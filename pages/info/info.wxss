@@ -1,0 +1,81 @@
+page{
+  background: #eee;
+}
+.container{
+  background: #fff;
+  padding: 0 30rpx;
+  box-sizing: border-box;
+}
+.title{
+  padding: 40rpx 0;
+  font-size: 48rpx;
+  color: #343434;
+}
+.section{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1rpx solid #DCDCDC;
+  height: 120rpx;
+}
+.section:last-of-type{
+  border-bottom: none;
+}
+.section__title{
+  font-size: 38rpx;
+  color: #343434;
+}
+.section .icon{
+  width: 34rpx;
+  height: 34rpx;
+}
+.placeholder{
+  min-width: 400rpx;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+.placeholder text{
+  font-size: 32rpx;
+  color: #B6B5B5;
+  line-height: 45rpx;
+  margin-right: 40rpx;
+}
+.picker{
+  min-width: 400rpx;
+  display: flex;
+  justify-content: flex-end;
+  font-size: 32rpx;
+  color: #343434;
+  opacity: 0.7;
+  line-height: 45rpx;
+  margin-right: 15rpx;
+}
+.btn{
+  position: fixed;
+  width: 100%;
+  bottom: 100rpx;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+.cancel{
+  border: 1rpx solid #DF2020;
+  border-radius: 4epx;
+  width: 200rpx;
+  line-height: 80rpx;
+  font-size: 38rpx;
+  color: #DF2020;
+}
+.submit{
+  border: 1rpx solid #DF2020;
+  border-radius: 4epx;
+  width: 200rpx;
+  line-height: 80rpx;
+  font-size: 38rpx;
+  color: #fff;
+  background: #DF2020;
+}
+.submit[disabled]{
+  border: 1px solid #ccc;
+}

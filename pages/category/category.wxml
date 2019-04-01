@@ -1,0 +1,23 @@
+<view class="container">
+    <view class='top'>
+        <image class='img' mode='aspectFill' src='{{options.img}}' />
+    </view>
+    <view class='wrap'>
+        <view catchtap="detailTap" wx:for="{{list}}" wx:key="index" class='item' data-item="{{item}}">
+            <view class='left'>
+                <image class='poster' mode='aspectFill' src='{{item.image}}' />
+                <image class='icon' mode='aspectFill' src='{{IMG_URL}}/images/play.png' />
+            </view>
+            <view class='right'>
+                <text class='line name'>{{item.title}}</text>
+                <text class='line actor' wx:if="{{item.teacher_id==0}}">{{item.subtitle}}</text>
+                <text class='line actor' wx:if="{{item.teacher_id!=0}}">{{item.name}}-{{item.honor}}</text>
+                <text class='line info'>
+          <text class='dramaNum'><text class='key'>剧集</text>{{item.lesson_count}}集</text>
+                <text wx:if="{{item.thousand}}" class='playNum'><text class='key'>播放</text>{{item.thousand}}万</text>
+                <text wx:if="{{!item.thousand}}" class='playNum'><text class='key'>播放</text>{{item.browse}}</text>
+                </text>
+            </view>
+        </view>
+    </view>
+</view>

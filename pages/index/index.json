@@ -1,0 +1,10 @@
+{
+  "backgroundTextStyle": "light",
+  "navigationBarTitleText": "中国网上老年大学",
+  "navigationBarTextStyle": "black",
+  "navigationStyle":"custom",
+  "enablePullDownRefresh": true,
+  "usingComponents": {
+    "navigationBar": "/components/navigationBar/navigationBar"
+  }
+}

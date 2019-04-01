@@ -1,0 +1,26 @@
+<view class="container">
+    <view class='wrap'>
+        <view class="joined" wx:if="{{joinList.length > 0 }}">
+            <view class="title">我加入的圈子</view>
+            <view class="item" wx:for="{{joinList}}" wx:key="index">
+                <image class='img' mode='widthFix' src='{{item.bimage}}' bindtap="gotoCdetail" data-id="{{item.id}}" />
+                <button class="btn-operate" wx:if="{{isEdit}}" catchtap="fnCancelJoin" data-item='{{item}}'>
+                    <image src="../../images/icon-del.png" class="icon icon-add"></image> 
+                  <text>取消</text>
+                </button>
+            </view>
+        </view>
+        <view class="no-joined" wx:if="{{noJoinList.length > 0 }}">
+            <view class="title">其他圈子</view>
+            <view class="item" wx:for="{{noJoinList}}" wx:key="index" data-item='{{item}}'>
+                <image class='img' mode='widthFix' src='{{item.bimage}}' bindtap="gotoCdetail" data-id="{{item.id}}" />
+                <button class="btn-operate" wx:if="{{isEdit}}" catchtap="fnJoin" data-item='{{item}}'>
+                        <!--TODO 图片地址，建议均使用网络地址，代上传的图片  {{IMG_URL}}/images/icon-add.png -->
+                  <image src="../../images/icon-add.png" class="icon icon-add"></image> 
+                  <text>加圈</text>
+                </button>
+            </view>
+        </view>
+    </view>
+    <button class='confirm' bindtap='confirm' bindtap="fnEdit"><text>{{isEdit ? "确定" :"编辑"}}</text></button>
+</view>

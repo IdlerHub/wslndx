@@ -1,0 +1,67 @@
+<view class="container">
+    <view class="wrap">
+        <view wx:for="{{list}}" wx:key="index" class='item'>
+            <view class='top' catchtap="navigate" data-id='{{item.id}}'>
+                <view class='left'>
+                    <image mode='aspectFill' class='avatarUrl' src='{{item.avatar}}'></image>
+                    <view class='text'>
+                        <text class='nickName line'>{{item.nickname}}</text>
+                        <text wx:if="{{item.university_name}}" class='school line'>{{item.university_name}}</text>
+                    </view>
+                </view>
+                <text class='date'>{{item.createtimes}}</text>
+            </view>
+            <view catchtap="navigate" data-id='{{item.id}}'>
+                <rich-text wx:if="{{item.content}}" class='name' nodes="{{item.content}}"></rich-text>
+                <view class='content' wx:if="{{item.images.length>0}}">
+                    <view class='img one' wx:if="{{item.images.length==1}}" style="max-height: 100vh;overflow: hidden;">
+                        <image mode='widthFix' wx:for="{{item.images}}" wx:for-item="items" wx:key="index" src='{{items}}' data-urls="{{item.images}}" data-current="{{items}}" bindtap="previewImage"></image>
+                    </view>
+                    <view class='img three' wx:if="{{item.images.length>1}}">
+                        <image mode='aspectFill' wx:for="{{item.images}}" wx:for-item="items" wx:key="index" src='{{items}}' data-urls="{{item.images}}" data-current="{{items}}" bindtap="previewImage"></image>
+                    </view>
+                </view>
+                <view class='content' wx:if="{{item.url}}">
+                    <video wx:if="{{!item.pause}}" id="{{item.id}}" src="{{item.url}}" controls page-gesture enable-play-gesture>
+          </video>
+                    <view wx:if="{{item.pause}}" class="bg" data-index='{{index}}'>
+                        <image wx:if="{{item.pause}}" mode='aspectFill' src="{{item.auditing?IMG_URL+'/images/tip.jpg':item.image}}" class="poster"></image>
+                        <image wx:if="{{item.pause}}" mode='aspectFill' src="{{IMG_URL}}/images/play-hl.png" class="play"></image>
+                    </view>
+                </view>
+            </view>
+            <navigator wx:if="{{item.fs_title}}" url='../cDetail/cDetail?id={{item.fs_id}}' hover-class="none" open-type="navigate" class='label' style='background: #{{item.color}}'>#{{item.fs_title}}精选</navigator>
+            <view class='btn'>
+                <view class='item' bindtap='praise' data-index='{{index}}'>
+                    <view wx:if="{{!item.praising}}" class='icon'>
+                        <image wx:if="{{item.likestatus==0}}" mode='aspectFill' src='{{IMG_URL}}/images/heart-ash.png'></image>
+                        <image wx:if="{{item.likestatus==1}}" mode='aspectFill' src='{{IMG_URL}}/images/heart-red.png'></image>
+                    </view>
+                    <view wx:if="{{item.praising}}" class='icon'>
+                        <view class='ani' bindanimationend="aniend" data-index='{{index}}' style='background-image: url(https://bogole.com/project/d19030901/images/heart-ani.png)'></view>
+                    </view>
+                    <text wx:if="{{!item.lw}}" class='text'>{{item.likes}}</text>
+                    <text wx:if="{{item.lw}}" class='text'>{{item.lw}}万</text>
+                </view>
+                <navigator url='../pDetail/pDetail?id={{item.id}}&comment' hover-class="none" open-type="navigate" class='item'>
+                    <image mode='aspectFill' class='icon' src='{{IMG_URL}}/images/comment.png'></image>
+                    <text wx:if="{{!item.cw}}" class='text'>{{item.comments}}</text>
+                    <text wx:if="{{item.cw}}" class='text'>{{item.cw}}万</text>
+                </navigator>
+            </view>
+        </view>
+    </view>
+    <view class='footer'>
+        <navigator url='../circle/circle?type=1' hover-class="none" open-type="navigate" class='to'>
+            <text class='icon'>+</text>
+            <text class='text'>加圈</text>
+        </navigator>
+        <navigator url='../release/release' hover-class="none" open-type="navigate" class='write'>
+            <image mode='aspectFill' class='icon' src='{{IMG_URL}}/images/write.png'></image>
+            <text class='text'>写帖</text>
+        </navigator>
+    </view>
+    <view class='popup' wx:if="{{rlAni}}">
+        <view class='rlAni' bindanimationend="rlAniend" style='background-image: url(https://bogole.com/project/d19030901/images/release-ani.png)'></view>
+    </view>
+</view>
