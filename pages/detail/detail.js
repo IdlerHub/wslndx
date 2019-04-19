@@ -1,20 +1,20 @@
 //index.js
 //获取应用实例
-const app = getApp()
+const app = getApp();
 Page({
     data: {
         IMG_URL: app.IMG_URL,
         sort: 0,
-        nav: [{ name: '剧集' }, { name: '简介' }],
+        nav: [{name: '剧集'}, {name: '简介'}],
         height: 0,
-        phoneMask: false
+        baseInfo: false
     },
     onLoad(options) {
-        var that = this;
-        this.videoContext = wx.createVideoContext('myVideo')
-        let systemInfo = wx.getSystemInfoSync();
-        let windowHeight = systemInfo.windowHeight;
-        let query = wx.createSelectorQuery().in(that);
+        /*todo:考虑去掉that*/
+        let that = this;
+        this.videoContext = wx.createVideoContext('myVideo');
+        let windowHeight = wx.getSystemInfoSync().windowHeight;
+        let query = wx.createSelectorQuery().in(this);
         query.select('#myVideo').boundingClientRect();
         query.select('.info').boundingClientRect();
         query.select('.nav').boundingClientRect();
@@ -33,29 +33,27 @@ Page({
             });
             wx.setNavigationBarTitle({
                 title: options.name
-            })
+            });
             if (options.play) {
                 that.setData({
                     hideRecode: true
-                })
-                that.getDetail(function() {
+                });
+                that.getDetail(function () {
                     that.recordAdd()
                 })
             } else {
                 that.getDetail()
             }
         });
-        app.PhoneMask(that)
+        app.baseInfo(that);
     },
 
-    //获取用户号码
-    getPhoneNumber: function(e) {
-        app.phone(e, this);
-      console.log(this.data.phoneMask)
+    onGotUserInfo: function (e) {
+        app.updateBase(e, this);
     },
     switchNav(event) {
-        var cur = event.currentTarget.dataset.current;
-        if (this.data.currentTab == cur) {
+        let cur = event.currentTarget.dataset.current;
+        if (this.data.currentTab === cur) {
             return false;
         } else {
             this.setData({
@@ -64,35 +62,31 @@ Page({
         }
     },
     switchTab(event) {
-        var cur = event.detail.current;
+        let cur = event.detail.current;
         this.setData({
             currentTab: cur,
         });
-        app.PhoneMask(this)
+        app.baseInfo(this)
     },
-    getDetail(callback) {
-        var that = this;
+    getDetail() {
         this.param = {
             id: this.data.id,
             sort: this.data.sort
-        }
-        wx.showNavigationBarLoading()
-        app.classroom.detail(this.param, function(msg) {
-            wx.hideNavigationBarLoading()
-            if (msg.code == 1) {
+        };
+        wx.showNavigationBarLoading();
+        return app.classroom.detail(this.param).then((msg) => {
+            wx.hideNavigationBarLoading();
+            if (msg.code === 1) {
                 msg.data.bw = app.util.tow(msg.data.browse);
-                msg.data.sublesson.forEach(function(item, index) {
+                msg.data.sublesson.forEach(function (item) {
                     item.minute = (item.film_length / 60).toFixed(0)
-                })
-                that.setData({
+                });
+                this.setData({
                     detail: msg.data
-                })
-                that.manage()
+                });
+                this.manage();
             }
-            if (callback) {
-                callback()
-            }
-        }, function() {})
+        })
     },
     ended() {
         this.setData({
@@ -100,68 +94,67 @@ Page({
         })
     },
     manage() {
-        var that = this;
-        var detail = this.data.detail;
-        var current = 0,
-            total = 0,
+        let detail = this.data.detail;
+        let current = 0,
+            total = detail.sublesson.length,
             cur = '';
-        detail.sublesson.forEach(function(item) {
-            total++;
+        detail.sublesson.forEach(function (item) {
             if (item.played == 1) {
                 current++;
             }
             if (item.id == detail.current_sublesson_id) {
                 cur = item;
             }
-        })
+        });
         if (detail.current_sublesson_id == 0) {
-            cur = detail.sublesson[0]
+            cur = detail.sublesson[0];
         }
         this.setData({
-            'detail.progress': parseInt(current / total * 100),
+            'detail.progress': parseInt(current / total * 100 + ''),
             cur: cur
         })
     },
     // 排序
     order() {
         this.setData({
-            sort: this.data.sort == 0 ? 1 : 0
-        })
+            sort: this.data.sort === 0 ? 1 : 0
+        });
         this.getDetail();
     },
     // 收藏
     collect() {
-        var that = this;
-        var param = { lesson_id: this.param.id }
+        /*todo:考虑去掉that*/
+        let that = this;
+        let param = {lesson_id: this.param.id};
         if (this.data.detail.collected == 1) {
             wx.showModal({
                 title: '',
                 content: '是否取消收藏',
-                success: function(res) {
+                success: function (res) {
                     if (res.confirm) {
-                        app.classroom.collectCancel(param, function(msg) {
+                        app.classroom.collectCancel(param).then((msg) => {
                             if (msg.code == 1) {
                                 that.setData({
                                     "detail.collected": 0
                                 })
                             }
-                        }, function() {})
+                        })
                     } else if (res.cancel) {
                         return
                     }
                 }
             })
         } else {
-            app.classroom.collect(param, function(msg) {
-                    if (msg.code == 1) {
-                        that.setData({
-                            "detail.collecting": true,
-                            "detail.collected": 1
-                        })
-                    }
-                }, function() {})
-                //用于数据统计
-            app.aldstat.sendEvent('课程收藏', { "name": that.data.title })
+            app.classroom.collect(param).then((msg) => {
+                if (msg.code == 1) {
+                    this.setData({
+                        "detail.collecting": true,
+                        "detail.collected": 1
+                    })
+                }
+            });
+            //用于数据统计
+            app.aldstat.sendEvent('课程收藏', {"name": this.data.title})
         }
     },
     aniend() {
@@ -171,57 +164,39 @@ Page({
     },
     // 选择剧集
     select(e) {
-        var i = e.currentTarget.dataset.index
-        var list = this.data.detail.sublesson
+        let i = e.currentTarget.dataset.index;
+        let list = this.data.detail.sublesson;
         this.setData({
             cur: list[i],
-        })
+        });
         this.recordAdd();
     },
     recordAdd() {
-        var that = this
-        var list = this.data.detail.sublesson
-
-        var param = {
+        let param = {
             lesson_id: this.param.id,
-            sublesson_id: that.data.cur.id
+            sublesson_id: this.data.cur.id
         }
-        app.classroom.recordAdd(param, function(msg) {
+        app.classroom.recordAdd(param).then((msg) => {
             if (msg.code == 1) {
-                that.getDetail(function() {
-                    that.videoContext.play();
-                    that.setData({
+                this.getDetail().then(() => {
+                    this.videoContext.play();
+                    this.setData({
                         playing: true,
                         hideRecode: true
                     });
-                    app.addVisitedNum(`k${that.data.cur.id}`)
-                    app.PhoneMask(that)
+                    app.addVisitedNum(`k${this.data.cur.id}`);
+                    app.baseInfo(this);
                 })
             }
-        }, function() {})
+        })
     },
     navitor() {
-        if (!this.data.userInfo.nickname) {
-            wx.showModal({
-                title: '',
-                showCancel: false,
-                content: '您还没有授权，请先授权',
-                success: function(res) {
-                    if (res.confirm) {
-                        wx.reLaunch({
-                            url: '../index/index',
-                        })
-                    }
-                }
-            })
-        } else {
-            wx.navigateTo({
-                url: '../certificate/certificate?name=' + this.data.detail.title,
-            })
-        }
+        wx.navigateTo({
+            url: '../certificate/certificate?name=' + this.data.detail.title,
+        })
     },
     //用于数据统计
     onHide() {
-        app.aldstat.sendEvent('退出', { "name": "课程详情页" })
+        app.aldstat.sendEvent('退出', {"name": "课程详情页"})
     }
 })

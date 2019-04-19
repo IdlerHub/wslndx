@@ -1,12 +1,17 @@
 <view class="container">
-    <view class='top' wx:if="{{userInfo.nickname}}">
+    <!-- 下拉刷新 -->
+    <view wx:if="{{isRefreshing}}" class='weui-loadmore'>
+        <view class='weui-loading'></view>
+        <view class='weui-loadmore-tips'>加载中...</view>
+    </view>
+    <view class='top'>
         <view bindtap='toUser'>
-            <image class='bg' mode='widthFix' src='{{userInfo.avatar}}' />
+            <image class='bg' mode='widthFix' src='{{userInfo.avatar || "/images/5.png"}}' />
             <view class='box'>
                 <view class='left'>
-                    <image class='img' mode='aspectFill' src='{{userInfo.avatar}}' />
+                    <image class='img' mode='aspectFill' src='{{userInfo.avatar || "/images/5.png"}}' />
                     <view class='info'>
-                        <text class='line name'>{{userInfo.nickname}}</text>
+                        <text class='line name'>{{userInfo.nickname||userInfo.mobile}}</text>
                         <view class='line'>
                             <view class='city' bindtap='toInfo'>{{userInfo.address?userInfo.address:'暂无'}}</view>
                             <view class='school' bindtap='toInfo' wx:if="{{!userInfo.university}}"><text class='icon'>+</text>添加学校标签</view>
@@ -18,23 +23,6 @@
             </view>
         </view>
     </view>
-    <button class='top' wx:if="{{!userInfo.nickname}}" hover-class="none" open-type="getUserInfo" bindgetuserinfo="getUserInfo">
-    <image class='bg' mode='widthFix' src='{{IMG_URL}}/images/5.png'/>
-    <view class='box'>
-      <view class='left'>
-        <image class='img' mode='aspectFill' src='{{IMG_URL}}/images/5.png'/>
-        <view class='info'>
-          <text class='line name'>微信授权</text>
-          <view class='line'>
-            <text class='city'>暂无</text>
-            <view class='school' wx:if="{{!userInfo.university}}"><text class='icon'>+</text>添加学校标签</view>
-          </view>
-        </view>
-      </view>
-      <image class='right' mode='aspectFill' src='{{IMG_URL}}/images/Return.png'/>
-    </view>
-  </button>
-    <!-- <button style="width: 100%;height:200rpx;font-size: 36rpx;" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber">获取电话号码</button> -->
     <navigationBar wx:if="{{scroll}}" id="navigationBar" placeholderBg="#F8F8F8" color="#000000" title="网上老年大学" back="{{false}}" background="#F8F8F8"></navigationBar>
     <scroll-view scroll-x="true" class="nav {{scroll?'fixed':''}}" style='top:{{top}}px' scroll-left="{{navScrollLeft}}" scroll-with-animation="{{true}}">
         <block wx:for="{{nav}}" wx:for-index="id" wx:for-item="item" wx:key="id">
@@ -79,24 +67,6 @@
             </view>
         </swiper-item>
     </swiper>
-    <view id="getinfo-box" wx:if="{{!userInfo.nickname}}" hover-class="none">
-        <view class="mask"></view>
-        <view class="content-box">
-            <view class="head">
-                <text>微信授权</text>
-            </view>
-            <view class="content">
-                <image src="{{IMG_URL}}/images/logo.png" mode="aspectFill" />
-                <text class="lg-tit">网上老年大学申请获得一下权限</text>
-                <text class="sm-tit">获得你的公开信息（昵称、头像等）</text>
-            </view>
-            <view class="footer">
-                <button bindtap="showAgain">拒绝</button>
-                <button class="btn-comfirm" hover-class="none" open-type="getUserInfo" bindgetuserinfo="getUserInfo">允许</button>
-            </view>
-        </view>
-    </view>
-
     <!-- 底部tabbar -->
     <view class='tabbar'>
         <view class='item'>

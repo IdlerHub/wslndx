@@ -4,12 +4,13 @@ const app = getApp()
 Page({
     data: {
         IMG_URL: app.IMG_URL,
-        nav: [{ name: '评论', class: '.comment' }, { name: '点赞', class: '.praise' }, ],
+        nav: [{ name: '评论', class: '.comment' }, { name: '点赞', class: '.praise' }],
+        isRefreshing: false,
+        txoptions:true
     },
     onLoad(options) {
-        var that = this;
         this.id = options.id;
-        this.comParam = this.praParam = { blog_id: this.id, page: 1, pageSize: 10 }
+        this.comParam = this.praParam = { blog_id: this.id, page: 1, pageSize: 10 };
         if (options.comment) {
             this.show();
         }
@@ -20,16 +21,17 @@ Page({
             currentTab: 0,
             navScrollLeft: 0,
             userInfo: wx.getStorageSync('userInfo')
-        })
-        this.getDetail()
-        this.getComment()
+        });
+        this.getDetail();
+        this.getComment();
         this.getPraise()
     },
     setHeight() {
-        var that = this;
-        var nav = this.data.nav;
-        var currentTab = this.data.currentTab;
-        let query = wx.createSelectorQuery().in(that);
+        /*todo:考虑去掉that*/
+        let that = this;
+        let nav = this.data.nav;
+        let currentTab = this.data.currentTab;
+        let query = wx.createSelectorQuery().in(this);
         query.select(nav[currentTab].class).boundingClientRect();
         query.exec((res) => {
             let height = res[0].height;
@@ -39,10 +41,8 @@ Page({
         });
     },
     switchNav(event) {
-        var cur = event.currentTarget.dataset.current;
-        if (this.data.currentTab == cur) {
-            return false;
-        } else {
+        let cur = event.currentTarget.dataset.current;
+        if (this.data.currentTab !== cur) {
             this.setData({
                 currentTab: cur
             })
@@ -50,81 +50,72 @@ Page({
         this.setHeight();
     },
     switchTab(event) {
-        var cur = event.detail.current;
+        let cur = event.detail.current;
         this.setData({
             currentTab: cur,
         });
         this.setHeight();
     },
-    getDetail(callback) {
-        var that = this;
-        var param = { blog_id: this.id }
-        wx.showNavigationBarLoading()
-        app.circle.detail(param, function(msg) {
-            wx.hideNavigationBarLoading()
+    getDetail() {
+        let param = { blog_id: this.id };
+        wx.showNavigationBarLoading();
+        app.circle.detail(param).then((msg) => {
+            wx.hideNavigationBarLoading();
             if (msg.code == 1) {
-                var detail = msg.data[0];
+                let detail = msg.data[0];
                 detail.lw = app.util.tow(detail.likes);
                 detail.cw = app.util.tow(detail.comments);
-                var arr = [];
+                let arr = [];
                 detail.images.forEach(function(i) {
                     arr.push(i.image)
                 });
                 detail.images = arr;
                 detail.auditing = ((new Date()).getTime() - new Date(detail.createtime * 1000)) < 7000 ? true : false;
                 detail.pause = true;
-                that.setData({
+                this.setData({
                     detail: detail,
                 })
             }
-            if (callback) {
-                callback();
-            }
-        }, function() {})
+        })
     },
     praise() {
-        var that = this;
-        var detail = that.data.detail;
-        var param = {
+        let detail = this.data.detail;
+        let param = {
             blog_id: detail.id
-        }
+        };
         if (detail.likestatus == 1) {
             // 取消点赞
-            app.circle.delPraise(param, function(msg) {
+            app.circle.delPraise(param).then((msg) => {
                 if (msg.code == 1) {
-                    that.getDetail();
-                    that.praParam.page = 1;
-                    that.getPraise([]);
+                    this.getDetail();
+                    this.praParam.page = 1;
+                    this.getPraise([]);
                 }
-            }, function() {})
+            })
         } else {
             // 点赞
-            app.circle.praise(param, function(msg) {
+            app.circle.praise(param).then((msg) => {
                 if (msg.code == 1) {
                     detail.praising = true;
-                    that.setData({
-                        detail: detail
-                    })
+                    this.setData({ detail: detail })
                 }
-            }, function() {})
+            })
         }
     },
-    aniend(e) {
-        var that = this;
-        that.getDetail();
-        that.praParam.page = 1;
-        that.getPraise([]);
+    aniend() {
+        this.getDetail();
+        this.praParam.page = 1;
+        this.getPraise([]);
     },
     play() {
-        var detail = this.data.detail;
-        var videoContext = wx.createVideoContext(String(detail.id));
+        let detail = this.data.detail;
+        let videoContext = wx.createVideoContext(String(detail.id));
         videoContext.play();
         this.setData({
             "detail.pause": false
         })
     },
-    ended(e) {
-        var detail = this.data.detail;
+    ended() {
         this.setData({
             "detail.pause": true
         })
@@ -147,32 +138,32 @@ Page({
     },
     // 发布评论
     release() {
-        var param = { blog_id: this.id, content: this.data.content }
+        console.log('release');
+        let param = { blog_id: this.id, content: this.data.content };
         if (this.data.content) this.post(param)
     },
     post(param) {
-        var that = this;
-        that.setData({
+        this.setData({
             write: false,
             content: null
-        })
+        });
         wx.showLoading({
             title: '发布中',
-        })
-        app.circle.comment(param, function(msg) {
-            wx.hideLoading()
+        });
+        app.circle.comment(param).then((msg) => {
+            wx.hideLoading();
             if (msg.code == 1) {
-                setTimeout(function() {
+                setTimeout(() => {
                     wx.showToast({
                         title: '发布成功',
                         icon: 'none',
                         duration: 1500
-                    })
-                    that.setData({
-                        ['detail.comments']: ++that.data.detail.comments
-                    })
-                    that.comParam.page = 1;
-                    that.getComment([]);
+                    });
+                    this.setData({
+                        ['detail.comments']: ++this.data.detail.comments
+                    });
+                    this.comParam.page = 1;
+                    this.getComment([]);
                 }, 500)
             } else {
                 wx.showToast({
@@ -181,101 +172,98 @@ Page({
                     duration: 1500
                 })
             }
-        }, function() {})
+        })
     },
     navigator() {
         this.setData({
             write: false,
             content: null
-        })
+        });
         this.setData({
             write: false
-        })
+        });
         wx.navigateTo({
             url: '../comment/comment?id=' + this.data.detail.id,
         })
     },
-    getComment(list, callback) {
-        var that = this;
-        var comment = list ? list : that.data.comment;
-        wx.showNavigationBarLoading()
-        app.circle.getComment(this.comParam, function(msg) {
-            wx.hideNavigationBarLoading()
+    getComment(list) {
+        let comment = list || this.data.comment;
+        wx.showNavigationBarLoading();
+        return app.circle.getComment(this.comParam).then((msg) => {
+            wx.hideNavigationBarLoading();
             if (msg.code == 1) {
                 msg.data.forEach(function(item) {
                     comment.push(item);
-                })
-                that.setData({
+                });
+                this.setData({
                     comment: comment
                 })
             }
-            that.setHeight()
-            if (callback) {
-                callback();
-            }
-        }, function() {})
+            this.setHeight();
+        })
     },
-    getPraise(list, callback) {
-        var that = this;
-        var praise = list ? list : that.data.praise;
-        wx.showNavigationBarLoading()
-        app.circle.getPraise(this.praParam, function(msg) {
-            wx.hideNavigationBarLoading()
+    getPraise(list) {
+        let praise = list || this.data.praise;
+        wx.showNavigationBarLoading();
+        return app.circle.getPraise(this.praParam).then((msg) => {
+            wx.hideNavigationBarLoading();
             if (msg.code == 1) {
                 msg.data.forEach(function(item) {
                     praise.push(item);
                 })
-                that.setData({
+                this.setData({
                     praise: praise
                 })
             }
-            that.setHeight()
-            if (callback) {
-                callback();
-            }
-        }, function() {})
+            this.setHeight();
+        })
     },
     //下拉刷新
     onPullDownRefresh() {
-        var that = this;
-        var currentTab = this.data.currentTab;
+        let currentTab = this.data.currentTab;
+        this.setData({
+            isRefreshing: true
+        });
         switch (currentTab) {
             case 0:
-                that.comParam.page = 1;
-                that.getComment([], function() {
+                this.comParam.page = 1;
+                this.getComment([]).then(() => {
                     wx.stopPullDownRefresh();
                 });
                 break;
             case 1:
-                that.praParam.page = 1;
-                that.getPraise([], function() {
+                this.praParam.page = 1;
+                this.getPraise([]).then(() => {
                     wx.stopPullDownRefresh();
                 });
                 break;
         }
+        let timer = setTimeout(() => {
+            this.setData({
+                isRefreshing: false
+            }, () => {
+                clearTimeout(timer)
+            })
+        }, 1000)
     },
     //上拉加载
     onReachBottom() {
-        var that = this;
-        var currentTab = this.data.currentTab;
+        let currentTab = this.data.currentTab;
         switch (currentTab) {
             case 0:
-                that.comParam.page++;
-                that.getComment();
+                this.comParam.page++;
+                this.getComment();
                 break;
             case 1:
-                that.praParam.page++;
-                that.getPraise();
+                this.praParam.page++;
+                this.getPraise();
                 break;
         }
     },
     //图片预览
     previewImage(e) {
-        var that = this;
-        var urls = [];
-        var current = {};
-        var urls = e.currentTarget.dataset.urls;
-        var current = e.currentTarget.dataset.current;
+        let urls = e.currentTarget.dataset.urls;
+        let current = e.currentTarget.dataset.current;
         wx.previewImage({
             current: current,
             urls: urls // 需要预览的图片http链接列表
@@ -283,22 +271,21 @@ Page({
     },
     //删除评论
     delComment: function(e) {
-        var that = this;
-        var param = { blog_id: e.currentTarget.dataset.item.blog_id, id: e.currentTarget.dataset.item.id }
-        app.circle.delComment(param, function(msg) {
-            wx.hideLoading()
+        let param = { blog_id: e.currentTarget.dataset.item.blog_id, id: e.currentTarget.dataset.item.id };
+        app.circle.delComment(param).then((msg) => {
+            wx.hideLoading();
             if (msg.code == 1) {
-                setTimeout(function() {
+                setTimeout(() => {
                     wx.showToast({
                         title: '删除成功',
                         icon: 'none',
                         duration: 1500
-                    })
-                    that.setData({
-                        ['detail.comments']: --that.data.detail.comments
-                    })
-                    that.comParam.page = 1;
-                    that.getComment([]);
+                    });
+                    this.setData({
+                        ['detail.comments']: --this.data.detail.comments
+                    });
+                    this.comParam.page = 1;
+                    this.getComment([]);
                 }, 500)
             } else {
                 wx.showToast({
@@ -307,6 +294,6 @@ Page({
                     duration: 1500
                 })
             }
-        }, function() {})
+        })
     }
 })

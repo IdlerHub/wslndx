@@ -81,5 +81,5 @@
             </swiper-item>
         </swiper>
     </view>
-        <button class="getPhone-mask" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber" style="position:fixed;left: 0;top: 0;width: 100vw;height: 100vh;z-index: 9999;"></button>
+    <button class="getPhone-mask" wx:if="{{baseInfo}}" open-type="getUserInfo" bindgetuserinfo="onGotUserInfo" style="position:fixed;left: 0;top: 0;width: 100vw;height: 100vh;z-index: 9999;"></button>
 </view>

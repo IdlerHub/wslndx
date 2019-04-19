@@ -1,3 +1,8 @@
+<!-- 下拉刷新 -->
+<view wx:if="{{isRefreshing}}" class='weui-loadmore'>
+    <view class='weui-loading'></view>
+    <view class='weui-loadmore-tips'>加载中...</view>
+</view>
 <view class="container">
     <view class='box'>
         <view class='detail'>
@@ -106,7 +111,14 @@
     <view class='popup write' wx:if="{{write}}">
         <view class='bg' bindtap='hide'></view>
         <view class='box'>
-            <textarea placeholder="写评论" focus="true" adjust-position="true" cursor-spacing="190rpx" fixed="true" bindinput="input" value='{{content}}' placeholder-class="ph-class" />
+            <textarea
+            placeholder="写评论"
+            focus="{{txoptions}}" 
+            cursor-spacing="190rpx"
+            fixed="{{txoptions}}"
+            bindinput="input"
+            value='{{content}}'
+            placeholder-class="ph-class" />
             <view class='right' catchtap='navigator'>
                 <view class='to'>
                     <image mode='aspectFit' class='icon' src='{{IMG_URL}}/images/screen.png'></image>

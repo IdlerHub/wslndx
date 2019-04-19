@@ -3,13 +3,13 @@
   <!-- 返回首页 -->
   <cover-view class='back' wx:if="{{back}}" bindtap='back'><cover-image mode='aspectFill' src="{{IMG_URL}}/images/back.png" class='icon'></cover-image><cover-view>首页</cover-view></cover-view>
   <!-- 功能 -->
-  <cover-view class='bg' style="{{phoneMask ? 'z-index: 10;': 'z-index: 2'}}">
-    <cover-view  bindtap='tap' bindtouchstart="scrollTouchStart" bindtouchend="scrollTouchEnd" wx:if="{{!phoneMask}}" class="tapbg"></cover-view>
-   <cover-view class="getPhone-mask" wx:if="{{phoneMask}}">
+  <cover-view class='bg' style="{{baseInfo ? 'z-index: 10;': 'z-index: 2'}}">
+    <cover-view  bindtap="tap" bindtouchstart="scrollTouchStart" bindtouchend="scrollTouchEnd" wx:if="{{!baseInfo}}" class="tapbg"></cover-view>
+   <cover-view class="getPhone-mask" wx:if="{{baseInfo}}">
       <cover-view class="phone-box">
         <cover-view class="text">完善微信授权</cover-view>
         <cover-view class="text">获得更多免费内容</cover-view>
-        <button  open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber">允许授权</button>
+        <button  open-type="getUserInfo" bindgetuserinfo="onGotUserInfo">允许授权</button>
       </cover-view>
     </cover-view>  
   </cover-view>
@@ -18,7 +18,7 @@
   <!-- 信息 -->
   <cover-image mode='aspectFill' src="{{IMG_URL}}/images/mask.png" class='mask'></cover-image>
   <cover-view class='info'>
-    <cover-view class='name'>{{cur.title}}</cover-view>
+    <!-- <cover-view class='name'>{{cur.title}}</cover-view> -->
     <cover-view class='synopsis'>{{cur.intro_content}}</cover-view>
   </cover-view>
   <!-- 操作 -->

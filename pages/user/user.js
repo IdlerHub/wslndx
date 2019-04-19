@@ -4,7 +4,7 @@ const app = getApp()
 Page({
     data: {
         IMG_URL: app.IMG_URL,
-        nav: [{ name: '收藏课程' }, { name: '学习历史' }, { name: '我的圈子' }],
+        nav: [{name: '收藏课程'}, {name: '学习历史'}, {name: '我的圈子'}],
         height: 0
     },
     onShow() {
@@ -15,11 +15,12 @@ Page({
         })
 
     },
-    onLoad(options) {
-        var that = this;
+    onLoad() {
+        /*todo:去掉that*/
+        let that = this;
         let systemInfo = wx.getSystemInfoSync();
         let windowHeight = systemInfo.windowHeight;
-        let query = wx.createSelectorQuery().in(that);
+        let query = wx.createSelectorQuery().in(this);
         query.select('.top').boundingClientRect();
         query.select('.nav').boundingClientRect();
         query.exec((res) => {
@@ -36,101 +37,89 @@ Page({
             circle: [],
             currentTab: 0,
             navScrollLeft: 0,
-        })
-        this.collectParam = this.historyParam = this.circleParam = { page: 1, pageSize: 10 };
+        });
+        this.collectParam = this.historyParam = this.circleParam = {page: 1, pageSize: 10};
         this.getCollect([]);
         this.getHistory([]);
         this.getCircle([]);
     },
     switchNav(event) {
-        var cur = event.currentTarget.dataset.current;
-        if (this.data.currentTab == cur) {
-            return false;
-        } else {
+        let cur = event.currentTarget.dataset.current;
+        if (this.data.currentTab !== cur) {
             this.setData({
                 currentTab: cur
             })
         }
     },
     switchTab(event) {
-        var cur = event.detail.current;
+        let cur = event.detail.current;
         this.setData({
             currentTab: cur,
         });
     },
     getUserInfo(e) {
-        var that = this;
-        if (e.detail.errMsg != 'getUserInfo:ok') return
-        var param = {
+        if (e.detail.errMsg != 'getUserInfo:ok') return;
+        let param = {
             userInfo: JSON.stringify(e.detail.userInfo)
-        }
-        app.user.profile(param, function(msg) {
+        };
+        app.user.profile(param).then((msg) => {
             if (msg.code == 1) {
-                wx.setStorageSync('userInfo', msg.data.userInfo)
-                var userInfo = wx.getStorageSync('userInfo');
+                wx.setStorageSync('userInfo', msg.data.userInfo);
+                let userInfo = msg.data.userInfo;
                 if (userInfo) userInfo.address = userInfo.address ? userInfo.address.split(',')[1] : '';
-                that.setData({
+                this.setData({
                     userInfo: userInfo,
                 })
             }
-        }, function() {})
+        })
     },
-    getCollect(list, callback) {
-        var that = this;
-        var collect = list ? list : that.data.collect;
-        wx.showNavigationBarLoading()
-        app.user.collect(this.collectParam, function(msg) {
-            wx.hideNavigationBarLoading()
+    getCollect(list) {
+        let collect = list || this.data.collect;
+        wx.showNavigationBarLoading();
+        return app.user.collect(this.collectParam).then((msg) => {
+            wx.hideNavigationBarLoading();
             if (msg.code == 1) {
-                msg.data.forEach(function(item) {
+                msg.data.forEach(function (item) {
                     item.thousand = (item.browse / 10000) > 1 ? (item.browse / 10000).toFixed(1) : null;
                     collect.push(item);
-                })
-                that.setData({
+                });
+                this.setData({
                     collect: collect
                 })
             }
-            if (callback) {
-                callback();
-            }
-        }, function() {})
+        })
     },
-    getHistory(list, callback) {
-        var that = this;
-        var history = that.data.history;
-        var list = list ? list : that.data.history.history;
-        wx.showNavigationBarLoading()
-        app.user.history(this.historyParam, function(msg) {
-            wx.hideNavigationBarLoading()
+    getHistory(list) {
+        let temp = list || this.data.history.history;
+        wx.showNavigationBarLoading();
+        return app.user.history(this.historyParam).then((msg) => {
+            wx.hideNavigationBarLoading();
             if (msg.code == 1) {
                 for (let i in msg.data.history) {
-                    msg.data.history[i].forEach(function(item) {
+                    msg.data.history[i].forEach(function (item) {
                         item.createtime = app.util.formatTime(new Date(item.createtime * 1000)).slice(10)
-                    })
-                    list.push({ date: i, data: msg.data.history[i] });
+                    });
+                    temp.push({date: i, data: msg.data.history[i]});
                 }
-                that.setData({
-                    'history.history': list,
+                this.setData({
+                    'history.history': temp,
                     'history.last_lesson': msg.data.last_lesson
                 })
             }
-            if (callback) {
-                callback();
-            }
-        }, function() {})
+
+        })
     },
-    getCircle(list, callback) {
-        var that = this;
-        var circle = list ? list : that.data.circle;
-        wx.showNavigationBarLoading()
+    getCircle(list) {
+        let circle = list || this.data.circle;
+        wx.showNavigationBarLoading();
         this.circleParam.us_id = 0;
-        app.circle.news(this.circleParam, function(msg) {
-            wx.hideNavigationBarLoading()
+        app.circle.news(this.circleParam).then((msg) => {
+            wx.hideNavigationBarLoading();
             if (msg.code == 1) {
                 if (msg.data) {
-                    msg.data.forEach(function(item) {
-                        var arr = [];
-                        item.images.forEach(function(i) {
+                    msg.data.forEach(function (item) {
+                        let arr = [];
+                        item.images.forEach(function (i) {
                             arr.push(i.image)
                         });
                         item.images = arr;
@@ -139,36 +128,31 @@ Page({
                         circle.push(item);
                     })
                 }
-                that.setData({
+                this.setData({
                     circle: circle
                 })
-
             }
-            if (callback) {
-                callback();
-            }
-        }, function() {})
+        })
     },
     del(e) {
-        var that = this;
-        var i = e.currentTarget.dataset.index;
-        var circle = this.data.circle;
-        var param = {
+        let i = e.currentTarget.dataset.index;
+        let circle = this.data.circle;
+        let param = {
             blog_id: circle[i].id
-        }
+        };
         wx.showModal({
             title: '',
             content: '是否删除帖子',
-            success: function(res) {
+            success: (res) => {
                 if (res.confirm) {
-                    app.circle.delPost(param, function(msg) {
+                    app.circle.delPost(param).then((msg) => {
                         if (msg.code == 1) {
-                            that.circleParam.page = 1;
-                            that.getCircle([]);
+                            this.circleParam.page = 1;
+                            this.getCircle([]);
                         }
-                    }, function() {})
+                    })
                 } else if (res.cancel) {
-                    return
+                    return;
                 }
             }
         })
@@ -177,7 +161,7 @@ Page({
     rlSuc() {
         this.setData({
             rlAni: true
-        })
+        });
         this.circleParam.page = 1;
         this.getCircle([]);
     },
@@ -188,18 +172,16 @@ Page({
     },
     //图片预览
     previewImage(e) {
-        var that = this;
-        var urls = [];
-        var current = {};
-        var urls = e.currentTarget.dataset.urls;
-        var current = e.currentTarget.dataset.current;
-        that.setData({
+        let that = this;
+        let urls = e.currentTarget.dataset.urls;
+        let current = e.currentTarget.dataset.current;
+        this.setData({
             preview: true
-        })
+        });
         wx.previewImage({
             current: current,
             urls: urls, // 需要预览的图片http链接列表
-            complete: function() {
+            complete: () => {
                 that.setData({
                     preview: false
                 })
@@ -207,7 +189,7 @@ Page({
         })
     },
     navigate(e) {
-        var id = e.currentTarget.dataset.id;
+        let id = e.currentTarget.dataset.id;
         if (!this.data.preview) {
             wx.navigateTo({
                 url: '../pDetail/pDetail?id=' + id,
@@ -217,7 +199,7 @@ Page({
     //下拉刷新
     onPullDownRefresh() {
         this.collectParam.page = this.historyParam.page = this.circleParam.page = 1;
-        this.getCollect([], function() {
+        this.getCollect([]).then(() => {
             wx.stopPullDownRefresh();
         });
         this.getHistory([]);
@@ -238,6 +220,6 @@ Page({
     },
     //用于数据统计
     onHide() {
-        app.aldstat.sendEvent('退出', { "name": "个人中心页" })
+        app.aldstat.sendEvent('退出', {"name": "个人中心页"})
     }
 })

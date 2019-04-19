@@ -1,11 +1,12 @@
 //配置
-var content_type = [
+const content_type = [
     'application/json',
     'application/x-www-form-urlencoded'
 ];
-var header = {
+let header = {
     'content-type': content_type[0]
 };
+
 //验证code
 function handle(res) {
     switch (res.statusCode) {
@@ -14,26 +15,26 @@ function handle(res) {
                 title: '',
                 content: '当前身份已过期',
                 showCancel: false,
-                success: function(val) {
+                success: function (val) {
                     if (val.confirm) {
                         getApp().wxLogin()
                     }
                 }
-            })
+            });
             break;
         case 404:
             wx.showToast({
                 title: '找不到资源',
                 icon: 'none',
                 duration: 2000
-            })
+            });
             break;
         case 500:
             wx.showToast({
                 title: '服务器出错',
                 icon: 'none',
                 duration: 2000
-            })
+            });
             break;
         default:
     }
@@ -45,45 +46,14 @@ function handle(res) {
     }
 };
 
-// get
-function get(path, param, successFn, failFn, noToken, type) {
-    var url = getApp().API_URL + path;
+// post  return  promise
+function post(path, param, noToken, type) {
+    let url = getApp().API_URL + path;
     if (!noToken) {
-        var token = wx.getStorageSync('token');
-        if (!token) return;
-    }
-    if (type) {
-        header['content-type'] = content_type[type];
-    } else {
-        header['content-type'] = content_type[0];
-    }
-    wx.request({
-        method: 'GET',
-        header: header,
-        url: url,
-        data: param || {},
-        success: function(res) {
-            handle(res);
-            if (successFn) {
-                successFn(res.data);
-            }
-        },
-        fail: function(res) {
-            if (failFn) {
-                failFn(res.data);
-            }
-        }
-    })
-}
-
-// post
-function post(path, param, successFn, failFn, noToken, type) {
-    var url = getApp().API_URL + path;
-    if (!noToken) {
-        var token = wx.getStorageSync('token');
+        let token = wx.getStorageSync('token');
         if (!token) return;
         param.uid = wx.getStorageSync('uid');
-        param.timestamp = parseInt((new Date()).getTime() / 1000);
+        param.timestamp = parseInt(new Date().getTime() / 1000 + '');
         param.sign = getApp().md5('uid=' + param.uid + '&token=' + token + '&timestamp=' + param.timestamp);
     }
     if (type) {
@@ -91,71 +61,27 @@ function post(path, param, successFn, failFn, noToken, type) {
     } else {
         header['content-type'] = content_type[0];
     }
-    wx.request({
+    return wx.pro.request({
         method: 'POST',
         header: header,
         data: param || {},
-        url: url,
-        success: function(res) {
-            // wx.hideLoading();
-            handle(res);
-            if (successFn) {
-                successFn(res.data);
-            }
-        },
-        fail: function(res) {
-            if (failFn) {
-                failFn(res.data);
-            }
-        }
+        url: url
+    }).then(function (res) {
+        handle(res);
+        return res.data;
+    }, function (res) {
+        return res.data;
     })
 }
 
-// put
-function put(path, param, successFn, failFn, noToken, type) {
-    var url = getApp().API_URL + path;
-    if (!noToken) {
-        var token = wx.getStorageSync('token');
-        if (!token) return;
-        param.uid = wx.getStorageSync('uid');
-        param.timestamp = parseInt((new Date()).getTime() / 1000);
-        param.sign = getApp().md5('uid=' + param.uid + '&token=' + token + '&timestamp=' + param.timestamp);
-    }
-    if (type) {
-        header['content-type'] = content_type[type];
-    } else {
-        header['content-type'] = content_type[0];
-    }
-    wx.showLoading({
-        title: ''
-    })
-    wx.request({
-        method: 'PUT',
-        header: header,
-        data: param || {},
-        url: url,
-        success: function(res) {
-            wx.hideLoading();
-            handle(res);
-            if (successFn) {
-                successFn(res.data);
-            }
-        },
-        fail: function(res) {
-            if (failFn) {
-                failFn(res.data);
-            }
-        }
-    })
-}
 // delete
-function del(path, param, successFn, failFn, noToken, type) {
-    var url = getApp().API_URL + path;
+function del(path, param, noToken, type) {
+    let url = getApp().API_URL + path;
     if (!noToken) {
-        var token = wx.getStorageSync('token');
+        let token = wx.getStorageSync('token');
         if (!token) return;
         param.uid = wx.getStorageSync('uid');
-        param.timestamp = parseInt((new Date()).getTime() / 1000);
+        param.timestamp = parseInt(new Date().getTime() / 1000 + '');
         param.sign = getApp().md5('uid=' + param.uid + '&token=' + token + '&timestamp=' + param.timestamp);
     }
     if (type) {
@@ -163,92 +89,68 @@ function del(path, param, successFn, failFn, noToken, type) {
     } else {
         header['content-type'] = content_type[0];
     }
-    // wx.showLoading({
-    //   title: '',
-    // });
-    wx.request({
+    return wx.pro.request({
         method: 'DELETE',
         header: header,
         url: url,
-        data: param || {},
-        success: function(res) {
-            // wx.hideLoading(); 
-            handle(res);
-            if (successFn) {
-                successFn(res.data);
-            }
-        },
-        fail: function(res) {
-            if (failFn) {
-                failFn(res.data);
-            }
-        }
+        data: param || {}
+    }).then(function (res) {
+        handle(res);
+        return res.data;
+    }, function (res) {
+        return res.data;
     })
 }
 
 //文件上传
-function upload(path, file, successFn, failFn, noloading) {
-    var url = getApp().API_URL + path;
-    if (!noloading) {
+function upload(path, file, noLoading) {
+    let url = getApp().API_URL + path;
+    if (!noLoading) {
         wx.showLoading({
             title: '上传中',
         });
     }
-    const uploadTask = wx.uploadFile({
+
+    return wx.pro.uploadFile({
         url: url,
         filePath: file,
         header: header,
         name: 'file',
-        formData: {},
-        success: function(res) {
-            if (!noloading) wx.hideLoading();
-            handle(res);
-            if (successFn) {
-                successFn(res.data, uploadTask);
-            }
-        },
-        fail: function(res) {
-            if (failFn) {
-                failFn(res);
-            }
-        }
+        formData: {}
+    }).then(function (res) {
+        if (!noLoading) wx.hideLoading();
+        handle(res);
+        return res.data;
+    }, function (res) {
+        return res.data;
     })
 }
 
 //没有登录post
 // post
-function nologinpost(path, param, successFn, failFn, noToken, type) {
-    var url = getApp().API_URL + path;
+function noLoginPost(path, param, noToken, type) {
+    let url = getApp().API_URL + path;
     if (type) {
         header['content-type'] = content_type[type];
     } else {
         header['content-type'] = content_type[0];
     }
-    wx.request({
+    return wx.pro.request({
         method: 'POST',
         header: header,
         data: param || {},
-        url: url,
-        success: function(res) {
-            // wx.hideLoading();
-            handle(res);
-            if (successFn) {
-                successFn(res.data);
-            }
-        },
-        fail: function(res) {
-            if (failFn) {
-                failFn(res.data);
-            }
-        }
+        url: url
+    }).then(function (res) {
+        handle(res);
+        return res.data;
+    }, function (res) {
+        return res.data;
     })
 }
 
 module.exports = {
-    get: get,
     post: post,
-    put: put,
     del: del,
     upload: upload,
-    nologinpost: nologinpost
+    noLoginPost: noLoginPost
 }

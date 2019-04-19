@@ -1,23 +1,24 @@
 //index.js
 //获取应用实例
-const app = getApp()
+const app = getApp();
 Page({
     data: {
         IMG_URL: app.IMG_URL,
-        rlSucFlag: false
+        rlSucFlag: false,
+        isRefreshing: false
     },
     onLoad(options) {
-        this.param = { page: 1, pageSize: 10 };
+        this.param = {page: 1, pageSize: 10};
         this.setData({
             list: [],
-        })
+        });
         if (options.rlSuc) {
-            this.setData({ rlSucFlag: true })
+            this.setData({rlSucFlag: true})
         }
-        app.aldstat.sendEvent('菜单', { "name": "学有圈" })
+        app.aldstat.sendEvent('菜单', {"name": "学有圈"})
     },
 
-    onShow: function() {
+    onShow: function () {
         if (this.data.rlSucFlag) {
             this.rlSuc()
         } else {
@@ -25,67 +26,62 @@ Page({
         }
 
     },
-    getList(list, callback) {
-        var that = this;
-        var list = list ? list : that.data.list;
-        wx.showNavigationBarLoading()
-        app.circle.news(this.param, function(msg) {
-            wx.hideNavigationBarLoading()
+    getList(list) {
+        let temp = list || this.data.list;
+        wx.showNavigationBarLoading();
+        return app.circle.news(this.param).then((msg) => {
+            wx.hideNavigationBarLoading();
             if (msg.code == 1) {
                 if (msg.data) {
-                    msg.data.forEach(function(item) {
-                        var arr = [];
+                    msg.data.forEach(function (item) {
+                        let arr = [];
                         item.lw = app.util.tow(item.likes);
                         item.cw = app.util.tow(item.comments);
-                        item.images.forEach(function(i) {
+                        item.images.forEach(function (i) {
                             arr.push(i.image)
                         });
                         item.images = arr;
                         item.auditing = ((new Date()).getTime() - new Date(item.createtime * 1000)) < 7000 ? true : false;
                         item.pause = true;
-                        list.push(item);
-                    })
-                    that.setData({
-                        list: list
+                        temp.push(item);
+                    });
+                    this.setData({
+                        list: temp
                     })
                 }
 
             }
-            if (callback) {
-                callback();
-            }
-        }, function() {})
+        })
     },
     praise(e) {
-        var that = this;
-        var i = e.currentTarget.dataset.index;
-        var list = this.data.list;
-        var param = {
+        let i = e.currentTarget.dataset.index;
+        let list = this.data.list;
+        let param = {
             blog_id: list[i].id
-        }
+        };
         if (list[i].likestatus == 1) {
             // 取消点赞
-            app.circle.delPraise(param, function(msg) {
+            app.circle.delPraise(param).then((msg) => {
                 if (msg.code == 1) {
                     list[i].likestatus = 0;
                     list[i].likes--;
-                    that.setData({
+                    this.setData({
                         list: list
                     })
                 }
-            }, function() {})
+            })
         } else {
             // 点赞
-            app.circle.praise(param, function(msg) {
+            app.circle.praise(param).then((msg) => {
                 if (msg.code == 1) {
                     list[i].likestatus = 1;
                     list[i].likes++;
                     list[i].praising = true;
-                    that.setData({
+                    this.setData({
                         list: list
                     })
                 }
-            }, function() {})
+            })
         }
     },
     aniend(e) {
@@ -98,13 +94,13 @@ Page({
     },
     // 加圈
     result(id, data) {
-        var param = {
+        let param = {
             fs_id: id
-        }
-        app.circle.join(param, function(msg) {
+        };
+        app.circle.join(param).then((msg) => {
             if (msg.code == 1) {
-                data.forEach(function(item, index) {
-                    setTimeout(function() {
+                data.forEach(function (item, index) {
+                    setTimeout(() => {
                         wx.showToast({
                             title: '    您已成功加入\r\n【' + item.title + '】学友圈',
                             icon: 'none',
@@ -113,13 +109,20 @@ Page({
                     }, index * 1000 + 500)
                 })
             }
-        }, function() {})
+        })
     },
     // 写帖成功动效
     rlSuc() {
         this.setData({
             rlAni: true
-        })
+        });
+        let timer = setTimeout(() => {
+            this.setData({
+                rlAni: false
+            }, () => {
+                clearTimeout(timer)
+            })
+        }, 1350);
         this.getList([]);
     },
     rlAniend() {
@@ -129,18 +132,17 @@ Page({
     },
     //图片预览
     previewImage(e) {
-        var that = this;
-        var urls = [];
-        var current = {};
-        var urls = e.currentTarget.dataset.urls;
-        var current = e.currentTarget.dataset.current;
-        that.setData({
+        /*todo:考虑去掉that*/
+        let that = this;
+        let urls = e.currentTarget.dataset.urls;
+        let current = e.currentTarget.dataset.current;
+        this.setData({
             preview: true
-        })
+        });
         wx.previewImage({
             current: current,
             urls: urls, // 需要预览的图片http链接列表
-            complete: function() {
+            complete: function () {
                 that.setData({
                     preview: false
                 })
@@ -148,7 +150,7 @@ Page({
         })
     },
     navigate(e) {
-        var id = e.currentTarget.dataset.id;
+        let id = e.currentTarget.dataset.id;
         if (!this.data.preview) {
             wx.navigateTo({
                 url: '../pDetail/pDetail?id=' + id,
@@ -158,8 +160,18 @@ Page({
     //下拉刷新
     onPullDownRefresh() {
         this.param.page = 1;
-        this.getList([], function() {
+        this.setData({
+            isRefreshing: true
+        });
+        this.getList([]).then(() => {
             wx.stopPullDownRefresh();
+            let timer = setTimeout(() => {
+                this.setData({
+                    isRefreshing: false
+                }, () => {
+                    clearTimeout(timer)
+                })
+            }, 1000)
         });
     },
     //上拉加载
@@ -169,6 +181,6 @@ Page({
     },
     //用于数据统计
     onHide() {
-        app.aldstat.sendEvent('退出', { "name": "学友圈页" })
+        app.aldstat.sendEvent('退出', {"name": "学友圈页"})
     }
 })

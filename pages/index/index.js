@@ -6,20 +6,13 @@ Page({
     data: {
         IMG_URL: app.IMG_URL,
         nav: [{ name: '推荐', class: '.recommend' }, { name: '分类', class: '.category' }],
-        height: 0
+        height: 0,
+        navigateTo: false,
+        isRefreshing: false
     },
-    onShow() {
-        var userInfo = wx.getStorageSync('userInfo');
-        if (userInfo) userInfo.address = userInfo.address ? userInfo.address.split(',')[1] : '';
-        this.setData({
-            userInfo: userInfo,
-            navigateTo: false
-        })
-        this.historyParam = { page: 1, pageSize: 10 };
-        this.getHistory([]);
-    },
-    onLoad(options) {
-        var that = this;
+    onLoad() {
+        /*todo:考虑去掉that*/
+        let that = this;
         this.param = { page: 1, pageSize: 10 };
         let reg = /ios/i;
         let pt = 20; //导航状态栏上内边距
@@ -28,12 +21,12 @@ Page({
         pt = systemInfo.statusBarHeight;
         if (!reg.test(systemInfo.system)) {
             h = 48
-        };
-        that.setData({
+        }
+        this.setData({
             top: pt + h,
-        })
+        });
         let windowHeight = systemInfo.windowHeight;
-        let query = wx.createSelectorQuery().in(that);
+        let query = wx.createSelectorQuery().in(this);
         query.select('.top').boundingClientRect();
         query.select('.nav').boundingClientRect();
         query.exec((res) => {
@@ -47,15 +40,41 @@ Page({
             history: {},
             currentTab: 0,
             navScrollLeft: 0,
-        })
+        });
         this.getRecommend();
         this.getCategory();
     },
+    onReady: function() {
+        setTimeout(wx.hideLoading, 500);
+    },
+    onShow() {
+        if (app.globalData.userInfo) {
+            /*login请求先返回*/
+            this.init();
+        } else {
+            /*页面先加载，login请求后返回*/
+            app.userInfoReadyCallback = () => {
+                this.init();
+            };
+        }
+    },
+    init() {
+        let userInfo = wx.getStorageSync('userInfo');
+        userInfo.address = userInfo.address ? userInfo.address.split(',')[1] : '';
+        this.setData({
+            userInfo: userInfo
+        });
+        if (userInfo.mobile) {
+            this.historyParam = { page: 1, pageSize: 10 };
+            this.getHistory([]);
+        }
+    },
     setHeight() {
-        var that = this;
-        var nav = this.data.nav;
-        var currentTab = this.data.currentTab;
-        let query = wx.createSelectorQuery().in(that);
+        /*todo:考虑去掉that*/
+        let that = this;
+        let nav = this.data.nav;
+        let currentTab = this.data.currentTab;
+        let query = wx.createSelectorQuery().in(this);
         query.select(nav[currentTab].class).boundingClientRect();
         query.exec((res) => {
             let height = res[0].height;
@@ -65,107 +84,72 @@ Page({
         });
     },
     switchNav(event) {
-        var cur = event.currentTarget.dataset.current;
-        if (this.data.currentTab == cur) {
-            return false;
-        } else {
+        let cur = event.currentTarget.dataset.current;
+        if (this.data.currentTab !== cur) {
             this.setData({
                 currentTab: cur
             })
         }
-        this.setHeight()
+        this.setHeight();
     },
     switchTab(event) {
-        var cur = event.detail.current;
+        let cur = event.detail.current;
         this.setData({
             currentTab: cur,
-        })
-        this.setHeight()
+        });
+        this.setHeight();
     },
-    getUserInfo(e) {
-        var that = this;
-        if (e.detail.errMsg != 'getUserInfo:ok') return
-        var param = {
-            userInfo: JSON.stringify(e.detail.userInfo),
-            encryptedData: e.detail.encryptedData,
-            iv: e.detail.iv
-        }
-        app.user.profile(param, function(msg) {
-            if (msg.code == 1) {
-                wx.setStorageSync('userInfo', msg.data.userInfo)
-                wx.setStorageSync('visitedNum', [])
-                var userInfo = wx.getStorageSync('userInfo');
-                if (userInfo) userInfo.address = userInfo.address ? userInfo.address.split(',')[1] : '';
-                that.setData({
-                    userInfo: userInfo,
-                })
-            }
-        }, function() {})
-    },
-    getRecommend(list, callback) {
-        var that = this;
-        var recommend = list ? list : that.data.recommend;
-        wx.showNavigationBarLoading()
-        app.classroom.recommend(this.param, function(msg) {
-            wx.hideNavigationBarLoading()
+    getRecommend(list) {
+        let recommend = list || this.data.recommend;
+        wx.showNavigationBarLoading();
+        return app.classroom.recommend(this.param).then((msg) => {
+            wx.hideNavigationBarLoading();
             if (msg.code == 1) {
                 msg.data.forEach(function(item) {
                     item.bw = app.util.tow(item.browse);
                     recommend.push(item);
-                })
-                that.setData({
+                });
+                this.setData({
                     recommend: recommend
                 })
             }
-            that.setHeight()
-            if (callback) {
-                callback();
-            }
-        }, function() {})
+            this.setHeight();
+        })
     },
-    getCategory(list, callback) {
-        var that = this;
-        var category = list ? list : that.data.category;
-        wx.showNavigationBarLoading()
-        app.classroom.category(function(msg) {
-            wx.hideNavigationBarLoading()
+    getCategory(list) {
+        let category = list || this.data.category;
+        wx.showNavigationBarLoading();
+        return app.classroom.category().then((msg) => {
+            wx.hideNavigationBarLoading();
             if (msg.code == 1) {
                 msg.data.forEach(function(item) {
                     category.push(item);
-                })
-                that.setData({
+                });
+                this.setData({
                     category: category
                 })
             }
-            that.setHeight()
-            if (callback) {
-                callback();
-            }
-        }, function() {})
+            this.setHeight();
+        });
     },
-    getHistory(list, callback) {
-        var that = this;
-        var history = that.data.history;
-        var list = list ? list : that.data.history.history;
-        wx.showNavigationBarLoading()
-        app.user.history(this.historyParam, function(msg) {
-            wx.hideNavigationBarLoading()
+    getHistory(list) {
+        let temp = list || this.data.history.history;
+        wx.showNavigationBarLoading();
+        return app.user.history(this.historyParam).then((msg) => {
+            wx.hideNavigationBarLoading();
             if (msg.code == 1) {
                 for (let i in msg.data.history) {
                     msg.data.history[i].forEach(function(item) {
                         item.createtime = app.util.formatTime(new Date(item.createtime * 1000)).slice(10)
-                    })
-                    list.push({ date: i, data: msg.data.history[i] });
+                    });
+                    temp.push({ date: i, data: msg.data.history[i] });
                 }
-                that.setData({
-                    'history.history': list,
+                this.setData({
+                    'history.history': temp,
                     'history.last_lesson': msg.data.last_lesson
                 })
             }
-            if (callback) {
-                callback();
-            }
-        }, function() {})
+        })
     },
     toUser() {
         if (!this.data.navigateTo) {
@@ -177,54 +161,28 @@ Page({
     toInfo() {
         this.setData({
             navigateTo: true
-        })
+        });
         wx.navigateTo({
             url: '../info/info',
         })
     },
     toVideo() {
-        if (!this.data.userInfo.nickname) {
-            wx.showModal({
-                title: '',
-                showCancel: false,
-                content: '您还没有授权，请先授权',
-                success: function(res) {
-                    if (res.confirm) {
-
-                    }
-                }
-            })
-        } else {
-            wx.navigateTo({
-                url: '../video/video',
-            })
-        }
+        wx.navigateTo({
+            url: '../video/video',
+        })
     },
     toPost() {
-        if (!this.data.userInfo.nickname) {
-            wx.showModal({
-                title: '',
-                showCancel: false,
-                content: '您还没有授权，请先授权',
-                success: function(res) {
-                    if (res.confirm) {
-
-                    }
-                }
-            })
-        } else {
-            wx.navigateTo({
-                url: '../post/post',
-            })
-        }
+        wx.navigateTo({
+            url: '../post/post',
+        })
     },
     onPageScroll(e) {
         if (e.scrollTop >= this.headerHeight - this.navHeight) {
-            this.setData({
+            (!this.data.scroll) && this.setData({
                 scroll: true
             })
         } else {
-            this.setData({
+            (this.data.scroll) && this.setData({
                 scroll: false
             })
         }
@@ -232,19 +190,28 @@ Page({
     //下拉刷新
     onPullDownRefresh() {
         this.param.page = 1;
-        this.getRecommend([], function() {
+        this.setData({
+            isRefreshing: true
+        });
+        this.getRecommend([]).then(() => {
             wx.stopPullDownRefresh();
+            let timer = setTimeout(() => {
+                this.setData({
+                    isRefreshing: false
+                }, () => {
+                    clearTimeout(timer)
+                })
+            }, 1000)
         });
         this.getCategory([]);
     },
     //上拉加载
     onReachBottom() {
-        var that = this;
-        var currentTab = this.data.currentTab;
+        let currentTab = this.data.currentTab;
         switch (currentTab) {
             case 0:
-                that.param.page++;
-                that.getRecommend();
+                this.param.page++;
+                this.getRecommend();
                 break;
         }
     },
@@ -285,7 +252,7 @@ Page({
         app.aldstat.sendEvent('退出', { "name": "首页" })
     },
     // 转发
-    onShareAppMessage: function(res) {
+    onShareAppMessage: function() {
         return {
             path: 'pages/index/index'
         }

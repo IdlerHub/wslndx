@@ -1,72 +1,33 @@
 var httpService = require('../utils/service.js');
 
 //POST User/wxlogin 微信登录
-function wxlogin(param, successFn, failFn) {
-    console.log('wx.login')
-    httpService.post('User/wxlogin', param, function(data) {
-        if (successFn) {
-            successFn(data);
-        }
-    }, function(err) {
-        if (failFn) {
-            failFn(err);
-        }
-    }, true);
+function wxLoginCode(param) {
+    console.log('wx.login');
+    return httpService.post('User/wxlogin', param, true);
 }
 
 //POST user/profile 更新用户资料
-function profile(param, successFn, failFn) {
-    httpService.post('User/profile', param, function(data) {
-        if (successFn) {
-            successFn(data);
-        }
-    }, function(err) {
-        if (failFn) {
-            failFn(err);
-        }
-    });
+function profile(param) {
+    return httpService.post('User/profile', param);
 }
 
 //POST User/collect 收藏课程
-function collect(param, successFn, failFn) {
-    httpService.post('User/collect', param, function(data) {
-        if (successFn) {
-            successFn(data);
-        }
-    }, function(err) {
-        if (failFn) {
-            failFn(err);
-        }
-    });
+function collect(param) {
+    return httpService.post('User/collect', param);
 }
+
 //POST User/history 学习历史
-function history(param, successFn, failFn) {
-    httpService.post('User/history', param, function(data) {
-        if (successFn) {
-            successFn(data);
-        }
-    }, function(err) {
-        if (failFn) {
-            failFn(err);
-        }
-    });
+function history(param) {
+    return httpService.post('User/history', param);
 }
 
 //POST area/search 搜索地址和大学
-function search(param, successFn, failFn) {
-    httpService.post('area/search', param, function(data) {
-        if (successFn) {
-            successFn(data);
-        }
-    }, function(err) {
-        if (failFn) {
-            failFn(err);
-        }
-    });
+function search(param) {
+    return httpService.post('area/search', param);
 }
 
 module.exports = {
-    wxlogin: wxlogin,
+    wxLoginCode: wxLoginCode,
     collect: collect,
     history: history,
     search: search,

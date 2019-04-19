@@ -239,7 +239,7 @@
 
 .tabbar {
     position: fixed;
-    height: 180rpx;
+    height: 160rpx;
     width: 100%;
     bottom: 0;
     background: rgba(248, 248, 248, 0.99);

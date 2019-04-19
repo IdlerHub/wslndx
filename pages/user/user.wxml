@@ -28,7 +28,7 @@
       <view class='left'>
         <image class='img' mode='aspectFill' src='{{IMG_URL}}/images/5.png'/>
         <view class='info'>
-          <text class='line name'>微信授权</text>
+          <text class='line name'>{{userInfo.mobile}}</text>
           <view class='line'>
             <text class='city'>暂无</text>
             <view class='school navigator' wx:if="{{!userInfo.university}}"><text class='icon'>+</text>添加学校标签</view>

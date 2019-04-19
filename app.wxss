@@ -1,69 +1,120 @@
 /**app.wxss**/
-page{
-  background: #fff;
-  box-sizing: border-box;
+
+page {
+    background: #fff;
+    box-sizing: border-box;
 }
-.popup{
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background:rgba(0,0,0,0.4);
-  box-sizing: border-box;
-  z-index: 999;
+
+.popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    box-sizing: border-box;
+    z-index: 999;
 }
-.moveIn{animation: moveIn 0.5s ease-out 0s both;}
-.moveOut{
-  pointer-events:none;
-  animation: moveOut 0.5s ease-out 0s both;
+
+.moveIn {
+    animation: moveIn 0.5s ease-out 0s both;
 }
+
+.moveOut {
+    pointer-events: none;
+    animation: moveOut 0.5s ease-out 0s both;
+}
+
 @keyframes moveIn {
-	from{opacity:0;}
-	to{transform:none;opacity:1;}
+    from {
+        opacity: 0;
+    }
+    to {
+        transform: none;
+        opacity: 1;
+    }
 }
+
 @keyframes moveOut {
-	from{transform:scale(1);opacity:1;}
- 	to{opacity:0;}
+    from {
+        transform: scale(1);
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
 }
+
 @keyframes ani {
-  0% {
-    background-position: 0%;
-  }
-  100% {
-    background-position: 100%;
-  }
+    0% {
+        background-position: 0%;
+    }
+    100% {
+        background-position: 100%;
+    }
 }
-button::after{
-  border: none;
+
+button::after {
+    border: none;
 }
-button{
-  outline: none;
-  background-color: none;
-  border: none;
-  border-radius: inherit; 
-  padding: 0;
-  margin: 0;
-  background: none;
+
+button {
+    outline: none;
+    background-color: none;
+    border: none;
+    border-radius: inherit;
+    padding: 0;
+    margin: 0;
+    background: none;
 }
-.line{
-  display: block;
-  overflow: hidden;
-  text-overflow:ellipsis;
-  white-space: nowrap;
+
+.line {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
-.btn-hover{
-  background: none;
+
+.btn-hover {
+    background: none;
 }
+
 .rlAni {
-  position: absolute;
-  top:50%;
-  bottom: 0;
-  left:0;
-  right: 0;
-  margin: -500rpx auto 0;
-  width: 750rpx;
-  height: 800rpx;
-  background-size: cover;
-  animation: ani steps(22) 1.8s both;
+    position: absolute;
+    top: 50%;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: -500rpx auto 0;
+    width: 750rpx;
+    height: 950rpx;
+    background-size: cover;
+    animation: ani steps(22) 1.8s both;
+}
+
+
+/* 下拉刷新 */
+
+.weui-loadmore {
+    width: 100%;
+    height: 100rpx;
+    font-size: 30rpx;
+    text-align: center;
+    margin: 0rpx auto;
+    padding-top: 30rpx;
+    background: #eee;
+}
+
+.weui-loading {
+    width: 60rpx;
+    height: 50rpx;
+    display: block;
+    margin: 0rpx auto;
+    background: transparent url('https://jinling-xcx-dev.obs.cn-north-1.myhuaweicloud.com/images/pulldownrefresh.gif') no-repeat;
+    background-size: 100%;
+}
+
+.weui-loadmore-tips {
+    display: inline-block;
+    vertical-align: middle;
 }

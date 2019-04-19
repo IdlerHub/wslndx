@@ -1,0 +1,6 @@
+<!--pages/login/login.wxml-->
+<view class="container">
+    <image src="/images/logo.png" class="logo"></image>
+    <text class="logo-title">网上老年大学</text>
+    <button open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber" class="authorize-phone">微信授权登录</button>
+</view>

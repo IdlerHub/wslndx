@@ -85,7 +85,7 @@
 
 .synopsis {
     margin-top: 20rpx;
-    font-size: 30rpx;
+    font-size: 36rpx;
     color: #FFFFFF;
     line-height: 42rpx;
     overflow: hidden;

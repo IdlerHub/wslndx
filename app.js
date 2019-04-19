@@ -1,9 +1,15 @@
 //base64 
 import { Base64 } from 'utils/base64.js';
-const ald = require('./utils/ald-stat.js')
-    //app.js  
+/*添加async await*/
+import regeneratorRuntime from 'wx-promise-pro';
+/*添加微信官方接口转化为promise*/
+const wxpro = require('wx-promise-pro');
+/*埋点统计*/
+const ald = require('./utils/ald-stat.js');
+
+//app.js
 App({
-    API_URL: 'https://develop.jinlingkeji.cn/api/v1/', //正式域名：https://api.jinlingkeji.cn   开发域名：https://develop.jinlingkeji.cn
+    API_URL: 'https://develop.jinlingkeji.cn/api/v1/', //正式域名：https://admin.jinlingkeji.cn   开发域名：https://develop.jinlingkeji.cn
     IMG_URL: 'https://develop.jinlingkeji.cn/uploads',
     //工具库
     util: require('utils/util.js'),
@@ -15,70 +21,80 @@ App({
     circle: require('data/Circle.js'),
     // Base64
     base64: Base64,
-    data: {
-
-    },
-    onLaunch: function() {
-        if (wx.getStorageSync('token')) return;
-        this.wxLogin();
-    },
-    wxLogin() {
-        var that = this;
-        wx.login({
-            success: res => {
-                // 微信code登录
-                var code = {
-                    code: res.code,
-                }
-                that.user.wxlogin(code, function(msg) {
-                    if (msg.code == 1) {
-                        wx.setStorageSync('token', msg.data.token)
-                        wx.setStorageSync('uid', msg.data.uid)
-                        wx.setStorageSync('userInfo', msg.data.userInfo)
-                        var pages = getCurrentPages();
-                        var prePage = pages[pages.length - 1];
-                        prePage.onShow();
-                        prePage.onLoad();
-                    }
-                }, function() {})
+    data: {},
+    onLaunch: async function() {
+        let userInfo = wx.getStorageSync('userInfo');
+        if (!!userInfo.mobile) {
+            this.globalData.userInfo = userInfo;
+            wx.reLaunch({ url: '/pages/index/index' });
+        } else {
+            await this.wxLogin();
+            if (!this.globalData.userInfo.mobile) {
+                wx.reLaunch({ url: '/pages/login/login' });
+            } else {
+                wx.reLaunch({ url: '/pages/index/index' });
             }
-        })
-    },
-    //获取电话号码
-    phone(e, page) {
-        var page = page;
-        if (e.detail.errMsg != 'getPhoneNumber:ok') { page.setData({ phoneMask: true }); return; }
-        var param = {
-            mobileEncryptedData: e.detail.encryptedData,
-            mobileiv: e.detail.iv
         }
-        this.user.profile(param, function(msg) {
-            if (msg.code == 1) {
-                wx.setStorageSync('userInfo', msg.data.userInfo)
-                page.setData({
-                    phoneMask: false
-                })
+    },
+    wxLogin: async function() {
+        await wx.pro.login({}).then((res) => {
+            this.globalData.code = res.code;
+        });
+        await this.user.wxLoginCode({ code: this.globalData.code }).then((msg) => {
+            if (msg.code === 1) {
+                wx.setStorageSync('token', msg.data.token);
+                wx.setStorageSync('uid', msg.data.uid);
+                wx.setStorageSync('userInfo', msg.data.userInfo);
+                this.globalData.userInfo = msg.data.userInfo;
+                if (this.userInfoReadyCallback) {
+                    this.userInfoReadyCallback()
+                }
             }
-        }, function() {})
+        });
     },
     addVisitedNum: function(id) {
-        var that = this;
-        var userInfo = wx.getStorageSync('userInfo');
-        if (!userInfo.mobile) {
-            var arr = wx.getStorageSync('visitedNum') ? wx.getStorageSync('visitedNum') : [];
+        let userInfo = wx.getStorageSync('userInfo');
+        if (!userInfo.nickname) {
+            let arr = wx.getStorageSync('visitedNum') ? wx.getStorageSync('visitedNum') : [];
             if (arr.indexOf(id) == -1) {
-                arr.push(id)
+                arr.push(id);
                 wx.setStorageSync('visitedNum', arr)
             }
         }
     },
-    //判断是否显示获取电话授权弹框
-    PhoneMask: function(page) {
-        var that = page;
-        var visitedNum = wx.getStorageSync('visitedNum');
-        var userInfo = wx.getStorageSync('userInfo')
-        if (visitedNum.length > 10 && !userInfo.mobile) {
-            that.setData({ phoneMask: true })
+    updateBase(e, page) {
+        if (e.detail.errMsg != 'getUserInfo:ok') {
+            page.setData({ phoneMask: true });
+            return;
         }
+        let param = {
+            userInfo: JSON.stringify(e.detail.userInfo),
+            encryptedData: e.detail.encryptedData,
+            iv: e.detail.iv
+        };
+        this.user.profile(param).then((msg) => {
+            if (msg.code == 1) {
+                wx.setStorageSync('userInfo', msg.data.userInfo);
+                let userInfo = msg.data.userInfo;
+                if (userInfo) userInfo.address = userInfo.address ? userInfo.address.split(',')[1] : '';
+                page.setData({
+                    userInfo: userInfo,
+                    baseInfo: false
+                })
+            }
+        })
+    },
+    baseInfo: function(page) {
+        let visitedNum = wx.getStorageSync('visitedNum');
+        let userInfo = wx.getStorageSync('userInfo');
+        if (visitedNum.length > 10 && !userInfo.nickname) {
+            page.setData({ baseInfo: true })
+        }
+    },
+    globalData: {
+        /*wx.login 返回值 code */
+        code: null,
+        /* 登录用户信息 */
+        userInfo: null,
     }
-})
+});

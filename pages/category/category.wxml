@@ -1,4 +1,9 @@
 <view class="container">
+    <!-- 下拉刷新 -->
+    <view wx:if="{{isRefreshing}}" class='weui-loadmore'>
+        <view class='weui-loading'></view>
+        <view class='weui-loadmore-tips'>加载中...</view>
+    </view>
     <view class='top'>
         <image class='img' mode='aspectFill' src='{{options.img}}' />
     </view>

@@ -1,0 +1,17 @@
+.DS_Store
+node_modules/
+/dist/
+demo/
+miniprogram_npm/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+temp.js
+
+# Editor directories and files
+.idea
+.vscode
+*.suo
+*.ntvs*
+*.njsproj
+*.sln

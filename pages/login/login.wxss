@@ -1,0 +1,30 @@
+/* pages/login/login.wxss */
+
+.container {
+    text-align: center;
+    padding: 100rpx 0;
+}
+
+.logo {
+    width: 74px;
+    height: 74px;
+    margin-bottom: 30rpx;
+}
+
+.logo-title {
+    display: block;
+    font-size: 44rpx;
+    color: #3a3a3a;
+    letter-spacing: 1rpx;
+}
+
+
+.authorize-phone {
+    margin: 400rpx  40rpx  0;
+    border-radius: 4rpx;
+    background: #4ba82d;
+    font-size: 36rpx;
+    font-weight: bold;
+    color: white;
+    padding: 10rpx;
+}
