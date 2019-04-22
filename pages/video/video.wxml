@@ -2,8 +2,8 @@
     <video id="myVideo" src="{{cur.url}}" controls="{{false}}" show-center-play-btn="{{false}}" object-fit="fill" page-gesture autoplay loop> 
   <!-- 返回首页 -->
   <cover-view class='back' wx:if="{{back}}" bindtap='back'><cover-image mode='aspectFill' src="{{IMG_URL}}/images/back.png" class='icon'></cover-image><cover-view>首页</cover-view></cover-view>
-  <!-- 功能 -->
-  <cover-view class='bg' style="{{baseInfo ? 'z-index: 10;': 'z-index: 2'}}">
+  <!-- 功能  滑动监听 及 微信授权 -->
+  <cover-view wx:if='{{cur}}' class='bg' style="{{baseInfo ? 'z-index: 10;': 'z-index: 2'}}">
     <cover-view  bindtap="tap" bindtouchstart="scrollTouchStart" bindtouchend="scrollTouchEnd" wx:if="{{!baseInfo}}" class="tapbg"></cover-view>
    <cover-view class="getPhone-mask" wx:if="{{baseInfo}}">
       <cover-view class="phone-box">
@@ -13,17 +13,17 @@
       </cover-view>
     </cover-view>  
   </cover-view>
-  <!-- <cover-view wx:if="{{loading}}" class='loading'>正在加载中...</cover-view> -->
   <cover-image wx:if="{{pause}}" mode='aspectFill' src="{{IMG_URL}}/images/play-hl.png" class="pause" bindtap='tap'></cover-image>
-  <!-- 信息 -->
-  <cover-image mode='aspectFill' src="{{IMG_URL}}/images/mask.png" class='mask'></cover-image>
-  <cover-view class='info'>
-    <!-- <cover-view class='name'>{{cur.title}}</cover-view> -->
+  <!-- 信息 底部视频描述-->
+  <cover-view wx:if='{{cur}}' class='info'>
     <cover-view class='synopsis'>{{cur.intro_content}}</cover-view>
   </cover-view>
   <!-- 操作 -->
-  <cover-image wx:if="{{cur.fs_image}}" mode='aspectFill' src="{{cur.fs_image}}" class="cimg" bindtap='navigate'></cover-image>
-  <cover-view wx:if="{{cur.fs_joined==0 && cur.fs_image}}" class="join" bindtap='join'>+</cover-view>
+  <cover-view wx:if="{{cur.fs_image}}" class="cimg">
+      <cover-image  mode='aspectFill' src="{{cur.fs_image}}" bindtap='navigate' class="img" ></cover-image>
+      <cover-view wx:if="{{cur.fs_joined==0 && cur.fs_image}}" class="join" bindtap='join'>+</cover-view>
+  </cover-view>
+  
   <cover-view class='praise' bindtap='praise'>
     <cover-view class="icon" style="{{cur.praising ? 'visibility: hidden;' :''}}">
       <cover-image wx:if="{{cur.praised==0}}" mode='aspectFill' src="{{IMG_URL}}/images/heart.png"></cover-image>
@@ -32,19 +32,19 @@
     <cover-view wx:if="{{!cur.pw}}" class='text'>{{cur.praise}}</cover-view>
     <cover-view wx:if="{{cur.pw}}" class='text'>{{cur.pw}}万</cover-view>
   </cover-view>
-  <button class='share' open-type="share" hover-class="btn-hover">
-    <cover-image mode='aspectFill' src="{{IMG_URL}}/images/share.png" class="icon"></cover-image>
-    <cover-view wx:if="{{!cur.fw}}" class='text'>{{cur.forward}}</cover-view>
-    <cover-view wx:if="{{cur.fw}}" class='text'>{{cur.fw}}万</cover-view>
-  </button>
+  <cover-view class='share'>
+    <button open-type="share" hover-class="btn-hover">
+        <cover-image mode='aspectFill' src="{{IMG_URL}}/images/share.png" class="icon"></cover-image>
+        <cover-view wx:if="{{!cur.fw}}" class='text'>{{cur.forward}}</cover-view>
+        <cover-view wx:if="{{cur.fw}}" class='text'>{{cur.fw}}万</cover-view>
+      </button>
+  </cover-view>
   <cover-view class='complete' bindtap='complete' wx:if="{{cur.target_id}}">
     <cover-image mode='aspectFill' src="{{IMG_URL}}/images/video-white.png" class="icon"></cover-image>
     <cover-view class='text'>完整视频</cover-view>
   </cover-view>
- 
 </video>
     <view wx:if="{{cur.praising}}" class='praising'>
         <view class='ani' bindanimationend="aniend" data-index='{{index}}' style='background-image: url({{IMG_URL}}/images/heart-ani.png)'></view>
     </view>
-
 </view>

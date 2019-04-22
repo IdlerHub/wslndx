@@ -4,6 +4,10 @@
     overflow: hidden;
 }
 
+.top .authorize {
+    overflow: initial;
+}
+
 .top .bg {
     position: absolute;
     left: -25rpx;
@@ -252,6 +256,7 @@
 
 .tabbar .item {
     text-align: center;
+    line-height: 24rpx;
 }
 
 .tabbar .icon {

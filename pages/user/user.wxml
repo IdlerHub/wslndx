@@ -23,10 +23,10 @@
         </view>
     </navigator>
     <button class='top' wx:if="{{!userInfo.nickname}}" hover-class="none" open-type="getUserInfo" bindgetuserinfo="getUserInfo">
-    <image class='bg' mode='widthFix' src='{{IMG_URL}}/images/5.png'/>
+    <image class='bg' mode='widthFix' src='/images/5.png'/>
     <view class='box'>
       <view class='left'>
-        <image class='img' mode='aspectFill' src='{{IMG_URL}}/images/5.png'/>
+        <image class='img' mode='aspectFill' src='/images/portrait.jpg'/>
         <view class='info'>
           <text class='line name'>{{userInfo.mobile}}</text>
           <view class='line'>

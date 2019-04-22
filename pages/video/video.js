@@ -5,7 +5,27 @@ Page({
     data: {
         IMG_URL: app.IMG_URL,
         list: [],
-        baseInfo: false
+        baseInfo: false,
+    },
+    onLoad(options) {
+        this.videoContext = wx.createVideoContext('myVideo');
+        this.param = { id: options.id ? options.id : '', page: 1, pageSize: 10 };
+        let pages = getCurrentPages();
+        let prePage = pages[pages.length - 2];
+        if (!prePage) {
+            this.setData({
+                back: true
+            });
+        }
+        this.getList([]).then(() => {
+            this.setData({
+                cur: this.data.list[0],
+                index: 0
+            });
+            app.addVisitedNum(`v${this.data.cur.id}`);
+            app.aldstat.sendEvent('短视频播放', { "name": this.data.cur.title })
+        })
+        app.aldstat.sendEvent('菜单', { "name": "短视频" })
     },
     onShow() {
         let userInfo = wx.getStorageSync('userInfo');
@@ -28,25 +48,8 @@ Page({
         }
         if (!this.data.back) app.baseInfo(this);
     },
-    onLoad(options) {
-        this.videoContext = wx.createVideoContext('myVideo');
-        this.param = { id: options.id ? options.id : '', page: 1, pageSize: 10 };
-        let pages = getCurrentPages();
-        let prePage = pages[pages.length - 2];
-        if (!prePage) {
-            this.setData({
-                back: true
-            });
-        }
-        this.getList([]).then(() => {
-            this.setData({
-                cur: this.data.list[0],
-                index: 0
-            })
-            app.addVisitedNum(`v${this.data.cur.id}`);
-            app.aldstat.sendEvent('短视频播放', { "name": this.data.cur.title })
-        })
-        app.aldstat.sendEvent('菜单', { "name": "短视频" })
+    onReady() {
+        console.log('ready ok');
     },
     getList(list) {
         let temp = list || this.data.list;

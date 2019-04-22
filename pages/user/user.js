@@ -4,16 +4,8 @@ const app = getApp()
 Page({
     data: {
         IMG_URL: app.IMG_URL,
-        nav: [{name: '收藏课程'}, {name: '学习历史'}, {name: '我的圈子'}],
+        nav: [{ name: '收藏课程' }, { name: '学习历史' }, { name: '我的圈子' }],
         height: 0
-    },
-    onShow() {
-        var userInfo = wx.getStorageSync('userInfo');
-        if (userInfo) userInfo.address = userInfo.address ? userInfo.address.split(',')[1] : '';
-        this.setData({
-            userInfo: userInfo,
-        })
-
     },
     onLoad() {
         /*todo:去掉that*/
@@ -38,10 +30,28 @@ Page({
             currentTab: 0,
             navScrollLeft: 0,
         });
-        this.collectParam = this.historyParam = this.circleParam = {page: 1, pageSize: 10};
+        this.collectParam = this.historyParam = this.circleParam = { page: 1, pageSize: 10 };
         this.getCollect([]);
         this.getHistory([]);
         this.getCircle([]);
+    },
+    onShow() {
+        if (app.globalData.userInfo.nickname) {
+            /*updateBase请求先返回*/
+            this.init();
+        } else {
+            /*页面先加载，login请求后返回*/
+            app.userInfoReadyCallback = () => {
+                this.init();
+            };
+        };
+    },
+    init() {
+        var userInfo = wx.getStorageSync('userInfo');
+        if (userInfo) userInfo.address = userInfo.address ? userInfo.address.split(',')[1] : '';
+        this.setData({
+            userInfo: userInfo,
+        })
     },
     switchNav(event) {
         let cur = event.currentTarget.dataset.current;
@@ -79,7 +89,7 @@ Page({
         return app.user.collect(this.collectParam).then((msg) => {
             wx.hideNavigationBarLoading();
             if (msg.code == 1) {
-                msg.data.forEach(function (item) {
+                msg.data.forEach(function(item) {
                     item.thousand = (item.browse / 10000) > 1 ? (item.browse / 10000).toFixed(1) : null;
                     collect.push(item);
                 });
@@ -96,10 +106,10 @@ Page({
             wx.hideNavigationBarLoading();
             if (msg.code == 1) {
                 for (let i in msg.data.history) {
-                    msg.data.history[i].forEach(function (item) {
+                    msg.data.history[i].forEach(function(item) {
                         item.createtime = app.util.formatTime(new Date(item.createtime * 1000)).slice(10)
                     });
-                    temp.push({date: i, data: msg.data.history[i]});
+                    temp.push({ date: i, data: msg.data.history[i] });
                 }
                 this.setData({
                     'history.history': temp,
@@ -117,9 +127,9 @@ Page({
             wx.hideNavigationBarLoading();
             if (msg.code == 1) {
                 if (msg.data) {
-                    msg.data.forEach(function (item) {
+                    msg.data.forEach(function(item) {
                         let arr = [];
-                        item.images.forEach(function (i) {
+                        item.images.forEach(function(i) {
                             arr.push(i.image)
                         });
                         item.images = arr;
@@ -220,6 +230,6 @@ Page({
     },
     //用于数据统计
     onHide() {
-        app.aldstat.sendEvent('退出', {"name": "个人中心页"})
+        app.aldstat.sendEvent('退出', { "name": "个人中心页" })
     }
 })

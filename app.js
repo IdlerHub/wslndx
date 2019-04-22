@@ -46,9 +46,6 @@ App({
                 wx.setStorageSync('uid', msg.data.uid);
                 wx.setStorageSync('userInfo', msg.data.userInfo);
                 this.globalData.userInfo = msg.data.userInfo;
-                if (this.userInfoReadyCallback) {
-                    this.userInfoReadyCallback()
-                }
             }
         });
     },
@@ -64,7 +61,7 @@ App({
     },
     updateBase(e, page) {
         if (e.detail.errMsg != 'getUserInfo:ok') {
-            page.setData({ phoneMask: true });
+            page.setData({ baseInfo: true });
             return;
         }
         let param = {
@@ -74,13 +71,17 @@ App({
         };
         this.user.profile(param).then((msg) => {
             if (msg.code == 1) {
+                this.globalData.userInfo = msg.data.userInfo;
                 wx.setStorageSync('userInfo', msg.data.userInfo);
                 let userInfo = msg.data.userInfo;
                 if (userInfo) userInfo.address = userInfo.address ? userInfo.address.split(',')[1] : '';
                 page.setData({
                     userInfo: userInfo,
                     baseInfo: false
-                })
+                });
+                if (this.userInfoReadyCallback) {
+                    this.userInfoReadyCallback()
+                }
             }
         })
     },

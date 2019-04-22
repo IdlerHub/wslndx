@@ -7,7 +7,6 @@ Page({
         IMG_URL: app.IMG_URL,
         nav: [{ name: '推荐', class: '.recommend' }, { name: '分类', class: '.category' }],
         height: 0,
-        navigateTo: false,
         isRefreshing: false
     },
     onLoad() {
@@ -48,19 +47,14 @@ Page({
         setTimeout(wx.hideLoading, 500);
     },
     onShow() {
-        if (app.globalData.userInfo) {
-            /*login请求先返回*/
-            this.init();
-        } else {
-            /*页面先加载，login请求后返回*/
-            app.userInfoReadyCallback = () => {
-                this.init();
-            };
-        }
+        this.init();
     },
     init() {
         let userInfo = wx.getStorageSync('userInfo');
+        /* 地区格式化 */
         userInfo.address = userInfo.address ? userInfo.address.split(',')[1] : '';
+        /* 电话号码隐藏 */
+        userInfo.telShow = userInfo.mobile.substr(0, 3) + '****' + userInfo.mobile.substr(7, 4);
         this.setData({
             userInfo: userInfo
         });
@@ -152,16 +146,11 @@ Page({
         })
     },
     toUser() {
-        if (!this.data.navigateTo) {
-            wx.navigateTo({
-                url: '../user/user',
-            })
-        }
+        wx.navigateTo({
+            url: '../user/user',
+        })
     },
     toInfo() {
-        this.setData({
-            navigateTo: true
-        });
         wx.navigateTo({
             url: '../info/info',
         })
@@ -257,4 +246,16 @@ Page({
             path: 'pages/index/index'
         }
     },
+    // 用户昵称等信息授权
+    onGotUserInfo(e) {
+        if (e.detail.errMsg === "getUserInfo:ok") {
+            app.updateBase(e, this);
+            if (e.currentTarget.dataset.role == 'user') {
+                this.toUser();
+            } else {
+                this.toPost();
+            }
+
+        }
+    }
 })

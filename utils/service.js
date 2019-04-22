@@ -11,13 +11,15 @@ let header = {
 function handle(res) {
     switch (res.statusCode) {
         case 401:
+            wx.clearStorage();
+            getApp().wxLogin();
             wx.showModal({
                 title: '',
                 content: '当前身份已过期',
                 showCancel: false,
-                success: function (val) {
+                success: function(val) {
                     if (val.confirm) {
-                        getApp().wxLogin()
+                        wx.reLaunch({ url: '/pages/login/login' });
                     }
                 }
             });
@@ -41,13 +43,15 @@ function handle(res) {
     switch (res.data.code) {
         case -1:
             // 重新登录
+            wx.clearStorage();
             getApp().wxLogin();
+            wx.reLaunch({ url: '/pages/login/login' });
             break;
     }
 };
 
 // post  return  promise
-function post(path, param, noToken, type) {
+function post(path, param = {}, noToken, type) {
     let url = getApp().API_URL + path;
     if (!noToken) {
         let token = wx.getStorageSync('token');
@@ -66,10 +70,10 @@ function post(path, param, noToken, type) {
         header: header,
         data: param || {},
         url: url
-    }).then(function (res) {
+    }).then(function(res) {
         handle(res);
         return res.data;
-    }, function (res) {
+    }, function(res) {
         return res.data;
     })
 }
@@ -94,10 +98,10 @@ function del(path, param, noToken, type) {
         header: header,
         url: url,
         data: param || {}
-    }).then(function (res) {
+    }).then(function(res) {
         handle(res);
         return res.data;
-    }, function (res) {
+    }, function(res) {
         return res.data;
     })
 }
@@ -117,11 +121,11 @@ function upload(path, file, noLoading) {
         header: header,
         name: 'file',
         formData: {}
-    }).then(function (res) {
+    }).then(function(res) {
         if (!noLoading) wx.hideLoading();
         handle(res);
         return res.data;
-    }, function (res) {
+    }, function(res) {
         return res.data;
     })
 }
@@ -140,10 +144,10 @@ function noLoginPost(path, param, noToken, type) {
         header: header,
         data: param || {},
         url: url
-    }).then(function (res) {
+    }).then(function(res) {
         handle(res);
         return res.data;
-    }, function (res) {
+    }, function(res) {
         return res.data;
     })
 }

@@ -61,7 +61,7 @@
             <text class='icon'>+</text>
             <text class='text'>加圈</text>
         </navigator>
-        <navigator url='../release/release' hover-class="none" open-type="navigate" class='write'>
+        <navigator url="/pages/release/release" hover-class="none" open-type="navigate" class='write'>
             <image mode='aspectFill' class='icon' src='{{IMG_URL}}/images/write.png'></image>
             <text class='text'>写帖</text>
         </navigator>

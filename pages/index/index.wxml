@@ -5,23 +5,40 @@
         <view class='weui-loadmore-tips'>加载中...</view>
     </view>
     <view class='top'>
-        <view bindtap='toUser'>
-            <image class='bg' mode='widthFix' src='{{userInfo.avatar || "/images/5.png"}}' />
+        <view wx:if="{{userInfo.nickname}}" bindtap='toUser'>
+            <image class='bg' mode='widthFix' src='{{userInfo.avatar}}' />
             <view class='box'>
                 <view class='left'>
-                    <image class='img' mode='aspectFill' src='{{userInfo.avatar || "/images/5.png"}}' />
+                    <image class='img' mode='aspectFill' src='{{userInfo.avatar}}' />
                     <view class='info'>
-                        <text class='line name'>{{userInfo.nickname||userInfo.mobile}}</text>
+                        <text class='line name'>{{userInfo.nickname}}</text>
                         <view class='line'>
-                            <view class='city' bindtap='toInfo'>{{userInfo.address?userInfo.address:'暂无'}}</view>
-                            <view class='school' bindtap='toInfo' wx:if="{{!userInfo.university}}"><text class='icon'>+</text>添加学校标签</view>
-                            <view class='school' bindtap='toInfo' wx:if="{{userInfo.university}}">{{userInfo.university}}</view>
+                            <view class='city' catchtap='toInfo'>{{userInfo.address?userInfo.address:'暂无'}}</view>
+                            <view class='school' catchtap='toInfo' wx:if="{{userInfo.university}}">{{userInfo.university}}</view>
+                            <view class='school' catchtap='toInfo' wx:else><text class='icon'>+</text>添加学校标签</view>
                         </view>
                     </view>
                 </view>
                 <image class='right' mode='aspectFill' src='{{IMG_URL}}/images/Return.png' />
             </view>
         </view>
+        <button class="authorize" wx:else open-type="getUserInfo" bindgetuserinfo="onGotUserInfo" data-role="user">
+            <image class='bg' mode='widthFix' src="/images/5.png" />
+            <view class='box'>
+                <view class='left'>
+                    <image class='img' mode='aspectFill' src="/images/portrait.jpg" />
+                    <view class='info'>
+                        <text class='line name'>{{userInfo.telShow}}</text>
+                        <view class='line'>
+                            <view class='city' catchtap='toInfo'>{{userInfo.address?userInfo.address:'暂无'}}</view>
+                            <view class='school' catchtap='toInfo' wx:if="{{userInfo.university}}">{{userInfo.university}}</view>
+                            <view class='school' catchtap='toInfo' wx:else><text class='icon'>+</text>添加学校标签</view>
+                        </view>
+                    </view>
+                </view>
+                <image class='right' mode='aspectFill' src='{{IMG_URL}}/images/Return.png' />
+            </view>
+        </button>
     </view>
     <navigationBar wx:if="{{scroll}}" id="navigationBar" placeholderBg="#F8F8F8" color="#000000" title="网上老年大学" back="{{false}}" background="#F8F8F8"></navigationBar>
     <scroll-view scroll-x="true" class="nav {{scroll?'fixed':''}}" style='top:{{top}}px' scroll-left="{{navScrollLeft}}" scroll-with-animation="{{true}}">
@@ -77,7 +94,11 @@
             <image class='icon' mode='aspectFill' src='{{IMG_URL}}/images/video.png' />
             <text class='name'>短视频</text>
         </view>
-        <view bindtap='toPost' class='item'>
+        <button wx:if="{{!userInfo.nickname}}" class='item' open-type="getUserInfo" bindgetuserinfo="onGotUserInfo" data-role="post">
+            <image mode='aspectFill' class='icon' src='{{IMG_URL}}/images/circle.png'></image>
+            <text class='name'>学友圈</text>
+        </button>
+        <view wx:else bindtap='toPost' class='item'>
             <image class='icon' mode='aspectFill' src='{{IMG_URL}}/images/circle.png' />
             <text class='name'>学友圈</text>
         </view>
