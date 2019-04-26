@@ -15,8 +15,9 @@ Page({
     // 绘制证书
     draw() {
         let userInfo = this.data.userInfo;
+        userInfo.nickname = userInfo.nickname || '如此优秀的你';
         let course = this.data.course;
-        this.context = wx.createCanvasContext('myCanvas');
+        this.context = wx.createCanvasContext('myCanvas', this);
         let r = wx.getSystemInfoSync().windowWidth / 750;
         // 背景图
         this.context.drawImage('../../images/certificate.png', 0, 0, 670 * r, 500 * r);
@@ -43,7 +44,7 @@ Page({
                         img: res.tempFilePath
                     })
                 },
-                fail(res) {
+                fail: (res) => {
                     console.log(res)
                 }
             })
@@ -67,7 +68,7 @@ Page({
         })
     },
     // 转发
-    onShareAppMessage: function () {
+    onShareAppMessage: function() {
         return {
             title: '网上老年大学',
             imageUrl: this.data.img,

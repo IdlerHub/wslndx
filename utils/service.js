@@ -13,16 +13,16 @@ function handle(res) {
         case 401:
             wx.clearStorage();
             getApp().wxLogin();
-            wx.showModal({
-                title: '',
-                content: '当前身份已过期',
-                showCancel: false,
-                success: function(val) {
-                    if (val.confirm) {
-                        wx.reLaunch({ url: '/pages/login/login' });
-                    }
-                }
-            });
+            /*   wx.showModal({
+                  title: '',
+                  content: '当前身份已过期',
+                  showCancel: false,
+                  success: function(val) {
+                      if (val.confirm) {
+                          wx.reLaunch({ url: '/pages/index/index' });
+                      }
+                  }
+              }); */
             break;
         case 404:
             wx.showToast({
@@ -45,7 +45,6 @@ function handle(res) {
             // 重新登录
             wx.clearStorage();
             getApp().wxLogin();
-            wx.reLaunch({ url: '/pages/login/login' });
             break;
     }
 };

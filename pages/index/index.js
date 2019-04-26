@@ -116,11 +116,8 @@ Page({
         return app.classroom.category().then((msg) => {
             wx.hideNavigationBarLoading();
             if (msg.code == 1) {
-                msg.data.forEach(function(item) {
-                    category.push(item);
-                });
                 this.setData({
-                    category: category
+                    category: category.concat(msg.data)
                 })
             }
             this.setHeight();

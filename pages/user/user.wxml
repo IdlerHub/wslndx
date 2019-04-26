@@ -142,6 +142,6 @@
         </swiper-item>
     </swiper>
     <view class='popup' wx:if="{{rlAni}}">
-        <view class='rlAni' bindanimationend="rlAniend" style='background-image: url(https://bogole.com/project/d19030901/images/release-ani.png)'></view>
+        <view class="publishAni"></view>
     </view>
 </view>

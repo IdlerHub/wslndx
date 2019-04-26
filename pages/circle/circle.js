@@ -6,7 +6,7 @@ Page({
         IMG_URL: app.IMG_URL,
         isEdit: false
     },
-    onLoad() {
+    onShow() {
         this.getList();
     },
     getList() {
@@ -29,11 +29,10 @@ Page({
         });
         wx.hideNavigationBarLoading()
     },
-
     //加入加圈
     fnJoin(e) {
         let curItem = e.currentTarget.dataset.item;
-        let param = {fs_id: curItem.id};
+        let param = { fs_id: curItem.id };
         app.circle.join(param).then((msg) => {
             if (msg.code === 1) {
                 wx.showToast({
@@ -49,7 +48,7 @@ Page({
     //取消加圈
     fnCancelJoin(e) {
         let curItem = e.currentTarget.dataset.item;
-        let param = {fs_id: curItem.id};
+        let param = { fs_id: curItem.id };
         app.circle.cancelJoin(param).then((msg) => {
             if (msg.code == 1) {
                 wx.showToast({
@@ -63,7 +62,7 @@ Page({
     },
 
     //编辑
-    fnEdit: function () {
+    fnEdit: function() {
         this.setData({
             isEdit: !this.data.isEdit
         })
@@ -74,6 +73,6 @@ Page({
         });
     },
     onHide() {
-        app.aldstat.sendEvent('退出', {"name": "加圈页"})
+        app.aldstat.sendEvent('退出', { "name": "加圈页" })
     }
 })

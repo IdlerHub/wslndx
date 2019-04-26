@@ -11,7 +11,6 @@ page {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.4);
     box-sizing: border-box;
     z-index: 999;
 }
@@ -79,42 +78,53 @@ button {
     background: none;
 }
 
-.rlAni {
+
+/* 下拉刷新 */
+
+.weui-loadmore {
+    width: 100%;
+    height: 50px;
+    font-size: 30rpx;
+    text-align: center;
+    margin: 0rpx auto;
+    padding-top: 20rpx;
+    padding-bottom: 20rpx;
+    background: #eee;
+}
+
+.weui-loadmore.indexdrop {
+    padding-top: 60rpx;
+}
+
+.weui-loading {
+    display: block;
+    width: 131rpx;
+    height: 100rpx;
+    margin: 0rpx auto;
+    background-image: url('https://jinling-xcx-dev.obs.cn-north-1.myhuaweicloud.com/images/refresh.png');
+    background-size: cover;
+    animation: ani 1s steps(15, end) infinite;
+}
+
+
+/* .weui-loadmore-tips {
+    display: inline-block;
+    vertical-align: middle;
+} */
+
+
+/* 发布动画 */
+
+.publishAni {
     position: absolute;
     top: 50%;
     bottom: 0;
     left: 0;
     right: 0;
     margin: -500rpx auto 0;
-    width: 750rpx;
-    height: 950rpx;
+    background-image: url('https://jinling-xcx-dev.obs.cn-north-1.myhuaweicloud.com/images/fabu.png');
     background-size: cover;
-    animation: ani steps(22) 1.8s both;
-}
-
-
-/* 下拉刷新 */
-
-.weui-loadmore {
-    width: 100%;
-    height: 100rpx;
-    font-size: 30rpx;
-    text-align: center;
-    margin: 0rpx auto;
-    padding-top: 30rpx;
-    background: #eee;
-}
-
-.weui-loading {
-    width: 60rpx;
-    height: 50rpx;
-    display: block;
-    margin: 0rpx auto;
-    background: transparent url('https://jinling-xcx-dev.obs.cn-north-1.myhuaweicloud.com/images/pulldownrefresh.gif') no-repeat;
-    background-size: 100%;
-}
-
-.weui-loadmore-tips {
-    display: inline-block;
-    vertical-align: middle;
+    width: 666rpx;
+    height: 950rpx;
+    animation: ani 2s steps(23, end);
 }

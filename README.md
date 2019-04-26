@@ -8,5 +8,6 @@
 1. app.json中的debug是否关闭;
 2. app.js中的API_URL是否需要切换服务器;
 3. 在ald-stat-conf.js中的app_key;
+正式版本的统计代码appkey:    442eede02179d279dd26d2141592e071
 
 

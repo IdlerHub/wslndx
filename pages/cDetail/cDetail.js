@@ -10,17 +10,16 @@ Page({
     },
     onLoad(options) {
         this.id = options.id;
-        this.param = {fs_id: this.id, page: 1, pageSize: 10};
-        this.getList([]).then(() => {
+        this.param = { fs_id: this.id, page: 1, pageSize: 10 };
+        this.getList([]);
+        this.getCircleInfo().then(() => {
             if (options.join) {
-                this.join().then(function () {
+                this.join().then(function() {
                     let pages = getCurrentPages();
                     let prePage = pages[pages.length - 2];
                     prePage.result();
                 })
             }
-        });
-        this.getCircleInfo().then(() => {
             wx.setNavigationBarTitle({
                 title: this.data.circle.title
             })
@@ -35,17 +34,17 @@ Page({
             })
         }
     },
-    getList: function (list) {
+    getList: function(list) {
         let temp = list || this.data.list;
         wx.showNavigationBarLoading();
         return app.circle.news(this.param).then((msg) => {
             wx.hideNavigationBarLoading();
             if (msg.code === 1 && msg.data) {
-                msg.data.forEach(function (item) {
+                msg.data.forEach(function(item) {
                     item.lw = app.util.tow(item.likes);
                     item.cw = app.util.tow(item.comments);
                     let arr = [];
-                    item.images.forEach(function (i) {
+                    item.images.forEach(function(i) {
                         arr.push(i.image)
                     });
                     item.images = arr;
@@ -115,7 +114,7 @@ Page({
     },
     join() {
         let circle = this.data.circle;
-        let param = {fs_id: this.id};
+        let param = { fs_id: this.id };
         return app.circle.join(param).then((msg) => {
             if (msg.code === 1) {
                 wx.showToast({
@@ -179,6 +178,6 @@ Page({
     },
     //用于数据统计
     onHide() {
-        app.aldstat.sendEvent('退出', {"name": "学友圈详情页"})
+        app.aldstat.sendEvent('退出', { "name": "学友圈详情页" })
     }
 })

@@ -2,7 +2,7 @@
     <!-- 下拉刷新 -->
     <view wx:if="{{isRefreshing}}" class='weui-loadmore'>
         <view class='weui-loading'></view>
-        <view class='weui-loadmore-tips'>加载中...</view>
+        <!-- <view class='weui-loadmore-tips'>加载中...</view> -->
     </view>
     <view class="wrap">
         <view wx:for="{{list}}" wx:key="index" class='item'>
@@ -66,9 +66,7 @@
             <text class='text'>写帖</text>
         </navigator>
     </view>
-    <!--  wx:if="{{rlAni}}" -->
     <view wx:if="{{rlAni}}" class='popup'>
-        <!-- <view class='rlAni' bindanimationend="rlAniend" style='background-image: url(https://bogole.com/project/d19030901/images/release-ani.png)'></view> -->
-        <image class='rlAni' src='https://jinling-xcx-dev.obs.cn-north-1.myhuaweicloud.com/images/publish.gif'></image>
+        <view class="publishAni"></view>
     </view>
 </view>

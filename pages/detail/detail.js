@@ -5,7 +5,7 @@ Page({
     data: {
         IMG_URL: app.IMG_URL,
         sort: 0,
-        nav: [{name: '剧集'}, {name: '简介'}],
+        nav: [{ name: '剧集' }, { name: '简介' }],
         height: 0,
         baseInfo: false
     },
@@ -38,17 +38,17 @@ Page({
                 that.setData({
                     hideRecode: true
                 });
-                that.getDetail(function () {
+                that.getDetail(function() {
                     that.recordAdd()
                 })
             } else {
                 that.getDetail()
             }
         });
-        app.baseInfo(that);
+        app.baseInfo(this);
     },
 
-    onGotUserInfo: function (e) {
+    onGotUserInfo: function(e) {
         app.updateBase(e, this);
     },
     switchNav(event) {
@@ -78,7 +78,7 @@ Page({
             wx.hideNavigationBarLoading();
             if (msg.code === 1) {
                 msg.data.bw = app.util.tow(msg.data.browse);
-                msg.data.sublesson.forEach(function (item) {
+                msg.data.sublesson.forEach(function(item) {
                     item.minute = (item.film_length / 60).toFixed(0)
                 });
                 this.setData({
@@ -98,7 +98,7 @@ Page({
         let current = 0,
             total = detail.sublesson.length,
             cur = '';
-        detail.sublesson.forEach(function (item) {
+        detail.sublesson.forEach(function(item) {
             if (item.played == 1) {
                 current++;
             }
@@ -125,12 +125,12 @@ Page({
     collect() {
         /*todo:考虑去掉that*/
         let that = this;
-        let param = {lesson_id: this.param.id};
+        let param = { lesson_id: this.param.id };
         if (this.data.detail.collected == 1) {
             wx.showModal({
                 title: '',
                 content: '是否取消收藏',
-                success: function (res) {
+                success: function(res) {
                     if (res.confirm) {
                         app.classroom.collectCancel(param).then((msg) => {
                             if (msg.code == 1) {
@@ -154,7 +154,7 @@ Page({
                 }
             });
             //用于数据统计
-            app.aldstat.sendEvent('课程收藏', {"name": this.data.title})
+            app.aldstat.sendEvent('课程收藏', { "name": this.data.title })
         }
     },
     aniend() {
@@ -197,6 +197,6 @@ Page({
     },
     //用于数据统计
     onHide() {
-        app.aldstat.sendEvent('退出', {"name": "课程详情页"})
+        app.aldstat.sendEvent('退出', { "name": "课程详情页" })
     }
 })

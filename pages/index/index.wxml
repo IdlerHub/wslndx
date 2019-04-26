@@ -1,8 +1,8 @@
 <view class="container">
     <!-- 下拉刷新 -->
-    <view wx:if="{{isRefreshing}}" class='weui-loadmore'>
+    <view wx:if="{{isRefreshing}}" class='weui-loadmore indexdrop'>
         <view class='weui-loading'></view>
-        <view class='weui-loadmore-tips'>加载中...</view>
+        <!-- <view class='weui-loadmore-tips'>加载中...</view> -->
     </view>
     <view class='top'>
         <view wx:if="{{userInfo.nickname}}" bindtap='toUser'>
@@ -51,7 +51,7 @@
             <!--推荐  -->
             <view class="wrap recommend">
                 <view class='now' wx:if="{{history.last_lesson}}" bindtap='historyTap' data-id="{{history.last_lesson.id}}" data-title="{{history.last_lesson.title}}" data-play="true">
-                    <view class='line'>继续播放：{{history.last_lesson.sub_id}}.{{history.last_lesson.title}}</view>
+                    <view class='line'>继续播放：{{history.last_lesson.title+'第'+history.last_lesson.sub_id+'讲'}}</view>
                     <image class='icon' mode='widthFix' src='{{IMG_URL}}/images/rectangle.png' />
                 </view>
                 <view catchtap="detailTap" wx:for="{{recommend}}" wx:key="index" class='item' data-item="{{item}}">

@@ -50,7 +50,7 @@ Page({
             wx.showActionSheet({
                 itemList: ['图片', '视频'],
                 itemColor: '#000000',
-                success: function (res) {
+                success: function(res) {
                     switch (res.tapIndex) {
                         case 0:
                             that.uploadImg(9 - image.length);
@@ -76,8 +76,8 @@ Page({
             count: val, // 默认9
             sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
             sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
-            success: function (res) {
-                that.next(res.tempFilePaths, type, i,)
+            success: function(res) {
+                that.next(res.tempFilePaths, type, i, )
             }
         })
     },
@@ -136,7 +136,7 @@ Page({
         wx.chooseVideo({
             compressed: true,
             sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
-            success: function (res) {
+            success: function(res) {
                 if ((res.size / 1024) > 3000) {
                     wx.showToast({
                         title: '上传的视频不能大于3M',
@@ -182,7 +182,7 @@ Page({
         this.judge();
     },
     //是否同步到圈子
-    switchChange: function (e) {
+    switchChange: function(e) {
         this.setData({
             showFlag: e.detail.value
         })
@@ -224,36 +224,40 @@ Page({
             video: this.data.param.video,
             fs_id: this.data.showFlag && (this.data.selId || '')
         };
-        wx.showLoading({
-            title: '发布中',
-        });
+
         if (this.data.param.content) {
+            wx.showLoading({
+                title: '发布中',
+            });
             app.circle.add(param).then((msg) => {
                 wx.hideLoading();
                 if (msg.code == 1) {
-                    setTimeout(() => {
-                        let pages = getCurrentPages();
-                        let prePage = pages[pages.length - 2];
-                        if (prePage.route == "pages/cDetail/cDetail") {
-                            wx.redirectTo({
-                                url: '../post/post?rlSuc',
-                            })
-                        } else {
-                            wx.navigateBack({
-                                delta: 1,
-                                success: function () {
-                                    prePage.rlSuc();
-                                }
-                            })
-                        }
-                    }, 500)
+                    let pages = getCurrentPages();
+                    let prePage = pages[pages.length - 2];
+                    if (prePage.route == "pages/cDetail/cDetail") {
+                        wx.redirectTo({
+                            url: '../post/post?rlSuc',
+                        })
+                    } else {
+                        wx.navigateBack({
+                            delta: 1,
+                            success: function() {
+                                prePage.rlSuc();
+                            }
+                        })
+                    }
                 }
             })
+        } else {
+            wx.showToast({
+                title: '内容不能为空！',
+                icon: 'none',
+                duration: 1500
+            });
         }
-
     },
     //用于数据统计
     onHide() {
-        app.aldstat.sendEvent('退出', {"name": "发帖页"})
+        app.aldstat.sendEvent('退出', { "name": "发帖页" })
     }
 })

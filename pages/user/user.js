@@ -172,13 +172,15 @@ Page({
         this.setData({
             rlAni: true
         });
+        let timer = setTimeout(() => {
+            this.setData({
+                rlAni: false
+            }, () => {
+                clearTimeout(timer)
+            })
+        }, 2000);
         this.circleParam.page = 1;
         this.getCircle([]);
-    },
-    rlAniend() {
-        this.setData({
-            rlAni: false
-        })
     },
     //图片预览
     previewImage(e) {

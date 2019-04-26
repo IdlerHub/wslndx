@@ -48,9 +48,6 @@ Page({
         }
         if (!this.data.back) app.baseInfo(this);
     },
-    onReady() {
-        console.log('ready ok');
-    },
     getList(list) {
         let temp = list || this.data.list;
         wx.showNavigationBarLoading();
@@ -85,6 +82,14 @@ Page({
         this.sy = e.touches[0].pageY
     },
     scrollTouchEnd(e) {
+        if (!!this.data.back) {
+            wx.showToast({
+                title: '点击首页，查看更多精彩视频～',
+                icon: 'none',
+                duration: 1500
+            });
+            return;
+        };
         let list = this.data.list;
         let index = this.data.index;
         this.ey = e.changedTouches[0].pageY;
@@ -115,6 +120,10 @@ Page({
         app.aldstat.sendEvent('短视频播放', { "name": this.data.cur.title })
     },
     praise() {
+        if (!!this.data.back && !this.data.userInfo.mobile) {
+            this.back();
+            return;
+        }
         let list = this.data.list;
         let index = this.data.index;
         let param = {
@@ -159,12 +168,16 @@ Page({
     },
     // 转发
     onShareAppMessage: function() {
+        if (!!this.data.back && !this.data.userInfo.mobile) {
+            this.back();
+            return;
+        }
         let list = this.data.list;
         let index = this.data.index;
         let param = {
             id: list[index].id
         };
-        // 分享
+        // 分享  todo:iphoneX有卡顿bug
         app.video.share(param).then((msg) => {
             if (msg.code == 1) {
                 list[index].forward += 1;
@@ -172,7 +185,7 @@ Page({
                     list: list,
                     cur: list[index]
                 });
-                app.aldstat.sendEvent('短视频转发', { "name": that.data.cur.title })
+                app.aldstat.sendEvent('短视频转发', { "name": this.data.cur.title })
             }
         });
         return {
@@ -181,14 +194,20 @@ Page({
             path: 'pages/video/video?id=' + list[index].id
         }
     },
-    // 首页
+    // 首页 
     back() {
-        wx.reLaunch({
-            url: '../index/index'
-        })
+        if (this.data.userInfo.mobile) {
+            wx.reLaunch({ url: '/pages/index/index' })
+        } else {
+            wx.reLaunch({ url: '/pages/login/login' });
+        }
     },
     // 跳转学友圈
     navigate() {
+        if (!!this.data.back && !this.data.userInfo.mobile) {
+            this.back();
+            return;
+        }
         let cur = this.data.cur;
         app.aldstat.sendEvent('短视频跳转', { "name": this.data.cur.title });
         wx.navigateTo({
@@ -197,6 +216,10 @@ Page({
     },
     // 加入学友圈
     join() {
+        if (!!this.data.back && !this.data.userInfo.mobile) {
+            this.back();
+            return;
+        }
         let cur = this.data.cur;
         wx.navigateTo({
             url: '../cDetail/cDetail?id=' + cur.fs_id + '&join=true',
@@ -204,6 +227,10 @@ Page({
     },
     // 完整视频
     complete() {
+        if (!!this.data.back && !this.data.userInfo.mobile) {
+            this.back();
+            return;
+        }
         let cur = this.data.cur;
         wx.navigateTo({
             url: '../detail/detail?id=' + cur.target_id,
@@ -222,7 +249,6 @@ Page({
     onHide() {
         app.aldstat.sendEvent('退出', { "name": "短视频页" })
     },
-
     //获取用户号码
     onGotUserInfo: function(e) {
         app.updateBase(e, this);

@@ -2,7 +2,7 @@
     <!-- 下拉刷新 -->
     <view wx:if="{{isRefreshing}}" class='weui-loadmore'>
         <view class='weui-loading'></view>
-        <view class='weui-loadmore-tips'>加载中...</view>
+        <!-- <view class='weui-loadmore-tips'>加载中...</view> -->
     </view>
     <view class='header' style='background-image: linear-gradient(-90deg, #{{detail.color[0]}} 0%, #{{detail.color[1]}} 100%);'>
         <view class='left'>

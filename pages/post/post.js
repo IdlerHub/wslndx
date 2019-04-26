@@ -1,4 +1,3 @@
-//index.js
 //获取应用实例
 const app = getApp();
 Page({
@@ -12,6 +11,7 @@ Page({
         this.setData({
             list: [],
         });
+        /* 从cdetail-->发帖 */
         if (options.rlSuc) {
             this.setData({ rlSucFlag: true })
         }
@@ -20,11 +20,11 @@ Page({
 
     onShow: function() {
         if (this.data.rlSucFlag) {
-            this.rlSuc()
-        } else {
-            this.getList([]);
+            this.rlSuc();
+            /* 确保动画只执行一次 */
+            this.setData({ rlSucFlag: false });
         }
-
+        this.getList([]);
     },
     getList(list) {
         let temp = list || this.data.list;
@@ -122,13 +122,15 @@ Page({
             }, () => {
                 clearTimeout(timer)
             })
-        }, 1350);
-        this.getList([]);
-    },
-    rlAniend() {
-        this.setData({
-            rlAni: false
-        })
+        }, 2000);
+        /* 重新到第一页 */
+        this.param.page = 1;
+        this.getList([]).then(() => {
+            wx.pageScrollTo({
+                scrollTop: 0,
+                duration: 300
+            });
+        });
     },
     //图片预览
     previewImage(e) {
