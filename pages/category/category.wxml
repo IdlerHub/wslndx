@@ -11,7 +11,7 @@
         <view catchtap="detailTap" wx:for="{{list}}" wx:key="index" class='item' data-item="{{item}}">
             <view class='left'>
                 <image class='poster' mode='aspectFill' src='{{item.image}}' />
-                <image class='icon' mode='aspectFill' src='{{IMG_URL}}/images/play.png' />
+                <image class='icon' mode='aspectFill' src='{{IMG_URL}}/play.png' />
             </view>
             <view class='right'>
                 <text class='line name'>{{item.title}}</text>

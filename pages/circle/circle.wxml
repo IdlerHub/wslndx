@@ -15,7 +15,6 @@
             <view class="item" wx:for="{{noJoinList}}" wx:key="index" data-item='{{item}}'>
                 <image class='img' mode='widthFix' src='{{item.bimage}}' bindtap="gotoCdetail" data-id="{{item.id}}" />
                 <button class="btn-operate" wx:if="{{isEdit}}" catchtap="fnJoin" data-item='{{item}}'>
-                        <!--TODO 图片地址，建议均使用网络地址，代上传的图片  {{IMG_URL}}/images/icon-add.png -->
                   <image src="../../images/icon-add.png" class="icon icon-add"></image> 
                   <text>加圈</text>
                 </button>

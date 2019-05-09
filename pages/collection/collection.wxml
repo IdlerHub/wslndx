@@ -1,0 +1,29 @@
+<!-- 下拉刷新 -->
+<view wx:if="{{ isRefreshing }}" class="weui-loadmore indexdrop">
+  <view class="weui-loading"></view>
+</view>
+<!-- 收藏课程 -->
+<navigator url="../detail/detail?id={{ item.id }}&name={{ item.title }}" wx:for="{{ collect }}" wx:key="index" hover-class="none" open-type="navigate" class="item">
+  <view class="content">
+    <view class="left">
+      <image class="poster" mode="widthFix" src="{{ item.image }}"></image>
+      <image class="icon" mode="aspectFill" src="{{ IMG_URL }}/play.png"></image>
+    </view>
+    <view class="right">
+      <text class="line name">{{ item.title }}</text>
+      <text class="line actor" wx:if="{{ item.teacher_id == 0 }}">{{ item.subtitle }}</text>
+      <text class="line actor" wx:if="{{ item.teacher_id != 0 }}">{{ item.name }}-{{ item.honor }}</text>
+      <text class="line info">
+        <!-- prettier-ignore-start -->
+        <text class="dramaNum"><text class="key">剧集</text>{{ item.lesson_count }}集</text>
+        <text wx:if="{{ item.thousand }}" class="playNum"><text class="key">播放</text>{{ item.thousand }}万</text>
+        <text wx:if="{{ !item.thousand }}" class="playNum"><text class="key">播放</text>{{ item.browse }}</text>
+        <!-- prettier-ignore-end -->
+      </text>
+    </view>
+  </view>
+</navigator>
+<view class="ncol" wx:if="{{ collect.length == 0 }}">
+  <image mode="widthFix" src="{{ IMG_URL }}/ncol.png"></image>
+  <text class="line">啥都没有呢~\n赶紧去收藏课程吧</text>
+</view>

@@ -1,0 +1,348 @@
+page {
+  background: #eee;
+}
+#myVideo {
+  display: block;
+  position: relative;
+  width: 750rpx;
+  height: 422rpx;
+}
+.poster {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 422rpx;
+  filter: brightness(0.8);
+  background: white;
+}
+.play {
+  position: absolute;
+  width: 120rpx;
+  height: 120rpx;
+  z-index: 1;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+}
+.info {
+  padding: 30rpx 0;
+  box-sizing: border-box;
+  background: #fff;
+  .top {
+    padding: 0 30rpx;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    line-height: 62rpx;
+    .name {
+      width: 600rpx;
+      font-size: 44rpx;
+      color: #3a3a3a;
+    }
+    .dramaNum {
+      width: 150rpx;
+      font-size: 36rpx;
+      color: #7e7e7e;
+      text-align: right;
+    }
+  }
+  .actor {
+    padding: 0 30rpx;
+    color: #646464;
+    font-size: 30rpx;
+    line-height: 42rpx;
+    margin-top: 10rpx;
+  }
+  .bottom {
+    padding-left: 30rpx;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    height: 80rpx;
+    margin-top: 30rpx;
+    margin-bottom: 10rpx;
+    .left {
+      display: flex;
+      align-items: center;
+    }
+    .collect {
+      font-size: 0;
+      image {
+        width: 200rpx;
+        height: 66rpx;
+      }
+    }
+    .share {
+      @extend .collect;
+      margin-left: 30rpx;
+    }
+    .right {
+      width: 200rpx;
+      height: 80rpx;
+      background: #f0f0f0;
+      border-radius: 40rpx 0 0 40rpx;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .progress {
+      .line {
+        width: 150rpx;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .num {
+        font-size: 30rpx;
+        color: #df2020;
+        line-height: 42rpx;
+      }
+      .des {
+        font-size: 24rpx;
+        color: #9b9b9b;
+      }
+    }
+    .certificate {
+      .des {
+        font-size: 24rpx;
+        color: #9b9b9b;
+      }
+    }
+  }
+}
+
+.content {
+  background: #eee;
+}
+.nav {
+  position: relative;
+  line-height: 98rpx;
+  box-sizing: border-box;
+  margin-top: 10px;
+  border-bottom: 2rpx solid #e9e9e9;
+  background: #fff;
+  .item {
+    display: inline-block;
+    width: 140rpx;
+    text-align: center;
+    font-family: PingFangSC-Regular;
+    font-size: 36rpx;
+    color: #7e7e7e;
+    letter-spacing: 0;
+    &.active {
+      position: relative;
+      color: #df2020;
+      font-size: 44rpx;
+      &::after {
+        content: "";
+        position: absolute;
+        bottom: -4rpx;
+        left: 25%;
+        width: 50%;
+        height: 4rpx;
+        background: #df2020;
+      }
+    }
+  }
+  .order {
+    position: absolute;
+    right: 30rpx;
+    top: 0;
+    margin: auto;
+    .box {
+      line-height: 104rpx;
+      font-size: 36rpx;
+      color: #7e7e7e;
+      display: flex;
+      align-items: center;
+    }
+    .icon {
+      display: block;
+      width: 30rpx;
+      height: 30rpx;
+      margin: 0 8rpx;
+    }
+  }
+}
+.wrap {
+  height: 100%;
+  padding: 0 30rpx;
+  box-sizing: border-box;
+  background: #fff;
+}
+rich-text {
+  display: block;
+  padding: 30rpx 0;
+  font-size: 36rpx;
+  color: #3a3a3a;
+  line-height: 60rpx;
+}
+.drama {
+  padding: 0 30rpx;
+  .item {
+    padding: 30rpx 0;
+    line-height: 50rpx;
+    border-bottom: 2rpx solid #e9e9e9;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    &:last-of-type {
+      border-bottom: none;
+    }
+    .left {
+      width: 530rpx;
+      font-size: 36rpx;
+      color: #3a3a3a;
+    }
+    .time {
+      position: relative;
+      color: #7e7e7e;
+      margin-left: 30rpx;
+      line-height: 50rpx;
+      &::after {
+        content: "";
+        width: 2rpx;
+        height: 34rpx;
+        position: absolute;
+        left: -15rpx;
+        top: 10rpx;
+        background: #7e7e7e;
+      }
+    }
+    &.played {
+      .left {
+        color: rgba(58, 58, 58, 0.4);
+      }
+      .time {
+        color: rgba(58, 58, 58, 0.4);
+        &::after {
+          background: rgba(58, 58, 58, 0.4);
+        }
+      }
+    }
+    &.active {
+      .left {
+        color: #df2020;
+      }
+      .time {
+        color: #df2020;
+        &::after {
+          background: #df2020;
+        }
+      }
+    }
+  }
+  .right {
+    font-size: 30rpx;
+    color: #7e7e7e;
+    display: flex;
+    align-items: center;
+    .icon {
+      width: 48rpx;
+      height: 48rpx;
+    }
+    text {
+      margin: 0 8rpx;
+    }
+  }
+}
+.pro-bar {
+  position: relative;
+  margin: 0 auto;
+  width: 150rpx;
+  height: 10rpx;
+  border: 2rpx solid #bdbdbd;
+  border-radius: 38rpx;
+}
+.por-cur {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 2%;
+  margin: auto;
+  background: #df2020;
+  border-radius: 38rpx;
+  border: 1rpx solid #df2020;
+  height: 2rpx;
+  animation: all 0.5s;
+}
+.certificate {
+  width: 150rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  .icon {
+    width: 48rpx;
+    height: 38rpx;
+  }
+}
+.now {
+  position: relative;
+  margin: 20rpx auto 0;
+  width: 690rpx;
+  line-height: 95rpx;
+  font-size: 36rpx;
+  color: #ed5708;
+  padding: 0 20rpx;
+  box-sizing: border-box;
+  .line {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+  }
+  .icon {
+    position: absolute;
+    left: 0;
+    top: -10rpx;
+    width: 690rpx;
+    height: 95rpx;
+  }
+}
+
+.vistor-head {
+  position: fixed;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 110rpx;
+  line-height: 110rpx;
+  top: 0;
+  left: 0;
+  background: rgba(223, 32, 32, 0.9);
+  font-family: PingFangSC-Regular;
+  font-size: 36rpx;
+  color: #ffffff;
+  padding: 0 30rpx;
+  .iconfont {
+    width: 60rpx;
+    height: 60rpx;
+    &:nth-child(4) {
+      position: absolute;
+      top: 25rpx;
+      right: 160rpx;
+    }
+  }
+}
+
+.vistor-home {
+  position: fixed;
+  width: 156rpx;
+  height: 156rpx;
+  right: 30rpx;
+  bottom: 150rpx;
+  border-radius: 50%;
+  background: linear-gradient(to top right, #df2020, #ff5f48);
+  font-size: 36rpx;
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  .iconfont {
+    font-size: 50rpx;
+  }
+}

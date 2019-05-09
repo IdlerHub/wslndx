@@ -4,11 +4,11 @@
     <text class='line course'>《{{course}}》</text>
     <view class='operate'>
         <button class='save' bindtap='save' hover-class="btn-hover">
-      <view class='download'><image class='icon' mode='aspectFill' src='{{IMG_URL}}/images/download.png'/></view>
+      <view class='download'><image class='icon' mode='aspectFill' src='{{IMG_URL}}/download.png'/></view>
       <text class='line'>保存图片</text>
     </button>
         <button class='share' open-type="share" hover-class="btn-hover">
-      <view class='weixin'><image class='icon' mode='aspectFill' src='{{IMG_URL}}/images/weixin.png'/></view>
+      <view class='weixin'><image class='icon' mode='aspectFill' src='{{IMG_URL}}/weixin.png'/></view>
       <text class='line'>微信</text>
     </button>
     </view>

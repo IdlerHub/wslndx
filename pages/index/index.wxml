@@ -19,7 +19,7 @@
                         </view>
                     </view>
                 </view>
-                <image class='right' mode='aspectFill' src='{{IMG_URL}}/images/Return.png' />
+                <image class='right' mode='aspectFill' src='{{IMG_URL}}/Return.png' />
             </view>
         </view>
         <button class="authorize" wx:else open-type="getUserInfo" bindgetuserinfo="onGotUserInfo" data-role="user">
@@ -36,7 +36,7 @@
                         </view>
                     </view>
                 </view>
-                <image class='right' mode='aspectFill' src='{{IMG_URL}}/images/Return.png' />
+                <image class='right' mode='aspectFill' src='{{IMG_URL}}/Return.png' />
             </view>
         </button>
     </view>
@@ -50,24 +50,24 @@
         <swiper-item class="tab-item">
             <!--推荐  -->
             <view class="wrap recommend">
-                <view class='now' wx:if="{{history.last_lesson}}" bindtap='historyTap' data-id="{{history.last_lesson.id}}" data-title="{{history.last_lesson.title}}" data-play="true">
+                <view class='now' wx:if="{{history.last_lesson}}" bindtap='historyTap' data-id="{{history.last_lesson.id}}" data-title="{{history.last_lesson.title}}">
                     <view class='line'>继续播放：{{history.last_lesson.title+'第'+history.last_lesson.sub_id+'讲'}}</view>
-                    <image class='icon' mode='widthFix' src='{{IMG_URL}}/images/rectangle.png' />
+                    <image class='icon' mode='widthFix' src='{{IMG_URL}}/rectangle.png' />
                 </view>
                 <view catchtap="detailTap" wx:for="{{recommend}}" wx:key="index" class='item' data-item="{{item}}">
                     <view class='content'>
                         <view class='left'>
-                            <image class='poster' mode='aspectFill' src='{{item.image}}' />
-                            <image class='icon' mode='aspectFill' src='{{IMG_URL}}/images/play.png' />
+                            <image class='poster' mode='aspectFill' src='{{item.image}}' lazy-load="true"/>
+                            <image class='icon' mode='aspectFill' src='{{IMG_URL}}/play.png' />
                         </view>
                         <view class='right'>
                             <text class='line name'>{{item.title}}</text>
                             <text class='line actor' wx:if="{{item.teacher_id==0}}">{{item.subtitle}}</text>
                             <text class='line actor' wx:if="{{item.teacher_id!=0}}">{{item.name}}-{{item.honor}}</text>
-                            <text class='line info'>
-                  <text class='dramaNum'><text class='key'>剧集</text>{{item.lesson_count}}集</text>
-                            <text wx:if="{{item.bw}}" class='playNum'><text class='key'>播放</text>{{item.bw}}万</text>
-                            <text wx:if="{{!item.bw}}" class='playNum'><text class='key'>播放</text>{{item.browse}}</text>
+                            <text class='line info'> 
+                              <text class='dramaNum'><text class='key'>剧集</text>{{item.lesson_count}}集</text>
+                              <text wx:if="{{item.bw}}" class='playNum'><text class='key'>播放</text>{{item.bw}}万</text>
+                              <text wx:if="{{!item.bw}}" class='playNum'><text class='key'>播放</text>{{item.browse}}</text>
                             </text>
                         </view>
                     </view>
@@ -77,9 +77,14 @@
         <swiper-item class="tab-item">
             <!--分类  -->
             <view class="wrap category">
-                <view wx:for="{{category}}" wx:key="index" catchtap="categoryTap" class='item' data-item="{{item}}">
-                    <image class='img' mode='widthFix' src='{{item.image}}' />
-                    <text class='line name'>{{item.name}}</text>
+                <view wx:for="{{category}}" wx:key="index"  class='kind'  wx:for-item="item1">
+                    <text class='title'>{{item1.title }}</text>
+                    <view class="list">
+                        <view class='item' wx:for="{{item1.lists}}" wx:key="index"  wx:for-item="item2" catchtap="categoryTap"  data-item="{{item2}}">
+                            <image class='img' mode='widthFix' src='{{item2.image}}' lazy-load="true" />
+                            <text class='name'>{{item2.name }}</text>
+                        </view>
+                    </view>
                 </view>
             </view>
         </swiper-item>
@@ -87,20 +92,29 @@
     <!-- 底部tabbar -->
     <view class='tabbar'>
         <view class='item'>
-            <image class='icon' mode='aspectFill' src='{{IMG_URL}}/images/Classroom-red.png' />
+            <image class='icon' mode='aspectFill' src='{{IMG_URL}}/Classroom-red.png' />
             <text class='name active'>云课堂</text>
         </view>
         <view bindtap='toVideo' class='item'>
-            <image class='icon' mode='aspectFill' src='{{IMG_URL}}/images/video.png' />
+            <image class='icon' mode='aspectFill' src='{{IMG_URL}}/video.png' />
             <text class='name'>短视频</text>
         </view>
         <button wx:if="{{!userInfo.nickname}}" class='item' open-type="getUserInfo" bindgetuserinfo="onGotUserInfo" data-role="post">
-            <image mode='aspectFill' class='icon' src='{{IMG_URL}}/images/circle.png'></image>
+            <image mode='aspectFill' class='icon' src='{{IMG_URL}}/circle.png'></image>
             <text class='name'>学友圈</text>
         </button>
         <view wx:else bindtap='toPost' class='item'>
-            <image class='icon' mode='aspectFill' src='{{IMG_URL}}/images/circle.png' />
+            <image class='icon' mode='aspectFill' src='{{IMG_URL}}/circle.png' />
             <text class='name'>学友圈</text>
         </view>
+    </view>
+    <!-- 签到拿积分 -->
+    <view class="integration" wx:if='{{quickInteg}}'  catchtouchmove="return">
+      <view class="dialog">
+          <image class="bg" src="/images/integration_bg.png" mode="aspectFill" ></image> 
+          <view class="ani"></view>
+          <button catchtap='signIn'  data-id="1" >签到领积分</button>
+          <icon type="cancel" size="37" color='white'  data-id="0"  catchtap='signIn' />
+      </view> 
     </view>
 </view>

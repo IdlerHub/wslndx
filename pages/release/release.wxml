@@ -5,11 +5,11 @@
             <view class='img' wx:key="index" wx:for="{{param.image}}">
                 <!-- <image class='image' mode='aspectFill' src="{{item}}" data-index='{{index}}' catchtap='selectImg'></image> -->
                 <image class='image' mode='aspectFill' src="{{item}}" data-index='{{index}}' catchtap='selectImg'></image>
-                <image class='close' mode='aspectFill' src="{{IMG_URL}}/images/close.png" data-index='{{index}}' catchtap='delImg'></image>
+                <image class='close' mode='aspectFill' src="{{IMG_URL}}/close.png" data-index='{{index}}' catchtap='delImg'></image>
             </view>
             <view class='video' wx:if="{{param.video}}">
-                <image class='image' mode='aspectFill' src="{{IMG_URL}}/images/video-bg.jpg" catchtap='addImg'></image>
-                <image class='close' mode='aspectFill' src="{{IMG_URL}}/images/close.png" catchtap='delvideo'></image>
+                <image class='image' mode='aspectFill' src="{{IMG_URL}}/video-bg.jpg" catchtap='addImg'></image>
+                <image class='close' mode='aspectFill' src="{{IMG_URL}}/close.png" catchtap='delvideo'></image>
             </view>
             <view class='ub' wx:if="{{!hide}}" bindtap='addImg'>+</view>
         </view>

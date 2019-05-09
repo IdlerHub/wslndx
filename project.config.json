@@ -5,6 +5,14 @@
 			{
 				"type": "folder",
 				"value": "demo"
+			},
+			{
+				"type": "folder",
+				"value": ".history"
+			},
+			{
+				"type": "suffix",
+				"value": ".scss"
 			}
 		]
 	},
@@ -19,12 +27,9 @@
 		"checkInvalidKey": true
 	},
 	"compileType": "miniprogram",
-	"libVersion": "2.6.4",
+	"libVersion": "2.6.6",
 	"appid": "wx756d04f5d669cef0",
 	"projectname": "%E4%B8%AD%E5%9B%BD%E7%BD%91%E4%B8%8A%E8%80%81%E5%B9%B4%E5%A4%A7%E5%AD%A6",
-	"debugOptions": {
-		"hidedInDevtools": []
-	},
 	"isGameTourist": false,
 	"simulatorType": "wechat",
 	"simulatorPluginLibVersion": {},
@@ -37,13 +42,25 @@
 			"current": -1,
 			"list": []
 		},
+		"plugin": {
+			"current": -1,
+			"list": []
+		},
 		"game": {
 			"currentL": -1,
 			"list": []
 		},
 		"miniprogram": {
-			"current": -1,
-			"list": []
+			"current": 0,
+			"list": [
+				{
+					"id": 0,
+					"name": "微课堂分享卡片",
+					"pathName": "pages/detail/detail",
+					"query": "id=88&curid=263&type=share",
+					"scene": 1007
+				}
+			]
 		}
 	}
 }
