@@ -21,7 +21,8 @@
     "pages/history/history",
     "pages/myCircle/myCircle",
     "pages/invitation/invitation",
-    "pages/gift/gift"
+    "pages/gift/gift",
+    "pages/education/education"
   ],
   "permission": {
     "scope.userLocation": {

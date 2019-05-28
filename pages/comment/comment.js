@@ -2,9 +2,7 @@
 //获取应用实例
 const app = getApp()
 Page({
-  data: {
-    IMG_URL: app.IMG_URL
-  },
+  data: {},
   onLoad(options) {
     this.id = options["id"]
   },

@@ -3,7 +3,6 @@
 const app = getApp()
 Page({
   data: {
-    IMG_URL: app.IMG_URL,
     param: {
       image: [],
       content: null,
@@ -16,9 +15,6 @@ Page({
   },
   onLoad() {
     this.getCircleList()
-    this.setData({
-      userInfo: wx.getStorageSync("userInfo")
-    })
   },
   input(e) {
     this.setData({

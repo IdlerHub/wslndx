@@ -3,10 +3,8 @@
 const app = getApp()
 Page({
   data: {
-    IMG_URL: app.IMG_URL,
     list: [],
-    limit: false,
-    baseInfo: false
+    limit: false
   },
   onLoad(options) {
     this.videoContext = wx.createVideoContext("myVideo")
@@ -23,10 +21,6 @@ Page({
     app.aldstat.sendEvent("菜单", { name: "短视频" })
   },
   onShow() {
-    let userInfo = wx.getStorageSync("userInfo")
-    this.setData({
-      userInfo: userInfo
-    })
     if (!!this.data.cur && this.data.cur.fs_joined == 1) {
       let arr = this.data.list
       arr.forEach((item, index) => {
@@ -41,7 +35,6 @@ Page({
       })
       app.aldstat.sendEvent("加圈", { name: this.data.cur.title })
     }
-    app.baseInfo(this)
   },
   getList(list) {
     let temp = list || this.data.list
@@ -100,8 +93,6 @@ Page({
       }
     }
     app.addVisitedNum(`v${this.data.cur.id}`)
-    //判断是否显示baseInfo
-    app.baseInfo(this)
     app.aldstat.sendEvent("短视频播放", { name: this.data.cur.title })
   },
   praise() {
@@ -177,7 +168,7 @@ Page({
   },
   // 跳转学友圈
   navigate() {
-    if (!this.data.userInfo.nickname) {
+    if (!this.data.$state.authUserInfo) {
       /* 要求授权 */
       this.setData({
         limit: true

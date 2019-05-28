@@ -3,12 +3,11 @@
 const app = getApp()
 Page({
   data: {
-    IMG_URL: app.IMG_URL,
     isRefreshing: false
   },
   onLoad() {},
   onShow() {
-    if (app.globalData.userInfo.nickname) {
+    if (this.data.$state.userInfo.nickname) {
       /*updateBase请求先返回*/
       this.init()
     } else {
@@ -19,7 +18,7 @@ Page({
     }
   },
   init() {
-    var userInfo = wx.getStorageSync("userInfo")
+    var userInfo = JSON.parse(JSON.stringify(this.data.$state.userInfo))
     if (userInfo) userInfo.address = userInfo.address ? userInfo.address.split(",")[1] : ""
     this.setData({
       userInfo: userInfo
@@ -32,8 +31,8 @@ Page({
     }
     app.user.profile(param).then(msg => {
       if (msg.code == 1) {
-        wx.setStorageSync("userInfo", msg.data.userInfo)
-        let userInfo = msg.data.userInfo
+        app.setUser(msg.data.userInfo)
+        let userInfo = JSON.parse(JSON.stringify(msg.data.userInfo))
         if (userInfo) userInfo.address = userInfo.address ? userInfo.address.split(",")[1] : ""
         this.setData({
           userInfo: userInfo

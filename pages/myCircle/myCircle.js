@@ -3,7 +3,6 @@ const app = getApp()
 Page({
   data: {
     circle: [],
-    IMG_URL: app.IMG_URL,
     isRefreshing: false
   },
   //options(Object)

@@ -3,7 +3,6 @@
 const app = getApp()
 Page({
   data: {
-    IMG_URL: app.IMG_URL,
     list: [],
     circle: null,
     isRefreshing: false
@@ -12,9 +11,6 @@ Page({
     this.id = options.id
     this.param = { fs_id: this.id, page: 1, pageSize: 10 }
     this.getList([])
-    this.setData({
-      userInfo: wx.getStorageSync("userInfo")
-    })
     this.getCircleInfo().then(() => {
       if (options.join) {
         this.join().then(() => {
@@ -194,7 +190,7 @@ Page({
     }
   },
   toUser(e) {
-    if (this.data.userInfo.id == e.currentTarget.dataset.uid) {
+    if (this.data.$state.userInfo.id == e.currentTarget.dataset.uid) {
       wx.navigateTo({
         url: "/pages/user/user"
       })

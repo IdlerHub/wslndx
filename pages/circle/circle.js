@@ -3,7 +3,6 @@
 const app = getApp()
 Page({
   data: {
-    IMG_URL: app.IMG_URL,
     isEdit: false
   },
   onShow() {

@@ -470,3 +470,46 @@
     }
   }
 }
+
+.outer-link {
+  height: 250rpx;
+  margin: 30rpx 0 0;
+  padding: 40rpx 30rpx;
+  background: rgba(239, 239, 239, 1);
+  display: flex;
+  align-items: stretch;
+  text-align: left;
+  overflow: visible;
+  & > image {
+    width: 270rpx;
+    height: 170rpx;
+  }
+  .dsc {
+    position: relative;
+    flex: 1;
+    padding-left: 20rpx;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    & > text:nth-child(1) {
+      font-size: 40rpx;
+      font-family: PingFangSC-Medium;
+      font-weight: 500;
+      color: rgba(58, 58, 58, 1);
+      line-height: 56rpx;
+    }
+    & > text:nth-child(2) {
+      font-size: 28rpx;
+      font-family: PingFangSC-Regular;
+      font-weight: 400;
+      color: rgba(126, 126, 126, 1);
+      line-height: 40rpx;
+    }
+    image {
+      width: 200rpx;
+      height: 54rpx;
+      position: absolute;
+      bottom: 0;
+    }
+  }
+}

@@ -7,7 +7,7 @@
       <cover-image src="/images/shouzhi.png" class="iconfont"></cover-image>
     </cover-view>
     <cover-image wx:if="{{ !playing }}" mode="widthFix" src="{{ detail.image }}" class="poster" bindtap="recordAdd"></cover-image>
-    <cover-image wx:if="{{ !playing }}" mode="aspectFill" src="{{ IMG_URL }}/play.png" class="play" bindtap="recordAdd"></cover-image>
+    <cover-image wx:if="{{ !playing }}" mode="aspectFill" src="{{ $state.imgHost }}/play.png" class="play" bindtap="recordAdd"></cover-image>
   </video>
   <view class="info">
     <view class="top">
@@ -36,7 +36,7 @@
           </view>
         </view>
         <view class="certificate" wx:if="{{ detail.progress == 100 }}" bindtap="navitor">
-          <image class="icon" mode="aspectFill" src="{{ IMG_URL }}/badge.png"></image>
+          <image class="icon" mode="aspectFill" src="{{ $state.imgHost }}/badge.png"></image>
           <text class="des">查看证书</text>
         </view>
       </view>
@@ -44,7 +44,7 @@
   </view>
   <view class="now" wx:if="{{ detail.current_sublesson_id != 0 && !hideRecode }}" bindtap="recordAdd">
     <view class="line">继续播放：{{ cur.sub_id }}. {{ cur.title }}</view>
-    <image class="icon" mode="widthFix" src="{{ IMG_URL }}/rectangle.png"></image>
+    <image class="icon" mode="widthFix" src="{{ $state.imgHost }}/rectangle.png"></image>
   </view>
   <view class="content">
     <scroll-view scroll-x="true" class="nav" scroll-left="{{ navScrollLeft }}" scroll-with-animation="{{ true }}">
@@ -52,8 +52,8 @@
         <view class="item {{ currentTab == id ? 'active' : '' }}" data-current="{{ id }}" bindtap="switchNav">{{ item.name }}</view>
       </block>
       <view class="order" wx:if="{{ currentTab == 0 }}" bindtap="order">
-        <view wx:if="{{ sort == 0 }}" class="box"> <image class="icon" mode="aspectFill" src="{{ IMG_URL }}/order.png"></image>正序</view>
-        <view wx:if="{{ sort == 1 }}" class="box"> <image class="icon" mode="aspectFill" src="{{ IMG_URL }}/order-fall.png"></image>倒序</view>
+        <view wx:if="{{ sort == 0 }}" class="box"> <image class="icon" mode="aspectFill" src="{{ $state.imgHost }}/order.png"></image>正序</view>
+        <view wx:if="{{ sort == 1 }}" class="box"> <image class="icon" mode="aspectFill" src="{{ $state.imgHost }}/order-fall.png"></image>倒序</view>
       </view>
     </scroll-view>
     <swiper class="tab" style="height:{{ height }}px" current="{{ currentTab }}" duration="300" bindchange="switchTab">
@@ -65,7 +65,7 @@
               <text class="name">{{ item.sub_id }}. {{ item.title }}</text>
               <text class="time">{{ item.minute }}分钟</text>
             </view>
-            <view class="right"> <image class="icon" mode="aspectFill" src="{{ IMG_URL }}/play-ash.png"></image><text>播放</text></view>
+            <view class="right"> <image class="icon" mode="aspectFill" src="{{ $state.imgHost }}/play-ash.png"></image><text>播放</text></view>
           </view>
         </scroll-view>
       </swiper-item>
@@ -81,5 +81,5 @@
     <icon class="iconfont icon-shouye"></icon>
     <text>首页</text>
   </view>
-  <button class="getPhone-mask" wx:if="{{ baseInfo }}" open-type="getUserInfo" bindgetuserinfo="onGotUserInfo" style="position:fixed;left: 0;top: 0;width: 100vw;height: 100vh;z-index: 9999;"></button>
+  <button class="getPhone-mask" wx:if="{{ $state.baseInfo }}" open-type="getUserInfo" bindgetuserinfo="onGotUserInfo" style="position:fixed;left: 0;top: 0;width: 100vw;height: 100vh;z-index: 9999;"></button>
 </view>

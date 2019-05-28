@@ -2,8 +2,16 @@ var httpService = require("../utils/service.js")
 
 //POST User/wxlogin 微信登录
 function wxLoginCode(param) {
-  // console.log("wx.login")
   return httpService.post("User/wxlogin", param, true)
+}
+
+/**
+ * @description:获取验证码
+ * @mobile {number}
+ * @return:promise
+ */
+function getAuthCode(mobile) {
+  return httpService.post("sms/send", mobile, true)
 }
 
 /**
@@ -69,9 +77,18 @@ function gift(param) {
 function exchange(param) {
   return httpService.post("Gift/exchange", param)
 }
+/**
+ * @description:  首页活动
+ * @param { * }
+ * @return: promise
+ */
+function activite() {
+  return httpService.post("activity/index", {})
+}
 
 module.exports = {
   wxLoginCode: wxLoginCode,
+  getAuthCode: getAuthCode,
   register: register,
   collect: collect,
   history: history,
@@ -81,5 +98,6 @@ module.exports = {
   sign: sign,
   gift: gift,
   exchange: exchange,
-  pointsinfo: pointsinfo
+  pointsinfo: pointsinfo,
+  activite: activite
 }

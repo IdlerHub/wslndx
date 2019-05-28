@@ -2,19 +2,16 @@
 //获取应用实例
 const app = getApp()
 Page({
-  data: {
-    IMG_URL: app.IMG_URL
-  },
+  data: {},
   onLoad(options) {
     this.setData({
-      course: options["name"],
-      userInfo: wx.getStorageSync("userInfo")
+      course: options["name"]
     })
     this.draw()
   },
   // 绘制证书
   draw() {
-    let userInfo = this.data.userInfo
+    let userInfo = JSON.parse(JSON.stringify(this.data.$state.userInfo))
     userInfo.nickname = userInfo.nickname || "如此优秀的你"
     let course = this.data.course
     this.context = wx.createCanvasContext("myCanvas", this)

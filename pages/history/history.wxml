@@ -10,7 +10,7 @@
         <text class="line name">{{ history.last_lesson.sub_id }}.{{ history.last_lesson.title }}</text>
       </view>
       <view class="right">
-        <image class="icon" mode="aspectFill" src="{{ IMG_URL }}/play-red.png"></image>
+        <image class="icon" mode="aspectFill" src="{{ $state.imgHost }}/play-red.png"></image>
         <text class="line">继续播放</text>
       </view>
     </view>
@@ -29,7 +29,7 @@
     </view>
   </view>
   <view class="nhis" wx:else>
-    <image mode="widthFix" src="{{ IMG_URL }}/nhis.png"></image>
+    <image mode="widthFix" src="{{ $state.imgHost }}/nhis.png"></image>
     <text class="line">啥都没有呢~</text>
     <text class="line">赶紧去课程看看吧</text>
   </view>

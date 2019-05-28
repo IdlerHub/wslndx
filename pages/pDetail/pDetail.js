@@ -3,7 +3,6 @@
 const app = getApp()
 Page({
   data: {
-    IMG_URL: app.IMG_URL,
     nav: [{ name: "评论", class: ".comment" }, { name: "点赞", class: ".praise" }],
     isRefreshing: false,
     txoptions: true
@@ -20,10 +19,9 @@ Page({
       praise: [],
       vistor: options.type == "share", //游客从分享卡片过来
       currentTab: 0,
-      navScrollLeft: 0,
-      userInfo: wx.getStorageSync("userInfo")
+      navScrollLeft: 0
     })
-    if (this.data.userInfo.mobile) {
+    if (this.data.$state.userInfo.mobile) {
       this.getDetail()
       this.getComment()
       this.getPraise()
@@ -304,16 +302,11 @@ Page({
       }
     })
   },
-
   tohome: function() {
-    if (this.data.userInfo.mobile) {
-      wx.reLaunch({ url: "/pages/index/index" })
-    } else {
-      wx.reLaunch({ url: "/pages/login/login" })
-    }
+    wx.reLaunch({ url: "/pages/index/index" })
   },
   toUser(e) {
-    if (this.data.userInfo.id == e.currentTarget.dataset.uid) {
+    if (this.data.$state.userInfo.id == e.currentTarget.dataset.uid) {
       wx.navigateTo({
         url: "/pages/user/user"
       })

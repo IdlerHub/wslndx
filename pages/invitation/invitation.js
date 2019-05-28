@@ -3,9 +3,7 @@ const app = getApp()
 
 Page({
   data: {
-    IMG_URL: app.IMG_URL,
     locolurl: "",
-    userInfo: null,
     qrcode: null
   },
   param: {
@@ -16,10 +14,7 @@ Page({
   },
   //options(Object)
   onLoad: function(options) {
-    let user = wx.getStorageSync("userInfo")
-    this.setData({
-      userInfo: user
-    })
+    let user = this.data.$state.userInfo
     wx.pro.getImageInfo({ src: user.avatar }).then(res => {
       if (res.errMsg == "getImageInfo:ok") {
         this.param.count += 1
@@ -53,8 +48,8 @@ Page({
   },
   draw: function() {
     let ctx = wx.createCanvasContext("canva_invite", this)
-    let ratio = wx.getSystemInfoSync().pixelRatio / 4
-    ctx.drawImage("../../images/invitation.png", 0, 0, this.param.container.width * 2 * ratio, this.param.container.height * 2 * ratio)
+    let ratio = 0.5
+    ctx.drawImage("../../images/invitation.png", 0, 0, this.param.container.width, this.param.container.height)
     ctx.save()
     ctx.beginPath()
     ctx.arc(85 * ratio, 410 * ratio, 35 * ratio, 0, Math.PI * 2, false)
@@ -63,10 +58,10 @@ Page({
     ctx.restore()
     ctx.setFillStyle("white")
     ctx.setFontSize(36 * ratio)
-    ctx.fillText("我是" + this.data.userInfo.nickname, 140 * ratio, 424 * ratio)
+    ctx.fillText("我是" + this.data.$state.userInfo.nickname, 140 * ratio, 424 * ratio)
     ctx.setFontSize(40 * ratio)
-    ctx.fillText("老有所学，老有所乐，", 140 * ratio, 490 * ratio)
-    ctx.fillText("邀请你一起学习交友。", 140 * ratio, 544 * ratio)
+    ctx.fillText("十万个免费老年课程", 140 * ratio, 490 * ratio)
+    ctx.fillText("打造新时代“三有老人”", 140 * ratio, 544 * ratio)
     ctx.fillRect(0, this.param.container.height - 210 * ratio, this.param.container.width, 210 * ratio)
     ctx.drawImage(this.data.qrcode, 50 * ratio, this.param.container.height - 210 / 2 + 50 / 2 / 2, 160 / 2, 160 / 2)
     ctx.setFillStyle("#3A3A3A")
@@ -133,7 +128,7 @@ Page({
     return {
       title: "网上老年大学",
       imageUrl: this.data.img,
-      path: "/pages/loading/loading?uid=" + this.data.userInfo.id + "&type=invite"
+      path: "/pages/loading/loading?uid=" + this.data.$state.userInfo.id + "&type=invite"
     }
   }
 })

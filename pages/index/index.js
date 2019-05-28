@@ -1,14 +1,13 @@
 //index.js
 //获取应用实例
 const app = getApp()
-var ald = require("../../utils/ald-stat.js")
 Page({
   data: {
-    IMG_URL: app.IMG_URL,
     nav: [{ name: "推荐", class: ".recommend" }, { name: "分类", class: ".category" }],
     height: 0,
     isRefreshing: false,
-    quickInteg: false
+    quickInteg: false,
+    activity: ""
   },
   onLoad(e) {
     let that = this
@@ -43,6 +42,11 @@ Page({
     })
     this.getRecommend()
     this.getCategory()
+    this.getactivite().then(res => {
+      this.setData({
+        activity: res.data
+      })
+    })
   },
   onReady: function() {
     setTimeout(wx.hideLoading, 500)
@@ -51,7 +55,7 @@ Page({
     this.init()
   },
   init() {
-    let userInfo = wx.getStorageSync("userInfo")
+    let userInfo = JSON.parse(JSON.stringify(this.data.$state.userInfo))
     /* 地区格式化 */
     userInfo.address = userInfo.address ? userInfo.address.split(",")[1] : ""
     /* 电话号码隐藏 */
@@ -124,6 +128,9 @@ Page({
       }
       this.setHeight()
     })
+  },
+  getactivite() {
+    return app.user.activite()
   },
   getHistory(list) {
     let temp = list || this.data.history.history
@@ -234,7 +241,8 @@ Page({
   },
   //分类点击
   categoryTap: function(data) {
-    data.currentTarget.dataset.item.id &&
+    data.currentTarget.dataset.item &&
+      data.currentTarget.dataset.item.id &&
       wx.navigateTo({
         url: `../category/category?id=${data.currentTarget.dataset.item.id}&name=${data.currentTarget.dataset.item.name}&img=${data.currentTarget.dataset.item.top_image}`
       })
@@ -257,8 +265,10 @@ Page({
       app.updateBase(e, this)
       if (e.currentTarget.dataset.role == "user") {
         this.toUser()
-      } else {
+      } else if (e.currentTarget.dataset.role == "post") {
         this.toPost()
+      } else {
+        this.toEducation()
       }
     }
   },
@@ -300,5 +310,10 @@ Page({
         }
       })
     }
+  },
+  toEducation() {
+    wx.navigateTo({
+      url: "/pages/education/education"
+    })
   }
 })

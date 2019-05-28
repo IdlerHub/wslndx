@@ -3,11 +3,9 @@
 const app = getApp()
 Page({
   data: {
-    IMG_URL: app.IMG_URL,
     sort: 0,
     nav: [{ name: "剧集" }, { name: "简介" }],
-    height: 0,
-    baseInfo: false
+    height: 0
   },
   onLoad(options) {
     /*todo:考虑去掉that*/
@@ -29,7 +27,6 @@ Page({
         height: scrollViewHeight,
         currentTab: 0,
         navScrollLeft: 0,
-        userInfo: wx.getStorageSync("userInfo") || {},
         id: options.id,
         curid: options.curid || null,
         cur: null
@@ -44,13 +41,11 @@ Page({
         that.getDetail(function() {
           that.recordAdd()
         })
-      } else if (that.data.userInfo.mobile) {
+      } else if (that.data.$state.userInfo.mobile) {
         that.getDetail()
       }
     })
-    app.baseInfo(this)
   },
-
   onGotUserInfo: function(e) {
     app.updateBase(e, this)
   },
@@ -69,7 +64,6 @@ Page({
     this.setData({
       currentTab: cur
     })
-    app.baseInfo(this)
   },
   getDetail() {
     this.param = {
@@ -183,7 +177,6 @@ Page({
             hideRecode: true
           })
           app.addVisitedNum(`k${this.data.cur.id}`)
-          app.baseInfo(this)
         })
       }
     })
@@ -209,11 +202,7 @@ Page({
     }
   },
   tohome: function() {
-    if (this.data.userInfo.mobile) {
-      wx.reLaunch({ url: "/pages/index/index" })
-    } else {
-      wx.reLaunch({ url: "/pages/login/login" })
-    }
+    wx.reLaunch({ url: "/pages/index/index" })
   },
   //用于数据统计
   onHide() {

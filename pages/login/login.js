@@ -6,14 +6,16 @@ Page({
    * 页面的初始数据
    */
   data: {
-    canIUse: wx.canIUse("button.open-type.getPhoneNumber")
+    canIUse: wx.canIUse("button.open-type.getPhoneNumber"),
+    mode: 1,
+    authenable: false,
+    btnName: "获取验证码"
   },
-
+  params: { tel: "", authCode: "", telFormat: false, codeFormat: false },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {},
-
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
@@ -25,59 +27,125 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function() {},
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function() {},
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function() {},
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function() {
-    wx.stopPullDownRefresh()
+  loginType(e) {
+    this.setData({
+      mode: parseInt(e.currentTarget.dataset.type)
+    })
   },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function() {},
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function() {},
+  /* 授权获取电话号码 */
   getPhoneNumber: function(e) {
-    if (e.detail.errMsg !== "getPhoneNumber:ok") {
+    if (e.detail.errMsg == "getPhoneNumber:ok") {
+      let param = {
+        mobileEncryptedData: e.detail.encryptedData,
+        mobileiv: e.detail.iv,
+        tempCode: app.globalData.tempCode,
+        invite_uid: wx.getStorageSync("invite") /* 邀请码 */
+      }
+      this.login(param)
+    } else {
       return
     }
-    let param = {
-      mobileEncryptedData: e.detail.encryptedData,
-      mobileiv: e.detail.iv,
-      tempCode: app.globalData.tempCode,
-      invite_uid: wx.getStorageSync("invite") /* 邀请码 */
+  },
+  /* 输入电话号码 */
+  inputTel(e) {
+    this.params.tel = e.detail.value
+    this.params.telFormat = app.util.isPoneAvailable(this.params.tel)
+  },
+  /* 输入验证码 */
+  inputCode(e) {
+    this.params.authCode = e.detail.value
+    this.params.codeFormat = !!this.params.authCode && this.params.authCode.toString().length == 6
+  },
+  /* 获取验证码 */
+  getCode() {
+    if (this.params.telFormat) {
+      /* send  code */
+      this.countDown()
+      app.user.getAuthCode({ mobile: this.params.tel })
+    } else {
+      wx.showToast({
+        title: "电话号码格式不对",
+        icon: "none",
+        duration: 1500,
+        mask: false
+      })
     }
-    app.user.register(param).then(msg => {
-      if (msg.code === 1) {
-        wx.setStorageSync("token", msg.data.token)
-        wx.setStorageSync("uid", msg.data.uid)
-        wx.setStorageSync("userInfo", msg.data.userInfo)
-        app.globalData.userInfo = msg.data.userInfo
-        if (app.globalData.query.type == "share") {
-          let params = []
-          for (let attr in app.globalData.query) {
-            params.push(attr + "=" + app.globalData.query[attr])
+  },
+  /* 验证码计时器 */
+  countDown() {
+    this.setData({
+      authenable: true,
+      btnName: "60 s"
+    })
+    let num = 60
+    let it = setInterval(() => {
+      if (num > 1) {
+        num -= 1
+        this.setData({
+          btnName: num + " s"
+        })
+      } else {
+        this.setData({
+          btnName: "重新获取",
+          authenable: false
+        })
+        clearInterval(it)
+      }
+    }, 1000)
+  },
+  /* 手机号登录 */
+  send() {
+    if (!this.params.telFormat) {
+      wx.showToast({
+        title: "电话号码格式不对",
+        icon: "none",
+        duration: 1500,
+        mask: false
+      })
+    } else if (!this.params.codeFormat) {
+      wx.showToast({
+        title: "验证码格式不对",
+        icon: "none",
+        duration: 1500,
+        mask: false
+      })
+    } else {
+      let params = {
+        tempCode: app.globalData.tempCode,
+        mobile: this.params.tel,
+        captcha: this.params.authCode,
+        invite_uid: wx.getStorageSync("invite") /* 邀请码 */
+      }
+      this.login(params)
+    }
+  },
+  /* 登录请求 */
+  login(param) {
+    app.user.register(param).then(res => {
+      if (res.code === 1) {
+        wx.setStorageSync("token", res.data.token)
+        wx.setStorageSync("uid", res.data.uid)
+        wx.setStorageSync("authKey", res.data.authKey)
+        app.setUser(res.data.userInfo)
+        if (res.data.userInfo.mobile) {
+          if (app.globalData.query.type == "share") {
+            let params = []
+            for (let attr in app.globalData.query) {
+              params.push(attr + "=" + app.globalData.query[attr])
+            }
+            wx.reLaunch({ url: app.globalData.path + "?" + params.join("&") })
+          } else {
+            /*跳转首页*/
+            wx.reLaunch({ url: "/pages/index/index" })
           }
-          wx.reLaunch({ url: app.globalData.path + "?" + params.join("&") })
-        } else {
-          /*返回首页*/
-          wx.reLaunch({ url: "/pages/index/index" })
         }
+      } else {
+        wx.showToast({
+          title: res.msg,
+          icon: "none",
+          duration: 1500,
+          mask: false
+        })
       }
     })
   }

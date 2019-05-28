@@ -2,15 +2,13 @@
 const app = getApp()
 Page({
   data: {
-    IMG_URL: app.IMG_URL,
     rlSucFlag: false,
     isRefreshing: false
   },
   onLoad(options) {
     this.param = { page: 1, pageSize: 10 }
     this.setData({
-      list: [],
-      userInfo: wx.getStorageSync("userInfo")
+      list: []
     })
     /* 从cdetail-->发帖 */
     if (options.rlSuc) {
@@ -205,7 +203,7 @@ Page({
     this.getList()
   },
   toUser(e) {
-    if (this.data.userInfo.id == e.currentTarget.dataset.uid) {
+    if (this.data.$state.userInfo.id == e.currentTarget.dataset.uid) {
       wx.navigateTo({
         url: "/pages/user/user"
       })

@@ -10,7 +10,7 @@
           <view class="picker" wx:if="{{param.address[1]}}">
             {{param.address[0]}}，{{param.address[1]}}，{{param.address[2]}}
           </view>
-          <image class='icon' mode='aspectFill' src='{{IMG_URL}}/Return-black.png'/>
+          <image class='icon' mode='aspectFill' src='{{$state.imgHost}}/Return-black.png'/>
         </view>
       </picker>
     </view>
@@ -29,7 +29,7 @@
           <view class="picker" wx:if="{{param.university[2]}}">
             {{param.university[0]}} {{param.university[1]}} {{param.university[2]}}
           </view>
-          <image class='icon' mode='aspectFill' src='{{IMG_URL}}/Return-black.png'/>
+          <image class='icon' mode='aspectFill' src='{{$state.imgHost}}/Return-black.png'/>
         </view>
       </picker>
     </view>
@@ -42,7 +42,7 @@
           <view class="picker" wx:if="{{param.gender==0||param.gender==1}}">
             {{gender[param.gender]}}
           </view>
-          <image class='icon' mode='aspectFill' src='{{IMG_URL}}/Return-black.png'/>
+          <image class='icon' mode='aspectFill' src='{{$state.imgHost}}/Return-black.png'/>
         </view>
       </picker>
     </view>
@@ -55,7 +55,7 @@
           <view class="picker" wx:if="{{param.age}}">
             {{param.age}}
           </view>
-          <image class='icon' mode='aspectFill' src='{{IMG_URL}}/Return-black.png'/>
+          <image class='icon' mode='aspectFill' src='{{$state.imgHost}}/Return-black.png'/>
         </view>
       </picker>
     </view>

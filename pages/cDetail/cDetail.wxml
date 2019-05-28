@@ -11,7 +11,7 @@
         <text class="name line">{{ circle.title }}</text>
         <navigator class="member" url="../member/member?id={{ circle.id }}&name={{ circle.title }}" hover-class="none" open-type="navigate">
           {{ circle.members }}名成员
-          <image mode="aspectFill" class="icon" src="{{ IMG_URL }}/Return.png"></image>
+          <image mode="aspectFill" class="icon" src="{{ $state.imgHost }}/Return.png"></image>
         </navigator>
       </view>
     </view>
@@ -43,8 +43,8 @@
         <view class="content" wx:if="{{ item.url }}">
           <video wx:if="{{ !item.pause }}" id="{{ item.id }}" src="{{ item.url }}" controls page-gesture enable-play-gesture bindended="ended" data-index="{{ index }}"></video>
           <view wx:if="{{ item.pause }}" class="bg" data-index="{{ index }}">
-            <image wx:if="{{ item.pause }}" mode="aspectFill" src="{{ item.auditing ? IMG_URL + '/tip.jpg' : item.image }}" class="poster"></image>
-            <image wx:if="{{ item.pause }}" mode="aspectFill" src="{{ IMG_URL }}/play-hl.png" class="play" data-index="{{ index }}"></image>
+            <image wx:if="{{ item.pause }}" mode="aspectFill" src="{{ item.auditing ? $state.imgHost + '/tip.jpg' : item.image }}" class="poster"></image>
+            <image wx:if="{{ item.pause }}" mode="aspectFill" src="{{ $state.imgHost }}/play-hl.png" class="play" data-index="{{ index }}"></image>
           </view>
         </view>
       </view>
@@ -71,7 +71,7 @@
 </view>
 <view class="footer">
   <navigator url="../release/release" hover-class="none" open-type="navigate" class="write">
-    <image mode="aspectFill" class="icon" src="{{ IMG_URL }}/write.png"></image>
+    <image mode="aspectFill" class="icon" src="{{ $state.imgHost }}/write.png"></image>
     <text class="text">写帖</text>
   </navigator>
 </view>

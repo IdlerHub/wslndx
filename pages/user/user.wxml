@@ -3,7 +3,7 @@
   <view wx:if="{{ isRefreshing }}" class="weui-loadmore indexdrop">
     <view class="weui-loading"></view>
   </view>
-  <navigator hover-class="none" class="top" wx:if="{{ userInfo.nickname }}" url="../info/info" open-type="navigate">
+  <navigator hover-class="none" class="top" wx:if="{{ $state.authUserInfo }}" url="../info/info" open-type="navigate">
     <image class="bg" mode="widthFix" src="{{ userInfo.avatar }}"></image>
     <view class="box">
       <view class="left">
@@ -20,7 +20,7 @@
       <icon class="iconfont icon-arrow-right"></icon>
     </view>
   </navigator>
-  <button class="top" wx:if="{{ !userInfo.nickname }}" open-type="getUserInfo" bindgetuserinfo="getUserInfo">
+  <button class="top" wx:else open-type="getUserInfo" bindgetuserinfo="getUserInfo">
     <image class="bg" mode="widthFix" src="/images/5.png"></image>
     <view class="box">
       <view class="left">

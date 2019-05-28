@@ -33,8 +33,8 @@
                 <video wx:if="{{!detail.pause}}" id="{{detail.id}}" src="{{detail.url}}" controls page-gesture enable-play-gesture bindended="ended">
           </video>
                 <view wx:if="{{detail.pause}}" class="bg" bindtap='play'>
-                    <image wx:if="{{detail.pause}}" mode='aspectFill' src="{{detail.auditing?IMG_URL+'/tip.jpg':detail.image}}" class="poster"></image>
-                    <image wx:if="{{detail.pause}}" mode='aspectFill' src="{{IMG_URL}}/play-hl.png" class="play" bindtap='play'></image>
+                    <image wx:if="{{detail.pause}}" mode='aspectFill' src="{{detail.auditing?$state.imgHost+'/tip.jpg':detail.image}}" class="poster"></image>
+                    <image wx:if="{{detail.pause}}" mode='aspectFill' src="{{$state.imgHost}}/play-hl.png" class="play" bindtap='play'></image>
                 </view>
             </view>
             <!-- </navigator> -->
@@ -63,8 +63,8 @@
                                 <text class='line name'>{{item.nickname}}</text>
                                 <view class="time-del">
                                     <text class='line time'>{{item.createtimes}}</text>
-                                    <view class="del" wx:if="{{userInfo.id == item.uid}}" catchtap="delComment" data-item="{{item}}">
-                                        <image src="{{IMG_URL}}/delete.png" mode="aspectFill" class="icon-del"></image>
+                                    <view class="del" wx:if="{{$state.userInfo.id == item.uid}}" catchtap="delComment" data-item="{{item}}">
+                                        <image src="{{$state.imgHost}}/delete.png" mode="aspectFill" class="icon-del"></image>
                                         <text>删除</text>
                                     </view>
                                 </view>
@@ -117,7 +117,7 @@
             <textarea placeholder="写评论" focus="{{txoptions}}" cursor-spacing="190rpx" fixed="{{txoptions}}" bindinput="input" value='{{content}}' placeholder-class="ph-class" />
             <view class='right' catchtap='navigator'>
                 <view class='to'>
-                    <image mode='aspectFit' class='icon' src='{{IMG_URL}}/screen.png'></image>
+                    <image mode='aspectFit' class='icon' src='{{$state.imgHost}}/screen.png'></image>
                 </view>
                 <button class='release' disabled="{{!content}}" catchtap='release'>发布</button>
             </view>

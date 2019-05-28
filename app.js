@@ -6,11 +6,12 @@ import regeneratorRuntime from "wx-promise-pro"
 const wxpro = require("wx-promise-pro")
 /*埋点统计*/
 const ald = require("./utils/ald-stat.js")
+/* 全局状态管理 */
+import store from "./store"
 
 //app.js
 App({
-  API_URL: "https://apielb.jinlingkeji.cn/api/v1/", //正式域名：https://apielb.jinlingkeji.cn   开发域名：https://develop.jinlingkeji.cn/api/v1/
-  IMG_URL: "https://jinling-xcx-dev.obs.cn-north-1.myhuaweicloud.com/images/pro",
+  API_URL: "https://apielb.jinlingkeji.cn/api/v2/", //正式域名：https://apielb.jinlingkeji.cn   开发域名：https://develop.jinlingkeji.cn/api/v1/
   //工具库
   util: require("utils/util.js"),
   md5: require("utils/md5.js"),
@@ -21,67 +22,51 @@ App({
   circle: require("data/Circle.js"),
   // Base64
   base64: Base64,
-  data: {},
+  store,
   onLaunch: async function(opts) {
-    let sign = wx.getStorageSync("signStatus") || {}
-    /* 签到状态 */
-    this.globalData.integration = sign.time == new Date().toDateString() && sign.status
-    /* 每天显示一次签到弹窗 */
-    if (sign.time == new Date().toDateString() && sign.modal) {
-      this.globalData.quickInteg = false
-    } else {
-      this.globalData.quickInteg = true
-      wx.setStorage({
-        key: "signStatus",
-        data: { time: new Date().toDateString(), status: sign.status || false, modal: true }
-      })
-    }
-
     /* 检查版本更新 */
     this.checkVersion()
+    /* 签到状态 */
+    this.initSignIn()
     /* 检查用户是否时分享卡片进来 */
-    if (opts.scene == 1007 || opts.scene == 1008) {
-      /* 卡片页面路径 */
-      this.globalData.path = "/" + opts.path
-      /* 卡片页面参数 */
-      this.globalData.query = opts.query
-      /* 邀请码记录 */
+    if (this.globalData.scenes.indexOf(opts.scene) >= 0) {
+      this.globalData.path = "/" + opts.path /* 卡片页面路径 */
+      this.globalData.query = opts.query /* 卡片页面参数 */
       if (opts.query.type == "invite") {
-        wx.setStorageSync("invite", opts.query.uid)
+        wx.setStorageSync("invite", opts.query.uid) /* 邀请码记录 */
       }
     }
-    /* 直接进入首页的全部要求授权 */
+
     let userInfo = wx.getStorageSync("userInfo") || {}
-    if (!!userInfo.mobile) {
-      this.globalData.userInfo = userInfo
-      !(opts.query.type == "share") && wx.reLaunch({ url: "/pages/index/index" })
-    } else {
+    let authKey = wx.getStorageSync("authKey")
+    /* storage中信息缺失,重新登录 */
+    if (!(userInfo.mobile && authKey)) {
       await this.wxLogin()
-      if (!this.globalData.userInfo.mobile) {
-        /* 新用户注册不用提示签到 */
-        this.globalData.quickInteg = false
-        wx.reLaunch({ url: "/pages/login/login" })
-      } else {
-        !(opts.query.type == "share") && wx.reLaunch({ url: "/pages/index/index" })
-      }
+    }
+    /* 初始化store */
+    this.initStore()
+    if (!this.store.$state.userInfo.mobile) {
+      /* 新用户注册不用提示签到 */
+      this.globalData.quickInteg = false
+      wx.reLaunch({ url: "/pages/login/login" })
+    } else {
+      opts.query.type !== "share" && wx.reLaunch({ url: "/pages/index/index" })
     }
   },
   onShow: function(opts) {
     let lists = ["share", "invite"]
-    /* 小程序已经启动后从分享卡片过来 */
-    if (getCurrentPages().length > 0 && (opts.scene == 1007 || opts.scene == 1008) && lists.indexOf(opts.query.type) >= 0) {
-      /* 卡片页面路径 */
-      this.globalData.path = "/" + opts.path
-      /* 卡片页面参数 */
-      this.globalData.query = opts.query
-      if (!this.globalData.userInfo.mobile) {
+    /* 小程序(在后台运行中时)从分享卡片过来 */
+    if (getCurrentPages().length > 0 && this.globalData.scenes.indexOf(opts.scene) >= 0 && lists.indexOf(opts.query.type) >= 0) {
+      this.globalData.path = "/" + opts.path /* 卡片页面路径 */
+      this.globalData.query = opts.query /* 卡片页面参数 */
+      if (!this.store.$state.userInfo.mobile) {
         /* 邀请码记录 */
         if (opts.query.type == "invite") {
           wx.setStorageSync("invite", opts.query.uid)
         }
         wx.reLaunch({ url: "/pages/login/login" })
       } else {
-        !(opts.query.type == "share") && wx.reLaunch({ url: "/pages/index/index" })
+        opts.query.type !== "share" && wx.reLaunch({ url: "/pages/index/index" })
       }
     }
   },
@@ -98,27 +83,60 @@ App({
           /* 旧用户 */
           wx.setStorageSync("token", msg.data.token)
           wx.setStorageSync("uid", msg.data.uid)
-          wx.setStorageSync("userInfo", msg.data.userInfo)
-          this.globalData.userInfo = msg.data.userInfo
+          wx.setStorageSync("authKey", msg.data.authKey)
+          this.setUser(msg.data.userInfo)
+        }
+      }
+    })
+  },
+  /* 初始化store */
+  initStore: function() {
+    this.store.setState({
+      visitedNum: wx.getStorageSync("visitedNum") || [],
+      userInfo: wx.getStorageSync("userInfo") || {},
+      authKey: wx.getStorageSync("authKey")
+    })
+    this.getSets()
+  },
+  /* 更新store中的userInfo */
+  setUser: function(data) {
+    this.store.setState({
+      userInfo: data
+    })
+    wx.setStorageSync("userInfo", data)
+  },
+  /* 用户授权情况  */
+  getSets: function() {
+    let self = this
+    wx.getSetting({
+      success: res => {
+        if (res.errMsg == "getSetting:ok") {
+          let auth = res.authSetting["scope.userInfo"]
+          self.store.setState({
+            authUserInfo: auth || false,
+            baseInfo: !auth && self.store.$state.visitedNum.length > 10
+          })
         }
       }
     })
   },
   addVisitedNum: function(id) {
-    let userInfo = wx.getStorageSync("userInfo")
-    if (!userInfo.nickname) {
-      let arr = wx.getStorageSync("visitedNum") ? wx.getStorageSync("visitedNum") : []
-      if (arr.indexOf(id) == -1) {
-        arr.push(id)
-        wx.setStorageSync("visitedNum", arr)
-      }
+    let arr = this.store.$state.visitedNum
+    if (!this.store.$state.authUserInfo && arr.indexOf(id) == -1) {
+      arr.push(id)
+      this.store.setState({
+        visitedNum: arr,
+        baseInfo: arr.length > 10
+      })
+      wx.setStorageSync("visitedNum", arr)
     }
   },
+  /* 授权更新用户信息 */
   updateBase(e, page) {
     if (e.detail.errMsg != "getUserInfo:ok") {
-      page.setData({ baseInfo: true })
       return
     }
+    this.getSets()
     let param = {
       userInfo: JSON.stringify(e.detail.userInfo),
       encryptedData: e.detail.encryptedData,
@@ -126,13 +144,11 @@ App({
     }
     this.user.profile(param).then(msg => {
       if (msg.code == 1) {
-        this.globalData.userInfo = msg.data.userInfo
-        wx.setStorageSync("userInfo", msg.data.userInfo)
-        let userInfo = msg.data.userInfo
+        this.setUser(msg.data.userInfo)
+        let userInfo = JSON.parse(JSON.stringify(msg.data.userInfo))
         if (userInfo) userInfo.address = userInfo.address ? userInfo.address.split(",")[1] : ""
         page.setData({
-          userInfo: userInfo,
-          baseInfo: false
+          userInfo: userInfo
         })
         if (this.userInfoReadyCallback) {
           this.userInfoReadyCallback()
@@ -140,14 +156,22 @@ App({
       }
     })
   },
-  baseInfo: function(page) {
-    let visitedNum = wx.getStorageSync("visitedNum")
-    let userInfo = wx.getStorageSync("userInfo")
-    if (visitedNum.length > 10 && !userInfo.nickname) {
-      page.setData({ baseInfo: true })
+  initSignIn() {
+    let sign = wx.getStorageSync("signStatus") || {}
+    /* 是否已签到 */
+    this.globalData.integration = sign.time == new Date().toDateString() && sign.status
+    /* 每天只显示一次签到弹窗 */
+    if (sign.time == new Date().toDateString() && sign.modal) {
+      this.globalData.quickInteg = false
+    } else {
+      this.globalData.quickInteg = true
+      wx.setStorage({
+        key: "signStatus",
+        data: { time: new Date().toDateString(), status: sign.status || false, modal: true }
+      })
     }
   },
-  checkVersion: () => {
+  checkVersion: function() {
     if (wx.canIUse("getUpdateManager")) {
       const updateManager = wx.getUpdateManager()
       updateManager.onCheckForUpdate(function(res) {
@@ -185,16 +209,15 @@ App({
     code: null,
     /* 新用户临时code */
     tempCode: null,
-    /* 登录用户信息 */
-    userInfo: {},
     /* 签到弹窗 */
     quickInteg: false,
     /* 签到状态 */
     integration: null,
-    /*  */
     /* 卡片路径 */
     path: null,
     /* 卡片参数 */
-    query: {}
+    query: {},
+    /* 卡片进入的场景值 */
+    scenes: [1007, 1008, 1047, 1048, 1049]
   }
 })

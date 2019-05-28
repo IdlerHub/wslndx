@@ -455,7 +455,7 @@
   width: 400rpx;
   height: 285rpx;
   left: calc((100% - 400rpx) / 2);
-  background-image: url("https://jinling-xcx-dev.obs.cn-north-1.myhuaweicloud.com/images/dev/integration_ani.png");
+  background-image: url("https://jinling-xcx-dev.obs.cn-north-1.myhuaweicloud.com/images/pro/integration_ani.png");
   background-size: cover;
   animation: ani 2s steps(22, end) infinite;
 }
@@ -476,4 +476,52 @@
 
 .integration .dialog icon {
   margin-top: 48rpx;
+}
+
+.outer-link {
+  height: 250rpx;
+  margin: 30rpx 0 0;
+  padding: 40rpx 30rpx;
+  background: #efefef;
+  display: flex;
+  align-items: stretch;
+  text-align: left;
+  overflow: visible;
+}
+
+.outer-link > image {
+  width: 270rpx;
+  height: 170rpx;
+}
+
+.outer-link .dsc {
+  position: relative;
+  flex: 1;
+  padding-left: 20rpx;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.outer-link .dsc > text:nth-child(1) {
+  font-size: 40rpx;
+  font-family: PingFangSC-Medium;
+  font-weight: 500;
+  color: #3a3a3a;
+  line-height: 56rpx;
+}
+
+.outer-link .dsc > text:nth-child(2) {
+  font-size: 28rpx;
+  font-family: PingFangSC-Regular;
+  font-weight: 400;
+  color: #7e7e7e;
+  line-height: 40rpx;
+}
+
+.outer-link .dsc image {
+  width: 200rpx;
+  height: 54rpx;
+  position: absolute;
+  bottom: 0;
 }

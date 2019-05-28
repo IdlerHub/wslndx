@@ -7,7 +7,7 @@
   <view class="content">
     <view class="left">
       <image class="poster" mode="widthFix" src="{{ item.image }}"></image>
-      <image class="icon" mode="aspectFill" src="{{ IMG_URL }}/play.png"></image>
+      <image class="icon" mode="aspectFill" src="{{ $state.imgHost }}/play.png"></image>
     </view>
     <view class="right">
       <text class="line name">{{ item.title }}</text>
@@ -24,6 +24,6 @@
   </view>
 </navigator>
 <view class="ncol" wx:if="{{ collect.length == 0 }}">
-  <image mode="widthFix" src="{{ IMG_URL }}/ncol.png"></image>
+  <image mode="widthFix" src="{{ $state.imgHost }}/ncol.png"></image>
   <text class="line">啥都没有呢~\n赶紧去收藏课程吧</text>
 </view>
