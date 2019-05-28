@@ -1,0 +1,7 @@
+<view class="gift_page">
+  <view class="bg">
+    <icon class="iconfont icon-dui"></icon>
+  </view>
+  <text class="title">兑换成功</text>
+  <button class="customer" hover-class="button-hover" open-type="contact" bindcontact="handleContact">联系客服领取</button>
+</view>

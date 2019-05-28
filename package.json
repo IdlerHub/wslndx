@@ -12,7 +12,8 @@
   "author": "hxz",
   "license": "ISC",
   "dependencies": {
-    "wx-promise-pro": "^2.6.0"
+    "wx-promise-pro": "^2.6.0",
+    "wxministore": "^1.2.4"
   },
   "devDependencies": {}
 }

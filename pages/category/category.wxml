@@ -2,7 +2,7 @@
     <!-- 下拉刷新 -->
     <view wx:if="{{isRefreshing}}" class='weui-loadmore'>
         <view class='weui-loading'></view>
-        <view class='weui-loadmore-tips'>加载中...</view>
+        <!-- <view class='weui-loadmore-tips'>加载中...</view> -->
     </view>
     <view class='top'>
         <image class='img' mode='aspectFill' src='{{options.img}}' />
@@ -11,7 +11,7 @@
         <view catchtap="detailTap" wx:for="{{list}}" wx:key="index" class='item' data-item="{{item}}">
             <view class='left'>
                 <image class='poster' mode='aspectFill' src='{{item.image}}' />
-                <image class='icon' mode='aspectFill' src='{{IMG_URL}}/images/play.png' />
+                <image class='icon' mode='aspectFill' src='{{$state.imgHost}}/play.png' />
             </view>
             <view class='right'>
                 <text class='line name'>{{item.title}}</text>

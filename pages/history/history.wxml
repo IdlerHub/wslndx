@@ -1,0 +1,36 @@
+<view class="" hover-class="none">
+  <!-- 下拉刷新 -->
+  <view wx:if="{{ isRefreshing }}" class="weui-loadmore indexdrop">
+    <view class="weui-loading"></view>
+  </view>
+  <navigator wx:if="{{ history.last_lesson }}" url="../detail/detail?id={{ history.last_lesson.id }}&play&name={{ history.last_lesson.title }}" hover-class="none" open-type="navigate" class="cur">
+    <view class="cur-wrap">
+      <view class="left">
+        <text class="line dName">{{ history.last_lesson.subtitle }}</text>
+        <text class="line name">{{ history.last_lesson.sub_id }}.{{ history.last_lesson.title }}</text>
+      </view>
+      <view class="right">
+        <image class="icon" mode="aspectFill" src="{{ $state.imgHost }}/play-red.png"></image>
+        <text class="line">继续播放</text>
+      </view>
+    </view>
+  </navigator>
+  <!--学习历史  -->
+  <view wx:if="{{ history.last_lesson }}" class="wrap history">
+    <view wx:for="{{ history.history }}" wx:key="index" class="item">
+      <view class="date">{{ item.date }}</view>
+      <view wx:for="{{ item.data }}" wx:for-item="items" wx:key="index" class="li">
+        <view class="time">{{ items.createtime }} 学习</view>
+        <view class="title">
+          <text class="dName">{{ items.subtitle }}</text>
+          <text class="name" wx:if="{{ items.title }}">{{ items.title }}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+  <view class="nhis" wx:else>
+    <image mode="widthFix" src="{{ $state.imgHost }}/nhis.png"></image>
+    <text class="line">啥都没有呢~</text>
+    <text class="line">赶紧去课程看看吧</text>
+  </view>
+</view>

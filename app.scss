@@ -1,0 +1,123 @@
+/**app.wxss**/
+@import "./iconfont.wxss";
+@import "./variables.scss";
+
+page {
+  background: #fff;
+  box-sizing: border-box;
+}
+
+.popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  z-index: 999;
+}
+
+.moveIn {
+  animation: moveIn 0.5s ease-out 0s both;
+}
+
+.moveOut {
+  pointer-events: none;
+  animation: moveOut 0.5s ease-out 0s both;
+}
+
+@keyframes moveIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    transform: none;
+    opacity: 1;
+  }
+}
+
+@keyframes moveOut {
+  from {
+    transform: scale(1);
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes ani {
+  0% {
+    background-position: 0%;
+  }
+  100% {
+    background-position: 100%;
+  }
+}
+
+button::after {
+  border: none;
+}
+
+button {
+  outline: none;
+  background-color: none;
+  border: none;
+  border-radius: inherit;
+  padding: 0;
+  margin: 0;
+  background: none;
+}
+
+.line {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.btn-hover {
+  background: none;
+}
+
+/* 下拉刷新 */
+
+.weui-loadmore {
+  width: 100%;
+  height: 50px;
+  font-size: 30rpx;
+  text-align: center;
+  margin: 0rpx auto;
+  padding-top: 20rpx;
+  padding-bottom: 20rpx;
+  background: #eee;
+}
+
+.weui-loadmore.indexdrop {
+  padding-top: 60rpx;
+}
+
+.weui-loading {
+  display: block;
+  width: 100rpx;
+  height: 100rpx;
+  margin: 0rpx auto;
+  background-image: url($bg-host+"/refresh.png");
+  background-size: cover;
+  animation: ani 1s steps(23, end) infinite;
+}
+
+/* 发布动画 */
+.publishAni {
+  position: absolute;
+  top: 50%;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: -500rpx auto 0;
+  background-image: url($bg-host+"/fabu.png");
+  background-size: cover;
+  width: 460rpx;
+  height: 650rpx;
+  animation: ani 5s steps(20, end);
+}

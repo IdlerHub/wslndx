@@ -1,0 +1,40 @@
+<!-- 下拉刷新 -->
+<view wx:if="{{ isRefreshing }}" class="weui-loadmore indexdrop">
+  <view class="weui-loading"></view>
+</view>
+<view class="circle" hover-class="none" hover-stop-propagation="false">
+  <!--我的圈子  -->
+  <view wx:if="{{ circle.length > 0 }}" wx:for="{{ circle }}" wx:key="index" class="item">
+    <view class="top">
+      <text class="date">{{ item.createtimes }}</text>
+      <view class="delete" data-index="{{ index }}" bindtap="del"> <image mode="aspectFill" src="{{ $state.imgHost }}/delete.png"></image>删除</view>
+    </view>
+    <view bindtap="navigate" data-id="{{ item.id }}">
+      <rich-text class="name" nodes="{{ item.content }}"></rich-text>
+      <view class="content" wx:if="{{ item.images.length > 0 }}">
+        <view class="img one" wx:if="{{ item.images.length == 1 }}">
+          <image mode="widthFix" src="{{ item.images[0] }}" data-urls="{{ item.images }}" data-current="{{ item.images[0] }}" bindtap="previewImage"></image>
+        </view>
+        <view class="img three" wx:else>
+          <image mode="aspectFill" wx:for="{{ item.images }}" wx:for-item="items" wx:key="index" src="{{ items }}" data-urls="{{ item.images }}" data-current="{{ items }}" bindtap="previewImage"></image>
+        </view>
+      </view>
+      <view class="content" wx:if="{{ item.url }}">
+        <video wx:if="{{ !item.pause }}" id="{{ item.id }}" src="{{ item.url }}" controls page-gesture enable-play-gesture></video>
+        <view wx:if="{{ item.pause }}" class="bg" data-index="{{ index }}">
+          <image wx:if="{{ item.pause }}" mode="aspectFill" src="{{ item.auditing ? $state.imgHost + '/tip.jpg' : item.image }}" class="poster"></image>
+          <image wx:if="{{ item.pause }}" mode="aspectFill" src="{{ $state.imgHost }}/play-hl.png" class="play"></image>
+        </view>
+      </view>
+    </view>
+    <navigator wx:if="{{ item.fs_title }}" url="../cDetail/cDetail?id={{ item.fs_id }}" hover-class="none" open-type="navigate" class="label">#{{ item.fs_title }}精选</navigator>
+  </view>
+  <view class="ncir" wx:if="{{ circle.length == 0 }}">
+    <image mode="widthFix" src="{{ $state.imgHost }}/ncir.png"></image>
+    <text class="line">啥都没有呢~\n发表自己的学友圈吧</text>
+    <navigator url="../release/release" hover-class="none" open-type="navigate">马上发布</navigator>
+  </view>
+  <view class="popup" wx:if="{{ rlAni }}">
+    <view class="publishAni"></view>
+  </view>
+</view>

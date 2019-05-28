@@ -1,6 +1,18 @@
 <!--pages/login/login.wxml-->
 <view class="container">
-    <image src="/images/logo.png" class="logo"></image>
-    <text class="logo-title">网上老年大学</text>
-    <button open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber" class="authorize-phone">微信授权登录</button>
+  <image src="/images/logo.png" class="logo"></image>
+  <text class="logo-title">网上老年大学</text>
+  <button wx:if="{{ mode }}" class="authorize-phone" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber">微信授权登录</button>
+  <form wx:else class="mobile" bindsubmit="send">
+    <view class="section1">
+      <input type="number" placeholder="请输入手机号" bindblur="inputTel" />
+    </view>
+    <view class="section2">
+      <input type="number" placeholder="请输入验证码" value="{{ params.authCode }}" bindblur="inputCode" />
+      <button class="code" disabled="{{ authenable }}" hover-class="button-hover" catchtap="getCode">{{ btnName }}</button>
+    </view>
+    <button class="submit" hover-class="button-hover" form-type="submit">登录</button>
+  </form>
+
+  <view class="buttons"> <text data-type="1" catchtap="loginType">微信授权登录</text> | <text data-type="0" catchtap="loginType">手机号登录</text> </view>
 </view>

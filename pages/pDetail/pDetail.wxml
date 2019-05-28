@@ -1,14 +1,17 @@
 <!-- 下拉刷新 -->
 <view wx:if="{{isRefreshing}}" class='weui-loadmore'>
     <view class='weui-loading'></view>
-    <view class='weui-loadmore-tips'>加载中...</view>
+    <!-- <view class='weui-loadmore-tips'>加载中...</view> -->
 </view>
 <view class="container">
     <view class='box'>
+        <view wx:if='{{vistor}}' class="vistor-head">
+           点击“ <icon class="iconfont icon-xiaochengxu"></icon> ”添加到我的小程序 <icon class="iconfont icon-shouzhi"></icon>
+        </view>
         <view class='detail'>
             <view class='top'>
                 <view class='left'>
-                    <image mode='aspectFill' class='avatarUrl' src='{{detail.avatar}}'></image>
+                    <image mode='aspectFill' class='avatarUrl' src='{{detail.avatar}}' data-uid="{{ detail.uid }}" catchtap="toUser"></image>
                     <view class='text'>
                         <text class='nickName line'>{{detail.nickname}}</text>
                         <text wx:if="{{detail.university_name}}" class='school line'>{{detail.university_name}}</text>
@@ -30,12 +33,12 @@
                 <video wx:if="{{!detail.pause}}" id="{{detail.id}}" src="{{detail.url}}" controls page-gesture enable-play-gesture bindended="ended">
           </video>
                 <view wx:if="{{detail.pause}}" class="bg" bindtap='play'>
-                    <image wx:if="{{detail.pause}}" mode='aspectFill' src="{{detail.auditing?IMG_URL+'/images/tip.jpg':detail.image}}" class="poster"></image>
-                    <image wx:if="{{detail.pause}}" mode='aspectFill' src="{{IMG_URL}}/images/play-hl.png" class="play" bindtap='play'></image>
+                    <image wx:if="{{detail.pause}}" mode='aspectFill' src="{{detail.auditing?$state.imgHost+'/tip.jpg':detail.image}}" class="poster"></image>
+                    <image wx:if="{{detail.pause}}" mode='aspectFill' src="{{$state.imgHost}}/play-hl.png" class="play" bindtap='play'></image>
                 </view>
             </view>
             <!-- </navigator> -->
-            <navigator wx:if="{{detail.fs_title}}" url='../cDetail/cDetail?id={{detail.fs_id}}' hover-class="none" open-type="navigate" class='label' style='background: #{{detail.color}}'>#{{detail.fs_title}}</navigator>
+            <button  wx:if="{{detail.fs_title}}"  class="label"  hover-class="none" > #{{detail.fs_title}}</button>
         </view>
     </view>
     <scroll-view scroll-x="true" class="nav" scroll-left="{{navScrollLeft}}" scroll-with-animation="{{true}}">
@@ -43,7 +46,7 @@
             <view class="item {{currentTab == id ?'active':''}}" data-current="{{id}}" bindtap="switchNav">{{item.name}}</view>
         </block>
     </scroll-view>
-    <swiper class="tab" style="height:{{height}}px" current="{{currentTab}}" duration="300" bindchange="switchTab">
+    <swiper class="tab"  style="height:{{height}}px" current="{{currentTab}}" duration="300" bindchange="switchTab">
         <swiper-item class="tab-item">
             <!--评论  -->
             <view class="wrap comment">
@@ -60,8 +63,8 @@
                                 <text class='line name'>{{item.nickname}}</text>
                                 <view class="time-del">
                                     <text class='line time'>{{item.createtimes}}</text>
-                                    <view class="del" wx:if="{{userInfo.id == item.uid}}" catchtap="delComment" data-item="{{item}}">
-                                        <image src="{{IMG_URL}}/images/delete.png" mode="aspectFill" class="icon-del"></image>
+                                    <view class="del" wx:if="{{$state.userInfo.id == item.uid}}" catchtap="delComment" data-item="{{item}}">
+                                        <image src="{{$state.imgHost}}/delete.png" mode="aspectFill" class="icon-del"></image>
                                         <text>删除</text>
                                     </view>
                                 </view>
@@ -91,40 +94,38 @@
         </swiper-item>
     </swiper>
     <view class='footer'>
-        <view class='item' bindtap='praise'>
-            <view wx:if="{{!detail.praising}}" class='icon'>
-                <image wx:if="{{detail.likestatus==0}}" mode='aspectFill' src='{{IMG_URL}}/images/heart-ash.png'></image>
-                <image wx:if="{{detail.likestatus==1}}" mode='aspectFill' src='{{IMG_URL}}/images/heart-red.png'></image>
-            </view>
-            <view wx:if="{{detail.praising}}" class='icon'>
-                <view class='ani' bindanimationend="aniend" style='background-image: url(https://bogole.com/project/d19030901/images/heart-ani.png)'></view>
-            </view>
-            <text wx:if="{{!detail.lw}}" class='text'>{{detail.likes}}</text>
-            <text wx:if="{{detail.lw}}" class='text'>{{detail.lw}}万</text>
-        </view>
+        <button class="share item" open-type="share" data-id="{{detail.id}}" hover-class="btn-hover">
+            <icon class="iconfont icon-fenxiang"></icon>
+            <text class="text">{{ detail.fw ? detail.fw + "万" : detail.forward }}</text>
+        </button>  
+        <text class="division"></text>
         <view class='item' bindtap='show'>
-            <image mode='aspectFill' class='icon' src='{{IMG_URL}}/images/comment.png'></image>
+            <icon class="iconfont icon-comment"></icon>
             <text wx:if="{{!detail.cw}}" class='text'>{{detail.comments}}</text>
             <text wx:if="{{detail.cw}}" class='text'>{{detail.cw}}万</text>
+        </view>
+        <text class="division"></text>
+        <view class='item' bindtap='praise'>
+            <view class="praise  {{ detail.likestatus ? 'end' : '' }} {{ detail.praising ? 'ani' : '' }}" data-index="{{ index }}" bindanimationend="aniend"></view>
+            <text wx:if="{{!detail.lw}}" class='text'>{{detail.likes}}</text>
+            <text wx:if="{{detail.lw}}" class='text'>{{detail.lw}}万</text>
         </view>
     </view>
     <view class='popup write' wx:if="{{write}}">
         <view class='bg' bindtap='hide'></view>
         <view class='box'>
-            <textarea
-            placeholder="写评论"
-            focus="{{txoptions}}" 
-            cursor-spacing="190rpx"
-            fixed="{{txoptions}}"
-            bindinput="input"
-            value='{{content}}'
-            placeholder-class="ph-class" />
+            <textarea placeholder="写评论" focus="{{txoptions}}" cursor-spacing="190rpx" fixed="{{txoptions}}" bindinput="input" value='{{content}}' placeholder-class="ph-class" />
             <view class='right' catchtap='navigator'>
                 <view class='to'>
-                    <image mode='aspectFit' class='icon' src='{{IMG_URL}}/images/screen.png'></image>
+                    <image mode='aspectFit' class='icon' src='{{$state.imgHost}}/screen.png'></image>
                 </view>
                 <button class='release' disabled="{{!content}}" catchtap='release'>发布</button>
             </view>
         </view>
+    </view>
+
+    <view wx:if="{{vistor}}" class="vistor-home" catchtap='tohome'>
+        <icon class="iconfont icon-shouye"></icon>
+        <text>首页</text>
     </view>
 </view>

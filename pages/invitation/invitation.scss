@@ -1,0 +1,122 @@
+page {
+  background: #f4f4f4;
+  padding: 40rpx 60rpx 0;
+  canvas {
+    width: 592rpx;
+    height: 837rpx;
+    position: absolute;
+    top: -1000rpx;
+  }
+  .scroll {
+    // display: none;
+    margin-bottom: 380rpx;
+    .theme {
+      position: relative;
+      height: 797rpx;
+      .bg {
+        height: 797rpx;
+        width: 100%;
+      }
+      .user {
+        position: absolute;
+        top: 375rpx;
+        left: 50rpx;
+        display: flex;
+        align-items: center;
+        .portrait {
+          width: 70rpx;
+          height: 70rpx;
+          border-radius: 50%;
+        }
+        .name {
+          font-family: PingFangSC-Regular;
+          font-size: 36rpx;
+          color: #ffffff;
+          margin-left: 20rpx;
+        }
+      }
+      .phrase {
+        position: absolute;
+        top: 445rpx;
+        left: 137rpx;
+        width: 65%;
+        text-align: center;
+        font-family: PingFangSC-Medium;
+        font-size: 40rpx;
+        line-height: 56rpx;
+        color: #ffffff;
+      }
+      .dsc {
+        position: absolute;
+        height: 170rpx;
+        width: calc(100% - 80rpx);
+        bottom: 0;
+        padding: 5rpx 40rpx;
+        background: white;
+        display: flex;
+        align-items: center;
+        .qrcode {
+          width: 160rpx;
+          height: 160rpx;
+        }
+        text {
+          margin-left: 30rpx;
+          display: block;
+          font-family: PingFangSC-Regular;
+          font-size: 32rpx;
+          color: #3a3a3a;
+          letter-spacing: 0;
+          line-height: 48rpx;
+        }
+      }
+    }
+    .broadcast {
+      font-family: PingFangSC-Regular;
+      font-size: 32rpx;
+      color: #7e7e7e;
+      letter-spacing: 0;
+      height: 158rpx;
+      padding-top: 30rpx;
+      line-height: 48rpx;
+      text-align: center;
+      text {
+        color: #ffb211;
+      }
+    }
+  }
+  .buttons {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    background: white;
+    width: calc(100% - 280rpx);
+    height: 200rpx;
+    padding: 40rpx 140rpx;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .save {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      .icon {
+        padding: 23rpx;
+        width: 74rpx;
+        height: 74rpx;
+        background: #44c4ff;
+        border-radius: 50%;
+      }
+      text {
+        font-family: PingFangSC-Regular;
+        font-size: 36rpx;
+        color: #3a3a3a;
+      }
+    }
+    .share {
+      @extend .save;
+      .icon {
+        background: #00bd02;
+      }
+    }
+  }
+}

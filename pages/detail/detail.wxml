@@ -1,85 +1,85 @@
 <view class="container">
-    <video id="myVideo" src="{{cur.url}}" controls page-gesture enable-play-gesture bindended="ended">
-        <cover-image wx:if="{{!playing}}" mode='widthFix' src="{{detail.image}}" class="poster" bindtap='recordAdd'></cover-image>
-        <cover-image wx:if="{{!playing}}" mode='aspectFill' src="{{IMG_URL}}/images/play.png" class="play" bindtap='recordAdd'></cover-image>
-    </video>
-    <view class='info'>
-        <view class='top'>
-            <text class='name line'>{{detail.title}}</text>
-            <text class='dramaNum'>共{{detail.lesson_count}}讲</text>
-        </view>
-        <text class='line actor' wx:if="{{detail.teacher_id==0}}">{{detail.subtitle}}</text>
-        <text class='line actor' wx:if="{{detail.teacher_id!=0}}">{{detail.teacher.name}}-{{detail.teacher.honor}}</text>
-        <view class='bottom'>
-            <view class='left'>
-                <view class='collect' bindtap='collect'>
-                    <view wx:if="{{!detail.collecting}}" class='icon'>
-                        <image wx:if="{{detail.collected==0}}" mode='aspectFill' src='{{IMG_URL}}/images/Collection.png' />
-                        <image wx:if="{{detail.collected==1}}" mode='aspectFill' src='{{IMG_URL}}/images/Collection-red.png' />
-                    </view>
-                    <view wx:if="{{detail.collecting}}" class='icon'>
-                        <view class='ani' bindanimationend="aniend" style='background-image: url({{IMG_URL}}/images/Collection-ani.png)'></view>
-                    </view>
-                    <text wx:if="{{detail.collected==0}}">收藏</text>
-                    <text wx:if="{{detail.collected==1}}">已收藏</text>
-                </view>
-                <view class='playNum'>
-                    <image class='icon' mode='aspectFill' src='{{IMG_URL}}/images/play-ash.png' />
-                    <text wx:if="{{detail.bw}}">{{detail.bw}}万</text>
-                    <text wx:if="{{!detail.bw}}">{{detail.browse}}</text>
-                </view>
-            </view>
-            <view class='right'>
-                <view class='progress' wx:if="{{detail.progress<100}}">
-                    <view class='line'><text class='num'>{{detail.progress?detail.progress:0}}%</text><text class='des'>已学习</text></view>
-                    <view class='pro-bar'>
-                        <view class='por-cur' wx:if="{{detail.progress&&detail.progress>0}}" style='width:{{detail.progress-4}}%'></view>
-                    </view>
-                </view>
-                <view class='certificate' wx:if="{{detail.progress==100}}" bindtap="navitor">
-                    <image class='icon' mode='aspectFill' src='{{IMG_URL}}/images/badge.png' />
-                    <text class='des'>查看证书</text>
-                </view>
-            </view>
-        </view>
+  <video id="myVideo" src="{{ cur.url }}" controls page-gesture enable-play-gesture bindended="ended">
+    <cover-view wx:if="{{ vistor }}" class="vistor-head">
+      <cover-view>点击“</cover-view>
+      <cover-image src="/images/xiaochengxu.png" class="iconfont"></cover-image>
+      <cover-view>”添加到我的小程序 </cover-view>
+      <cover-image src="/images/shouzhi.png" class="iconfont"></cover-image>
+    </cover-view>
+    <cover-image wx:if="{{ !playing }}" mode="widthFix" src="{{ detail.image }}" class="poster" bindtap="recordAdd"></cover-image>
+    <cover-image wx:if="{{ !playing }}" mode="aspectFill" src="{{ $state.imgHost }}/play.png" class="play" bindtap="recordAdd"></cover-image>
+  </video>
+  <view class="info">
+    <view class="top">
+      <text class="name line">{{ detail.title }}</text>
+      <text class="dramaNum">共{{ detail.lesson_count }}讲</text>
     </view>
-    <view class='now' wx:if="{{detail.current_sublesson_id!=0&&!hideRecode}}" bindtap='recordAdd'>
-        <view class='line'>继续播放：{{cur.sub_id}}. {{cur.title}}</view>
-        <image class='icon' mode='widthFix' src='{{IMG_URL}}/images/rectangle.png' />
+    <text class="line actor" wx:if="{{ detail.teacher_id == 0 }}">{{ detail.subtitle }}</text>
+    <text class="line actor" wx:if="{{ detail.teacher_id != 0 }}">{{ detail.teacher.name }}-{{ detail.teacher.honor }}</text>
+    <view class="bottom">
+      <view class="left">
+        <view class="collect" bindtap="collect">
+          <image wx:if="{{ detail.collected }}" mode="aspectFill" src="/images/yishoucang.png"></image>
+          <image wx:else mode="aspectFill" src="/images/shoucang.png"></image>
+        </view>
+        <button class="share" open-type="share" hover-class="btn-hover">
+          <image class="icon" mode="aspectFill" src="/images/fenxiang.png"></image>
+        </button>
+      </view>
+      <view class="right">
+        <view class="progress" wx:if="{{ detail.progress < 100 }}">
+          <view class="line">
+            <text class="num">{{ detail.progress ? detail.progress : 0 }}%</text><text class="des">已学习</text>
+          </view>
+          <view class="pro-bar">
+            <view class="por-cur" wx:if="{{ detail.progress && detail.progress > 0 }}" style="width:{{ detail.progress - 4 }}%"></view>
+          </view>
+        </view>
+        <view class="certificate" wx:if="{{ detail.progress == 100 }}" bindtap="navitor">
+          <image class="icon" mode="aspectFill" src="{{ $state.imgHost }}/badge.png"></image>
+          <text class="des">查看证书</text>
+        </view>
+      </view>
     </view>
-    <view class='content'>
-        <scroll-view scroll-x="true" class="nav" scroll-left="{{navScrollLeft}}" scroll-with-animation="{{true}}">
-            <block wx:for="{{nav}}" wx:for-index="id" wx:for-item="item" wx:key="id">
-                <view class="item {{currentTab == id ?'active':''}}" data-current="{{id}}" bindtap="switchNav">{{item.name}}</view>
-            </block>
-            <view class='order' wx:if="{{currentTab==0}}" bindtap='order'>
-                <view wx:if="{{sort==0}}" class='box'>
-                    <image class='icon' mode='aspectFill' src='{{IMG_URL}}/images/order.png' />正序</view>
-                <view wx:if="{{sort==1}}" class='box'>
-                    <image class='icon' mode='aspectFill' src='{{IMG_URL}}/images/order-fall.png' />倒序</view>
+  </view>
+  <view class="now" wx:if="{{ detail.current_sublesson_id != 0 && !hideRecode }}" bindtap="recordAdd">
+    <view class="line">继续播放：{{ cur.sub_id }}. {{ cur.title }}</view>
+    <image class="icon" mode="widthFix" src="{{ $state.imgHost }}/rectangle.png"></image>
+  </view>
+  <view class="content">
+    <scroll-view scroll-x="true" class="nav" scroll-left="{{ navScrollLeft }}" scroll-with-animation="{{ true }}">
+      <block wx:for="{{ nav }}" wx:for-index="id" wx:for-item="item" wx:key="id">
+        <view class="item {{ currentTab == id ? 'active' : '' }}" data-current="{{ id }}" bindtap="switchNav">{{ item.name }}</view>
+      </block>
+      <view class="order" wx:if="{{ currentTab == 0 }}" bindtap="order">
+        <view wx:if="{{ sort == 0 }}" class="box"> <image class="icon" mode="aspectFill" src="{{ $state.imgHost }}/order.png"></image>正序</view>
+        <view wx:if="{{ sort == 1 }}" class="box"> <image class="icon" mode="aspectFill" src="{{ $state.imgHost }}/order-fall.png"></image>倒序</view>
+      </view>
+    </scroll-view>
+    <swiper class="tab" style="height:{{ height }}px" current="{{ currentTab }}" duration="300" bindchange="switchTab">
+      <swiper-item class="tab-item">
+        <!--剧集  -->
+        <scroll-view scroll-y="true" class="wrap drama">
+          <view wx:for="{{ detail.sublesson }}" bindtap="select" data-index="{{ index }}" wx:key="index" class="item {{ item.played == 1 ? 'played' : '' }} {{ item.id == cur.id ? 'active' : '' }}">
+            <view class="left">
+              <text class="name">{{ item.sub_id }}. {{ item.title }}</text>
+              <text class="time">{{ item.minute }}分钟</text>
             </view>
+            <view class="right"> <image class="icon" mode="aspectFill" src="{{ $state.imgHost }}/play-ash.png"></image><text>播放</text></view>
+          </view>
         </scroll-view>
-        <swiper class="tab" style="height:{{height}}px" current="{{currentTab}}" duration="300" bindchange="switchTab">
-            <swiper-item class="tab-item">
-                <!--剧集  -->
-                <scroll-view scroll-y="true" class="wrap drama">
-                    <view wx:for="{{detail.sublesson}}" bindtap='select' data-index='{{index}}' wx:key="index" class="item {{item.played==1?'played':''}} {{item.id==cur.id?'active':''}}">
-                        <view class='left'>
-                            <text class='name'>{{item.sub_id}}. {{item.title}}</text>
-                            <text class='time'>{{item.minute}}分钟</text>
-                        </view>
-                        <view class='right'>
-                            <image class='icon' mode='aspectFill' src='{{IMG_URL}}/images/play-ash.png' /><text>播放</text></view>
-                    </view>
-                </scroll-view>
-            </swiper-item>
-            <swiper-item class="tab-item">
-                <!--简介  -->
-                <view class="wrap synopsis">
-                    <rich-text nodes="{{detail.intro_content}}"></rich-text>
-                </view>
-            </swiper-item>
-        </swiper>
-    </view>
-    <button class="getPhone-mask" wx:if="{{baseInfo}}" open-type="getUserInfo" bindgetuserinfo="onGotUserInfo" style="position:fixed;left: 0;top: 0;width: 100vw;height: 100vh;z-index: 9999;"></button>
+      </swiper-item>
+      <swiper-item class="tab-item">
+        <!--简介  -->
+        <view class="wrap synopsis">
+          <rich-text nodes="{{ detail.intro_content }}"></rich-text>
+        </view>
+      </swiper-item>
+    </swiper>
+  </view>
+  <view wx:if="{{ vistor }}" class="vistor-home" catchtap="tohome">
+    <icon class="iconfont icon-shouye"></icon>
+    <text>首页</text>
+  </view>
+  <button class="getPhone-mask" wx:if="{{ $state.baseInfo }}" open-type="getUserInfo" bindgetuserinfo="onGotUserInfo" style="position:fixed;left: 0;top: 0;width: 100vw;height: 100vh;z-index: 9999;"></button>
 </view>

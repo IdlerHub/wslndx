@@ -1,29 +1,29 @@
 <view class="container">
-  <!-- 下拉刷新 -->
-  <view wx:if="{{isRefreshing}}" class='weui-loadmore'>
-      <view class='weui-loading'></view>
-      <view class='weui-loadmore-tips'>加载中...</view>
-  </view>
-  <view class='admin' wx:if="{{detail.friendscircle.length>0}}">
-    <view class='title'>管理员</view>
-    <view class='wrap'>
-      <view wx:for="{{detail.friendscircle}}" wx:key="index" class='item'>
-        <view class='left'>
-          <image mode='aspectFill' class='img' src='{{item.admin_image}}'></image>
-          <text class='name'>{{item.admin_name}}</text>
-        </view>
-      </view>
+    <!-- 下拉刷新 -->
+    <view wx:if="{{isRefreshing}}" class='weui-loadmore'>
+        <view class='weui-loading'></view>
+        <!-- <view class='weui-loadmore-tips'>加载中...</view> -->
     </view>
-  </view>
-  <view class='list' wx:if="{{detail.user.length>0}}">
-    <view class='title'>成员(按最新加入排序）</view>
-    <view class='wrap'>
-      <view wx:for="{{detail.user}}" wx:key="index" class='item'>
-        <view class='left'>
-          <image mode='aspectFill' class='img' src='{{item.avatar}}'></image>
-          <text class='name'>{{item.nickname}}</text>
+    <view class='admin' wx:if="{{detail.friendscircle.length>0}}">
+        <view class='title'>管理员</view>
+        <view class='wrap'>
+            <view wx:for="{{detail.friendscircle}}" wx:key="index" class='item'>
+                <view class='left'>
+                    <image mode='aspectFill' class='img' src='{{item.admin_image}}'></image>
+                    <text class='name'>{{item.admin_name}}</text>
+                </view>
+            </view>
         </view>
-      </view>
     </view>
-  </view>
+    <view class='list' wx:if="{{detail.user.length>0}}">
+        <view class='title'>成员(按最新加入排序）</view>
+        <view class='wrap'>
+            <view wx:for="{{detail.user}}" wx:key="index" class='item'>
+                <view class='left'>
+                    <image mode='aspectFill' class='img' src='{{item.avatar}}'></image>
+                    <text class='name'>{{item.nickname}}</text>
+                </view>
+            </view>
+        </view>
+    </view>
 </view>

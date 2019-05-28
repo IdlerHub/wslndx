@@ -1,147 +1,72 @@
 <view class="container">
-    <navigator url='../info/info' hover-class="none" open-type="navigate" bindtap='navigator' class='top' wx:if="{{userInfo.nickname}}">
-        <image class='bg' mode='widthFix' src='{{userInfo.avatar}}' />
-        <view class='box'>
-            <view class='left'>
-                <view>
-                    <image class='img' mode='widthFix' src='{{userInfo.avatar}}' />
-                </view>
-                <view class='info'>
-                    <view>
-                        <text class='line name'>{{userInfo.nickname}}</text>
-                    </view>
-                    <view class='line'>
-                        <view class='navigator'>
-                            <view class='city'>{{userInfo.address?userInfo.address:'暂无'}}</view>
-                        </view>
-                        <view class='school navigator' wx:if="{{!userInfo.university}}"><text class='icon'>+</text>添加学校标签</view>
-                        <view class='school navigator' wx:if="{{userInfo.university}}">{{userInfo.university}}</view>
-                    </view>
-                </view>
-            </view>
-            <image class='right' mode='aspectFill' src='{{IMG_URL}}/images/Return.png' />
-        </view>
-    </navigator>
-    <button class='top' wx:if="{{!userInfo.nickname}}" hover-class="none" open-type="getUserInfo" bindgetuserinfo="getUserInfo">
-    <image class='bg' mode='widthFix' src='/images/5.png'/>
-    <view class='box'>
-      <view class='left'>
-        <image class='img' mode='aspectFill' src='/images/portrait.jpg'/>
-        <view class='info'>
-          <text class='line name'>{{userInfo.mobile}}</text>
-          <view class='line'>
-            <text class='city'>暂无</text>
-            <view class='school navigator' wx:if="{{!userInfo.university}}"><text class='icon'>+</text>添加学校标签</view>
+  <!-- 下拉刷新 -->
+  <view wx:if="{{ isRefreshing }}" class="weui-loadmore indexdrop">
+    <view class="weui-loading"></view>
+  </view>
+  <navigator hover-class="none" class="top" wx:if="{{ $state.authUserInfo }}" url="../info/info" open-type="navigate">
+    <image class="bg" mode="widthFix" src="{{ userInfo.avatar }}"></image>
+    <view class="box">
+      <view class="left">
+        <image class="img" mode="widthFix" src="{{ userInfo.avatar }}"></image>
+        <view class="info">
+          <text class="line name">{{ userInfo.nickname }}</text>
+          <view class="line">
+            <text class="city">{{ userInfo.address ? userInfo.address : "暂无" }}</text>
+            <text class="school" wx:if="{{ !userInfo.university }}">+添加学校标签</text>
+            <text class="school" wx:if="{{ userInfo.university }}">{{ userInfo.university }}</text>
           </view>
         </view>
       </view>
-      <image class='right' mode='aspectFill' src='{{IMG_URL}}/images/Return.png'/>
+      <icon class="iconfont icon-arrow-right"></icon>
+    </view>
+  </navigator>
+  <button class="top" wx:else open-type="getUserInfo" bindgetuserinfo="getUserInfo">
+    <image class="bg" mode="widthFix" src="/images/5.png"></image>
+    <view class="box">
+      <view class="left">
+        <image class="img" mode="aspectFill" src="/images/portrait.jpg"></image>
+        <view class="info">
+          <text class="line name">{{ userInfo.mobile }}</text>
+          <view class="line">
+            <text class="city">{{ userInfo.address ? userInfo.address : "暂无" }}</text>
+            <text class="school" wx:if="{{ !userInfo.university }}">+添加学校标签</text>
+            <text class="school" wx:if="{{ userInfo.university }}">{{ userInfo.university }}</text>
+          </view>
+        </view>
+      </view>
+      <icon class="iconfont icon-arrow-right"></icon>
     </view>
   </button>
-    <scroll-view scroll-x="true" class="nav" scroll-left="{{navScrollLeft}}" scroll-with-animation="{{true}}">
-        <block wx:for="{{nav}}" wx:for-index="id" wx:for-item="item" wx:key="id">
-            <view class="item {{currentTab == id ?'active':''}}" data-current="{{id}}" bindtap="switchNav">{{item.name}}</view>
-        </block>
-    </scroll-view>
-    <swiper class="tab" style="height:{{height}}px" current="{{currentTab}}" duration="300" bindchange="switchTab">
-        <swiper-item class="tab-item">
-            <!--收藏课程  -->
-            <scroll-view scroll-y="true" bindscrolltolower="collectLower" class="wrap collect">
-                <navigator url='../detail/detail?id={{item.id}}&name={{item.title}}' wx:for="{{collect}}" wx:key="index" hover-class="none" open-type="navigate" class='item'>
-                    <view class='content'>
-                        <view class='left'>
-                            <image class='poster' mode='widthFix' src='{{item.image}}' />
-                            <image class='icon' mode='aspectFill' src='{{IMG_URL}}/images/play.png' />
-                        </view>
-                        <view class='right'>
-                            <text class='line name'>{{item.title}}</text>
-                            <text class='line actor' wx:if="{{item.teacher_id==0}}">{{item.subtitle}}</text>
-                            <text class='line actor' wx:if="{{item.teacher_id!=0}}">{{item.name}}-{{item.honor}}</text>
-                            <text class='line info'>
-                  <text class='dramaNum'><text class='key'>剧集</text>{{item.lesson_count}}集</text>
-                            <text wx:if="{{item.thousand}}" class='playNum'><text class='key'>播放</text>{{item.thousand}}万</text>
-                            <text wx:if="{{!item.thousand}}" class='playNum'><text class='key'>播放</text>{{item.browse}}</text>
-                            </text>
-                        </view>
-                    </view>
-                </navigator>
-                <view class='ncol' wx:if="{{collect.length==0}}">
-                    <image mode='widthFix' src='{{IMG_URL}}/images/ncol.png' />
-                    <text class='line'>啥都没有呢~\n赶紧去收藏课程吧</text>
-                </view>
-            </scroll-view>
-        </swiper-item>
-        <swiper-item class="tab-item">
-            <navigator url='../detail/detail?id={{history.last_lesson.id}}&play&name={{history.last_lesson.title}}' hover-class="none" open-type="navigate" class='cur' wx:if="{{history.last_lesson}}">
-                <view class='cur-wrap'>
-                    <view class='left'>
-                        <text class='line dName'>{{history.last_lesson.subtitle}}</text>
-                        <text class='line name'>{{history.last_lesson.sub_id}}.{{history.last_lesson.title}}</text>
-                    </view>
-                    <view class='right'>
-                        <image class='icon' mode='aspectFill' src='{{IMG_URL}}/images/play-red.png' />
-                        <text class='line'>继续播放</text>
-                    </view>
-                </view>
-            </navigator>
-            <!--学习历史  -->
-            <scroll-view wx:if="{{history.last_lesson}}" scroll-y="true" bindscrolltolower="historyLower" class="wrap history">
-                <view wx:for="{{history.history}}" wx:key="index" class='item'>
-                    <view class='date'>{{item.date}}</view>
-                    <view wx:for="{{item.data}}" wx:for-item="items" wx:key="index" class='li'>
-                        <view class='time'>{{items.createtime}} 学习</view>
-                        <view class='title'><text class='dName'>{{items.subtitle}}</text><text class='name' wx:if='{{items.title}}'>{{items.title}}</text></view>
-                    </view>
-                </view>
-            </scroll-view>
-            <view class='nhis' wx:if="{{!history.last_lesson}}">
-                <image mode='widthFix' src='{{IMG_URL}}/images/nhis.png' />
-                <text class='line'>啥都没有呢~</text>
-                <text class="line">赶紧去课程看看吧</text>
-            </view>
-        </swiper-item>
-        <swiper-item class="tab-item">
-            <!--我的圈子  -->
-            <scroll-view scroll-y="true" bindscrolltolower="circleLower" class="wrap circle">
-                <view class="box" style="padding: 30rpx;" wx:if="{{circle.length > 0 }}">
-                    <view wx:for="{{circle}}" wx:key="index" class='item'>
-                        <view class='top'>
-                            <text class='date'>{{item.createtimes}}</text>
-                            <view class='delete' data-index='{{index}}' bindtap='del'>
-                                <image mode='aspectFill' src='{{IMG_URL}}/images/delete.png'></image>删除</view>
-                        </view>
-                        <view bindtap="navigate" data-id='{{item.id}}'>
-                            <rich-text class='name' nodes="{{item.content}}"></rich-text>
-                            <view class='content' wx:if="{{item.images.length>0}}">
-                                <view class='img one' wx:if="{{item.images.length==1}}">
-                                    <image mode='widthFix' wx:for="{{item.images}}" wx:for-item="items" wx:key="index" src='{{items}}' data-urls="{{item.images}}" data-current="{{items}}" bindtap="previewImage"></image>
-                                </view>
-                                <view class='img three' wx:if="{{item.images.length>1}}">
-                                    <image mode='aspectFill' wx:for="{{item.images}}" wx:for-item="items" wx:key="index" src='{{items}}' data-urls="{{item.images}}" data-current="{{items}}" bindtap="previewImage"></image>
-                                </view>
-                            </view>
-                            <view class='content' wx:if="{{item.url}}">
-                                <video wx:if="{{!item.pause}}" id="{{item.id}}" src="{{item.url}}" controls page-gesture enable-play-gesture>
-                            </video>
-                                <view wx:if="{{item.pause}}" class="bg" data-index='{{index}}'>
-                                    <image wx:if="{{item.pause}}" mode='aspectFill' src="{{item.auditing?IMG_URL+'/images/tip.jpg':item.image}}" class="poster"></image>
-                                    <image wx:if="{{item.pause}}" mode='aspectFill' src="{{IMG_URL}}/images/play-hl.png" class="play"></image>
-                                </view>
-                            </view>
-                        </view>
-                        <navigator wx:if="{{item.fs_title}}" url='../cDetail/cDetail?id={{item.fs_id}}' hover-class="none" open-type="navigate" class='label' style='background: #{{item.color}}'>#{{item.fs_title}}精选</navigator>
-                    </view>
-                </view>
-
-                <view class='ncir' wx:if="{{circle.length==0}}">
-                    <image mode='widthFix' src='{{IMG_URL}}/images/ncir.png' />
-                    <text class='line'>啥都没有呢~\n发表自己的学友圈吧</text>
-                    <navigator url='../release/release' hover-class="none" open-type="navigate">马上发布</navigator>
-                </view>
-            </scroll-view>
-        </swiper-item>
-    </swiper>
-    <view class='popup' wx:if="{{rlAni}}">
-        <view class='rlAni' bindanimationend="rlAniend" style='background-image: url(https://bogole.com/project/d19030901/images/release-ani.png)'></view>
-    </view>
+  <view class="list">
+    <navigator hover-class="none" class="nav" url="/pages/collection/collection" open-type="navigate">
+      <icon class="iconfont icon-shoucang"></icon>
+      <text>收藏课程</text>
+      <icon class="iconfont icon-arrow-right"></icon>
+    </navigator>
+    <navigator hover-class="none" class="nav" url="/pages/history/history" open-type="navigate">
+      <icon class="iconfont icon-lishi"></icon>
+      <text>学习历史</text>
+      <icon class="iconfont icon-arrow-right "></icon>
+    </navigator>
+    <navigator hover-class="none" class="nav" url="/pages/myCircle/myCircle" open-type="navigate">
+      <icon class="iconfont icon-quanzi"></icon>
+      <text>我的圈子</text>
+      <icon class="iconfont icon-arrow-right "></icon>
+    </navigator>
+    <navigator hover-class="none" class="nav" url="/pages/score/score" open-type="navigate">
+      <icon class="iconfont icon-jifen"></icon>
+      <text>我的积分</text>
+      <icon class="iconfont icon-arrow-right "></icon>
+    </navigator>
+    <navigator hover-class="none" class="nav" url="/pages/invitation/invitation" open-type="navigate">
+      <icon class="iconfont icon-yaoqing"></icon>
+      <text>邀请好友</text>
+      <icon class="iconfont icon-arrow-right "></icon>
+    </navigator>
+    <button class="nav" open-type="contact" bindcontact="handleContact">
+      <icon class="iconfont icon-kefu"></icon>
+      <text>联系客服</text>
+      <icon class="iconfont icon-arrow-right "></icon>
+    </button>
+  </view>
 </view>

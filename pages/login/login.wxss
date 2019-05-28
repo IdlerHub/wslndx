@@ -1,29 +1,101 @@
 /* pages/login/login.wxss */
-
 .container {
-    text-align: center;
-    padding: 200rpx 0;
+  text-align: center;
+  padding: 200rpx 0;
 }
 
-.logo {
-    width: 74px;
-    height: 74px;
-    margin-bottom: 30rpx;
+.container .logo {
+  width: 74px;
+  height: 74px;
+  margin-bottom: 30rpx;
 }
 
-.logo-title {
-    display: block;
-    font-size: 44rpx;
-    color: #3a3a3a;
-    letter-spacing: 1rpx;
+.container .logo-title {
+  display: block;
+  font-size: 44rpx;
+  color: #3a3a3a;
+  letter-spacing: 1rpx;
 }
 
-.authorize-phone {
-    margin: 400rpx 40rpx 0;
-    border-radius: 4rpx;
-    background: #4ba82d;
-    font-size: 36rpx;
-    font-weight: bold;
-    color: white;
-    padding: 10rpx;
+.container .authorize-phone {
+  margin: 400rpx 40rpx 0;
+  border-radius: 4rpx;
+  background: #4ba82d;
+  font-size: 36rpx;
+  font-weight: bold;
+  color: white;
+  padding: 10rpx;
+}
+
+.container .mobile {
+  display: block;
+  margin-top: 30rpx;
+  padding: 0 30rpx;
+}
+
+.container .mobile .section1, .container .mobile .section2 {
+  height: 160rpx;
+  border-bottom: 1rpx solid rgba(80, 80, 80, 0.5);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.container .mobile input {
+  flex: 1;
+  margin: 0 30rpx;
+  text-align: left;
+  font-size: 40rpx;
+  height: 60rpx;
+  line-height: 60rpx;
+}
+
+.container .mobile .section2 .code {
+  width: 250rpx;
+  height: 90rpx;
+  background: #df2020;
+  border-radius: 4rpx;
+  font-size: 40rpx;
+  font-family: PingFangSC-Regular;
+  font-weight: 400;
+  color: white;
+  line-height: 90rpx;
+}
+
+.container .mobile .submit {
+  margin-top: 40rpx;
+  height: 110rpx;
+  background: #df2020;
+  border-radius: 4rpx;
+  font-size: 44rpx;
+  font-family: PingFangSC-Regular;
+  font-weight: 400;
+  color: white;
+  line-height: 110rpx;
+}
+
+.container .buttons {
+  position: absolute;
+  width: 100%;
+  font-size: 30rpx;
+  color: #bdbdbd;
+  bottom: 40rpx;
+  display: flex;
+  justify-content: stretch;
+  align-items: center;
+  vertical-align: bottom;
+}
+
+.container .buttons text {
+  flex: 1;
+  display: block;
+  padding: 10rpx 20rpx;
+}
+
+.container .buttons text:nth-child(1) {
+  text-align: right;
+}
+
+.container .buttons text:nth-child(2) {
+  text-align: left;
 }
