@@ -85,19 +85,28 @@ function exchange(param) {
 function activite() {
   return httpService.post("activity/index", {})
 }
+/**
+ * @description: 用户签到状态
+ * @param {*}
+ * @return:promise
+ */
+function signed() {
+  return httpService.post("User/signed", {})
+}
 
 module.exports = {
-  wxLoginCode: wxLoginCode,
-  getAuthCode: getAuthCode,
-  register: register,
-  collect: collect,
-  history: history,
-  search: search,
-  profile: profile,
-  userQr: userQr,
-  sign: sign,
-  gift: gift,
-  exchange: exchange,
-  pointsinfo: pointsinfo,
-  activite: activite
+  wxLoginCode,
+  getAuthCode,
+  register,
+  collect,
+  history,
+  search,
+  profile,
+  userQr,
+  sign,
+  gift,
+  exchange,
+  pointsinfo,
+  activite,
+  signed
 }

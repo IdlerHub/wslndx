@@ -21,7 +21,7 @@
             <cover-image class="heart" wx:if="{{ cur.praised == 0 }}" mode="aspectFill" src="/images/heart.png"></cover-image>
             <cover-image class="heart" wx:else mode="aspectFill" src="{{ $state.imgHost }}/heart-red.png"></cover-image>
           </cover-view>
-          <cover-view wx:if="{{ cur.pw }}" class="text">{{ cur.pw }}万</cover-view>
+          <cover-view wx:if="{{ cur.pw }}" class="text">{{ cur.pw }}</cover-view>
           <cover-view wx:else class="text">{{ cur.praise }}</cover-view>
         </cover-view>
         <!-- 完整视频 -->
@@ -43,7 +43,7 @@
       <!-- 分享 -->
       <button wx:if="{{ cur && !$state.baseInfo }}" class="share" open-type="share" hover-class="btn-hover">
         <cover-image mode="aspectFill" src="/images/share.png" class="icon"></cover-image>
-        <cover-view wx:if="{{ cur.fw }}" class="text">{{ cur.fw }}万</cover-view>
+        <cover-view wx:if="{{ cur.fw }}" class="text">{{ cur.fw }}</cover-view>
         <cover-view wx:else class="text">{{ cur.forward }}</cover-view>
       </button>
     </cover-view>

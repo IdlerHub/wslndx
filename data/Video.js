@@ -21,8 +21,8 @@ function share(param) {
 }
 
 module.exports = {
-  list: list,
-  praise: praise,
-  delPraise: delPraise,
-  share: share
+  list,
+  praise,
+  delPraise,
+  share
 }

@@ -8,7 +8,7 @@ Page({
   },
   onLoad(options) {
     this.videoContext = wx.createVideoContext("myVideo")
-    this.param = { id: options.id ? options.id : "", page: 1, pageSize: 10 }
+    this.param = { id: options.id ? options.id : "", page: 1, pageSize: 10, last_id: "" }
     this.getList([]).then(() => {
       this.setData({
         cur: this.data.list[0],
@@ -39,15 +39,17 @@ Page({
   getList(list) {
     let temp = list || this.data.list
     return app.video.list(this.param).then(msg => {
-      if (msg.code === 1) {
-        msg.data.forEach(function(item) {
+      if (msg.code === 1 && msg.data) {
+        msg.data.lists.forEach(function(item) {
           item.pw = app.util.tow(item.praise)
           item.fw = app.util.tow(item.forward)
           temp.push(item)
         })
+
         this.setData({
           list: temp
         })
+        this.param.last_id = msg.data.last_id
       }
     })
   },

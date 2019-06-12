@@ -30,6 +30,7 @@ page {
   from {
     opacity: 0;
   }
+
   to {
     transform: none;
     opacity: 1;
@@ -41,6 +42,7 @@ page {
     transform: scale(1);
     opacity: 1;
   }
+
   to {
     opacity: 0;
   }
@@ -50,6 +52,7 @@ page {
   0% {
     background-position: 0%;
   }
+
   100% {
     background-position: 100%;
   }
@@ -81,7 +84,6 @@ button {
 }
 
 /* 下拉刷新 */
-
 .weui-loadmore {
   width: 100%;
   height: 50px;
@@ -89,7 +91,7 @@ button {
   text-align: center;
   margin: 0rpx auto;
   padding-top: 20rpx;
-  padding-bottom: 20rpx;
+  padding-bottom: 15rpx;
   background: #eee;
 }
 
@@ -119,5 +121,5 @@ button {
   background-size: cover;
   width: 460rpx;
   height: 650rpx;
-  animation: ani 5s steps(20, end);
+  animation: ani 2s steps(20, end);
 }

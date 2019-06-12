@@ -4,7 +4,8 @@
   "description": "网上老年大学",
   "main": "app.js",
   "scripts": {
-    "test": "test"
+    "serve": "cross-env NODE_ENV=develop  gulp  environment",
+    "build": "cross-env NODE_ENV=production  gulp  environment"
   },
   "keywords": [
     "老年大学"
@@ -12,8 +13,18 @@
   "author": "hxz",
   "license": "ISC",
   "dependencies": {
+    "fundebug-wxjs": "^1.2.1",
     "wx-promise-pro": "^2.6.0",
     "wxministore": "^1.2.4"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "cross-env": "^5.2.0",
+    "gulp": "^4.0.2",
+    "gulp-load-plugins": "^1.6.0",
+    "gulp-preprocess": "^3.0.2",
+    "gulp-rename": "^1.4.0",
+    "gulp-replace": "^1.0.0",
+    "gulp-sass": "^4.0.2",
+    "yargs": "^13.2.4"
+  }
 }

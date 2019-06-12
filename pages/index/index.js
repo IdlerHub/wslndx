@@ -1,4 +1,5 @@
 //index.js
+import regeneratorRuntime from "wx-promise-pro"
 //获取应用实例
 const app = getApp()
 Page({
@@ -6,11 +7,14 @@ Page({
     nav: [{ name: "推荐", class: ".recommend" }, { name: "分类", class: ".category" }],
     height: 0,
     isRefreshing: false,
-    quickInteg: false,
     activity: ""
   },
-  onLoad(e) {
-    let that = this
+  navHeightList: [],
+  onLoad: async function(e) {
+    await app.user.signed().then(res => {
+      let sign = !!res.data.signed
+      app.setSignIn({ status: sign, count: sign ? 1 : this.data.$state.signStatus.count }, true)
+    })
     this.param = { page: 1, pageSize: 10 }
     let reg = /ios/i
     let pt = 20 //导航状态栏上内边距
@@ -24,63 +28,59 @@ Page({
       top: pt + h
     })
     let windowHeight = systemInfo.windowHeight
+    let that = this
     let query = wx.createSelectorQuery().in(this)
     query.select(".top").boundingClientRect()
     query.select(".nav").boundingClientRect()
     query.exec(res => {
       that.headerHeight = res[0].height
       that.navHeight = res[1].height
-      that.scrollViewHeight = windowHeight - that.headerHeight - that.navHeight
     })
     this.setData({
       recommend: [],
       category: [],
       history: {},
       currentTab: e.tabs || 0 /* 从积分页面过来的直接去分类 */,
-      navScrollLeft: 0,
-      quickInteg: app.globalData.quickInteg /* 签到拿积分弹窗 */
+      navScrollLeft: 0
     })
-    this.getRecommend()
-    this.getCategory()
-    this.getactivite().then(res => {
-      this.setData({
-        activity: res.data
-      })
-    })
+    this.init()
   },
   onReady: function() {
     setTimeout(wx.hideLoading, 500)
   },
   onShow() {
-    this.init()
+    /* 更新用户的视频浏览历史 */
+    this.historyParam = { page: 1, pageSize: 10 }
+    this.getHistory([])
   },
   init() {
-    let userInfo = JSON.parse(JSON.stringify(this.data.$state.userInfo))
-    /* 地区格式化 */
-    userInfo.address = userInfo.address ? userInfo.address.split(",")[1] : ""
-    /* 电话号码隐藏 */
-    userInfo.telShow = userInfo.mobile.substr(0, 3) + "****" + userInfo.mobile.substr(7, 4)
-    this.setData({
-      userInfo: userInfo
+    return Promise.all([this.getactivite(), this.getRecommend(), this.getCategory()]).then(values => {
+      this.setData({
+        activity: values[0].data
+      })
+      this.navHeightList = []
+      this.setHeight()
     })
-    if (userInfo.mobile) {
-      this.historyParam = { page: 1, pageSize: 10 }
-      this.getHistory([])
-    }
   },
   setHeight() {
-    /*todo:考虑去掉that*/
-    let that = this
     let nav = this.data.nav
     let currentTab = this.data.currentTab
-    let query = wx.createSelectorQuery().in(this)
-    query.select(nav[currentTab].class).boundingClientRect()
-    query.exec(res => {
-      let height = res[0].height
-      that.setData({
-        height: height
+    if (this.navHeightList[currentTab]) {
+      this.setData({
+        height: this.navHeightList[currentTab]
       })
-    })
+    } else {
+      let query = wx.createSelectorQuery().in(this)
+      let that = this
+      query.select(nav[currentTab].class).boundingClientRect()
+      query.exec(res => {
+        let height = res[0].height
+        that.navHeightList[currentTab] = height
+        that.setData({
+          height: height
+        })
+      })
+    }
   },
   switchNav(event) {
     let cur = event.currentTarget.dataset.current
@@ -89,7 +89,6 @@ Page({
         currentTab: cur
       })
     }
-    this.setHeight()
   },
   switchTab(event) {
     let cur = event.detail.current
@@ -98,23 +97,19 @@ Page({
     })
     this.setHeight()
   },
-  getRecommend(list) {
-    let recommend = list || this.data.recommend
+  getRecommend() {
     return app.classroom.recommend(this.param).then(msg => {
       if (msg.code == 1) {
         msg.data.forEach(function(item) {
           item.bw = app.util.tow(item.browse)
-          recommend.push(item)
         })
         this.setData({
-          recommend: recommend
+          recommend: msg.data
         })
       }
-      this.setHeight()
     })
   },
-  getCategory(list) {
-    let category = list || this.data.category
+  getCategory() {
     return app.classroom.category().then(msg => {
       if (msg.code == 1) {
         msg.data.forEach((v, i) => {
@@ -123,10 +118,9 @@ Page({
           v.lists.length = r ? t + (3 - r) : t
         })
         this.setData({
-          category: category.concat(msg.data)
+          category: msg.data
         })
       }
-      this.setHeight()
     })
   },
   getactivite() {
@@ -180,37 +174,6 @@ Page({
         this.setData({
           scroll: false
         })
-    }
-  },
-  //下拉刷新
-  onPullDownRefresh() {
-    this.param.page = 1
-    this.setData({
-      isRefreshing: true
-    })
-    this.getRecommend([]).then(() => {
-      wx.stopPullDownRefresh()
-      let timer = setTimeout(() => {
-        this.setData(
-          {
-            isRefreshing: false
-          },
-          () => {
-            clearTimeout(timer)
-          }
-        )
-      }, 1000)
-    })
-    this.getCategory([])
-  },
-  //上拉加载
-  onReachBottom() {
-    let currentTab = this.data.currentTab
-    switch (currentTab) {
-      case 0:
-        this.param.page++
-        this.getRecommend()
-        break
     }
   },
   showAgain: function() {
@@ -274,20 +237,9 @@ Page({
   },
   /* 签到 */
   signIn(data) {
-    this.setData({
-      quickInteg: false
-    })
-    /* 签到弹窗 */
-    app.globalData.quickInteg = false
-    /* 签到状态 */
-    app.globalData.integration = data.currentTarget.dataset.id == 1
-
-    if (data.currentTarget.dataset.id == 1) {
-      wx.setStorage({
-        key: "signStatus",
-        data: { time: new Date().toDateString(), status: true, modal: true }
-      })
-
+    let sign = data.currentTarget.dataset.id == 1
+    app.setSignIn({ status: sign, count: 1 }, true)
+    if (sign) {
       app.user.sign().then(res => {
         if (res.code == 1) {
           /* 前往积分页面 */
@@ -315,5 +267,19 @@ Page({
     wx.navigateTo({
       url: "/pages/education/education"
     })
-  }
+  },
+  onPullDownRefresh() {
+    wx.stopPullDownRefresh()
+    this.setData({
+      isRefreshing: true
+    })
+    this.init().then(() => {
+      setTimeout(() => {
+        this.setData({
+          isRefreshing: false
+        })
+      }, 1000)
+    })
+  },
+  onReachBottom() {}
 })

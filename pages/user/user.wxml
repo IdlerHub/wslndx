@@ -3,40 +3,22 @@
   <view wx:if="{{ isRefreshing }}" class="weui-loadmore indexdrop">
     <view class="weui-loading"></view>
   </view>
-  <navigator hover-class="none" class="top" wx:if="{{ $state.authUserInfo }}" url="../info/info" open-type="navigate">
-    <image class="bg" mode="widthFix" src="{{ userInfo.avatar }}"></image>
+  <navigator hover-class="none" class="top" url="../info/info" open-type="navigate">
+    <image class="bg" mode="widthFix" src="{{ $state.userInfo.avatar }}"></image>
     <view class="box">
       <view class="left">
-        <image class="img" mode="widthFix" src="{{ userInfo.avatar }}"></image>
+        <image class="img" mode="widthFix" src="{{ $state.userInfo.avatar }}"></image>
         <view class="info">
-          <text class="line name">{{ userInfo.nickname }}</text>
+          <text class="line name">{{ $state.userInfo.nickname }}</text>
           <view class="line">
-            <text class="city">{{ userInfo.address ? userInfo.address : "暂无" }}</text>
-            <text class="school" wx:if="{{ !userInfo.university }}">+添加学校标签</text>
-            <text class="school" wx:if="{{ userInfo.university }}">{{ userInfo.university }}</text>
+            <text class="city">{{ $state.userInfo.addressCity || "暂无" }}</text>
+            <text class="school">{{ $state.userInfo.university || "+添加学校标签" }}</text>
           </view>
         </view>
       </view>
       <icon class="iconfont icon-arrow-right"></icon>
     </view>
   </navigator>
-  <button class="top" wx:else open-type="getUserInfo" bindgetuserinfo="getUserInfo">
-    <image class="bg" mode="widthFix" src="/images/5.png"></image>
-    <view class="box">
-      <view class="left">
-        <image class="img" mode="aspectFill" src="/images/portrait.jpg"></image>
-        <view class="info">
-          <text class="line name">{{ userInfo.mobile }}</text>
-          <view class="line">
-            <text class="city">{{ userInfo.address ? userInfo.address : "暂无" }}</text>
-            <text class="school" wx:if="{{ !userInfo.university }}">+添加学校标签</text>
-            <text class="school" wx:if="{{ userInfo.university }}">{{ userInfo.university }}</text>
-          </view>
-        </view>
-      </view>
-      <icon class="iconfont icon-arrow-right"></icon>
-    </view>
-  </button>
   <view class="list">
     <navigator hover-class="none" class="nav" url="/pages/collection/collection" open-type="navigate">
       <icon class="iconfont icon-shoucang"></icon>

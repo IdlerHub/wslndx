@@ -23,11 +23,10 @@ Page({
     return app.classroom.lessons(this.param).then(msg => {
       if (msg.code === 1) {
         msg.data.forEach(function(item) {
-          item.thousand = item.browse / 10000 > 1 ? (item.browse / 10000).toFixed(1) : null
-          temp.push(item)
+          item.thousand = app.util.tow(item.browse)
         })
         this.setData({
-          list: temp
+          list: temp.concat(msg.data)
         })
       }
     })

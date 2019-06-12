@@ -45,12 +45,12 @@ function share(param) {
 }
 
 module.exports = {
-  recommend: recommend,
-  detail: detail,
-  category: category,
-  lessons: lessons,
-  recordAdd: recordAdd,
-  collect: collect,
-  collectCancel: collectCancel,
-  share: share
+  recommend,
+  detail,
+  category,
+  lessons,
+  recordAdd,
+  collect,
+  collectCancel,
+  share
 }

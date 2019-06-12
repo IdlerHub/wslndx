@@ -123,6 +123,8 @@ Page({
   login(param) {
     app.user.register(param).then(res => {
       if (res.code === 1) {
+        /* 新用户注册不用提示签到 */
+        app.setSignIn({ status: false, count: 1 })
         wx.setStorageSync("token", res.data.token)
         wx.setStorageSync("uid", res.data.uid)
         wx.setStorageSync("authKey", res.data.authKey)
@@ -133,10 +135,10 @@ Page({
             for (let attr in app.globalData.query) {
               params.push(attr + "=" + app.globalData.query[attr])
             }
-            wx.reLaunch({ url: app.globalData.path + "?" + params.join("&") })
+            wx.redirectTo({ url: app.globalData.path + "?" + params.join("&") })
           } else {
             /*跳转首页*/
-            wx.reLaunch({ url: "/pages/index/index" })
+            wx.redirectTo({ url: "/pages/index/index" })
           }
         }
       } else {
