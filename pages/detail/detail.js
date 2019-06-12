@@ -71,7 +71,6 @@ Page({
       sort: this.data.sort
     }
     return app.classroom.detail(this.param).then(msg => {
-      console.log(msg)
       if (msg.code === 1) {
         msg.data.sublesson.forEach(function(item) {
           item.minute = (item.film_length / 60).toFixed(0)

@@ -1,15 +1,17 @@
 <view class="container">
-    <canvas style="width: 670rpx; height: 500rpx;" canvas-id="myCanvas"></canvas>
-    <text class='line title'>如此优秀的你又学完了</text>
-    <text class='line course'>《{{course}}》</text>
-    <view class='operate'>
-        <button class='save' bindtap='save' hover-class="btn-hover">
-      <view class='download'><image class='icon' mode='aspectFill' src='{{$state.imgHost}}/download.png'/></view>
-      <text class='line'>保存图片</text>
+  <canvas style="width: 690rpx; height: 912rpx;" canvas-id="myCanvas"></canvas>
+  <cover-view class="operate">
+    <button class="save" bindtap="save" hover-class="btn-hover">
+      <cover-view class="download">
+        <cover-image class="icon" mode="aspectFill" src="{{ $state.imgHost }}/download.png"></cover-image>
+      </cover-view>
+      <cover-view class="line">保存图片</cover-view>
     </button>
-        <button class='share' open-type="share" hover-class="btn-hover">
-      <view class='weixin'><image class='icon' mode='aspectFill' src='{{$state.imgHost}}/weixin.png'/></view>
-      <text class='line'>微信</text>
+    <button class="share" open-type="share" hover-class="btn-hover">
+      <cover-view class="weixin">
+        <cover-image class="icon" mode="aspectFill" src="{{ $state.imgHost }}/weixin.png"></cover-image>
+      </cover-view>
+      <cover-view class="line">微信</cover-view>
     </button>
-    </view>
+  </cover-view>
 </view>

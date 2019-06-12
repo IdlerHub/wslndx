@@ -1,47 +1,34 @@
 .cur {
   width: 100%;
-  background: #fff;
-}
-
-.cur .left {
-  width: 420rpx;
-}
-
-.cur .left .dName {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  font-size: 36rpx;
-  color: #404040;
-  line-height: 50rpx;
-  margin-bottom: 10rpx;
-}
-
-.cur .left .name {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  font-size: 30rpx;
-  color: #a8a8a8;
-  line-height: 42rpx;
-}
-
-.cur .right {
-  text-align: center;
-  padding-left: 30rpx;
-  border-left: 1rpx solid #e9e9e9;
-}
-
-.cur .right .icon {
-  width: 60rpx;
-  height: 60rpx;
-}
-
-.cur .right text {
-  font-size: 30rpx;
-  color: #515151;
-  line-height: 42rpx;
-}
+  background: #fff; }
+  .cur .left {
+    width: 420rpx; }
+    .cur .left .dName {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      font-size: 36rpx;
+      color: #404040;
+      line-height: 50rpx;
+      margin-bottom: 10rpx; }
+    .cur .left .name {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      font-size: 30rpx;
+      color: #a8a8a8;
+      line-height: 42rpx; }
+  .cur .right {
+    text-align: center;
+    padding-left: 30rpx;
+    border-left: 1rpx solid #e9e9e9; }
+    .cur .right .icon {
+      width: 60rpx;
+      height: 60rpx; }
+    .cur .right text {
+      font-size: 30rpx;
+      color: #515151;
+      line-height: 42rpx; }
 
 .cur-wrap {
   width: 670rpx;
@@ -55,79 +42,61 @@
   box-shadow: 0rpx 0rpx 10rpx #eee;
   justify-content: space-between;
   border-radius: 10rpx;
-  z-index: 1;
-}
+  z-index: 1; }
 
 .history {
   background: #fff;
   padding: 0 40rpx;
-  box-sizing: border-box;
-}
-
-.history .item {
-  position: relative;
-  padding-left: 50rpx;
-  padding-bottom: 50rpx;
-  box-sizing: border-box;
-}
-
-.history .item::after {
-  position: absolute;
-  left: 0rpx;
-  top: 5rpx;
-  content: "";
-  width: 24rpx;
-  height: 24rpx;
-  border: 4rpx solid #df2020;
-  border-radius: 50%;
-  background: #fff;
-}
-
-.history .item::before {
-  position: absolute;
-  left: 15rpx;
-  top: 5rpx;
-  content: "";
-  background: #e9e9e9;
-  width: 3rpx;
-  height: 100%;
-}
-
-.history .item .date {
-  line-height: 42rpx;
-  font-size: 30rpx;
-  color: #a8a8a8;
-}
-
-.history .item .time {
-  line-height: 40rpx;
-  font-size: 28rpx;
-  color: #a8a8a8;
-  margin: 20rpx 0 10rpx;
-}
-
-.history .item .title {
-  display: block;
-  line-height: 50rpx;
-  font-size: 36rpx;
-  color: #323232;
-}
-
-.history .item .name {
-  color: #8b8b8b;
-  margin-left: 40rpx;
-  position: relative;
-}
-
-.history .item .name::after {
-  position: absolute;
-  content: "";
-  width: 3rpx;
-  height: 28rpx;
-  background: #323232;
-  left: -20rpx;
-  top: 10rpx;
-}
+  box-sizing: border-box; }
+  .history .item {
+    position: relative;
+    padding-left: 50rpx;
+    padding-bottom: 50rpx;
+    box-sizing: border-box; }
+    .history .item::after {
+      position: absolute;
+      left: 0rpx;
+      top: 5rpx;
+      content: "";
+      width: 24rpx;
+      height: 24rpx;
+      border: 4rpx solid #df2020;
+      border-radius: 50%;
+      background: #fff; }
+    .history .item::before {
+      position: absolute;
+      left: 15rpx;
+      top: 5rpx;
+      content: "";
+      background: #e9e9e9;
+      width: 3rpx;
+      height: 100%; }
+    .history .item .date {
+      line-height: 42rpx;
+      font-size: 30rpx;
+      color: #a8a8a8; }
+    .history .item .time {
+      line-height: 40rpx;
+      font-size: 28rpx;
+      color: #a8a8a8;
+      margin: 20rpx 0 10rpx; }
+    .history .item .title {
+      display: block;
+      line-height: 50rpx;
+      font-size: 36rpx;
+      color: #323232; }
+    .history .item .name {
+      color: #8b8b8b;
+      margin-left: 40rpx;
+      position: relative; }
+      .history .item .name::after {
+        position: absolute;
+        content: "";
+        width: 3rpx;
+        height: 28rpx;
+        background: #323232;
+        left: -20rpx;
+        top: 10rpx; }
 
 .nhis {
   width: 100%;
@@ -136,13 +105,10 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-}
-
-.nhis text {
-  margin-top: -100rpx;
-  font-size: 32rpx;
-  color: #949494;
-  width: 100%;
-  text-align: center;
-}
+  justify-content: center; }
+  .nhis text {
+    margin-top: -100rpx;
+    font-size: 32rpx;
+    color: #949494;
+    width: 100%;
+    text-align: center; }

@@ -3,7 +3,5 @@
   "navigationBarTitleText": "发评论",
   "navigationBarTextStyle": "black",
   "enablePullDownRefresh": false,
-  "usingComponents": {
-    
-  }
+  "usingComponents": {}
 }

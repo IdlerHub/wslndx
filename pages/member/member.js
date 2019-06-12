@@ -24,7 +24,7 @@ Page({
     return app.circle.member(this.param).then(msg => {
       if (msg.code == 1) {
         detail = msg.data
-        detail.user = temp.concat(msg.data.user)
+        detail.user = temp.concat(msg.data.user || [])
         this.setData({
           detail: detail
         })

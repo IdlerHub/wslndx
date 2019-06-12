@@ -2,39 +2,30 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 100rpx;
-}
-
-.gift_page .bg {
-  background: #f4f4f4;
-  width: 112rpx;
-  height: 112rpx;
-  padding: 40rpx;
-  border-radius: 50%;
-}
-
-.gift_page .bg .iconfont {
-  font-size: 112rpx;
-  color: #209c3b;
-}
-
-.gift_page .title {
-  opacity: 0.87;
-  margin: 40rpx auto 80rpx;
-  font-family: PingFangSC-Regular;
-  font-size: 54rpx;
-  color: #000000;
-  text-align: center;
-}
-
-.gift_page .customer {
-  width: 630rpx;
-  height: 110rpx;
-  background: #df2020;
-  border-radius: 4px;
-  font-family: PingFangSC-Regular;
-  font-size: 44rpx;
-  line-height: 110rpx;
-  color: #ffffff;
-  letter-spacing: 0;
-}
+  margin-top: 100rpx; }
+  .gift_page .bg {
+    background: #f4f4f4;
+    width: 112rpx;
+    height: 112rpx;
+    padding: 40rpx;
+    border-radius: 50%; }
+    .gift_page .bg .iconfont {
+      font-size: 112rpx;
+      color: #209c3b; }
+  .gift_page .title {
+    opacity: 0.87;
+    margin: 40rpx auto 80rpx;
+    font-family: PingFangSC-Regular;
+    font-size: 54rpx;
+    color: #000000;
+    text-align: center; }
+  .gift_page .customer {
+    width: 630rpx;
+    height: 110rpx;
+    background: #df2020;
+    border-radius: 4px;
+    font-family: PingFangSC-Regular;
+    font-size: 44rpx;
+    line-height: 110rpx;
+    color: #ffffff;
+    letter-spacing: 0; }

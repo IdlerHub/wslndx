@@ -49,20 +49,17 @@ Page({
       if (msg.code == 1) {
         if (msg.data) {
           msg.data.forEach(function(item) {
-            let arr = []
             item.fw = app.util.tow(item.forward)
             item.cw = app.util.tow(item.comments)
             item.lw = app.util.tow(item.likes)
-            item.images.forEach(function(i) {
-              arr.push(i.image)
+            item.images = item.images.map(i => {
+              return i.image
             })
-            item.images = arr
-            item.auditing = new Date().getTime() - new Date(item.createtime * 1000) < 7000 ? true : false
+            item.auditing = new Date().getTime() - new Date(item.createtime * 1000) < 7000
             item.pause = true
-            temp.push(item)
           })
           this.setData({
-            list: temp
+            list: temp.concat(msg.data)
           })
         }
       }

@@ -36,8 +36,10 @@
 }
 
 .box .left {
+  flex: 1;
   display: flex;
   align-items: center;
+  overflow: hidden;
 }
 
 .box .left .img {
@@ -45,6 +47,7 @@
   height: 150rpx;
   border-radius: 50%;
   border: 2rpx solid #b1adac;
+  overflow: hidden;
 }
 
 .box .right {
@@ -53,7 +56,9 @@
 }
 
 .left .info {
+  flex: 1;
   margin: 0 20rpx;
+  overflow: hidden;
 }
 
 .info .line {
@@ -143,6 +148,30 @@
   padding: 30rpx 0;
   box-sizing: border-box;
   border-bottom: 1rpx solid #e9e9e9;
+
+  &.big {
+    flex-direction: column;
+    align-items: flex-start;
+    .left {
+      width: 100%;
+      height: 400rpx;
+      .poster {
+        width: 100%;
+        height: 400rpx;
+      }
+    }
+    .right {
+      width: 100%;
+      margin-left: 0;
+      margin-top: 20rpx;
+      .actor {
+        margin-bottom: 0;
+      }
+      .info {
+        display: none;
+      }
+    }
+  }
 }
 
 .recommend .item:last-of-type .content {
@@ -170,6 +199,7 @@
   right: 0;
   top: 0;
   bottom: 0;
+  opacity: 0.7;
 }
 
 .recommend .right {
@@ -190,7 +220,7 @@
   font-size: 28rpx;
   color: #8a8a8a;
   letter-spacing: 0;
-  margin: 10rpx 0;
+  margin: 8rpx 0;
 }
 
 .recommend .right .info {
@@ -215,6 +245,7 @@
   .kind {
     background: white;
     margin: 30rpx;
+    border-radius: 6rpx;
     .title {
       display: block;
       padding-left: 30rpx;

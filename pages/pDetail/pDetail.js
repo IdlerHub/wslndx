@@ -69,7 +69,7 @@ Page({
           arr.push(i.image)
         })
         detail.images = arr
-        detail.auditing = new Date().getTime() - new Date(detail.createtime * 1000) < 7000 ? true : false
+        detail.auditing = new Date().getTime() - new Date(detail.createtime * 1000) < 7000
         detail.pause = true
         this.setData({
           detail: detail
@@ -199,11 +199,8 @@ Page({
     let praise = list || this.data.praise
     return app.circle.getPraise(this.praParam).then(msg => {
       if (msg.code == 1) {
-        msg.data.forEach(function(item) {
-          praise.push(item)
-        })
         this.setData({
-          praise: praise
+          praise: praise.concat(msg.data || [])
         })
       }
       this.setHeight()

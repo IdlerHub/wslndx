@@ -1,23 +1,29 @@
 page {
-  background: #eee; }
-  page .container {
-    padding-bottom: 350rpx; }
+  background: #eee;
+
+  .container {
+    padding-bottom: 350rpx;
+  }
+}
 
 canvas {
-  margin: 72rpx auto; }
+  margin: 72rpx auto;
+}
 
 .title {
   line-height: 40rpx;
   font-size: 28rpx;
   color: #7e7e7e;
   text-align: center;
-  margin-bottom: 10rpx; }
+  margin-bottom: 10rpx;
+}
 
 .course {
   line-height: 56rpx;
   font-size: 40rpx;
   color: #7e7e7e;
-  text-align: center; }
+  text-align: center;
+}
 
 .operate {
   position: fixed;
@@ -27,15 +33,20 @@ canvas {
   background: #fff;
   display: flex;
   align-items: center;
-  justify-content: stretch; }
-  .operate .save,
-  .operate .share {
-    flex: 1; }
-  .operate text {
+  justify-content: stretch;
+
+  .save,
+  .share {
+    flex: 1;
+  }
+
+  text {
     font-size: 32rpx;
     text-align: center;
     margin-top: 40rpx;
-    line-height: 1; }
+    line-height: 1;
+  }
+}
 
 .download,
 .weixin {
@@ -46,18 +57,25 @@ canvas {
   border-radius: 50%;
   display: flex;
   align-items: center;
-  justify-content: center; }
+  justify-content: center;
+}
 
 .download {
   background: #44c4ff;
-  box-shadow: 0rpx 10rpx 10rpx #d5f9fe; }
-  .download .icon {
+  box-shadow: 0rpx 10rpx 10rpx #d5f9fe;
+
+  .icon {
     width: 74rpx;
-    height: 74rpx; }
+    height: 74rpx;
+  }
+}
 
 .weixin {
   background: #00bd02;
-  box-shadow: 0rpx 10rpx 10rpx #d0f3ce; }
-  .weixin .icon {
+  box-shadow: 0rpx 10rpx 10rpx #d0f3ce;
+
+  .icon {
     width: 74rpx;
-    height: 74rpx; }
+    height: 74rpx;
+  }
+}

@@ -16,7 +16,7 @@
       <text class="line info">
         <!-- prettier-ignore-start -->
         <text class="dramaNum"><text class="key">剧集</text>{{ item.lesson_count }}集</text>
-        <text wx:if="{{ item.thousand }}" class="playNum"><text class="key">播放</text>{{ item.thousand }}万</text>
+        <text wx:if="{{ item.thousand }}" class="playNum"><text class="key">播放</text>{{ item.thousand }}</text>
         <text wx:if="{{ !item.thousand }}" class="playNum"><text class="key">播放</text>{{ item.browse }}</text>
         <!-- prettier-ignore-end -->
       </text>

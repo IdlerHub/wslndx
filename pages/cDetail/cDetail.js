@@ -40,17 +40,14 @@ Page({
         msg.data.forEach(function(item) {
           item.lw = app.util.tow(item.likes)
           item.cw = app.util.tow(item.comments)
-          let arr = []
-          item.images.forEach(function(i) {
-            arr.push(i.image)
+          item.images = item.images.map(i => {
+            return i.image
           })
-          item.images = arr
           item.auditing = new Date().getTime() - new Date(item.createtime * 1000) < 7000
           item.pause = true
-          temp.push(item)
         })
         this.setData({
-          list: temp
+          list: temp.concat(msg.data)
         })
       }
     })

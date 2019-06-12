@@ -3,7 +3,5 @@
   "navigationBarTitleText": "毕业证书",
   "navigationBarTextStyle": "black",
   "enablePullDownRefresh": false,
-  "usingComponents": {
-    
-  }
+  "usingComponents": {}
 }

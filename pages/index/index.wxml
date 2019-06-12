@@ -1,124 +1,122 @@
 <view class="container">
-    <!-- 下拉刷新 -->
-    <view wx:if="{{isRefreshing}}" class='weui-loadmore indexdrop'>
-        <view class='weui-loading'></view>
-        <!-- <view class='weui-loadmore-tips'>加载中...</view> -->
-    </view>
-    <view class='top'>
-        <view wx:if="{{$state.authUserInfo}}" bindtap='toUser'>
-            <image class='bg' mode='widthFix' src='{{userInfo.avatar}}' />
-            <view class='box'>
-                <view class='left'>
-                    <image class='img' mode='aspectFill' src='{{userInfo.avatar}}' />
-                    <view class='info'>
-                        <text class='line name'>{{userInfo.nickname}}</text>
-                        <view class='line'>
-                            <view class='city' catchtap='toInfo'>{{userInfo.address?userInfo.address:'暂无'}}</view>
-                            <view class='school' catchtap='toInfo' wx:if="{{userInfo.university}}">{{userInfo.university}}</view>
-                            <view class='school' catchtap='toInfo' wx:else><text class='icon'>+</text>添加学校标签</view>
-                        </view>
-                    </view>
-                </view>
-                <image class='right' mode='aspectFill' src='{{$state.imgHost}}/Return.png' />
+  <!-- 下拉刷新 -->
+  <view wx:if="{{ isRefreshing }}" class="weui-loadmore indexdrop">
+    <view class="weui-loading"></view>
+    <!-- <view class='weui-loadmore-tips'>加载中...</view> -->
+  </view>
+  <view class="top">
+    <view wx:if="{{ $state.authUserInfo }}" bindtap="toUser">
+      <image class="bg" mode="widthFix" src="{{ $state.userInfo.avatar }}"></image>
+      <view class="box">
+        <view class="left">
+          <image class="img" mode="aspectFill" src="{{ $state.userInfo.avatar }}"></image>
+          <view class="info">
+            <text class="line name">{{ $state.userInfo.nickname }}的老年大学</text>
+            <view class="line">
+              <view class="city" catchtap="toInfo">{{ $state.userInfo.addressCity || "暂无" }}</view>
+              <view class="school" catchtap="toInfo">{{ $state.userInfo.university || "+添加学校标签" }}</view>
             </view>
+          </view>
         </view>
-        <button class="authorize" wx:else open-type="getUserInfo" bindgetuserinfo="onGotUserInfo" data-role="user">
-            <image class='bg' mode='widthFix' src="/images/5.png" />
-            <view class='box'>
-                <view class='left'>
-                    <image class='img' mode='aspectFill' src="/images/portrait.jpg" />
-                    <view class='info'>
-                        <text class='line name'>{{userInfo.telShow}}</text>
-                        <view class='line'>
-                            <view class='city' catchtap='toInfo'>{{userInfo.address?userInfo.address:'暂无'}}</view>
-                            <view class='school' catchtap='toInfo' wx:if="{{userInfo.university}}">{{userInfo.university}}</view>
-                            <view class='school' catchtap='toInfo' wx:else><text class='icon'>+</text>添加学校标签</view>
-                        </view>
-                    </view>
-                </view>
-                <image class='right' mode='aspectFill' src='{{$state.imgHost}}/Return.png' />
+        <image class="right" mode="aspectFill" src="{{ $state.imgHost }}/Return.png"></image>
+      </view>
+    </view>
+    <button class="authorize" wx:else open-type="getUserInfo" bindgetuserinfo="onGotUserInfo" data-role="user">
+      <open-data class="bg" type="userAvatarUrl"></open-data>
+      <view class="box">
+        <view class="left">
+          <open-data class="img" type="userAvatarUrl"></open-data>
+          <view class="info">
+            <view class="line name"> <open-data type="userNickName"></open-data>的老年大学 </view>
+            <view class="line">
+              <view class="city" catchtap="toInfo">{{ $state.userInfo.addressCity || "暂无" }}</view>
+              <view class="school" catchtap="toInfo">{{ $state.userInfo.university || "+添加学校标签" }}</view>
             </view>
+          </view>
+        </view>
+        <image class="right" mode="aspectFill" src="{{ $state.imgHost }}/Return.png"></image>
+      </view>
+    </button>
+  </view>
+  <navigationBar wx:if="{{ scroll }}" id="navigationBar" placeholderBg="#F8F8F8" color="#000000" title="网上老年大学" back="{{ false }}" background="#F8F8F8"></navigationBar>
+  <scroll-view scroll-x="true" class="nav {{ scroll ? 'fixed' : '' }}" style="top:{{ top }}px" scroll-left="{{ navScrollLeft }}" scroll-with-animation="{{ true }}">
+    <block wx:for="{{ nav }}" wx:for-index="id" wx:for-item="item" wx:key="id">
+      <view class="item {{ currentTab == id ? 'active' : '' }}" data-current="{{ id }}" bindtap="switchNav">{{ item.name }}</view>
+    </block>
+  </scroll-view>
+  <swiper class="tab" style="height:{{ height }}px" current="{{ currentTab }}" duration="300" bindchange="switchTab">
+    <swiper-item class="tab-item">
+      <!--推荐  -->
+      <view class="wrap recommend">
+        <view class="now" wx:if="{{ history.last_lesson }}" bindtap="historyTap" data-id="{{ history.last_lesson.id }}" data-title="{{ history.last_lesson.title }}">
+          <view class="line">继续播放：{{ history.last_lesson.title + "第" + history.last_lesson.sub_id + "讲" }}</view>
+          <image class="icon" mode="widthFix" src="{{ $state.imgHost }}/rectangle.png"></image>
+        </view>
+        <button wx:if="{{ activity }}" class="outer-link" hover-class="none" open-type="getUserInfo" bindgetuserinfo="onGotUserInfo" data-role="education">
+          <image src="{{ activity.image }}"></image>
+          <view class="dsc">
+            <text class="line">{{ activity.title }}</text>
+            <text class="line">{{ activity.description }}</text>
+            <image class="icon" mode="aspectFill" src="/images/instant.png"></image>
+          </view>
         </button>
-    </view>
-    <navigationBar wx:if="{{scroll}}" id="navigationBar" placeholderBg="#F8F8F8" color="#000000" title="网上老年大学" back="{{false}}" background="#F8F8F8"></navigationBar>
-    <scroll-view scroll-x="true" class="nav {{scroll?'fixed':''}}" style='top:{{top}}px' scroll-left="{{navScrollLeft}}" scroll-with-animation="{{true}}">
-        <block wx:for="{{nav}}" wx:for-index="id" wx:for-item="item" wx:key="id">
-            <view class="item {{currentTab == id ?'active':''}}" data-current="{{id}}" bindtap="switchNav">{{item.name}}</view>
-        </block>
-    </scroll-view>
-    <swiper class="tab" style="height:{{height}}px" current="{{currentTab}}" duration="300" bindchange="switchTab">
-        <swiper-item class="tab-item">
-            <!--推荐  -->
-            <view class="wrap recommend">
-                <view class='now' wx:if="{{history.last_lesson}}" bindtap='historyTap' data-id="{{history.last_lesson.id}}" data-title="{{history.last_lesson.title}}">
-                    <view class='line'>继续播放：{{history.last_lesson.title+'第'+history.last_lesson.sub_id+'讲'}}</view>
-                    <image class='icon' mode='widthFix' src='{{$state.imgHost}}/rectangle.png' />
-                </view>
-                <button wx:if="{{activity}}" class="outer-link" hover-class="none" open-type="getUserInfo"  bindgetuserinfo="onGotUserInfo" data-role="education">
-                     <image src='{{activity.image}}' /> 
-                     <view class="dsc">
-                         <text class="line">{{activity.title}}</text>
-                         <text class="line">{{activity.description}}</text>
-                         <image class='icon' mode='aspectFill' src='/images/instant.png' />
-                     </view> 
-                </button>
-                <view catchtap="detailTap" wx:for="{{recommend}}" wx:key="index" class='item' data-item="{{item}}">
-                    <view class='content'>
-                        <view class='left'>
-                            <image class='poster' mode='aspectFill' src='{{item.image}}' lazy-load="true"/>
-                            <image class='icon' mode='aspectFill' src='{{$state.imgHost}}/play.png' />
-                        </view>
-                        <view class='right'>
-                            <text class='line name'>{{item.title}}</text>
-                            <text class='line actor' wx:if="{{item.teacher_id==0}}">{{item.subtitle}}</text>
-                            <text class='line actor' wx:if="{{item.teacher_id!=0}}">{{item.name}}-{{item.honor}}</text>
-                            <text class='line info'> 
-                              <text class='dramaNum'><text class='key'>剧集</text>{{item.lesson_count}}集</text>
-                              <text wx:if="{{item.bw}}" class='playNum'><text class='key'>播放</text>{{item.bw}}万</text>
-                              <text wx:if="{{!item.bw}}" class='playNum'><text class='key'>播放</text>{{item.browse}}</text>
-                            </text>
-                        </view>
-                    </view>
-                </view>
+        <view catchtap="detailTap" wx:for="{{ recommend }}" wx:key="index" class="item" data-item="{{ item }}">
+          <view class="content {{ item.show_big ? 'big' : '' }}">
+            <view class="left">
+              <image class="poster" mode="aspectFill" src="{{ item.show_big ? item.big_image || item.image : item.image }}" lazy-load="true"></image>
+              <image class="icon" mode="aspectFill" src="{{ $state.imgHost }}/play.png"></image>
             </view>
-        </swiper-item>
-        <swiper-item class="tab-item">
-            <!--分类  -->
-            <view class="wrap category">
-                <view wx:for="{{category}}" wx:key="index"  class='kind'  wx:for-item="item1">
-                    <text class='title'>{{item1.title }}</text>
-                    <view class="list">
-                        <view class='item' wx:for="{{item1.lists}}" wx:key="index"  wx:for-item="item2" catchtap="categoryTap"  data-item="{{item2}}">
-                            <image class='img' mode='widthFix' src='{{item2.image}}' lazy-load="true" />
-                            <text class='name'>{{item2.name }}</text>
-                        </view>
-                    </view>
-                </view>
+            <view class="right">
+              <text class="line name">{{ item.title }}</text>
+              <text class="line actor" wx:if="{{ item.teacher_id == 0 }}">{{ item.subtitle }}</text>
+              <text class="line actor" wx:if="{{ item.teacher_id != 0 }}">{{ item.name }}-{{ item.honor }}</text>
+              <text class="line info">
+                <text class="dramaNum"><text class="key">剧集</text>{{ item.lesson_count }}集</text>
+                <text wx:if="{{ item.bw }}" class="playNum"><text class="key">播放</text>{{ item.bw }}</text>
+                <text wx:if="{{ !item.bw }}" class="playNum"><text class="key">播放</text>{{ item.browse }}</text>
+              </text>
             </view>
-        </swiper-item>
-    </swiper>
-    <!-- 底部tabbar -->
-    <view class='tabbar'>
-        <view class='item'>
-            <image class='icon' mode='aspectFill' src='{{$state.imgHost}}/Classroom-red.png' />
-            <text class='name active'>云课堂</text>
+          </view>
         </view>
-        <view bindtap='toVideo' class='item'>
-            <image class='icon' mode='aspectFill' src='{{$state.imgHost}}/video.png' />
-            <text class='name'>短视频</text>
+      </view>
+    </swiper-item>
+    <swiper-item class="tab-item">
+      <!--分类  -->
+      <view class="wrap category">
+        <view wx:for="{{ category }}" wx:key="index" class="kind" wx:for-item="item1">
+          <text class="title">{{ item1.title }}</text>
+          <view class="list">
+            <view class="item" wx:for="{{ item1.lists }}" wx:key="index" wx:for-item="item2" catchtap="categoryTap" data-item="{{ item2 }}">
+              <image class="img" mode="widthFix" src="{{ item2.image }}" lazy-load="true"></image>
+              <text class="name">{{ item2.name }}</text>
+            </view>
+          </view>
         </view>
-        <button class='item' open-type="getUserInfo" bindgetuserinfo="onGotUserInfo" data-role="post">
-            <image mode='aspectFill' class='icon' src='{{$state.imgHost}}/circle.png'></image>
-            <text class='name'>学友圈</text>
-        </button>
+      </view>
+    </swiper-item>
+  </swiper>
+  <!-- 底部tabbar -->
+  <view class="tabbar">
+    <view class="item">
+      <image class="icon" mode="aspectFill" src="{{ $state.imgHost }}/Classroom-red.png"></image>
+      <text class="name active">云课堂</text>
     </view>
-    <!-- 签到拿积分 -->
-    <view class="integration" wx:if='{{quickInteg}}'  catchtouchmove="return">
-      <view class="dialog">
-          <image class="bg" src="/images/integration_bg.png" mode="aspectFill" ></image> 
-          <view class="ani"></view>
-          <button catchtap='signIn'  data-id="1" >签到领积分</button>
-          <icon type="cancel" size="37" color='white'  data-id="0"  catchtap='signIn' />
-      </view> 
+    <view bindtap="toVideo" class="item">
+      <image class="icon" mode="aspectFill" src="{{ $state.imgHost }}/video.png"></image>
+      <text class="name">短视频</text>
     </view>
+    <button class="item" open-type="getUserInfo" bindgetuserinfo="onGotUserInfo" data-role="post">
+      <image mode="aspectFill" class="icon" src="{{ $state.imgHost }}/circle.png"></image>
+      <text class="name">学友圈</text>
+    </button>
+  </view>
+  <!-- 签到拿积分 -->
+  <view class="integration" wx:if="{{ quickInteg }}" catchtouchmove="return">
+    <view class="dialog">
+      <image class="bg" src="/images/integration_bg.png" mode="aspectFill"></image>
+      <view class="ani"></view>
+      <button catchtap="signIn" data-id="1">签到领积分</button>
+      <icon type="cancel" size="37" color="white" data-id="0" catchtap="signIn"></icon>
+    </view>
+  </view>
 </view>

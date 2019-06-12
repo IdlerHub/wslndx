@@ -40,11 +40,9 @@ Page({
       if (msg.code == 1) {
         if (msg.data) {
           msg.data.forEach(function(item) {
-            let arr = []
-            item.images.forEach(function(i) {
-              arr.push(i.image)
+            item.images = item.images.map(i => {
+              return i.image
             })
-            item.images = arr
             item.auditing = new Date().getTime() - new Date(item.createtime * 1000) < 7000
             item.pause = true
             circle.push(item)

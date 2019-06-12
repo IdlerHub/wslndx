@@ -3,11 +3,9 @@ Page({
   data: {
     url: ""
   },
-  //options(Object)
   onLoad: function(options) {
-    let url = "https://gqjy.jinlingkeji.cn/?"
     this.setData({
-      url: url + "mobile=" + encodeURIComponent(this.data.$state.userInfo.mobile) + "&authKey=" + encodeURIComponent(this.data.$state.authKey)
+      url: this.data.$state.activityUrl + "mobile=" + encodeURIComponent(this.data.$state.userInfo.mobile) + "&authKey=" + encodeURIComponent(this.data.$state.authKey)
     })
   },
   onReady: function() {},
@@ -16,6 +14,6 @@ Page({
   onUnload: function() {},
   onPullDownRefresh: function() {},
   onReachBottom: function() {},
-  onShareAppMessage: function() {},
+  /* onShareAppMessage: function() {}, */
   onPageScroll: function() {}
 })

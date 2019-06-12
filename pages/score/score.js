@@ -18,7 +18,7 @@ Page({
       if (res.code == 1) {
         this.setData({
           paylist: res.data,
-          "sources[2].status": app.globalData.integration /* 用户签到状态 */
+          "sources[2].status": this.data.$state.signStatus.status /* 用户签到状态 */
         })
       }
     })
@@ -131,14 +131,9 @@ Page({
     let i = e.currentTarget.dataset.index
     if (i == 2) {
       /* 签到状态 */
-      app.globalData.integration = true
+      app.setSignIn({ status: true, count: 1 }, true)
       this.setData({
         "sources[2].status": true
-      })
-      /* 存储签到日期 */
-      wx.setStorage({
-        key: "signStatus",
-        data: { time: new Date().toDateString(), status: true, modal: true }
       })
       app.user.sign().then(res => {
         this.init()

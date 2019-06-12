@@ -96,19 +96,19 @@
     <view class='footer'>
         <button class="share item" open-type="share" data-id="{{detail.id}}" hover-class="btn-hover">
             <icon class="iconfont icon-fenxiang"></icon>
-            <text class="text">{{ detail.fw ? detail.fw + "万" : detail.forward }}</text>
+            <text class="text">{{ detail.fw ? detail.fw  : detail.forward }}</text>
         </button>  
         <text class="division"></text>
         <view class='item' bindtap='show'>
             <icon class="iconfont icon-comment"></icon>
             <text wx:if="{{!detail.cw}}" class='text'>{{detail.comments}}</text>
-            <text wx:if="{{detail.cw}}" class='text'>{{detail.cw}}万</text>
+            <text wx:if="{{detail.cw}}" class='text'>{{detail.cw}}</text>
         </view>
         <text class="division"></text>
         <view class='item' bindtap='praise'>
             <view class="praise  {{ detail.likestatus ? 'end' : '' }} {{ detail.praising ? 'ani' : '' }}" data-index="{{ index }}" bindanimationend="aniend"></view>
             <text wx:if="{{!detail.lw}}" class='text'>{{detail.likes}}</text>
-            <text wx:if="{{detail.lw}}" class='text'>{{detail.lw}}万</text>
+            <text wx:if="{{detail.lw}}" class='text'>{{detail.lw}}</text>
         </view>
     </view>
     <view class='popup write' wx:if="{{write}}">

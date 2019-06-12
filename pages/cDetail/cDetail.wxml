@@ -51,19 +51,19 @@
       <view class="btn">
         <button class="share item" open-type="share" data-index="{{ index }}" hover-class="btn-hover">
           <icon class="iconfont icon-fenxiang"></icon>
-          <text class="text">{{ item.fw ? item.fw + "万" : item.forward }}</text>
+          <text class="text">{{ item.fw ? item.fw : item.forward }}</text>
         </button>
         <text class="division"></text>
         <!-- 评论 -->
         <navigator url="../pDetail/pDetail?id={{ item.id }}&comment" hover-class="none" open-type="navigate" class="item">
           <icon class="iconfont icon-comment"></icon>
-          <text class="text">{{ item.cw ? item.cw + "万" : item.comments }}</text>
+          <text class="text">{{ item.cw ? item.cw : item.comments }}</text>
         </navigator>
         <text class="division"></text>
         <!-- 点赞 -->
         <view class="item" bindtap="praise" data-index="{{ index }}">
           <view class="praise  {{ item.likestatus ? 'end' : '' }} {{ item.praising ? 'ani' : '' }}" data-index="{{ index }}" bindanimationend="aniend"></view>
-          <text class="text">{{ item.lw ? item.lw + "万" : item.likes }} </text>
+          <text class="text">{{ item.lw ? item.lw : item.likes }} </text>
         </view>
       </view>
     </view>

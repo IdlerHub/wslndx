@@ -35,7 +35,6 @@ Page({
     this.judge()
   },
   addImg() {
-    /*todo:去掉that*/
     let that = this
     let image = this.data.param.image
     if (this.data.media_type == 1) {
@@ -126,7 +125,6 @@ Page({
   },
   //上传视频
   uploadVideo() {
-    /*todo:去掉that*/
     let that = this,
       type = 2
     wx.chooseVideo({

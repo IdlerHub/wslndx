@@ -81,5 +81,5 @@
     <icon class="iconfont icon-shouye"></icon>
     <text>首页</text>
   </view>
-  <button class="getPhone-mask" wx:if="{{ $state.baseInfo }}" open-type="getUserInfo" bindgetuserinfo="onGotUserInfo" style="position:fixed;left: 0;top: 0;width: 100vw;height: 100vh;z-index: 9999;"></button>
+  <button class="authorize" wx:if="{{ $state.baseInfo }}" open-type="getUserInfo" bindgetuserinfo="onGotUserInfo"></button>
 </view>
