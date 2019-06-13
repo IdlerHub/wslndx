@@ -118,11 +118,14 @@ Page({
     })
   },
   // 转发
-  onShareAppMessage: function() {
-    return {
-      title: "网上老年大学",
-      imageUrl: this.data.img,
-      path: "/pages/index/index"
+  onShareAppMessage: function(ops) {
+    if (ops.from === "button") {
+      console.log("ShareAppMessage  button")
+      return {
+        title: "网上老年大学",
+        imageUrl: this.data.img,
+        path: "pages/loading/loading"
+      }
     }
   }
 })

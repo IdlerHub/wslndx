@@ -141,27 +141,29 @@ Page({
     })
   },
   // 转发
-  onShareAppMessage: function() {
-    let list = this.data.list
-    let index = this.data.index
-    let param = {
-      id: list[index].id
-    }
-    // 分享  todo:iphoneX有卡顿bug
-    app.video.share(param).then(msg => {
-      if (msg.code == 1) {
-        list[index].forward += 1
-        this.setData({
-          list: list,
-          cur: list[index]
-        })
-        app.aldstat.sendEvent("短视频转发", { name: this.data.cur.title })
+  onShareAppMessage: function(ops) {
+    if (ops.from === "button") {
+      console.log("ShareAppMessage  button")
+      let list = this.data.list
+      let index = this.data.index
+      let param = {
+        id: list[index].id
       }
-    })
-    return {
-      title: list[index].title,
-      imageUrl: list[index].cimg,
-      path: "/pages/video/video?id=" + list[index].id + "&type=share"
+      app.video.share(param).then(msg => {
+        if (msg.code == 1) {
+          list[index].forward += 1
+          this.setData({
+            list: list,
+            cur: list[index]
+          })
+          app.aldstat.sendEvent("短视频转发", { name: this.data.cur.title })
+        }
+      })
+      return {
+        title: list[index].title,
+        imageUrl: list[index].cimg,
+        path: "/pages/video/video?id=" + list[index].id + "&type=share"
+      }
     }
   },
   // 首页

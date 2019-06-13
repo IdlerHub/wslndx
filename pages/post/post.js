@@ -25,22 +25,25 @@ Page({
       this.setData({ rlSucFlag: false })
     }
   },
-  onShareAppMessage: function(e) {
-    let i = e.target.dataset.index
-    let bkid = this.data.list[i].id
-    app.circle.addForward({ blog_id: bkid }).then(res => {
-      if (res.code == 1) {
-        let list = this.data.list
-        list[i].forward += 1
-        this.setData({
-          list: list
-        })
+  onShareAppMessage: function(ops) {
+    if (ops.from === "button") {
+      console.log("ShareAppMessage  button")
+      let i = ops.target.dataset.index
+      let bkid = this.data.list[i].id
+      app.circle.addForward({ blog_id: bkid }).then(res => {
+        if (res.code == 1) {
+          let list = this.data.list
+          list[i].forward += 1
+          this.setData({
+            list: list
+          })
+        }
+      })
+      return {
+        title: "网上老年大学",
+        imageUrl: "",
+        path: "/pages/pDetail/pDetail?id=" + bkid + "&type=share"
       }
-    })
-    return {
-      title: "网上老年大学",
-      imageUrl: this.data.img,
-      path: "/pages/pDetail/pDetail?id=" + bkid + "&type=share"
     }
   },
   getList(list) {
@@ -112,12 +115,13 @@ Page({
     app.circle.join(param).then(msg => {
       if (msg.code == 1) {
         data.forEach(function(item, index) {
-          setTimeout(() => {
+          let timer = setTimeout(() => {
             wx.showToast({
               title: "    您已成功加入\r\n【" + item.title + "】学友圈",
               icon: "none",
               duration: 1000
             })
+            clearTimeout(timer)
           }, index * 1000 + 500)
         })
       }
@@ -129,14 +133,10 @@ Page({
       rlAni: true
     })
     let timer = setTimeout(() => {
-      this.setData(
-        {
-          rlAni: false
-        },
-        () => {
-          clearTimeout(timer)
-        }
-      )
+      this.setData({
+        rlAni: false
+      })
+      clearTimeout(timer)
     }, 2000)
     /* 重新到第一页 */
     this.param.page = 1
@@ -183,14 +183,10 @@ Page({
     this.getList([]).then(() => {
       wx.stopPullDownRefresh()
       let timer = setTimeout(() => {
-        this.setData(
-          {
-            isRefreshing: false
-          },
-          () => {
-            clearTimeout(timer)
-          }
-        )
+        this.setData({
+          isRefreshing: false
+        })
+        clearTimeout(timer)
       }, 1000)
     })
   },

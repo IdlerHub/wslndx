@@ -1,131 +1,121 @@
 <!-- 下拉刷新 -->
-<view wx:if="{{isRefreshing}}" class='weui-loadmore'>
-    <view class='weui-loading'></view>
-    <!-- <view class='weui-loadmore-tips'>加载中...</view> -->
+<view wx:if="{{ isRefreshing }}" class="weui-loadmore">
+  <view class="weui-loading"></view>
 </view>
 <view class="container">
-    <view class='box'>
-        <view wx:if='{{vistor}}' class="vistor-head">
-           点击“ <icon class="iconfont icon-xiaochengxu"></icon> ”添加到我的小程序 <icon class="iconfont icon-shouzhi"></icon>
+  <view class="box">
+    <view wx:if="{{ vistor }}" class="vistor-head"> 点击“ <icon class="iconfont icon-xiaochengxu"></icon> ”添加到我的小程序 <icon class="iconfont icon-shouzhi"></icon> </view>
+    <view class="detail">
+      <view class="top">
+        <view class="left">
+          <image mode="aspectFill" class="avatarUrl" src="{{ detail.avatar }}" data-uid="{{ detail.uid }}" catchtap="toUser"></image>
+          <view class="text">
+            <text class="nickName line">{{ detail.nickname }}</text>
+            <text wx:if="{{ detail.university_name }}" class="school line">{{ detail.university_name }}</text>
+          </view>
         </view>
-        <view class='detail'>
-            <view class='top'>
-                <view class='left'>
-                    <image mode='aspectFill' class='avatarUrl' src='{{detail.avatar}}' data-uid="{{ detail.uid }}" catchtap="toUser"></image>
-                    <view class='text'>
-                        <text class='nickName line'>{{detail.nickname}}</text>
-                        <text wx:if="{{detail.university_name}}" class='school line'>{{detail.university_name}}</text>
-                    </view>
-                </view>
-                <text class='date'>{{detail.createtimes}}</text>
-            </view>
-            <!-- <navigator url='../pDetail/pDetail?id={{detail.id}}' hover-class="none" open-type="navigate"> -->
-            <rich-text wx:if="{{detail.content}}" class='name' nodes="{{detail.content}}"></rich-text>
-            <view class='content' wx:if="{{detail.images.length>0}}">
-                <view class='img one' wx:if="{{detail.images.length==1}}">
-                    <image mode='widthFix' wx:for="{{detail.images}}" wx:for-item="items" wx:key="index" src='{{items}}' data-urls="{{detail.images}}" data-current="{{items}}" bindtap="previewImage"></image>
-                </view>
-                <view class='img three' wx:if="{{detail.images.length>1}}">
-                    <image mode='aspectFill' wx:for="{{detail.images}}" wx:for-item="items" wx:key="index" src='{{items}}' data-urls="{{detail.images}}" data-current="{{items}}" bindtap="previewImage"></image>
-                </view>
-            </view>
-            <view class='content' wx:if="{{detail.url}}">
-                <video wx:if="{{!detail.pause}}" id="{{detail.id}}" src="{{detail.url}}" controls page-gesture enable-play-gesture bindended="ended">
-          </video>
-                <view wx:if="{{detail.pause}}" class="bg" bindtap='play'>
-                    <image wx:if="{{detail.pause}}" mode='aspectFill' src="{{detail.auditing?$state.imgHost+'/tip.jpg':detail.image}}" class="poster"></image>
-                    <image wx:if="{{detail.pause}}" mode='aspectFill' src="{{$state.imgHost}}/play-hl.png" class="play" bindtap='play'></image>
-                </view>
-            </view>
-            <!-- </navigator> -->
-            <button  wx:if="{{detail.fs_title}}"  class="label"  hover-class="none" > #{{detail.fs_title}}</button>
+        <text class="date">{{ detail.createtimes }}</text>
+      </view>
+      <rich-text wx:if="{{ detail.content }}" class="name" nodes="{{ detail.content }}"></rich-text>
+      <view class="content" wx:if="{{ detail.images.length > 0 }}">
+        <view class="img one" wx:if="{{ detail.images.length == 1 }}">
+          <image mode="widthFix" wx:for="{{ detail.images }}" wx:for-item="items" wx:key="index" src="{{ items }}" data-urls="{{ detail.images }}" data-current="{{ items }}" bindtap="previewImage"></image>
         </view>
+        <view class="img three" wx:if="{{ detail.images.length > 1 }}">
+          <image mode="aspectFill" wx:for="{{ detail.images }}" wx:for-item="items" wx:key="index" src="{{ items }}" data-urls="{{ detail.images }}" data-current="{{ items }}" bindtap="previewImage"></image>
+        </view>
+      </view>
+      <view class="content" wx:if="{{ detail.url }}">
+        <video wx:if="{{ !detail.pause }}" id="{{ detail.id }}" src="{{ detail.url }}" controls page-gesture enable-play-gesture bindended="ended"></video>
+        <view wx:if="{{ detail.pause }}" class="bg" bindtap="play">
+          <image mode="aspectFill" src="{{ detail.auditing ? $state.imgHost + '/tip.jpg' : detail.image }}" class="poster"></image>
+          <image mode="aspectFill" src="{{ $state.imgHost }}/play-hl.png" class="play" bindtap="play"></image>
+        </view>
+      </view>
+      <button wx:if="{{ detail.fs_title }}" class="label" hover-class="none">#{{ detail.fs_title }}</button>
     </view>
-    <scroll-view scroll-x="true" class="nav" scroll-left="{{navScrollLeft}}" scroll-with-animation="{{true}}">
-        <block wx:for="{{nav}}" wx:for-index="id" wx:for-item="item" wx:key="id">
-            <view class="item {{currentTab == id ?'active':''}}" data-current="{{id}}" bindtap="switchNav">{{item.name}}</view>
-        </block>
-    </scroll-view>
-    <swiper class="tab"  style="height:{{height}}px" current="{{currentTab}}" duration="300" bindchange="switchTab">
-        <swiper-item class="tab-item">
-            <!--评论  -->
-            <view class="wrap comment">
-                <view class="nodata" wx:if="{{comment.length <= 0 }}">
-                    <image src="../../images/no-com.png" mode="aspectFill" />
-                </view>
-                <view wx:for="{{comment}}" wx:key="index" class='item'>
-                    <view class='content'>
-                        <view class='left'>
-                            <image class='img' mode='aspectFill' src='{{item.avatar}}' />
-                        </view>
-                        <view class='right'>
-                            <view class='top'>
-                                <text class='line name'>{{item.nickname}}</text>
-                                <view class="time-del">
-                                    <text class='line time'>{{item.createtimes}}</text>
-                                    <view class="del" wx:if="{{$state.userInfo.id == item.uid}}" catchtap="delComment" data-item="{{item}}">
-                                        <image src="{{$state.imgHost}}/delete.png" mode="aspectFill" class="icon-del"></image>
-                                        <text>删除</text>
-                                    </view>
-                                </view>
-                            </view>
-                            <rich-text nodes="{{item.content}}"></rich-text>
-                        </view>
-                    </view>
-                </view>
-            </view>
-        </swiper-item>
-        <swiper-item class="tab-item">
-            <!--点赞  -->
-            <view class="wrap praise">
-                <view class="nodata" wx:if="{{praise.length <= 0 }}">
-                    <image src="../../images/no-com.png" mode="aspectFill" />
-                </view>
-                <view wx:for="{{praise}}" wx:key="index" class='item'>
-                    <view class='content'>
-                        <view class='left'>
-                            <image class='img' mode='aspectFill' src='{{item.avatar}}' />
-                            <text class='name'>{{item.nickname}}</text>
-                        </view>
-                        <text class='time'>{{item.createtimes}}</text>
-                    </view>
-                </view>
-            </view>
-        </swiper-item>
-    </swiper>
-    <view class='footer'>
-        <button class="share item" open-type="share" data-id="{{detail.id}}" hover-class="btn-hover">
-            <icon class="iconfont icon-fenxiang"></icon>
-            <text class="text">{{ detail.fw ? detail.fw  : detail.forward }}</text>
-        </button>  
-        <text class="division"></text>
-        <view class='item' bindtap='show'>
-            <icon class="iconfont icon-comment"></icon>
-            <text wx:if="{{!detail.cw}}" class='text'>{{detail.comments}}</text>
-            <text wx:if="{{detail.cw}}" class='text'>{{detail.cw}}</text>
+  </view>
+  <scroll-view scroll-x="true" class="nav" scroll-left="{{ navScrollLeft }}" scroll-with-animation="{{ true }}">
+    <block wx:for="{{ nav }}" wx:for-index="id" wx:for-item="item" wx:key="id">
+      <view class="item {{ currentTab == id ? 'active' : '' }}" data-current="{{ id }}" bindtap="switchNav">{{ item.name }}</view>
+    </block>
+  </scroll-view>
+  <swiper class="tab" style="height:{{ height }}px" current="{{ currentTab }}" duration="300" bindchange="switchTab">
+    <swiper-item class="tab-item">
+      <view class="wrap comment">
+        <view class="nodata" wx:if="{{ comment.length <= 0 }}">
+          <image src="../../images/no-com.png" mode="aspectFill"></image>
         </view>
-        <text class="division"></text>
-        <view class='item' bindtap='praise'>
-            <view class="praise  {{ detail.likestatus ? 'end' : '' }} {{ detail.praising ? 'ani' : '' }}" data-index="{{ index }}" bindanimationend="aniend"></view>
-            <text wx:if="{{!detail.lw}}" class='text'>{{detail.likes}}</text>
-            <text wx:if="{{detail.lw}}" class='text'>{{detail.lw}}</text>
-        </view>
-    </view>
-    <view class='popup write' wx:if="{{write}}">
-        <view class='bg' bindtap='hide'></view>
-        <view class='box'>
-            <textarea placeholder="写评论" focus="{{txoptions}}" cursor-spacing="190rpx" fixed="{{txoptions}}" bindinput="input" value='{{content}}' placeholder-class="ph-class" />
-            <view class='right' catchtap='navigator'>
-                <view class='to'>
-                    <image mode='aspectFit' class='icon' src='{{$state.imgHost}}/screen.png'></image>
-                </view>
-                <button class='release' disabled="{{!content}}" catchtap='release'>发布</button>
+        <view wx:for="{{ comment }}" wx:key="index" class="item">
+          <view class="content">
+            <view class="left">
+              <image class="img" mode="aspectFill" src="{{ item.avatar }}"></image>
             </view>
+            <view class="right">
+              <view class="top">
+                <text class="line name">{{ item.nickname }}</text>
+                <view class="time-del">
+                  <text class="line time">{{ item.createtimes }}</text>
+                  <view class="del" wx:if="{{ $state.userInfo.id == item.uid }}" catchtap="delComment" data-item="{{ item }}">
+                    <image src="{{ $state.imgHost }}/delete.png" mode="aspectFill" class="icon-del"></image>
+                    <text>删除</text>
+                  </view>
+                </view>
+              </view>
+              <rich-text nodes="{{ item.content }}"></rich-text>
+            </view>
+          </view>
         </view>
+      </view>
+    </swiper-item>
+    <swiper-item class="tab-item">
+      <view class="wrap praise">
+        <view class="nodata" wx:if="{{ praise.length <= 0 }}">
+          <image src="../../images/no-com.png" mode="aspectFill"></image>
+        </view>
+        <view wx:for="{{ praise }}" wx:key="index" class="item">
+          <view class="content">
+            <view class="left">
+              <image class="img" mode="aspectFill" src="{{ item.avatar }}"></image>
+              <text class="name">{{ item.nickname }}</text>
+            </view>
+            <text class="time">{{ item.createtimes }}</text>
+          </view>
+        </view>
+      </view>
+    </swiper-item>
+  </swiper>
+  <view class="footer">
+    <button class="share item" open-type="share" data-id="{{ detail.id }}" hover-class="btn-hover">
+      <icon class="iconfont icon-fenxiang"></icon>
+      <text class="text">{{ detail.fw ? detail.fw : detail.forward }}</text>
+    </button>
+    <text class="division"></text>
+    <view class="item" bindtap="show">
+      <icon class="iconfont icon-comment"></icon>
+      <text class="text">{{ detail.cw || detail.comments }}</text>
     </view>
-
-    <view wx:if="{{vistor}}" class="vistor-home" catchtap='tohome'>
-        <icon class="iconfont icon-shouye"></icon>
-        <text>首页</text>
+    <text class="division"></text>
+    <view class="item" bindtap="praise">
+      <view class="praise  {{ detail.likestatus ? 'end' : '' }} {{ detail.praising ? 'ani' : '' }}" data-index="{{ index }}" bindanimationend="aniend"></view>
+      <text class="text">{{ detail.lw || detail.likes }}</text>
     </view>
+  </view>
+  <view class="popup write" wx:if="{{ write }}">
+    <view class="bg" bindtap="hide"></view>
+    <view class="box">
+      <!-- prettier-ignore -->
+      <textarea placeholder="写评论" focus="{{txoptions}}" cursor-spacing="190rpx" fixed="{{txoptions}}" bindinput="input" value='{{content}}' placeholder-class="ph-class" />
+      <view class="right" catchtap="navigator">
+        <view class="to">
+          <image mode="aspectFit" class="icon" src="{{ $state.imgHost }}/screen.png"></image>
+        </view>
+        <button class="release" disabled="{{ !content }}" catchtap="release">发布</button>
+      </view>
+    </view>
+  </view>
+  <view wx:if="{{ vistor }}" class="vistor-home" catchtap="tohome">
+    <icon class="iconfont icon-shouye"></icon>
+    <text>首页</text>
+  </view>
 </view>

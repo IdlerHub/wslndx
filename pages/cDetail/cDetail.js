@@ -155,11 +155,12 @@ Page({
     })
     this.getList([]).then(() => {
       wx.stopPullDownRefresh()
-      setTimeout(() => {
+      let timer = setTimeout(() => {
         wx.hideLoading()
         this.setData({
           isRefreshing: false
         })
+        clearTimeout(timer)
       }, 500)
     })
   },
@@ -168,22 +169,25 @@ Page({
     this.param.page++
     this.getList()
   },
-  onShareAppMessage: function(e) {
-    let i = e.target.dataset.index
-    let bkid = this.data.list[i].id
-    app.circle.addForward({ blog_id: bkid }).then(res => {
-      if (res.code == 1) {
-        let list = this.data.list
-        list[i].forward += 1
-        this.setData({
-          list: list
-        })
+  onShareAppMessage: function(ops) {
+    if (ops.from === "button") {
+      console.log("ShareAppMessage  button")
+      let i = ops.target.dataset.index
+      let bkid = this.data.list[i].id
+      app.circle.addForward({ blog_id: bkid }).then(res => {
+        if (res.code == 1) {
+          let list = this.data.list
+          list[i].forward += 1
+          this.setData({
+            list: list
+          })
+        }
+      })
+      return {
+        title: "网上老年大学",
+        imageUrl: "",
+        path: "/pages/pDetail/pDetail?id=" + bkid + "&type=share"
       }
-    })
-    return {
-      title: "网上老年大学",
-      imageUrl: this.data.img,
-      path: "/pages/pDetail/pDetail?id=" + bkid + "&type=share"
     }
   },
   toUser(e) {

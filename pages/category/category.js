@@ -40,14 +40,10 @@ Page({
     this.getList([]).then(() => {
       wx.stopPullDownRefresh()
       let timer = setTimeout(() => {
-        this.setData(
-          {
-            isRefreshing: false
-          },
-          () => {
-            clearTimeout(timer)
-          }
-        )
+        this.setData({
+          isRefreshing: false
+        })
+        clearTimeout(timer)
       }, 1000)
     })
   },
@@ -56,7 +52,6 @@ Page({
     this.param.page++
     this.getList()
   },
-
   detailTap: function(e) {
     wx.navigateTo({
       url: `../detail/detail?id=${e.currentTarget.dataset.item.id}&name=${e.currentTarget.dataset.item.title}`

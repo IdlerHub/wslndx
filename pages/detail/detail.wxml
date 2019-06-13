@@ -15,7 +15,7 @@
       <text class="dramaNum">共{{ detail.lesson_count }}讲</text>
     </view>
     <text class="line actor" wx:if="{{ detail.teacher_id == 0 }}">{{ detail.subtitle }}</text>
-    <text class="line actor" wx:if="{{ detail.teacher_id != 0 }}">{{ detail.teacher.name }}-{{ detail.teacher.honor }}</text>
+    <text class="line actor" wx:else>{{ detail.teacher.name }}-{{ detail.teacher.honor }}</text>
     <view class="bottom">
       <view class="left">
         <view class="collect" bindtap="collect">

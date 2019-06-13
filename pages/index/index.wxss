@@ -138,6 +138,9 @@
       .recommend .item .content.big .left .poster {
         width: 100%;
         height: 400rpx; }
+      .recommend .item .content.big .left .icon {
+        width: 100rpx;
+        height: 100rpx; }
     .recommend .item .content.big .right {
       width: 100%;
       margin-left: 0;

@@ -22,8 +22,8 @@
       <view class="content" wx:if="{{ item.url }}">
         <video wx:if="{{ !item.pause }}" id="{{ item.id }}" src="{{ item.url }}" controls page-gesture enable-play-gesture></video>
         <view wx:if="{{ item.pause }}" class="bg" data-index="{{ index }}">
-          <image wx:if="{{ item.pause }}" mode="aspectFill" src="{{ item.auditing ? $state.imgHost + '/tip.jpg' : item.image }}" class="poster"></image>
-          <image wx:if="{{ item.pause }}" mode="aspectFill" src="{{ $state.imgHost }}/play-hl.png" class="play"></image>
+          <image mode="aspectFill" src="{{ item.auditing ? $state.imgHost + '/tip.jpg' : item.image }}" class="poster"></image>
+          <image mode="aspectFill" src="{{ $state.imgHost }}/play-hl.png" class="play"></image>
         </view>
       </view>
     </view>

@@ -2,7 +2,6 @@
   <!-- 下拉刷新 -->
   <view wx:if="{{ isRefreshing }}" class="weui-loadmore">
     <view class="weui-loading"></view>
-    <!-- <view class='weui-loadmore-tips'>加载中...</view> -->
   </view>
   <view class="top">
     <image class="img" mode="aspectFill" src="{{ options.img }}"></image>
@@ -19,8 +18,7 @@
         <text class="line actor" wx:else>{{ item.name }}-{{ item.honor }}</text>
         <text class="line info">
           <text class="dramaNum"><text class="key">剧集</text>{{ item.lesson_count }}集</text>
-          <text wx:if="{{ item.thousand }}" class="playNum"><text class="key">播放</text>{{ item.thousand }}</text>
-          <text wx:else class="playNum"><text class="key">播放</text>{{ item.browse }}</text>
+          <text class="playNum"><text class="key">播放</text>{{ item.thousand || item.browse }}</text>
         </text>
       </view>
     </view>

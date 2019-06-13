@@ -4,7 +4,31 @@ Page({
   data: {
     currentTab: 1,
     scrollStatus: false,
-    sources: [{ title: "邀请好友注册", score: 25, status: false, page: "/pages/invitation/invitation" }, { title: "分享课程", score: 10, times: 3, status: false, page: "/pages/index/index?tabs=1" }, { title: "每日签到获得积分", score: 10, status: false }, { title: "注册完成获得积分", score: 20, status: true }],
+    sources: [
+      {
+        title: "邀请好友注册",
+        score: 25,
+        status: false,
+        page: "/pages/invitation/invitation"
+      },
+      {
+        title: "分享课程",
+        score: 10,
+        times: 3,
+        status: false,
+        page: "/pages/index/index?tabs=1"
+      },
+      {
+        title: "每日签到获得积分",
+        score: 10,
+        status: false
+      },
+      {
+        title: "注册完成获得积分",
+        score: 20,
+        status: true
+      }
+    ],
     paylist: [],
     details: [],
     isRefreshing: false
@@ -16,6 +40,9 @@ Page({
   onLoad: function(options) {
     app.user.gift().then(res => {
       if (res.code == 1) {
+        res.data.forEach(item => {
+          item.largePoint = item.need_points >= 10000 ? (item.need_points / 10000).toFixed(2) + "w" : null
+        })
         this.setData({
           paylist: res.data,
           "sources[2].status": this.data.$state.signStatus.status /* 用户签到状态 */
@@ -66,7 +93,6 @@ Page({
       scrollStatus: true
     })
   },
-  onShareAppMessage: function() {},
   onPageScroll: function(e) {
     if (e.scrollTop < this.params.scrollTop) {
       this.data.scrollStatus && this.setData({ scrollStatus: false })

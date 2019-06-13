@@ -144,9 +144,10 @@ Page({
     })
   },
   toUser() {
-    wx.navigateTo({
+    this.test()
+    /* wx.navigateTo({
       url: "../user/user"
-    })
+    }) */
   },
   toInfo() {
     wx.navigateTo({
@@ -216,12 +217,6 @@ Page({
   onHide() {
     app.aldstat.sendEvent("退出", { name: "首页" })
   },
-  // 转发
-  onShareAppMessage: function() {
-    return {
-      path: "/pages/index/index"
-    }
-  },
   // 用户昵称等信息授权
   onGotUserInfo(e) {
     if (e.detail.errMsg === "getUserInfo:ok") {
@@ -252,12 +247,13 @@ Page({
             mask: true
           })
 
-          setTimeout(() => {
+          let timer = setTimeout(() => {
             wx.hideToast({
               success: () => {
                 wx.navigateTo({ url: "/pages/score/score" })
               }
             })
+            clearTimeout(timer)
           }, 1500)
         }
       })
@@ -274,12 +270,27 @@ Page({
       isRefreshing: true
     })
     this.init().then(() => {
-      setTimeout(() => {
+      let timer = setTimeout(() => {
         this.setData({
           isRefreshing: false
         })
+        clearTimeout(timer)
       }, 1000)
     })
   },
-  onReachBottom() {}
+  onReachBottom() {},
+  test() {
+    console.log("takePhoto")
+    wx.createCameraContext().takePhoto({
+      success: function(res) {
+        consolr.log(res)
+      },
+      fail: function(err) {
+        console.log(err)
+      },
+      complete: function() {
+        console.log("end")
+      }
+    })
+  }
 })

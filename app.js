@@ -1,7 +1,7 @@
 /*
  * @Date: 2019-05-28 09:50:08
  * @LastEditors: hxz
- * @LastEditTime: 2019-06-11 18:27:27
+ * @LastEditTime: 2019-06-12 14:36:28
  */
 /*添加async await*/
 import regeneratorRuntime from "wx-promise-pro"
@@ -15,7 +15,8 @@ import store from "./store"
 if (store.process == "production") {
   var fundebug = require("fundebug-wxjs")
   fundebug.init({
-    apikey: "b3b256c65b30a1b0eb26f8d9c2cd7855803498f0c667df934be2c72048af93d9"
+    apikey: "b3b256c65b30a1b0eb26f8d9c2cd7855803498f0c667df934be2c72048af93d9",
+    releaseStage: "production"
   })
 }
 
@@ -198,6 +199,11 @@ App({
         }
       })
     }
+  },
+  onPageNotFound() {
+    wx.redirectTo({
+      url: "/pages/index/index"
+    })
   },
   globalData: {
     /*wx.login 返回值 code */

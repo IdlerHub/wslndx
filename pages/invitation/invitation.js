@@ -105,7 +105,7 @@ Page({
       time = 1000
     }
 
-    setTimeout(() => {
+    let timer = setTimeout(() => {
       wx.hideLoading()
       // 保存图片到系统相册
       wx.saveImageToPhotosAlbum({
@@ -121,14 +121,18 @@ Page({
           })
         }
       })
+      clearTimeout(timer)
     }, time)
   },
   // 转发
-  onShareAppMessage: function() {
-    return {
-      title: "网上老年大学",
-      imageUrl: this.data.img,
-      path: "/pages/loading/loading?uid=" + this.data.$state.userInfo.id + "&type=invite"
+  onShareAppMessage: function(ops) {
+    if (ops.from === "button") {
+      console.log("ShareAppMessage  button")
+      return {
+        title: "网上老年大学",
+        imageUrl: "",
+        path: "/pages/loading/loading?uid=" + this.data.$state.userInfo.id + "&type=invite"
+      }
     }
   }
 })

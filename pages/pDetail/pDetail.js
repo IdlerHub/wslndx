@@ -151,7 +151,7 @@ Page({
     app.circle.comment(param).then(msg => {
       wx.hideLoading()
       if (msg.code == 1) {
-        setTimeout(() => {
+        let timer = setTimeout(() => {
           wx.showToast({
             title: "发布成功",
             icon: "none",
@@ -162,6 +162,7 @@ Page({
           })
           this.comParam.page = 1
           this.getComment([])
+          clearTimeout(timer)
         }, 500)
       } else {
         wx.showToast({
@@ -227,14 +228,10 @@ Page({
         break
     }
     let timer = setTimeout(() => {
-      this.setData(
-        {
-          isRefreshing: false
-        },
-        () => {
-          clearTimeout(timer)
-        }
-      )
+      this.setData({
+        isRefreshing: false
+      })
+      clearTimeout(timer)
     }, 1000)
   },
   //上拉加载
@@ -260,16 +257,18 @@ Page({
       urls: urls // 需要预览的图片http链接列表
     })
   },
-  onShareAppMessage: function(e) {
-    let bkid = e.target.dataset.id
-    app.circle.addForward({ blog_id: bkid }).then(() => {
-      this.getDetail()
-    })
-
-    return {
-      title: "网上老年大学",
-      imageUrl: this.data.img,
-      path: "/pages/pDetail/pDetail?id=" + bkid + "&type=share"
+  onShareAppMessage: function(ops) {
+    if (ops.from === "button") {
+      console.log("ShareAppMessage  button")
+      let bkid = ops.target.dataset.id
+      app.circle.addForward({ blog_id: bkid }).then(() => {
+        this.getDetail()
+      })
+      return {
+        title: "网上老年大学",
+        imageUrl: "",
+        path: "/pages/pDetail/pDetail?id=" + bkid + "&type=share"
+      }
     }
   },
   //删除评论
@@ -278,7 +277,7 @@ Page({
     app.circle.delComment(param).then(msg => {
       wx.hideLoading()
       if (msg.code == 1) {
-        setTimeout(() => {
+        let timer = setTimeout(() => {
           wx.showToast({
             title: "删除成功",
             icon: "none",
@@ -289,6 +288,7 @@ Page({
           })
           this.comParam.page = 1
           this.getComment([])
+          clearTimeout(timer)
         }, 500)
       } else {
         wx.showToast({

@@ -33,6 +33,16 @@ let store = new Store({
   },
   pageLisener: {
     onLoad(opts) {},
+    onShareAppMessage(ops) {
+      if (ops.from === "menu") {
+        console.log("ShareAppMessage  menu")
+        return {
+          title: "网上老年大学",
+          path: "pages/loading/loading",
+          imageUrl: ""
+        }
+      }
+    },
     onUnload() {}
   },
   methods: {}

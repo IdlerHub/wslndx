@@ -185,19 +185,20 @@ Page({
       url: "../certificate/certificate?name=" + this.data.detail.title
     })
   },
-  onShareAppMessage: function(e) {
-    let temp = wx.getStorageSync("shareLessions") || {}
-    if (temp.time == new Date().toDateString()) {
-      temp.count += 1
-    }
-    wx.setStorageSync("shareLessions", { time: new Date().toDateString(), count: temp.count || 1 })
-
-    app.classroom.share({ lesson_id: this.data.id, sublesson_id: this.data.cur.id })
-
-    return {
-      title: "网上老年大学",
-      imageUrl: this.data.img,
-      path: "/pages/detail/detail?id=" + this.data.id + "&curid=" + this.data.cur.id + "&type=share"
+  onShareAppMessage: function(ops) {
+    if (ops.from === "button") {
+      console.log("ShareAppMessage  button")
+      let temp = wx.getStorageSync("shareLessions") || {}
+      if (temp.time == new Date().toDateString()) {
+        temp.count += 1
+      }
+      wx.setStorageSync("shareLessions", { time: new Date().toDateString(), count: temp.count || 1 })
+      app.classroom.share({ lesson_id: this.data.id, sublesson_id: this.data.cur.id })
+      return {
+        title: "网上老年大学",
+        imageUrl: "",
+        path: "/pages/detail/detail?id=" + this.data.id + "&curid=" + this.data.cur.id + "&type=share"
+      }
     }
   },
   tohome: function() {
