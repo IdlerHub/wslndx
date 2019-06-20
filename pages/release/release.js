@@ -181,7 +181,6 @@ Page({
       showFlag: e.detail.value
     })
   },
-
   // 获取所有圈子信息
   getCircleList() {
     //获取没有加入的圈子list

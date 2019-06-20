@@ -4,37 +4,50 @@ const app = getApp()
 Page({
   data: {
     list: [],
-    limit: false
+    tip: true,
+    vid: "short-video" + Date.now(),
+    rect: wx.getMenuButtonBoundingClientRect()
   },
   onLoad(options) {
-    this.videoContext = wx.createVideoContext("myVideo")
+    this.videoContext = wx.createVideoContext(this.data.vid)
+    let pages = getCurrentPages()
+    let prePage = pages[pages.length - 2]
+    if (prePage && prePage.route == "pages/videoItemize/videoItemize") {
+      /* 从短视频分类页面过来 */
+      this.setData({
+        limit: true,
+        home: options.home == "true"
+      })
+    } else {
+      let share = options.type == "share"
+      this.setData({
+        vistor: share
+      })
+      if (share) {
+        setTimeout(() => {
+          this.setData({
+            tip: false
+          })
+        }, 15000)
+      }
+    }
+
+    if (this.data.$state.userInfo.mobile) {
+      this.init(options)
+    }
+    app.aldstat.sendEvent("菜单", { name: "短视频" })
+  },
+  onShow() {},
+  init(options) {
     this.param = { id: options.id ? options.id : "", page: 1, pageSize: 10, last_id: "" }
-    this.getList([]).then(() => {
+    return this.getList([]).then(() => {
       this.setData({
         cur: this.data.list[0],
-        index: 0,
-        vistor: options.type == "share"
+        index: 0
       })
       app.addVisitedNum(`v${this.data.cur.id}`)
       app.aldstat.sendEvent("短视频播放", { name: this.data.cur.title })
     })
-    app.aldstat.sendEvent("菜单", { name: "短视频" })
-  },
-  onShow() {
-    if (!!this.data.cur && this.data.cur.fs_joined == 1) {
-      let arr = this.data.list
-      arr.forEach((item, index) => {
-        if (item.fs_id == this.data.cur.fs_id) {
-          item.fs_joined = 1
-        }
-        let temp = "list[" + index + "]"
-        this.setData({
-          [temp]: item,
-          list: arr
-        })
-      })
-      app.aldstat.sendEvent("加圈", { name: this.data.cur.title })
-    }
   },
   getList(list) {
     let temp = list || this.data.list
@@ -54,6 +67,7 @@ Page({
     })
   },
   tap() {
+    console.log(this.data.vid)
     if (this.data.pause) {
       this.videoContext.play()
       this.setData({
@@ -82,14 +96,15 @@ Page({
       })
     } else if (this.ey - this.sy < -30) {
       // 上拉
+      let temp = index >= list.length - 1 ? 0 : index + 1
       this.setData({
-        cur: index >= list.length - 1 ? list[0] : list[index + 1],
-        index: index >= list.length - 1 ? 0 : index + 1,
+        cur: list[temp],
+        index: temp,
         pause: false
       })
-      if (index >= list.length - 2) {
+      if (temp == list.length - 2) {
         // 加载新数据
-        this.param.page++
+        this.param.page += 1
         this.param.id = ""
         this.getList()
       }
@@ -142,6 +157,9 @@ Page({
   },
   // 转发
   onShareAppMessage: function(ops) {
+    if (ops.from === "menu") {
+      return this.menuAppShare()
+    }
     if (ops.from === "button") {
       console.log("ShareAppMessage  button")
       let list = this.data.list
@@ -161,7 +179,6 @@ Page({
       })
       return {
         title: list[index].title,
-        imageUrl: list[index].cimg,
         path: "/pages/video/video?id=" + list[index].id + "&type=share"
       }
     }
@@ -170,26 +187,12 @@ Page({
   tohome() {
     wx.reLaunch({ url: "/pages/index/index" })
   },
-  // 跳转学友圈
+  // 短视频分类
   navigate() {
-    if (!this.data.$state.authUserInfo) {
-      /* 要求授权 */
-      this.setData({
-        limit: true
-      })
-      return
-    }
-    let cur = this.data.cur
-    app.aldstat.sendEvent("短视频跳转", { name: this.data.cur.title })
+    /* 只能迭代一层 */
+    if (this.data.limit) return
     wx.navigateTo({
-      url: "../cDetail/cDetail?id=" + cur.fs_id
-    })
-  },
-  // 加入学友圈
-  join() {
-    let cur = this.data.cur
-    wx.navigateTo({
-      url: "../cDetail/cDetail?id=" + cur.fs_id + "&join=true"
+      url: "/pages/videoItemize/videoItemize?categoryId=" + this.data.cur.category_id + "&share=" + this.data.vistor
     })
   },
   // 完整视频
@@ -199,33 +202,14 @@ Page({
       url: "../detail/detail?id=" + cur.target_id
     })
   },
-  result() {
-    let list = this.data.list
-    let index = this.data.index
-    list[index].fs_joined = 1
-    this.setData({
-      list: list,
-      cur: list[index]
-    })
-  },
-  //用于数据统计
+  // 用于数据统计
   onHide() {
     app.aldstat.sendEvent("退出", { name: "短视频页" })
   },
-  //获取用户的昵称头像
+  // 获取用户的微信昵称头像
   onGotUserInfo: function(e) {
     if (e.detail.errMsg == "getUserInfo:ok") {
       app.updateBase(e, this)
-      if (this.data.limit) {
-        this.setData({
-          limit: false
-        })
-        let cur = this.data.cur
-        app.aldstat.sendEvent("短视频跳转", { name: this.data.cur.title })
-        wx.navigateTo({
-          url: "../cDetail/cDetail?id=" + cur.fs_id
-        })
-      }
     }
   }
 })

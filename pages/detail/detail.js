@@ -5,7 +5,9 @@ Page({
   data: {
     sort: 0,
     nav: [{ name: "剧集" }, { name: "简介" }],
-    height: 0
+    height: 0,
+    tip: true,
+    rect: wx.getMenuButtonBoundingClientRect()
   },
   onLoad(options) {
     /*todo:考虑去掉that*/
@@ -31,6 +33,15 @@ Page({
         curid: options.curid || null,
         cur: null
       })
+
+      if (that.data.vistor) {
+        setTimeout(() => {
+          that.setData({
+            tip: false
+          })
+        }, 15000)
+      }
+
       wx.setNavigationBarTitle({
         title: options.name || ""
       })
@@ -186,17 +197,14 @@ Page({
     })
   },
   onShareAppMessage: function(ops) {
+    if (ops.from === "menu") {
+      return this.menuAppShare()
+    }
     if (ops.from === "button") {
       console.log("ShareAppMessage  button")
-      let temp = wx.getStorageSync("shareLessions") || {}
-      if (temp.time == new Date().toDateString()) {
-        temp.count += 1
-      }
-      wx.setStorageSync("shareLessions", { time: new Date().toDateString(), count: temp.count || 1 })
       app.classroom.share({ lesson_id: this.data.id, sublesson_id: this.data.cur.id })
       return {
-        title: "网上老年大学",
-        imageUrl: "",
+        title: this.data.detail.title,
         path: "/pages/detail/detail?id=" + this.data.id + "&curid=" + this.data.cur.id + "&type=share"
       }
     }

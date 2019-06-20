@@ -55,7 +55,7 @@ function getQueryStringByName(href, name) {
 }
 /**破万 */
 function tow(num) {
-  return num / 10000 > 1 ? (num / 10000).toFixed(1) + "万" : null
+  return num / 10000 > 1 ? (num / 10000).toFixed(1) + "W" : null
 }
 
 module.exports = {

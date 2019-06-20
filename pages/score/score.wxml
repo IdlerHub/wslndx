@@ -57,7 +57,7 @@
     </scroll-view>
   </swiper-item>
   <swiper-item item-id="3">
-    <scroll-view class="scroll_container" scroll-y="{{ scrollStatus }}">
+    <scroll-view class="scroll_container" scroll-y="{{ scrollStatus }}" bindscrolltolower="lower">
       <view class="details_content">
         <view class="scroll_con">
           <view class="item" wx:for="{{ details }}" wx:key="index">

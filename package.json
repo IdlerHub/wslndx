@@ -15,8 +15,7 @@
   "dependencies": {
     "fundebug-wxjs": "^1.2.1",
     "wx-promise-pro": "^2.6.0",
-    "wxministore": "^1.2.4",
-    "wxml2canvas": "^1.0.1"
+    "wxministore": "^1.2.4"
   },
   "devDependencies": {
     "cross-env": "^5.2.0",

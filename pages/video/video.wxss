@@ -1,7 +1,8 @@
 @charset "UTF-8";
-#myVideo {
+.myVideo {
   height: 100vh;
-  width: 100%; }
+  width: 100%;
+}
 
 /* 背景幕 */
 .dropback {
@@ -9,10 +10,12 @@
   height: 100vh;
   width: 100%;
   background-color: rgba(0, 0, 0, 0.15);
-  visibility: visible; }
+  visibility: visible;
+}
 
 .dropback .frontdrop {
-  z-index: 10; }
+  z-index: 10;
+}
 
 /* 视频播放幕 和 授权幕 */
 .tapbg,
@@ -21,12 +24,14 @@
   left: 0;
   top: 0;
   width: 100vw;
-  height: 100vh; }
+  height: 100vh;
+}
 
 .userInfo-mask {
   display: flex;
   align-items: center;
-  justify-content: center; }
+  justify-content: center;
+}
 
 .userInfo-box {
   width: 500rpx;
@@ -36,14 +41,16 @@
   background: #fff;
   justify-content: center;
   align-items: center;
-  border-radius: 20rpx; }
+  border-radius: 20rpx;
+}
 
 .userInfo-box .text {
   font-family: PingFangSC-Regular;
   font-size: 38rpx;
   color: #3a3a3a;
   text-align: center;
-  line-height: 65rpx; }
+  line-height: 65rpx;
+}
 
 .userInfo-box button {
   background: #df2020;
@@ -53,7 +60,8 @@
   font-family: PingFangSC-Regular;
   font-size: 36rpx;
   color: #fff;
-  margin-top: 30rpx; }
+  margin-top: 30rpx;
+}
 
 /* 底部视频描述 */
 .info {
@@ -62,7 +70,8 @@
   padding: 0 30rpx;
   bottom: 0;
   box-sizing: border-box;
-  height: 313rpx; }
+  height: 313rpx;
+}
 
 .info .icon {
   position: absolute;
@@ -70,7 +79,8 @@
   height: 100%;
   top: 0;
   left: 0;
-  z-index: -1; }
+  z-index: -1;
+}
 
 .synopsis {
   height: 130rpx;
@@ -86,7 +96,8 @@
   white-space: normal;
   display: -webkit-box;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 3; }
+  -webkit-line-clamp: 3;
+}
 
 /* 加群 */
 .cimg {
@@ -96,7 +107,8 @@
   width: 110rpx;
   height: 110rpx;
   border-radius: 50%;
-  border: 2rpx solid rgba(255, 255, 255, 0.5); }
+  border: 2rpx solid rgba(255, 255, 255, 0.5);
+}
 
 .join {
   position: absolute;
@@ -109,7 +121,8 @@
   line-height: 40rpx;
   text-align: center;
   color: #fff;
-  font-size: 45rpx; }
+  font-size: 45rpx;
+}
 
 /* 点赞 */
 .praise {
@@ -118,33 +131,38 @@
   left: 610rpx;
   top: calc(50% - 120rpx);
   text-align: center;
-  overflow: visible; }
+  overflow: visible;
+}
 
 .praise .heart {
   margin: 0 auto;
   width: 80rpx;
-  height: 80rpx; }
+  height: 80rpx;
+}
 
 .praising {
   position: fixed;
   top: 50%;
   z-index: 5;
   margin-top: -170rpx;
-  right: -8rpx; }
+  right: -8rpx;
+}
 
 /* 点赞动画 */
 .ani {
   width: 180rpx;
   height: 180rpx;
   background-size: cover;
-  animation: ani steps(20) 0.8s both; }
+  animation: ani steps(20) 0.8s both;
+}
 
 .praise .text {
   font-family: "黑体";
   font-size: 36rpx;
   color: #ffffff;
   text-shadow: 0 2rpx 4rpx rgba(0, 0, 0, 0.5);
-  line-height: 43rpx; }
+  line-height: 43rpx;
+}
 
 /* 分享 */
 .share {
@@ -155,19 +173,22 @@
   margin-top: 60rpx;
   text-align: center;
   line-height: normal;
-  z-index: 5; }
+  z-index: 5;
+}
 
 .share .icon {
   margin: 0 auto;
   width: 72rpx;
-  height: 72rpx; }
+  height: 72rpx;
+}
 
 .share .text {
   font-family: "黑体";
   font-size: 36rpx;
   color: #ffffff;
   text-shadow: 0 2rpx 4rpx rgba(0, 0, 0, 0.5);
-  line-height: 43rpx; }
+  line-height: 43rpx;
+}
 
 /* 完整视频 */
 .complete {
@@ -177,19 +198,22 @@
   top: 50%;
   z-index: 3;
   margin-top: 220rpx;
-  text-align: center; }
+  text-align: center;
+}
 
 .complete .icon {
   margin: 0 auto;
   width: 79rpx;
-  height: 79rpx; }
+  height: 79rpx;
+}
 
 .complete .text {
   font-family: "黑体";
   font-size: 30rpx;
   color: #ffffff;
   text-shadow: 0 2rpx 4rpx rgba(0, 0, 0, 0.19);
-  line-height: 42rpx; }
+  line-height: 42rpx;
+}
 
 /* 视频暂停 */
 .pause {
@@ -201,7 +225,8 @@
   right: 0;
   top: 0;
   bottom: 0;
-  margin: auto; }
+  margin: auto;
+}
 
 .vistor-head {
   position: fixed;
@@ -217,14 +242,18 @@
   font-family: PingFangSC-Regular;
   font-size: 36rpx;
   color: #ffffff;
-  padding: 0 30rpx; }
-  .vistor-head .iconfont {
-    width: 60rpx;
-    height: 60rpx; }
-    .vistor-head .iconfont:nth-child(4) {
-      position: absolute;
-      top: 25rpx;
-      right: 160rpx; }
+  padding: 0 30rpx;
+}
+
+.vistor-head .iconfont {
+  width: 60rpx;
+  height: 60rpx;
+}
+
+.vistor-head .iconfont:nth-child(4) {
+  position: absolute;
+  top: 25rpx;
+}
 
 .vistor-home {
   position: fixed;
@@ -240,7 +269,10 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center; }
-  .vistor-home .iconfont {
-    width: 50rpx;
-    height: 50rpx; }
+  align-items: center;
+}
+
+.vistor-home .iconfont {
+  width: 50rpx;
+  height: 50rpx;
+}

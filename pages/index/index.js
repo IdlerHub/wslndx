@@ -144,10 +144,9 @@ Page({
     })
   },
   toUser() {
-    this.test()
-    /* wx.navigateTo({
+    wx.navigateTo({
       url: "../user/user"
-    }) */
+    })
   },
   toInfo() {
     wx.navigateTo({
@@ -176,14 +175,6 @@ Page({
           scroll: false
         })
     }
-  },
-  showAgain: function() {
-    wx.showToast({
-      title: "请先授权~",
-      mask: true,
-      icon: "none",
-      duration: 2000
-    })
   },
   //继续播放
   historyTap: function(e) {
@@ -278,19 +269,5 @@ Page({
       }, 1000)
     })
   },
-  onReachBottom() {},
-  test() {
-    console.log("takePhoto")
-    wx.createCameraContext().takePhoto({
-      success: function(res) {
-        consolr.log(res)
-      },
-      fail: function(err) {
-        console.log(err)
-      },
-      complete: function() {
-        console.log("end")
-      }
-    })
-  }
+  onReachBottom() {}
 })

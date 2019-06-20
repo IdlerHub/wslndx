@@ -1,7 +1,7 @@
 /*
  * @Date: 2019-05-28 09:50:08
  * @LastEditors: hxz
- * @LastEditTime: 2019-06-12 14:36:28
+ * @LastEditTime: 2019-06-19 18:11:59
  */
 /*添加async await*/
 import regeneratorRuntime from "wx-promise-pro"
@@ -58,14 +58,17 @@ App({
   onShow: function(opts) {
     let lists = ["share", "invite"]
     /* 小程序(在后台运行中时)从分享卡片切到前台 */
-    if (getCurrentPages().length > 0 && this.globalData.scenes.indexOf(opts.scene) >= 0 && lists.indexOf(opts.query.type) >= 0) {
-      this.globalData.path = "/" + opts.path /* 卡片页面路径 */
-      this.globalData.query = opts.query /* 卡片页面参数 */
-      if (!this.store.$state.userInfo.mobile) {
+    if (getCurrentPages().length > 0 && this.globalData.scenes.indexOf(opts.scene) >= 0) {
+      if (lists.indexOf(opts.query.type) >= 0) {
+        this.globalData.path = "/" + opts.path /* 卡片页面路径 */
+        this.globalData.query = opts.query /* 卡片页面参数 */
         /* 邀请码存储 */
         if (opts.query.type == "invite") {
           wx.setStorageSync("invite", opts.query.uid)
         }
+      }
+
+      if (!this.store.$state.userInfo.mobile) {
         wx.redirectTo({ url: "/pages/login/login" })
       } else if (opts.query.type !== "share") {
         wx.redirectTo({ url: "/pages/index/index" })

@@ -14,5 +14,5 @@
 
 <!--
 todo:
-4. 使用 wxministore 提取所有的 页面统计函数  和授权函数
+4. 使用 wxministore 提取所有的授权函数
  -->

@@ -14,7 +14,7 @@ Page({
   onShow: function() {},
   onHide: function() {},
   onUnload: function() {
-    app.aldstat.sendEvent("退出", { name: "我的圈子" })
+    app.aldstat.sendEvent("退出", { name: "风采展示" })
   },
   onPullDownRefresh: function() {
     this.setData({
@@ -43,7 +43,6 @@ Page({
               return i.image
             })
             item.auditing = new Date().getTime() - new Date(item.createtime * 1000) < 7000
-            item.pause = true
             circle.push(item)
           })
         }

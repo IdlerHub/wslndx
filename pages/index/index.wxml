@@ -63,7 +63,7 @@
         <view catchtap="detailTap" wx:for="{{ recommend }}" wx:key="index" class="item" data-item="{{ item }}">
           <view class="content {{ item.show_big ? 'big' : '' }}">
             <view class="left">
-              <image class="poster" mode="aspectFill" src="{{ item.show_big ? item.big_image || item.image : item.image }}" lazy-load="true"></image>
+              <image class="poster" mode="aspectFill" src="{{ (item.show_big && item.big_image) || item.image }}" lazy-load="true"></image>
               <image class="icon" mode="aspectFill" src="{{ $state.imgHost }}/play.png"></image>
             </view>
             <view class="right">
@@ -106,11 +106,11 @@
     </view>
     <button class="item" open-type="getUserInfo" bindgetuserinfo="onGotUserInfo" data-role="post">
       <image mode="aspectFill" class="icon" src="{{ $state.imgHost }}/circle.png"></image>
-      <text class="name">学友圈</text>
+      <text class="name">秀风采</text>
     </button>
   </view>
   <!-- 签到拿积分 -->
-  <view class="integration" wx:if="{{ quickInteg }}" catchtouchmove="return">
+  <view class="integration" wx:if="{{ !$state.signStatus.count }}" catchtouchmove="return">
     <view class="dialog">
       <image class="bg" src="/images/integration_bg.png" mode="aspectFill"></image>
       <view class="ani"></view>

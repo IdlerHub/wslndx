@@ -15,9 +15,8 @@ Page({
       this.setData({ rlSucFlag: true })
     }
     this.getList([])
-    app.aldstat.sendEvent("菜单", { name: "学有圈" })
+    app.aldstat.sendEvent("菜单", { name: "风采展示" })
   },
-
   onShow: function() {
     if (this.data.rlSucFlag) {
       this.rlSuc()
@@ -25,11 +24,15 @@ Page({
       this.setData({ rlSucFlag: false })
     }
   },
-  onShareAppMessage: function(ops) {
+  onShareAppMessage: function(ops, b) {
+    if (ops.from === "menu") {
+      return this.menuAppShare()
+    }
     if (ops.from === "button") {
       console.log("ShareAppMessage  button")
       let i = ops.target.dataset.index
-      let bkid = this.data.list[i].id
+      let article = this.data.list[i]
+      let bkid = article.id
       app.circle.addForward({ blog_id: bkid }).then(res => {
         if (res.code == 1) {
           let list = this.data.list
@@ -40,8 +43,8 @@ Page({
         }
       })
       return {
-        title: "网上老年大学",
-        imageUrl: "",
+        title: article.content,
+        imageUrl: article.image || article.images[0] || "../../images/sharemessage.jpg",
         path: "/pages/pDetail/pDetail?id=" + bkid + "&type=share"
       }
     }
@@ -59,7 +62,6 @@ Page({
               return i.image
             })
             item.auditing = new Date().getTime() - new Date(item.createtime * 1000) < 7000
-            item.pause = true
           })
           this.setData({
             list: temp.concat(msg.data)
@@ -105,26 +107,6 @@ Page({
     list[i].praising = false
     this.setData({
       list: list
-    })
-  },
-  // 加圈
-  result(id, data) {
-    let param = {
-      fs_id: id
-    }
-    app.circle.join(param).then(msg => {
-      if (msg.code == 1) {
-        data.forEach(function(item, index) {
-          let timer = setTimeout(() => {
-            wx.showToast({
-              title: "    您已成功加入\r\n【" + item.title + "】学友圈",
-              icon: "none",
-              duration: 1000
-            })
-            clearTimeout(timer)
-          }, index * 1000 + 500)
-        })
-      }
     })
   },
   // 写帖成功动效
@@ -204,6 +186,6 @@ Page({
   },
   //用于数据统计
   onHide() {
-    app.aldstat.sendEvent("退出", { name: "学友圈页" })
+    app.aldstat.sendEvent("退出", { name: "秀风采页" })
   }
 })

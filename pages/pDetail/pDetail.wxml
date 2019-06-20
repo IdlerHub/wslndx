@@ -4,7 +4,7 @@
 </view>
 <view class="container">
   <view class="box">
-    <view wx:if="{{ vistor }}" class="vistor-head"> 点击“ <icon class="iconfont icon-xiaochengxu"></icon> ”添加到我的小程序 <icon class="iconfont icon-shouzhi"></icon> </view>
+    <view wx:if="{{ vistor && tip }}" class="vistor-head"> 点击“ <icon class="iconfont icon-xiaochengxu"></icon> ”添加到我的小程序 <icon class="iconfont icon-shouzhi" style="left:{{ rect.left + 10 }}px"></icon> </view>
     <view class="detail">
       <view class="top">
         <view class="left">

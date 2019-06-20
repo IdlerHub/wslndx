@@ -66,6 +66,8 @@ page {
           margin-top: 20rpx;
         }
         &.one {
+          max-height: 100vh;
+          overflow: hidden;
           image {
             width: 400rpx;
           }

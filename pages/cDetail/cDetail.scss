@@ -95,6 +95,8 @@ page {
 
 .img {
   &.one {
+    max-height: 100vh;
+    overflow: hidden;
     image {
       width: 400rpx;
     }

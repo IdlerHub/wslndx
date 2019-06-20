@@ -1,9 +1,7 @@
 {
   "backgroundTextStyle": "light",
-  "navigationBarTitleText": "学友圈正文",
+  "navigationBarTitleText": "秀风采正文",
   "navigationBarTextStyle": "black",
   "enablePullDownRefresh": true,
-  "usingComponents": {
-    
-  }
+  "usingComponents": {}
 }

@@ -9,12 +9,12 @@ if (env == "develop") {
   /* 测试环境 */
   imgHost = "https://jinling-xcx-dev.obs.cn-north-1.myhuaweicloud.com/images/dev" /* 图片等静态资源服务器 */
   activityUrl = "https://gqjydev.jinlingkeji.cn/?" /* 国情教育链接 */
-  API_URL = "https://develop.jinlingkeji.cn/api/v3/" /* 数据服务器 */
+  API_URL = "https://develop.jinlingkeji.cn/api/v4/" /* 数据服务器 */
 } else {
   /* 发布环境 */
   imgHost = "https://jinling-xcx-dev.obs.cn-north-1.myhuaweicloud.com/images/pro"
   activityUrl = "https://gqjy.jinlingkeji.cn/?"
-  API_URL = "https://apielb.jinlingkeji.cn/api/v3/"
+  API_URL = "https://apielb.jinlingkeji.cn/api/v4/"
 }
 
 Store.prototype.process = env
@@ -32,20 +32,28 @@ let store = new Store({
     imgHost: imgHost
   },
   pageLisener: {
-    onLoad(opts) {},
-    onShareAppMessage(ops) {
-      if (ops.from === "menu") {
-        console.log("ShareAppMessage  menu")
-        return {
-          title: "网上老年大学",
-          path: "pages/loading/loading",
-          imageUrl: ""
+    onLoad(opts) {
+      if (!this.onShareAppMessage) {
+        wx.showShareMenu()
+        this.onShareAppMessage = function(ops) {
+          if (ops.from === "menu") {
+            return this.menuAppShare()
+          }
         }
       }
-    },
-    onUnload() {}
+    }
+    /*  onUnload() {} */
   },
-  methods: {}
+  methods: {
+    menuAppShare() {
+      console.log("ShareAppMessage  menu")
+      return {
+        title: "福利！老年大学十万集免费课程在线学习",
+        path: "/pages/loading/loading",
+        imageUrl: "../../images/sharemessage.jpg"
+      }
+    }
+  }
 })
 
 module.exports = store

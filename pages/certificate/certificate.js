@@ -49,57 +49,6 @@ Page({
       })
     })
   },
-  /**
-   * 绘制多行文本
-   * @param ctx canvas对象
-   * @param str 文本
-   * @param startWidth 文本的起点
-   * @param leftWidth 距离左侧的距离
-   * @param initHeight 距离顶部的距离
-   * @param titleHeight 文本的高度
-   * @param canvasWidth 容器的宽度
-   * @returns {width , height }
-   */
-  /* drawText: function(ctx, str, startWidth, leftWidth, initHeight, titleHeight, canvasWidth) {
-    let lineWidth = 0
-    let vernier = 0 //每次开始截取的字符串的索引
-    let lastSubStrIndex = 0 //行标
-
-    for (let i = 0; i < str.length; i++) {
-      lineWidth += ctx.measureText(str[i]).width
-      if (lastSubStrIndex == 0) {
-        if (lineWidth >= canvasWidth - startWidth) {
-          ctx.fillText(str.substring(0, i || 1), startWidth, initHeight) //绘制截取部分
-          initHeight += titleHeight
-          lineWidth = 0
-          vernier = i || 1
-          lastSubStrIndex += 1
-        }
-      } else {
-        if (lineWidth >= canvasWidth) {
-          ctx.fillText(str.substring(vernier, i), leftWidth, initHeight) //绘制截取部分
-          initHeight += titleHeight
-          lineWidth = 0
-          vernier = i
-          lastSubStrIndex += 1
-        }
-      }
-
-      if (i == str.length - 1) {
-        ctx.fillText(str.substring(vernier, i + 1), lastSubStrIndex == 0 ? startWidth : leftWidth, initHeight) //绘制剩余部分
-        lastSubStrIndex > 0 && (lineWidth += ctx.measureText(str[i]).width)
-      }
-    }
-
-    let res = {
-      width: lineWidth + (lastSubStrIndex == 0 ? startWidth : leftWidth),
-      height: initHeight
-    }
-
-    console.log(res)
-
-    return res
-  }, */
   // 保存
   save() {
     // 保存图片到系统相册
@@ -119,12 +68,14 @@ Page({
   },
   // 转发
   onShareAppMessage: function(ops) {
+    if (ops.from === "menu") {
+      return this.menuAppShare()
+    }
     if (ops.from === "button") {
       console.log("ShareAppMessage  button")
       return {
-        title: "网上老年大学",
-        imageUrl: this.data.img,
-        path: "pages/loading/loading"
+        title: "福利！老年大学十万集免费课程在线学习",
+        path: "/pages/loading/loading"
       }
     }
   }

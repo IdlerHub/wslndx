@@ -12,27 +12,12 @@ Page({
     this.param = { fs_id: this.id, page: 1, pageSize: 10 }
     this.getList([])
     this.getCircleInfo().then(() => {
-      if (options.join) {
-        this.join().then(() => {
-          let pages = getCurrentPages()
-          let prePage = pages[pages.length - 2]
-          prePage.result()
-        })
-      }
       wx.setNavigationBarTitle({
         title: this.data.circle.title
       })
     })
   },
-  onUnload() {
-    let pages = getCurrentPages()
-    let prevPage = pages[pages.length - 2]
-    if (prevPage.data.cur) {
-      prevPage.setData({
-        "cur.fs_joined": this.data.circle.joined
-      })
-    }
-  },
+  onUnload() {},
   getList: function(list) {
     let temp = list || this.data.list
     return app.circle.news(this.param).then(msg => {
@@ -44,7 +29,6 @@ Page({
             return i.image
           })
           item.auditing = new Date().getTime() - new Date(item.createtime * 1000) < 7000
-          item.pause = true
         })
         this.setData({
           list: temp.concat(msg.data)
@@ -59,11 +43,6 @@ Page({
           circle: msg.data
         })
       }
-    })
-  },
-  play(e) {
-    wx.navigateTo({
-      url: "../pDetail/pDetail?id=" + this.data.list[e.currentTarget.dataset.index].id
     })
   },
   praise(e) {
@@ -170,10 +149,14 @@ Page({
     this.getList()
   },
   onShareAppMessage: function(ops) {
+    if (ops.from === "menu") {
+      return this.menuAppShare()
+    }
     if (ops.from === "button") {
       console.log("ShareAppMessage  button")
       let i = ops.target.dataset.index
-      let bkid = this.data.list[i].id
+      let article = this.data.list[i]
+      let bkid = article.id
       app.circle.addForward({ blog_id: bkid }).then(res => {
         if (res.code == 1) {
           let list = this.data.list
@@ -184,8 +167,8 @@ Page({
         }
       })
       return {
-        title: "网上老年大学",
-        imageUrl: "",
+        title: article.content,
+        imageUrl: article.image || article.images[0] || "../../images/sharemessage.jpg",
         path: "/pages/pDetail/pDetail?id=" + bkid + "&type=share"
       }
     }

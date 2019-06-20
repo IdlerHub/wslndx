@@ -274,8 +274,7 @@ rich-text {
     height: 60rpx; }
     .vistor-head .iconfont:nth-child(4) {
       position: absolute;
-      top: 25rpx;
-      right: 160rpx; }
+      top: 25rpx; }
 
 .vistor-home {
   position: fixed;

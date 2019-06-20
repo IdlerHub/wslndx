@@ -20,9 +20,19 @@ function share(param) {
   return httpService.post("Shortvideo/forward", param)
 }
 
+/**
+ * @description: 短视频分类
+ * @param {page ,pageSize }
+ * @return: promise
+ */
+function search(param) {
+  return httpService.post("Shortvideo/search", param)
+}
+
 module.exports = {
   list,
   praise,
   delPraise,
-  share
+  share,
+  search
 }

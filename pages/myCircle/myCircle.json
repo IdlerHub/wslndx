@@ -1,6 +1,6 @@
 {
   "backgroundTextStyle": "light",
-  "navigationBarTitleText": "我的圈子",
+  "navigationBarTitleText": "风采展示",
   "navigationBarTextStyle": "black",
   "enablePullDownRefresh": true,
   "usingComponents": {}

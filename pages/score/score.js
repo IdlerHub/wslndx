@@ -33,7 +33,7 @@ Page({
     details: [],
     isRefreshing: false
   },
-  params: {
+  common: {
     scrollTop: 175
   },
   //options(Object)
@@ -51,27 +51,34 @@ Page({
     })
   },
   onShow: function() {
+    this.params = { page: 1, pageSize: 10 }
     this.init()
   },
   init() {
-    let shareLessions = wx.getStorageSync("shareLessions") || {}
-    /* 今天分享课程次数 */
-    if (shareLessions.time == new Date().toDateString()) {
-      let remain = 3 - shareLessions.count
-      this.setData({
-        "sources[1].times": remain > 0 ? remain : 0,
-        "sources[1].status": remain <= 0
-      })
-    }
-    return app.user.pointsinfo().then(res => {
+    if (this.params.end) return Promise.resolve()
+    return app.user.pointsinfo(this.params).then(res => {
       if (res.code == 1) {
         res.data.lists.forEach(v => {
           v.time = app.util.formatTime(new Date(v.createtime * 1000))
         })
-        this.setData({
-          totalPoints: res.data.mypoints,
-          details: res.data.lists
-        })
+        if (this.params.page == 1) {
+          /* 每天分享课程最多3次获取积分 */
+          let shareCount = res.data.lists.filter(item => {
+            return item.type == "SHARE_LESSON" && item.createtime * 1000 > new Date(new Date().toLocaleDateString()).getTime()
+          }).length
+          let remain = 3 - shareCount
+          this.setData({
+            totalPoints: res.data.mypoints,
+            details: res.data.lists,
+            "sources[1].times": remain > 0 ? remain : 0,
+            "sources[1].status": remain <= 0
+          })
+        } else {
+          if (res.data.lists.length < this.params.pageSize) this.params.end = true
+          this.setData({
+            details: this.data.details.concat(res.data.lists)
+          })
+        }
       }
     })
   },
@@ -80,7 +87,7 @@ Page({
     this.setData({
       isRefreshing: true
     })
-
+    this.params = { page: 1, pageSize: 10 }
     this.init().then(() => {
       wx.stopPullDownRefresh()
       this.setData({
@@ -94,9 +101,13 @@ Page({
     })
   },
   onPageScroll: function(e) {
-    if (e.scrollTop < this.params.scrollTop) {
+    if (e.scrollTop < this.common.scrollTop) {
       this.data.scrollStatus && this.setData({ scrollStatus: false })
     }
+  },
+  lower() {
+    this.params.page += 1
+    this.init()
   },
   switchTap(e) {
     let id = e.currentTarget.dataset.index
@@ -161,6 +172,7 @@ Page({
       this.setData({
         "sources[2].status": true
       })
+      this.params = { page: 1, pageSize: 10 }
       app.user.sign().then(res => {
         this.init()
       })

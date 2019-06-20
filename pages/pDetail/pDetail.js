@@ -5,7 +5,9 @@ Page({
   data: {
     nav: [{ name: "评论", class: ".comment" }, { name: "点赞", class: ".praise" }],
     isRefreshing: false,
-    txoptions: true
+    tip: true,
+    txoptions: true,
+    rect: wx.getMenuButtonBoundingClientRect()
   },
   onLoad(options) {
     this.id = options.id
@@ -21,6 +23,15 @@ Page({
       currentTab: 0,
       navScrollLeft: 0
     })
+
+    if (this.data.vistor) {
+      setTimeout(() => {
+        this.setData({
+          tip: false
+        })
+      }, 15000)
+    }
+
     if (this.data.$state.userInfo.mobile) {
       this.getDetail()
       this.getComment()
@@ -258,15 +269,19 @@ Page({
     })
   },
   onShareAppMessage: function(ops) {
+    if (ops.from === "menu") {
+      return this.menuAppShare()
+    }
     if (ops.from === "button") {
       console.log("ShareAppMessage  button")
       let bkid = ops.target.dataset.id
       app.circle.addForward({ blog_id: bkid }).then(() => {
         this.getDetail()
       })
+      let article = this.data.detail
       return {
-        title: "网上老年大学",
-        imageUrl: "",
+        title: article.content,
+        imageUrl: article.image || article.images[0] || "../../images/sharemessage.jpg",
         path: "/pages/pDetail/pDetail?id=" + bkid + "&type=share"
       }
     }

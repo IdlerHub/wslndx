@@ -57,7 +57,7 @@ page {
     width: 125rpx;
     height: 125rpx;
     background-size: cover;
-    background-image: url("https://jinling-xcx-dev.obs.cn-north-1.myhuaweicloud.com/images/pro/heart-ani.png");
+    background-image: url("https://jinling-xcx-dev.obs.cn-north-1.myhuaweicloud.com/images/dev/heart-ani.png");
     animation-fill-mode: forwards; }
     .btn > .item .praise.end {
       background-position: 100% 0; }
@@ -73,8 +73,11 @@ page {
     letter-spacing: 0;
     line-height: 40rpx; }
 
-.img.one image {
-  width: 400rpx; }
+.img.one {
+  max-height: 100vh;
+  overflow: hidden; }
+  .img.one image {
+    width: 400rpx; }
 
 .img.two image {
   width: 335rpx;

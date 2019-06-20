@@ -22,7 +22,8 @@
     "pages/myCircle/myCircle",
     "pages/invitation/invitation",
     "pages/gift/gift",
-    "pages/education/education"
+    "pages/education/education",
+    "pages/videoItemize/videoItemize"
   ],
   "permission": {
     "scope.userLocation": {
