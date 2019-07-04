@@ -71,9 +71,9 @@
       </swiper-item>
       <swiper-item class="tab-item">
         <!--简介  -->
-        <view class="wrap synopsis">
+        <scroll-view scroll-y="true" class="wrap synopsis">
           <rich-text nodes="{{ detail.intro_content }}"></rich-text>
-        </view>
+        </scroll-view>
       </swiper-item>
     </swiper>
   </view>

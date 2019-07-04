@@ -2,7 +2,7 @@
  * Page videoItemize
  * @Date: 2019-06-15 18:10:21
  * @LastEditors: hxz
- * @LastEditTime: 2019-06-19 20:38:15
+ * @LastEditTime: 2019-07-01 17:33:02
  */
 const app = getApp()
 
@@ -13,8 +13,7 @@ Page({
   },
   params: {
     page: 1,
-    pageSize: 14,
-    timestamp: parseInt(Date.now() / 1000)
+    pageSize: 14
   },
   //options(Object)
   onLoad: function(ops) {
@@ -26,7 +25,7 @@ Page({
   },
   getSearch: function() {
     return app.video.search(this.params).then(res => {
-      if (res.code == 1) {
+      if (res.code == 1 && res.data.lists) {
         res.data.lists.forEach(item => {
           item.praise >= 10000 ? (item.praise = (item.praise / 10000).toFixed(1) + "W") : null
         })
@@ -49,7 +48,6 @@ Page({
   onShow: function() {},
   onPullDownRefresh: function() {
     this.params.page = 1
-    this.params.timestamp = parseInt(Date.now() / 1000)
     this.getSearch().then(() => {
       wx.stopPullDownRefresh()
     })
@@ -62,7 +60,7 @@ Page({
     let id = e.currentTarget.dataset.id
     let end = this.data.vistor ? "&home=true" : ""
     wx.navigateTo({
-      url: "/pages/video/video?id=" + id + end
+      url: "/pages/video/video?id=" + id + "&categoryId=" + this.params.categoryId + end
     })
   },
   tohome: function() {

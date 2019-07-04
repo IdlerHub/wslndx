@@ -410,7 +410,7 @@
       width: 400rpx;
       height: 285rpx;
       left: calc((100% - 400rpx) / 2);
-      background-image: url("https://jinling-xcx-dev.obs.cn-north-1.myhuaweicloud.com/images/dev/integration_ani.png");
+      background-image: url("https://jinling-xcx-dev.obs.cn-north-1.myhuaweicloud.com/images/pro/integration_ani.png");
       background-size: cover;
       animation: ani 2s steps(22, end) infinite; }
     .integration .dialog button {

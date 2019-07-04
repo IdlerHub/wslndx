@@ -29,7 +29,7 @@ Page({
         this.setData({
           tip: false
         })
-      }, 15000)
+      }, 10000)
     }
 
     if (this.data.$state.userInfo.mobile) {

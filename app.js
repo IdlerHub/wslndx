@@ -1,10 +1,8 @@
 /*
  * @Date: 2019-05-28 09:50:08
  * @LastEditors: hxz
- * @LastEditTime: 2019-06-19 18:11:59
+ * @LastEditTime: 2019-07-04 17:55:17
  */
-/*添加async await*/
-import regeneratorRuntime from "wx-promise-pro"
 /*添加微信官方接口转化为promise*/
 const wxpro = require("wx-promise-pro")
 /*埋点统计*/
@@ -56,24 +54,28 @@ App({
     }
   },
   onShow: function(opts) {
+    console.log(opts)
     let lists = ["share", "invite"]
     /* 小程序(在后台运行中时)从分享卡片切到前台 */
-    if (getCurrentPages().length > 0 && this.globalData.scenes.indexOf(opts.scene) >= 0) {
-      if (lists.indexOf(opts.query.type) >= 0) {
+    if (this.globalData.backstage) {
+      this.globalData.backstage = false
+      if (this.globalData.scenes.indexOf(opts.scene) >= 0 && lists.indexOf(opts.query.type) >= 0) {
         this.globalData.path = "/" + opts.path /* 卡片页面路径 */
         this.globalData.query = opts.query /* 卡片页面参数 */
-        /* 邀请码存储 */
         if (opts.query.type == "invite") {
-          wx.setStorageSync("invite", opts.query.uid)
+          wx.setStorageSync("invite", opts.query.uid) /* 邀请码存储 */
         }
       }
 
       if (!this.store.$state.userInfo.mobile) {
         wx.redirectTo({ url: "/pages/login/login" })
-      } else if (opts.query.type !== "share") {
+      } else if (opts.query.type !== "share" && opts.path == "pages/loading/loading") {
         wx.redirectTo({ url: "/pages/index/index" })
       }
     }
+  },
+  onHide() {
+    this.globalData.backstage = true
   },
   wxLogin: async function() {
     await wx.pro.login({}).then(res => {
@@ -116,6 +118,13 @@ App({
     })
     wx.setStorageSync("userInfo", data)
   },
+  /* 更新AuthKey */
+  setAuthKey: function(data) {
+    this.store.setState({
+      authKey: data
+    })
+    wx.setStorageSync("userInfo", data)
+  },
   /* 更新store中的用户授权  */
   getSets: function() {
     let self = this
@@ -144,7 +153,7 @@ App({
     }
   },
   /* 授权更新数据库及store中的用户信息 */
-  updateBase(e, page) {
+  updateBase(e) {
     if (e.detail.errMsg != "getUserInfo:ok") {
       return
     }
@@ -218,6 +227,8 @@ App({
     /* 卡片参数 */
     query: {},
     /* 卡片进入的场景值 */
-    scenes: [1007, 1008, 1047, 1048, 1049]
+    scenes: [1007, 1008, 1047, 1048, 1049],
+    /* 后台模式*/
+    backstage: false
   }
 })

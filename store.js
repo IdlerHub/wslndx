@@ -1,6 +1,6 @@
 import Store from "wxministore"
 
-let env = "develop"
+let env = "production"
 let imgHost
 let activityUrl
 let API_URL

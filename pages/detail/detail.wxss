@@ -276,6 +276,9 @@ rich-text {
       position: absolute;
       top: 25rpx; }
 
+.tab {
+  padding-bottom: 30rpx; }
+
 .vistor-home {
   position: fixed;
   width: 156rpx;

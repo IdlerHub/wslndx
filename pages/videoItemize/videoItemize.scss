@@ -69,13 +69,14 @@
   display: flex;
   padding: 15rpx;
   flex-wrap: wrap;
-  justify-content: space-around;
+  justify-content: space-between;
 
   .item {
     position: relative;
     width: 350rpx;
     height: 450rpx;
-    margin-bottom: 10rpx;
+    margin: 0 5rpx 10rpx;
+    box-sizing: content-box;
 
     .praise {
       position: absolute;

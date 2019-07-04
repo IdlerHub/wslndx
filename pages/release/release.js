@@ -131,9 +131,9 @@ Page({
       compressed: true,
       sourceType: ["album", "camera"], // 可以指定来源是相册还是相机，默认二者都有
       success: function(res) {
-        if (res.size / 1024 > 3000) {
+        if (res.size / 1024 > 5000) {
           wx.showToast({
-            title: "上传的视频不能大于3M",
+            title: "上传的视频不能大于5M",
             icon: "none",
             duration: 1500
           })

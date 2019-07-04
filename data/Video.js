@@ -22,11 +22,20 @@ function share(param) {
 
 /**
  * @description: 短视频分类
- * @param {page ,pageSize }
+ * @param {page ,pageSize ,id ,categoryId }
  * @return: promise
  */
 function search(param) {
   return httpService.post("Shortvideo/search", param)
+}
+
+/**
+ * @description: 根据id获取分类列表（登录）
+ * @param {categoryId, id ,position,include  ,pageSize }
+ * @return:
+ */
+function category(param) {
+  return httpService.post("Shortvideo/categoryLists", param)
 }
 
 module.exports = {
@@ -34,5 +43,6 @@ module.exports = {
   praise,
   delPraise,
   share,
-  search
+  search,
+  category
 }

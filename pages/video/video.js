@@ -18,56 +18,64 @@ Page({
         limit: true,
         home: options.home == "true"
       })
+      this.param = { type: "category", id: options.id, pageSize: 10, position: "first", include: "yes", categoryId: options.categoryId }
     } else {
+      /* 短视频推荐 */
       let share = options.type == "share"
       this.setData({
         vistor: share
       })
+      /* 分享卡片进来,提示持续15秒 */
       if (share) {
         setTimeout(() => {
           this.setData({
             tip: false
           })
-        }, 15000)
+        }, 10000)
       }
+      this.param = { type: "recommend", id: options.id ? options.id : "", page: 1, pageSize: 10, last_id: "" }
     }
 
     if (this.data.$state.userInfo.mobile) {
-      this.init(options)
+      /* 已登录 */
+      this.getList([]).then(() => {
+        this.setData({
+          cur: this.data.list[0],
+          index: 0
+        })
+        app.addVisitedNum(`v${this.data.cur.id}`)
+        app.aldstat.sendEvent("短视频播放", { name: this.data.cur.title })
+      })
     }
     app.aldstat.sendEvent("菜单", { name: "短视频" })
   },
-  onShow() {},
-  init(options) {
-    this.param = { id: options.id ? options.id : "", page: 1, pageSize: 10, last_id: "" }
-    return this.getList([]).then(() => {
-      this.setData({
-        cur: this.data.list[0],
-        index: 0
-      })
-      app.addVisitedNum(`v${this.data.cur.id}`)
-      app.aldstat.sendEvent("短视频播放", { name: this.data.cur.title })
-    })
-  },
   getList(list) {
     let temp = list || this.data.list
-    return app.video.list(this.param).then(msg => {
-      if (msg.code === 1 && msg.data) {
-        msg.data.lists.forEach(function(item) {
-          item.pw = app.util.tow(item.praise)
-          item.fw = app.util.tow(item.forward)
-          temp.push(item)
-        })
+    if (this.data.limit) {
+      return app.video.category(this.param).then(msg => {
+        this.callback(msg, temp)
+        return msg
+      })
+    } else {
+      return app.video.list(this.param).then(msg => {
+        this.callback(msg, temp)
+      })
+    }
+  },
+  callback(msg, temp) {
+    if (msg.code === 1 && msg.data && msg.data.lists) {
+      msg.data.lists.forEach(function(item) {
+        item.pw = app.util.tow(item.praise)
+        item.fw = app.util.tow(item.forward)
+      })
 
-        this.setData({
-          list: temp
-        })
-        this.param.last_id = msg.data.last_id
-      }
-    })
+      this.setData({
+        list: this.param.position == "end" ? (msg.data.lists || []).concat(temp) : temp.concat(msg.data.lists || [])
+      })
+      this.param.last_id = msg.data.last_id
+    }
   },
   tap() {
-    console.log(this.data.vid)
     if (this.data.pause) {
       this.videoContext.play()
       this.setData({
@@ -89,23 +97,49 @@ Page({
     this.ey = e.changedTouches[0].pageY
     if (this.ey - this.sy > 30) {
       // 下拉
-      this.setData({
-        cur: index <= 0 ? list[0] : list[index - 1],
-        index: index <= 0 ? 0 : index - 1,
-        pause: false
-      })
+
+      if (this.param.type == "category" && index == 0) {
+        this.param.id = list[0].id
+        this.param.position = "end"
+        this.param.include = "no"
+        this.getList().then(data => {
+          if (data.data && data.data.lists) {
+            if (data.data.lists.length == 0) {
+              /*  已经是第一个了  */
+            } else if (data.data.lists.length > 0) {
+              this.setData({
+                cur: this.data.list[data.data.lists.length - 1],
+                index: data.data.lists.length - 1,
+                pause: false
+              })
+            }
+          }
+        })
+      } else {
+        this.setData({
+          cur: index <= 0 ? list[0] : list[index - 1],
+          index: index <= 0 ? 0 : index - 1,
+          pause: false
+        })
+      }
     } else if (this.ey - this.sy < -30) {
       // 上拉
-      let temp = index >= list.length - 1 ? 0 : index + 1
+      let temp = index >= list.length - 1 ? (this.param.type == "recommend" ? 0 : index) : index + 1
       this.setData({
         cur: list[temp],
         index: temp,
         pause: false
       })
       if (temp == list.length - 2) {
-        // 加载新数据
-        this.param.page += 1
-        this.param.id = ""
+        //还剩下一个视频时,加载新数据
+        if (this.param.type == "recommend") {
+          this.param.page += 1
+          this.param.id = ""
+        } else {
+          this.param.id = list[list.length - 1].id
+          this.param.position = "first"
+          this.param.include = "no"
+        }
         this.getList()
       }
     }
@@ -115,12 +149,12 @@ Page({
   praise() {
     let list = this.data.list
     let index = this.data.index
-    let param = {
+    let param1 = {
       id: list[index].id
     }
     if (list[index].praised == 1) {
       // 取消点赞
-      app.video.delPraise(param).then(msg => {
+      app.video.delPraise(param1).then(msg => {
         if (msg.code == 1) {
           list[index].praised = 0
           list[index].praise--
@@ -132,7 +166,7 @@ Page({
       })
     } else {
       // 点赞
-      app.video.praise(param).then(msg => {
+      app.video.praise(param1).then(msg => {
         if (msg.code == 1) {
           list[index].praised = 1
           list[index].praise++
@@ -164,10 +198,10 @@ Page({
       console.log("ShareAppMessage  button")
       let list = this.data.list
       let index = this.data.index
-      let param = {
+      let param2 = {
         id: list[index].id
       }
-      app.video.share(param).then(msg => {
+      app.video.share(param2).then(msg => {
         if (msg.code == 1) {
           list[index].forward += 1
           this.setData({
@@ -209,7 +243,7 @@ Page({
   // 获取用户的微信昵称头像
   onGotUserInfo: function(e) {
     if (e.detail.errMsg == "getUserInfo:ok") {
-      app.updateBase(e, this)
+      app.updateBase(e)
     }
   }
 })

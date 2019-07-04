@@ -39,7 +39,7 @@ Page({
           that.setData({
             tip: false
           })
-        }, 15000)
+        }, 10000)
       }
 
       wx.setNavigationBarTitle({
@@ -58,7 +58,7 @@ Page({
     })
   },
   onGotUserInfo: function(e) {
-    app.updateBase(e, this)
+    app.updateBase(e)
   },
   switchNav(event) {
     let cur = event.currentTarget.dataset.current
