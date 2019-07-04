@@ -129,6 +129,7 @@ Page({
         wx.setStorageSync("uid", res.data.uid)
         wx.setStorageSync("authKey", res.data.authKey)
         app.setUser(res.data.userInfo)
+        app.setAuthKey(res.data.authKey)
         if (res.data.userInfo.mobile) {
           if (app.globalData.query.type == "share") {
             let params = []

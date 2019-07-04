@@ -44,7 +44,7 @@ Page({
         }
         this.setData({
           "history.history": temp,
-          "history.last_lesson": msg.data.last_lesson
+          "history.last_lesson": msg.data.last_lesson || ""
         })
       }
     })

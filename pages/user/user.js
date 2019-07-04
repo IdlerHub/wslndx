@@ -12,11 +12,12 @@ Page({
       isRefreshing: true
     })
 
-    setTimeout(() => {
+    let timer = setTimeout(() => {
       this.setData({
         isRefreshing: false
       })
       wx.stopPullDownRefresh()
+      clearTimeout(timer)
     }, 1000)
   },
   handleContact(e) {},

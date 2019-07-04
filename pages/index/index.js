@@ -1,5 +1,4 @@
 //index.js
-import regeneratorRuntime from "wx-promise-pro"
 //获取应用实例
 const app = getApp()
 Page({
@@ -12,7 +11,7 @@ Page({
   navHeightList: [],
   onLoad: async function(e) {
     await app.user.signed().then(res => {
-      let sign = !!res.data.signed
+      let sign = res.data && res.data.signed
       app.setSignIn({ status: sign, count: sign ? 1 : this.data.$state.signStatus.count }, true)
     })
     this.param = { page: 1, pageSize: 10 }
@@ -51,7 +50,7 @@ Page({
   onShow() {
     /* 更新用户的视频浏览历史 */
     this.historyParam = { page: 1, pageSize: 10 }
-    this.getHistory([])
+    this.getHistory()
   },
   init() {
     return Promise.all([this.getactivite(), this.getRecommend(), this.getCategory()]).then(values => {
@@ -127,18 +126,10 @@ Page({
     return app.user.activite()
   },
   getHistory(list) {
-    let temp = list || this.data.history.history
     return app.user.history(this.historyParam).then(msg => {
       if (msg.code == 1) {
-        for (let i in msg.data.history) {
-          msg.data.history[i].forEach(function(item) {
-            item.createtime = app.util.formatTime(new Date(item.createtime * 1000)).slice(10)
-          })
-          temp.push({ date: i, data: msg.data.history[i] })
-        }
         this.setData({
-          "history.history": temp,
-          "history.last_lesson": msg.data.last_lesson
+          "history.last_lesson": msg.data.last_lesson || ""
         })
       }
     })
@@ -176,14 +167,6 @@ Page({
         })
     }
   },
-  showAgain: function() {
-    wx.showToast({
-      title: "请先授权~",
-      mask: true,
-      icon: "none",
-      duration: 2000
-    })
-  },
   //继续播放
   historyTap: function(e) {
     wx.navigateTo({
@@ -216,16 +199,10 @@ Page({
   onHide() {
     app.aldstat.sendEvent("退出", { name: "首页" })
   },
-  // 转发
-  onShareAppMessage: function() {
-    return {
-      path: "/pages/index/index"
-    }
-  },
   // 用户昵称等信息授权
   onGotUserInfo(e) {
     if (e.detail.errMsg === "getUserInfo:ok") {
-      app.updateBase(e, this)
+      app.updateBase(e)
       if (e.currentTarget.dataset.role == "user") {
         this.toUser()
       } else if (e.currentTarget.dataset.role == "post") {
@@ -252,12 +229,13 @@ Page({
             mask: true
           })
 
-          setTimeout(() => {
+          let timer = setTimeout(() => {
             wx.hideToast({
               success: () => {
                 wx.navigateTo({ url: "/pages/score/score" })
               }
             })
+            clearTimeout(timer)
           }, 1500)
         }
       })
@@ -274,10 +252,11 @@ Page({
       isRefreshing: true
     })
     this.init().then(() => {
-      setTimeout(() => {
+      let timer = setTimeout(() => {
         this.setData({
           isRefreshing: false
         })
+        clearTimeout(timer)
       }, 1000)
     })
   },

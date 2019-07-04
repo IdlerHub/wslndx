@@ -31,7 +31,11 @@ function handle(res) {
     case -1:
       // 重新登录
       wx.clearStorage()
-      getApp().wxLogin()
+      getApp()
+        .wxLogin()
+        .then(() => {
+          wx.startPullDownRefresh()
+        })
       break
   }
 }
@@ -68,6 +72,9 @@ function post(path, param = {}, noToken, type) {
         return res.data
       }
     )
+    .catch(err => {
+      throw new Error(error)
+    })
     .finally(() => {
       wx.hideNavigationBarLoading()
     })

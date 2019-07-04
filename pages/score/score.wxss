@@ -140,21 +140,21 @@ page {
             margin-left: 20rpx; }
           page .swiper .scroll_container .pay_content .item .unit {
             font-family: PingFangSC-Regular;
-            font-size: 30rpx;
+            font-size: 28rpx;
             color: #7e7e7e;
             letter-spacing: 0;
             padding-left: 6rpx; }
           page .swiper .scroll_container .pay_content .item .bt {
             position: absolute;
             right: 20rpx;
-            width: 130rpx;
-            height: 55rpx;
+            width: 120rpx;
+            height: 50rpx;
             padding: 0;
             background: #df2020;
             border-radius: 27.5rpx;
             font-family: PingFangSC-Regular;
             font-size: 36rpx;
-            line-height: 55rpx;
+            line-height: 50rpx;
             color: #ffffff;
             letter-spacing: 0; }
             page .swiper .scroll_container .pay_content .item .bt.out {

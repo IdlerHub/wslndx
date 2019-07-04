@@ -4,54 +4,76 @@ const app = getApp()
 Page({
   data: {
     list: [],
-    limit: false
+    tip: true,
+    vid: "short-video" + Date.now(),
+    rect: wx.getMenuButtonBoundingClientRect()
   },
   onLoad(options) {
-    this.videoContext = wx.createVideoContext("myVideo")
-    this.param = { id: options.id ? options.id : "", page: 1, pageSize: 10, last_id: "" }
-    this.getList([]).then(() => {
+    this.videoContext = wx.createVideoContext(this.data.vid)
+    let pages = getCurrentPages()
+    let prePage = pages[pages.length - 2]
+    if (prePage && prePage.route == "pages/videoItemize/videoItemize") {
+      /* 从短视频分类页面过来 */
       this.setData({
-        cur: this.data.list[0],
-        index: 0,
-        vistor: options.type == "share"
+        limit: true,
+        home: options.home == "true"
       })
-      app.addVisitedNum(`v${this.data.cur.id}`)
-      app.aldstat.sendEvent("短视频播放", { name: this.data.cur.title })
-    })
-    app.aldstat.sendEvent("菜单", { name: "短视频" })
-  },
-  onShow() {
-    if (!!this.data.cur && this.data.cur.fs_joined == 1) {
-      let arr = this.data.list
-      arr.forEach((item, index) => {
-        if (item.fs_id == this.data.cur.fs_id) {
-          item.fs_joined = 1
-        }
-        let temp = "list[" + index + "]"
-        this.setData({
-          [temp]: item,
-          list: arr
-        })
+      this.param = { type: "category", id: options.id, pageSize: 10, position: "first", include: "yes", categoryId: options.categoryId }
+    } else {
+      /* 短视频推荐 */
+      let share = options.type == "share"
+      this.setData({
+        vistor: share
       })
-      app.aldstat.sendEvent("加圈", { name: this.data.cur.title })
+      /* 分享卡片进来,提示持续15秒 */
+      if (share) {
+        setTimeout(() => {
+          this.setData({
+            tip: false
+          })
+        }, 10000)
+      }
+      this.param = { type: "recommend", id: options.id ? options.id : "", page: 1, pageSize: 10, last_id: "" }
     }
+
+    if (this.data.$state.userInfo.mobile) {
+      /* 已登录 */
+      this.getList([]).then(() => {
+        this.setData({
+          cur: this.data.list[0],
+          index: 0
+        })
+        app.addVisitedNum(`v${this.data.cur.id}`)
+        app.aldstat.sendEvent("短视频播放", { name: this.data.cur.title })
+      })
+    }
+    app.aldstat.sendEvent("菜单", { name: "短视频" })
   },
   getList(list) {
     let temp = list || this.data.list
-    return app.video.list(this.param).then(msg => {
-      if (msg.code === 1 && msg.data) {
-        msg.data.lists.forEach(function(item) {
-          item.pw = app.util.tow(item.praise)
-          item.fw = app.util.tow(item.forward)
-          temp.push(item)
-        })
+    if (this.data.limit) {
+      return app.video.category(this.param).then(msg => {
+        this.callback(msg, temp)
+        return msg
+      })
+    } else {
+      return app.video.list(this.param).then(msg => {
+        this.callback(msg, temp)
+      })
+    }
+  },
+  callback(msg, temp) {
+    if (msg.code === 1 && msg.data && msg.data.lists) {
+      msg.data.lists.forEach(function(item) {
+        item.pw = app.util.tow(item.praise)
+        item.fw = app.util.tow(item.forward)
+      })
 
-        this.setData({
-          list: temp
-        })
-        this.param.last_id = msg.data.last_id
-      }
-    })
+      this.setData({
+        list: this.param.position == "end" ? (msg.data.lists || []).concat(temp) : temp.concat(msg.data.lists || [])
+      })
+      this.param.last_id = msg.data.last_id
+    }
   },
   tap() {
     if (this.data.pause) {
@@ -75,22 +97,49 @@ Page({
     this.ey = e.changedTouches[0].pageY
     if (this.ey - this.sy > 30) {
       // 下拉
-      this.setData({
-        cur: index <= 0 ? list[0] : list[index - 1],
-        index: index <= 0 ? 0 : index - 1,
-        pause: false
-      })
+
+      if (this.param.type == "category" && index == 0) {
+        this.param.id = list[0].id
+        this.param.position = "end"
+        this.param.include = "no"
+        this.getList().then(data => {
+          if (data.data && data.data.lists) {
+            if (data.data.lists.length == 0) {
+              /*  已经是第一个了  */
+            } else if (data.data.lists.length > 0) {
+              this.setData({
+                cur: this.data.list[data.data.lists.length - 1],
+                index: data.data.lists.length - 1,
+                pause: false
+              })
+            }
+          }
+        })
+      } else {
+        this.setData({
+          cur: index <= 0 ? list[0] : list[index - 1],
+          index: index <= 0 ? 0 : index - 1,
+          pause: false
+        })
+      }
     } else if (this.ey - this.sy < -30) {
       // 上拉
+      let temp = index >= list.length - 1 ? (this.param.type == "recommend" ? 0 : index) : index + 1
       this.setData({
-        cur: index >= list.length - 1 ? list[0] : list[index + 1],
-        index: index >= list.length - 1 ? 0 : index + 1,
+        cur: list[temp],
+        index: temp,
         pause: false
       })
-      if (index >= list.length - 2) {
-        // 加载新数据
-        this.param.page++
-        this.param.id = ""
+      if (temp == list.length - 2) {
+        //还剩下一个视频时,加载新数据
+        if (this.param.type == "recommend") {
+          this.param.page += 1
+          this.param.id = ""
+        } else {
+          this.param.id = list[list.length - 1].id
+          this.param.position = "first"
+          this.param.include = "no"
+        }
         this.getList()
       }
     }
@@ -100,12 +149,12 @@ Page({
   praise() {
     let list = this.data.list
     let index = this.data.index
-    let param = {
+    let param1 = {
       id: list[index].id
     }
     if (list[index].praised == 1) {
       // 取消点赞
-      app.video.delPraise(param).then(msg => {
+      app.video.delPraise(param1).then(msg => {
         if (msg.code == 1) {
           list[index].praised = 0
           list[index].praise--
@@ -117,7 +166,7 @@ Page({
       })
     } else {
       // 点赞
-      app.video.praise(param).then(msg => {
+      app.video.praise(param1).then(msg => {
         if (msg.code == 1) {
           list[index].praised = 1
           list[index].praise++
@@ -141,53 +190,43 @@ Page({
     })
   },
   // 转发
-  onShareAppMessage: function() {
-    let list = this.data.list
-    let index = this.data.index
-    let param = {
-      id: list[index].id
+  onShareAppMessage: function(ops) {
+    if (ops.from === "menu") {
+      return this.menuAppShare()
     }
-    // 分享  todo:iphoneX有卡顿bug
-    app.video.share(param).then(msg => {
-      if (msg.code == 1) {
-        list[index].forward += 1
-        this.setData({
-          list: list,
-          cur: list[index]
-        })
-        app.aldstat.sendEvent("短视频转发", { name: this.data.cur.title })
+    if (ops.from === "button") {
+      console.log("ShareAppMessage  button")
+      let list = this.data.list
+      let index = this.data.index
+      let param2 = {
+        id: list[index].id
       }
-    })
-    return {
-      title: list[index].title,
-      imageUrl: list[index].cimg,
-      path: "/pages/video/video?id=" + list[index].id + "&type=share"
+      app.video.share(param2).then(msg => {
+        if (msg.code == 1) {
+          list[index].forward += 1
+          this.setData({
+            list: list,
+            cur: list[index]
+          })
+          app.aldstat.sendEvent("短视频转发", { name: this.data.cur.title })
+        }
+      })
+      return {
+        title: list[index].title,
+        path: "/pages/video/video?id=" + list[index].id + "&type=share"
+      }
     }
   },
   // 首页
   tohome() {
     wx.reLaunch({ url: "/pages/index/index" })
   },
-  // 跳转学友圈
+  // 短视频分类
   navigate() {
-    if (!this.data.$state.authUserInfo) {
-      /* 要求授权 */
-      this.setData({
-        limit: true
-      })
-      return
-    }
-    let cur = this.data.cur
-    app.aldstat.sendEvent("短视频跳转", { name: this.data.cur.title })
+    /* 只能迭代一层 */
+    if (this.data.limit) return
     wx.navigateTo({
-      url: "../cDetail/cDetail?id=" + cur.fs_id
-    })
-  },
-  // 加入学友圈
-  join() {
-    let cur = this.data.cur
-    wx.navigateTo({
-      url: "../cDetail/cDetail?id=" + cur.fs_id + "&join=true"
+      url: "/pages/videoItemize/videoItemize?categoryId=" + this.data.cur.category_id + "&share=" + this.data.vistor
     })
   },
   // 完整视频
@@ -197,33 +236,14 @@ Page({
       url: "../detail/detail?id=" + cur.target_id
     })
   },
-  result() {
-    let list = this.data.list
-    let index = this.data.index
-    list[index].fs_joined = 1
-    this.setData({
-      list: list,
-      cur: list[index]
-    })
-  },
-  //用于数据统计
+  // 用于数据统计
   onHide() {
     app.aldstat.sendEvent("退出", { name: "短视频页" })
   },
-  //获取用户的昵称头像
+  // 获取用户的微信昵称头像
   onGotUserInfo: function(e) {
     if (e.detail.errMsg == "getUserInfo:ok") {
-      app.updateBase(e, this)
-      if (this.data.limit) {
-        this.setData({
-          limit: false
-        })
-        let cur = this.data.cur
-        app.aldstat.sendEvent("短视频跳转", { name: this.data.cur.title })
-        wx.navigateTo({
-          url: "../cDetail/cDetail?id=" + cur.fs_id
-        })
-      }
+      app.updateBase(e)
     }
   }
 })

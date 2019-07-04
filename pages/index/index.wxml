@@ -63,17 +63,16 @@
         <view catchtap="detailTap" wx:for="{{ recommend }}" wx:key="index" class="item" data-item="{{ item }}">
           <view class="content {{ item.show_big ? 'big' : '' }}">
             <view class="left">
-              <image class="poster" mode="aspectFill" src="{{ item.show_big ? item.big_image || item.image : item.image }}" lazy-load="true"></image>
+              <image class="poster" mode="aspectFill" src="{{ (item.show_big && item.big_image) || item.image }}" lazy-load="true"></image>
               <image class="icon" mode="aspectFill" src="{{ $state.imgHost }}/play.png"></image>
             </view>
             <view class="right">
               <text class="line name">{{ item.title }}</text>
               <text class="line actor" wx:if="{{ item.teacher_id == 0 }}">{{ item.subtitle }}</text>
-              <text class="line actor" wx:if="{{ item.teacher_id != 0 }}">{{ item.name }}-{{ item.honor }}</text>
+              <text class="line actor" wx:else>{{ item.name }}-{{ item.honor }}</text>
               <text class="line info">
                 <text class="dramaNum"><text class="key">剧集</text>{{ item.lesson_count }}集</text>
-                <text wx:if="{{ item.bw }}" class="playNum"><text class="key">播放</text>{{ item.bw }}</text>
-                <text wx:if="{{ !item.bw }}" class="playNum"><text class="key">播放</text>{{ item.browse }}</text>
+                <text class="playNum"><text class="key">播放</text>{{ item.bw || item.browse }}</text>
               </text>
             </view>
           </view>
@@ -107,11 +106,11 @@
     </view>
     <button class="item" open-type="getUserInfo" bindgetuserinfo="onGotUserInfo" data-role="post">
       <image mode="aspectFill" class="icon" src="{{ $state.imgHost }}/circle.png"></image>
-      <text class="name">学友圈</text>
+      <text class="name">秀风采</text>
     </button>
   </view>
   <!-- 签到拿积分 -->
-  <view class="integration" wx:if="{{ quickInteg }}" catchtouchmove="return">
+  <view class="integration" wx:if="{{ !$state.signStatus.count }}" catchtouchmove="return">
     <view class="dialog">
       <image class="bg" src="/images/integration_bg.png" mode="aspectFill"></image>
       <view class="ani"></view>

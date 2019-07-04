@@ -10,11 +10,9 @@
 
 ## 4.发布前检测项
 
-1. config.js 中的 API_URL 是否需要交叉发布 v1/v2 ;
+1. config.js 中的 API_URL 是否需要交叉发布 v1~v10 ;
 
 <!--
 todo:
-1. 提取background-img的头部
-4. 使用 wxministore 提取所有的 页面统计函数  和授权函数
-
+4. 使用 wxministore 提取所有的授权函数
  -->

@@ -18,8 +18,7 @@
     line-height: 110rpx;
     vertical-align: bottom; }
     .vistor-head .iconfont:nth-child(2) {
-      position: absolute;
-      right: 180rpx; }
+      position: absolute; }
 
 .vistor-home {
   position: fixed;

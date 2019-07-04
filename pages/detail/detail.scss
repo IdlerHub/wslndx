@@ -374,9 +374,12 @@ rich-text {
     &:nth-child(4) {
       position: absolute;
       top: 25rpx;
-      right: 160rpx;
     }
   }
+}
+
+.tab {
+  padding-bottom: 30rpx;
 }
 
 .vistor-home {

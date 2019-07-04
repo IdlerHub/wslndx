@@ -52,8 +52,11 @@ page {
       align-content: flex-start; }
       .wrap > .item .content .img image {
         margin-top: 20rpx; }
-      .wrap > .item .content .img.one image {
-        width: 400rpx; }
+      .wrap > .item .content .img.one {
+        max-height: 100vh;
+        overflow: hidden; }
+        .wrap > .item .content .img.one image {
+          width: 400rpx; }
       .wrap > .item .content .img.three image {
         width: 216rpx;
         height: 216rpx;

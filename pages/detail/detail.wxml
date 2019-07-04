@@ -1,10 +1,10 @@
 <view class="container">
   <video id="myVideo" src="{{ cur.url }}" controls page-gesture enable-play-gesture bindended="ended">
-    <cover-view wx:if="{{ vistor }}" class="vistor-head">
+    <cover-view wx:if="{{ vistor && tip }}" class="vistor-head">
       <cover-view>点击“</cover-view>
       <cover-image src="/images/xiaochengxu.png" class="iconfont"></cover-image>
       <cover-view>”添加到我的小程序 </cover-view>
-      <cover-image src="/images/shouzhi.png" class="iconfont"></cover-image>
+      <cover-image src="/images/shouzhi.png" class="iconfont" style="left:{{ rect.left + 10 }}px"></cover-image>
     </cover-view>
     <cover-image wx:if="{{ !playing }}" mode="widthFix" src="{{ detail.image }}" class="poster" bindtap="recordAdd"></cover-image>
     <cover-image wx:if="{{ !playing }}" mode="aspectFill" src="{{ $state.imgHost }}/play.png" class="play" bindtap="recordAdd"></cover-image>
@@ -15,7 +15,7 @@
       <text class="dramaNum">共{{ detail.lesson_count }}讲</text>
     </view>
     <text class="line actor" wx:if="{{ detail.teacher_id == 0 }}">{{ detail.subtitle }}</text>
-    <text class="line actor" wx:if="{{ detail.teacher_id != 0 }}">{{ detail.teacher.name }}-{{ detail.teacher.honor }}</text>
+    <text class="line actor" wx:else>{{ detail.teacher.name }}-{{ detail.teacher.honor }}</text>
     <view class="bottom">
       <view class="left">
         <view class="collect" bindtap="collect">
@@ -71,9 +71,9 @@
       </swiper-item>
       <swiper-item class="tab-item">
         <!--简介  -->
-        <view class="wrap synopsis">
+        <scroll-view scroll-y="true" class="wrap synopsis">
           <rich-text nodes="{{ detail.intro_content }}"></rich-text>
-        </view>
+        </scroll-view>
       </swiper-item>
     </swiper>
   </view>

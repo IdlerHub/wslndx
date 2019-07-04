@@ -1,0 +1,128 @@
+.video-itemize {
+  position: relative;
+  overflow: hidden;
+  height: 240rpx;
+  padding-left: 30rpx;
+  display: flex;
+  align-items: center;
+
+  .bg {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    transform: scale(1.2, 1.2);
+    filter: blur(20px) brightness(60%);
+  }
+
+  .avator {
+    width: 150rpx;
+    height: 150rpx;
+    border-radius: 50%;
+    border: 2rpx solid rgba(255, 255, 255, 0.5);
+  }
+
+  .dsc {
+    margin-left: 20rpx;
+    .title {
+      width: 150rpx;
+      height: 70rpx;
+      font-size: 50rpx;
+      font-family: PingFangSC-Medium;
+      font-weight: 500;
+      color: rgba(255, 255, 255, 1);
+      line-height: 70rpx;
+    }
+
+    .count {
+      .total,
+      .praises {
+        display: inline-block;
+        margin-right: 30rpx;
+        font-size: 36rpx;
+        font-family: PingFangSC-Regular;
+        font-weight: 400;
+        color: rgba(255, 255, 255, 0.5);
+        line-height: 50rpx;
+
+        .num1 {
+          font-size: 40rpx;
+          font-family: PingFangSC-Regular;
+          font-weight: 400;
+          color: rgba(255, 255, 255, 1);
+          line-height: 56rpx;
+        }
+
+        .num2 {
+          font-size: 36rpx;
+          font-family: PingFangSC-Regular;
+          font-weight: 400;
+          color: rgba(255, 255, 255, 1);
+          line-height: 50rpx;
+        }
+      }
+    }
+  }
+}
+
+.block {
+  display: flex;
+  padding: 15rpx;
+  flex-wrap: wrap;
+  justify-content: space-between;
+
+  .item {
+    position: relative;
+    width: 350rpx;
+    height: 450rpx;
+    margin: 0 5rpx 10rpx;
+    box-sizing: content-box;
+
+    .praise {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      height: 80rpx;
+      background: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.7));
+      .iconfont {
+        font-size: 32rpx;
+        color: white;
+        margin: 0 5rpx 0 20rpx;
+        line-height: 80rpx;
+
+        &.icon-collection {
+          color: red;
+        }
+      }
+
+      .num {
+        font-size: 32rpx;
+        font-family: HelveticaNeue-Medium;
+        font-weight: 500;
+        color: rgba(255, 255, 255, 1);
+        line-height: 80rpx;
+        text-shadow: 0px 2rpx 4rpx rgba(0, 0, 0, 0.5);
+      }
+    }
+  }
+}
+
+.vistor-home {
+  position: fixed;
+  width: 156rpx;
+  height: 156rpx;
+  right: 30rpx;
+  bottom: 150rpx;
+  border-radius: 50%;
+  background: linear-gradient(to top right, #df2020, #ff5f48);
+  font-size: 36rpx;
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  .iconfont {
+    font-size: 50rpx;
+  }
+}

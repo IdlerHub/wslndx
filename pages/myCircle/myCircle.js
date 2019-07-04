@@ -14,7 +14,7 @@ Page({
   onShow: function() {},
   onHide: function() {},
   onUnload: function() {
-    app.aldstat.sendEvent("退出", { name: "我的圈子" })
+    app.aldstat.sendEvent("退出", { name: "风采展示" })
   },
   onPullDownRefresh: function() {
     this.setData({
@@ -32,7 +32,6 @@ Page({
     this.circleParam.page++
     this.getCircle()
   },
-  onShareAppMessage: function() {},
   getCircle(list) {
     let circle = list || this.data.circle
     this.circleParam.us_id = 0
@@ -44,7 +43,6 @@ Page({
               return i.image
             })
             item.auditing = new Date().getTime() - new Date(item.createtime * 1000) < 7000
-            item.pause = true
             circle.push(item)
           })
         }
@@ -108,14 +106,10 @@ Page({
       rlAni: true
     })
     let timer = setTimeout(() => {
-      this.setData(
-        {
-          rlAni: false
-        },
-        () => {
-          clearTimeout(timer)
-        }
-      )
+      this.setData({
+        rlAni: false
+      })
+      clearTimeout(timer)
     }, 2000)
     this.circleParam.page = 1
     this.getCircle([])

@@ -14,6 +14,5 @@ Page({
   onUnload: function() {},
   onPullDownRefresh: function() {},
   onReachBottom: function() {},
-  /* onShareAppMessage: function() {}, */
   onPageScroll: function() {}
 })

@@ -34,13 +34,10 @@
       <view class="source_content">
         <view class="item" wx:for="{{ sources }}" wx:key="index">
           <text class="title">{{ item.title }}</text>
-          <text class="score"
-            ><text class="num">{{ item.score }}</text
-            >积分</text
-          ><text wx:if="{{ item.times }}" class="times"
-            >每天还有<text class="num">{{ item.times }}</text
-            >次机会</text
-          >
+          <!-- prettier-ignore -->
+          <text class="score"><text class="num">{{ item.score }}</text>积分</text>
+          <!-- prettier-ignore -->
+          <text wx:if="{{ item.times }}" class="times">每天还有<text class="num">{{ item.times }}</text>次机会</text>
           <button class="status {{ item.status ? 'finish' : '' }}" bindtap="nav" data-index="{{ index }}" disabled="{{ item.status }}">{{ item.status ? "已完成" : "立即领取" }}</button>
         </view>
       </view>
@@ -52,7 +49,7 @@
         <view class="item" wx:for="{{ paylist }}" wx:key="index">
           <image class="bg" src="{{ item.image }}" mode="aspectFill" lazy-load="true"> </image>
           <text class="title">{{ item.title }}</text>
-          <text class="score">{{ item.need_points }}</text>
+          <text class="score">{{ item.largePoint || item.need_points }}</text>
           <text class="unit">积分</text>
           <button class="bt {{ item.stock ? '' : 'out' }}" size="mini" data-stock="{{ item.stock }}" data-score="{{ item.need_points }}" data-id="{{ item.id }}" bindtap="gift">兑换</button>
         </view>
@@ -60,7 +57,7 @@
     </scroll-view>
   </swiper-item>
   <swiper-item item-id="3">
-    <scroll-view class="scroll_container" scroll-y="{{ scrollStatus }}">
+    <scroll-view class="scroll_container" scroll-y="{{ scrollStatus }}" bindscrolltolower="lower">
       <view class="details_content">
         <view class="scroll_con">
           <view class="item" wx:for="{{ details }}" wx:key="index">

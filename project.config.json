@@ -1,111 +1,136 @@
 {
-  "description": "项目配置文件",
-  "packOptions": {
-    "ignore": [
-      {
-        "type": "folder",
-        "value": "demo"
-      },
-      {
-        "type": "file",
-        "value": "config.js"
-      },
-      {
-        "type": "file",
-        "value": "Gulpfile.js"
-      },
-      {
-        "type": "file",
-        "value": "package-lock.json"
-      },
-      {
-        "type": "file",
-        "value": "variables.wxss"
-      },
-      {
-        "type": "folder",
-        "value": ".history"
-      },
-      {
-        "type": "suffix",
-        "value": ".scss"
-      }
-    ]
-  },
-  "setting": {
-    "urlCheck": false,
-    "es6": true,
-    "postcss": true,
-    "minified": true,
-    "newFeature": true,
-    "nodeModules": true,
-    "autoAudits": false,
-    "uglifyFileName": false,
-    "checkInvalidKey": true,
-    "checkSiteMap": true,
-    "uploadWithSourceMap": true,
-    "babelSetting": {
-      "ignore": [],
-      "disablePlugins": [],
-      "outputPath": ""
-    }
-  },
-  "compileType": "miniprogram",
-  "libVersion": "2.7.1",
-  "appid": "wx756d04f5d669cef0",
-  "projectname": "%E4%B8%AD%E5%9B%BD%E7%BD%91%E4%B8%8A%E8%80%81%E5%B9%B4%E5%A4%A7%E5%AD%A6",
-  "isGameTourist": false,
-  "simulatorType": "wechat",
-  "simulatorPluginLibVersion": {},
-  "condition": {
-    "search": {
-      "current": -1,
-      "list": []
-    },
-    "conversation": {
-      "current": -1,
-      "list": []
-    },
-    "plugin": {
-      "current": -1,
-      "list": []
-    },
-    "game": {
-      "currentL": -1,
-      "list": []
-    },
-    "miniprogram": {
-      "current": 0,
-      "list": [
-        {
-          "id": 0,
-          "name": "微课堂分享卡片",
-          "pathName": "pages/detail/detail",
-          "query": "id=88&curid=263&type=share",
-          "scene": 1007
-        },
-        {
-          "id": 1,
-          "name": "小程序码分享",
-          "pathName": "pages/loading/loading",
-          "query": "uid=303&type=invite",
-          "scene": 1047
-        },
-        {
-          "id": 2,
-          "name": "长按图片识别小程序码进入",
-          "pathName": "pages/loading/loading",
-          "query": "uid=303&type=invite",
-          "scene": 1048
-        },
-        {
-          "id": 3,
-          "name": "手机相册选取小程序码",
-          "pathName": "pages/loading/loading",
-          "query": "uid=303&type=invite",
-          "scene": 1049
-        }
-      ]
-    }
-  }
+	"description": "项目配置文件",
+	"packOptions": {
+		"ignore": [
+			{
+				"type": "folder",
+				"value": "demo"
+			},
+			{
+				"type": "folder",
+				"value": "leetCode"
+			},
+			{
+				"type": "file",
+				"value": "config.js"
+			},
+			{
+				"type": "file",
+				"value": "Gulpfile.js"
+			},
+			{
+				"type": "file",
+				"value": "package-lock.json"
+			},
+			{
+				"type": "file",
+				"value": "variables.wxss"
+			},
+			{
+				"type": "folder",
+				"value": ".history"
+			},
+			{
+				"type": "suffix",
+				"value": ".scss"
+			}
+		]
+	},
+	"setting": {
+		"urlCheck": true,
+		"es6": true,
+		"enhance": true,
+		"postcss": true,
+		"minified": true,
+		"newFeature": true,
+		"nodeModules": true,
+		"autoAudits": false,
+		"uglifyFileName": false,
+		"checkInvalidKey": true,
+		"checkSiteMap": true,
+		"uploadWithSourceMap": true,
+		"babelSetting": {
+			"ignore": [],
+			"disablePlugins": [],
+			"outputPath": ""
+		}
+	},
+	"compileType": "miniprogram",
+	"libVersion": "2.7.3",
+	"appid": "wx756d04f5d669cef0",
+	"projectname": "%E4%B8%AD%E5%9B%BD%E7%BD%91%E4%B8%8A%E8%80%81%E5%B9%B4%E5%A4%A7%E5%AD%A6",
+	"isGameTourist": false,
+	"simulatorType": "wechat",
+	"simulatorPluginLibVersion": {},
+	"condition": {
+		"search": {
+			"current": -1,
+			"list": []
+		},
+		"conversation": {
+			"current": -1,
+			"list": []
+		},
+		"plugin": {
+			"current": -1,
+			"list": []
+		},
+		"game": {
+			"currentL": -1,
+			"list": []
+		},
+		"miniprogram": {
+			"current": 6,
+			"list": [
+				{
+					"id": 0,
+					"name": "微课堂分享卡片",
+					"pathName": "pages/detail/detail",
+					"query": "id=88&curid=263&type=share",
+					"scene": 1007
+				},
+				{
+					"id": 1,
+					"name": "小程序码分享",
+					"pathName": "pages/loading/loading",
+					"query": "uid=303&type=invite",
+					"scene": 1047
+				},
+				{
+					"id": 2,
+					"name": "长按图片识别小程序码进入",
+					"pathName": "pages/loading/loading",
+					"query": "uid=303&type=invite",
+					"scene": 1048
+				},
+				{
+					"id": 3,
+					"name": "手机相册选取小程序码",
+					"pathName": "pages/loading/loading",
+					"query": "uid=303&type=invite",
+					"scene": 1049
+				},
+				{
+					"id": 4,
+					"name": "短视频分享卡片",
+					"pathName": "pages/video/video",
+					"query": "id=808&type=share",
+					"scene": 1007
+				},
+				{
+					"id": 5,
+					"name": "秀风采分享卡片",
+					"pathName": "pages/pDetail/pDetail",
+					"query": "id=721&type=share",
+					"scene": 1007
+				},
+				{
+					"id": -1,
+					"name": "小程序 profile 页",
+					"pathName": "pages/loading/loading",
+					"scene": 1024
+				}
+			]
+		}
+	}
 }

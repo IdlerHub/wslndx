@@ -1,0 +1,31 @@
+<view class="video-itemize" hover-class="none">
+  <image class="bg" src="{{ category.image }}" mode="aspectFill"> </image>
+  <image class="avator" src="{{ category.image }}" mode="aspectFill"> </image>
+  <view class="dsc">
+    <text class="title"> {{ category.category_name }} </text>
+    <view class="count">
+      <text class="total">
+        <text class="num1"> {{ category.total_num }} </text> 视频
+      </text>
+      <text class="praises">
+        <text class="num2"> {{ category.praise_num }} </text> 获赞
+      </text>
+    </view>
+  </view>
+</view>
+
+<view class="block">
+  <block wx:for="{{ list }}" wx:key="index">
+    <image class="item" src="{{ item.img_url }}" lazy-load mode="aspectFill" data-id="{{ item.id }}" bindtap="nav">
+      <view class="praise">
+        <icon class="iconfont {{ item.praised ? 'icon-collection' : ' icon-praise' }}"></icon>
+        <text class="num">{{ item.praise }} </text>
+      </view>
+    </image>
+  </block>
+</view>
+
+<view wx:if="{{ vistor }}" class="vistor-home" catchtap="tohome">
+  <icon class="iconfont icon-shouye"></icon>
+  <text>首页</text>
+</view>

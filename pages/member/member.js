@@ -40,14 +40,10 @@ Page({
     this.getList([]).then(() => {
       wx.stopPullDownRefresh()
       let timer = setTimeout(() => {
-        this.setData(
-          {
-            isRefreshing: false
-          },
-          () => {
-            clearTimeout(timer)
-          }
-        )
+        this.setData({
+          isRefreshing: false
+        })
+        clearTimeout(timer)
       }, 1000)
     })
   },
