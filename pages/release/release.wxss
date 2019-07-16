@@ -45,7 +45,7 @@ textarea {
   margin: auto;
 }
 
-.footer > .item {
+.footer .item {
   flex: 1;
   text-align: center;
   display: flex;
@@ -56,11 +56,11 @@ textarea {
   height: 150rpx;
 }
 
-.footer > .item:last-of-type {
+.footer .item.ensure {
   color: #df2020;
 }
 
-.footer > .item[disabled] {
+.footer .item[disabled] {
   background: none;
 }
 

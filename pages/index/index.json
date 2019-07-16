@@ -5,6 +5,7 @@
   "navigationStyle": "custom",
   "enablePullDownRefresh": true,
   "usingComponents": {
-    "navigationBar": "/components/navigationBar/navigationBar"
+    "navigationBar": "/components/navigationBar/navigationBar",
+    "formCode": "/components/formCode/formCode"
   }
 }

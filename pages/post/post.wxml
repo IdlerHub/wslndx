@@ -16,7 +16,7 @@
         <text class="date">{{ item.createtimes }}</text>
       </view>
       <view catchtap="navigate" data-id="{{ item.id }}">
-        <rich-text wx:if="{{ item.content }}" class="name" nodes="{{ item.content }}"></rich-text>
+        <rich-text wx:if="{{ item.content }}" class="name" nodes="{{ item.content }}" space="emsp"></rich-text>
         <view class="content" wx:if="{{ item.images.length > 0 }}">
           <view class="img one" wx:if="{{ item.images.length == 1 }}">
             <image mode="widthFix" wx:for="{{ item.images }}" wx:for-item="items" wx:key="index" src="{{ items }}" data-urls="{{ item.images }}" data-current="{{ items }}" bindtap="previewImage"></image>
@@ -41,26 +41,40 @@
         <text class="division"></text>
         <!-- 评论 -->
         <navigator url="../pDetail/pDetail?id={{ item.id }}&comment" hover-class="none" open-type="navigate" class="item">
-          <icon class="iconfont icon-comment"></icon>
-          <text class="text">{{ item.cw || item.comments }}</text>
+          <formCode>
+            <view class="container-sub">
+              <icon class="iconfont icon-comment"></icon>
+              <text class="text">{{ item.cw || item.comments }}</text>
+            </view>
+          </formCode>
         </navigator>
         <text class="division"></text>
         <!-- 点赞 -->
-        <view class="item" bindtap="praise" data-index="{{ index }}">
-          <view class="praise  {{ item.likestatus ? 'end' : '' }} {{ item.praising ? 'ani' : '' }}" data-index="{{ index }}" bindanimationend="aniend"></view>
-          <text class="text">{{ item.lw || item.likes }} </text>
-        </view>
+        <formCode bind:handler="praise" class="item" data-index="{{ index }}">
+          <view class="container-sub">
+            <view class="praise  {{ item.likestatus ? 'end' : '' }} {{ item.praising ? 'ani' : '' }}" data-index="{{ index }}" bindanimationend="aniend"></view>
+            <text class="text">{{ item.lw || item.likes }} </text>
+          </view>
+        </formCode>
       </view>
     </view>
   </view>
   <view class="footer">
     <navigator url="../circle/circle?type=1" hover-class="none" open-type="navigate" class="to">
-      <text class="icon">+</text>
-      <text class="text">加圈</text>
+      <formCode>
+        <view class="to">
+          <text class="icon">+</text>
+          <text class="text">加圈</text>
+        </view>
+      </formCode>
     </navigator>
     <navigator url="/pages/release/release" hover-class="none" open-type="navigate" class="write">
-      <image mode="aspectFill" class="icon" src="{{ $state.imgHost }}/write.png"></image>
-      <text class="text">写帖</text>
+      <formCode>
+        <view class="write">
+          <image mode="aspectFill" class="icon" src="{{ $state.imgHost }}/write.png"></image>
+          <text class="text">写帖</text>
+        </view>
+      </formCode>
     </navigator>
   </view>
   <view wx:if="{{ rlAni }}" class="popup">

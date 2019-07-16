@@ -3,5 +3,7 @@
   "navigationBarTitleText": "秀风采",
   "navigationBarTextStyle": "black",
   "enablePullDownRefresh": true,
-  "usingComponents": {}
+  "usingComponents": {
+    "formCode": "/components/formCode/formCode"
+  }
 }

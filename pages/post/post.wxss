@@ -45,7 +45,9 @@ page {
       text-align: justify;
       line-height: 60rpx;
       font-size: 40rpx;
-      color: #3a3a3a; }
+      color: #3a3a3a;
+      word-wrap: break-word;
+      white-space: pre-line; }
     .wrap > .item .content .img {
       display: flex;
       flex-wrap: wrap;
@@ -119,11 +121,14 @@ page {
     font-size: 58rpx;
     color: #bdbdbd;
     text-align: center; }
+  .btn > .item .container-sub {
+    display: flex;
+    align-items: center; }
   .btn > .item .praise {
     width: 125rpx;
     height: 125rpx;
     background-size: cover;
-    background-image: url("https://jinling-xcx-dev.obs.cn-north-1.myhuaweicloud.com/images/pro/heart-ani.png");
+    background-image: url("https://jinling-xcx-dev.obs.cn-north-1.myhuaweicloud.com/images/dev/heart-ani.png");
     animation-fill-mode: forwards; }
     .btn > .item .praise.end {
       background-position: 100% 0; }

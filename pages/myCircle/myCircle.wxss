@@ -38,7 +38,9 @@
     text-align: justify;
     line-height: 56rpx;
     font-size: 40rpx;
-    color: #343434; }
+    color: #343434;
+    word-wrap: break-word;
+    white-space: pre-line; }
   .circle .content {
     overflow: hidden; }
     .circle .content video {

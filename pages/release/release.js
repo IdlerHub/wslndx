@@ -211,12 +211,12 @@ Page({
   result() {
     let param = {
       image: this.data.media_type == 1 ? this.data.param.image.join(",") : this.data.param.cover,
-      content: this.data.param.content,
+      content: this.data.param.content || "",
       video: this.data.param.video,
       fs_id: this.data.showFlag && (this.data.selId || "")
     }
 
-    if (this.data.param.content) {
+    if (param.content.trim() || param.image || param.video) {
       wx.showLoading({
         title: "发布中"
       })

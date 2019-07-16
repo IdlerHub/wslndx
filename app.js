@@ -1,7 +1,7 @@
 /*
  * @Date: 2019-05-28 09:50:08
  * @LastEditors: hxz
- * @LastEditTime: 2019-07-04 17:55:17
+ * @LastEditTime: 2019-07-16 15:15:34
  */
 /*添加微信官方接口转化为promise*/
 const wxpro = require("wx-promise-pro")
@@ -69,7 +69,7 @@ App({
 
       if (!this.store.$state.userInfo.mobile) {
         wx.redirectTo({ url: "/pages/login/login" })
-      } else if (opts.query.type !== "share" && opts.path == "pages/loading/loading") {
+      } else if (opts.path == "pages/loading/loading") {
         wx.redirectTo({ url: "/pages/index/index" })
       }
     }
@@ -113,6 +113,8 @@ App({
   /* 更新store中的userInfo */
   setUser: function(data) {
     data.addressCity = data.address ? data.address.split(",")[1] : ""
+    let sh = data.university.split(",")
+    data.school = sh.length == 3 ? sh[2] : sh[0]
     this.store.setState({
       userInfo: data
     })

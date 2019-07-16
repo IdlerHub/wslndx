@@ -49,7 +49,6 @@ Page({
   },
   onShow() {
     /* 更新用户的视频浏览历史 */
-    this.historyParam = { page: 1, pageSize: 10 }
     this.getHistory()
   },
   init() {
@@ -89,6 +88,10 @@ Page({
       })
     }
   },
+  getFeatureCode(e) {
+    console.log(e)
+    console.log(e.detail.formId)
+  },
   switchTab(event) {
     let cur = event.detail.current
     this.setData({
@@ -125,8 +128,9 @@ Page({
   getactivite() {
     return app.user.activite()
   },
-  getHistory(list) {
-    return app.user.history(this.historyParam).then(msg => {
+  getHistory() {
+    let historyParam = { page: 1, pageSize: 10 }
+    return app.user.history(historyParam).then(msg => {
       if (msg.code == 1) {
         this.setData({
           "history.last_lesson": msg.data.last_lesson || ""

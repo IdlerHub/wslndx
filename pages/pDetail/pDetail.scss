@@ -281,6 +281,7 @@
         flex: 1;
         padding-left: 20rpx;
         box-sizing: border-box;
+        overflow: hidden;
       }
     }
   }
@@ -301,6 +302,8 @@
       font-size: 36rpx;
       color: #7e7e7e;
       line-height: 50rpx;
+      word-wrap: break-word;
+      white-space: pre-line;
     }
   }
 }
@@ -382,30 +385,29 @@
       position: relative;
       height: 190rpx;
       flex: 1;
+      display: flex;
+      flex-direction: column;
       .icon {
-        position: relative;
-        left: 20rpx;
-        top: 5rpx;
         width: 44rpx;
         height: 44rpx;
         z-index: 999;
       }
+      .to {
+        flex: 1;
+        text-align: center;
+      }
       .release {
-        position: absolute;
-        width: 100%;
+        flex: 1;
         text-align: center;
         bottom: 0;
         background: none;
         font-size: 40rpx;
         color: #3a3a3a;
-        line-height: 70rpx;
+        line-height: 90rpx;
         z-index: 999;
         display: block;
         cursor: pointer;
       }
-    }
-    .to {
-      height: 80rpx;
     }
   }
 }

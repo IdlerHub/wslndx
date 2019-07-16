@@ -5,8 +5,8 @@ Page({
   data: {
     list: [],
     tip: true,
-    vid: "short-video" + Date.now(),
-    rect: wx.getMenuButtonBoundingClientRect()
+    vid: "short-video" + Date.now()
+    /*  rect: wx.getMenuButtonBoundingClientRect() */
   },
   onLoad(options) {
     this.videoContext = wx.createVideoContext(this.data.vid)

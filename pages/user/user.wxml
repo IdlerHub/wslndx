@@ -12,7 +12,7 @@
           <text class="line name">{{ $state.userInfo.nickname }}</text>
           <view class="line">
             <text class="city">{{ $state.userInfo.addressCity || "暂无" }}</text>
-            <text class="school">{{ $state.userInfo.university || "+添加学校标签" }}</text>
+            <text class="school">{{ $state.userInfo.school || $state.userInfo.university || "+添加学校标签" }}</text>
           </view>
         </view>
       </view>

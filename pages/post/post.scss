@@ -55,6 +55,8 @@ page {
       line-height: 60rpx;
       font-size: 40rpx;
       color: #3a3a3a;
+      word-wrap: break-word;
+      white-space: pre-line;
     }
 
     .content {
@@ -150,6 +152,11 @@ page {
       font-size: 58rpx;
       color: #bdbdbd;
       text-align: center;
+    }
+
+    .container-sub {
+      display: flex;
+      align-items: center;
     }
 
     .praise {

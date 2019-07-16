@@ -6,8 +6,8 @@ Page({
     sort: 0,
     nav: [{ name: "剧集" }, { name: "简介" }],
     height: 0,
-    tip: true,
-    rect: wx.getMenuButtonBoundingClientRect()
+    tip: true
+    /* rect: wx.getMenuButtonBoundingClientRect() */
   },
   onLoad(options) {
     /*todo:考虑去掉that*/
@@ -31,7 +31,7 @@ Page({
         navScrollLeft: 0,
         id: options.id,
         curid: options.curid || null,
-        cur: null
+        cur: {}
       })
 
       if (that.data.vistor) {
@@ -50,7 +50,9 @@ Page({
           hideRecode: true
         })
         that.getDetail(function() {
-          that.recordAdd()
+          wx.nextTick(() => {
+            that.recordAdd()
+          })
         })
       } else if (that.data.$state.userInfo.mobile) {
         that.getDetail()
@@ -105,7 +107,7 @@ Page({
     let detail = this.data.detail
     let current = 0,
       total = detail.sublesson.length,
-      cur = ""
+      cur = {}
     detail.sublesson.forEach(item => {
       if (item.played == 1) {
         current++
@@ -171,7 +173,9 @@ Page({
     this.setData({
       cur: list[i]
     })
-    this.recordAdd()
+    wx.nextTick(() => {
+      this.recordAdd()
+    })
   },
   recordAdd() {
     let param = {

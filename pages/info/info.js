@@ -8,47 +8,55 @@ Page({
   },
   onLoad() {
     let userInfo = JSON.parse(JSON.stringify(this.data.$state.userInfo))
+    let str = userInfo.university.split(",")
+    let Univs = str.length == 3 ? str : ["", "", str[0]]
     this.setData({
       userInfo: userInfo,
       param: {
         address: userInfo.address ? userInfo.address.split(",") : ["", "", ""],
-        university: ["", "", userInfo.university],
+        university: Univs,
         gender: userInfo.gender,
         age: userInfo.age
       }
     })
-    this.param = this.data.param.university
-    this.getProvince()
+    this.init(Univs)
+  },
+  init(Univs) {
+    this.getProvince().then(() => {
+      this.getCity(Univs[0]).then(() => {
+        this.getSchool(Univs[1]).then(() => {
+          let index1 = Univs[0] ? this.province.indexOf(Univs[0]) : 0
+          let index2 = Univs[1] ? this.city.indexOf(Univs[1]) : 0
+          let index3 = Univs[2] ? Math.max(this.school.indexOf(Univs[2]), 0) : 0
+          this.setData({
+            multiArray: [this.province, this.city, this.school],
+            multiIndex: [index1, index2, index3]
+          })
+        })
+      })
+    })
   },
   getProvince() {
     let param = { level: 1 }
-    app.user.search(param).then(msg => {
+    return app.user.search(param).then(msg => {
       if (msg.code == 1) {
         this.province = msg.data
-        this.getCity()
       }
     })
   },
   getCity(val) {
     let param = { level: 2, name: val || this.province[0] }
-    app.user.search(param).then(msg => {
+    return app.user.search(param).then(msg => {
       if (msg.code == 1) {
         this.city = msg.data
-        this.getSchool()
       }
     })
   },
   getSchool(val) {
     let param = { level: 3, name: val || this.city[0] }
-    app.user.search(param).then(msg => {
+    return app.user.search(param).then(msg => {
       if (msg.code == 1) {
         this.school = msg.data
-        if (!this.param[2]) {
-          this.param[2] = this.school ? this.school[0] : ""
-        }
-        this.setData({
-          multiArray: [this.province, this.city, this.school]
-        })
       }
     })
   },
@@ -58,21 +66,40 @@ Page({
     })
     this.submit()
   },
-  bindMultiPickerChange() {
+  bindMultiPickerChange(e) {
+    let arr = e.detail.value
     this.setData({
-      "param.university": this.param[2] ? this.param : [this.province[0], this.city[0], this.school[0]]
+      "param.university": [this.province[arr[0]], this.city[arr[1]], this.school[arr[2]]]
     })
     this.submit()
   },
   bindMultiPickerColumnChange(e) {
-    let param = this.param
-    param[e.detail.column] = this.data.multiArray[e.detail.column][e.detail.value]
-    switch (e.detail.column) {
+    let temp = this.data.multiIndex
+    let col = e.detail.column
+    let val = e.detail.value
+    temp[col] = val
+    switch (col) {
       case 0:
-        this.getCity(param[e.detail.column])
+        this.getCity(this.province[val]).then(() => {
+          this.getSchool().then(() => {
+            temp[1] = 0
+            temp[2] = 0
+            this.setData({
+              "multiArray[1]": this.city,
+              "multiArray[2]": this.school,
+              multiIndex: temp
+            })
+          })
+        })
         break
       case 1:
-        this.getSchool(param[e.detail.column])
+        this.getSchool(this.city[val]).then(() => {
+          temp[2] = 0
+          this.setData({
+            "multiArray[2]": this.school,
+            multiIndex: temp
+          })
+        })
         break
     }
   },

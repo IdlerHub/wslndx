@@ -23,11 +23,14 @@
                 <text>{{item.title}}</text>
                 <image src="../../images/icon-sel.png" mode="aspectFill" wx:if="{{item.isSel}}"></image>
             </view>
-
         </view>
     </view>
     <view class='footer'>
-        <button class='item' disabled="{{!param.content&&!param.video&&param.image.length<1}}" bindtap='cancel'>取消</button>
-        <button class='item' disabled="{{!param.content&&!param.video&&param.image.length<1}}" bindtap='result'>发布</button>
+        <formCode  bind:handler='cancel'>
+            <button class='item' disabled="{{!param.content&&!param.video&&param.image.length<1}}">取消</button>
+        </formCode>
+        <formCode  bind:handler='result'>
+            <button class='item ensure' disabled="{{!param.content&&!param.video&&param.image.length<1}}">发布</button>
+        </formCode>
     </view>
 </view>

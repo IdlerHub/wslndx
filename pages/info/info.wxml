@@ -15,13 +15,13 @@
       </picker>
     </view>
     <!-- 学校 -->
-    <view class="section">
+    <view class="section" wx:if='multiArray'>
       <view class="section__title">大学</view>
       <picker
         mode="multiSelector"
         bindchange="bindMultiPickerChange"
         bindcolumnchange="bindMultiPickerColumnChange"
-        value="{{param.university}}"
+        value="{{multiIndex}}"
         range="{{multiArray}}"
       >
         <view class="placeholder">

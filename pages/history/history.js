@@ -29,8 +29,10 @@ Page({
     })
   },
   onReachBottom: function() {
-    this.historyParam.page++
-    this.getHistory()
+    if (this.historyParam.page < this.historyParam.max) {
+      this.historyParam.page++
+      this.getHistory()
+    }
   },
   getHistory(list) {
     let temp = list || this.data.history.history
@@ -46,6 +48,7 @@ Page({
           "history.history": temp,
           "history.last_lesson": msg.data.last_lesson || ""
         })
+        this.historyParam.max = msg.data.total_page
       }
     })
   }

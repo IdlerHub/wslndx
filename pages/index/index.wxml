@@ -14,7 +14,7 @@
             <text class="line name">{{ $state.userInfo.nickname }}的老年大学</text>
             <view class="line">
               <view class="city" catchtap="toInfo">{{ $state.userInfo.addressCity || "暂无" }}</view>
-              <view class="school" catchtap="toInfo">{{ $state.userInfo.university || "+添加学校标签" }}</view>
+              <view class="school" catchtap="toInfo">{{ $state.userInfo.school || $state.userInfo.university || "+添加学校标签" }}</view>
             </view>
           </view>
         </view>
@@ -30,7 +30,7 @@
             <view class="line name"> <open-data type="userNickName"></open-data>的老年大学 </view>
             <view class="line">
               <view class="city" catchtap="toInfo">{{ $state.userInfo.addressCity || "暂无" }}</view>
-              <view class="school" catchtap="toInfo">{{ $state.userInfo.university || "+添加学校标签" }}</view>
+              <view class="school" catchtap="toInfo">{{ $state.userInfo.school || $state.userInfo.university || "+添加学校标签" }}</view>
             </view>
           </view>
         </view>
@@ -41,7 +41,9 @@
   <navigationBar wx:if="{{ scroll }}" id="navigationBar" placeholderBg="#F8F8F8" color="#000000" title="网上老年大学" back="{{ false }}" background="#F8F8F8"></navigationBar>
   <scroll-view scroll-x="true" class="nav {{ scroll ? 'fixed' : '' }}" style="top:{{ top }}px" scroll-left="{{ navScrollLeft }}" scroll-with-animation="{{ true }}">
     <block wx:for="{{ nav }}" wx:for-index="id" wx:for-item="item" wx:key="id">
-      <view class="item {{ currentTab == id ? 'active' : '' }}" data-current="{{ id }}" bindtap="switchNav">{{ item.name }}</view>
+      <formCode bind:handler="switchNav" data-current="{{ id }}">
+        <view class="item {{ currentTab == id ? 'active' : '' }}">{{ item.name }}</view>
+      </formCode>
     </block>
   </scroll-view>
   <swiper class="tab" style="height:{{ height }}px" current="{{ currentTab }}" duration="300" bindchange="switchTab">
@@ -100,11 +102,19 @@
       <image class="icon" mode="aspectFill" src="{{ $state.imgHost }}/Classroom-red.png"></image>
       <text class="name active">云课堂</text>
     </view>
-    <view bindtap="toVideo" class="item">
-      <image class="icon" mode="aspectFill" src="{{ $state.imgHost }}/video.png"></image>
-      <text class="name">短视频</text>
-    </view>
-    <button class="item" open-type="getUserInfo" bindgetuserinfo="onGotUserInfo" data-role="post">
+    <formCode bind:handler="toVideo">
+      <view class="item">
+        <image class="icon" mode="aspectFill" src="{{ $state.imgHost }}/video.png"></image>
+        <text class="name">短视频</text>
+      </view>
+    </formCode>
+    <formCode bind:handler="toPost" class="item" wx:if="{{ $state.authUserInfo }}">
+      <view class="tab-container">
+        <image mode="aspectFill" class="icon" src="{{ $state.imgHost }}/circle.png"></image>
+        <text class="name">秀风采</text>
+      </view>
+    </formCode>
+    <button wx:else class="item" open-type="getUserInfo" bindgetuserinfo="onGotUserInfo" data-role="post">
       <image mode="aspectFill" class="icon" src="{{ $state.imgHost }}/circle.png"></image>
       <text class="name">秀风采</text>
     </button>

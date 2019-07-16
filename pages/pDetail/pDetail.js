@@ -5,9 +5,8 @@ Page({
   data: {
     nav: [{ name: "评论", class: ".comment" }, { name: "点赞", class: ".praise" }],
     isRefreshing: false,
-    tip: true,
-    txoptions: true,
-    rect: wx.getMenuButtonBoundingClientRect()
+    tip: true
+    /* rect: wx.getMenuButtonBoundingClientRect() */
   },
   onLoad(options) {
     this.id = options.id

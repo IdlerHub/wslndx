@@ -72,6 +72,11 @@ button {
   background: none;
 }
 
+button.button-hover {
+  background-color: transparent;
+  opacity: 1;
+}
+
 .line {
   display: block;
   overflow: hidden;
