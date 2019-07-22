@@ -31,7 +31,7 @@ Page({
           this.setData({
             tip: false
           })
-        }, 10000)
+        }, 5000)
       }
       this.param = { type: "recommend", id: options.id ? options.id : "", page: 1, pageSize: 10, last_id: "" }
     }

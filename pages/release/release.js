@@ -1,4 +1,3 @@
-//index.js
 //获取应用实例
 const app = getApp()
 Page({
@@ -35,7 +34,6 @@ Page({
     this.judge()
   },
   addImg() {
-    let that = this
     let image = this.data.param.image
     if (this.data.media_type == 1) {
       this.uploadImg(9 - image.length)
@@ -45,13 +43,13 @@ Page({
       wx.showActionSheet({
         itemList: ["图片", "视频"],
         itemColor: "#000000",
-        success: function(res) {
+        success: res => {
           switch (res.tapIndex) {
             case 0:
-              that.uploadImg(9 - image.length)
+              this.uploadImg(9 - image.length)
               break
             case 1:
-              that.uploadVideo()
+              this.uploadVideo()
               break
           }
         }
@@ -64,73 +62,87 @@ Page({
   },
   //上传图片
   uploadImg(val, i) {
-    /*todo:去掉that*/
-    let that = this,
-      type = 1
     wx.chooseImage({
       count: val, // 默认9
       sizeType: ["original", "compressed"], // 可以指定是原图还是压缩图，默认二者都有
       sourceType: ["album", "camera"], // 可以指定来源是相册还是相机，默认二者都有
-      success: function(res) {
-        that.next(res.tempFilePaths, type, i)
+      success: res => {
+        this.next(res.tempFilePaths, 1, i)
       }
     })
   },
   next(val, type, i) {
-    app.circle.upload(val[0], type).then(msg => {
-      msg = JSON.parse(msg)
-      if (msg.code == 1) {
-        let image = this.data.param.image
-        if (i != undefined) {
-          image[i] = msg.data.url
+    app.circle
+      .upload(val[0], type)
+      .then(msg => {
+        msg = JSON.parse(msg)
+        if (msg.code == 1) {
+          let image = this.data.param.image
+          if (i != undefined) {
+            image[i] = msg.data.url
+          } else {
+            image.push(msg.data.url)
+          }
+          this.setData({
+            "param.image": image,
+            media_type: type
+          })
+          this.judge()
+          val.splice(0, 1)
+          if (val.length > 0) {
+            return this.next(val, type)
+          }
         } else {
-          image.push(msg.data.url)
+          wx.showToast({
+            title: ms.msg,
+            icon: "none",
+            duration: 1500
+          })
         }
-        this.setData({
-          "param.image": image,
-          media_type: type
-        })
-        this.judge()
-        val.splice(0, 1)
-        if (val.length > 0) {
-          return this.next(val, type)
-        }
-      } else {
+      })
+      .catch(err => {
         wx.showToast({
-          title: ms.msg,
+          title: "上传失败！",
           icon: "none",
           duration: 1500
         })
-      }
-    })
+      })
   },
   next2(val, type) {
-    app.circle.upload(val.tempFilePath, type).then(msg => {
-      msg = JSON.parse(msg)
-      if (msg.code == 1) {
-        this.setData({
-          "param.video": msg.data.url,
-          "param.cover": msg.data.cover,
-          media_type: type
-        })
-        this.judge()
-      } else {
+    app.circle
+      .upload(val.tempFilePath, type)
+      .then(msg => {
+        msg = JSON.parse(msg)
+        console.log(msg)
+        if (msg.code == 1) {
+          this.setData({
+            "param.video": msg.data.url,
+            "param.cover": msg.data.cover,
+            media_type: type
+          })
+          this.judge()
+        } else {
+          wx.showToast({
+            title: ms.msg,
+            icon: "none",
+            duration: 1500
+          })
+        }
+      })
+      .catch(err => {
         wx.showToast({
-          title: ms.msg,
+          title: "上传失败！",
           icon: "none",
           duration: 1500
         })
-      }
-    })
+      })
   },
   //上传视频
   uploadVideo() {
-    let that = this,
-      type = 2
     wx.chooseVideo({
       compressed: true,
       sourceType: ["album", "camera"], // 可以指定来源是相册还是相机，默认二者都有
-      success: function(res) {
+      success: res => {
         if (res.size / 1024 > 5000) {
           wx.showToast({
             title: "上传的视频不能大于5M",
@@ -139,7 +151,7 @@ Page({
           })
           return
         }
-        that.next2(res, type)
+        this.next2(res, 2)
       }
     })
   },
@@ -147,11 +159,9 @@ Page({
     this.setData({
       hide: false
     })
-    if (9 <= this.data.param.image.length && this.data.media_type == 1) {
-      this.setData({
-        hide: true
-      })
-    } else if (this.data.param.video && this.data.media_type == 2) {
+    let imageOver = 9 <= this.data.param.image.length && this.data.media_type == 1 /* 9张图片 */
+    let videoOver = this.data.param.video && this.data.media_type == 2 /* 一个视频 */
+    if (imageOver || videoOver) {
       this.setData({
         hide: true
       })
@@ -183,12 +193,8 @@ Page({
   },
   // 获取所有圈子信息
   getCircleList() {
-    //获取没有加入的圈子list
     app.circle.joinedCircles().then(msg => {
       if (msg.code == 1) {
-        msg.data.forEach(item => {
-          item.isSel = false
-        })
         this.setData({
           allCircle: msg.data
         })
@@ -218,7 +224,8 @@ Page({
 
     if (param.content.trim() || param.image || param.video) {
       wx.showLoading({
-        title: "发布中"
+        title: "发布中",
+        mask: true
       })
       app.circle.add(param).then(msg => {
         wx.hideLoading()

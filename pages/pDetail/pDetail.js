@@ -28,7 +28,7 @@ Page({
         this.setData({
           tip: false
         })
-      }, 10000)
+      }, 5000)
     }
 
     if (this.data.$state.userInfo.mobile) {
@@ -38,7 +38,6 @@ Page({
     }
   },
   setHeight() {
-    /*todo:考虑去掉that*/
     let that = this
     let nav = this.data.nav
     let currentTab = this.data.currentTab
@@ -147,8 +146,10 @@ Page({
   },
   // 发布评论
   release() {
-    let param = { blog_id: this.id, content: this.data.content }
-    if (this.data.content) this.post(param)
+    if (!!this.data.content.trim()) {
+      let param = { blog_id: this.id, content: this.data.content }
+      if (this.data.content) this.post(param)
+    }
   },
   post(param) {
     this.setData({

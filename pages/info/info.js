@@ -118,7 +118,7 @@ Page({
   submit() {
     let param = {
       address: this.data.param.address.join(","),
-      gender: this.data.param.gender,
+      gender: +this.data.param.gender,
       university: this.data.param.university[2],
       age: this.data.param.age
     }

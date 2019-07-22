@@ -57,26 +57,16 @@ Page({
     let that = this
     let urls = e.currentTarget.dataset.urls
     let current = e.currentTarget.dataset.current
-    this.setData({
-      preview: true
-    })
     wx.previewImage({
       current: current,
-      urls: urls, // 需要预览的图片http链接列表
-      complete: () => {
-        that.setData({
-          preview: false
-        })
-      }
+      urls: urls // 需要预览的图片http链接列表
     })
   },
   navigate(e) {
     let id = e.currentTarget.dataset.id
-    if (!this.data.preview) {
-      wx.navigateTo({
-        url: "../pDetail/pDetail?id=" + id
-      })
-    }
+    wx.navigateTo({
+      url: "../pDetail/pDetail?id=" + id
+    })
   },
   del(e) {
     let i = e.currentTarget.dataset.index

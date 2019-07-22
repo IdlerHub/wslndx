@@ -131,30 +131,18 @@ Page({
   },
   //图片预览
   previewImage(e) {
-    /*todo:考虑去掉that*/
-    let that = this
     let urls = e.currentTarget.dataset.urls
     let current = e.currentTarget.dataset.current
-    this.setData({
-      preview: true
-    })
     wx.previewImage({
       current: current,
-      urls: urls, // 需要预览的图片http链接列表
-      complete: function() {
-        that.setData({
-          preview: false
-        })
-      }
+      urls: urls // 需要预览的图片http链接列表
     })
   },
   navigate(e) {
     let id = e.currentTarget.dataset.id
-    if (!this.data.preview) {
-      wx.navigateTo({
-        url: "../pDetail/pDetail?id=" + id
-      })
-    }
+    wx.navigateTo({
+      url: "../pDetail/pDetail?id=" + id
+    })
   },
   //下拉刷新
   onPullDownRefresh() {

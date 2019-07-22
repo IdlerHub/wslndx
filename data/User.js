@@ -94,6 +94,15 @@ function signed() {
   return httpService.post("User/signed", {})
 }
 
+/**
+ * @description: 收集formID
+ * @param {form_id}
+ * @return:  promise
+ */
+function addFormId(param) {
+  return httpService.post("user/addFormId", param)
+}
+
 module.exports = {
   wxLoginCode,
   getAuthCode,
@@ -108,5 +117,6 @@ module.exports = {
   exchange,
   pointsinfo,
   activite,
-  signed
+  signed,
+  addFormId
 }

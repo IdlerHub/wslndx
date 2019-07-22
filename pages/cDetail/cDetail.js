@@ -106,25 +106,15 @@ Page({
   previewImage(e) {
     let urls = e.currentTarget.dataset.urls
     let current = e.currentTarget.dataset.current
-    this.setData({
-      preview: true
-    })
     wx.previewImage({
       current: current,
-      urls: urls, // 需要预览的图片http链接列表
-      complete: () => {
-        this.setData({
-          preview: false
-        })
-      }
+      urls: urls // 需要预览的图片http链接列表
     })
   },
   navigate(e) {
-    if (!this.data.preview) {
-      wx.navigateTo({
-        url: "../pDetail/pDetail?id=" + e.currentTarget.dataset.id
-      })
-    }
+    wx.navigateTo({
+      url: "../pDetail/pDetail?id=" + e.currentTarget.dataset.id
+    })
   },
   //下拉刷新
   onPullDownRefresh() {

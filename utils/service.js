@@ -123,7 +123,8 @@ function upload(path, file, noLoading) {
   let url = getApp().API_URL + path
   if (!noLoading) {
     wx.showLoading({
-      title: "上传中"
+      title: "上传中",
+      mask: true
     })
   }
 
@@ -137,15 +138,15 @@ function upload(path, file, noLoading) {
     })
     .then(
       function(res) {
-        if (!noLoading) wx.hideLoading()
         handle(res)
         return res.data
       },
       function(res) {
-        return res.data
+        return res
       }
     )
     .finally(() => {
+      if (!noLoading) wx.hideLoading()
       wx.hideNavigationBarLoading()
     })
 }

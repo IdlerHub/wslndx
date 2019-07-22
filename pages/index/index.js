@@ -49,7 +49,7 @@ Page({
   },
   onShow() {
     /* 更新用户的视频浏览历史 */
-    this.getHistory()
+    if (app.store.$state.userInfo.mobile) this.getHistory()
   },
   init() {
     return Promise.all([this.getactivite(), this.getRecommend(), this.getCategory()]).then(values => {

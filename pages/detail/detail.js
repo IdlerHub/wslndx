@@ -39,7 +39,7 @@ Page({
           that.setData({
             tip: false
           })
-        }, 10000)
+        }, 5000)
       }
 
       wx.setNavigationBarTitle({

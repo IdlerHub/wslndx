@@ -1,7 +1,7 @@
 /*
  * @Date: 2019-05-28 09:50:08
  * @LastEditors: hxz
- * @LastEditTime: 2019-07-16 15:15:34
+ * @LastEditTime: 2019-07-19 17:22:37
  */
 /*添加微信官方接口转化为promise*/
 const wxpro = require("wx-promise-pro")
@@ -14,7 +14,18 @@ if (store.process == "production") {
   var fundebug = require("fundebug-wxjs")
   fundebug.init({
     apikey: "b3b256c65b30a1b0eb26f8d9c2cd7855803498f0c667df934be2c72048af93d9",
-    releaseStage: "production"
+    releaseStage: "production",
+    filters: [
+      {
+        req: {
+          url: /log\.aldwx\.com/,
+          method: /^GET$/
+        }
+      },
+      {
+        error: /getHistory/
+      }
+    ]
   })
 }
 
