@@ -185,6 +185,7 @@ Page({
     app.classroom.recordAdd(param).then(msg => {
       if (msg.code == 1) {
         this.getDetail().then(() => {
+          this.getProgress()
           this.videoContext.play()
           this.setData({
             playing: true,
@@ -193,6 +194,18 @@ Page({
           app.addVisitedNum(`k${this.data.cur.id}`)
         })
       }
+    })
+  },
+  getProgress() {
+    var lesson = wx.getStorageSync("lessonProgress")
+    if (this.data.cur.id == lesson.id) {
+      this.videoContext.seek(lesson.time)
+    }
+  },
+  timeupdate(e) {
+    wx.setStorage({
+      key: "lessonProgress",
+      data: { id: this.data.cur.id, time: e.detail.currentTime }
     })
   },
   navitor() {

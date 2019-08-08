@@ -50,7 +50,7 @@ let store = new Store({
       console.log("ShareAppMessage  menu")
       return {
         title: "福利！老年大学十万集免费课程在线学习",
-        path: "/pages/loading/loading",
+        path: "/pages/loading/loading?uid=" + this.data.$state.userInfo.id + "&type=invite",
         imageUrl: "../../images/sharemessage.jpg"
       }
     }
