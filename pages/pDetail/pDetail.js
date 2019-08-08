@@ -3,7 +3,7 @@
 const app = getApp()
 Page({
   data: {
-    nav: [{ name: "评论", class: ".comment" }, { name: "点赞", class: ".praise" }],
+    nav: [{ name: "评论", class: ".comment", num: 0 }, { name: "点赞", class: ".praise", num: 0 }],
     isRefreshing: false,
     tip: true
     /* rect: wx.getMenuButtonBoundingClientRect() */
@@ -71,8 +71,6 @@ Page({
     app.circle.detail(param).then(msg => {
       if (msg.code == 1) {
         let detail = msg.data[0]
-        detail.lw = app.util.tow(detail.likes)
-        detail.cw = app.util.tow(detail.comments)
         let arr = []
         detail.images.forEach(function(i) {
           arr.push(i.image)
@@ -81,7 +79,9 @@ Page({
         detail.auditing = new Date().getTime() - new Date(detail.createtime * 1000) < 7000
         detail.pause = true
         this.setData({
-          detail: detail
+          detail: detail,
+          "nav[0].num": app.util.tow(detail.comments) || detail.comments,
+          "nav[1].num": app.util.tow(detail.likes) || detail.likes
         })
       }
     })
@@ -95,15 +95,14 @@ Page({
       // 取消点赞
       app.circle.delPraise(param).then(msg => {
         if (msg.code == 1) {
-          this.getDetail()
-          this.praParam.page = 1
-          this.getPraise([])
+          this.aniend()
         }
       })
     } else {
       // 点赞
       app.circle.praise(param).then(msg => {
         if (msg.code == 1) {
+          /* 开启动画 */
           detail.praising = true
           this.setData({ detail: detail })
         }
@@ -111,6 +110,7 @@ Page({
     }
   },
   aniend() {
+    /* 点赞动画结束 */
     this.getDetail()
     this.praParam.page = 1
     this.getPraise([])
@@ -128,7 +128,16 @@ Page({
       "detail.pause": true
     })
   },
-  show() {
+  show(e) {
+    if (e && e.target.dataset.reply) {
+      /* 回复别人的评论 或者 回复别人的回复  */
+      this.replyParent = e.target.dataset.parent
+      this.replyInfo = e.target.dataset.reply
+    } else {
+      /* 评论 */
+      this.replyInfo = null
+      this.replyParent = null
+    }
     this.setData({
       write: true
     })
@@ -147,8 +156,32 @@ Page({
   // 发布评论
   release() {
     if (!!this.data.content.trim()) {
-      let param = { blog_id: this.id, content: this.data.content }
-      if (this.data.content) this.post(param)
+      if (this.replyParent) {
+        /* 回复别人的回复 */
+        let params = {
+          blog_id: +this.id,
+          comment_id: this.replyParent,
+          reply_type: 2,
+          reply_id: this.replyInfo.reply_id,
+          reply_content: this.data.content,
+          to_user: this.replyInfo.reply_user_id
+        }
+        this.reply(params)
+      } else if (this.replyInfo) {
+        /* 回复评论 */
+        let params = {
+          blog_id: +this.id,
+          comment_id: this.replyInfo.id,
+          reply_type: 1,
+          reply_id: -1,
+          reply_content: this.data.content,
+          to_user: this.replyInfo.uid
+        }
+        this.reply(params)
+      } else {
+        let param = { blog_id: this.id, content: this.data.content }
+        this.post(param)
+      }
     }
   },
   post(param) {
@@ -168,9 +201,7 @@ Page({
             icon: "none",
             duration: 1500
           })
-          this.setData({
-            ["detail.comments"]: ++this.data.detail.comments
-          })
+          this.getDetail()
           this.comParam.page = 1
           this.getComment([])
           clearTimeout(timer)
@@ -185,12 +216,20 @@ Page({
     })
   },
   navigator() {
+    let vm = this
     this.setData({
-      write: false,
-      content: null
+      write: false
     })
     wx.navigateTo({
-      url: "../comment/comment?id=" + this.data.detail.id
+      url: "../comment/comment?content=" + this.data.content,
+      events: {
+        commentContent: res => {
+          vm.setData({
+            content: res.data
+          })
+          vm.release()
+        }
+      }
     })
   },
   getComment(list) {
@@ -198,6 +237,9 @@ Page({
     return app.circle.getComment(this.comParam).then(msg => {
       if (msg.code == 1) {
         msg.data.forEach(function(item) {
+          item.reply_array.forEach(v => {
+            v.rtext = `回复<span  class="respond">${v.to_user}</span>:&nbsp;&nbsp;`
+          })
           comment.push(item)
         })
         this.setData({
@@ -298,9 +340,7 @@ Page({
             icon: "none",
             duration: 1500
           })
-          this.setData({
-            ["detail.comments"]: --this.data.detail.comments
-          })
+          this.getDetail()
           this.comParam.page = 1
           this.getComment([])
           clearTimeout(timer)
@@ -308,6 +348,58 @@ Page({
       } else {
         wx.showToast({
           title: "删除失败，请稍后重试",
+          icon: "none",
+          duration: 1500
+        })
+      }
+    })
+  },
+  /* 删除回复 */
+  delReply(e) {
+    let params = { blog_id: this.id, comment_id: e.currentTarget.dataset.parentid, id: e.currentTarget.dataset.item.reply_id }
+    app.circle.replydel(params).then(msg => {
+      wx.hideLoading()
+      if (msg.code == 1) {
+        wx.showToast({
+          title: "删除成功",
+          icon: "none",
+          duration: 1500
+        })
+        this.getDetail()
+        this.comParam.page = 1
+        this.getComment([])
+      } else {
+        wx.showToast({
+          title: "删除失败，请稍后重试",
+          icon: "none",
+          duration: 1500
+        })
+      }
+    })
+  },
+  /* 回复评论 */
+  reply(params) {
+    this.setData({
+      write: false,
+      content: null
+    })
+    wx.showLoading({
+      title: "发布中"
+    })
+    app.circle.reply(params).then(msg => {
+      wx.hideLoading()
+      if (msg.code == 1) {
+        wx.showToast({
+          title: "发布成功",
+          icon: "none",
+          duration: 1500
+        })
+        this.getDetail()
+        this.comParam.page = 1
+        this.getComment([])
+      } else {
+        wx.showToast({
+          title: "发布失败",
           icon: "none",
           duration: 1500
         })
@@ -323,5 +415,17 @@ Page({
         url: "/pages/user/user"
       })
     }
+  },
+  toCommentDetail(e) {
+    let vm = this
+    wx.navigateTo({
+      url: "/pages/commentDetail/commentDetail?" + "blog_id=" + this.id + "&comment_id=" + e.currentTarget.dataset.parentid,
+      events: {
+        refreshComments: data => {
+          this.comParam.page = 1
+          this.getComment([])
+        }
+      }
+    })
   }
 })

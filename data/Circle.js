@@ -1,3 +1,8 @@
+/*
+ * @Date: 2019-05-28 09:50:08
+ * @LastEditors: hxz
+ * @LastEditTime: 2019-08-07 11:33:00
+ */
 var httpService = require("../utils/service.js")
 
 // POST Friendscircle/index 获取所有学友圈集合
@@ -75,6 +80,32 @@ function comment(param) {
   return httpService.post("Bokecomments/add", param)
 }
 
+/**
+ * @description: 回复评论 （二级评论）
+ * @param {blog_id ,comment_id ,reply_type ,reply_id ,reply_content ,to_user }
+ * @return: promise
+ */
+function reply(param) {
+  return httpService.post("Bokereply/add", param)
+}
+
+/**
+ * @description:删除回复 （二级评论）
+ * @param { blog_id , comment_id  , id }
+ * @return:promise
+ */
+function replydel(param) {
+  return httpService.post("Bokereply/del", param)
+}
+/**
+ * @description: 评论详情
+ * @param {blog_id , comment_id }
+ * @return:promise
+ */
+function replyDetail(param) {
+  return httpService.post("Bokereply/index", param)
+}
+
 //POST bokeblog/del  删除我的最新动态
 function delPost(param) {
   return httpService.post("bokeblog/del", param)
@@ -113,6 +144,9 @@ module.exports = {
   delPraise,
   member,
   comment,
+  reply,
+  replydel,
+  replyDetail,
   delPost,
   upload,
   fsinfo,

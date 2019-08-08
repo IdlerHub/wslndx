@@ -2,9 +2,13 @@
 //获取应用实例
 const app = getApp()
 Page({
-  data: {},
+  data: {
+    content: ""
+  },
   onLoad(options) {
-    this.id = options["id"]
+    this.setData({
+      content: options.content
+    })
   },
   input(e) {
     this.setData({
@@ -18,16 +22,8 @@ Page({
   },
   // 发布评论
   release() {
-    let param = { blog_id: this.id, content: this.data.content }
-    let pages = getCurrentPages()
-    let prePage = pages[pages.length - 2]
-    if (pages.length > 1) {
-      wx.navigateBack({
-        delta: 1,
-        success: function() {
-          prePage.post(param)
-        }
-      })
-    }
+    const eventChannel = this.getOpenerEventChannel()
+    eventChannel.emit("commentContent", { data: this.data.content })
+    wx.navigateBack({ delta: 1 })
   }
 })

@@ -1,25 +1,47 @@
+@charset "UTF-8";
+/* 环境变量 */
+page {
+  background: #eee; }
+
 .circle {
-  box-sizing: border-box;
-  background: #fff;
-  padding: 30rpx; }
-  .circle .item {
-    border-bottom: 2rpx solid #e9e9e9;
-    padding-bottom: 30rpx; }
-    .circle .item:last-of-type {
-      border-bottom: none; }
+  box-sizing: content-box; }
+  .circle > .item {
+    background: #fff;
+    padding: 30rpx 30rpx 0;
+    margin-bottom: 20rpx; }
+    .circle > .item:last-of-type {
+      margin-bottom: 0; }
   .circle .top {
     display: flex;
     align-items: center;
     justify-content: space-between;
     margin: 30rpx 0 20rpx; }
+    .circle .top .left {
+      display: flex;
+      align-items: center; }
+    .circle .top .avatarUrl {
+      width: 90rpx;
+      height: 90rpx;
+      border-radius: 50%;
+      border: 1rpx solid #d8d8d8; }
+    .circle .top .text {
+      margin-left: 20rpx;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap; }
+    .circle .top .nickName {
+      font-size: 40rpx;
+      color: #343434; }
     .circle .top .date {
       font-size: 32rpx;
-      color: #9e9e9e; }
+      color: #9e9e9e;
+      white-space: nowrap; }
     .circle .top .delete {
       display: flex;
       align-items: center;
       font-size: 32rpx;
-      color: #9e9e9e; }
+      color: #9e9e9e;
+      white-space: nowrap; }
       .circle .top .delete image {
         width: 30rpx;
         height: 30rpx;
@@ -81,6 +103,49 @@
       margin-right: 20rpx; }
       .circle .img.three image:nth-of-type(3n) {
         margin-right: 0; }
+  .circle .btn {
+    height: 125rpx;
+    margin-top: 30rpx;
+    position: relative;
+    border-top: 2rpx solid #e8e8e8;
+    display: flex;
+    align-items: center;
+    justify-content: stretch; }
+    .circle .btn .division {
+      width: 2rpx;
+      height: 40rpx;
+      background: #dbdbdb; }
+    .circle .btn > .item {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center; }
+      .circle .btn > .item .iconfont {
+        font-size: 58rpx;
+        color: #bdbdbd;
+        text-align: center; }
+      .circle .btn > .item .container-sub {
+        display: flex;
+        align-items: center; }
+      .circle .btn > .item .praise {
+        width: 125rpx;
+        height: 125rpx;
+        background-size: cover;
+        background-image: url("https://jinling-xcx-dev.obs.cn-north-1.myhuaweicloud.com/images/dev/heart-ani.png");
+        animation-fill-mode: forwards; }
+        .circle .btn > .item .praise.end {
+          background-position: 100% 0; }
+        .circle .btn > .item .praise.ani {
+          animation: ani steps(20) 1s both; }
+        .circle .btn > .item .praise + .text {
+          margin-left: -20rpx; }
+      .circle .btn > .item .text {
+        margin-left: 20rpx;
+        font-family: PingFangSC-Regular;
+        font-size: 28rpx;
+        color: #3a3a3a;
+        letter-spacing: 0;
+        line-height: 40rpx; }
 
 .navigator {
   display: inline-block; }

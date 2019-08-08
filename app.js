@@ -1,7 +1,7 @@
 /*
  * @Date: 2019-05-28 09:50:08
  * @LastEditors: hxz
- * @LastEditTime: 2019-07-19 17:22:37
+ * @LastEditTime: 2019-07-23 15:31:17
  */
 /*添加微信官方接口转化为promise*/
 const wxpro = require("wx-promise-pro")
@@ -66,6 +66,7 @@ App({
   },
   onShow: function(opts) {
     console.log(opts)
+    console.log(wx.getLaunchOptionsSync())
     let lists = ["share", "invite"]
     /* 小程序(在后台运行中时)从分享卡片切到前台 */
     if (this.globalData.backstage) {
@@ -136,13 +137,14 @@ App({
     this.store.setState({
       authKey: data
     })
-    wx.setStorageSync("userInfo", data)
+    wx.setStorageSync("authKey", data)
   },
   /* 更新store中的用户授权  */
   getSets: function() {
     let self = this
     wx.getSetting({
       success: res => {
+        console.log(res)
         if (res.errMsg == "getSetting:ok") {
           let auth = res.authSetting["scope.userInfo"]
           self.store.setState({

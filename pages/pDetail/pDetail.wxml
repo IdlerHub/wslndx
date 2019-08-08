@@ -37,7 +37,7 @@
   </view>
   <scroll-view scroll-x="true" class="nav" scroll-left="{{ navScrollLeft }}" scroll-with-animation="{{ true }}">
     <block wx:for="{{ nav }}" wx:for-index="id" wx:for-item="item" wx:key="id">
-      <view class="item {{ currentTab == id ? 'active' : '' }}" data-current="{{ id }}" bindtap="switchNav">{{ item.name }}</view>
+      <view class="item {{ currentTab == id ? 'active' : '' }}" data-current="{{ id }}" bindtap="switchNav">{{ item.name + ' ' + item.num }}</view>
     </block>
   </scroll-view>
   <swiper class="tab" style="height:{{ height }}px" current="{{ currentTab }}" duration="300" bindchange="switchTab">
@@ -63,8 +63,27 @@
                 </view>
               </view>
               <rich-text nodes="{{ item.content }}"></rich-text>
+               <button wx:if="{{ $state.userInfo.id != item.uid }}" class="reply-btn" data-reply='{{ item }}' catchtap='show' >回复</button>
             </view>
           </view>
+          <view class="children"   wx:for="{{ item.reply_array }}" wx:key="index"  wx:for-item="child">
+            <view class="from_user">
+              <view class="user_info">
+                  <image class="img" mode="aspectFill" src="{{ child.from_user_avatar }}"></image>
+                  <text class="line name">{{ child.from_user }}</text>
+              </view>
+              <view class="time-del">
+                <text class="line time">{{ child.create_time }}</text>
+                <view class="del" wx:if="{{ $state.userInfo.id == child.reply_user_id }}" catchtap="delReply" data-item="{{ child }}" data-parentid="{{ item.id }}">
+                  <image src="{{ $state.imgHost }}/delete.png" mode="aspectFill" class="icon-del"></image>
+                  <text>删除</text>
+                </view>
+              </view>
+            </view>
+            <rich-text nodes="{{  child.rtext  +  child.reply_content }}"></rich-text>
+            <button wx:if="{{ $state.userInfo.id != child.reply_user_id }}" class="reply-btn" data-reply='{{ child }}'  data-parent="{{ item.id }}"   catchtap='show' >回复</button>
+          </view>
+          <view class="reply_all" wx:if='{{item.reply_num > 3}}' data-parentid="{{ item.id }}" catchtap='toCommentDetail'> 查看全部{{ item.reply_num  }}条 </view>
         </view>
       </view>
     </swiper-item>
@@ -88,17 +107,19 @@
   <view class="footer">
     <button class="share item" open-type="share" data-id="{{ detail.id }}" hover-class="btn-hover">
       <icon class="iconfont icon-fenxiang"></icon>
-      <text class="text">{{ detail.fw ? detail.fw : detail.forward }}</text>
+      <text class="text">转发</text>
     </button>
     <text class="division"></text>
     <view class="item" bindtap="show">
       <icon class="iconfont icon-comment"></icon>
-      <text class="text">{{ detail.cw || detail.comments }}</text>
+      <text class="text">评论</text>
+      <!-- <text class="text">{{ detail.cw || detail.comments }}</text> -->
     </view>
     <text class="division"></text>
     <view class="item" bindtap="praise">
       <view class="praise  {{ detail.likestatus ? 'end' : '' }} {{ detail.praising ? 'ani' : '' }}" data-index="{{ index }}" bindanimationend="aniend"></view>
-      <text class="text">{{ detail.lw || detail.likes }}</text>
+      <text class="text">点赞</text>
+      <!-- <text class="text">{{ detail.lw || detail.likes }}</text> -->
     </view>
   </view>
   <view class="popup write" wx:if="{{ write }}">

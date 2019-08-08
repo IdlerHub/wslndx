@@ -39,6 +39,9 @@ Page({
       if (msg.code == 1) {
         if (msg.data) {
           msg.data.forEach(function(item) {
+            item.fw = app.util.tow(item.forward)
+            item.cw = app.util.tow(item.comments)
+            item.lw = app.util.tow(item.likes)
             item.images = item.images.map(i => {
               return i.image
             })
@@ -103,5 +106,69 @@ Page({
     }, 2000)
     this.circleParam.page = 1
     this.getCircle([])
+  },
+  onShareAppMessage: function(ops, b) {
+    if (ops.from === "menu") {
+      return this.menuAppShare()
+    }
+    if (ops.from === "button") {
+      console.log("ShareAppMessage  button")
+      let i = ops.target.dataset.index
+      let article = this.data.circle[i]
+      let bkid = article.id
+      app.circle.addForward({ blog_id: bkid }).then(res => {
+        if (res.code == 1) {
+          let list = this.data.circle
+          list[i].forward += 1
+          this.setData({
+            circle: list
+          })
+        }
+      })
+      return {
+        title: article.content,
+        imageUrl: article.image || article.images[0] || "../../images/sharemessage.jpg",
+        path: "/pages/pDetail/pDetail?id=" + bkid + "&type=share"
+      }
+    }
+  },
+  praise(e) {
+    let i = e.currentTarget.dataset.index
+    let list = this.data.circle
+    let param = {
+      blog_id: list[i].id
+    }
+    if (list[i].likestatus == 1) {
+      // 取消点赞
+      app.circle.delPraise(param).then(msg => {
+        if (msg.code == 1) {
+          list[i].likestatus = 0
+          list[i].likes--
+          this.setData({
+            circle: list
+          })
+        }
+      })
+    } else {
+      // 点赞
+      app.circle.praise(param).then(msg => {
+        if (msg.code == 1) {
+          list[i].likestatus = 1
+          list[i].likes++
+          list[i].praising = true
+          this.setData({
+            circle: list
+          })
+        }
+      })
+    }
+  },
+  aniend(e) {
+    var i = e.currentTarget.dataset.index
+    var list = this.data.circle
+    list[i].praising = false
+    this.setData({
+      list: list
+    })
   }
 })
