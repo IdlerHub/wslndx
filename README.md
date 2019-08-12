@@ -1,3 +1,9 @@
+<!--
+ * @Date: 2019-05-28 09:50:08
+ * @LastEditors: hxz
+ * @LastEditTime: 2019-08-12 11:28:14
+ -->
+
 小程序
 
 ## 1.npm init
@@ -14,5 +20,5 @@
 
 <!--
 todo:
-4. 使用 wxministore 提取所有的授权函数
+1.  备忘录  发布时 删除数据库address值
  -->

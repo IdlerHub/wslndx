@@ -1,3 +1,8 @@
+/*
+ * @Date: 2019-05-28 09:50:08
+ * @LastEditors: hxz
+ * @LastEditTime: 2019-08-12 16:41:40
+ */
 var httpService = require("../utils/service.js")
 
 //POST User/wxlogin 微信登录
@@ -52,7 +57,7 @@ function sign(param) {
 }
 
 /**
- * @description:
+ * @description:用户积分总和 及 积分获取明细
  * @param {*}
  * @return: promise
  */

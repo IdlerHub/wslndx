@@ -1,7 +1,7 @@
 /*
  * @Date: 2019-05-28 09:50:08
  * @LastEditors: hxz
- * @LastEditTime: 2019-08-10 16:13:46
+ * @LastEditTime: 2019-08-12 15:06:55
  */
 /*添加微信官方接口转化为promise*/
 const wxpro = require("wx-promise-pro")
@@ -55,10 +55,11 @@ App({
       }
     }
     let userInfo = wx.getStorageSync("userInfo") || {}
-    let authKey = wx.getStorageSync("authKey")
+    let version = wx.getStorageSync("version")
     /* storage中信息缺失,重新登录 */
-    if (!(userInfo.mobile && authKey)) {
+    if (!userInfo.mobile || version != this.store.version) {
       await this.wxLogin()
+      wx.setStorageSync("version", this.store.version)
     }
     this.initStore()
 
@@ -135,9 +136,12 @@ App({
   },
   /* 更新store中的userInfo */
   setUser: function(data) {
-    data.addressCity = data.address ? data.address.split(",")[1] : ""
-    let sh = data.university.split(",")
-    data.school = sh[sh.length == 3 ? 2 : 0]
+    let areaArray = data.university.split(",")
+    if ((!data.address || !data.school) && areaArray.length == 3) {
+      data.address = areaArray.slice(0, 2)
+      data.addressCity = areaArray[1]
+      data.school = areaArray[2]
+    }
     this.store.setState({
       userInfo: data
     })

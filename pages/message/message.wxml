@@ -1,7 +1,7 @@
 <!--
  * @Date: 2019-08-09 16:40:53
  * @LastEditors: hxz
- * @LastEditTime: 2019-08-10 17:26:12
+ * @LastEditTime: 2019-08-12 17:05:59
  -->
 <view class="messagePage">
   <view class="message-item" wx:for="{{ messages }}" wx:key="index" data-item="{{ item }}" catchtap="todetail">
@@ -13,7 +13,7 @@
     </view>
     <view class="blog">
       <image wx:if="{{ item.media_type == 2 }}" class="media" src="{{ item.title }}" mode="aspectFill">
-        <image class="" src="/images/play.png" mode="aspectFill"> </image>
+        <image wx:if="{{ item.video_url }}" src="/images/play.png" mode="aspectFill"> </image>
       </image>
       <text wx:else class="word"> {{ item.title }} </text>
     </view>

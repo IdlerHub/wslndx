@@ -1,3 +1,8 @@
+/*
+ * @Date: 2019-05-28 09:50:08
+ * @LastEditors: hxz
+ * @LastEditTime: 2019-08-12 15:19:28
+ */
 //index.js
 //获取应用实例
 const app = getApp()
@@ -8,29 +13,30 @@ Page({
   },
   onLoad() {
     let userInfo = JSON.parse(JSON.stringify(this.data.$state.userInfo))
-    let str = userInfo.university.split(",")
-    let Univs = str.length == 3 ? str : ["", "", str[0]]
     this.setData({
       userInfo: userInfo,
       param: {
-        address: userInfo.address ? userInfo.address.split(",") : ["", "", ""],
-        university: Univs,
+        address: userInfo.address || ["", ""],
+        school: userInfo.school || "",
         gender: userInfo.gender,
         age: userInfo.age
       }
     })
-    this.init(Univs)
+    this.init()
   },
-  init(Univs) {
+  init() {
+    let cascade = this.data.userInfo.university.split(",") || ["", "", ""]
     this.getProvince().then(() => {
-      this.getCity(Univs[0]).then(() => {
-        this.getSchool(Univs[1]).then(() => {
-          let index1 = Univs[0] ? this.province.indexOf(Univs[0]) : 0
-          let index2 = Univs[1] ? this.city.indexOf(Univs[1]) : 0
-          let index3 = Univs[2] ? Math.max(this.school.indexOf(Univs[2]), 0) : 0
+      this.getCity(cascade[0]).then(() => {
+        this.getSchool(cascade[1]).then(() => {
+          let index1 = cascade[0] ? this.province.indexOf(cascade[0]) : 0
+          let index2 = cascade[1] ? this.city.indexOf(cascade[1]) : 0
+          let index3 = cascade[2] ? Math.max(this.school.indexOf(cascade[2]), 0) : 0
           this.setData({
-            multiArray: [this.province, this.city, this.school],
-            multiIndex: [index1, index2, index3]
+            multiAddress: [this.province, this.city],
+            multiIndex: [index1, index2],
+            singleSchool: this.school,
+            singleIndex: index3
           })
         })
       })
@@ -60,19 +66,6 @@ Page({
       }
     })
   },
-  bindRegionChange: function(e) {
-    this.setData({
-      "param.address": e.detail.value
-    })
-    this.submit()
-  },
-  bindMultiPickerChange(e) {
-    let arr = e.detail.value
-    this.setData({
-      "param.university": [this.province[arr[0]], this.city[arr[1]], this.school[arr[2]]]
-    })
-    this.submit()
-  },
   bindMultiPickerColumnChange(e) {
     let temp = this.data.multiIndex
     let col = e.detail.column
@@ -83,31 +76,52 @@ Page({
         this.getCity(this.province[val]).then(() => {
           this.getSchool().then(() => {
             temp[1] = 0
-            temp[2] = 0
             this.setData({
-              "multiArray[1]": this.city,
-              "multiArray[2]": this.school,
-              multiIndex: temp
+              "multiAddress[1]": this.city,
+              multiIndex: temp,
+              singleSchool: this.school,
+              singleIndex: 0
             })
           })
         })
         break
       case 1:
         this.getSchool(this.city[val]).then(() => {
-          temp[2] = 0
           this.setData({
-            "multiArray[2]": this.school,
-            multiIndex: temp
+            singleSchool: this.school,
+            singleIndex: 0
           })
         })
         break
     }
   },
+  bindMultiPickerChange(e) {
+    let arr = e.detail.value
+    this.setData({
+      "param.address": [this.province[arr[0]], this.city[arr[1]]]
+    })
+  },
+  tipOrder() {
+    if (!this.data.param.address[1]) {
+      wx.showToast({
+        title: "请先选择地区",
+        icon: "none",
+        duration: 1500,
+        mask: false
+      })
+    }
+  },
+  bindSchool(e) {
+    let index = e.detail.value
+    this.setData({
+      "param.school": this.school[index]
+    })
+    this.submit()
+  },
   bindSexChange(e) {
     this.setData({
       "param.gender": e.detail.value
     })
-    this.submit()
   },
   bindAgeChange(e) {
     this.setData({
@@ -119,7 +133,7 @@ Page({
     let param = {
       address: this.data.param.address.join(","),
       gender: +this.data.param.gender,
-      university: this.data.param.university[2],
+      university: this.data.param.school,
       age: this.data.param.age
     }
     app.user.profile(param).then(msg => {

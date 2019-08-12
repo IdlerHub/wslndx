@@ -59,6 +59,12 @@
         font-size: 28rpx;
         color: rgba(179, 179, 179, 1);
         line-height: 40rpx;
+        word-wrap: break-word;
+        white-space: pre-line;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 3;
+        overflow: hidden;
       }
     }
   }

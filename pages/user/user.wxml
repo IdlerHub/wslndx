@@ -1,3 +1,8 @@
+<!--
+ * @Date: 2019-06-11 21:04:19
+ * @LastEditors: hxz
+ * @LastEditTime: 2019-08-12 16:46:49
+ -->
 <view class="container">
   <!-- 下拉刷新 -->
   <view wx:if="{{ isRefreshing }}" class="weui-loadmore indexdrop">
@@ -20,6 +25,16 @@
     </view>
   </navigator>
   <view class="list">
+    <view class="score">
+      <text class="title"> 我的积分</text>
+      <image class="content" src="/images/score.png" mode="aspectFill">
+        <view class="contain">
+          <text class="num">{{ my_score }}</text>
+          <text class="dsc">可用积分</text>
+        </view>
+        <text class="score-btn" bindtap="toScore">兑换礼品</text>
+      </image>
+    </view>
     <navigator hover-class="none" class="nav" url="/pages/collection/collection" open-type="navigate">
       <icon class="iconfont icon-shoucang"></icon>
       <text>收藏课程</text>
@@ -33,11 +48,6 @@
     <navigator hover-class="none" class="nav" url="/pages/myCircle/myCircle" open-type="navigate">
       <icon class="iconfont icon-quanzi"></icon>
       <text>风采展示</text>
-      <icon class="iconfont icon-arrow-right "></icon>
-    </navigator>
-    <navigator hover-class="none" class="nav" url="/pages/score/score" open-type="navigate">
-      <icon class="iconfont icon-jifen"></icon>
-      <text>我的积分</text>
       <icon class="iconfont icon-arrow-right "></icon>
     </navigator>
     <navigator hover-class="none" class="nav" url="/pages/invitation/invitation" open-type="navigate">

@@ -1,67 +1,58 @@
+<!--
+ * @Date: 2019-05-28 09:50:08
+ * @LastEditors: hxz
+ * @LastEditTime: 2019-08-12 15:15:34
+ -->
 <view class="container">
-  <view class='title'>完善资料</view>
-  <view class='box'>
+  <view class="title">完善资料</view>
+  <view class="box">
     <!-- 地区 -->
-    <view class="section">
+    <view class="section" wx:if="areaList">
       <view class="section__title">地区</view>
-      <picker mode="region" bindchange="bindRegionChange" value="{{param.address}}">
+      <picker mode="multiSelector" bindchange="bindMultiPickerChange" bindcolumnchange="bindMultiPickerColumnChange" value="{{ multiIndex }}" range="{{ multiAddress }}">
         <view class="placeholder">
-          <text wx:if="{{!param.address[1]}}">请选择</text>
-          <view class="picker" wx:if="{{param.address[1]}}">
-            {{param.address[0]}}，{{param.address[1]}}，{{param.address[2]}}
-          </view>
-          <image class='icon' mode='aspectFill' src='{{$state.imgHost}}/Return-black.png'/>
+          <text wx:if="{{ !param.address[1] }}">请选择</text>
+          <view class="picker" wx:if="{{ param.address[1] }}"> {{ param.address[0] }}，{{ param.address[1] }} </view>
+          <image class="icon" mode="aspectFill" src="{{ $state.imgHost }}/Return-black.png"></image>
         </view>
       </picker>
     </view>
     <!-- 学校 -->
-    <view class="section" wx:if='multiArray'>
+    <view class="section" wx:if="singleSchool" bindtap="tipOrder">
       <view class="section__title">大学</view>
-      <picker
-        mode="multiSelector"
-        bindchange="bindMultiPickerChange"
-        bindcolumnchange="bindMultiPickerColumnChange"
-        value="{{multiIndex}}"
-        range="{{multiArray}}"
-      >
+      <picker mode="selector" disabled="{{ !param.address[1] }}" bindchange="bindSchool" value="{{ singleIndex }}" range="{{ singleSchool }}">
         <view class="placeholder">
-          <text wx:if="{{!param.university[2]}}">请选择</text>
-          <view class="picker" wx:if="{{param.university[2]}}">
-            {{param.university[0]}} {{param.university[1]}} {{param.university[2]}}
-          </view>
-          <image class='icon' mode='aspectFill' src='{{$state.imgHost}}/Return-black.png'/>
+          <text wx:if="{{ !param.school }}">请选择</text>
+          <view class="picker" wx:if="{{ param.school }}"> {{ param.school }} </view>
+          <image class="icon" mode="aspectFill" src="{{ $state.imgHost }}/Return-black.png"></image>
         </view>
       </picker>
     </view>
     <!-- 性别 -->
     <view class="section">
       <view class="section__title">性别</view>
-      <picker bindchange="bindSexChange" value="{{param.gender}}" range="{{gender}}">
+      <picker bindchange="bindSexChange" value="{{ param.gender }}" range="{{ gender }}">
         <view class="placeholder">
-          <text wx:if="{{param.gender!=0&&param.gender!=1}}">请选择</text>
-          <view class="picker" wx:if="{{param.gender==0||param.gender==1}}">
-            {{gender[param.gender]}}
+          <text wx:if="{{ param.gender != 0 && param.gender != 1 }}">请选择</text>
+          <view class="picker" wx:if="{{ param.gender == 0 || param.gender == 1 }}">
+            {{ gender[param.gender] }}
           </view>
-          <image class='icon' mode='aspectFill' src='{{$state.imgHost}}/Return-black.png'/>
+          <image class="icon" mode="aspectFill" src="{{ $state.imgHost }}/Return-black.png"></image>
         </view>
       </picker>
     </view>
     <!-- 年龄 -->
     <view class="section">
       <view class="section__title">年龄段</view>
-      <picker bindchange="bindAgeChange" value="{{param.age}}" range="{{age}}">
+      <picker bindchange="bindAgeChange" value="{{ param.age }}" range="{{ age }}">
         <view class="placeholder">
-          <text wx:if="{{!param.age}}">请选择</text>
-          <view class="picker" wx:if="{{param.age}}">
-            {{param.age}}
+          <text wx:if="{{ !param.age }}">请选择</text>
+          <view class="picker" wx:if="{{ param.age }}">
+            {{ param.age }}
           </view>
-          <image class='icon' mode='aspectFill' src='{{$state.imgHost}}/Return-black.png'/>
+          <image class="icon" mode="aspectFill" src="{{ $state.imgHost }}/Return-black.png"></image>
         </view>
       </picker>
     </view>
   </view>
-  <!-- <view class='btn'>
-    <button class='cancel' bindtap='back'>取消</button>
-    <button class='submit' disabled='{{!param.address[0]||!param.university[0]||!param.gender||!param.age}}' bindtap='submit'>确认</button>
-  </view> -->
 </view>
