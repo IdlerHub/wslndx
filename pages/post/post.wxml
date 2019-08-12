@@ -1,7 +1,19 @@
+<!--
+ * @Date: 2019-06-14 19:54:05
+ * @LastEditors: hxz
+ * @LastEditTime: 2019-08-10 14:33:27
+ -->
 <view class="container">
   <!-- 下拉刷新 -->
   <view wx:if="{{ isRefreshing }}" class="weui-loadmore">
     <view class="weui-loading"></view>
+  </view>
+  <view class="message" wx:if="{{ $state.unRead }}">
+    <view class="msg-btn" catchtap="toMessage">
+      <image class="img" src="{{ $state.lastMan }}" mode="aspectFill"> </image>
+      <text class="news"> {{ $state.unRead }}条新信息</text>
+      <icon class="iconfont icon-arrow-right"></icon>
+    </view>
   </view>
   <view class="wrap">
     <view wx:for="{{ list }}" wx:key="index" class="item">

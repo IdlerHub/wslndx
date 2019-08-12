@@ -24,7 +24,8 @@
     "pages/gift/gift",
     "pages/education/education",
     "pages/videoItemize/videoItemize",
-    "pages/commentDetail/commentDetail"
+    "pages/commentDetail/commentDetail",
+    "pages/message/message"
   ],
   "permission": {
     "scope.userLocation": {

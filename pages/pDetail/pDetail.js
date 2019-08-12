@@ -1,3 +1,8 @@
+/*
+ * @Date: 2019-05-28 09:50:08
+ * @LastEditors: hxz
+ * @LastEditTime: 2019-08-10 16:18:44
+ */
 //index.js
 //获取应用实例
 const app = getApp()
@@ -104,6 +109,7 @@ Page({
         if (msg.code == 1) {
           /* 开启动画 */
           detail.praising = true
+          app.socket.send(this.data.detail.uid)
           this.setData({ detail: detail })
         }
       })
@@ -195,17 +201,15 @@ Page({
     app.circle.comment(param).then(msg => {
       wx.hideLoading()
       if (msg.code == 1) {
-        let timer = setTimeout(() => {
-          wx.showToast({
-            title: "发布成功",
-            icon: "none",
-            duration: 1500
-          })
-          this.getDetail()
-          this.comParam.page = 1
-          this.getComment([])
-          clearTimeout(timer)
-        }, 500)
+        wx.showToast({
+          title: "发布成功",
+          icon: "none",
+          duration: 1500
+        })
+        this.getDetail()
+        this.comParam.page = 1
+        app.socket.send(this.data.detail.uid)
+        this.getComment([])
       } else {
         wx.showToast({
           title: "发布失败",
@@ -397,6 +401,8 @@ Page({
         this.getDetail()
         this.comParam.page = 1
         this.getComment([])
+        console.log(params.to_user)
+        app.socket.send(params.to_user)
       } else {
         wx.showToast({
           title: "发布失败",

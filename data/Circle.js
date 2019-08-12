@@ -1,7 +1,7 @@
 /*
  * @Date: 2019-05-28 09:50:08
  * @LastEditors: hxz
- * @LastEditTime: 2019-08-07 11:33:00
+ * @LastEditTime: 2019-08-10 10:45:27
  */
 var httpService = require("../utils/service.js")
 
@@ -129,6 +129,11 @@ function addForward(param) {
   return httpService.post("bokeforward/add", param)
 }
 
+/* 博客通知列表 */
+function getMessage(param) {
+  return httpService.post("Bokeblog/blogMessageList", param)
+}
+
 module.exports = {
   allCircles,
   noJoinCircles,
@@ -151,5 +156,6 @@ module.exports = {
   upload,
   fsinfo,
   delComment,
-  addForward
+  addForward,
+  getMessage
 }

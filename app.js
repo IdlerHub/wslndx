@@ -1,7 +1,7 @@
 /*
  * @Date: 2019-05-28 09:50:08
  * @LastEditors: hxz
- * @LastEditTime: 2019-07-23 15:31:17
+ * @LastEditTime: 2019-08-10 16:13:46
  */
 /*添加微信官方接口转化为promise*/
 const wxpro = require("wx-promise-pro")
@@ -9,6 +9,8 @@ const wxpro = require("wx-promise-pro")
 const ald = require("./utils/ald-stat.js")
 /* 全局状态管理 */
 import store from "./store"
+/* sse */
+const socket = require("data/socket.js")
 /* 接入bug平台 */
 if (store.process == "production") {
   var fundebug = require("fundebug-wxjs")
@@ -40,6 +42,7 @@ App({
   user: require("data/User.js"),
   video: require("data/Video.js"),
   circle: require("data/Circle.js"),
+  socket,
   store,
   onLaunch: async function(opts) {
     this.checkVersion()
@@ -58,6 +61,14 @@ App({
       await this.wxLogin()
     }
     this.initStore()
+
+    /* 建立socket链接 */
+    if (this.store.$state.userInfo.id) {
+      socket.init(userInfo.id)
+      socket.listen(this.handleMessage)
+      socket.send(userInfo.id)
+    }
+
     if (!this.store.$state.userInfo.mobile) {
       wx.redirectTo({ url: "/pages/login/login" })
     } else if (opts.query.type !== "share") {
@@ -66,7 +77,6 @@ App({
   },
   onShow: function(opts) {
     console.log(opts)
-    console.log(wx.getLaunchOptionsSync())
     let lists = ["share", "invite"]
     /* 小程序(在后台运行中时)从分享卡片切到前台 */
     if (this.globalData.backstage) {
@@ -120,17 +130,22 @@ App({
       authKey: wx.getStorageSync("authKey") || "",
       signStatus: sign
     })
+
     this.getSets()
   },
   /* 更新store中的userInfo */
   setUser: function(data) {
     data.addressCity = data.address ? data.address.split(",")[1] : ""
     let sh = data.university.split(",")
-    data.school = sh.length == 3 ? sh[2] : sh[0]
+    data.school = sh[sh.length == 3 ? 2 : 0]
     this.store.setState({
       userInfo: data
     })
     wx.setStorageSync("userInfo", data)
+    if (data.id) {
+      socket.init(data.id)
+      socket.listen(this.handleMessage)
+    }
   },
   /* 更新AuthKey */
   setAuthKey: function(data) {
@@ -208,7 +223,6 @@ App({
               content: "新版本已经准备好，是否重启应用？",
               success: function(res) {
                 console.log("success====", res)
-                // res: {errMsg: "showModal: ok", cancel: false, confirm: true}
                 if (res.confirm) {
                   // 新的版本已经下载好，调用 applyUpdate 应用新版本并重启
                   updateManager.applyUpdate()
@@ -226,6 +240,13 @@ App({
         }
       })
     }
+  },
+  handleMessage(res) {
+    let { num = 0, avatar } = JSON.parse(res.data)
+    this.store.setState({
+      unRead: num,
+      lastMan: avatar
+    })
   },
   onPageNotFound() {
     wx.redirectTo({

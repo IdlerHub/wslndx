@@ -1,3 +1,8 @@
+/*
+ * @Date: 2019-05-28 09:50:08
+ * @LastEditors: hxz
+ * @LastEditTime: 2019-08-10 16:29:30
+ */
 const app = getApp()
 //Page Object
 Page({

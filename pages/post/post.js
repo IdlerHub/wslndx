@@ -1,3 +1,8 @@
+/*
+ * @Date: 2019-06-14 19:54:05
+ * @LastEditors: hxz
+ * @LastEditTime: 2019-08-10 16:26:30
+ */
 //获取应用实例
 const app = getApp()
 Page({
@@ -94,6 +99,7 @@ Page({
           list[i].likestatus = 1
           list[i].likes++
           list[i].praising = true
+          app.socket.send(list[i].uid)
           this.setData({
             list: list
           })
@@ -171,6 +177,11 @@ Page({
         url: "/pages/user/user"
       })
     }
+  },
+  toMessage() {
+    wx.navigateTo({
+      url: "/pages/message/message"
+    })
   },
   //用于数据统计
   onHide() {

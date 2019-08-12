@@ -11,30 +11,12 @@ function formatTime(date) {
 
 function formatNumber(n) {
   n = n.toString()
-  return n[1] ? n : "0" + n
+  return n.padStart(2, "0")
 }
 
 function dateUnit() {
   var date = new Date()
   return date.getFullYear() + "年" + (date.getMonth() + 1) + "月" + date.getDate() + "日"
-}
-
-/**时间格式化 00:00:00 */
-function timeFormat(t) {
-  var t = t || 0
-  // t=Math.round(t/1000);
-  function format(n) {
-    var k = n.toString()
-    if (k.length <= 1) k = "0" + k
-    return k
-  }
-  var h = "00",
-    m = "00",
-    s = "00"
-  h = format(parseInt(t / 3600 + ""))
-  m = format(parseInt(t / 60 + "") % 60)
-  s = format(t % 60)
-  return h + "小时 " + m + "分 " + s + "秒"
 }
 
 /**验证是否手机号 */
@@ -60,7 +42,6 @@ function tow(num) {
 
 module.exports = {
   formatTime,
-  timeFormat,
   isPoneAvailable,
   getQueryStringByName,
   tow,
