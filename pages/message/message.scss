@@ -34,6 +34,11 @@
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
+        &.cancel {
+          font-size: 28rpx;
+          font-weight: 400;
+          color: #808080;
+        }
       }
       .time {
         font-size: 28rpx;

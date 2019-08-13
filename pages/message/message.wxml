@@ -1,14 +1,14 @@
 <!--
  * @Date: 2019-08-09 16:40:53
  * @LastEditors: hxz
- * @LastEditTime: 2019-08-12 17:05:59
+ * @LastEditTime: 2019-08-13 21:13:18
  -->
 <view class="messagePage">
   <view class="message-item" wx:for="{{ messages }}" wx:key="index" data-item="{{ item }}" catchtap="todetail">
     <image class="avator" src="{{ item.avatar }}" mode="aspectFill"></image>
     <view class="content">
       <text class="name"> {{ item.nickname }} </text>
-      <text class="msg"> {{ item.msg }} </text>
+      <text class="msg  {{ item.display_delete ? 'cancel' : '' }}  "> {{ item.msg }} </text>
       <text class="time"> {{ item.create_time }} </text>
     </view>
     <view class="blog">
