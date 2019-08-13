@@ -1,7 +1,7 @@
 /*
  * @Date: 2019-05-28 09:50:08
  * @LastEditors: hxz
- * @LastEditTime: 2019-08-12 20:08:21
+ * @LastEditTime: 2019-08-13 14:32:02
  */
 const app = getApp()
 //Page Object
@@ -93,7 +93,10 @@ Page({
         if (res.confirm) {
           app.circle.delPost(param).then(msg => {
             if (msg.code == 1) {
-              wx.startPullDownRefresh()
+              circle.splice(i, 1)
+              this.setData({
+                circle: circle
+              })
             }
           })
         } else {

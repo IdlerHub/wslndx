@@ -1,7 +1,7 @@
 /*
  * @Date: 2019-08-08 16:42:54
  * @LastEditors: hxz
- * @LastEditTime: 2019-08-13 14:09:02
+ * @LastEditTime: 2019-08-13 14:16:05
  */
 function socket() {
   this.connectState = false
@@ -59,6 +59,7 @@ socket.prototype = {
       })
     } else {
       if (this.reCount == 0) {
+        this.reCount = 3
         this.reconnection()
       }
       this.SocketTask.onOpen(() => {
