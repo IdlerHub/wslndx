@@ -1,3 +1,8 @@
+/*
+ * @Date: 2019-05-28 09:50:08
+ * @LastEditors: hxz
+ * @LastEditTime: 2019-08-13 17:45:01
+ */
 //配置
 const content_type = ["application/json", "application/x-www-form-urlencoded"]
 let header = {

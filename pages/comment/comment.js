@@ -1,7 +1,7 @@
 /*
  * @Date: 2019-05-28 09:50:08
  * @LastEditors: hxz
- * @LastEditTime: 2019-08-13 15:10:42
+ * @LastEditTime: 2019-08-13 15:58:33
  */
 //index.js
 //获取应用实例
@@ -11,11 +11,9 @@ Page({
     content: ""
   },
   onLoad(options) {
-    if (options.content != undefined) {
-      this.setData({
-        content: options.content
-      })
-    }
+    this.setData({
+      content: options.content
+    })
   },
   input(e) {
     this.setData({

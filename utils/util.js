@@ -1,3 +1,8 @@
+/*
+ * @Date: 2019-05-27 19:54:16
+ * @LastEditors: hxz
+ * @LastEditTime: 2019-08-13 17:26:55
+ */
 function formatTime(date) {
   date = date ? date : new Date()
   const year = date.getFullYear()

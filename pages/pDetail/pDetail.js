@@ -1,7 +1,7 @@
 /*
  * @Date: 2019-05-28 09:50:08
  * @LastEditors: hxz
- * @LastEditTime: 2019-08-13 15:49:32
+ * @LastEditTime: 2019-08-13 18:06:54
  */
 //index.js
 //获取应用实例
@@ -112,6 +112,12 @@ Page({
       app.circle.delPraise(param).then(msg => {
         if (msg.code == 1) {
           this.aniend()
+        } else if (msg.code == -2) {
+          /* 帖子已经删除 */
+          this.setData({
+            detail: "",
+            delState: true
+          })
         }
       })
     } else {
@@ -122,15 +128,24 @@ Page({
           detail.praising = true
           app.socket.send(this.data.detail.uid)
           this.setData({ detail: detail })
+        } else if (msg.code == -2) {
+          /* 帖子已经删除 */
+          this.setData({
+            detail: "",
+            delState: true
+          })
         }
       })
     }
   },
   aniend() {
     /* 点赞动画结束 */
-    this.getDetail()
-    this.praParam.page = 1
-    this.getPraise([])
+    this.getDetail().then(code => {
+      if (code == 1) {
+        this.praParam.page = 1
+        this.getPraise([])
+      }
+    })
   },
   play() {
     let detail = this.data.detail
@@ -227,8 +242,6 @@ Page({
           detail: "",
           delState: true
         })
-      } else if (msg.code == -4) {
-        /* 消息已经删除 */
       } else {
         wx.showToast({
           title: "发布失败",
@@ -268,8 +281,14 @@ Page({
         this.setData({
           comment: comment
         })
+        this.setHeight()
+      } else if (msg.code == -2) {
+        /* 帖子已经删除 */
+        this.setData({
+          detail: "",
+          delState: true
+        })
       }
-      this.setHeight()
     })
   },
   getPraise(list) {
@@ -279,8 +298,14 @@ Page({
         this.setData({
           praise: praise.concat(msg.data || [])
         })
+        this.setHeight()
+      } else if (msg.code == -2) {
+        /* 帖子已经删除 */
+        this.setData({
+          detail: "",
+          delState: true
+        })
       }
-      this.setHeight()
     })
   },
   //下拉刷新
@@ -354,10 +379,11 @@ Page({
   //删除评论
   delComment: function(e) {
     let param = { blog_id: e.currentTarget.dataset.item.blog_id, id: e.currentTarget.dataset.item.id }
-    app.circle.delComment(param).then(msg => {
-      wx.hideLoading()
-      if (msg.code == 1) {
-        let timer = setTimeout(() => {
+    app.circle
+      .delComment(param)
+      .then(msg => {
+        wx.hideLoading()
+        if (msg.code == 1) {
           wx.showToast({
             title: "删除成功",
             icon: "none",
@@ -366,16 +392,23 @@ Page({
           this.getDetail()
           this.comParam.page = 1
           this.getComment([])
-          clearTimeout(timer)
-        }, 500)
-      } else {
-        wx.showToast({
-          title: "删除失败，请稍后重试",
-          icon: "none",
-          duration: 1500
-        })
-      }
-    })
+        } else if (msg.code == -2) {
+          /* 帖子已经删除 */
+          this.setData({
+            detail: "",
+            delState: true
+          })
+        } else {
+          wx.showToast({
+            title: "删除失败，请稍后重试",
+            icon: "none",
+            duration: 1500
+          })
+        }
+      })
+      .finally(() => {
+        console.log("hxz")
+      })
   },
   /* 删除回复 */
   delReply(e) {
@@ -391,6 +424,12 @@ Page({
         this.getDetail()
         this.comParam.page = 1
         this.getComment([])
+      } else if (msg.code == -2) {
+        /* 帖子已经删除 */
+        this.setData({
+          detail: "",
+          delState: true
+        })
       } else {
         wx.showToast({
           title: "删除失败，请稍后重试",
@@ -422,6 +461,22 @@ Page({
         this.getComment([])
         console.log(params.to_user)
         app.socket.send(params.to_user)
+      } else if (msg.code == -2) {
+        /* 帖子已经删除 */
+        this.setData({
+          detail: "",
+          delState: true
+        })
+      } else if (msg.code == -3) {
+        /* 消息已经删除 */
+        wx.showToast({
+          title: "消息已删除",
+          icon: "none",
+          duration: 1500
+        })
+        this.getDetail()
+        this.comParam.page = 1
+        this.getComment([])
       } else {
         wx.showToast({
           title: "发布失败",

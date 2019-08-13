@@ -1,7 +1,7 @@
 /*
  * @Date: 2019-08-07 11:06:58
  * @LastEditors: hxz
- * @LastEditTime: 2019-08-13 15:49:57
+ * @LastEditTime: 2019-08-13 17:15:10
  */
 // pages/commentDetail/commentDetail.js
 const app = getApp()
@@ -72,6 +72,11 @@ Page({
         setTimeout(() => {
           wx.navigateBack({ delta: 1 })
         }, 1500)
+      } else if (msg.code == -2) {
+        /* 帖子已经删除 */
+        this.setData({
+          detail: {}
+        })
       } else {
         this.toast("删除失败，请稍后重试")
       }
@@ -84,6 +89,11 @@ Page({
         this.toast("删除成功")
         this.emitEvent()
         this.getData()
+      } else if (msg.code == -2) {
+        /* 帖子已经删除 */
+        this.setData({
+          detail: {}
+        })
       } else {
         this.toast("删除失败，请稍后重试")
       }
@@ -144,11 +154,15 @@ Page({
     })
     app.circle.reply(params).then(msg => {
       if (msg.code == 1) {
-        this.toast("发布成功")
+        this.toast("回复成功")
         this.emitEvent()
         this.getData()
+      } else if (msg.code == -2) {
+        this.toast("帖子已删除,回复失败")
+      } else if (msg.code == -3) {
+        this.toast("信息已删除,回复失败")
       } else {
-        this.toast("发布失败")
+        this.toast("回复失败")
       }
     })
   },

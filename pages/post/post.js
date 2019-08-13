@@ -1,7 +1,7 @@
 /*
  * @Date: 2019-06-14 19:54:05
  * @LastEditors: hxz
- * @LastEditTime: 2019-08-10 16:26:30
+ * @LastEditTime: 2019-08-13 16:27:52
  */
 //获取应用实例
 const app = getApp()
@@ -90,6 +90,12 @@ Page({
           this.setData({
             list: list
           })
+        } else if (msg.code == -2) {
+          wx.showToast({
+            title: "帖子已删除",
+            icon: "none",
+            duration: 1500
+          })
         }
       })
     } else {
@@ -102,6 +108,12 @@ Page({
           app.socket.send(list[i].uid)
           this.setData({
             list: list
+          })
+        } else if (msg.code == -2) {
+          wx.showToast({
+            title: "帖子已删除",
+            icon: "none",
+            duration: 1500
           })
         }
       })

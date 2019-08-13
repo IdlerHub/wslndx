@@ -1,3 +1,8 @@
+<!--
+ * @Date: 2019-08-07 11:06:58
+ * @LastEditors: hxz
+ * @LastEditTime: 2019-08-13 17:11:47
+ -->
 <view class="content">
   <view class="left">
     <image class="img" mode="aspectFill" src="{{ detail.avatar }}"></image>
@@ -14,7 +19,7 @@
       </view>
     </view>
     <rich-text nodes="{{ detail.content }}"></rich-text>
-    <button wx:if="{{ $state.userInfo.id != detail.uid }}" class="reply-btn" catchtap="show">回复</button>
+    <button wx:if="{{ detail.uid && $state.userInfo.id != detail.uid }}" class="reply-btn" catchtap="show">回复</button>
   </view>
 </view>
 <view class="children" wx:for="{{ detail.reply_array }}" wx:key="index" wx:for-item="child">
