@@ -1,3 +1,8 @@
+/*
+ * @Date: 2019-08-07 11:06:58
+ * @LastEditors: hxz
+ * @LastEditTime: 2019-08-13 15:49:57
+ */
 // pages/commentDetail/commentDetail.js
 const app = getApp()
 
@@ -167,7 +172,7 @@ Page({
       write: false
     })
     wx.navigateTo({
-      url: "../comment/comment?content=" + this.data.content,
+      url: "../comment/comment?content=" + (this.data.content != undefined ? this.data.content : ""),
       events: {
         commentContent: res => {
           vm.setData({

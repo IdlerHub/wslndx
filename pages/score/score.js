@@ -1,3 +1,8 @@
+/*
+ * @Date: 2019-05-28 09:50:08
+ * @LastEditors: hxz
+ * @LastEditTime: 2019-08-13 15:08:19
+ */
 const app = getApp()
 //Page Object
 Page({
@@ -133,7 +138,7 @@ Page({
         duration: 1500
       })
     } else {
-      if (this.data.totalPoints > e.currentTarget.dataset.score) {
+      if (this.data.totalPoints >= e.currentTarget.dataset.score) {
         let param = { gift_id: e.currentTarget.dataset.id }
         wx.showModal({
           title: "兑换提示",

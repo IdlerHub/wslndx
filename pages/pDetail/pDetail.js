@@ -1,7 +1,7 @@
 /*
  * @Date: 2019-05-28 09:50:08
  * @LastEditors: hxz
- * @LastEditTime: 2019-08-12 20:29:24
+ * @LastEditTime: 2019-08-13 15:49:32
  */
 //index.js
 //获取应用实例
@@ -162,7 +162,7 @@ Page({
   hide() {
     this.setData({
       write: false,
-      content: null
+      content: ""
     })
   },
   input(e) {
@@ -204,7 +204,7 @@ Page({
   post(param) {
     this.setData({
       write: false,
-      content: null
+      content: ""
     })
     wx.showLoading({
       title: "发布中"
@@ -221,6 +221,14 @@ Page({
         this.comParam.page = 1
         app.socket.send(this.data.detail.uid)
         this.getComment([])
+      } else if (msg.code == -2) {
+        /* 帖子已经删除 */
+        this.setData({
+          detail: "",
+          delState: true
+        })
+      } else if (msg.code == -4) {
+        /* 消息已经删除 */
       } else {
         wx.showToast({
           title: "发布失败",
@@ -236,7 +244,7 @@ Page({
       write: false
     })
     wx.navigateTo({
-      url: "../comment/comment?content=" + this.data.content,
+      url: "../comment/comment?content=" + (this.data.content != undefined ? this.data.content : ""),
       events: {
         commentContent: res => {
           vm.setData({
@@ -396,7 +404,7 @@ Page({
   reply(params) {
     this.setData({
       write: false,
-      content: null
+      content: ""
     })
     wx.showLoading({
       title: "发布中"
