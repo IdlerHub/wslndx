@@ -534,3 +534,19 @@
 .nodata image {
   width: 598rpx;
 }
+
+.del_blog {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.del_blog image {
+  width: 598rpx;
+}
+
+.del_blog text {
+  transform: translateY(-50px);
+}

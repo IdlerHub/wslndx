@@ -21,6 +21,7 @@
   display: flex;
   flex-direction: column;
   justify-content: space-around;
+  overflow: hidden;
 }
 
 .messagePage .message-item .content .name {
@@ -33,6 +34,10 @@
   font-size: 36rpx;
   color: #2e2e2e;
   line-height: 50rpx;
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .messagePage .message-item .content .time {
@@ -45,6 +50,7 @@
   width: 140rpx;
   font-size: 0;
   align-self: center;
+  margin-left: 10rpx;
 }
 
 .messagePage .message-item .blog .media {

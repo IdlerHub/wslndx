@@ -1,11 +1,19 @@
+<!--
+ * @Date: 2019-06-11 21:01:20
+ * @LastEditors: hxz
+ * @LastEditTime: 2019-08-12 20:30:54
+ -->
 <!-- 下拉刷新 -->
 <view wx:if="{{ isRefreshing }}" class="weui-loadmore">
   <view class="weui-loading"></view>
 </view>
 <view class="container">
   <view class="box">
-    <view wx:if="{{ vistor && tip }}" class="vistor-head"> 点击“ <icon class="iconfont icon-xiaochengxu"></icon> ”添加到我的小程序 <!-- <icon class="iconfont icon-shouzhi" style="left:{{ rect.left + 10 }}px"></icon> --> </view>
-    <view class="detail">
+    <view wx:if="{{ vistor && tip }}" class="vistor-head">
+      点击“ <icon class="iconfont icon-xiaochengxu"></icon> ”添加到我的小程序
+      <!-- <icon class="iconfont icon-shouzhi" style="left:{{ rect.left + 10 }}px"></icon> -->
+    </view>
+    <view wx:if="{{ detail }}" class="detail">
       <view class="top">
         <view class="left">
           <image mode="aspectFill" class="avatarUrl" src="{{ detail.avatar }}" data-uid="{{ detail.uid }}" catchtap="toUser"></image>
@@ -35,12 +43,12 @@
       <button wx:if="{{ detail.fs_title }}" class="label" hover-class="none">#{{ detail.fs_title }}</button>
     </view>
   </view>
-  <scroll-view scroll-x="true" class="nav" scroll-left="{{ navScrollLeft }}" scroll-with-animation="{{ true }}">
+  <scroll-view wx:if="{{ detail }}" scroll-x="true" class="nav" scroll-left="{{ navScrollLeft }}" scroll-with-animation="{{ true }}">
     <block wx:for="{{ nav }}" wx:for-index="id" wx:for-item="item" wx:key="id">
-      <view class="item {{ currentTab == id ? 'active' : '' }}" data-current="{{ id }}" bindtap="switchNav">{{ item.name + ' ' + item.num }}</view>
+      <view class="item {{ currentTab == id ? 'active' : '' }}" data-current="{{ id }}" bindtap="switchNav">{{ item.name + " " + item.num }}</view>
     </block>
   </scroll-view>
-  <swiper class="tab" style="height:{{ height }}px" current="{{ currentTab }}" duration="300" bindchange="switchTab">
+  <swiper wx:if="{{ detail }}" class="tab" style="height:{{ height }}px" current="{{ currentTab }}" duration="300" bindchange="switchTab">
     <swiper-item class="tab-item">
       <view class="wrap comment">
         <view class="nodata" wx:if="{{ comment.length <= 0 }}">
@@ -63,14 +71,14 @@
                 </view>
               </view>
               <rich-text nodes="{{ item.content }}"></rich-text>
-               <button wx:if="{{ $state.userInfo.id != item.uid }}" class="reply-btn" data-reply='{{ item }}' catchtap='show' >回复</button>
+              <button wx:if="{{ $state.userInfo.id != item.uid }}" class="reply-btn" data-reply="{{ item }}" catchtap="show">回复</button>
             </view>
           </view>
-          <view class="children"   wx:for="{{ item.reply_array }}" wx:key="index"  wx:for-item="child">
+          <view class="children" wx:for="{{ item.reply_array }}" wx:key="index" wx:for-item="child">
             <view class="from_user">
               <view class="user_info">
-                  <image class="img" mode="aspectFill" src="{{ child.from_user_avatar }}"></image>
-                  <text class="line name">{{ child.from_user }}</text>
+                <image class="img" mode="aspectFill" src="{{ child.from_user_avatar }}"></image>
+                <text class="line name">{{ child.from_user }}</text>
               </view>
               <view class="time-del">
                 <text class="line time">{{ child.create_time }}</text>
@@ -80,10 +88,10 @@
                 </view>
               </view>
             </view>
-            <rich-text nodes="{{  child.rtext  +  child.reply_content }}"></rich-text>
-            <button wx:if="{{ $state.userInfo.id != child.reply_user_id }}" class="reply-btn" data-reply='{{ child }}'  data-parent="{{ item.id }}"   catchtap='show' >回复</button>
+            <rich-text nodes="{{ child.rtext + child.reply_content }}"></rich-text>
+            <button wx:if="{{ $state.userInfo.id != child.reply_user_id }}" class="reply-btn" data-reply="{{ child }}" data-parent="{{ item.id }}" catchtap="show">回复</button>
           </view>
-          <view class="reply_all" wx:if='{{item.reply_num > 3}}' data-parentid="{{ item.id }}" catchtap='toCommentDetail'> 查看全部{{ item.reply_num  }}条 </view>
+          <view class="reply_all" wx:if="{{ item.reply_num > 3 }}" data-parentid="{{ item.id }}" catchtap="toCommentDetail"> 查看全部{{ item.reply_num }}条 </view>
         </view>
       </view>
     </swiper-item>
@@ -104,7 +112,7 @@
       </view>
     </swiper-item>
   </swiper>
-  <view class="footer">
+  <view wx:if="{{ detail }}" class="footer">
     <button class="share item" open-type="share" data-id="{{ detail.id }}" hover-class="btn-hover">
       <icon class="iconfont icon-fenxiang"></icon>
       <text class="text">转发</text>
@@ -113,20 +121,22 @@
     <view class="item" bindtap="show">
       <icon class="iconfont icon-comment"></icon>
       <text class="text">评论</text>
-      <!-- <text class="text">{{ detail.cw || detail.comments }}</text> -->
     </view>
     <text class="division"></text>
     <view class="item" bindtap="praise">
       <view class="praise  {{ detail.likestatus ? 'end' : '' }} {{ detail.praising ? 'ani' : '' }}" data-index="{{ index }}" bindanimationend="aniend"></view>
       <text class="text">点赞</text>
-      <!-- <text class="text">{{ detail.lw || detail.likes }}</text> -->
     </view>
+  </view>
+  <view class="del_blog" wx:if="{{ delState }}">
+    <image src="/images/delBlog.png" mode="aspectFill"> </image>
+    <text>帖子已删除~ </text>
   </view>
   <view class="popup write" wx:if="{{ write }}">
     <view class="bg" bindtap="hide"></view>
     <view class="box">
       <!-- prettier-ignore -->
-      <textarea placeholder="写评论" focus  cursor-spacing="190rpx"  fixed  bindinput="input" value='{{content}}' placeholder-class="ph-class" />
+      <textarea placeholder="写评论" focus  cursor-spacing="190rpx"  fixed  bindinput="input" value='{{content}}' placeholder-class="ph-class" ></textarea>
       <!-- prettier-ignore -->
       <view class="right" catchtap="navigator">
         <view class="to">

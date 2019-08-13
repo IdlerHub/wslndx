@@ -1,7 +1,7 @@
 /*
  * @Date: 2019-05-28 09:50:08
  * @LastEditors: hxz
- * @LastEditTime: 2019-08-10 16:18:44
+ * @LastEditTime: 2019-08-12 20:29:24
  */
 //index.js
 //获取应用实例
@@ -10,7 +10,8 @@ Page({
   data: {
     nav: [{ name: "评论", class: ".comment", num: 0 }, { name: "点赞", class: ".praise", num: 0 }],
     isRefreshing: false,
-    tip: true
+    tip: true,
+    delState: false
     /* rect: wx.getMenuButtonBoundingClientRect() */
   },
   onLoad(options) {
@@ -20,7 +21,7 @@ Page({
       this.show()
     }
     this.setData({
-      detail: [],
+      detail: "",
       comment: [],
       praise: [],
       vistor: options.type == "share", //游客从分享卡片过来
@@ -37,9 +38,12 @@ Page({
     }
 
     if (this.data.$state.userInfo.mobile) {
-      this.getDetail()
-      this.getComment()
-      this.getPraise()
+      this.getDetail().then(code => {
+        if (code == 1) {
+          this.getComment()
+          this.getPraise()
+        }
+      })
     }
   },
   setHeight() {
@@ -73,7 +77,7 @@ Page({
   },
   getDetail() {
     let param = { blog_id: this.id }
-    app.circle.detail(param).then(msg => {
+    return app.circle.detail(param).then(msg => {
       if (msg.code == 1) {
         let detail = msg.data[0]
         let arr = []
@@ -88,7 +92,14 @@ Page({
           "nav[0].num": app.util.tow(detail.comments) || detail.comments,
           "nav[1].num": app.util.tow(detail.likes) || detail.likes
         })
+      } else if (msg.code == -2) {
+        /* 帖子已经删除 */
+        this.setData({
+          detail: "",
+          delState: true
+        })
       }
+      return msg.code
     })
   },
   praise() {

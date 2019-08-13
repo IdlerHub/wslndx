@@ -494,3 +494,17 @@
     width: 598rpx;
   }
 }
+
+.del_blog {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  image {
+    width: 598rpx;
+  }
+  text {
+    transform: translateY(-50px);
+  }
+}

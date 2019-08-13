@@ -1,7 +1,7 @@
 /*
  * @Date: 2019-08-09 16:40:53
  * @LastEditors: hxz
- * @LastEditTime: 2019-08-10 17:27:18
+ * @LastEditTime: 2019-08-12 20:39:42
  */
 // pages/message/message.js
 const app = getApp()
@@ -49,8 +49,20 @@ Page({
    */
   onUnload: function() {},
   todetail(e) {
-    wx.navigateTo({
-      url: "/pages/pDetail/pDetail?id=" + e.currentTarget.dataset.item.blog_id
-    })
+    let msg = e.currentTarget.dataset.item
+    if (msg.blog_is_delete) {
+      wx.showModal({
+        content: "该动态已删除!",
+        showCancel: false,
+        confirmColor: "#DF2020",
+        success: res => {
+          return
+        }
+      })
+    } else {
+      wx.navigateTo({
+        url: "/pages/pDetail/pDetail?id=" + msg.blog_id
+      })
+    }
   }
 })

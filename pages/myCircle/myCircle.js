@@ -1,7 +1,7 @@
 /*
  * @Date: 2019-05-28 09:50:08
  * @LastEditors: hxz
- * @LastEditTime: 2019-08-10 16:29:30
+ * @LastEditTime: 2019-08-12 20:08:21
  */
 const app = getApp()
 //Page Object
@@ -56,6 +56,10 @@ Page({
         }
         this.setData({
           circle: circle
+        })
+      } else if (msg.code == -2) {
+        this.setData({
+          circle: []
         })
       }
     })

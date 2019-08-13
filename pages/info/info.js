@@ -1,7 +1,7 @@
 /*
  * @Date: 2019-05-28 09:50:08
  * @LastEditors: hxz
- * @LastEditTime: 2019-08-12 15:19:28
+ * @LastEditTime: 2019-08-12 18:22:52
  */
 //index.js
 //获取应用实例
@@ -122,6 +122,7 @@ Page({
     this.setData({
       "param.gender": e.detail.value
     })
+    this.submit()
   },
   bindAgeChange(e) {
     this.setData({
