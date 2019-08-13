@@ -1,7 +1,7 @@
 /*
  * @Date: 2019-06-11 14:24:48
  * @LastEditors: hxz
- * @LastEditTime: 2019-08-12 11:49:24
+ * @LastEditTime: 2019-08-13 11:57:25
  */
 import Store from "wxministore"
 
@@ -9,25 +9,29 @@ let env = "/* @echo NODE_ENV */"
 let imgHost
 let activityUrl
 let API_URL
-let version
+let mpVersion
+let socket_host
 
 if (env == "develop") {
   /* 测试环境 */
   imgHost = "https://jinling-xcx-dev.obs.cn-north-1.myhuaweicloud.com/images/dev" /* 图片等静态资源服务器 */
   activityUrl = "https://gqjydev.jinlingkeji.cn/?" /* 国情教育链接 */
-  version = "v6" /* 版本管理 */
+  mpVersion = "v6" /* 版本管理 */
   API_URL = "https://develop.jinlingkeji.cn/api/v6/" /* 数据服务器 */
+  socket_host = "develop.jinlingkeji.cn:8182"
 } else {
   /* 发布环境 */
   imgHost = "https://jinling-xcx-dev.obs.cn-north-1.myhuaweicloud.com/images/pro"
   activityUrl = "https://gqjy.jinlingkeji.cn/?"
-  version = "v5"
+  mpVersion = "v5"
   API_URL = "https://apielb.jinlingkeji.cn/api/v5/"
+  socket_host = "develop.jinlingkeji.cn:8182"
 }
 
 Store.prototype.process = env
 Store.prototype.API_URL = API_URL
-Store.prototype.version = version
+Store.prototype.mpVersion = mpVersion
+Store.prototype.socket_host = socket_host
 
 let store = new Store({
   state: {

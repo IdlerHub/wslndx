@@ -1,3 +1,8 @@
+<!--
+ * @Date: 2019-06-11 20:56:43
+ * @LastEditors: hxz
+ * @LastEditTime: 2019-08-13 12:01:10
+ -->
 <view class="container">
   <!-- 下拉刷新 -->
   <view wx:if="{{ isRefreshing }}" class="weui-loadmore indexdrop">
@@ -112,13 +117,13 @@
       <view class="tab-container">
         <image mode="aspectFill" class="icon" src="{{ $state.imgHost }}/circle.png"></image>
         <text class="name">秀风采</text>
-        <text class="badge" wx:if="{{ $state.unRead }}">{{ $state.unRead }}</text>
+        <text class="badge" wx:if="{{ $state.unRead }}">{{ $state.surPass ? "···" : $state.unRead }}</text>
       </view>
     </formCode>
     <button wx:else class="item" open-type="getUserInfo" bindgetuserinfo="onGotUserInfo" data-role="post">
       <image mode="aspectFill" class="icon" src="{{ $state.imgHost }}/circle.png"></image>
       <text class="name">秀风采</text>
-      <text class="badge" wx:if="{{ $state.unRead }}">{{ $state.unRead }}</text>
+      <text class="badge" wx:if="{{ $state.unRead }}">{{ $state.surPass ? "···" : $state.unRead }}</text>
     </button>
   </view>
   <!-- 签到拿积分 -->

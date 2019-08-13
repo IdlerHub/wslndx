@@ -1,3 +1,8 @@
+<!--
+ * @Date: 2019-06-11 21:00:43
+ * @LastEditors: hxz
+ * @LastEditTime: 2019-08-13 09:29:54
+ -->
 <!-- 下拉刷新 -->
 <view wx:if="{{ isRefreshing }}" class="weui-loadmore indexdrop">
   <view class="weui-loading"></view>

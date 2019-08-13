@@ -1,20 +1,23 @@
 /*
  * @Date: 2019-08-08 16:42:54
  * @LastEditors: hxz
- * @LastEditTime: 2019-08-10 16:13:09
+ * @LastEditTime: 2019-08-13 14:09:02
  */
 function socket() {
   this.connectState = false
-  this.reCount = 4
+  this.reCount = 3
   this.id = -1
   this.beat = null
 }
 
+import store from "../store"
+
 socket.prototype = {
   init: function(id, mark) {
     this.id = id
+    console.log()
     this.SocketTask = wx.connectSocket({
-      url: "wss://develop.jinlingkeji.cn:8182?c=Bokemessage&uid=" + id,
+      url: "wss://" + store.socket_host + "?c=Bokemessage&uid=" + id,
       header: {
         "content-type": "application/json"
       },
@@ -22,16 +25,16 @@ socket.prototype = {
     })
 
     wx.onSocketClose(res => {
+      console.log("连接断开")
       this.connectState = false
       this.beat && clearInterval(this.beat) && (this.beat = null)
       this.reconnection()
     })
     wx.onSocketOpen(res => {
       console.log("连接成功")
-      console.log(new Date())
       this.connectState = true
       this.heartBeat()
-      this.reCount = 4
+      this.reCount = 3
     })
     if (mark) {
       this.listen(this.handler)
@@ -79,7 +82,13 @@ socket.prototype = {
   reconnection: function() {
     if (this.reCount > 0) {
       this.reCount--
-      setTimeout(() => this.init(this.id, true), 10000)
+      setTimeout(() => this.init(this.id, true), 3000)
+    }
+  },
+  backstage() {
+    if (!this.connectState) {
+      this.reCount = 3
+      this.reconnection()
     }
   }
 }

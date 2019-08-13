@@ -1,7 +1,7 @@
 /*
  * @Date: 2019-05-28 09:50:08
  * @LastEditors: hxz
- * @LastEditTime: 2019-08-12 15:06:55
+ * @LastEditTime: 2019-08-13 14:06:00
  */
 /*添加微信官方接口转化为promise*/
 const wxpro = require("wx-promise-pro")
@@ -55,11 +55,11 @@ App({
       }
     }
     let userInfo = wx.getStorageSync("userInfo") || {}
-    let version = wx.getStorageSync("version")
+    let mpVersion = wx.getStorageSync("mpVersion")
     /* storage中信息缺失,重新登录 */
-    if (!userInfo.mobile || version != this.store.version) {
+    if (!userInfo.mobile || mpVersion != this.store.mpVersion) {
       await this.wxLogin()
-      wx.setStorageSync("version", this.store.version)
+      wx.setStorageSync("mpVersion", this.store.mpVersion)
     }
     this.initStore()
 
@@ -67,7 +67,6 @@ App({
     if (this.store.$state.userInfo.id) {
       socket.init(userInfo.id)
       socket.listen(this.handleMessage)
-      socket.send(userInfo.id)
     }
 
     if (!this.store.$state.userInfo.mobile) {
@@ -82,6 +81,7 @@ App({
     /* 小程序(在后台运行中时)从分享卡片切到前台 */
     if (this.globalData.backstage) {
       this.globalData.backstage = false
+      this.socket.backstage()
       if (this.globalData.scenes.indexOf(opts.scene) >= 0 && lists.indexOf(opts.query.type) >= 0) {
         this.globalData.path = "/" + opts.path /* 卡片页面路径 */
         this.globalData.query = opts.query /* 卡片页面参数 */
@@ -249,6 +249,7 @@ App({
     let { num = 0, avatar } = JSON.parse(res.data)
     this.store.setState({
       unRead: num,
+      surPass: num > 99,
       lastMan: avatar
     })
   },

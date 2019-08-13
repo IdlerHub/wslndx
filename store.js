@@ -1,28 +1,40 @@
+/*
+ * @Date: 2019-06-11 14:24:48
+ * @LastEditors: hxz
+ * @LastEditTime: 2019-08-13 11:57:25
+ */
 import Store from "wxministore"
 
 let env = "develop"
 let imgHost
 let activityUrl
 let API_URL
+let mpVersion
+let socket_host
 
 if (env == "develop") {
   /* 测试环境 */
   imgHost = "https://jinling-xcx-dev.obs.cn-north-1.myhuaweicloud.com/images/dev" /* 图片等静态资源服务器 */
   activityUrl = "https://gqjydev.jinlingkeji.cn/?" /* 国情教育链接 */
+  mpVersion = "v6" /* 版本管理 */
   API_URL = "https://develop.jinlingkeji.cn/api/v6/" /* 数据服务器 */
+  socket_host = "develop.jinlingkeji.cn:8182"
 } else {
   /* 发布环境 */
   imgHost = "https://jinling-xcx-dev.obs.cn-north-1.myhuaweicloud.com/images/pro"
   activityUrl = "https://gqjy.jinlingkeji.cn/?"
+  mpVersion = "v5"
   API_URL = "https://apielb.jinlingkeji.cn/api/v5/"
+  socket_host = "develop.jinlingkeji.cn:8182"
 }
 
 Store.prototype.process = env
 Store.prototype.API_URL = API_URL
+Store.prototype.mpVersion = mpVersion
+Store.prototype.socket_host = socket_host
 
 let store = new Store({
   state: {
-    version: "1.4.2",
     userInfo: {} /* 用户信息 */,
     authUserInfo: false /* （微信用户信息）授权状态 */,
     visitedNum: [] /* 最多10个未授权视频 */,

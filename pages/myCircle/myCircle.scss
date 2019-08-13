@@ -20,6 +20,7 @@ page {
     .left {
       display: flex;
       align-items: center;
+      flex: 2.5;
     }
     .avatarUrl {
       width: 90rpx;
@@ -41,6 +42,8 @@ page {
       font-size: 32rpx;
       color: #9e9e9e;
       white-space: nowrap;
+      flex: 1;
+      margin-right: 5px;
     }
     .delete {
       display: flex;

@@ -1,7 +1,7 @@
 <!--
  * @Date: 2019-06-11 21:04:19
  * @LastEditors: hxz
- * @LastEditTime: 2019-08-12 16:46:49
+ * @LastEditTime: 2019-08-13 11:32:53
  -->
 <view class="container">
   <!-- 下拉刷新 -->
@@ -24,41 +24,36 @@
       <icon class="iconfont icon-arrow-right"></icon>
     </view>
   </navigator>
-  <view class="list">
-    <view class="score">
-      <text class="title"> 我的积分</text>
-      <image class="content" src="/images/score.png" mode="aspectFill">
-        <view class="contain">
-          <text class="num">{{ my_score }}</text>
-          <text class="dsc">可用积分</text>
-        </view>
-        <text class="score-btn" bindtap="toScore">兑换礼品</text>
-      </image>
+
+  <view class="score">
+    <view class="contain">
+      <image class="icon" src="/images/score.png" mode="aspectFill"> </image>
+      <text class="num">{{ my_score }}</text>
+      <text class="dsc">可用积分</text>
     </view>
+    <text class="score-btn" bindtap="toScore">兑换礼品</text>
+  </view>
+
+  <view class="list">
     <navigator hover-class="none" class="nav" url="/pages/collection/collection" open-type="navigate">
-      <icon class="iconfont icon-shoucang"></icon>
+      <icon class="iconfont icon-shoucang1"></icon>
       <text>收藏课程</text>
-      <icon class="iconfont icon-arrow-right"></icon>
     </navigator>
     <navigator hover-class="none" class="nav" url="/pages/history/history" open-type="navigate">
-      <icon class="iconfont icon-lishi"></icon>
+      <icon class="iconfont icon-iconxuexilishi"></icon>
       <text>学习历史</text>
-      <icon class="iconfont icon-arrow-right "></icon>
     </navigator>
     <navigator hover-class="none" class="nav" url="/pages/myCircle/myCircle" open-type="navigate">
-      <icon class="iconfont icon-quanzi"></icon>
+      <icon class="iconfont icon-iconfengcaizhanshi1"></icon>
       <text>风采展示</text>
-      <icon class="iconfont icon-arrow-right "></icon>
     </navigator>
     <navigator hover-class="none" class="nav" url="/pages/invitation/invitation" open-type="navigate">
-      <icon class="iconfont icon-yaoqing"></icon>
+      <icon class="iconfont icon-iconyaoqinghaoyou"></icon>
       <text>邀请好友</text>
-      <icon class="iconfont icon-arrow-right "></icon>
     </navigator>
     <button class="nav" open-type="contact" bindcontact="handleContact">
-      <icon class="iconfont icon-kefu"></icon>
+      <icon class="iconfont icon-kefu1"></icon>
       <text>联系客服</text>
-      <icon class="iconfont icon-arrow-right "></icon>
     </button>
   </view>
 </view>

@@ -18,7 +18,8 @@ page {
     margin: 30rpx 0 20rpx; }
     .circle .top .left {
       display: flex;
-      align-items: center; }
+      align-items: center;
+      flex: 2.5; }
     .circle .top .avatarUrl {
       width: 90rpx;
       height: 90rpx;
@@ -35,7 +36,9 @@ page {
     .circle .top .date {
       font-size: 32rpx;
       color: #9e9e9e;
-      white-space: nowrap; }
+      white-space: nowrap;
+      flex: 1;
+      margin-right: 5px; }
     .circle .top .delete {
       display: flex;
       align-items: center;
