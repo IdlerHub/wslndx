@@ -1,7 +1,7 @@
 /*
  * @Date: 2019-06-11 14:24:48
  * @LastEditors: hxz
- * @LastEditTime: 2019-08-13 11:57:25
+ * @LastEditTime: 2019-08-14 16:58:22
  */
 import Store from "wxministore"
 
@@ -23,9 +23,9 @@ if (env == "develop") {
   /* 发布环境 */
   imgHost = "https://jinling-xcx-dev.obs.cn-north-1.myhuaweicloud.com/images/pro"
   activityUrl = "https://gqjy.jinlingkeji.cn/?"
-  mpVersion = "v5"
-  API_URL = "https://apielb.jinlingkeji.cn/api/v5/"
-  socket_host = "develop.jinlingkeji.cn:8182"
+  mpVersion = "v6"
+  API_URL = "https://apielb.jinlingkeji.cn/api/v6/"
+  socket_host = "api.jinlingkeji.cn:8182"
 }
 
 Store.prototype.process = env

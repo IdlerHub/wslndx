@@ -871,7 +871,7 @@ button.button-hover {
   width: 100rpx;
   height: 100rpx;
   margin: 0rpx auto;
-  background-image: url("https://jinling-xcx-dev.obs.cn-north-1.myhuaweicloud.com/images/dev/refresh.png");
+  background-image: url("https://jinling-xcx-dev.obs.cn-north-1.myhuaweicloud.com/images/pro/refresh.png");
   background-size: cover;
   animation: ani 1s steps(23, end) infinite; }
 
@@ -883,7 +883,7 @@ button.button-hover {
   left: 0;
   right: 0;
   margin: -500rpx auto 0;
-  background-image: url("https://jinling-xcx-dev.obs.cn-north-1.myhuaweicloud.com/images/dev/fabu.png");
+  background-image: url("https://jinling-xcx-dev.obs.cn-north-1.myhuaweicloud.com/images/pro/fabu.png");
   background-size: cover;
   width: 460rpx;
   height: 650rpx;
