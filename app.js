@@ -70,7 +70,7 @@ App({
     }
 
     if (!this.store.$state.userInfo.mobile) {
-      wx.redirectTo({ url: "/pages/login/login" })
+      wx.redirectTo({ url: "/pages/sign/sign" })
     } else if (opts.query.type !== "share") {
       wx.redirectTo({ url: "/pages/index/index" })
     }
@@ -91,7 +91,7 @@ App({
       }
 
       if (!this.store.$state.userInfo.mobile) {
-        wx.redirectTo({ url: "/pages/login/login" })
+        wx.redirectTo({ url: "/pages/sign/sign" })
       } else if (opts.path == "pages/loading/loading") {
         wx.redirectTo({ url: "/pages/index/index" })
       }
@@ -157,6 +157,13 @@ App({
       authKey: data
     })
     wx.setStorageSync("authKey", data)
+  },
+  /* 更新转发分享 */
+  setShare: function (data) {
+    this.store.setState({
+      shareImgurl: data.data.img_url,
+      shareTitle: data.data.title
+    })
   },
   /* 更新store中的用户授权  */
   getSets: function() {

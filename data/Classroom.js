@@ -44,6 +44,10 @@ function share(param) {
   return httpService.post("classroom/share", param)
 }
 
+//POST Classroom/banner 获取广告配置
+function getBanner(param) {
+  return httpService.post("Classroom/collectCancel", param)
+}
 module.exports = {
   recommend,
   detail,

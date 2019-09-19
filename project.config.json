@@ -12,14 +12,6 @@
 			},
 			{
 				"type": "file",
-				"value": "config.js"
-			},
-			{
-				"type": "file",
-				"value": "Gulpfile.js"
-			},
-			{
-				"type": "file",
 				"value": "package-lock.json"
 			},
 			{
@@ -37,7 +29,7 @@
 		]
 	},
 	"setting": {
-		"urlCheck": true,
+		"urlCheck": false,
 		"es6": true,
 		"enhance": true,
 		"postcss": true,

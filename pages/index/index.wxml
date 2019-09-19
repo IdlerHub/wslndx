@@ -50,6 +50,10 @@
         <view class="item {{ currentTab == id ? 'active' : '' }}">{{ item.name }}</view>
       </formCode>
     </block>
+    <view class="integral"  bindtap="toScore">
+      <text>积 分</text>
+      <text>兑 换</text> 
+    </view>
   </scroll-view>
   <swiper class="tab" style="height:{{ height }}px" current="{{ currentTab }}" duration="300" bindchange="switchTab">
     <swiper-item class="tab-item">
@@ -59,6 +63,7 @@
           <view class="line">继续播放：{{ history.last_lesson.title + "第" + history.last_lesson.sub_id + "讲" }}</view>
           <image class="icon" mode="widthFix" src="{{ $state.imgHost }}/rectangle.png"></image>
         </view>
+        <view>jiajijs</view>
         <button wx:if="{{ activity }}" class="outer-link" hover-class="none" open-type="getUserInfo" bindgetuserinfo="onGotUserInfo" data-role="education">
           <image src="{{ activity.image }}"></image>
           <view class="dsc">
@@ -126,6 +131,7 @@
       <text class="badge" wx:if="{{ $state.unRead }}">{{ $state.surPass ? "···" : $state.unRead }}</text>
     </button>
   </view>
+  <!-- <navBar /> -->
   <!-- 签到拿积分 -->
   <view class="integration" wx:if="{{ !$state.signStatus.count }}" catchtouchmove="return">
     <view class="dialog">

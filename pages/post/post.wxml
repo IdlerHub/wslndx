@@ -71,7 +71,7 @@
       </view>
     </view>
   </view>
-  <view class="footer">
+  <!-- <view class="footer">
     <navigator url="../circle/circle?type=1" hover-class="none" open-type="navigate" class="to">
       <formCode>
         <view class="to">
@@ -88,8 +88,10 @@
         </view>
       </formCode>
     </navigator>
-  </view>
+  </view> -->
   <view wx:if="{{ rlAni }}" class="popup">
     <view class="publishAni"></view>
   </view>
+  <!-- 底部navBar -->
+  <navBar path="post"/>
 </view>

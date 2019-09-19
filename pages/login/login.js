@@ -9,6 +9,7 @@ Page({
     canIUse: wx.canIUse("button.open-type.getPhoneNumber"),
     mode: 1,
     authenable: false,
+    check:false,
     btnName: "获取验证码"
   },
   params: { tel: "", authCode: "", telFormat: false, codeFormat: false },
@@ -151,5 +152,17 @@ Page({
         })
       }
     })
+  },
+  checkboxChange: function (e) {
+    console.log(this.data.check)
+    if(this.data.check) {
+      this.setData({
+        check: false
+      })
+    }else {
+      this.setData({
+        check: true
+      })
+    }
   }
 })

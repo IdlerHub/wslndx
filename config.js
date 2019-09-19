@@ -4,8 +4,8 @@
  * @LastEditTime: 2019-08-14 16:58:22
  */
 import Store from "wxministore"
-
-let env = "/* @echo NODE_ENV */"
+// "/* @echo NODE_ENV */"
+let env = "develop"
 let imgHost
 let activityUrl
 let API_URL
@@ -16,15 +16,15 @@ if (env == "develop") {
   /* 测试环境 */
   imgHost = "https://jinling-xcx-dev.obs.cn-north-1.myhuaweicloud.com/images/dev" /* 图片等静态资源服务器 */
   activityUrl = "https://gqjydev.jinlingkeji.cn/?" /* 国情教育链接 */
-  mpVersion = "v6" /* 版本管理 */
-  API_URL = "https://develop.jinlingkeji.cn/api/v6/" /* 数据服务器 */
+  mpVersion = "v7" /* 版本管理 */
+  API_URL = "https://develop.jinlingkeji.cn/api/v7/" /* 数据服务器 */
   socket_host = "develop.jinlingkeji.cn:8182"
 } else {
   /* 发布环境 */
   imgHost = "https://jinling-xcx-dev.obs.cn-north-1.myhuaweicloud.com/images/pro"
   activityUrl = "https://gqjy.jinlingkeji.cn/?"
-  mpVersion = "v6"
-  API_URL = "https://apielb.jinlingkeji.cn/api/v6/"
+  mpVersion = "v7"
+  API_URL = "https://apielb.jinlingkeji.cn/api/v7/"
   socket_host = "api.jinlingkeji.cn:8182"
 }
 

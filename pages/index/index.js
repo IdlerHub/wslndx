@@ -14,7 +14,10 @@ Page({
       let sign = res.data && res.data.signed
       app.setSignIn({ status: sign, count: sign ? 1 : this.data.$state.signStatus.count }, true)
     })
-    this.param = { page: 1, pageSize: 10 }
+    await app.user.share({}).then(res => {
+      app.setShare(res)
+    })
+    this.param = { page: 1, pageSize: 10, province: this.data.$state.userInfo.university.split(',')[0] }
     let reg = /ios/i
     let pt = 20 //导航状态栏上内边距
     let h = 44 //导航状态栏高度
@@ -156,6 +159,11 @@ Page({
   toPost() {
     wx.navigateTo({
       url: "../post/post"
+    })
+  },
+  toScore() {
+    wx.navigateTo({
+      url: "/pages/score/score"
     })
   },
   onPageScroll(e) {

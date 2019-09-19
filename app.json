@@ -25,7 +25,9 @@
     "pages/education/education",
     "pages/videoItemize/videoItemize",
     "pages/commentDetail/commentDetail",
-    "pages/message/message"
+    "pages/message/message",
+    "pages/sign/sign",
+    "components/navBar/navBar"
   ],
   "permission": {
     "scope.userLocation": {

@@ -108,6 +108,11 @@ function addFormId(param) {
   return httpService.post("user/addFormId", param)
 }
 
+//POST User/shareConfig 获取转发配置
+function share() {
+  return httpService.post("User/shareConfig", {})
+}
+
 module.exports = {
   wxLoginCode,
   getAuthCode,
@@ -123,5 +128,6 @@ module.exports = {
   pointsinfo,
   activite,
   signed,
-  addFormId
+  addFormId,
+  share
 }

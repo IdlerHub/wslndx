@@ -1,0 +1,6 @@
+<!--pages/sign/sign.wxml-->
+<view class="container">
+  <image src="/images/logo.png" class="logo"></image>
+  <text class="logo-title">网上老年大学</text>
+  <button class="authorize-phone" bindtap="toLogin">注册</button>
+</view>

@@ -4,8 +4,8 @@
  * @LastEditTime: 2019-08-14 16:58:22
  */
 import Store from "wxministore"
-
-let env = "production"
+const app = getApp()
+let env = "develop"
 let imgHost
 let activityUrl
 let API_URL
@@ -16,15 +16,15 @@ if (env == "develop") {
   /* 测试环境 */
   imgHost = "https://jinling-xcx-dev.obs.cn-north-1.myhuaweicloud.com/images/dev" /* 图片等静态资源服务器 */
   activityUrl = "https://gqjydev.jinlingkeji.cn/?" /* 国情教育链接 */
-  mpVersion = "v6" /* 版本管理 */
-  API_URL = "https://develop.jinlingkeji.cn/api/v6/" /* 数据服务器 */
+  mpVersion = "v7" /* 版本管理 */
+  API_URL = "https://develop.jinlingkeji.cn/api/v7/" /* 数据服务器 */
   socket_host = "develop.jinlingkeji.cn:8182"
 } else {
   /* 发布环境 */
   imgHost = "https://jinling-xcx-dev.obs.cn-north-1.myhuaweicloud.com/images/pro"
   activityUrl = "https://gqjy.jinlingkeji.cn/?"
-  mpVersion = "v6"
-  API_URL = "https://apielb.jinlingkeji.cn/api/v6/"
+  mpVersion = "v7"
+  API_URL = "https://apielb.jinlingkeji.cn/api/v7/"
   socket_host = "api.jinlingkeji.cn:8182"
 }
 
@@ -42,10 +42,18 @@ let store = new Store({
     authKey: "" /* 小程序进入h5的身份标识 */,
     activityUrl: activityUrl,
     signStatus: {} /* 签到状态及弹窗 */,
-    imgHost: imgHost
+    imgHost: imgHost,
+    title:'',
+    path:'',
+    imageUrl:'',
+    shareImgurl: '',
+    shareTitle:''
   },
   pageLisener: {
     onLoad(opts) {
+      this.pramas = {
+        uid: this.data.$state.userInfo.id,
+      }
       if (!this.onShareAppMessage) {
         wx.showShareMenu()
         this.onShareAppMessage = function(ops) {
@@ -60,12 +68,22 @@ let store = new Store({
   methods: {
     menuAppShare() {
       console.log("ShareAppMessage  menu")
-      return {
-        title: "福利！老年大学十万集免费课程在线学习",
-        path: "/pages/loading/loading?uid=" + this.data.$state.userInfo.id + "&type=invite",
-        imageUrl: "../../images/sharemessage.jpg"
+      if (this.data.$state.shareTitle !== '' && this.data.$state.shareImgurl !== ''){
+        console.log(this.data.$state)
+        return {
+          title: this.data.$state.shareTitle,
+          path: "/pages/loading/loading?uid=" + this.data.$state.userInfo.id + "&type=invite",
+          imageUrl: this.data.$state.shareImgurl
+        }
+      }else {
+        return {
+          title: "福利！老年大学十万集免费课程在线学习",
+          path: "/pages/loading/loading?uid=" + this.data.$state.userInfo.id + "&type=invite",
+          imageUrl: "../../images/sharemessage.jpg",
+        }
       }
-    }
+    },
+
   }
 })
 

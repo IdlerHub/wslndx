@@ -1,7 +1,6 @@
 /* pages/login/login.wxss */
 .container {
-  text-align: center;
-  padding: 200rpx 0; }
+  text-align: center; }
   .container .logo {
     width: 74px;
     height: 74px;
@@ -12,13 +11,30 @@
     color: #3a3a3a;
     letter-spacing: 1rpx; }
   .container .authorize-phone {
-    margin: 400rpx 40rpx 0;
+    margin: 130rpx 40rpx 0;
     border-radius: 4rpx;
-    background: #4ba82d;
+    background: #df2020;
     font-size: 36rpx;
     font-weight: bold;
     color: white;
     padding: 10rpx; }
+  .container .remind {
+    height: 120rpx;
+    line-height: 120rpx;
+    color: #6c6c6c;
+    border-bottom: 1px solid #f7f7f7;
+  }
+  .container .checkbox {
+    margin-top: 10rpx;
+    font-size: 38rpx;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+  }
+  .container .agreement {
+    color:#e32323 
+  }
   .container .mobile {
     display: block;
     margin-top: 30rpx;
@@ -57,20 +73,27 @@
       color: white;
       line-height: 110rpx; }
   .container .buttons {
-    position: absolute;
     width: 100%;
     font-size: 30rpx;
-    color: #bdbdbd;
-    bottom: 40rpx;
-    display: flex;
-    justify-content: stretch;
-    align-items: center;
-    vertical-align: bottom; }
+    color: #6c6c6c;
+    height: 172rpx;
+    border-bottom: 1px solid #f7f7f7;
+
+    }
     .container .buttons text {
-      flex: 1;
-      display: block;
-      padding: 10rpx 20rpx; }
-      .container .buttons text:nth-child(1) {
-        text-align: right; }
-      .container .buttons text:nth-child(2) {
-        text-align: left; }
+      position: relative;
+      display: inline-block;
+      width: 50%;
+      height: 100%;
+      text-align: center;
+      font-size: 22px;
+    }
+  .container .buttons .redRow {
+    position: absolute;
+    display: inline-block;
+    bottom: 0;
+    width: 90rpx;
+    left: 50%;
+    margin-left: -45rpx;
+    border-bottom: 2px solid #df2020;
+  }

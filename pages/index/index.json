@@ -6,6 +6,7 @@
   "enablePullDownRefresh": true,
   "usingComponents": {
     "navigationBar": "/components/navigationBar/navigationBar",
-    "formCode": "/components/formCode/formCode"
+    "formCode": "/components/formCode/formCode",
+    "navBar": "/components/navBar/navBar"
   }
 }

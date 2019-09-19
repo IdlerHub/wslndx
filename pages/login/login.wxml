@@ -1,8 +1,25 @@
 <!--pages/login/login.wxml-->
 <view class="container">
-  <image src="/images/logo.png" class="logo"></image>
-  <text class="logo-title">网上老年大学</text>
-  <button wx:if="{{ mode }}" class="authorize-phone" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber">微信授权登录</button>
+  <view class="buttons">
+    <text data-type="1" catchtap="loginType">
+    微信授权
+    <text class="redRow" wx:if="{{ mode === 1 }}"></text>
+    </text>
+    <text data-type="0" catchtap="loginType">
+    短信验证
+    <text class="redRow" wx:if="{{ mode === 0}}"></text>
+    </text>
+  </view>
+  <view wx:if="{{ mode }}">
+    <view class="remind">为了让您账户更安全,请设置常用的联系方式</view>
+    <button class="authorize-phone" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber" disabled="{{check}}">微信授权登录</button>
+    <checkbox-group bindchange="checkboxChange">
+      <label class="checkbox">
+        <checkbox checked="true" color="#e32323"/>
+        阅读并同意一下协议  <text class="agreement">《服务协议》</text>
+      </label>
+    </checkbox-group>
+  </view>
   <form wx:else class="mobile" bindsubmit="send">
     <view class="section1">
       <input type="number" placeholder="请输入手机号" bindblur="inputTel" />
@@ -13,6 +30,4 @@
     </view>
     <button class="submit" hover-class="button-hover" form-type="submit">登录</button>
   </form>
-
-  <view class="buttons"> <text data-type="1" catchtap="loginType">微信授权登录</text> | <text data-type="0" catchtap="loginType">手机号登录</text> </view>
 </view>

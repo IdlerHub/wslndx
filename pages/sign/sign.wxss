@@ -1,0 +1,29 @@
+/* pages/sign/sign.wxss */
+
+.container {
+  text-align: center;
+  padding: 200rpx 0;
+}
+
+.container .logo {
+  width: 74px;
+  height: 74px;
+  margin-bottom: 30rpx;
+}
+
+.container .logo-title {
+  display: block;
+  font-size: 44rpx;
+  color: #3a3a3a;
+  letter-spacing: 1rpx;
+}
+
+.container .authorize-phone {
+  margin: 400rpx 40rpx 0;
+  border-radius: 4rpx;
+  background: #e21e1e;
+  font-size: 36rpx;
+  font-weight: bold;
+  color: white;
+  padding: 10rpx;
+}
