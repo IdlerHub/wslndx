@@ -72,26 +72,15 @@
     </view>
   </view>
   <view class="footer">
-    <navigator url="../circle/circle?type=1" hover-class="none" open-type="navigate" class="to">
-      <formCode>
-        <view class="to">
-          <text class="icon">+</text>
-          <text class="text">加圈</text>
-        </view>
-      </formCode>
-    </navigator>
     <navigator url="/pages/release/release" hover-class="none" open-type="navigate" class="write">
-      <formCode>
         <view class="write">
-          <image mode="aspectFill" class="icon" src="{{ $state.imgHost }}/write.png"></image>
           <text class="text">写帖</text>
         </view>
-      </formCode>
     </navigator>
   </view>
   <view wx:if="{{ rlAni }}" class="popup">
     <view class="publishAni"></view>
   </view>
   <!-- 底部navBar -->
-  <!-- <navBar path="post"/> -->
+  <navBar path="post"/>
 </view>

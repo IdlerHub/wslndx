@@ -80,6 +80,11 @@ Page({
       url: "/pages/post/post"
     })
   },
+  toUser() {
+    wx.navigateTo({
+      url: "/pages/user/user"
+    })
+  },
   // 用户昵称等信息授权
   onGotUserInfo(e) {
     if (e.detail.errMsg === "getUserInfo:ok") {

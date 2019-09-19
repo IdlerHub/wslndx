@@ -176,22 +176,13 @@ page {
 
 .footer {
   position: fixed;
-  bottom: 0;
+  right: 30rpx;
+  bottom: 300rpx;
   height: 120rpx;
-  width: 100%;
-  background: #f8f8f8;
-  display: flex; }
-  .footer::after {
-    content: "";
-    width: 2rpx;
-    height: 40rpx;
-    background: #dbdbdb;
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    margin: auto; }
+  width: 120rpx;
+  background:rgba(223,32,32,1);
+  border-radius: 50%; 
+}
 
 .write,
 .to {
@@ -215,6 +206,6 @@ page {
 .write .text,
 .to .text {
   font-size: 40rpx;
-  color: #343434;
+  color: #fff;
   padding: 0 15rpx;
   line-height: 56rpx; }

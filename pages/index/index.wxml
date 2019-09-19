@@ -115,7 +115,7 @@
     </swiper-item>
   </swiper>
   <!-- 底部tabbar -->
-  <view class="tabbar">
+  <!-- <view class="tabbar">
     <view class="item">
       <image class="icon" mode="aspectFill" src="{{ $state.imgHost }}/Classroom-red.png"></image>
       <text class="name active">云课堂</text>
@@ -138,8 +138,8 @@
       <text class="name">秀风采</text>
       <text class="badge" wx:if="{{ $state.unRead }}">{{ $state.surPass ? "···" : $state.unRead }}</text>
     </button>
-  </view>
-  <!-- <navBar /> -->
+  </view> -->
+  <navBar />
   <!-- 签到拿积分 -->
   <view class="integration" wx:if="{{ !$state.signStatus.count }}" catchtouchmove="return">
     <view class="dialog">
