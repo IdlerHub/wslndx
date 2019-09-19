@@ -6,7 +6,14 @@ Page({
     nav: [{ name: "推荐", class: ".recommend" }, { name: "分类", class: ".category" }],
     height: 0,
     isRefreshing: false,
-    activity: ""
+    activity: "",
+    imgUrls: [
+      'https://images.unsplash.com/photo-1551334787-21e6bd3ab135?w=640',
+      'https://images.unsplash.com/photo-1551214012-84f95e060dee?w=640',
+      'https://images.unsplash.com/photo-1551446591-142875a901a1?w=640'
+    ],
+    interval: 2000,
+    duration: 1000
   },
   navHeightList: [],
   onLoad: async function(e) {
@@ -55,7 +62,7 @@ Page({
     if (app.store.$state.userInfo.mobile) this.getHistory()
   },
   init() {
-    return Promise.all([this.getactivite(), this.getRecommend(), this.getCategory()]).then(values => {
+    return Promise.all([this.getactivite(), this.getRecommend(), this.getCategory(), this.getBanner()]).then(values => {
       this.setData({
         activity: values[0].data
       })
@@ -130,6 +137,14 @@ Page({
   },
   getactivite() {
     return app.user.activite()
+  },
+  getBanner() {
+    return app.classroom.banner({}).then(res => {
+      console.log(res)
+      this.setData({
+        imgUrls:res.data
+      })
+    })
   },
   getHistory() {
     let historyParam = { page: 1, pageSize: 10 }

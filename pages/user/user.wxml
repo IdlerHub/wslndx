@@ -24,10 +24,9 @@
       <icon class="iconfont icon-arrow-right"></icon>
     </view>
   </navigator>
-
   <view class="score">
+    <image src="/images/userbg.png" class="scoreBg"></image>
     <view class="contain">
-      <image class="icon" src="/images/score.png" mode="aspectFill"> </image>
       <text class="num">{{ my_score }}</text>
       <text class="dsc">可用积分</text>
     </view>
@@ -36,24 +35,29 @@
 
   <view class="list">
     <navigator hover-class="none" class="nav" url="/pages/collection/collection" open-type="navigate">
-      <icon class="iconfont icon-shoucang1"></icon>
+      <image src="/images/usershoucang.png" class="iconfont"></image>
       <text>收藏课程</text>
     </navigator>
     <navigator hover-class="none" class="nav" url="/pages/history/history" open-type="navigate">
-      <icon class="iconfont icon-iconxuexilishi"></icon>
+      <image src="/images/userhistory.png" class="iconfont"></image>
       <text>学习历史</text>
     </navigator>
     <navigator hover-class="none" class="nav" url="/pages/myCircle/myCircle" open-type="navigate">
-      <icon class="iconfont icon-iconfengcaizhanshi1"></icon>
+      <image src="/images/userfengcai.png" class="iconfont"></image>
       <text>风采展示</text>
     </navigator>
     <navigator hover-class="none" class="nav" url="/pages/invitation/invitation" open-type="navigate">
-      <icon class="iconfont icon-iconyaoqinghaoyou"></icon>
+      <image src="/images/useryaoqing.png" class="iconfont"></image>
       <text>邀请好友</text>
     </navigator>
+    <navigator hover-class="none" class="nav" url="../circle/circle?type=1" open-type="navigate">
+      <image src="/images/useraddquan.png" class="iconfont"></image>
+      <text>加入圈子</text>
+    </navigator>
     <button class="nav" open-type="contact" bindcontact="handleContact">
-      <icon class="iconfont icon-kefu1"></icon>
+      <image src="/images/userkefu.png" class="iconfont"></image>
       <text>联系客服</text>
     </button>
   </view>
+  <navBar />
 </view>

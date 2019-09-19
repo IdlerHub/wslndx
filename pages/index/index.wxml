@@ -63,7 +63,7 @@
           <view class="line">继续播放：{{ history.last_lesson.title + "第" + history.last_lesson.sub_id + "讲" }}</view>
           <image class="icon" mode="widthFix" src="{{ $state.imgHost }}/rectangle.png"></image>
         </view>
-        <view>jiajijs</view>
+        <!-- 答题（已隐藏） -->
         <button wx:if="{{ activity }}" class="outer-link" hover-class="none" open-type="getUserInfo" bindgetuserinfo="onGotUserInfo" data-role="education">
           <image src="{{ activity.image }}"></image>
           <view class="dsc">
@@ -72,6 +72,14 @@
             <image class="icon" mode="aspectFill" src="/images/instant.png"></image>
           </view>
         </button>
+        <!-- 广告位banner -->
+        <swiper indicator-dots autoplay interval="{{interval}}" duration="{{duration}}" circular class="swiper">
+          <block wx:for="{{imgUrls}}" wx:key="index" >
+            <swiper-item >
+              <image src="{{item.image}}" class="slide-image" width="355" height="150"/>
+            </swiper-item>
+          </block>
+        </swiper>
         <view catchtap="detailTap" wx:for="{{ recommend }}" wx:key="index" class="item" data-item="{{ item }}">
           <view class="content {{ item.show_big ? 'big' : '' }}">
             <view class="left">

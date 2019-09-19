@@ -45,8 +45,8 @@ function share(param) {
 }
 
 //POST Classroom/banner 获取广告配置
-function getBanner(param) {
-  return httpService.post("Classroom/collectCancel", param)
+function banner(param) {
+  return httpService.post("Classroom/banner", param)
 }
 module.exports = {
   recommend,
@@ -56,5 +56,6 @@ module.exports = {
   recordAdd,
   collect,
   collectCancel,
-  share
+  share,
+  banner
 }

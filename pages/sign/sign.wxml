@@ -2,5 +2,5 @@
 <view class="container">
   <image src="/images/logo.png" class="logo"></image>
   <text class="logo-title">网上老年大学</text>
-  <button class="authorize-phone" bindtap="toLogin">注册</button>
+  <button class="authorize-phone" bindtap="toLogin">我要注册</button>
 </view>

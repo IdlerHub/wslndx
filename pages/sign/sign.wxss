@@ -2,12 +2,12 @@
 
 .container {
   text-align: center;
-  padding: 200rpx 0;
+  padding: 120rpx 0;
 }
 
 .container .logo {
-  width: 74px;
-  height: 74px;
+  width: 160rpx;
+  height: 160rpx;
   margin-bottom: 30rpx;
 }
 
@@ -19,10 +19,10 @@
 }
 
 .container .authorize-phone {
-  margin: 400rpx 40rpx 0;
-  border-radius: 4rpx;
-  background: #e21e1e;
-  font-size: 36rpx;
+  margin: 459rpx 40rpx 0;
+  border-radius: 6rpx;
+  background:rgba(226,30,30,1);
+  font-size: 38rpx;
   font-weight: bold;
   color: white;
   padding: 10rpx;

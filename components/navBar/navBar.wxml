@@ -1,6 +1,6 @@
 <!--components/navBar/navBar.wxml-->
 <view class="tabbar">
-    <view class="item" bind:handler="toIndex">
+    <view class="item" bindtap="toIndex">
       <image class="icon" mode="aspectFill" src="{{ $state.imgHost }}/Classroom-red.png"></image>
       <text class="name active">云课堂</text>
     </view>
