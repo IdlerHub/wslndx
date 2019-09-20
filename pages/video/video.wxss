@@ -1,12 +1,12 @@
 @charset "UTF-8";
 .myVideo {
-  height: 100vh;
+  height: calc(100vh - 128rpx);
   width: 100%; }
 
 /* 背景幕 */
 .dropback {
   position: fixed;
-  height: 100vh;
+  height: calc(100vh - 128rpx);
   width: 100%;
   background-color: rgba(0, 0, 0, 0.15);
   visibility: visible; }
@@ -76,7 +76,7 @@
   height: 130rpx;
   position: absolute;
   width: calc(100% - 60rpx);
-  bottom: 40rpx;
+  bottom: 128rpx;
   font-size: 36rpx;
   color: #ffffff;
   line-height: 42rpx;
@@ -92,7 +92,7 @@
 .cimg {
   position: absolute;
   left: 615rpx;
-  top: calc(50% - 320rpx);
+  top: calc(50% - 375rpx);
   width: 110rpx;
   height: 110rpx;
   border-radius: 50%;
@@ -116,7 +116,7 @@
   position: absolute;
   width: 120rpx;
   left: 610rpx;
-  top: calc(50% - 120rpx);
+  top: calc(50% - 175rpx);
   text-align: center;
   overflow: visible; }
 
@@ -129,7 +129,7 @@
   position: fixed;
   top: 50%;
   z-index: 5;
-  margin-top: -170rpx;
+  margin-top: -224rpx;
   right: -8rpx; }
 
 /* 点赞动画 */
@@ -152,7 +152,7 @@
   left: 610rpx;
   top: 50%;
   width: 120rpx;
-  margin-top: 60rpx;
+  margin-top: -10rpx;
   text-align: center;
   line-height: normal;
   z-index: 5; }
@@ -199,7 +199,7 @@
   height: 146rpx;
   left: 0;
   right: 0;
-  top: 0;
+  top: -267rpx;
   bottom: 0;
   margin: auto; }
 

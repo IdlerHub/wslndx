@@ -1,101 +1,62 @@
 // components/navBar/navBar.js
 const app = getApp()
-Page({
-
-  /**
-   * 页面的初始数据
-   */
-  data: {
-    path:''
-  },
-
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad: function(options) {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function() {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function() {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function() {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function() {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function() {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function() {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function() {
-
-  },
-  toIndex() {
-    console.log(1)
-    wx.navigateTo({
-      url: "/pages/index/index"
-    })
-  },
-  toVideo() {
-    wx.navigateTo({
-      url: "/pages/video/video"
-    })
-  },
-  toPost() {
-    wx.navigateTo({
-      url: "/pages/post/post"
-    })
-  },
-  toUser() {
-    wx.navigateTo({
-      url: "/pages/user/user"
-    })
-  },
-  // 用户昵称等信息授权
-  onGotUserInfo(e) {
-    if (e.detail.errMsg === "getUserInfo:ok") {
-      app.updateBase(e)
-      if (e.currentTarget.dataset.role == "user") {
-        this.toUser()
-      } else if (e.currentTarget.dataset.role == "post") {
-        this.toPost()
-      } else {
-        this.toEducation()
-      }
+Component({
+  properties: {
+    path: {
+      type: String,//类型
+      value: ''//默认值
     }
   },
+  methods: {
+    toIndex() {
+      if(this.data.path == 'index') {
+        return
+      }else {
+        wx.redirectTo({
+          url: "/pages/index/index"
+        })
+      }  
+    },
+    toVideo() {
+      if (this.data.path == 'video') {
+        return
+      } else {
+        wx.redirectTo({
+          url: "/pages/video/video"
+        })
+      }  
+    },
+    toPost() {
+      if (this.data.path == 'post') {
+        return
+      } else {
+        wx.redirectTo({
+          url: "/pages/post/post"
+        })
+      }  
+    },
+    toUser() {
+      if (this.data.path == 'user') {
+        return
+      } else {
+        wx.redirectTo({
+          url:"/pages/user/user"
+        })
+      }  
+    },
+    // 用户昵称等信息授权
+    onGotUserInfo(e) {
+      if (e.detail.errMsg === "getUserInfo:ok") {
+        app.updateBase(e)
+        if (e.currentTarget.dataset.role == "user") {
+          this.toUser()
+        } else if (e.currentTarget.dataset.role == "post") {
+          this.toPost()
+        } else {
+          this.toEducation()
+        }
+      }
+    },
+  }
+  
 })

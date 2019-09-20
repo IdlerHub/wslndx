@@ -74,7 +74,7 @@
   <view class="footer">
     <navigator url="/pages/release/release" hover-class="none" open-type="navigate" class="write">
         <view class="write">
-          <text class="text">写帖</text>
+          <text class="text">发帖</text>
         </view>
     </navigator>
   </view>

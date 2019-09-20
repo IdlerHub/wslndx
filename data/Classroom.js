@@ -48,6 +48,11 @@ function share(param) {
 function banner(param) {
   return httpService.post("Classroom/banner", param)
 }
+
+//POST Classroom/banner 获取早报
+function paper(param) {
+  return httpService.post("Classroom/paper", param)
+}
 module.exports = {
   recommend,
   detail,
@@ -57,5 +62,6 @@ module.exports = {
   collect,
   collectCancel,
   share,
-  banner
+  banner,
+  paper
 }

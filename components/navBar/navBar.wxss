@@ -1,12 +1,11 @@
 /* components/navBar/navBar.wxss */
 .tabbar {
   position: fixed;
-  height: 160rpx;
+  height: 128rpx;
   width: 100%;
   bottom: 0;
   background: rgba(248, 248, 248, 0.99);
   display: flex;
-  align-items: center;
   justify-content: space-around;
   z-index: 1;
   border-top: 2rpx solid #e9e9e9; }
@@ -22,8 +21,8 @@
 .tabbar .item .badge {
   position: absolute;
   background: #df2020;
-  top: -5px;
-  right: -5px;
+  top: -4px;
+  right: -25px;
   min-width: 15px;
   height: 20px;
   padding: 0 5rpx;
@@ -44,6 +43,19 @@
 
 .tabbar .name {
   display: block;
-  font-size: 36rpx;
-  color: #979797;
+  font-size: 42rpx;
+  color:rgba(151,151,151,1);
+  padding-top: 30rpx;
   line-height: 45rpx; }
+.tabbar .active {
+  color: rgba(223,32,32,1);
+  font-weight: 550;
+}
+.tabbar .resRow {
+  width:40rpx;
+  height:6rpx;
+  background:rgba(223,32,32,1);
+  border-radius:3px;
+  margin: 15rpx 43rpx;
+}
+

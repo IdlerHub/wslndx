@@ -7,11 +7,6 @@ Page({
     height: 0,
     isRefreshing: false,
     activity: "",
-    imgUrls: [
-      'https://images.unsplash.com/photo-1551334787-21e6bd3ab135?w=640',
-      'https://images.unsplash.com/photo-1551214012-84f95e060dee?w=640',
-      'https://images.unsplash.com/photo-1551446591-142875a901a1?w=640'
-    ],
     interval: 2000,
     duration: 1000
   },
@@ -62,7 +57,7 @@ Page({
     if (app.store.$state.userInfo.mobile) this.getHistory()
   },
   init() {
-    return Promise.all([this.getactivite(), this.getRecommend(), this.getCategory(), this.getBanner()]).then(values => {
+    return Promise.all([this.getactivite(), this.getRecommend(), this.getCategory(), this.getBanner(), this.getPaper()]).then(values => {
       this.setData({
         activity: values[0].data
       })
@@ -287,5 +282,38 @@ Page({
       }, 1000)
     })
   },
-  onReachBottom() {}
+  onReachBottom() {},
+  /* 广告位值跳转 */ 
+  bannerGo(e) {
+    console.log(e.currentTarget.dataset.item)
+    let item = e.currentTarget.dataset.item;
+    if (item.jump_type == 1) {
+      /* 外链 */
+      wx.navigateTo({
+        url: `../education/education?type=${e.currentTarget.dataset.item.clickurl}}`
+      })
+    } else if (item.jump_type == 2) {
+      /* 视频 */
+      wx.navigateTo({
+        url: `../detail/detail?id=${e.currentTarget.dataset.item.video_id}&name=${e.currentTarget.dataset.item.title}`
+      })
+    } else {
+      /* 文章 */
+
+    }
+  },
+  getPaper() {
+    app.classroom.paper({}).then(res => {
+      console.log(res)
+      this.setData({
+        paperMsg: res.data
+      })
+    })
+  },
+  jumpPeper(e) {
+    console.log(e.currentTarget.dataset.peper.url)
+    wx.navigateTo({
+      url: `../education/education?url=${e.currentTarget.dataset.peper.url}&type=0}`
+    })
+  }
 })
