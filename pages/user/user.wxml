@@ -25,7 +25,7 @@
     </view>
   </navigator>
   <view class="score">
-    <image src="/images/userbg.png" class="scoreBg"></image>
+    <image src="{{ $state.imgHost }}/userbg.png" class="scoreBg"></image>
     <view class="contain">
       <text class="num">{{ my_score }}</text>
       <text class="dsc">可用积分</text>

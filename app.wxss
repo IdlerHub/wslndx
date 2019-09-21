@@ -827,6 +827,16 @@ page {
   100% {
     background-position: 100%; } }
 
+ @keyframes flicker {
+    0% {
+        background-position: 0%;
+    }
+    50% {
+        background-position: 100%;
+    }
+    100% {
+        background-position: 100%;
+    }}
 button::after {
   border: none; }
 

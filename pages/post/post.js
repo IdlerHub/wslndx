@@ -158,6 +158,7 @@ Page({
   },
   navigate(e) {
     let id = e.currentTarget.dataset.id
+    console.log(id)
     wx.navigateTo({
       url: "../pDetail/pDetail?id=" + id
     })

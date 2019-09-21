@@ -46,11 +46,11 @@
   <!-- 农场和电台 -->
   <view class="jumpout">
     <navigator class="jumpoutBox" url="/pages/education/education?type=farm">
-      <image class="img" mode="widthFix" src="/images/farm.png"></image>
+      <image class="img" mode="widthFix" src="{{ $state.imgHost }}/farm.png"></image>
       <text>开心农场</text>
     </navigator>
     <navigator class="jumpoutBox" url="/pages/education/education?type=station">
-      <image class="img" mode="widthFix" src="/images/station.png"></image>
+      <image class="img" mode="widthFix" src="{{ $state.imgHost }}/station.png"></image>
       <text>老年电台</text>
     </navigator>
   </view>
@@ -61,8 +61,8 @@
         <view class="item {{ currentTab == id ? 'active' : '' }}">{{ item.name }}</view>
       </formCode>
     </block>
-    <view class="integral"  bindtap="toScore">
-      <image src="/images/integral.png"></image> 
+    <view class="integral"  bindtap="toScore"> 
+      <view class="integralImg"></view>
     </view>
   </scroll-view>
   <swiper class="tab" style="height:{{ height }}px" current="{{ currentTab }}" duration="300" bindchange="switchTab">
@@ -83,7 +83,7 @@
           </view>
         </button> -->
         <!-- 广告位banner -->
-        <swiper indicator-dots autoplay interval="{{interval}}" duration="{{duration}}" circular class="swiper" wx:if="{{imgUrls[0].image}}">
+        <swiper indicator-dots="{{imgUrls.length > 1 ? true : false}}" autoplay interval="{{interval}}" duration="{{duration}}" circular class="swiper" wx:if="{{imgUrls[0].image}}">
           <block wx:for="{{imgUrls}}" wx:key="index" >
             <swiper-item >
               <image src="{{item.image}}" class="slide-image" width="355" height="150" catchtap="bannerGo" data-item="{{ item }}"/>
@@ -103,7 +103,7 @@
               </view>
           </view>
         </view>
-        <view catchtap="detailTap" wx:for="{{ recommend }}" wx:key="index" class="item" data-item="{{ item }}">
+        <view catchtap="detailTap" wx:for="{{ $state.recommend }}" wx:key="index" class="item" data-item="{{ item }}">
           <view class="content {{ item.show_big ? 'big' : '' }}">
             <view class="left">
               <image class="poster" mode="aspectFill" src="{{ (item.show_big && item.big_image) || item.image }}" lazy-load="true"></image>

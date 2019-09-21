@@ -205,7 +205,7 @@ page {
 
 .write .text,
 .to .text {
-  font-size: 40rpx;
+  font-size:34rpx;
   color: #fff;
   padding: 0 15rpx;
   line-height: 56rpx; }

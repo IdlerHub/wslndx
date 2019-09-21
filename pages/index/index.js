@@ -19,7 +19,6 @@ Page({
     await app.user.share({}).then(res => {
       app.setShare(res)
     })
-    this.param = { page: 1, pageSize: 10, province: this.data.$state.userInfo.university.split(',')[0] }
     let reg = /ios/i
     let pt = 20 //导航状态栏上内边距
     let h = 44 //导航状态栏高度
@@ -54,7 +53,7 @@ Page({
   },
   onShow() {
     /* 更新用户的视频浏览历史 */
-    if (app.store.$state.userInfo.mobile) this.getHistory()
+    if (app.store.$state.userInfo.mobile) this.getHistory() 
   },
   init() {
     return Promise.all([this.getactivite(), this.getRecommend(), this.getCategory(), this.getBanner(), this.getPaper()]).then(values => {
@@ -105,10 +104,14 @@ Page({
     this.setHeight()
   },
   getRecommend() {
-    return app.classroom.recommend(this.param).then(msg => {
+    let param = { page: 1, pageSize: 10, province: this.data.$state.userInfo.university.split(',')[0] }
+    return app.classroom.recommend(param).then(msg => {
       if (msg.code == 1) {
         msg.data.forEach(function(item) {
           item.bw = app.util.tow(item.browse)
+        })
+        app.store.setState({
+          recommend: msg.data
         })
         this.setData({
           recommend: msg.data
@@ -135,9 +138,8 @@ Page({
   },
   getBanner() {
     return app.classroom.banner({}).then(res => {
-      console.log(res)
       this.setData({
-        imgUrls:res.data
+        imgUrls: res.data
       })
     })
   },
@@ -145,9 +147,10 @@ Page({
     let historyParam = { page: 1, pageSize: 10 }
     return app.user.history(historyParam).then(msg => {
       if (msg.code == 1) {
+        console.log(this.data.history)
         this.setData({
           "history.last_lesson": msg.data.last_lesson || ""
-        })
+        }) 
       }
     })
   },
@@ -290,16 +293,18 @@ Page({
     if (item.jump_type == 1) {
       /* 外链 */
       wx.navigateTo({
-        url: `../education/education?type=${e.currentTarget.dataset.item.clickurl}}`
+        url: `../education/education?type=0&type=0&url=${item.clickurl}`
       })
     } else if (item.jump_type == 2) {
       /* 视频 */
       wx.navigateTo({
-        url: `../detail/detail?id=${e.currentTarget.dataset.item.video_id}&name=${e.currentTarget.dataset.item.title}`
+        url: `../detail/detail?id=${item.video_id}&name=${item.title}`
       })
     } else {
       /* 文章 */
-
+      wx.navigateTo({
+        url: "../pDetail/pDetail?id=" + 826
+      })
     }
   },
   getPaper() {

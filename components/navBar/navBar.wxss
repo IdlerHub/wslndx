@@ -21,8 +21,8 @@
 .tabbar .item .badge {
   position: absolute;
   background: #df2020;
-  top: -4px;
-  right: -25px;
+  top: 8px;
+  right: -21px;
   min-width: 15px;
   height: 20px;
   padding: 0 5rpx;

@@ -4,7 +4,7 @@
 </view>
 <!-- 头部大背景 -->
 <image class="bg" src="/images/score/score_bg.png">
-  <text class="title">可用积分</text>
+  <text class="title">您的可用积分</text>
   <text class="scores">{{ totalPoints }}</text>
 </image>
 <!-- tabs菜单列表 -->

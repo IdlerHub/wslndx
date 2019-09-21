@@ -47,7 +47,8 @@ let store = new Store({
     path:'',
     imageUrl:'',
     shareImgurl: '',
-    shareTitle:''
+    shareTitle:'',
+    recommend:''
   },
   pageLisener: {
     onLoad(opts) {

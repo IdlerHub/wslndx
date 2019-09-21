@@ -140,6 +140,16 @@ Page({
     app.user.profile(param).then(msg => {
       if (msg.code == 1) {
         app.setUser(msg.data.userInfo)
+        app.classroom.recommend({ page: 1, pageSize: 10, province: this.data.$state.userInfo.university.split(',')[0] }).then(msg => {
+          if (msg.code == 1) {
+            msg.data.forEach(function (item) {
+              item.bw = app.util.tow(item.browse)
+            })
+            app.store.setState({
+              recommend: msg.data
+            })
+          }
+        })
       }
     })
   },

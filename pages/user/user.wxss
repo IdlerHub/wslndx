@@ -119,7 +119,7 @@ page {
       justify-content: center;
     }
      page .list .nav:nth-child(3n) {
-       width: 234rpx;
+       width: 232rpx;
      }
     page .list .nav:nth-child(1) {
       position: relative;
@@ -149,7 +149,9 @@ page {
       align-items: center;
       overflow: visible;
       border: 1px solid rgba(237,237,237,1);
-      border-top: 0; }
+      border-top: 0; 
+      box-sizing: border-box;
+      }
       /* page .list .nav:nth-child(2) icon:nth-child(1) {
         color: #ff9161;
         font-size: 84rpx;
