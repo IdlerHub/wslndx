@@ -16,7 +16,7 @@ Page({
           this.junmpOut(options.url)
         } else {
           this.setData({
-            url: options.url + "mobile=" + encodeURIComponent(this.data.$state.userInfo.mobile) + "&authKey=" + encodeURIComponent(this.data.$state.authKey)
+            url: options.url + "?mobile=" + encodeURIComponent(this.data.$state.userInfo.mobile) + "&authKey=" + encodeURIComponent(this.data.$state.authKey)
           })
         }
       }else {
