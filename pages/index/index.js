@@ -155,7 +155,7 @@ Page({
     })
   },
   toUser() {
-    wx.navigateTo({
+    wx.redirectTo({
       url: "../user/user"
     })
   },
