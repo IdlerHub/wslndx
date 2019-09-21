@@ -15,8 +15,8 @@
       <text class="badge" wx:if="{{ $state.unRead }}">{{ $state.surPass ? "···" : $state.unRead }}</text>
       <view class="resRow" wx:if="{{path === 'post'}}"></view>
     </button>
-    <view class="item" bindtap="toUser">
+    <button class="item" bindgetuserinfo="onGotUserInfo" open-type="getUserInfo" data-role="user">
       <text  class="{{ path === 'user' ? 'active name' : 'name'}}" >我的</text>
       <view class="resRow" wx:if="{{path === 'user'}}"></view>
-    </view>
+    </button>
 </view>
