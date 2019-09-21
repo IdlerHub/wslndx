@@ -245,5 +245,10 @@ Page({
     if (e.detail.errMsg == "getUserInfo:ok") {
       app.updateBase(e)
     }
+  },
+  onUnload() {
+    wx.redirectTo({
+      url: '/pages/index/index',
+    })
   }
 })

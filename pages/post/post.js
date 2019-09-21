@@ -199,5 +199,10 @@ Page({
   //用于数据统计
   onHide() {
     app.aldstat.sendEvent("退出", { name: "秀风采页" })
+  },
+  onUnload() {
+    wx.redirectTo({
+      url: '/pages/index/index',
+    })
   }
 })
