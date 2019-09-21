@@ -16,7 +16,7 @@
     <checkbox-group bindchange="checkboxChange">
       <label class="checkbox">
         <checkbox checked="true" color="#e32323" class="boxcheck"/>
-        阅读并同意以下协议  <text class="agreement">《服务协议》</text>
+        阅读并同意以下协议  <text class="agreement" catchtap="toAgree">《服务协议》</text>
       </label>
     </checkbox-group>
   </view>

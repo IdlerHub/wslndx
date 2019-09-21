@@ -293,7 +293,7 @@ Page({
     if (item.jump_type == 1) {
       /* 外链 */
       wx.navigateTo({
-        url: `../education/education?type=0&type=0&url=${item.clickurl}`
+        url: `../education/education?type=0&url=${item.clickurl}&login=${item.is_login}`
       })
     } else if (item.jump_type == 2) {
       /* 视频 */

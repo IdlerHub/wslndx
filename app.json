@@ -27,6 +27,7 @@
     "pages/commentDetail/commentDetail",
     "pages/message/message",
     "pages/sign/sign",
+    "pages/agreement/agreement",
     "components/navBar/navBar"
   ],
   "permission": {

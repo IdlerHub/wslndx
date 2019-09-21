@@ -6,11 +6,23 @@ Page({
   onLoad: function(options) {
     console.log(options.type)
     if (options.type === 'farm') {
-      this.junmpOut('https://h5xyx.jinlingkeji.cn/h5game')
+      this.junmpOut('https://h5xyx.jinlingkeji.cn')
     } else if (options.type === 'station') {
       this.junmpOut('https://open.ximalaya.com/site/index/174/ca5492cf55806b41713dada77a1d2ed5')
     } else {
-      this.junmpOut(options.url)
+      console.log(options)
+      if (options.login) {
+        if (options.login == 0) {
+          this.junmpOut(options.url)
+        } else {
+          this.setData({
+            url: options.url + "mobile=" + encodeURIComponent(this.data.$state.userInfo.mobile) + "&authKey=" + encodeURIComponent(this.data.$state.authKey)
+          })
+        }
+      }else {
+        this.junmpOut(options.url)
+      }
+      
     }
     console.log(options.url)
   },

@@ -164,5 +164,11 @@ Page({
         check: true
       })
     }
+  },
+  /* 去协议页面 */
+  toAgree() {
+    wx.navigateTo({
+      url: '/pages/agreement/agreement',
+    })
   }
 })
