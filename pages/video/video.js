@@ -247,8 +247,5 @@ Page({
     }
   },
   onUnload() {
-    wx.redirectTo({
-      url: '/pages/index/index',
-    })
   }
 })

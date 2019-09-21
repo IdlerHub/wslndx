@@ -201,8 +201,5 @@ Page({
     app.aldstat.sendEvent("退出", { name: "秀风采页" })
   },
   onUnload() {
-    wx.redirectTo({
-      url: '/pages/index/index',
-    })
   }
 })

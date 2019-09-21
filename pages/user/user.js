@@ -43,8 +43,5 @@ Page({
   //用于数据统计
   onUnload() {
     app.aldstat.sendEvent("退出", { name: "个人中心页" })
-    wx.redirectTo({
-      url: '/pages/index/index',
-    })
   }
 })
