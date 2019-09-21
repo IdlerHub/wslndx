@@ -213,7 +213,7 @@ Page({
       })
       return {
         title: list[index].title,
-        path: "/pages/video/video?id=" + list[index].id + "&type=share"
+        path: "/pages/video/video?id=" + list[index].id + "&type=share&uid=" + this.data.$state.userInfo.id
       }
     }
   },

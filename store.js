@@ -68,21 +68,11 @@ let store = new Store({
   },
   methods: {
     menuAppShare() {
-      console.log("ShareAppMessage  menu")
-      if (this.data.$state.shareTitle !== '' && this.data.$state.shareImgurl !== ''){
-        console.log(this.data.$state)
         return {
-          title: this.data.$state.shareTitle,
+          title: this.data.$state.shareTitle || "福利！老年大学十万集免费课程在线学习",
           path: "/pages/loading/loading?uid=" + this.data.$state.userInfo.id + "&type=invite",
-          imageUrl: this.data.$state.shareImgurl
+          imageUrl: this.data.$state.shareImgurl || "../../images/sharemessage.jpg"
         }
-      }else {
-        return {
-          title: "福利！老年大学十万集免费课程在线学习",
-          path: "/pages/loading/loading?uid=" + this.data.$state.userInfo.id + "&type=invite",
-          imageUrl: "../../images/sharemessage.jpg",
-        }
-      }
     },
 
   }
