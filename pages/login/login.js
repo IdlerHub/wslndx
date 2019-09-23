@@ -70,8 +70,19 @@ Page({
   getCode() {
     if (this.params.telFormat) {
       /* send  code */
-      this.countDown()
-      app.user.getAuthCode({ mobile: this.params.tel })
+      // this.countDown()
+      app.user.getAuthCode({ mobile: this.params.tel }).then(res =>{
+        console.log(res)
+        this.setData({
+          btnName: "重新获取",
+        }) 
+        res.msg === '已注册' ? wx.showToast({
+          title: res.msg,
+          icon: "none",
+          duration: 1500,
+          mask: false
+        }) : this.countDown()
+      })
     } else {
       wx.showToast({
         title: "电话号码格式不对",
