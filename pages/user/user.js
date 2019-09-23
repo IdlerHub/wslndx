@@ -37,7 +37,7 @@ Page({
   handleContact(e) {},
   toScore() {
     wx.navigateTo({
-      url: "/pages/score/score"
+      url: "/pages/score/score?type=index"
     })
   },
   //用于数据统计

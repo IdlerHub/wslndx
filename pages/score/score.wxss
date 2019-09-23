@@ -198,3 +198,39 @@ page {
               text-align: center; }
               page .swiper .scroll_container .details_content .scroll_con .item .score.negative, page .swiper .scroll_container .details_content .scroll_con .source_content .item .negative.times, page .swiper .scroll_container .source_content .details_content .scroll_con .item .negative.times {
                 color: #17a15f; }
+.footer {
+  position: fixed;
+  right: 30rpx;
+  bottom: 300rpx;
+  height: 120rpx;
+  width: 120rpx;
+  background:rgba(223,32,32,1);
+  border-radius: 50%; 
+  z-index: 99;
+}
+
+.write,
+.to {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  height: 120rpx; }
+
+.write .icon {
+  margin-top: 5rpx;
+  width: 34rpx;
+  height: 34rpx; }
+
+.to .icon {
+  font-size: 60rpx;
+  color: #df2020;
+  text-align: center;
+  margin-top: -8rpx; }
+
+.write .text,
+.to .text {
+  font-size:34rpx;
+  color: #fff;
+  padding: 0 15rpx;
+  line-height: 56rpx; }

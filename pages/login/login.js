@@ -72,7 +72,6 @@ Page({
       /* send  code */
       // this.countDown()
       app.user.getAuthCode({ mobile: this.params.tel }).then(res =>{
-        console.log(res)
         this.setData({
           btnName: "重新获取",
         }) 

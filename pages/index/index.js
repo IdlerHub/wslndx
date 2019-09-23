@@ -176,7 +176,7 @@ Page({
   },
   toScore() {
     wx.navigateTo({
-      url: "/pages/score/score"
+      url: "/pages/score/score?type=index"
     })
   },
   onPageScroll(e) {

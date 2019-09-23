@@ -222,7 +222,7 @@ Page({
       app.classroom.share({ lesson_id: this.data.id, sublesson_id: this.data.cur.id })
       return {
         title: this.data.detail.title,
-        path: "/pages/detail/detail?id=" + this.data.id + "&curid=" + this.data.cur.id + "&type=share"
+        path: "/pages/detail/detail?id=" + this.data.id + "&curid=" + this.data.cur.id + "&type=share&uid=" + this.data.$state.userInfo.id
       }
     }
   },

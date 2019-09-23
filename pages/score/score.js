@@ -36,13 +36,20 @@ Page({
     ],
     paylist: [],
     details: [],
-    isRefreshing: false
+    isRefreshing: false,
+    showHome:false
   },
   common: {
     scrollTop: 175
   },
   //options(Object)
   onLoad: function(options) {
+    console.log(options)
+    options.type !== 'index' ? this.setData({
+      showHome: true 
+    }) : this.setData({
+      showHome: false
+    })
     app.user.gift().then(res => {
       if (res.code == 1) {
         res.data.forEach(item => {

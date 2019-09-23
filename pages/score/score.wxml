@@ -70,3 +70,10 @@
     </scroll-view>
   </swiper-item>
 </swiper>
+<view class="footer" wx:if="{{showHome}}">
+    <navigator url="/pages/index/index" hover-class="none" open-type="reLaunch" class="write" >
+        <view class="write">
+          <text class="text">首页</text>
+        </view>
+    </navigator>
+</view>
