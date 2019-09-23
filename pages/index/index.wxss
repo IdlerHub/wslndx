@@ -6,7 +6,7 @@
 }
 .top {
   position: relative;
-  height: 328rpx;
+  height: 286rpx;
   overflow: hidden; }
 
 .top .authorize {
@@ -31,7 +31,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 130rpx 30rpx 0;
+  padding: 124rpx 30rpx 0;
   box-sizing: border-box; }
 
 .box .left {
@@ -41,8 +41,8 @@
   overflow: hidden; }
 
 .box .left .img {
-  width: 150rpx;
-  height: 150rpx;
+  width: 120rpx;
+  height: 120rpx;
   border-radius: 50%;
   border: 2rpx solid #b1adac;
   overflow: hidden; }
@@ -63,8 +63,8 @@
 .info .name {
   /* width: 440rpx; */
   font-family: PingFangSC-Medium;
-  font-size: 44rpx;
-  line-height: 62rpx;
+  font-size: 40rpx;
+  line-height: 50rpx;
   color: #ffffff; }
 
 .info .city {
@@ -89,10 +89,9 @@
   padding: 0 15rpx; }
 
 .jumpout {
-  height: 180rpx;
   background: #fff;
   margin-bottom:20rpx;
-  padding: 30rpx;
+  padding:26rpx 30rpx;
   box-sizing: border-box; 
   display: flex;
   flex-direction: row;
@@ -100,6 +99,7 @@
 }
 .jumpout .jumpoutBox {
   position: relative;
+  height: 120rpx;
 }
 .jumpout .img {
   width:330rpx;
@@ -133,7 +133,8 @@
 .nav .item.active {
   position: relative;
   color: #df2020;
-  font-size: 44rpx; }
+  font-size: 44rpx; 
+  font-weight: 800;}
 
 .nav .item.active::after {
   content: "";
@@ -164,7 +165,6 @@
 .wrap {
   padding-bottom: 180rpx;
   box-sizing: border-box; }
-
 .recommend .item {
   padding: 0 30rpx;
   box-sizing: border-box;

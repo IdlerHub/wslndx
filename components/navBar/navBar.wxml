@@ -1,7 +1,7 @@
 <!--components/navBar/navBar.wxml-->
 <view class="tabbar">
     <view class="item" bindtap="toIndex">
-      <text  class="{{ path === 'index' ? 'active name' : 'name'}}" >微课堂</text>
+      <text  class="{{ path === 'index' ? 'active name' : 'name'}}" >云课堂</text>
       <view class="resRow" wx:if="{{path === 'index'}}"></view>
     </view>
     <view bindtap="toVideo">

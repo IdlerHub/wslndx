@@ -249,7 +249,7 @@ Page({
       app.user.sign().then(res => {
         if (res.code == 1) {
           /* 前往积分页面 */
-          wx.navigateTo({ url: "/pages/score/score" })
+          wx.navigateTo({ url: "/pages/score/score?type=index" })
         } else {
           wx.showToast({
             title: res.msg,
