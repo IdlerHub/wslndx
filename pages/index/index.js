@@ -53,7 +53,11 @@ Page({
   },
   onShow() {
     /* 更新用户的视频浏览历史 */
-    if (app.store.$state.userInfo.mobile) this.getHistory() 
+    if (app.store.$state.userInfo.mobile) {this.getHistory() } else {
+      wx.reLaunch({
+        url: '/pages/sign/sign',
+      })
+    } 
   },
   init() {
     return Promise.all([this.getactivite(), this.getRecommend(), this.getCategory(), this.getBanner(), this.getPaper()]).then(values => {

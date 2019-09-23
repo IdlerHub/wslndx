@@ -38,7 +38,7 @@ Page({
    */
   onUnload: function () {
     if (!this.data.$state.userInfo.mobile)
-      wx.redirectTo({
+      wx.reLaunch({
         url: '/pages/login/login',
       })
   },
@@ -75,7 +75,7 @@ Page({
         this.setData({
           btnName: "重新获取",
         }) 
-        res.msg === '已注册' ? wx.showToast({
+        res.code !== 1 ? wx.showToast({
           title: res.msg,
           icon: "none",
           duration: 1500,

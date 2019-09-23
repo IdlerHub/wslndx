@@ -12,15 +12,14 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function(options) {
-
+  onLoad: function() {
+   
   },
 
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function() {
-
   },
 
   /**
@@ -40,11 +39,10 @@ Page({
   /**
    * 生命周期函数--监听页面卸载
    */
-  onUnload: function() {
-    if (!this.data.toLogin)
-      wx.redirectTo({
-        url: '/pages/sign/sign',
-      })
+  onUnload: function () {
+      // wx.redirectTo({
+      //   url: '/pages/sign/sign',
+      // })
   },
 
   /**
@@ -71,7 +69,7 @@ Page({
     this.setData({
       toLogin:true
     })
-    wx.redirectTo({
+    wx.reLaunch({
       url: "/pages/login/login"
     })
   }

@@ -211,7 +211,6 @@ Page({
           app.aldstat.sendEvent("短视频转发", { name: this.data.cur.title })
         }
       })
-      console.log(list)
       return {
         title: list[index].title,
         path: "/pages/video/video?id=" + list[index].id + "&type=share&uid=" + this.data.$state.userInfo.id
