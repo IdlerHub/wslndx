@@ -63,7 +63,7 @@ Page({
   },
   /* 输入验证码 */
   inputCode(e) {
-    this.params.authCode = e.detail.value
+    this.params.authCode = e.detail.value.replace(/^\s+|\s+$/g, '');
     this.params.codeFormat = !!this.params.authCode && this.params.authCode.toString().length == 6
   },
   /* 获取验证码 */
