@@ -50,7 +50,7 @@ App({
     if (this.globalData.scenes.indexOf(opts.scene) >= 0) {
       this.globalData.path = "/" + opts.path /* 卡片页面路径 */
       this.globalData.query = opts.query /* 卡片页面参数 */
-      if (opts.query.type == "invite") {
+      if (opts.query.type == "invite" || opts.query.type == "share") {
         wx.setStorageSync("invite", opts.query.uid) /* 邀请码记录 */
       }
     }
@@ -85,7 +85,7 @@ App({
       if (this.globalData.scenes.indexOf(opts.scene) >= 0 && lists.indexOf(opts.query.type) >= 0) {
         this.globalData.path = "/" + opts.path /* 卡片页面路径 */
         this.globalData.query = opts.query /* 卡片页面参数 */
-        if (opts.query.type == "invite") {
+        if (opts.query.type == "invite" || opts.query.type == "share") {
           wx.setStorageSync("invite", opts.query.uid) /* 邀请码存储 */
         }
       }
