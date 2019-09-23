@@ -33,6 +33,15 @@ Page({
       mode: parseInt(e.currentTarget.dataset.type)
     })
   },
+   /**
+   * 生命周期函数--监听页面卸载
+   */
+  onUnload: function () {
+    if (!this.data.$state.userInfo.mobile)
+      wx.redirectTo({
+        url: '/pages/login/login',
+      })
+  },
   /* 授权获取电话号码 */
   getPhoneNumber: function(e) {
     if (e.detail.errMsg == "getPhoneNumber:ok") {
