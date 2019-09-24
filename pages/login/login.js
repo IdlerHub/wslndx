@@ -62,7 +62,7 @@ Page({
   // },
   inputNum(e) {
     this.params.telFormat = app.util.isPoneAvailable(e.detail.value)
-   this.params.tel = e.detail.value
+    this.params.tel = e.detail.value
   },
   /* 输入验证码 */
   inputCode(e) {
@@ -88,7 +88,7 @@ Page({
       })
     } else {
       wx.showToast({
-        title: res.msg,
+        title: '手机格式不正确',
         icon: "none",
         duration: 1500,
         mask: false
