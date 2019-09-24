@@ -25,7 +25,7 @@
       <input type="number" placeholder="请输入手机号"  bindinput="inputNum"/>
     </view>
     <view class="section2">
-      <input type="number" placeholder="请输入验证码" value="{{ params.authCode }}" />
+      <input type="number" placeholder="请输入验证码" bindinput="inputCode"/>
       <button class="code" disabled="{{ authenable }}" hover-class="button-hover" catchtap="getCode" >{{ btnName }}</button>
     </view>
     <button class="submit" hover-class="button-hover" form-type="submit">登录</button>
