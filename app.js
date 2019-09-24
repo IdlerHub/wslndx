@@ -105,6 +105,7 @@ App({
       this.globalData.code = res.code
     })
     await this.user.wxLoginCode({ code: this.globalData.code }).then(msg => {
+      console.log(msg)
       if (msg.code === 1) {
         if (msg.data.tempCode) {
           /* 新用户未注册 */
@@ -115,6 +116,9 @@ App({
           wx.setStorageSync("uid", msg.data.uid)
           wx.setStorageSync("authKey", msg.data.authKey)
           this.setUser(msg.data.userInfo)
+          wx.reLaunch({
+            url:'pages/index/inxdx'
+          })
         }
       }
     })

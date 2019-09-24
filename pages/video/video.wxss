@@ -76,7 +76,7 @@
   height: 130rpx;
   position: absolute;
   width: calc(100% - 60rpx);
-  bottom: 128rpx;
+  bottom: 140rpx;
   font-size: 36rpx;
   color: #ffffff;
   line-height: 42rpx;

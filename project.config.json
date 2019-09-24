@@ -10,14 +10,14 @@
 				"type": "folder",
 				"value": "leetCode"
 			},
-      {
-        "type": "file",
-        "value": "config.js"
-      },
-      {
-        "type": "file",
-        "value": "Gulpfile.js"
-      },
+			{
+				"type": "file",
+				"value": "config.js"
+			},
+			{
+				"type": "file",
+				"value": "Gulpfile.js"
+			},
 			{
 				"type": "file",
 				"value": "package-lock.json"
