@@ -26,7 +26,7 @@ function dateUnit() {
 
 /**验证是否手机号 */
 function isPoneAvailable(poneInput) {
-  if (!/^1[3|4|5|7|8|9]\d{9}$/.test(poneInput)) {
+  if (!/^1[3|4|5|6|7|8|9]\d{9}$/.test(poneInput)) {
     return false
   } else {
     return true

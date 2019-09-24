@@ -72,7 +72,7 @@ App({
     if (!this.store.$state.userInfo.mobile) {
       wx.redirectTo({ url: "/pages/sign/sign" })
     } else if (opts.query.type !== "share") {
-      wx.redirectTo({ url: "/pages/index/index" })
+      wx.redirectTo({ url: "/pages/login/login" })
     }
   },
   onShow: function(opts) {
@@ -93,7 +93,7 @@ App({
       if (!this.store.$state.userInfo.mobile) {
         wx.redirectTo({ url: "/pages/sign/sign" })
       } else if (opts.path == "pages/loading/loading") {
-        wx.redirectTo({ url: "/pages/index/index" })
+        wx.redirectTo({ url: "/pages/login/login" })
       }
     }
   },
@@ -105,7 +105,6 @@ App({
       this.globalData.code = res.code
     })
     await this.user.wxLoginCode({ code: this.globalData.code }).then(msg => {
-      console.log(msg)
       if (msg.code === 1) {
         if (msg.data.tempCode) {
           /* 新用户未注册 */

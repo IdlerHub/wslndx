@@ -84,7 +84,7 @@ Page({
       })
     } else {
       wx.showToast({
-        title: "电话号码格式不对",
+        title: res.msg,
         icon: "none",
         duration: 1500,
         mask: false
