@@ -117,7 +117,7 @@ App({
           wx.setStorageSync("authKey", msg.data.authKey)
           this.setUser(msg.data.userInfo)
           wx.reLaunch({
-            url:'pages/index/inxdx'
+            url: '/pages/index/index',
           })
         }
       }

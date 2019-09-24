@@ -148,13 +148,13 @@
 .nav .integral {
   height: 100%;
   float: right;
-  padding: 13rpx 0 0 30rpx;
+  padding: 10rpx 0 0 30rpx;
   border-left: 1px solid #e9e9e9;
   box-sizing: border-box;
 }
 .integral  .integralImg {
-    width: 104rpx;
-    height: 86rpx;
+    width: 96rpx;
+    height: 80rpx;
     background: url('https://jinling-xcx-dev.obs.cn-north-1.myhuaweicloud.com/images/pro/integral.png') no-repeat;
     background-size: cover;
     animation: flicker steps(23, end) infinite 2.5s 1s;
