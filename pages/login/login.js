@@ -64,7 +64,6 @@ Page({
   /* 输入验证码 */
   inputCode(e) {
     this.params.authCode = e.detail.value.replace(/^\s+|\s+$/g, '');
-    this.params.codeFormat = !!this.params.authCode && this.params.authCode.toString().length == 6
   },
   /* 获取验证码 */
   getCode() {
@@ -122,14 +121,7 @@ Page({
         duration: 1500,
         mask: false
       })
-    } else if (!this.params.codeFormat) {
-      wx.showToast({
-        title: "验证码格式不对",
-        icon: "none",
-        duration: 1500,
-        mask: false
-      })
-    } else {
+    }  else {
       let params = {
         tempCode: app.globalData.tempCode,
         mobile: this.params.tel,
