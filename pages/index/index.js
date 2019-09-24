@@ -12,12 +12,12 @@ Page({
   },
   navHeightList: [],
   onLoad: async function(e) {
-    await app.user.signed().then(res => {
-      let sign = res.data && res.data.signed
-      app.setSignIn({ status: sign, count: sign ? 1 : this.data.$state.signStatus.count }, true)
-    })
     await app.user.share({}).then(res => {
       app.setShare(res)
+    })
+    await app.user.signed({}).then(res => {
+      let sign = res.data && res.data.signed
+      app.setSignIn({ status: sign, count: sign ? 1 : this.data.$state.signStatus.count }, true)
     })
     let reg = /ios/i
     let pt = 20 //导航状态栏上内边距
@@ -168,16 +168,16 @@ Page({
       url: "../info/info"
     })
   },
-  toVideo() {
-    wx.navigateTo({
-      url: "../video/video"
-    })
-  },
-  toPost() {
-    wx.navigateTo({
-      url: "../post/post"
-    })
-  },
+  // toVideo() {
+  //   wx.navigateTo({
+  //     url: "../video/video"
+  //   })
+  // },
+  // toPost() {
+  //   wx.navigateTo({
+  //     url: "../post/post"
+  //   })
+  // },
   toScore() {
     wx.navigateTo({
       url: "/pages/score/score?type=index"

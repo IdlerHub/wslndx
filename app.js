@@ -72,7 +72,7 @@ App({
     if (!this.store.$state.userInfo.mobile) {
       wx.redirectTo({ url: "/pages/sign/sign" })
     } else if (opts.query.type !== "share") {
-      wx.redirectTo({ url: "/pages/login/login" })
+      wx.redirectTo({ url: "/pages/index/index" })
     }
   },
   onShow: function(opts) {
@@ -93,7 +93,7 @@ App({
       if (!this.store.$state.userInfo.mobile) {
         wx.redirectTo({ url: "/pages/sign/sign" })
       } else if (opts.path == "pages/loading/loading") {
-        wx.redirectTo({ url: "/pages/login/login" })
+        wx.redirectTo({ url: "/pages/index/index" })
       }
     }
   },

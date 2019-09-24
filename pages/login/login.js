@@ -57,20 +57,25 @@ Page({
     }
   },
   /* 输入电话号码 */
-  inputTel(e) {
-    this.params.tel = e.detail.value
-    this.params.telFormat = app.util.isPoneAvailable(this.params.tel)
+  // inputTel(e) {
+   
+  // },
+  inputNum(e) {
+    this.params.telFormat = app.util.isPoneAvailable(e.detail.value)
+   this.params.tel = e.detail.value
   },
   /* 输入验证码 */
-  inputCode(e) {
-    this.params.authCode = e.detail.value.replace(/^\s+|\s+$/g, '');
-  },
+  // inputCode(e) {
+  //   this.params.authCode = e.detail.value.replace(/^\s+|\s+$/g, '');
+  //   this.params.codeFormat = !!this.params.authCode && this.params.authCode.toString().length == 6
+  // },
   /* 获取验证码 */
   getCode() {
+    console.log(this.params.telFormat)
     if (this.params.telFormat) {
       /* send  code */
-      // this.countDown()
       app.user.getAuthCode({ mobile: this.params.tel }).then(res =>{
+        console.log(res)
         this.setData({
           btnName: "重新获取",
         }) 
@@ -121,7 +126,7 @@ Page({
         duration: 1500,
         mask: false
       })
-    }  else {
+    } else {
       let params = {
         tempCode: app.globalData.tempCode,
         mobile: this.params.tel,
