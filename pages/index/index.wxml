@@ -90,7 +90,7 @@
             </swiper-item>
           </block>
         </swiper>
-        <view class="item" bindtap="jumpPeper" data-peper="{{paperMsg}}">
+        <view class="item" bindtap="jumpPeper" data-peper="{{paperMsg}}" wx:if="{{paperMsg.image}}">
           <view class="content">
               <view class="left">
                 <image class="poster" mode="aspectFill" src="{{ paperMsg.image}}" lazy-load="true"></image>
