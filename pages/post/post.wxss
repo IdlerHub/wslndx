@@ -177,12 +177,12 @@ page {
 .footer {
   position: fixed;
   right: 30rpx;
-  bottom: 300rpx;
+  bottom: 260rpx;
   height: 140rpx;
   width: 140rpx;
   background:rgba(223,32,32,1);
   border-radius: 50%; 
-  box-shadow:0px 2rpx 5rpx #333333;
+  box-shadow:0px 4px 4px 0px rgba(166,19,19,0.3);
 }
 
 .write,
@@ -206,7 +206,7 @@ page {
 
 .write .text,
 .to .text {
-  font-size:34rpx;
+  font-size:36rpx;
   color: #fff;
   padding: 0 15rpx;
   line-height: 56rpx; }

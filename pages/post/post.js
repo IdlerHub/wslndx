@@ -68,6 +68,7 @@ Page({
             })
             item.auditing = new Date().getTime() - new Date(item.createtime * 1000) < 7000
           })
+          console.log(msg.data)
           this.setData({
             list: temp.concat(msg.data)
           })

@@ -244,7 +244,7 @@ Page({
         })
       } else {
         wx.showToast({
-          title: "发布失败",
+          title: msg.msg,
           icon: "none",
           duration: 1500
         })

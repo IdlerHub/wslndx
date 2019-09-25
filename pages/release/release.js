@@ -67,20 +67,6 @@ Page({
       sizeType: ["original", "compressed"], // 可以指定是原图还是压缩图，默认二者都有
       sourceType: ["album", "camera"], // 可以指定来源是相册还是相机，默认二者都有
       success: res => {
-        console.log(res.tempFilePaths)
-        let token = wx.getStorageSync('token')
-        // wx.request({
-        //   url: `https://api.weixin.qq.com/wxa/media_check_async?access_token=${token}`, //仅为示例，并非真实的接口地址
-        //   data: {
-        //     x: res.tempFilePaths,
-        //   },
-        //   header: {
-        //     'content-type': 'application/json' // 默认值
-        //   },
-        //   success(res) {
-        //     console.log(res.data)
-        //   }
-        // })
         this.next(res.tempFilePaths, 1, i)
       }
     })
@@ -116,7 +102,7 @@ Page({
       })
       .catch(err => {
         wx.showToast({
-          title: "上传失败！",
+          title: "您的图片涉及敏感内容，未能上传成功!",
           icon: "none",
           duration: 1500
         })
@@ -247,7 +233,7 @@ Page({
           let pages = getCurrentPages()
           let prePage = pages[pages.length - 2]
           if (prePage.route == "pages/cDetail/cDetail") {
-            wx.redirectTo({
+            wx.reLaunch({
               url: "../post/post?rlSuc"
             })
           } else {
