@@ -29,7 +29,11 @@ Page({
   onReady: function() {},
   onShow: function() {},
   onHide: function() {},
-  onUnload: function() {},
+  onUnload: function() {
+    wx.reLaunch({
+      url: '/pages/index/index',
+    })
+  },
   onPullDownRefresh: function() {},
   onReachBottom: function() {},
   onPageScroll: function() {},

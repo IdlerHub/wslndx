@@ -38,10 +38,6 @@
     </view>
     <navigator wx:if="{{ item.fs_title }}" url="../cDetail/cDetail?id={{ item.fs_id }}" hover-class="none" open-type="navigate" class="label">#{{ item.fs_title }}精选</navigator>
     <view class="btn">
-      <button class="share item" open-type="share" data-index="{{ index }}" hover-class="btn-hover" wx:if="{{ item.images.length > 1 }}">
-        <icon class="iconfont icon-fenxiang"></icon>
-        <text class="text">{{ item.fw || item.forward }}</text>
-      </button>
       <button class="share item" open-type="share" data-index="{{ index }}" hover-class="btn-hover" wx:if="{{ item.check_status != 0 && item.check_status != 2}}">
           <icon class="iconfont icon-fenxiang"></icon>
           <text class="text">{{ item.fw || item.forward }}</text>

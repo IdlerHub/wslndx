@@ -3,7 +3,7 @@
         <textarea placeholder="说点什么吧…" focus="true" bindinput="input" value="{{param.content}}" placeholder-class="ph-class" />
         <view class='box'>
             <view class='img' wx:key="index" wx:for="{{param.image}}">
-                <image class='image' mode='aspectFill' src="{{item}}" data-index='{{index}}' catchtap='selectImg'></image>
+                <image class='image' mode='aspectFill' src="{{item}}" data-index='{{index}}' data-url="{{item}}" catchtap='selectImg'></image>
                 <image class='close' mode='aspectFill' src="{{$state.imgHost}}/close.png" data-index='{{index}}' catchtap='delImg'></image>
             </view>
             <view class='video' wx:if="{{param.video}}">

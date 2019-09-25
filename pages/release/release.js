@@ -7,7 +7,8 @@ Page({
       content: null,
       video: null,
       cover: null,
-      fs_id: ""
+      fs_id: "",
+      num:0
     },
     media_type: null,
     showFlag: false
@@ -27,7 +28,8 @@ Page({
         content: null,
         video: null,
         cover: null,
-        fs_id: ""
+        fs_id: "",
+        num:0
       },
       media_type: null
     })
@@ -57,21 +59,23 @@ Page({
     }
   },
   selectImg(e) {
+    let up = true
     let index = e.currentTarget.dataset.index
-    this.uploadImg(1, index)
+    console.log(e)
+    this.uploadImg(1, index, up)
   },
   //上传图片
-  uploadImg(val, i) {
+  uploadImg(val, i, up) {
     wx.chooseImage({
       count: val, // 默认9
       sizeType: ["original", "compressed"], // 可以指定是原图还是压缩图，默认二者都有
       sourceType: ["album", "camera"], // 可以指定来源是相册还是相机，默认二者都有
       success: res => {
-        this.next(res.tempFilePaths, 1, i)
+        this.next(res.tempFilePaths, 1, i, up)
       }
     })
   },
-  next(val, type, i) {
+  next(val, type, i, up, url) {
     app.circle
       .upload(val[0], type)
       .then(msg => {
@@ -87,11 +91,7 @@ Page({
             "param.image": image,
             media_type: type
           })
-          this.judge()
-          val.splice(0, 1)
-          if (val.length > 0) {
-            return this.next(val, type)
-          }
+          this.judge() 
         } else {
           wx.showToast({
             title: ms.msg,
@@ -101,12 +101,26 @@ Page({
         }
       })
       .catch(err => {
-        wx.showToast({
-          title: "您的图片涉及敏感内容，未能上传成功!",
-          icon: "none",
-          duration: 1500
-        })
+        let image = this.data.param.image
+        if(!up) {
+          image.push("../../images/sensitivity.png")
+          this.setData({
+            "param.image": image
+          })
+        } else {
+          image[i] = "../../images/sensitivity.png"
+           this.setData({
+            "param.image": image
+          }) 
+        }
+        
+      }).finally ( ()=>{
+        val.splice(0, 1)
+        if (val.length > 0) {
+          return this.next(val, type)
+        }
       })
+
   },
   next2(val, type) {
     app.circle
@@ -186,6 +200,9 @@ Page({
       media_type: image.length > 0 ? 1 : null
     })
     this.judge()
+    this.setData({
+      num: this.data.param.num -= 1
+    })
   },
   //是否同步到圈子
   switchChange: function(e) {
@@ -224,45 +241,58 @@ Page({
       fs_id: this.data.showFlag && (this.data.selId || ""),
       asset_id: this.data.param.asset_id || ""
     }
-
-    if (param.content.trim() || param.image || param.video) {
-      wx.showLoading({
-        title: "发布中",
-        mask: true
-      })
-      app.circle.add(param).then(msg => {
-        wx.hideLoading()
-        if (msg.code == 1) {
-          let pages = getCurrentPages()
-          let prePage = pages[pages.length - 2]
-          if (prePage.route == "pages/cDetail/cDetail") {
-            wx.reLaunch({
-              url: "../post/post?rlSuc"
-            })
+    let num = this.data.param.num
+    let next = true
+    this.data.param.image.forEach(item => {
+      item == '../../images/sensitivity.png' ? next = false : ''
+    })
+    if (next) {
+      if (param.content.trim() || param.image || param.video) {
+        wx.showLoading({
+          title: "发布中",
+          mask: true
+        })
+        app.circle.add(param).then(msg => {
+          wx.hideLoading()
+          if (msg.code == 1) {
+            let pages = getCurrentPages()
+            let prePage = pages[pages.length - 2]
+            if (prePage.route == "pages/cDetail/cDetail") {
+              wx.reLaunch({
+                url: "../post/post?rlSuc"
+              })
+            } else {
+              wx.navigateBack({
+                delta: 1,
+                success: function () {
+                  prePage.rlSuc()
+                }
+              })
+            }
           } else {
-            wx.navigateBack({
-              delta: 1,
-              success: function() {
-                prePage.rlSuc()
-              }
+            wx.showToast({
+              title: msg.msg,
+              icon: "none",
+              duration: 1500,
+              mask: false
             })
           }
-        } else {
-          wx.showToast({
-            title: msg.msg,
-            icon: "none",
-            duration: 1500,
-            mask: false
-          })
-        }
-      })
+        })
+      } else {
+        wx.showToast({
+          title: "内容不能为空！",
+          icon: "none",
+          duration: 1500
+        })
+      }
     } else {
       wx.showToast({
-        title: "内容不能为空！",
+        title: "您的帖子涉及敏感内容，请修改后重新发布！",
         icon: "none",
         duration: 1500
       })
     }
+    
   },
   //用于数据统计
   onHide() {
