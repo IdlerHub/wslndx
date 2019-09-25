@@ -40,6 +40,12 @@
           <image mode="aspectFill" src="{{ $state.imgHost }}/play-hl.png" class="play" bindtap="play"></image>
         </view>
       </view>
+      <view class="content" wx:if="{{ item.check_status == 2 || detail.check_status == 0 }}">
+        <view class="bg">
+          <image mode="aspectFill" src="{{ detail.check_status == 0 ?  $state.imgHost + '/tip.jpg' : detail.check_status == 2 ? $state.imgHost + '/sensitivity.png' : '' }}" class="poster"></image>
+          <image mode="aspectFill" src="{{ $state.imgHost }}/play-hl.png" class="play"></image>
+        </view>
+      </view>
       <button wx:if="{{ detail.fs_title }}" class="label" hover-class="none">#{{ detail.fs_title }}</button>
     </view>
   </view>

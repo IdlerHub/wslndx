@@ -37,16 +37,26 @@
             <image mode="aspectFill" wx:for="{{ item.images }}" wx:for-item="items" wx:key="index" src="{{ items }}" data-urls="{{ item.images }}" data-current="{{ items }}" catchtap="previewImage"></image>
           </view>
         </view>
-        <view class="content" wx:if="{{ item.url }}">
+        <!-- wx:if="{{ item.url }}" -->
+        <view class="content" wx:if="{{ item.check_status == 1 || item.check_status == 2 || item.check_status == 0 }}">
           <view class="bg">
-            <image mode="aspectFill" src="{{ item.auditing ? $state.imgHost + '/tip.jpg' : item.image }}" class="poster"></image>
+            <image mode="aspectFill" src="{{ item.check_status == 0 ?  $state.imgHost + '/tip.jpg' : item.check_status == 2 ? $state.imgHost + '/sensitivity.png' : item.image }}" class="poster"></image>
             <image mode="aspectFill" src="{{ $state.imgHost }}/play-hl.png" class="play"></image>
           </view>
         </view>
       </view>
       <navigator wx:if="{{ item.fs_title }}" url="../cDetail/cDetail?id={{ item.fs_id }}" hover-class="none" open-type="navigate" class="label"> #{{ item.fs_title }}精选</navigator>
       <view class="btn">
-        <button class="share item" open-type="share" data-index="{{ index }}" hover-class="btn-hover">
+
+        <button class="share item" open-type="share" data-index="{{ index }}" hover-class="btn-hover" wx:if="{{ item.images.length > 1 }}">
+          <icon class="iconfont icon-fenxiang"></icon>
+          <text class="text">{{ item.fw || item.forward }}</text>
+        </button>
+        <button class="share item" open-type="share" data-index="{{ index }}" hover-class="btn-hover" wx:if="{{ item.check_status != 0 && item.check_status != 2}}">
+          <icon class="iconfont icon-fenxiang"></icon>
+          <text class="text">{{ item.fw || item.forward }}</text>
+        </button>
+         <button class="share item" bindtap="unShare" wx:if="{{ item.check_status == 0 || item.check_status == 2}}">
           <icon class="iconfont icon-fenxiang"></icon>
           <text class="text">{{ item.fw || item.forward }}</text>
         </button>

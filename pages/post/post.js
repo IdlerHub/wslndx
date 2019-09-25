@@ -47,11 +47,11 @@ Page({
           })
         }
       })
-      return {
-        title: article.content,
-        imageUrl: article.image || article.images[0] || "../../images/sharemessage.jpg",
-        path: "/pages/pDetail/pDetail?id=" + bkid + "&type=share&uid=" + this.data.$state.userInfo.id
-      }
+        return {
+          title: article.content,
+          imageUrl: article.image || article.images[0] || "../../images/sharemessage.jpg",
+          path: "/pages/pDetail/pDetail?id=" + bkid + "&type=share&uid=" + this.data.$state.userInfo.id
+        }
     }
   },
   getList(list) {
@@ -59,18 +59,21 @@ Page({
     return app.circle.news(this.param).then(msg => {
       if (msg.code == 1) {
         if (msg.data) {
-          msg.data.forEach(function(item) {
+          let arr = [];
+          for (let i in msg.data) {
+            arr.push(msg.data[i])
+          }
+          arr.forEach(function(item) {
             item.fw = app.util.tow(item.forward)
             item.cw = app.util.tow(item.comments)
             item.lw = app.util.tow(item.likes)
             item.images = item.images.map(i => {
               return i.image
             })
-            item.auditing = new Date().getTime() - new Date(item.createtime * 1000) < 7000
+            item.auditing = item.check_status
           })
-          console.log(msg.data)
           this.setData({
-            list: temp.concat(msg.data)
+            list: temp.concat(arr)
           })
         }
       }
@@ -202,5 +205,12 @@ Page({
     app.aldstat.sendEvent("退出", { name: "秀风采页" })
   },
   onUnload() {
+  },
+  unShare() {
+    wx.showToast({
+      title: "非常抱歉，不能分享这个内容！",
+      icon: "none",
+      duration: 1500
+    })
   }
 })

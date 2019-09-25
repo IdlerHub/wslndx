@@ -118,6 +118,7 @@ Page({
           this.setData({
             "param.video": msg.data.url,
             "param.cover": msg.data.cover,
+            "param.asset_id": msg.data.asset_id,
             media_type: type
           })
           this.judge()
@@ -151,6 +152,7 @@ Page({
           })
           return
         }
+        console.log(res)
         this.next2(res, 2)
       }
     })
@@ -219,7 +221,8 @@ Page({
       image: this.data.media_type == 1 ? this.data.param.image.join(",") : this.data.param.cover,
       content: this.data.param.content || "",
       video: this.data.param.video,
-      fs_id: this.data.showFlag && (this.data.selId || "")
+      fs_id: this.data.showFlag && (this.data.selId || ""),
+      asset_id: this.data.param.asset_id || ""
     }
 
     if (param.content.trim() || param.image || param.video) {

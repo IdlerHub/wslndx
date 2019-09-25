@@ -104,7 +104,7 @@ page {
       font-size: 34rpx;
       font-weight: 550;
       color:rgba(255,26,26,1);
-      line-height: 72rpx;
+      line-height: 75rpx;
       text-align: center; }
   page .list {
     background: white;

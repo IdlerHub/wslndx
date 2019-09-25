@@ -182,5 +182,12 @@ Page({
     this.setData({
       list: list
     })
+  },
+  unShare() {
+    wx.showToast({
+      title: "非常抱歉，不能分享这个内容！",
+      icon: "none",
+      duration: 1500
+    })
   }
 })
