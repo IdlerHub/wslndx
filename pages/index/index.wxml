@@ -4,7 +4,7 @@
  * @LastEditTime: 2019-08-13 12:01:10
  -->
 <view class="container">
-  <!-- 下拉刷新 -->
+  <!-- 下拉刷新 --> 
   <view wx:if="{{ isRefreshing }}" class="weui-loadmore indexdrop">
     <view class="weui-loading"></view>
     <!-- <view class='weui-loadmore-tips'>加载中...</view> -->
@@ -14,12 +14,12 @@
   </view>
   <view class="top">
     <view wx:if="{{ $state.authUserInfo }}" bindtap="toUser">
-      <image class="bg" mode="widthFix" src="{{ $state.userInfo.avatar }}"></image>
+      <image class="bg" mode="widthFix" src="{{ !$state.recommend ? '' : $state.userInfo.avatar }}"></image>
       <view class="box">
         <view class="left">
-          <image class="img" mode="aspectFill" src="{{ $state.userInfo.avatar }}"></image>
+          <image class="img" mode="aspectFill" src="{{ !$state.recommend ? '' : $state.userInfo.avatar }}"></image>
           <view class="info">
-            <text class="line name">{{ $state.userInfo.nickname }}的老年大学</text>
+            <text class="line name">{{ !$state.recommend ? '' : $state.userInfo.nickname }}的老年大学</text>
             <view class="line">
               <view class="city" catchtap="toInfo">{{ $state.userInfo.addressCity || "暂无" }}</view>
               <view class="school" catchtap="toInfo">{{ $state.userInfo.school || $state.userInfo.university || "+添加学校标签" }}</view>
@@ -30,10 +30,12 @@
       </view>
     </view>
     <button class="authorize" wx:else open-type="getUserInfo" bindgetuserinfo="onGotUserInfo" data-role="user">
-      <open-data class="bg" type="userAvatarUrl"></open-data>
+      <!-- <open-data class="bg" type="userAvatarUrl" wx:if="$state.recommend"></open-data> -->
+      <image class="bg" mode="aspectFill" src="{{ !$state.recommend ? '' : $state.userInfo.avatar }}"></image>
       <view class="box">
         <view class="left">
-          <open-data class="img" type="userAvatarUrl"></open-data>
+          <!-- <open-data class="img" type="userAvatarUrl"></open-data> -->
+          <image class="img" mode="aspectFill" src="{{ !$state.recommend ? '' : $state.userInfo.avatar }}"></image>
           <view class="info">
             <view class="line name"> <open-data type="userNickName"></open-data>的老年大学 </view>
             <view class="line">
@@ -42,18 +44,18 @@
             </view>
           </view>
         </view>
-        <image class="right" mode="aspectFill" src="{{ $state.imgHost }}/Return.png"></image>
+        <image class="right" mode="aspectFill" src="{{ !$state.recommend ? '' : $state.imgHost }}/Return.png"></image>
       </view>
     </button>
   </view>
   <!-- 农场和电台 -->
   <view class="jumpout">
     <navigator class="jumpoutBox" url="/pages/education/education?type=farm">
-      <image class="img" mode="widthFix" src="{{ $state.imgHost }}/farm.png"></image>
+      <image class="img" mode="widthFix" src="{{  !$state.recommend ? '' : $state.imgHost + '/farm.png' }}"></image>
       <text>开心农场</text>
     </navigator>
     <navigator class="jumpoutBox" url="/pages/education/education?type=station">
-      <image class="img" mode="widthFix" src="{{ $state.imgHost }}/station.png"></image>
+      <image class="img" mode="widthFix" src="{{  !$state.recommend ? '' : $state.imgHost + '/station.png'}}"></image>
       <text>老年电台</text>
     </navigator>
   </view>
@@ -68,7 +70,7 @@
       <view class="integralImg"></view>
     </view>
   </scroll-view>
-  <view class="skeleton" wx:for="{{5}}" wx:if="{{ !$state.recommend }}">
+  <view class="skeleton" wx:for="{{5}}" wx:if="{{ !$state.recommend }}" wx:key="{{index}}">
         <view class="skeletonBox">
             <view class="skeletonImg"></view>
             <view class="skeletonTitle"></view>
@@ -176,12 +178,12 @@
   </view> -->
   <navBar path='index' ></navBar>
   <!-- 签到拿积分 -->
-  <view class="integration" wx:if="{{ $state.signStatus.status != 1 || !$state.signStatus.status }}" catchtouchmove="return">
+  <view class="integration" wx:if="{{ showIntegration }}" catchtouchmove="return">
     <view class="dialog">
       <image class="bg" src="/images/integration_bg.png" mode="aspectFill"></image>
       <view class="ani"></view>
       <button catchtap="signIn" data-id="1">签到领积分</button>
-      <icon type="cancel" size="37" color="white" data-id="0" catchtap="signIn"></icon>
+      <icon type="cancel" size="37" color="white" data-id="0" catchtap="closeIntegration"></icon>
     </view>
   </view>
 </view> 

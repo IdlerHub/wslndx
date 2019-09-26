@@ -128,11 +128,18 @@ Page({
     this.setData({
       "param.age": this.data.age[e.detail.value]
     })
+    console.log()
     this.submit()
   },
   submit() {
-    let param = {
-      address: this.data.param.address.join(","),
+    let param = {}
+    this.data.param.address.length > 0 ?  param = {
+      address: '',
+      gender: +this.data.param.gender,
+      university: this.data.param.school,
+      age: this.data.param.age
+    } :  param = {
+      address: this.data.param.address.join(",") ,
       gender: +this.data.param.gender,
       university: this.data.param.school,
       age: this.data.param.age

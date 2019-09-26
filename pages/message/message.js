@@ -19,8 +19,11 @@ Page({
    */
   onLoad: function(options) {
     app.circle.getMessage().then(res => {
-      console.log(res)
       if (res.code == 1) {
+        res.data.forEach(item => {
+          item.msg = item.msg.replace(/\↵/g, '').replace(/\n/g, '')
+          console.log(item.msg)
+        })
         this.setData({
           messages: res.data
         })

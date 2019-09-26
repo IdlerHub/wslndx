@@ -8,7 +8,9 @@ Page({
     isRefreshing: false,
     activity: "",
     interval: 2000,
-    duration: 1000
+    duration: 1000,
+    currentTab: 0,
+    showIntegration: false
   },
   navHeightList: [],
   onLoad: async function(e) {
@@ -49,6 +51,9 @@ Page({
       navScrollLeft: 0
     })
     this.init()
+    this.data.$state.signStatus.status == 1 ? '' : this.setData({
+      showIntegration: true
+    })
   },
   onReady: function() {
     setTimeout(wx.hideLoading, 500)
@@ -250,6 +255,9 @@ Page({
         if (res.code == 1) {
           /* 前往积分页面 */
           wx.navigateTo({ url: "/pages/score/score?type=index" })
+          this.setData({
+            showIntegration: false
+          })
         } else {
           wx.showToast({
             title: res.msg,
@@ -257,7 +265,6 @@ Page({
             duration: 1500,
             mask: true
           })
-
           let timer = setTimeout(() => {
             wx.hideToast({
               success: () => {
@@ -269,6 +276,12 @@ Page({
         }
       })
     }
+  },
+  /* 关闭签到 */
+  closeIntegration(){
+    this.setData({
+      showIntegration: false
+    })
   },
   toEducation() {
     wx.navigateTo({

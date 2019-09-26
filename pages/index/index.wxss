@@ -263,11 +263,11 @@
 
 .skeleton .skeletonTitle {
   width: 400rpx;
-  height: 56rpx;
+  height: 40rpx;
   background: #f5f6f8;
   border-radius: 8rpx;
   float: right;
-  margin-top: 4rpx;
+  margin-top: 14rpx;
 }
 
 .skeleton .skeletonDaram {
@@ -670,6 +670,7 @@
   height: 320rpx;
   border-top-left-radius: 10rpx;
   border-top-right-radius: 10rpx;
+   background: #efefef; 
 }
 
 .integration .dialog .ani {

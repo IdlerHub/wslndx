@@ -76,7 +76,6 @@ App({
     }
   },
   onShow: function(opts) {
-    console.log(opts)
     let lists = ["share", "invite"]
     /* 小程序(在后台运行中时)从分享卡片切到前台 */
     if (this.globalData.backstage) {
@@ -115,6 +114,7 @@ App({
           wx.setStorageSync("uid", msg.data.uid)
           wx.setStorageSync("authKey", msg.data.authKey)
           this.setUser(msg.data.userInfo)
+          console.log(msg.data.userInfo)
           wx.reLaunch({
             url: '/pages/index/index',
           })
@@ -126,9 +126,9 @@ App({
   initStore: function() {
     let sign = wx.getStorageSync("signStatus") || {}
     if (sign.time !== new Date().toDateString()) {
-      sign = { status: 1, count: 0 }
+      sign = { status: false, count: 0 }
     }
-    this.store.setState({ 
+    this.store.setState({
       visitedNum: wx.getStorageSync("visitedNum") || [],
       userInfo: wx.getStorageSync("userInfo") || {},
       authKey: wx.getStorageSync("authKey") || "",
