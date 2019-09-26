@@ -170,6 +170,9 @@ Page({
       this.replyInfo = null
       this.replyParent = null
     }
+    wx.pageScrollTo({
+      scrollTop: 1000
+    })
     this.setData({
       write: true
     })
@@ -479,7 +482,7 @@ Page({
         this.getComment([])
       } else {
         wx.showToast({
-          title: "发布失败",
+          title: msg.msg || "发布失败",
           icon: "none",
           duration: 1500
         })
@@ -506,6 +509,13 @@ Page({
           this.getComment([])
         }
       }
+    })
+  },
+  unShare() {
+    wx.showToast({
+      title: "非常抱歉，不能分享这个内容！",
+      icon: "none",
+      duration: 1500
     })
   }
 })

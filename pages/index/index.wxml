@@ -9,6 +9,9 @@
     <view class="weui-loading"></view>
     <!-- <view class='weui-loadmore-tips'>加载中...</view> -->
   </view>
+  <view class="loding" wx:if="{{ !$state.recommend }}">
+    <view class="img"></view>
+  </view>
   <view class="top">
     <view wx:if="{{ $state.authUserInfo }}" bindtap="toUser">
       <image class="bg" mode="widthFix" src="{{ $state.userInfo.avatar }}"></image>
@@ -65,6 +68,15 @@
       <view class="integralImg"></view>
     </view>
   </scroll-view>
+  <view class="skeleton" wx:for="{{5}}" wx:if="{{ !$state.recommend }}">
+        <view class="skeletonBox">
+            <view class="skeletonImg"></view>
+            <view class="skeletonTitle"></view>
+            <view class="skeletonContent"></view>
+            <view class="skeletonDaram"></view>
+            <view class="skeletonDaram"></view>
+        </view>
+  </view>
   <swiper class="tab" style="height:{{ height }}px" current="{{ currentTab }}" duration="300" bindchange="switchTab">
     <swiper-item class="tab-item">
       <!--推荐  -->
@@ -164,7 +176,7 @@
   </view> -->
   <navBar path='index' ></navBar>
   <!-- 签到拿积分 -->
-  <view class="integration" wx:if="{{ !$state.signStatus.count }}" catchtouchmove="return">
+  <view class="integration" wx:if="{{ $state.signStatus.status != 1 || !$state.signStatus.status }}" catchtouchmove="return">
     <view class="dialog">
       <image class="bg" src="/images/integration_bg.png" mode="aspectFill"></image>
       <view class="ani"></view>
@@ -172,4 +184,4 @@
       <icon type="cancel" size="37" color="white" data-id="0" catchtap="signIn"></icon>
     </view>
   </view>
-</view>
+</view> 

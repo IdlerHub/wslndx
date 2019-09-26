@@ -23,6 +23,7 @@ Page({
     let pt = 20 //导航状态栏上内边距
     let h = 44 //导航状态栏高度
     let systemInfo = wx.getSystemInfoSync()
+    console.log(systemInfo.statusBarHeight)
     pt = systemInfo.statusBarHeight
     if (!reg.test(systemInfo.system)) {
       h = 48
@@ -36,7 +37,8 @@ Page({
     query.select(".top").boundingClientRect()
     query.select(".nav").boundingClientRect()
     query.exec(res => {
-      that.headerHeight = res[0].height
+      console.log(res)
+      that.headerHeight = res[0].height + pt + h
       that.navHeight = res[1].height
     })
     this.setData({
@@ -53,11 +55,9 @@ Page({
   },
   onShow() {
     /* 更新用户的视频浏览历史 */
-    if (app.store.$state.userInfo.mobile) {this.getHistory() } else {
-      wx.reLaunch({
-        url: '/pages/sign/sign',
-      })
-    } 
+    if (app.store.$state.userInfo.mobile) this.getHistory() 
+    /* 禁止原生loding框弹出 */
+    wx.hideLoading()
   },
   init() {
     return Promise.all([this.getactivite(), this.getRecommend(), this.getCategory(), this.getBanner(), this.getPaper()]).then(values => {

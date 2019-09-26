@@ -126,9 +126,9 @@ App({
   initStore: function() {
     let sign = wx.getStorageSync("signStatus") || {}
     if (sign.time !== new Date().toDateString()) {
-      sign = { status: false, count: 0 }
+      sign = { status: 1, count: 0 }
     }
-    this.store.setState({
+    this.store.setState({ 
       visitedNum: wx.getStorageSync("visitedNum") || [],
       userInfo: wx.getStorageSync("userInfo") || {},
       authKey: wx.getStorageSync("authKey") || "",

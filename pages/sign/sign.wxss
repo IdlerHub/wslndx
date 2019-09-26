@@ -4,21 +4,28 @@
   text-align: center;
   padding: 120rpx 0;
 }
-
-.container .logo {
+ .container .content {
+   width: 100%;
+   position: absolute;
+   top:64rpx;
+   z-index: 9;
+   background: #fff;
+   padding-top: 184rpx;
+}
+.content .logo {
   width: 160rpx;
   height: 160rpx;
   margin-bottom: 30rpx;
 }
 
-.container .logo-title {
+.content .logo-title {
   display: block;
   font-size: 44rpx;
   color: #3a3a3a;
   letter-spacing: 1rpx;
 }
 
-.container .authorize-phone {
+.content .authorize-phone {
   margin: 459rpx 40rpx 0;
   border-radius: 6rpx;
   background:rgba(226,30,30,1);

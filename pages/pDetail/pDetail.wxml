@@ -106,7 +106,7 @@
         <view class="nodata" wx:if="{{ praise.length <= 0 }}">
           <image src="../../images/no-com.png" mode="aspectFill"></image>
         </view>
-        <view wx:for="{{ praise }}" wx:key="index" class="item">
+        <view wx:for="{{ praise }}" wx:key="index" class="item" >
           <view class="content">
             <view class="left">
               <image class="img" mode="aspectFill" src="{{ item.avatar }}"></image>
@@ -119,7 +119,11 @@
     </swiper-item>
   </swiper>
   <view wx:if="{{ detail }}" class="footer">
-    <button class="share item" open-type="share" data-id="{{ detail.id }}" hover-class="btn-hover">
+    <button class="share item" open-type="share" data-id="{{ detail.id }}" hover-class="btn-hover" wx:if="{{ detail.check_status != 0 && detail.check_status != 2}}">
+      <icon class="iconfont icon-fenxiang"></icon>
+      <text class="text">转发</text>
+    </button>
+    <button class="share item" bindtap="unShare" hover-class="btn-hover" wx:if="{{ detail.check_status == 0 || detail.check_status == 2}}">
       <icon class="iconfont icon-fenxiang"></icon>
       <text class="text">转发</text>
     </button>
@@ -138,11 +142,11 @@
     <image src="/images/delBlog.png" mode="aspectFill"> </image>
     <text>帖子已删除~ </text>
   </view>
-  <view class="popup write" wx:if="{{ write }}">
+  <view class="popup write" id="write" wx:if="{{ write }}">
     <view class="bg" bindtap="hide"></view>
     <view class="box">
       <!-- prettier-ignore -->
-      <textarea placeholder="写评论" focus  cursor-spacing="190rpx"  fixed  bindinput="input" value='{{content}}' placeholder-class="ph-class" ></textarea>
+      <textarea placeholder="写评论"  cursor-spacing="190rpx"  fixed  bindinput="input" value='{{content}}' placeholder-class="ph-class" ></textarea>
       <!-- prettier-ignore -->
       <view class="right" catchtap="navigator">
         <view class="to">
