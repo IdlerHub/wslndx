@@ -56,13 +56,14 @@ Page({
     })
   },
   onReady: function() {
-    setTimeout(wx.hideLoading, 500)
   },
   onShow() {
     /* 更新用户的视频浏览历史 */
     if (app.store.$state.userInfo.mobile) this.getHistory() 
-    /* 禁止原生loding框弹出 */
-    wx.hideLoading()
+    wx.showLoading({
+      title: '',
+    })
+    setTimeout(wx.hideLoading, 500)
   },
   init() {
     return Promise.all([this.getactivite(), this.getRecommend(), this.getCategory(), this.getBanner(), this.getPaper()]).then(values => {

@@ -70,7 +70,7 @@ Page({
       toLogin:true
     })
     wx.reLaunch({
-      url: "/pages/login/login"
+      url: "/pages/login/login?mode=1"
     })
   }
 })

@@ -10,7 +10,7 @@
     <text class="redRow" wx:if="{{ mode === 0}}"></text>
     </text>
   </view>
-  <view wx:if="{{ mode }}">
+  <view wx:if="{{ mode === 1 }}">
     <view class="remind">为了让您账户更安全，请设置常用的联系方式</view>
     <button class="authorize-phone" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber" disabled="{{check}}">微信授权</button>
     <checkbox-group bindchange="checkboxChange">
@@ -22,7 +22,7 @@
   </view>
   <form wx:else class="mobile" bindsubmit="send">
     <view class="section1">
-      <input type="number" placeholder="请输入手机号"  bindinput="inputNum"/>
+      <input type="number" placeholder="请输入手机号"  bindinput="inputNum" value="{{ phone ? phone : '' }}"/>
     </view>
     <view class="section2">
       <input type="number" placeholder="请输入验证码" bindinput="inputCode"/>

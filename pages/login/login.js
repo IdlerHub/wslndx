@@ -12,11 +12,16 @@ Page({
     check:false,
     btnName: "获取验证码"
   },
-  params: { tel: "", authCode: "", telFormat: false, codeFormat: false },
+  params: { tel: "", authCode: "", telFormat: false, codeFormat: false, mode:1 },
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function(options) {},
+  onLoad: function (option) {
+    console.log(option)
+      option.phone ? this.setData({
+        phone: option.phone
+      }) : ''
+  },
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
@@ -27,8 +32,10 @@ Page({
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function() {},
-  loginType(e) {
+  onShow: function (option) {
+
+  },
+  loginType(e, type) {
     this.setData({
       mode: parseInt(e.currentTarget.dataset.type)
     })
@@ -38,8 +45,10 @@ Page({
    */
   onUnload: function () {
     if (!this.data.$state.userInfo.mobile)
-      wx.reLaunch({
-        url: '/pages/login/login',
+      this.params.mode = this.data.mode
+      console.log(this.params)
+      wx.redirectTo({
+        url: `/pages/login/login?phone=${this.params.tel}&mode=${this.params.mode}`
       })
   },
   /* 授权获取电话号码 */
@@ -71,7 +80,7 @@ Page({
   },
   /* 获取验证码 */
   getCode() {
-    console.log(this.params.telFormat)
+    console.log(this.params.tel)
     if (this.params.telFormat) {
       /* send  code */
       app.user.getAuthCode({ mobile: this.params.tel }).then(res =>{
