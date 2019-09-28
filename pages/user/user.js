@@ -40,6 +40,11 @@ Page({
       url: "/pages/score/score?type=index"
     })
   },
+  toInvite() {
+    wx.navigateTo({
+      url: "/pages/invitation/invitation"
+    })
+  },
   //用于数据统计
   onUnload() {
     app.aldstat.sendEvent("退出", { name: "个人中心页" })

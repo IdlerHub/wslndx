@@ -71,7 +71,7 @@ page {
     z-index: -1;
     left: 12rpx;
   }
-  page .score {
+  /* page .score {
     position: relative;
     height: 180rpx;
     padding: 30rpx 60rpx;
@@ -105,7 +105,80 @@ page {
       font-weight: 550;
       color:rgba(255,26,26,1);
       line-height: 75rpx;
-      text-align: center; }
+      text-align: center; } */
+  
+  page .navgationto {
+    width:  100%;
+    height: 240rpx;
+    padding: 14rpx 10rpx;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: rowl;
+    justify-content: space-around;
+  }
+  page .navgationto .navgationBox {
+    position: relative;
+  }
+  page .navgationto .navgationBox image {
+    width: 366rpx;
+    height: 220rpx;
+  }
+  page .navgationto .navgationBox .navTitle {
+    font-size:42rpx;
+    font-weight:600;
+    color:rgba(255,255,255,1);
+    position: absolute;
+    top: 46rpx;
+    left: 56rpx;
+  }
+  page .navgationto .navgationBox .num {
+    font-size:30rpx;
+    font-weight:400;
+    color:rgba(255,255,255,1);
+    position: absolute;
+    left: 56rpx;
+    bottom: 56rpx;
+  }
+  page .navgationto .navgationBox .toScore {
+    width:44rpx;
+    height:44rpx;
+    background:rgba(255,123,124,1);
+    box-shadow:0px 4px 8px 0px rgba(255,0,36,1);
+    border-radius: 50%;
+    position: absolute;
+    top: 54rpx;
+    right: 87rpx;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  page .navgationto .navgationBox .toScore .iconfont {
+    font-size: 10px;
+    color: white;
+    display: block;
+    height: 79rpx;
+    width: 16rpx;
+  }
+  page .navgationto .navgationBox .toInvite {
+    width:44rpx;
+    height:44rpx;
+    background:rgba(255,154,100,1);
+    box-shadow:0px 4px 8px 0px rgba(255,101,9,1);
+    border-radius: 50%;
+    position: absolute;
+    top: 54rpx;
+    right: 87rpx;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  page .navgationto .navgationBox .toInvite .iconfont {
+    font-size: 10px;
+    color: white;
+    display: block;
+    height: 76rpx;
+    width: 18rpx;
+  }
   page .list {
     background: white;
     position: relative;

@@ -24,15 +24,32 @@
       <icon class="iconfont icon-arrow-right"></icon>
     </view>
   </navigator>
-  <view class="score">
+  <!-- <view class="score">
     <image src="{{ $state.imgHost }}/userbg.png" class="scoreBg"></image>
     <view class="contain">
       <text class="num">{{ my_score }}</text>
       <text class="dsc">可用积分</text>
     </view>
     <text class="score-btn" bindtap="toScore">兑换礼品</text>
+  </view> -->
+  <view class="navgationto" bindtap="toScore">
+    <view class="navgationBox">
+      <image src="/images/integralbg.png"></image>
+      <text class="navTitle">积分兑换</text>
+      <text class="num">{{ my_score }}可用积分</text>
+      <view class="toScore">
+        <icon class="iconfont icon-arrow-right"></icon>
+      </view>
+    </view>
+    <view class="navgationBox" bindtap="toInvite">
+      <image src="/images/invitebg.png"></image>
+      <text class="navTitle">邀请好友</text>
+      <text class="num">邀请好友领福利</text>
+       <view class="toInvite">
+        <icon class="iconfont icon-arrow-right"></icon>
+      </view>
+    </view>
   </view>
-
   <view class="list">
     <navigator hover-class="none" class="nav" url="/pages/collection/collection" open-type="navigate">
       <image src="/images/usershoucang.png" class="iconfont"></image>
