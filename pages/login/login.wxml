@@ -1,13 +1,13 @@
 <!--pages/login/login.wxml-->
 <view class="container">
   <view class="buttons">
-    <text data-type="1" catchtap="loginType" class="{{ mode === 1 ? 'active' : ''}}">
+    <text data-type="1" catchtap="loginType" class="{{ mode == 1 ? 'active' : ''}}">
     微信授权
-    <text class="redRow" wx:if="{{ mode === 1 }}"></text>
+    <text class="redRow" wx:if="{{ mode == 1 }}"></text>
     </text>
-    <text data-type="0" catchtap="loginType" class="{{ mode === 0 ? 'active' : ''}}">
+    <text data-type="0" catchtap="loginType" class="{{ mode == 0 ? 'active' : ''}}">
     短信验证
-    <text class="redRow" wx:if="{{ mode === 0}}"></text>
+    <text class="redRow" wx:if="{{ mode == 0}}"></text>
     </text>
   </view>
   <view wx:if="{{ mode === 1 }}">

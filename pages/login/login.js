@@ -12,15 +12,21 @@ Page({
     check:false,
     btnName: "获取验证码"
   },
-  params: { tel: "", authCode: "", telFormat: false, codeFormat: false, mode:1 },
+  params: { tel: "", authCode: "", telFormat: false, codeFormat: false, mode: 1, tempCode: null },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (option) {
     console.log(option)
-      option.phone ? this.setData({
+    if(option.phone) {
+      console.log(app.globalData)
+      this.setData({
         phone: option.phone
-      }) : ''
+      })
+      this.params.telFormat = app.util.isPoneAvailable(option.phone)
+      this.params.tel = option.phone
+      this.onShow(option.mode)
+    }
   },
   /**
    * 生命周期函数--监听页面初次渲染完成
@@ -32,8 +38,11 @@ Page({
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function (option) {
-
+  onShow: function (mode) {
+    mode ? this.setData({
+      mode,
+      btnName: '重新获取'
+    }) : ''
   },
   loginType(e, type) {
     this.setData({
@@ -48,7 +57,7 @@ Page({
       this.params.mode = this.data.mode
       console.log(this.params)
       wx.redirectTo({
-        url: `/pages/login/login?phone=${this.params.tel}&mode=${this.params.mode}`
+        url: `/pages/login/login?phone=${this.params.tel}&mode=${this.params.mode}&tempCode=${this.params.tempCode}`
       })
   },
   /* 授权获取电话号码 */
