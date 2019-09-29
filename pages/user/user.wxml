@@ -38,7 +38,7 @@
       <text class="navTitle">积分兑换</text>
       <text class="num">{{ my_score }}可用积分</text>
       <view class="toScore">
-        <icon class="iconfont icon-arrow-right"></icon>
+        <image src="{{ $state.imgHost }}/Return.png"></image>
       </view>
     </view>
     <view class="navgationBox" bindtap="toInvite">
@@ -46,7 +46,7 @@
       <text class="navTitle">邀请好友</text>
       <text class="num">邀请好友领福利</text>
        <view class="toInvite">
-        <icon class="iconfont icon-arrow-right"></icon>
+        <image src="{{ $state.imgHost }}/Return.png"></image>
       </view>
     </view>
   </view>

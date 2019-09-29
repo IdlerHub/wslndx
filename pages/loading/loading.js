@@ -12,6 +12,9 @@ Page({
    */
   onLoad: function() {
     wx.showLoading()
+    wx:wx.reLaunch({
+      url: '/pages/index/index',
+    })
   },
 
   /**

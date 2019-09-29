@@ -9,17 +9,18 @@ Page({
     activity: "",
     interval: 2000,
     duration: 1000,
-    currentTab: 0,
-    showIntegration: false
+    currentTab: 0, 
+    showReco:false
   },
   navHeightList: [],
   onLoad: async function(e) {
+    await app.user.signed().then(res => {
+      let sign = res.data && res.data.signed
+      console.log(sign)
+      app.setSignIn({ status: sign, count: sign ? 1 : this.data.$state.signStatus.count }, true)
+    })
     await app.user.share({}).then(res => {
       app.setShare(res)
-    })
-    await app.user.signed({}).then(res => {
-      let sign = res.data && res.data.signed
-      app.setSignIn({ status: sign, count: sign ? 1 : this.data.$state.signStatus.count }, true)
     })
     let reg = /ios/i
     let pt = 20 //导航状态栏上内边距
@@ -54,6 +55,7 @@ Page({
     this.data.$state.signStatus.status == 1 ? '' : this.setData({
       showIntegration: true
     })
+    this.integrationTime()
   },
   onReady: function() {
   },
@@ -126,6 +128,12 @@ Page({
         this.setData({
           recommend: msg.data
         })
+        setTimeout(() => {
+          this.setData({
+            showReco: true
+          })
+        }, 250)
+        wx.hideLoading()
       }
     })
   },
@@ -247,6 +255,11 @@ Page({
       }
     }
   },
+  integrationTime(){
+    let data = new Date();
+    let time = data.getDate();
+    let tomorowTime = wx.getStorageSync("closeInTime")
+  },
   /* 签到 */
   signIn(data) {
     let sign = data.currentTarget.dataset.id == 1
@@ -266,6 +279,7 @@ Page({
             duration: 1500,
             mask: true
           })
+
           let timer = setTimeout(() => {
             wx.hideToast({
               success: () => {
@@ -277,12 +291,6 @@ Page({
         }
       })
     }
-  },
-  /* 关闭签到 */
-  closeIntegration(){
-    this.setData({
-      showIntegration: false
-    })
   },
   toEducation() {
     wx.navigateTo({

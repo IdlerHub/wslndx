@@ -97,7 +97,7 @@
       <view class="integralImg"></view>
     </view>
   </scroll-view>
-  <view class="skeleton" wx:for="{{5}}" wx:if="{{ !$state.recommend }}" wx:key="{{index}}">
+  <view class="skeleton" wx:for="{{5}}" wx:if="{{ !showReco }}" wx:key="{{index}}">
         <view class="skeletonBox">
             <view class="skeletonImg"></view>
             <view class="skeletonTitle"></view>
@@ -205,12 +205,12 @@
   </view> -->
   <navBar path='index' ></navBar>
   <!-- 签到拿积分 -->
-  <view class="integration" wx:if="{{ showIntegration && $state.recommend}}" catchtouchmove="return">
+  <view class="integration" wx:if="{{ !$state.signStatus.count && $state.recommend }}" catchtouchmove="return">
     <view class="dialog">
       <image class="bg" src="/images/integration_bg.png" mode="aspectFill"></image>
       <view class="ani"></view>
       <button catchtap="signIn" data-id="1">签到领积分</button>
-      <icon type="cancel" size="37" color="white" data-id="0" catchtap="closeIntegration"></icon>
+      <icon type="cancel" size="37" color="white" data-id="0" catchtap="signIn"></icon>
     </view>
   </view>
 </view> 

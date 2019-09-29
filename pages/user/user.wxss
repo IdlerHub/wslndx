@@ -153,12 +153,9 @@ page {
     align-items: center;
     justify-content: center;
   }
-  page .navgationto .navgationBox .toScore .iconfont {
-    font-size: 10px;
-    color: white;
-    display: block;
-    height: 76rpx;
-    width: 16rpx;
+  page .navgationto .navgationBox .toScore image {
+    height: 23rpx;
+    width: 24rpx;
   }
   page .navgationto .navgationBox .toInvite {
     width:44rpx;
@@ -173,12 +170,9 @@ page {
     align-items: center;
     justify-content: center;
   }
-  page .navgationto .navgationBox .toInvite .iconfont {
-    font-size: 10px;
-    color: white;
-    display: block;
-    height: 76rpx;
-    width: 18rpx;
+  page .navgationto .navgationBox .toInvite image {
+    height: 23rpx;
+    width: 24rpx;
   }
   page .list {
     background: white;
