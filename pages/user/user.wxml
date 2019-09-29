@@ -32,8 +32,8 @@
     </view>
     <text class="score-btn" bindtap="toScore">兑换礼品</text>
   </view> -->
-  <view class="navgationto" bindtap="toScore">
-    <view class="navgationBox">
+  <view class="navgationto">
+    <view class="navgationBox" bindtap="toScore">
       <image src="/images/integralbg.png"></image>
       <text class="navTitle">积分兑换</text>
       <text class="num">{{ my_score }}可用积分</text>
@@ -63,10 +63,6 @@
       <image src="/images/userfengcai.png" class="iconfont"></image>
       <text>风采展示</text>
     </navigator>
-    <navigator hover-class="none" class="nav" url="/pages/invitation/invitation" open-type="navigate">
-      <image src="/images/useryaoqing.png" class="iconfont"></image>
-      <text>邀请好友</text>
-    </navigator>
     <navigator hover-class="none" class="nav" url="../circle/circle?type=1" open-type="navigate">
       <image src="/images/useraddquan.png" class="iconfont"></image>
       <text>加入圈子</text>
@@ -74,6 +70,10 @@
     <button class="nav" open-type="contact" bindcontact="handleContact">
       <image src="/images/userkefu.png" class="iconfont"></image>
       <text>联系客服</text>
+    </button>
+    <button class="nav" open-type="contact">
+      <image  class="iconfont"></image>
+      <text></text>
     </button>
   </view>
   <navBar path="user" />

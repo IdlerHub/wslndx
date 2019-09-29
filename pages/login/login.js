@@ -53,12 +53,14 @@ Page({
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-    if (!this.data.$state.userInfo.mobile)
+    if (!this.data.$state.userInfo.mobile){
       this.params.mode = this.data.mode
       console.log(this.params)
       wx.redirectTo({
         url: `/pages/login/login?phone=${this.params.tel}&mode=${this.params.mode}&tempCode=${this.params.tempCode}`
       })
+    }
+    console.log(this.data.$state.userInfo.length)
   },
   /* 授权获取电话号码 */
   getPhoneNumber: function(e) {
