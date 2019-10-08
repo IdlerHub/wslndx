@@ -28,6 +28,21 @@ Page({
       /* 确保动画只执行一次 */
       this.setData({ rlSucFlag: false })
     }
+    let list = this.data.list
+    list.forEach(item => {
+      if(item.id == app.globalData.detail.id) {
+        if(app.globalData.detail.likestatus > 0) {
+          item.likes = app.globalData.detail.likes
+          item.likestatus = app.globalData.detail.likestatus
+        } else {
+          item.likes = app.globalData.detail.likes
+          item.likestatus = app.globalData.detail.likestatus
+        }
+      }
+      this.setData({
+        list
+      })
+    })
   },
   onShareAppMessage: function(ops, b) {
     if (ops.from === "menu") {

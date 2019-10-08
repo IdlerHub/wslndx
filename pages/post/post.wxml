@@ -19,7 +19,7 @@
     <view wx:for="{{ list }}" wx:key="index" class="item">
       <view class="top" catchtap="navigate" data-id="{{ item.id }}">
         <view class="left">
-          <image mode="aspectFill" class="avatarUrl" src="{{ item.avatar }}" data-uid="{{ item.uid }}" catchtap="toUser"></image>
+          <image mode="aspectFill" class="avatarUrl" src="{{ item.avatar }}" data-uid="{{ item.uid }}" catchtap="toUser" lazy-load></image>
           <view class="text">
             <text class="nickName line">{{ item.nickname }}</text>
             <text wx:if="{{ item.university_name }}" class="school line">{{ item.university_name }}</text>
@@ -31,7 +31,7 @@
         <rich-text wx:if="{{ item.content }}" class="name" nodes="{{ item.content }}" space="emsp"></rich-text>
         <view class="content" wx:if="{{ item.images.length > 0 }}">
           <view class="img one" wx:if="{{ item.images.length == 1 }}">
-            <image mode="widthFix" wx:for="{{ item.images }}" wx:for-item="items" wx:key="index" src="{{ items }}" data-urls="{{ item.images }}" data-current="{{ items }}" catchtap="previewImage"></image>
+            <image mode="widthFix" wx:for="{{ item.images }}" wx:for-item="items" wx:key="index" src="{{ items }}" data-urls="{{ item.images }}" data-current="{{ items }}" catchtap="previewImage" lazy-load></image>
           </view>
           <view class="img three" wx:if="{{ item.images.length > 1 }}">
             <image mode="aspectFill" wx:for="{{ item.images }}" wx:for-item="items" wx:key="index" src="{{ items }}" data-urls="{{ item.images }}" data-current="{{ items }}" catchtap="previewImage"></image>
@@ -40,8 +40,8 @@
         <!-- wx:if="{{ item.url }}" -->
         <view class="content" wx:if="{{ item.check_status == 1 || item.check_status == 2 || item.check_status == 0 }}">
           <view class="bg">
-            <image mode="aspectFill" src="{{ item.check_status == 0 ?  $state.imgHost + '/tip.jpg' : item.check_status == 2 ? $state.imgHost + '/sensitivity.png' : item.image }}" class="poster"></image>
-            <image mode="aspectFill" src="{{ $state.imgHost }}/play-hl.png" class="play"></image>
+            <image mode="aspectFill" src="{{ item.check_status == 0 ?  $state.imgHost + '/tip.jpg' : item.check_status == 2 ? $state.imgHost + '/sensitivity.png' : item.image }}" class="poster" lazy-load></image>
+            <image mode="aspectFill" src="{{ $state.imgHost }}/play-hl.png" class="play" lazy-load></image>
           </view>
         </view>
       </view>

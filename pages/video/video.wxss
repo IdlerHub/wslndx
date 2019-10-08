@@ -231,7 +231,7 @@
   width: 156rpx;
   height: 156rpx;
   right: 30rpx;
-  bottom: 150rpx;
+  bottom: 284rpx;
   border-radius: 50%;
   background: #df2020;
   font-size: 36rpx;

@@ -45,6 +45,7 @@ Page({
         }
       })
     }
+    
   },
   setHeight() {
     let that = this
@@ -92,6 +93,7 @@ Page({
           "nav[0].num": app.util.tow(detail.comments) || detail.comments,
           "nav[1].num": app.util.tow(detail.likes) || detail.likes
         })
+        app.globalData.detail = detail
       } else if (msg.code == -2) {
         /* 帖子已经删除 */
         this.setData({
