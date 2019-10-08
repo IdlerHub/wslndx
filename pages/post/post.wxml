@@ -75,6 +75,24 @@
         </formCode>
       </view>
     </view>
+    <mp-loading type="circle" wx:if="{{ showLoading }}"></mp-loading>
+    <!-- <view class="item">
+      <view class="top">
+        <view class="left">
+           <image style="background:#f5f6f8"  class="avatarUrl"></image>
+           <view class="text">
+              <text class="nickName line loadingTxt"></text>
+              <text class="school line loadingTxt"></text>
+           </view>
+        </view>
+        <text class="date loadingDate"></text>
+      </view>
+       <view class="contentTxt">
+        </view>
+        <view class="content">
+          <view></view>
+        </view>
+    </view> -->
   </view>
   <view class="footer">
     <navigator url="/pages/release/release" hover-class="none" open-type="navigate" class="write">

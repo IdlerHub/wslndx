@@ -8,7 +8,8 @@ const app = getApp()
 Page({
   data: {
     rlSucFlag: false,
-    isRefreshing: false
+    isRefreshing: false,
+    showLoading:false
   },
   onLoad(options) {
     this.param = { page: 1, pageSize: 10 }
@@ -70,6 +71,9 @@ Page({
     }
   },
   getList(list) {
+    this.setData({
+      showLoading: true
+    })
     let temp = list || this.data.list
     return app.circle.news(this.param).then(msg => {
       if (msg.code == 1) {
@@ -91,6 +95,10 @@ Page({
             list: temp.concat(arr)
           })
         }
+        console.log(1)
+        this.setData({
+          showLoading: false
+        })
       }
     })
   },

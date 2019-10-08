@@ -57,7 +57,8 @@ page {
         width: 90rpx;
         height: 90rpx;
         border-radius: 50%;
-        border: 1rpx solid #d8d8d8; }
+        border: 1rpx solid #d8d8d8;
+        background:#e9e9e9;  }
       .wrap > .item .top .text {
         margin-left: 20rpx;
         width: 400rpx;
@@ -81,18 +82,21 @@ page {
     .wrap > .item .content .img {
       display: flex;
       flex-wrap: wrap;
-      align-content: flex-start; }
+      align-content: flex-start;
+       }
       .wrap > .item .content .img image {
         margin-top: 20rpx; }
       .wrap > .item .content .img.one {
         max-height: 100vh;
         overflow: hidden; }
         .wrap > .item .content .img.one image {
-          width: 400rpx; }
+          width: 400rpx;
+          background: #e9e9e9; }
       .wrap > .item .content .img.three image {
         width: 216rpx;
         height: 216rpx;
-        margin-right: 20rpx; }
+        margin-right: 20rpx;
+        background: #e9e9e9; }
         .wrap > .item .content .img.three image:nth-of-type(3n) {
           margin-right: 0; }
     .wrap > .item .content video {
@@ -103,7 +107,8 @@ page {
       position: absolute;
       width: 100%;
       height: 100%;
-      filter: brightness(0.8); }
+      filter: brightness(0.8);
+       background: #e9e9e9;  }
     .wrap > .item .content .bg {
       position: relative;
       margin-top: 20rpx;
@@ -141,7 +146,30 @@ page {
       width: 2rpx;
       height: 40rpx;
       background: #dbdbdb; }
-
+  .wrap > .item .top .left .loadingTxt {
+    width: 240rpx;
+    height: 42rpx;
+    background:#f5f6f8;
+    border-radius: 8rpx;
+  }
+  .wrap > .item .top .left .loadingTxt:nth-child(2) {
+    width: 230rpx;
+    height: 32rpx;
+    background:#f5f6f8;
+    border-radius: 8rpx;
+  }
+  .wrap > .item .top .loadingDate {
+    width: 121rpx;
+    height: 43rpx;
+    background:#f5f6f8;
+    border-radius: 8rpx;
+  }
+  .wrap > .item .contentTxt {
+    width: 690rpx;
+    height: 33rpx;
+    background:#f5f6f8;
+    border-radius: 8rpx;
+  }
 .btn > .item {
   flex: 1;
   display: flex;
