@@ -57,14 +57,14 @@
         </button>
         <text class="division"></text>
         <!-- 评论 -->
-        <navigator url="../pDetail/pDetail?id={{ item.id }}&comment" hover-class="none" open-type="navigate" class="item">
+        <view hover-class="none"  class="item" bindtap="handleRelse" data-status="{{ $state.userInfo.status }}" data-id="{{ item.id }}" data-type="reply">
           <formCode>
             <view class="container-sub">
               <icon class="iconfont icon-comment"></icon>
               <text class="text">{{ item.cw || item.comments }}</text>
             </view>
           </formCode>
-        </navigator>
+        </view>
         <text class="division"></text>
         <!-- 点赞 -->
         <formCode bind:handler="praise" class="item" data-index="{{ index }}">
@@ -95,11 +95,11 @@
     </view> -->
   </view>
   <view class="footer">
-    <navigator url="/pages/release/release" hover-class="none" open-type="navigate" class="write">
+    <view hover-class="none"  class="write" bindtap="handleRelse" data-status="{{ $state.userInfo.status }}" data-type="release">
         <view class="write">
           <text class="text">发帖</text>
         </view>
-    </navigator>
+    </view>
   </view>
   <view wx:if="{{ rlAni }}" class="popup">
     <view class="publishAni"></view>

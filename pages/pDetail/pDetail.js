@@ -163,21 +163,28 @@ Page({
     })
   },
   show(e) {
-    if (e && e.target.dataset.reply) {
-      /* 回复别人的评论 或者 回复别人的回复  */
-      this.replyParent = e.target.dataset.parent
-      this.replyInfo = e.target.dataset.reply
+    if (this.data.$state.userInfo.status !== 'normal') {
+      wx.showModal({
+        content: '由于您近期不合规操作，您的账户已被管理员禁止发帖留言，如有疑问请在个人中心联系客服处理'
+      })
     } else {
-      /* 评论 */
-      this.replyInfo = null
-      this.replyParent = null
+      if (e && e.target.dataset.reply) {
+        /* 回复别人的评论 或者 回复别人的回复  */
+        this.replyParent = e.target.dataset.parent
+        this.replyInfo = e.target.dataset.reply
+      } else {
+        /* 评论 */
+        this.replyInfo = null
+        this.replyParent = null
+      }
+      wx.pageScrollTo({
+        scrollTop: 1000
+      })
+      this.setData({
+        write: true
+      })
     }
-    wx.pageScrollTo({
-      scrollTop: 1000
-    })
-    this.setData({
-      write: true
-    })
+    
   },
   hide() {
     this.setData({

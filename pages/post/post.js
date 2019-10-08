@@ -235,5 +235,19 @@ Page({
       icon: "none",
       duration: 1500
     })
+  },
+  //用户黑名单判断
+  handleRelse(status) {
+    if (this.data.$state.userInfo.status !== 'normal') {
+      wx.showModal({
+        content: '由于您近期不合规操作，您的账户已被管理员禁止发帖留言，如有疑问请在个人中心联系客服处理'
+      })
+    } else {
+      status.currentTarget.dataset.type == 'reply' ? wx.navigateTo({
+        url: `/pages/pDetail/pDetail?id= ${status.currentTarget.dataset.id}&comment`,
+      }) : wx.navigateTo({
+        url: '/pages/release/release',
+      })
+    }
   }
 })
