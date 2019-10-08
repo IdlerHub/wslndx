@@ -270,7 +270,7 @@
   width: 400rpx;
   height: 32rpx;
   background: #f5f6f8;
-  border-radius: 8rpx;
+  border-radius: 3rpx;
   float: right;
   margin-top: 14rpx;
 }
@@ -279,7 +279,7 @@
   width: 123rpx;
   height: 32rpx;
   background: #f5f6f8;
-  border-radius: 8rpx;
+  border-radius: 3rpx;
   float: left;
   margin-left: 30rpx;
 }
@@ -288,7 +288,7 @@
   width: 400rpx;
   height: 32rpx;
   background: #f5f6f8;
-  border-radius: 8rpx;
+  border-radius: 3rpx;
   float: right;
   margin: 15rpx 0 15rpx 0;
 }
