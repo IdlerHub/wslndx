@@ -36,6 +36,7 @@ Page({
       app.globalData.rlSuc = false
     }
     let list = this.data.list
+
     list.forEach(item => {
       if(item.id == app.globalData.detail.id) {
         if(app.globalData.detail.likestatus > 0) {
@@ -93,7 +94,8 @@ Page({
             item.cw = app.util.tow(item.comments)
             item.lw = app.util.tow(item.likes)
             item.images = item.images.map(i => {
-              return i.image
+              // return i.image
+              return i.image =  i.image.replace( 'https://jinling-xcx-dev.obs.cn-north-1.myhuaweicloud.com:443','https://hwcdn.jinlingkeji.cn')  
             })
             item.auditing = item.check_status
           })
@@ -184,6 +186,7 @@ Page({
   previewImage(e) {
     let urls = e.currentTarget.dataset.urls
     let current = e.currentTarget.dataset.current
+    console.log(urls)
     wx.previewImage({
       current: current,
       urls: urls // 需要预览的图片http链接列表

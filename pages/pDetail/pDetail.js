@@ -186,10 +186,17 @@ Page({
     }
   },
   textHeight(e) {
-    console.log(e.detail.height)
     this.setData({
       textHeight: e.detail.height + 'px'
     })
+  },
+  touchStart() {
+    setTimeout(()=> {
+      this.setData({
+        write: false,
+        content: ""
+      })
+    },200)
   },
   hide() {
     this.setData({
