@@ -146,7 +146,7 @@
     <view class="bg" bindtap="hide" bindtouchstart="touchStart"></view>
     <view class="box" style="{{ textHeight ? 'bottom:'+ textHeight : ''}}">
       <!-- prettier-ignore -->
-      <textarea placeholder="写评论"   focus="{{ focus }}" fixed  bindinput="input" value='{{content}}' placeholder-class="ph-class" show-confirm-bar="{{ false }}" adjust-position="{{ false }}" bindfocus="textHeight"   ></textarea>
+      <textarea placeholder="写评论"   focus="{{ focus }}" fixed  bindinput="input" value='{{content}}' placeholder-class="ph-class" show-confirm-bar="{{ false }}" adjust-position="{{ false }}" bindfocus="textHeight"  hold-keyboard ></textarea>
       <!-- prettier-ignore -->
       <view class="right" catchtap="navigator">
         <view class="to">
