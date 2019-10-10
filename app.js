@@ -291,6 +291,7 @@ App({
     /* 后台模式*/
     backstage: false,
     rlSuc: false,
-    path: 'index'
+    path: 'index',
+    currentTab: 0
   }
 })

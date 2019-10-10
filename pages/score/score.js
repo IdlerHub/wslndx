@@ -189,9 +189,16 @@ Page({
         this.init()
       })
     } else {
-      wx.navigateTo({
-        url: this.data.sources[i].page
-      })
+      if (i == 1) {
+        app.globalData.currentTab = 1
+        wx.switchTab({
+          url: this.data.sources[i].page
+        })
+      } else {
+        wx.navigateTo({
+          url: this.data.sources[i].page
+        })
+      }
     }
   }
 })

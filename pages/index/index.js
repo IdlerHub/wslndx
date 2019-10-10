@@ -48,7 +48,7 @@ Page({
       recommend: [],
       category: [],
       history: {},
-      currentTab: e.tabs || 0 /* 从积分页面过来的直接去分类 */,
+      currentTab:0 /* 从积分页面过来的直接去分类 */,
       navScrollLeft: 0
     })
     this.init()
@@ -60,6 +60,11 @@ Page({
   onReady: function() {
   },
   onShow() {
+    console.log(app.globalData.currentTab)
+    app.globalData.currentTab == 1 ? this.setData({
+      currentTab: 1
+    }) : ''
+    app.globalData.currentTab = ''
     /* 更新用户的视频浏览历史 */
     if (app.store.$state.userInfo.mobile) this.getHistory() 
 

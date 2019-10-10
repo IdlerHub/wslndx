@@ -24,9 +24,13 @@ Page({
     app.aldstat.sendEvent("菜单", { name: "风采展示" })
   },
   onShow: function() {
-    console.log(app.globalData.postShow)
     if (app.globalData.postShow) {
-      this.onLoad()
+      this.setData({
+        list:[]
+      })
+      this.param.page = 1
+      this.getList([]).then(() => {
+      })
       app.globalData.postShow = false
     }
     if (this.data.rlSucFlag) {
