@@ -12,36 +12,41 @@ Component({
       if(this.data.path == 'index') {
         return
       }else {
-        wx.redirectTo({
-          url: "/pages/index/index"
-        })
+        // wx.redirectTo({
+        //   url: "/pages/index/index"
+        // })
+        wx.switchTab({ url: "/pages/index/index" })
       }  
     },
     toVideo() {
       if (this.data.path == 'video') {
         return
       } else {
-        wx.redirectTo({
-          url: "/pages/video/video"
-        })
+        // wx.redirectTo({
+        //   url: "/pages/video/video"
+        // })
+        wx.switchTab({ url: "/pages/video/video" })
       }  
     },
     toPost() {
       if (this.data.path == 'post') {
         return
       } else {
-        wx.redirectTo({
-          url: "/pages/post/post"
-        })
+        // wx.redirectTo({
+        //   url: "/pages/post/post"
+        // })
+        wx.switchTab({ url: "/pages/post/post" })
+        app.globalData.postShow = true
       }  
     },
     toUser() {
       if (this.data.path == 'user') {
         return
       } else {
-        wx.redirectTo({
-          url:"/pages/user/user"
-        })
+        // wx.redirectTo({
+        //   url:"/pages/user/user"
+        // })
+        wx.switchTab({ url: "/pages/user/user" })
       }  
     },
     // 用户昵称等信息授权

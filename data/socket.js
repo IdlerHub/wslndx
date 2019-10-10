@@ -91,6 +91,20 @@ socket.prototype = {
       this.reCount = 3
       this.reconnection()
     }
+  },
+  close() {
+    if (this.SocketTask) {
+      this.SocketTask.close({
+        success: () => {
+          console.log('socket关闭成功')
+          this.SocketTask = ''
+        },
+        fail: () => {
+          console.log('socket关闭失败')
+        }
+      })
+    }
+    
   }
 }
 

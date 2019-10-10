@@ -144,9 +144,9 @@
   </view>
   <view class="popup write" id="write" wx:if="{{ write }}">
     <view class="bg" bindtap="hide"></view>
-    <view class="box">
+    <view class="box" style="{{ textHeight ? 'bottom:'+ textHeight : ''}}">
       <!-- prettier-ignore -->
-      <textarea placeholder="写评论"  cursor-spacing="190rpx"  fixed  bindinput="input" value='{{content}}' placeholder-class="ph-class" ></textarea>
+      <textarea placeholder="写评论"   focus="{{ focus }}" fixed  bindinput="input" value='{{content}}' placeholder-class="ph-class" show-confirm-bar="{{ false }}" adjust-position="{{ false }}" bindfocus="textHeight"></textarea>
       <!-- prettier-ignore -->
       <view class="right" catchtap="navigator">
         <view class="to">

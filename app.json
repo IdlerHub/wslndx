@@ -46,6 +46,26 @@
     "navigationBarTextStyle": "black",
     "backgroundColor": "#eeefef"
   },
-  "sitemapLocation": "sitemap.json"
-  
+  "sitemapLocation": "sitemap.json",
+  "tabBar": {
+    "custom": true,
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "云课堂"
+      },
+      {
+        "pagePath": "pages/video/video",
+        "text": "短视频"
+      },
+      {
+        "pagePath": "pages/post/post",
+        "text": "秀风采"
+      },
+      {
+        "pagePath": "pages/user/user",
+        "text": "我的"
+      }
+    ]
+  }
 }

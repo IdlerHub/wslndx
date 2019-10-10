@@ -62,9 +62,7 @@ Page({
   onShow() {
     /* 更新用户的视频浏览历史 */
     if (app.store.$state.userInfo.mobile) this.getHistory() 
-    wx.showLoading({
-      title: '',
-    })
+
     setTimeout(wx.hideLoading, 500)
   },
   init() {
@@ -173,9 +171,10 @@ Page({
     })
   },
   toUser() {
-    wx.redirectTo({
+    wx.switchTab({
       url: "../user/user"
     })
+    app.tabBar('user')
   },
   toInfo() {
     wx.navigateTo({

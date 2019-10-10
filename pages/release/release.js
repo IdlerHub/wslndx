@@ -261,9 +261,8 @@ Page({
             let pages = getCurrentPages()
             let prePage = pages[pages.length - 2]
             if (prePage.route == "pages/cDetail/cDetail") {
-              wx.reLaunch({
-                url: "../post/post?rlSuc"
-              })
+              wx.switchTab({ url: "/pages/post/post" })
+              app.globalData.rlSuc = true
             } else {
               wx.navigateBack({
                 delta: 1,

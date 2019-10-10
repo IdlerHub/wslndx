@@ -64,9 +64,12 @@ App({
     this.initStore()
 
     /* 建立socket链接 */
+    
     if (this.store.$state.userInfo.id) {
-      socket.init(userInfo.id)
-      socket.listen(this.handleMessage)
+      // setTimeout(()=> {
+      //   socket.init(userInfo.id)
+      //   socket.listen(this.handleMessage)
+      // },2000)
     }
 
     if (!this.store.$state.userInfo.mobile) {
@@ -150,6 +153,7 @@ App({
     })
     wx.setStorageSync("userInfo", data)
     if (data.id) {
+      socket.close()
       socket.init(data.id)
       socket.listen(this.handleMessage)
     }
@@ -211,6 +215,11 @@ App({
       if (msg.code == 1) {
         this.setUser(msg.data.userInfo)
       }
+    })
+  },
+  tabBar(path) {
+    this.store.setState({
+      tabPath: path
     })
   },
   /* 更新签到信息 */
@@ -280,6 +289,8 @@ App({
     /* 卡片进入的场景值 */
     scenes: [1007, 1008, 1047, 1048, 1049],
     /* 后台模式*/
-    backstage: false
+    backstage: false,
+    rlSuc: false,
+    path: 'index'
   }
 })

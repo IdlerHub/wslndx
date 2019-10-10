@@ -17,17 +17,23 @@ Page({
       list: []
     })
     /* 从cdetail-->发帖 */
-    if (options.rlSuc) {
+    if (app.globalData.rlSuc) {
       this.setData({ rlSucFlag: true })
     }
     this.getList([])
     app.aldstat.sendEvent("菜单", { name: "风采展示" })
   },
   onShow: function() {
+    console.log(app.globalData.postShow)
+    if (app.globalData.postShow) {
+      this.onLoad()
+      app.globalData.postShow = false
+    }
     if (this.data.rlSucFlag) {
       this.rlSuc()
       /* 确保动画只执行一次 */
       this.setData({ rlSucFlag: false })
+      app.globalData.rlSuc = false
     }
     let list = this.data.list
     list.forEach(item => {

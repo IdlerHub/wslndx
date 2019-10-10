@@ -17,9 +17,6 @@ Page({
   onLoad(options) {
     this.id = options.id
     this.comParam = this.praParam = { blog_id: this.id, page: 1, pageSize: 10 }
-    if (options.comment) {
-      this.show()
-    }
     this.setData({
       detail: "",
       comment: [],
@@ -40,12 +37,14 @@ Page({
     if (this.data.$state.userInfo.mobile) {
       this.getDetail().then(code => {
         if (code == 1) {
-          this.getComment()
+          this.getComment([], options.comment)
           this.getPraise()
         }
       })
     }
-    
+  },
+  onUnload() {
+    // app.globalData.postShow = false
   },
   setHeight() {
     let that = this
@@ -177,14 +176,20 @@ Page({
         this.replyInfo = null
         this.replyParent = null
       }
-      wx.pageScrollTo({
-        scrollTop: 1000
-      })
+      // wx.pageScrollTo({
+      //   scrollTop: 1000
+      // })
       this.setData({
-        write: true
+        write: true,
+        focus: true
       })
     }
-    
+  },
+  textHeight(e) {
+    console.log(e.detail.height)
+    this.setData({
+      textHeight: e.detail.height + 'px'
+    })
   },
   hide() {
     this.setData({
@@ -280,7 +285,7 @@ Page({
       }
     })
   },
-  getComment(list) {
+  getComment(list, options) {
     let comment = list || this.data.comment
     return app.circle.getComment(this.comParam).then(msg => {
       if (msg.code == 1) {
@@ -294,6 +299,11 @@ Page({
           comment: comment
         })
         this.setHeight()
+        if (options) {
+          this.data.comment.length > 0 ? this.setData({
+            write: false
+          }) : this.show()
+        }
       } else if (msg.code == -2) {
         /* 帖子已经删除 */
         this.setData({
