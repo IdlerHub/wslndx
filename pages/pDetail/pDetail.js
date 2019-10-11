@@ -80,11 +80,15 @@ Page({
     return app.circle.detail(param).then(msg => {
       if (msg.code == 1) {
         let detail = msg.data[0]
-        let arr = []
+        let arr = [] , brr = []
         detail.images.forEach(function(i) {
           arr.push(i.image)
         })
+        detail.images.forEach(function (i) {
+          brr.push(i.image_compress)
+        })
         detail.images = arr
+        detail.image_compress= brr
         detail.auditing = new Date().getTime() - new Date(detail.createtime * 1000) < 7000
         detail.pause = true
         this.setData({

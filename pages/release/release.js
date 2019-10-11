@@ -258,19 +258,21 @@ Page({
         app.circle.add(param).then(msg => {
           wx.hideLoading()
           if (msg.code == 1) {
-            let pages = getCurrentPages()
-            let prePage = pages[pages.length - 2]
-            if (prePage.route == "pages/cDetail/cDetail") {
-              wx.switchTab({ url: "/pages/post/post" })
-              app.globalData.rlSuc = true
-            } else {
-              wx.navigateBack({
-                delta: 1,
-                success: function () {
-                  prePage.rlSuc()
-                }
-              })
-            }
+            wx.switchTab({ url: "/pages/post/post" })
+            app.globalData.rlSuc = true
+            // let pages = getCurrentPages()
+            // let prePage = pages[pages.length - 2]
+            // if (prePage.route == "pages/cDetail/cDetail") {
+            //   wx.switchTab({ url: "/pages/post/post" })
+            //   app.globalData.rlSuc = true
+            // } else {
+            //   wx.navigateBack({
+            //     delta: 1,
+            //     success: function () {
+            //       prePage.rlSuc()
+            //     }
+            //   })
+            // }
           } else {
             wx.showToast({
               title: msg.msg,

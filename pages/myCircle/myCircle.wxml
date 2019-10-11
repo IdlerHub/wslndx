@@ -23,10 +23,10 @@
       <rich-text class="name" space="emsp" nodes="{{ item.content }}"></rich-text>
       <view class="content" wx:if="{{ item.images.length > 0 }}">
         <view class="img one" wx:if="{{ item.images.length == 1 }}">
-          <image mode="widthFix" src="{{ item.images[0] }}" data-urls="{{ item.images }}" data-current="{{ item.images[0] }}" catchtap="previewImage"></image>
+          <image mode="widthFix" src="{{ item.image_compress[0] }}" data-urls="{{ item.images }}" data-current="{{ item.images[0] }}" catchtap="previewImage"></image>
         </view>
         <view class="img three" wx:else>
-          <image mode="aspectFill" wx:for="{{ item.images }}" wx:for-item="items" wx:key="index" src="{{ items }}" data-urls="{{ item.images }}" data-current="{{ items }}" catchtap="previewImage"></image>
+          <image mode="aspectFill" wx:for="{{ item.images }}" wx:for-item="items" wx:key="index" src="{{ item.image_compress[index] }}" data-urls="{{ item.images }}" data-current="{{ items }}" catchtap="previewImage"></image>
         </view>
       </view>
       <view class="content" wx:if="{{ item.check_status == 1 || item.check_status == 2 || item.check_status == 0 }}">

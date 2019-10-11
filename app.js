@@ -292,6 +292,10 @@ App({
     backstage: false,
     rlSuc: false,
     path: 'index',
-    currentTab: 0
+    currentTab: 0,
+    detail:{
+      id:0,
+      likestatus:0
+    }
   }
 })

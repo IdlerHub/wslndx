@@ -27,10 +27,10 @@
       <rich-text wx:if="{{ detail.content }}" class="name" nodes="{{ detail.content }}"></rich-text>
       <view class="content" wx:if="{{ detail.images.length > 0 }}">
         <view class="img one" wx:if="{{ detail.images.length == 1 }}">
-          <image mode="widthFix" wx:for="{{ detail.images }}" wx:for-item="items" wx:key="index" src="{{ items }}" data-urls="{{ detail.images }}" data-current="{{ items }}" catchtap="previewImage"></image>
+          <image mode="widthFix" wx:for="{{ detail.images }}" wx:for-item="items" wx:key="index" src="{{ detail.image_compress }}" data-urls="{{ detail.images }}" data-current="{{ items }}" catchtap="previewImage"></image>
         </view>
         <view class="img three" wx:if="{{ detail.images.length > 1 }}">
-          <image mode="aspectFill" wx:for="{{ detail.images }}" wx:for-item="items" wx:key="index" src="{{ items }}" data-urls="{{ detail.images }}" data-current="{{ items }}" catchtap="previewImage"></image>
+          <image mode="aspectFill" wx:for="{{ detail.images }}" wx:for-item="items" wx:key="index" src="{{ detail.image_compress[index] }}" data-urls="{{ detail.images }}" data-current="{{ items }}" catchtap="previewImage"></image>
         </view>
       </view>
       <view class="content" wx:if="{{ detail.url }}">

@@ -18,6 +18,24 @@ Page({
     })
   },
   onUnload() {},
+  onShow() {
+    let list = this.data.list
+
+    list.forEach(item => {
+      if (item.id == app.globalData.detail.id) {
+        if (app.globalData.detail.likestatus > 0) {
+          item.likes = app.globalData.detail.likes
+          item.likestatus = app.globalData.detail.likestatus
+        } else {
+          item.likes = app.globalData.detail.likes
+          item.likestatus = app.globalData.detail.likestatus
+        }
+      }
+      this.setData({
+        list
+      })
+    })
+  },
   getList: function(list) {
     let temp = list || this.data.list
     return app.circle.news(this.param).then(msg => {
@@ -25,6 +43,9 @@ Page({
         msg.data.forEach(function(item) {
           item.lw = app.util.tow(item.likes)
           item.cw = app.util.tow(item.comments)
+          item.image_compress = item.images.map(i => {
+            return i.image_compress
+          })
           item.images = item.images.map(i => {
             return i.image
           })

@@ -47,6 +47,9 @@ Page({
             item.fw = app.util.tow(item.forward)
             item.cw = app.util.tow(item.comments)
             item.lw = app.util.tow(item.likes)
+            item.image_compress = item.images.map(i => {
+              return i.image_compress
+            })
             item.images = item.images.map(i => {
               return i.image
             })

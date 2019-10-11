@@ -16,10 +16,6 @@ Page({
     this.setData({
       list: []
     })
-    /* 从cdetail-->发帖 */
-    if (app.globalData.rlSuc) {
-      this.setData({ rlSucFlag: true })
-    }
     this.getList([])
     app.aldstat.sendEvent("菜单", { name: "风采展示" })
   },
@@ -32,6 +28,10 @@ Page({
       this.getList([]).then(() => {
       })
       app.globalData.postShow = false
+    }
+    /* 从cdetail-->发帖 */
+    if (app.globalData.rlSuc) {
+      this.setData({ rlSucFlag: true })
     }
     if (this.data.rlSucFlag) {
       this.rlSuc()
@@ -97,9 +97,11 @@ Page({
             item.fw = app.util.tow(item.forward)
             item.cw = app.util.tow(item.comments)
             item.lw = app.util.tow(item.likes)
+            item.image_compress = item.images.map(i => {
+              return i.image_compress
+            })
             item.images = item.images.map(i => {
-              // return i.image
-              return i.image =  i.image.replace( 'https://jinling-xcx-dev.obs.cn-north-1.myhuaweicloud.com:443','https://hwcdn.jinlingkeji.cn')  
+              return i.image
             })
             item.auditing = item.check_status
           })
@@ -168,6 +170,15 @@ Page({
   },
   // 写帖成功动效
   rlSuc() {
+    /* 重新到第一页 */
+    console.log('adfasdsad')
+    this.param.page = 1
+    this.getList([]).then(() => {
+      wx.pageScrollTo({
+        scrollTop: 0,
+        duration:0
+      })
+    })
     this.setData({
       rlAni: true
     })
@@ -177,17 +188,10 @@ Page({
       })
       clearTimeout(timer)
     }, 2000)
-    /* 重新到第一页 */
-    this.param.page = 1
-    this.getList([]).then(() => {
-      wx.pageScrollTo({
-        scrollTop: 0,
-        duration: 300
-      })
-    })
   },
   //图片预览
   previewImage(e) {
+    console.log(e)
     let urls = e.currentTarget.dataset.urls
     let current = e.currentTarget.dataset.current
     console.log(urls)

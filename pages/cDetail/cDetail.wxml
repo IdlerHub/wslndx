@@ -34,10 +34,10 @@
         <rich-text wx:if="{{ item.content }}" class="name" nodes="{{ item.content }}"></rich-text>
         <view class="content" wx:if="{{ item.images.length > 0 }}">
           <view class="img one" wx:if="{{ item.images.length == 1 }}">
-            <image mode="widthFix" wx:for="{{ item.images }}" wx:for-item="items" wx:key="index" src="{{ items }}" data-urls="{{ item.images }}" data-current="{{ items }}" catchtap="previewImage"></image>
+            <image mode="widthFix" wx:for="{{ item.images }}" wx:for-item="items" wx:key="index" src="{{ item.image_compress }}" data-urls="{{ item.images }}" data-current="{{ items }}" catchtap="previewImage"></image>
           </view>
           <view class="img three" wx:else>
-            <image mode="aspectFill" wx:for="{{ item.images }}" wx:for-item="items" wx:key="index" src="{{ items }}" data-urls="{{ item.images }}" data-current="{{ items }}" catchtap="previewImage"></image>
+            <image mode="aspectFill" wx:for="{{ item.images }}" wx:for-item="items" wx:key="index" src="{{ item.image_compress[index] }}" data-urls="{{ item.images }}" data-current="{{ items }}" catchtap="previewImage"></image>
           </view>
         </view>
         <view class="content" wx:if="{{ item.url }}">

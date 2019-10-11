@@ -176,7 +176,7 @@ Page({
             wx.redirectTo({ url: app.globalData.path + "?" + params.join("&") })
           } else {
             /*跳转首页*/
-            wx.redirectTo({ url: "/pages/index/index" })
+            wx.switchTab({ url: "/pages/index/index" })
           }
         }
       } else {
