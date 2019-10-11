@@ -12,10 +12,10 @@
   </view>
   <view wx:if="{{ mode === 1 }}">
     <view class="remind">为了让您账户更安全，请设置常用的联系方式</view>
-    <button class="authorize-phone" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber" disabled="{{check}}">微信授权</button>
+    <button class="authorize-phone" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber" disabled="{{!check}}">微信授权</button>
     <checkbox-group bindchange="checkboxChange">
       <label class="checkbox">
-        <checkbox checked="true" color="#e32323" class="boxcheck"/>
+        <checkbox checked="{{ check }}" color="#e32323" class="boxcheck"/>
         阅读并同意以下协议  <text class="agreement" catchtap="toAgree">《服务协议》</text>
       </label>
     </checkbox-group>

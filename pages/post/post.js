@@ -191,10 +191,8 @@ Page({
   },
   //图片预览
   previewImage(e) {
-    console.log(e)
     let urls = e.currentTarget.dataset.urls
     let current = e.currentTarget.dataset.current
-    console.log(urls)
     wx.previewImage({
       current: current,
       urls: urls // 需要预览的图片http链接列表
@@ -202,7 +200,6 @@ Page({
   },
   navigate(e) {
     let id = e.currentTarget.dataset.id
-    console.log(id)
     wx.navigateTo({
       url: "../pDetail/pDetail?id=" + id
     })

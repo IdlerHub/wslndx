@@ -9,7 +9,7 @@ Page({
     canIUse: wx.canIUse("button.open-type.getPhoneNumber"),
     mode: 1,
     authenable: false,
-    check:false,
+    check:true,
     btnName: "获取验证码"
   },
   params: { tel: "", authCode: "", telFormat: false, codeFormat: false, mode: 1, tempCode: null },
