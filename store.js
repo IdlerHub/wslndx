@@ -5,14 +5,13 @@
  */
 import Store from "wxministore"
 const app = getApp()
-let env = "develop"
+let env = "production"
 let imgHost
 let activityUrl
 let API_URL
 let mpVersion
 let socket_host
-
-if (env == "develop") {
+if (env == "develop"){
   /* 测试环境 */
   imgHost = "https://jinling-xcx-dev.obs.cn-north-1.myhuaweicloud.com/images/dev" /* 图片等静态资源服务器 */
   activityUrl = "https://gqjydev.jinlingkeji.cn/?" /* 国情教育链接 */

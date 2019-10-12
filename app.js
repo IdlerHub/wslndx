@@ -66,16 +66,16 @@ App({
     /* 建立socket链接 */
     
     if (this.store.$state.userInfo.id) {
-      // setTimeout(()=> {
-      //   socket.init(userInfo.id)
-      //   socket.listen(this.handleMessage)
-      // },2000)
+      setTimeout(()=> {
+        socket.init(userInfo.id)
+        socket.listen(this.handleMessage)
+      },2000)
     }
 
     if (!this.store.$state.userInfo.mobile) {
       wx.redirectTo({ url: "/pages/sign/sign" })
     } else if (opts.query.type !== "share") {
-      wx.redirectTo({ url: "/pages/index/index" })
+      wx.reLaunch({ url: "/pages/index/index" })
     }
   },
   onShow: function(opts) {
@@ -95,7 +95,7 @@ App({
       if (!this.store.$state.userInfo.mobile) {
         wx.redirectTo({ url: "/pages/sign/sign" })
       } else if (opts.path == "pages/loading/loading") {
-        wx.redirectTo({ url: "/pages/index/index" })
+        wx.reLaunch({ url: "/pages/index/index" })
       }
     }
   },
@@ -273,7 +273,7 @@ App({
     })
   },
   onPageNotFound() {
-    wx.redirectTo({
+    wx.reLaunch({
       url: "/pages/index/index"
     })
   },

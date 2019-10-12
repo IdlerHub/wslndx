@@ -33,7 +33,6 @@ Page({
         })
       }, 5000)
     }
-
     if (this.data.$state.userInfo.mobile) {
       this.getDetail().then(code => {
         if (code == 1) {
@@ -44,7 +43,9 @@ Page({
     }
   },
   onUnload() {
-    // app.globalData.postShow = false
+    wx.onMemoryWarning(function () {
+      console.log('内存不足')
+    })
   },
   setHeight() {
     let that = this
@@ -306,9 +307,11 @@ Page({
           })
           comment.push(item)
         })
-        this.setData({
-          comment: comment
-        })
+        setTimeout(() => {
+          this.setData({
+            comment: comment
+          })
+        }, 500)
         this.setHeight()
         if (options) {
           this.data.comment.length > 0 ? this.setData({
@@ -328,9 +331,11 @@ Page({
     let praise = list || this.data.praise
     return app.circle.getPraise(this.praParam).then(msg => {
       if (msg.code == 1) {
-        this.setData({
-          praise: praise.concat(msg.data || [])
-        })
+        setTimeout(() => {
+          this.setData({
+            praise: praise.concat(msg.data || [])
+          })
+        }, 500)     
         this.setHeight()
       } else if (msg.code == -2) {
         /* 帖子已经删除 */
@@ -388,7 +393,10 @@ Page({
     let current = e.currentTarget.dataset.current
     wx.previewImage({
       current: current,
-      urls: urls // 需要预览的图片http链接列表
+      urls: urls, // 需要预览的图片http链接列表
+      complete: () => {
+        console.log('关闭成功')
+      }
     })
   },
   onShareAppMessage: function(ops) {
@@ -524,7 +532,7 @@ Page({
   },
   toUser(e) {
     if (this.data.$state.userInfo.id == e.currentTarget.dataset.uid) {
-      wx.navigateTo({
+      wx.switchTab({
         url: "/pages/user/user"
       })
     }

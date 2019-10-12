@@ -9,7 +9,7 @@
     <view class="weui-loading"></view>
     <!-- <view class='weui-loadmore-tips'>加载中...</view> -->
   </view>
-  <view class="top topOne" wx:if="{{ !$state.recommend }}">
+  <view class="top topOne" wx:if="{{ !recommend }}">
      <image class="bg" mode="widthFix"></image>
       <view class="box">
         <view class="left">
@@ -62,7 +62,7 @@
   </view>
 </view>
   <!-- 农场和电台 -->
-  <view class="jumpout" wx:if="{{ !$state.recommend }}">
+  <view class="jumpout" wx:if="{{ !recommend }}">
     <navigator class="jumpoutBox" url="/pages/education/education?type=farm">
       <image class="img" mode="widthFix"></image>
       <text>开心农场</text>
@@ -74,16 +74,16 @@
   </view>
   <view class="jumpout" wx:else>
     <navigator class="jumpoutBox" url="/pages/education/education?type=farm">
-      <image class="img" mode="widthFix" src="{{  !$state.recommend ? '' : $state.imgHost + '/farm.png' }}"></image>
+      <image class="img" mode="widthFix" src="{{  !recommend ? '' : $state.imgHost + '/farm.png' }}"></image>
       <text>开心农场</text>
     </navigator>
     <navigator class="jumpoutBox" url="/pages/education/education?type=station">
-      <image class="img" mode="widthFix" src="{{  !$state.recommend ? '' : $state.imgHost + '/station.png'}}"></image>
+      <image class="img" mode="widthFix" src="{{  !recommend ? '' : $state.imgHost + '/station.png'}}"></image>
       <text>老年电台</text>
     </navigator>
   </view>
   <navigationBar wx:if="{{ scroll }}" id="navigationBar" placeholderBg="#F8F8F8" color="#000000" title="网上老年大学" back="{{ false }}" background="#F8F8F8"></navigationBar>
-  <view class="nav" wx:if="{{ !$state.recommend }}">
+  <view class="nav" wx:if="{{ !recommend }}">
     <view class="integral navintegral"> 
     </view>
    </view>
@@ -97,7 +97,7 @@
       <view class="integralImg"></view>
     </view>
   </scroll-view>
-  <view class="skeleton" wx:for="{{5}}" wx:if="{{ !showReco }}" wx:key="{{index}}">
+  <view class="skeleton" wx:for="{{5}}" wx:if="{{ !recommend }}" wx:key="{{index}}">
         <view class="skeletonBox">
             <view class="skeletonImg"></view>
             <view class="skeletonTitle"></view>
@@ -144,7 +144,7 @@
               </view>
           </view>
         </view>
-        <view catchtap="detailTap" wx:for="{{ $state.recommend }}" wx:key="index" class="item" data-item="{{ item }}">
+        <view catchtap="detailTap" wx:for="{{ recommend }}" wx:key="index" class="item" data-item="{{ item }}">
           <view class="content {{ item.show_big ? 'big' : '' }}">
             <view class="left">
               <image class="poster" mode="aspectFill" src="{{ (item.show_big && item.big_image) || item.image }}" lazy-load="true"></image>
@@ -205,7 +205,7 @@
   </view> -->
   <navBar path='index' ></navBar>
   <!-- 签到拿积分 -->
-  <view class="integration" wx:if="{{ !$state.signStatus.count && $state.recommend }}" catchtouchmove="return">
+  <view class="integration" wx:if="{{ !$state.signStatus.count && recommend }}" catchtouchmove="return">
     <view class="dialog">
       <image class="bg" src="/images/integration_bg.png" mode="aspectFill"></image>
       <view class="ani"></view>

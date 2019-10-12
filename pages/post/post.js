@@ -105,8 +105,9 @@ Page({
             })
             item.auditing = item.check_status
           })
+          temp.push(...arr)
           this.setData({
-            list: temp.concat(arr)
+            list: temp
           })
         }
         console.log(1)

@@ -69,7 +69,7 @@ Page({
     this.setData({
       toLogin:true
     })
-    wx.reLaunch({
+    wx.navigateTo({
       url: "/pages/login/login?"
     })
   }

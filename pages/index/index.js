@@ -125,17 +125,14 @@ Page({
         msg.data.forEach(function(item) {
           item.bw = app.util.tow(item.browse)
         })
-        app.store.setState({
-          recommend: msg.data
-        })
         this.setData({
           recommend: msg.data
         })
-        setTimeout(() => {
-          this.setData({
-            showReco: true
-          })
-        }, 250)
+        // setTimeout(() => {
+        //   this.setData({
+        //     showReco: true
+        //   })
+        // }, 250)
         wx.hideLoading()
       }
     })
