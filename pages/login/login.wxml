@@ -1,5 +1,6 @@
 <!--pages/login/login.wxml-->
 <view class="container">
+  <navigationBar  id="navigationBar" placeholderBg="#F8F8F8" color="#000000" title="网上老年大学"  background="#F8F8F8" class="navigationBar"></navigationBar>
   <view class="buttons">
     <text data-type="1" catchtap="loginType" class="{{ mode == 1 ? 'active' : ''}}">
     微信授权

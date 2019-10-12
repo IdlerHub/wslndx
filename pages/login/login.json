@@ -1,4 +1,7 @@
 {
   "disableSwipeBack": true,
-  "usingComponents": {}
+  "usingComponents": {
+    "navigationBar": "/components/navigationBar/navigationBar"
+  },
+  "navigationStyle": "custom"
 }

@@ -174,7 +174,7 @@ Page({
             for (let attr in app.globalData.query) {
               params.push(attr + "=" + app.globalData.query[attr])
             }
-            wx.redirectTo({ url: app.globalData.path + "?" + params.join("&") })
+            wx.reLaunch({ url: app.globalData.path + "?" + params.join("&") })
           } else {
             /*跳转首页*/
             wx.switchTab({ url: "/pages/index/index" })
