@@ -28,6 +28,7 @@
     "pages/message/message",
     "pages/sign/sign",
     "pages/agreement/agreement",
+    "pages/videoTwo/videoTwo",
     "components/navBar/navBar"
   ],
   "permission": {

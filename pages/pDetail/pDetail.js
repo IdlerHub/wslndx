@@ -307,11 +307,9 @@ Page({
           })
           comment.push(item)
         })
-        setTimeout(() => {
           this.setData({
             comment: comment
           })
-        }, 500)
         this.setHeight()
         if (options) {
           this.data.comment.length > 0 ? this.setData({

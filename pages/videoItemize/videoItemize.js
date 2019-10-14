@@ -60,7 +60,7 @@ Page({
     let id = e.currentTarget.dataset.id
     let end = this.data.vistor ? "&home=true" : ""
     wx.navigateTo({
-      url: "/pages/video/video?id=" + id + "&categoryId=" + this.params.categoryId + end
+      url: "/pages/videoTwo/videoTwo?id=" + id + "&categoryId=" + this.params.categoryId + end
     })
   },
   tohome: function() {
