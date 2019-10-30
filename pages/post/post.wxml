@@ -22,10 +22,11 @@
           <image mode="aspectFill" class="avatarUrl" src="{{ item.avatar }}" data-uid="{{ item.uid }}" catchtap="toUser" lazy-load></image>
           <view class="text">
             <text class="nickName line">{{ item.nickname }}</text>
-            <text wx:if="{{ item.university_name }}" class="school line">{{ item.university_name }}</text>
+            <text class="date">{{ item.createtimes }}</text>
+            <text wx:if="{{ item.university_name }}" class="school">{{ item.university_name }}</text>
           </view>
         </view>
-        <text class="date">{{ item.createtimes }}</text>
+        <view class="collect" catchtap="collect" data-id="{{item.id}}">...</view>
       </view>
       <view catchtap="navigate" data-id="{{ item.id }}">
         <rich-text wx:if="{{ item.content }}" class="name" nodes="{{ item.content }}" space="emsp"></rich-text>
@@ -90,3 +91,13 @@
   <!-- 底部navBar -->
   <navBar path="post"/>
 </view>
+  <view class="ActionSheet" bindtap="closeSheet" wx:if="{{showSheet}}">
+    <view class="ActionSheet-box">
+        <view class="ActionSheet-item">
+          收藏
+        </view>
+        <view class="ActionSheet-item">
+          取消
+        </view>
+    </view>
+  </view>

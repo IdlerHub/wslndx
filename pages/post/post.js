@@ -9,7 +9,8 @@ Page({
   data: {
     rlSucFlag: false,
     isRefreshing: false,
-    showLoading:false
+    showLoading:false,
+    showSheet: false
   },
   onLoad(options) {
     this.param = { page: 1, pageSize: 10 }
@@ -110,7 +111,6 @@ Page({
             list: temp
           })
         }
-        console.log(1)
         this.setData({
           showLoading: false
         })
@@ -228,7 +228,7 @@ Page({
   },
   toUser(e) {
     if (this.data.$state.userInfo.id == e.currentTarget.dataset.uid) {
-      wx.navigateTo({
+      wx.switchTab({
         url: "/pages/user/user"
       })
     }
@@ -264,5 +264,22 @@ Page({
         url: '/pages/release/release',
       })
     }
+  },
+  //收藏风采
+  collect(){
+    // wx.showActionSheet({
+    //   itemList: ['收藏'],
+    //   success: () =>{
+    //     console.log('shouchang')
+    //   }
+    // })
+    this.setData({
+      showSheet: true
+    })
+  },
+  closeSheet() {
+    this.setData({
+      showSheet: false
+    })
   }
 })

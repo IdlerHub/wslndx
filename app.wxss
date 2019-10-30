@@ -898,3 +898,19 @@ button.button-hover {
   width: 460rpx;
   height: 650rpx;
   animation: ani 2s steps(20, end); }
+
+/* 自定义 ActionSheet*/
+.ActionSheet {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background:rgba(0,0,0,0.6);
+  z-index: 20;
+  animation: bg 1s;
+}
+@keyframes bg {
+  0% {
+    background-color:rgba(0,0,0,0); }
+  100% {
+    background-color: rgba(0,0,0,0.6); } }
