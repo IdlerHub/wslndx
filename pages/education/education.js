@@ -24,7 +24,8 @@ Page({
       }
       
     }
-    console.log(options.url)
+    // console.log(options.url)
+    this.junmpOut()
   },
   onReady: function() {},
   onShow: function() {},
@@ -40,7 +41,7 @@ Page({
   junmpOut(url) {
     this.setData({
       // url: this.data.$state.activityUrl + "mobile=" + encodeURIComponent(this.data.$state.userInfo.mobile) + "&authKey=" + encodeURIComponent(this.data.$state.authKey)
-      url
+     url
     })
   }
 })

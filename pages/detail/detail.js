@@ -182,6 +182,37 @@ Page({
       lesson_id: this.param.id,
       sublesson_id: this.data.cur.id
     }
+    let that = this
+    if(this.data.$state.playVedio) {
+      that.recordAddVedio(param)
+    } else {
+      wx.getConnectedWifi({
+        success: res => {
+          console.log(res)
+          app.playVedio()
+          that.recordAddVedio(param)
+        },
+        fail: res => {
+          console.log(res)
+          wx.showModal({
+            content: '您当前不在Wi-Fi环境，继续播放将会产生流量，是否选择继续播放?',
+            confirmText:'是',
+            cancelText:'否',
+            confirmColor:'#DF2020',
+            success(res) {
+              if (res.confirm) {
+                app.playVedio()
+                that.recordAddVedio(param)
+              } else if (res.cancel) {
+                console.log('用户点击取消')
+              }
+            }
+          })
+        }
+      })
+    }
+  },
+  recordAddVedio(param) {
     app.classroom.recordAdd(param).then(msg => {
       if (msg.code == 1) {
         this.getDetail().then(() => {

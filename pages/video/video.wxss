@@ -1,4 +1,37 @@
 @charset "UTF-8";
+.container {
+  position: relative;
+}
+.tabnav {
+  width: 100%;
+  position: absolute;
+  top: 27px;
+  z-index: 200;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;}
+  .tabnav .tabnav-item {
+    font-size:22px;
+    font-family:PingFangSC-Medium,PingFang SC;
+    font-weight:500;
+    color:rgba(250,250,250,1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .tabnav .tabnav-item:nth-child(1) {
+    margin-right: 20px;
+  }
+  .tabnav .tabnav-item .bottom {
+    width:20px;
+    height:3px;
+    background:rgba(255,255,255,1);
+    border-radius:3px;
+    margin-top: 6px;
+  }
+
 .myVideo {
   height: calc(100vh - 128rpx);
   width: 100%; }

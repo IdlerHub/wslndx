@@ -5,7 +5,7 @@
  */
 import Store from "wxministore"
 const app = getApp()
-let env = "production"
+let env = "develop"
 let imgHost
 let activityUrl
 let API_URL
@@ -13,14 +13,14 @@ let mpVersion
 let socket_host
 if (env == "develop"){
   /* 测试环境 */
-  imgHost = "https://jinling-xcx-dev.obs.cn-north-1.myhuaweicloud.com/images/dev" /* 图片等静态资源服务器 */
+  imgHost = "https://hwcdn.jinlingkeji.cn/images/dev" /* 图片等静态资源服务器 */
   activityUrl = "https://gqjydev.jinlingkeji.cn/?" /* 国情教育链接 */
   mpVersion = "v8" /* 版本管理 */
   API_URL = "https://develop.jinlingkeji.cn/api/v8/" /* 数据服务器 */
   socket_host = "develop.jinlingkeji.cn:8182"
 } else {
   /* 发布环境 */
-  imgHost = "https://jinling-xcx-dev.obs.cn-north-1.myhuaweicloud.com/images/pro"
+  imgHost = "https://hwcdn.jinlingkeji.cn/images/pro"
   activityUrl = "https://gqjy.jinlingkeji.cn/?"
   mpVersion = "v8"
   API_URL = "https://apielb.jinlingkeji.cn/api/v8/"
@@ -47,7 +47,8 @@ let store = new Store({
     imageUrl:'',
     shareImgurl: '',
     shareTitle:'',
-    recommend:''
+    recommend:'',
+    playVedio: false
   },
   pageLisener: {
     onLoad(opts) {

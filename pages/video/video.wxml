@@ -1,4 +1,14 @@
 <view class="container">
+  <view class="tabnav" style="top:{{ top }}px">
+    <view class="tabnav-item">
+      <text>推荐</text>
+      <view class="bottom"></view>
+    </view>
+    <view class="tabnav-item">
+      <text>分类</text>
+      <view class="bottom"></view>
+    </view>
+  </view>
   <video class="myVideo" id="{{ vid }}" src="{{ cur.url }}" controls="{{ false }}" show-center-play-btn="{{ false }}" object-fit="fill" page-gesture autoplay loop>
     <!-- 功能  滑动及视频播/停监听-->
     <cover-view wx:if="{{ cur && !$state.baseInfo }}" class="dropback">

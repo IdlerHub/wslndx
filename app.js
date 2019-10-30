@@ -46,6 +46,7 @@ App({
   store,
   onLaunch: async function(opts) {
     this.checkVersion()
+    console.log(opts.query.type)
     /* 检查用户从分享卡片启动 */
     if (this.globalData.scenes.indexOf(opts.scene) >= 0) {
       this.globalData.path = "/" + opts.path /* 卡片页面路径 */
@@ -220,6 +221,11 @@ App({
   tabBar(path) {
     this.store.setState({
       tabPath: path
+    })
+  },
+  playVedio() {
+    this.store.setState({
+      playVedio: true
     })
   },
   /* 更新签到信息 */

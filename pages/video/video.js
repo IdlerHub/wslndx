@@ -5,10 +5,16 @@ Page({
   data: {
     list: [],
     tip: true,
-    vid: "short-video" + Date.now()
+    vid: "short-video" + Date.now(),
+    top: 27
     /*  rect: wx.getMenuButtonBoundingClientRect() */
   },
   onLoad(options) {
+    let systemInfo = wx.getSystemInfoSync()
+    console.log(systemInfo.statusBarHeight)
+    systemInfo.statusBarHeight == 20 ? '' : this.setData({
+      top: 48
+    })
     this.videoContext = wx.createVideoContext(this.data.vid)
     let pages = getCurrentPages()
     let prePage = pages[pages.length - 2]

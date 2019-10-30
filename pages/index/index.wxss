@@ -6,7 +6,6 @@
   height: 100%vh;
   background: rgba(248, 248, 248, 1);
 }
-
 .topOne {
   background: white;
 }
@@ -661,32 +660,30 @@
 
 .integration .dialog {
   position: absolute;
-  background: white;
-  width: 516rpx;
-  height: 548rpx;
+  width: 556rpx;
+  height: 742rpx;
   border-radius: 10rpx;
-  left: calc((100% - 516rpx) / 2);
-  top: calc((100% - 548rpx) / 2);
+  left: calc((100% - 556rpx) / 2);
+  top: calc((100% - 860rpx) / 2);
   text-align: center;
 }
 
 .integration .dialog .bg {
   width: 100%;
-  height: 320rpx;
+  height: 100%;
   border-top-left-radius: 10rpx;
   border-top-right-radius: 10rpx;
-   background: #efefef; 
 }
 
 .integration .dialog .ani {
   position: absolute;
-  top: 15rpx;
-  width: 400rpx;
-  height: 285rpx;
-  left: calc((100% - 400rpx) / 2);
-  background-image: url("https://jinling-xcx-dev.obs.cn-north-1.myhuaweicloud.com/images/pro/integration_ani.png");
+  top: 330rpx;
+  width: 539rpx;
+  height: 393rpx;
+  left: calc((100% - 539rpx) / 2);
+  background-image: url("https://hwcdn.jinlingkeji.cn/images/dev/scoreAnimation.png");
   background-size: cover;
-  animation: ani 2s steps(22, end) infinite;
+  animation: ani 1.5s steps(23, end) infinite;
 }
 
 .integration .dialog button {
