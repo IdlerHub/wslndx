@@ -71,6 +71,12 @@
       </swiper-item>
       <swiper-item class="tab-item">
         <!--简介  -->
+        <scroll-view scroll-y="true" class="discussion">
+          <view wx:for="item in 50" :key="item"> 9999</view>
+        </scroll-view>
+      </swiper-item>
+      <swiper-item class="tab-item">
+        <!--简介  -->
         <scroll-view scroll-y="true" class="wrap synopsis">
           <rich-text nodes="{{ detail.intro_content }}"></rich-text>
         </scroll-view>
@@ -82,4 +88,7 @@
     <text>首页</text>
   </view>
   <button class="authorize" wx:if="{{ $state.baseInfo }}" open-type="getUserInfo" bindgetuserinfo="onGotUserInfo"></button>
+  <view class="issueBox">
+    <textarea placeholder="写评论"></textarea>
+  </view>
 </view>

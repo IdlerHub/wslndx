@@ -4,7 +4,7 @@ const app = getApp()
 Page({
   data: {
     sort: 0,
-    nav: [{ name: "剧集" }, { name: "简介" }],
+    nav: [{ name: "剧集" }, { name: "讨论" } ,{ name: "简介" }],
     height: 0,
     tip: true
     /* rect: wx.getMenuButtonBoundingClientRect() */

@@ -210,7 +210,7 @@
       <image class="bg" src="/images/integrationBg.png" mode="aspectFill"></image>
       <view class="ani" catchtap="signIn" data-id="1"></view>
       <!-- <button catchtap="signIn" data-id="1">签到领积分</button> -->
-      <icon type="cancel" size="37" color="white" data-id="1" catchtap="signIn"></icon>
+      <icon type="cancel" size="37" color="white" data-id="0" catchtap="signIn"></icon>
     </view>
   </view>
 </view> 

@@ -268,8 +268,8 @@ page {
         font-size: 84rpx;
         line-height: 84rpx; } */
       page .list .nav:nth-child(4) .iconfont {
-        width:70rpx;
-        height: 59rpx;
+        width:64rpx;
+        height: 58rpx;
         }  
       page .list .nav:nth-child(4) text {
         margin-top: 20rpx;
@@ -293,10 +293,10 @@ page {
         line-height: 84rpx; } */
       page .list .nav:nth-child(5) .iconfont {
         width:64rpx;
-        height: 66rpx;
+        height: 60rpx;
         } 
       page .list .nav:nth-child(5) text {
-        margin-top: 15rpx;
+        margin-top: 18rpx;
         font-family: PingFangSC-Regular;
         font-size: 36rpx;
         color:rgba(102,102,102,1);

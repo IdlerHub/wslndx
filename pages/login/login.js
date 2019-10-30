@@ -43,7 +43,6 @@ Page({
       mode,
       btnName: '重新获取'
     }) : ''
-    wx.hideHomeButton()
   },
   loginType(e, type) {
     this.setData({

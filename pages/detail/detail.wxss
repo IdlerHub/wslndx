@@ -303,3 +303,21 @@ rich-text {
   width: 100vw;
   height: 100vh;
   z-index: 9999; }
+  .discussion {
+    height: 100%;
+    background: #fff;
+  }
+ .issueBox {
+    width: 100%;
+    min-height:128rpx;
+    background:rgba(255,255,255,1); 
+    border-top: 1px solid #e9e9e9;
+    position: fixed;
+    bottom: 0;
+  }
+  .issueBox textarea {
+    height: 0;
+    width:586rpx;
+    min-height: 80rpx;
+    background:#F7F7F7;
+  }

@@ -53,7 +53,7 @@
   <view class="list">
     <navigator hover-class="none" class="nav" url="/pages/collection/collection" open-type="navigate">
       <image src="/images/usershoucang.png" class="iconfont"></image>
-      <text>收藏课程</text>
+      <text>我的收藏</text>
     </navigator>
     <navigator hover-class="none" class="nav" url="/pages/history/history" open-type="navigate">
       <image src="/images/userhistory.png" class="iconfont"></image>
@@ -63,6 +63,10 @@
       <image src="/images/userfengcai.png" class="iconfont"></image>
       <text>风采展示</text>
     </navigator>
+    <button class="nav">
+      <image src="/images/experience.png"  class="iconfont"></image>
+      <text>体验官申请</text>
+    </button>
     <navigator hover-class="none" class="nav" url="../circle/circle?type=1" open-type="navigate">
       <image src="/images/useraddquan.png" class="iconfont"></image>
       <text>加入圈子</text>
@@ -70,10 +74,6 @@
     <button class="nav" open-type="contact" bindcontact="handleContact">
       <image src="/images/userkefu.png" class="iconfont"></image>
       <text>联系客服</text>
-    </button>
-    <button class="nav" open-type="contact">
-      <image  class="iconfont"></image>
-      <text></text>
     </button>
   </view>
   <navBar path="user" />

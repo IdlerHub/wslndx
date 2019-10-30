@@ -88,31 +88,42 @@
   color: #fff;
   margin-top: 30rpx; }
 
+.vedioAll {
+  width: 100%;
+  position: relative;
+  top: calc(100% - 510rpx);
+}
+.vedioAll .vedioAllTop {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding-left: 30rpx;
+}
 /* 底部视频描述 */
 .info {
-  position: absolute;
   width: 750rpx;
-  padding: 0 30rpx;
-  bottom: 0;
   box-sizing: border-box;
-  height: 313rpx; }
+  height: 313rpx; 
+  position: relative;
+  top: 30rpx;
+  }
 
 .info .icon {
-  position: absolute;
   width: 100%;
   height: 100%;
-  top: 0;
-  left: 0;
   z-index: -1; }
 
 .synopsis {
-  height: 130rpx;
   position: absolute;
-  width: calc(100% - 60rpx);
-  bottom: 140rpx;
-  font-size: 36rpx;
+  top: 0;
+  left: 30rpx;
+  height: 140rpx;
+  /* width: calc(100% - 60rpx); */
+  width: 568rpx;
+  bottom: 146rpx;
+  font-size: 34rpx;
   color: #ffffff;
-  line-height: 42rpx;
+  line-height: 48rpx;
   overflow: hidden;
   word-break: break-all;
   text-overflow: ellipsis;
@@ -123,9 +134,9 @@
 
 /* 加群 */
 .cimg {
-  position: absolute;
-  left: 615rpx;
-  top: calc(50% - 375rpx);
+  left: 26rpx;
+  /* bottom: calc(50% - 345rpx); */
+  bottom: 328rpx;
   width: 110rpx;
   height: 110rpx;
   border-radius: 50%;
@@ -147,11 +158,12 @@
 /* 点赞 */
 .praise {
   position: absolute;
+  top: 0;
+  right: 0;
   width: 120rpx;
-  left: 610rpx;
-  top: calc(50% - 175rpx);
+  /* top: calc(50% - 175rpx); */
   text-align: center;
-  overflow: visible; }
+  overflow: visible;}
 
 .praise .heart {
   margin: 0 auto;
@@ -160,17 +172,54 @@
 
 .praising {
   position: fixed;
-  top: 50%;
-  z-index: 5;
-  margin-top: -224rpx;
-  right: -8rpx; }
+  right: -30rpx;
+  bottom: 380rpx;
+  z-index: 1000;
+  margin-top: -224rpx; }
 
+/* 视频标题 */
+.vedioTitle {
+  z-index: 5;
+  bottom: 330rpx;
+  left: 169rpx;
+  margin-left: 26rpx;
+}
+.vedioTitle .vedioTitle-p {
+  font-size:40rpx;
+  font-weight:500;
+  color:#fff;
+  width: 435rpx;
+  overflow: hidden;
+  text-overflow:ellipsis;
+  white-space: nowrap;
+}
+.vedioTitle  .viewMore {
+  width: 164rpx;
+  height:50rpx;
+  background:rgba(250,249,250,0.8);
+  border-radius:25rpx;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: cneter;
+  line-height: 50rpx;
+  padding-left: 21rpx;
+  font-size:28rpx;
+  font-weight:500;
+  color:rgba(51,51,51,1);
+  margin-top: 10rpx;
+}
+.vedioTitle  .viewMore .viewMoreimg {
+  width: 11rpx;
+  height: 19rpx;
+  margin-left: 10rpx;
+}
 /* 点赞动画 */
 .ani {
   width: 180rpx;
   height: 180rpx;
   background-size: cover;
-  animation: ani steps(20) 0.8s both; }
+  animation: ani steps(20) 1s both; }
 
 .praise .text {
   font-family: "黑体";
@@ -181,11 +230,10 @@
 
 /* 分享 */
 .share {
-  position: fixed;
-  left: 610rpx;
-  top: 50%;
+  position: absolute;
+  top: 176rpx;
+  right: 0;
   width: 120rpx;
-  margin-top: -10rpx;
   text-align: center;
   line-height: normal;
   z-index: 5; }

@@ -22,8 +22,19 @@
         </cover-view>
         <!-- 视频停止 -->
         <cover-image wx:if="{{ pause }}" mode="aspectFill" src="{{ $state.imgHost }}/play-hl.png" class="pause"></cover-image>
-        <!-- 加群 -->
-        <cover-image wx:if="{{ cur.image }}" mode="aspectFill" src="{{ cur.image }}" catchtap="navigate" class="cimg"></cover-image>
+        <cover-view class="vedioAll">
+        <cover-view class="vedioAllTop">
+          <!-- 加群 -->
+          <cover-image wx:if="{{ cur.image }}" mode="aspectFill" src="{{ cur.image }}" catchtap="navigate" class="cimg"></cover-image>
+           <!-- 视频标题 -->
+          <cover-view class="vedioTitle">
+          <cover-view class="vedioTitle-p">{{ cur.title }}</cover-view>
+          <cover-view class="viewMore" catchtap="navigate">
+            查看更多
+            <cover-image src="/images/vedioRight.png" class="viewMoreimg"></cover-image>
+          </cover-view>
+        </cover-view>
+        </cover-view>
         <!-- 点赞 -->
         <cover-view class="praise" catchtap="praise">
           <cover-view wx:if="!cur.praising">
@@ -33,15 +44,17 @@
           <cover-view wx:if="{{ cur.pw }}" class="text">{{ cur.pw }}</cover-view>
           <cover-view wx:else class="text">{{ cur.praise }}</cover-view>
         </cover-view>
-        <!-- 完整视频 -->
-        <cover-view class="complete" catchtap="complete" wx:if="{{ cur.target_id }}">
-          <cover-image mode="aspectFill" src="/images/video-white.png" class="icon"></cover-image>
-          <cover-view class="text">完整视频</cover-view>
-        </cover-view>
         <!--底部视频描述-->
         <cover-view class="info">
           <cover-image class="icon" src="/images/mask.png"></cover-image>
           <cover-view class="synopsis">{{ cur.intro_content }}</cover-view>
+        </cover-view>
+        <!-- 分享 -->
+        <button wx:if="{{ cur && !$state.baseInfo }}" class="share" open-type="share" hover-class="btn-hover">
+          <cover-image mode="aspectFill" src="/images/share.png" class="icon"></cover-image>
+          <cover-view wx:if="{{ cur.fw }}" class="text">{{ cur.fw }}</cover-view>
+          <cover-view wx:else class="text">{{ cur.forward }}</cover-view>
+        </button>
         </cover-view>
         <!-- 返回首页 -->
         <cover-view wx:if="{{ vistor || home }}" class="vistor-home" catchtap="tohome">
@@ -49,13 +62,12 @@
           <cover-view>首页</cover-view>
         </cover-view>
       </cover-view>
-      <!-- 分享 -->
-      <button wx:if="{{ cur && !$state.baseInfo }}" class="share" open-type="share" hover-class="btn-hover">
-        <cover-image mode="aspectFill" src="/images/share.png" class="icon"></cover-image>
-        <cover-view wx:if="{{ cur.fw }}" class="text">{{ cur.fw }}</cover-view>
-        <cover-view wx:else class="text">{{ cur.forward }}</cover-view>
-      </button>
     </cover-view>
+     <!-- 完整视频 -->
+        <cover-view class="complete" catchtap="complete" wx:if="{{ cur.target_id }}">
+          <cover-image mode="aspectFill" src="/images/video-white.png" class="icon"></cover-image>
+          <cover-view class="text">完整视频</cover-view>
+        </cover-view>
     <!-- 授权 -->
     <cover-view wx:if="{{ cur && $state.baseInfo }}" class="dropback  frontdrop">
       <cover-view class="userInfo-mask">
@@ -68,6 +80,7 @@
     </cover-view>
   </video>
   <!-- 点赞动画 -->
+  <!-- wx:if="{{ cur.praising }}" -->
   <view wx:if="{{ cur.praising }}" class="praising">
     <!-- prettier-ignore -->
     <view class="ani" bindanimationend="aniend" data-index="{{ index }}" style="background-image: url({{$state.imgHost}}/heart-ani.png)"></view>

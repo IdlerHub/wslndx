@@ -291,6 +291,10 @@ Page({
           }, 1500)
         }
       })
+    } else {
+      app.user.sign().then(res => {
+        console.log('签到成功')
+      })
     }
   },
   toEducation() {
