@@ -6,7 +6,8 @@ Page({
     sort: 0,
     nav: [{ name: "剧集" }, { name: "讨论" } ,{ name: "简介" }],
     height: 0,
-    tip: true
+    tip: true,
+    showGuide: true
     /* rect: wx.getMenuButtonBoundingClientRect() */
   },
   onLoad(options) {
@@ -27,7 +28,7 @@ Page({
       that.setData({
         vistor: options.type == "share", //游客从分享卡片过来
         height: scrollViewHeight,
-        currentTab: 0,
+        currentTab: 1,
         navScrollLeft: 0,
         id: options.id,
         curid: options.curid || null,
@@ -263,5 +264,10 @@ Page({
   //用于数据统计
   onHide() {
     app.aldstat.sendEvent("退出", { name: "课程详情页" })
+  },
+  closeGuide() {
+    this.setData({
+      showGuide: false
+    })
   }
 })

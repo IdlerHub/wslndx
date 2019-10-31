@@ -270,3 +270,42 @@ page {
     bottom:-267rpx; }
   100% {
     bottom: 0; } }
+.postGuide {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background:rgba(0,0,0,0.65); 
+  top: 0;
+  left: 0;
+  z-index: 200;
+}
+.postGuide .postGuide-img {
+  position: absolute;
+  width: 133rpx;
+  height: 170rpx;
+  right: 23rpx;
+  top: 49rpx;
+}
+.postGuide .postGuide-txt {
+  display: inline-block;
+  font-size:40rpx;
+  font-weight:500;
+  color:#fff;
+  text-align: cneter;
+  position: absolute;
+  left: 50%;
+  margin-left: -90px;
+  top: 227rpx;
+  letter-spacing: 2rpx;
+}
+.postGuide .postGuide-txt button {
+  width:200rpx;
+  height:80rpx;
+  background:#fff;
+  border-radius:40rpx;
+  line-height: 80rpx;
+  font-size:36rpx;
+  font-weight:400;
+  color:rgba(51,51,51,1);
+  margin: 60rpx 0 0 84rpx;
+}

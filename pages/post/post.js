@@ -10,7 +10,8 @@ Page({
     rlSucFlag: false,
     isRefreshing: false,
     showLoading:false,
-    showSheet: false
+    showSheet: false,
+    showGuide:true
   },
   onLoad(options) {
     this.param = { page: 1, pageSize: 10 }
@@ -280,6 +281,11 @@ Page({
   closeSheet() {
     this.setData({
       showSheet: false
+    })
+  },
+  closeGuide() {
+    this.setData({
+      showGuide: false
     })
   }
 })

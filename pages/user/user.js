@@ -9,7 +9,8 @@ const app = getApp()
 Page({
   data: {
     isRefreshing: false,
-    my_score: 0
+    my_score: 0,
+    showGuide:true
   },
   onLoad() {},
   onShow() {
@@ -59,5 +60,10 @@ Page({
   //用于数据统计
   onUnload() {
     app.aldstat.sendEvent("退出", { name: "个人中心页" })
+  },
+  closeGuide() {
+    this.setData({
+      showGuide: false
+    })
   }
 })

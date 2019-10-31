@@ -6,12 +6,14 @@ Page({
     list: [],
     tip: true,
     vid: "short-video" + Date.now(),
-    top: 27
+    top: 27,
+    pause:false,
+    showGuide: true,
+    nextRtight:1
     /*  rect: wx.getMenuButtonBoundingClientRect() */
   },
   onLoad(options) {
     let systemInfo = wx.getSystemInfoSync()
-    console.log(systemInfo.statusBarHeight)
     systemInfo.statusBarHeight == 20 ? '' : this.setData({
       top: 48
     })
@@ -245,6 +247,32 @@ Page({
   // 用于数据统计
   onHide() {
     app.aldstat.sendEvent("退出", { name: "短视频页" })
+  },
+  //指引
+  closeGuide(e) {
+    let type = e.currentTarget.dataset.type
+    this.data.nextRtight == 4 ? this.setData({
+      showGuide: false
+    }) : type == 'once' ? this.setData({
+        showGuide: false
+    }) : ''
+    this.data.showGuide == false ? this.videoContext.play() : ''
+  },
+  nextGuide(e){
+    let type = e.currentTarget.dataset.type
+    if (type == 1) {
+      this.setData({
+        nextRtight: 2
+      })
+    } else if(type == 2) {
+      this.setData({
+        nextRtight: 3
+      })
+    } else if (type == 3) {
+      this.setData({
+        nextRtight: 4
+      })
+    }
   },
   // 获取用户的微信昵称头像
   onGotUserInfo: function(e) {

@@ -70,9 +70,9 @@
         </scroll-view>
       </swiper-item>
       <swiper-item class="tab-item">
-        <!--简介  -->
+        <!--讨论  -->
         <scroll-view scroll-y="true" class="discussion">
-          <view wx:for="item in 50" :key="item"> 9999</view>
+          <view wx:for="item in 50" wx:key="item"> 9999</view>
         </scroll-view>
       </swiper-item>
       <swiper-item class="tab-item">
@@ -91,4 +91,11 @@
   <view class="issueBox">
     <textarea placeholder="写评论"></textarea>
   </view>
+  <!-- 指引 -->
+  <cover-view class="detailGuide" wx:if="{{showGuide}}" bindtap="closeGuide">
+    <cover-view class="detailGuide-txt">
+      向右滑动到讨论模块,<cover-view>和各地学员一起讨论课程内容</cover-view> 
+    </cover-view>
+    <cover-image class="detailGuide-img" src="{{$state.imgHost}}/discussion.png"></cover-image>
+  </cover-view>
 </view>

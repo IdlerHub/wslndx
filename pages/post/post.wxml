@@ -32,7 +32,7 @@
         <rich-text wx:if="{{ item.content }}" class="name" nodes="{{ item.content }}" space="emsp"></rich-text>
         <view class="content" wx:if="{{ item.images.length > 0 }}">
           <view class="img one" wx:if="{{ item.images.length == 1 }}">
-            <image mode="widthFix" wx:for="{{ item.images }}" wx:for-item="items" wx:key="index" src="{{ item.image_compress + '/resize,p_50' }}" data-urls="{{ item.images }}" data-current="{{ items }}" data-index="{{ index }}"   catchtap="previewImage" lazy-load></image>
+            <image mode="widthFix" wx:for="{{ item.images }}" wx:for-item="items" wx:key="index" src="{{ item.image_compress + '/resize,p_50' }}" data-urls="{{ item.images }}" data-current="{{ items }}" data-index="{{ index }}" catchtap="previewImage" lazy-load></image>
           </view>
           <view class="img three" wx:if="{{ item.images.length > 1 }}">
             <image mode="aspectFill" wx:for="{{ item.images }}" wx:for-item="items" wx:key="index" src="{{ item.image_compress[index] + '/resize,p_25' }}" data-urls="{{ item.images }}" data-current="{{ items }}" data-index="{{ index }}" catchtap="previewImage" lazy-load></image>
@@ -52,13 +52,13 @@
           <icon class="iconfont icon-fenxiang"></icon>
           <text class="text">{{ item.fw || item.forward }}</text>
         </button>
-         <button class="share item" bindtap="unShare" wx:if="{{ item.check_status == 0 || item.check_status == 2}}">
+        <button class="share item" bindtap="unShare" wx:if="{{ item.check_status == 0 || item.check_status == 2}}">
           <icon class="iconfont icon-fenxiang"></icon>
           <text class="text">{{ item.fw || item.forward }}</text>
         </button>
         <text class="division"></text>
         <!-- 评论 -->
-        <view hover-class="none"  class="item" bindtap="handleRelse" data-status="{{ $state.userInfo.status }}" data-id="{{ item.id }}" data-type="reply">
+        <view hover-class="none" class="item" bindtap="handleRelse" data-status="{{ $state.userInfo.status }}" data-id="{{ item.id }}" data-type="reply">
           <formCode>
             <view class="container-sub">
               <icon class="iconfont icon-comment"></icon>
@@ -79,25 +79,32 @@
     <mp-loading type="circle" wx:if="{{ showLoading }}"></mp-loading>
   </view>
   <view class="footer">
-    <view hover-class="none"  class="write" bindtap="handleRelse" data-status="{{ $state.userInfo.status }}" data-type="release">
-        <view class="write">
-          <text class="text">发帖</text>
-        </view>
+    <view hover-class="none" class="write" bindtap="handleRelse" data-status="{{ $state.userInfo.status }}" data-type="release">
+      <view class="write">
+        <text class="text">发帖</text>
+      </view>
     </view>
   </view>
   <view wx:if="{{ rlAni }}" class="popup">
     <view class="publishAni"></view>
   </view>
   <!-- 底部navBar -->
-  <navBar path="post"/>
+  <navBar path="post" />
 </view>
-  <view class="ActionSheet" bindtap="closeSheet" wx:if="{{showSheet}}">
-    <view class="ActionSheet-box">
-        <view class="ActionSheet-item">
-          收藏
-        </view>
-        <view class="ActionSheet-item">
-          取消
-        </view>
+<view class="ActionSheet" bindtap="closeSheet" wx:if="{{showSheet}}">
+  <view class="ActionSheet-box">
+    <view class="ActionSheet-item">
+      收藏
+    </view>
+    <view class="ActionSheet-item">
+      取消
     </view>
   </view>
+</view>
+<cover-view class="postGuide" wx:if="{{ showGuide }}">
+  <cover-image src="{{$state.imgHost}}/collectMessege.png" class="postGuide-img"></cover-image>
+  <cover-view class="postGuide-txt">
+  点击收藏喜欢的帖子
+   <button bindtap="closeGuide">我知道了</button>
+  </cover-view>
+</cover-view>

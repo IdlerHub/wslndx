@@ -77,4 +77,10 @@
     </button>
   </view>
   <navBar path="user" />
+  <cover-view class="userGuide" bindtap="closeGuide" wx:if="{{showGuide}}">
+    <cover-view class="userGuide-txt">
+    申请体验官, <cover-view>成为网上老年大学产品设计</cover-view>
+    </cover-view>
+    <cover-image class="userGuide-img" src="{{$state.imgHost}}/experienceApply.png"></cover-image>
+  </cover-view>
 </view>

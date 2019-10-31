@@ -320,4 +320,36 @@ rich-text {
     width:586rpx;
     min-height: 80rpx;
     background:#F7F7F7;
+    z-index: 20;
   }
+  /* 指引  */
+  .detailGuide {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background:rgba(0,0,0,0.65); 
+    top: 0;
+    left: 0;
+    z-index: 200;
+  }
+   .detailGuide .detailGuide-txt {
+     width: 561rpx;
+    text-align: center;
+    font-size: 40rpx;
+    line-height: 56rpx;
+    font-weight: 500;
+    color: #fff;
+    white-space: normal;
+    letter-spacing: 2rpx;
+    position: absolute;
+    top: 441rpx;
+    left: 50%;
+    margin-left: -280rpx;
+   }
+.detailGuide .detailGuide-img {
+  width: 140rpx;
+  height: 240rpx;
+  position: absolute;
+  top: 625rpx;
+  left: 146rpx;
+}

@@ -193,7 +193,7 @@
   text-overflow:ellipsis;
   white-space: nowrap;
 }
-.vedioTitle  .viewMore {
+.viewMore {
   width: 164rpx;
   height:50rpx;
   background:rgba(250,249,250,0.8);
@@ -203,13 +203,12 @@
   align-items: center;
   justify-content: cneter;
   line-height: 50rpx;
-  padding-left: 21rpx;
+  padding-left: 30rpx;
   font-size:28rpx;
   font-weight:500;
   color:rgba(51,51,51,1);
   margin-top: 10rpx;
-}
-.vedioTitle  .viewMore .viewMoreimg {
+} .viewMore .viewMoreimg {
   width: 11rpx;
   height: 19rpx;
   margin-left: 10rpx;
@@ -324,3 +323,182 @@
   .vistor-home .iconfont {
     width: 50rpx;
     height: 50rpx; }
+
+    /* 视频指引 */
+.vedioGuide {
+  width: 100%;
+  min-height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background:rgba(0,0,0,0.7);
+  z-index: 5000;
+}
+.vedioGuide .animitionBox {
+  position: absolute;
+  bottom: 764rpx;
+  left: 267rpx;
+  width: 476rpx;
+  height: 281rpx;
+}
+.vedioGuide .animitionBox .vedioGuide-img:nth-child(1) {
+  width: 74rpx;
+  height: 192rpx;
+  margin-right: 10rpx;
+}
+.vedioGuide .animitionBoxtow .vedioGuide-img:nth-child(1) {
+  width: 171rpx;
+  height: 95rpx;
+  margin-left: 50rpx;
+}
+.vedioGuide .animitionBox .vedioGuide-img:nth-child(2) {
+  width: 122rpx;
+  height: 116rpx;
+  position: absolute;
+  top: 84rpx;
+  left: 94rpx;
+  animation: runAway 3s infinite;
+}
+.vedioGuide .animitionBoxtow .vedioGuide-img:nth-child(2) {
+  width: 119rpx;
+  height: 175rpx;
+  top: 42rpx;
+  left: 53rpx;
+  animation: runRtight 3s infinite;
+}
+.vedioGuide .vedioGuide-txt {
+  position: absolute;
+  left: 115rpx;
+  bottom: 428rpx;
+} 
+.vedioGuide .vedioGuide-txt .vedioGuide-p {
+  font-size:40rpx;
+  font-weight:500;
+  color:#fff;
+  display: block;
+}
+.vedioGuide  .vedioGuide-btn {
+  width:200rpx;
+  height:80rpx;
+  background:#fff;
+  border-radius:40rpx;
+  font-size:36rpx;
+  font-weight:400;
+  color:#333;
+  text-align: center;
+  line-height: 80rpx;
+  display: inline-block;
+  margin: 60rpx  50rpx 0 99rpx;
+}
+.vedioGuide .vedioGuide-t {
+  font-size:36rpx;
+  font-weight:400;
+  color:#fff;
+  display: inline-block;
+}
+.vedioGuideBox {
+  position: absolute;
+  bottom: 84rpx;
+  left: 30rpx;
+}
+.vedioGuideBox-title {
+  display: flex;
+}
+.vedioGuideBox .vedioGuideBox-titlep {
+  display: flex;
+  flex-direction: column;
+  margin-left: 26rpx;
+}
+.vedioGuideBox .vedioGuideBox-titlep .vedioTitle-p {
+  font-size:40rpx;
+  font-weight:500;
+  color:#fff;
+  width: 435rpx;
+  overflow: hidden;
+  text-overflow:ellipsis;
+  white-space: nowrap;
+}
+.vedioGuideBox .vedioGuideBox-titlep .viewMore {
+  background: none;
+  color: #fff;
+  border:1px solid #fff;
+}
+.vedioGuideBox .vedioGuideBox-content {
+  margin-top: 36rpx;
+}
+.vedioGuideBox .vedioGuideBox-content .pathTop {
+  width: 86rpx;
+  height: 80rpx;
+  margin-left: 71rpx;
+}
+.vedioGuideBox .vedioGuideBox-content .vedioGuide-p {
+  width: 371rpx;
+  text-align: center;
+  font-size:40rpx;
+  line-height:56rpx;
+  font-weight:500;
+  color:#fff;
+  white-space: normal;
+  position: relative;
+  z-index: 50;
+  top: -70rpx;
+  left: 166rpx;
+}
+.vedioGuideBox .vedioGuideBox-content .vedioGuide-btn {
+  margin-top: 0;
+  margin-left: 192rpx;
+}
+.vedioGuidefinal {
+  width: 100%;
+  left: 215rpx;
+  bottom: 237rpx;
+  overflow:visible;
+}
+.vedioGuide-text {
+  width:285rpx;
+  font-size:40rpx;
+  font-weight:500;
+  color: #fff;
+  white-space: normal;
+  margin-bottom: 76rpx;
+  line-height:56rpx;
+}
+.vedioGuide-text:nth-child(2){
+  margin-bottom: 90rpx;
+}
+.vedioGuidefinal-img {
+  position: absolute;
+  width: 215rpx;
+  height: 303rpx;
+  top: 147rpx;
+  left: 308rpx;
+}
+.vedioGuidefinal-num {
+  position: absolute;
+  top: 274rpx;
+  left: 452rpx;
+}
+.vedioGuidefinal-num .vedioGuidefinal-numt {
+  font-size:30rpx;
+  font-weight:500;
+  color:#666;
+  width: 67rpx;
+  text-align: cneter;
+  margin-bottom: 150rpx;
+}
+@keyframes runAway {
+  0% {
+    top:0rpx; }
+  50% {
+    top: 164rpx; }
+  100% {
+    top: 0;
+  }}
+  @keyframes runRtight {
+  0% {
+    left:53rpx; }
+  50% {
+    left: 153rpx; }
+  100% {
+    left:53rpx;
+  }}

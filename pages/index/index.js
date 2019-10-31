@@ -264,7 +264,7 @@ Page({
   /* 签到 */
   signIn(data) {
     let sign = data.currentTarget.dataset.id == 1
-    app.setSignIn({ status: sign, count: 1 }, true)
+    app.setSignIn({ status: true, count: 1 }, true)
     if (sign) {
       app.user.sign().then(res => {
         if (res.code == 1) {
