@@ -73,11 +73,11 @@ App({
       },2000)
     }
 
-    if (!this.store.$state.userInfo.mobile) {
-      wx.redirectTo({ url: "/pages/sign/sign" })
-    } else if (opts.query.type !== "share") {
-      wx.reLaunch({ url: "/pages/index/index" })
-    }
+    // if (!this.store.$state.userInfo.mobile) {
+    //   wx.redirectTo({ url: "/pages/sign/sign" })
+    // } else if (opts.query.type !== "share") {
+    //   wx.reLaunch({ url: "/pages/index/index" })
+    // }
   },
   onShow: function(opts) {
     let lists = ["share", "invite"]
@@ -239,6 +239,14 @@ App({
   },
   /* 版本检测 */
   checkVersion: function() {
+    let systemInfo = wx.getSystemInfoSync()
+    let wxtype = systemInfo.version.replace(".", '').replace(".", '')
+    if (wxtype < 703) {
+      wx.reLaunch({
+        url: '/pages/upwxpage/upwxpage'
+      })
+      console.log(1)
+    }
     if (wx.canIUse("getUpdateManager")) {
       const updateManager = wx.getUpdateManager()
       updateManager.onCheckForUpdate(function(res) {

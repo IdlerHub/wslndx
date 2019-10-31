@@ -63,10 +63,10 @@
       <image src="/images/userfengcai.png" class="iconfont"></image>
       <text>风采展示</text>
     </navigator>
-    <button class="nav">
+    <navigator class="nav" url="/pages/experience/experience" open-type="navigate">
       <image src="/images/experience.png"  class="iconfont"></image>
       <text>体验官申请</text>
-    </button>
+    </navigator>
     <navigator hover-class="none" class="nav" url="../circle/circle?type=1" open-type="navigate">
       <image src="/images/useraddquan.png" class="iconfont"></image>
       <text>加入圈子</text>

@@ -29,7 +29,9 @@
     "pages/sign/sign",
     "pages/agreement/agreement",
     "pages/videoTwo/videoTwo",
-    "components/navBar/navBar"
+    "pages/experience/experience",
+    "components/navBar/navBar",
+    "pages/upwxpage/upwxpage"
   ],
   "permission": {
     "scope.userLocation": {
