@@ -24,7 +24,6 @@ Page({
       let infoHeight = res[1].height
       let navHeight = res[2].height + 10
       let scrollViewHeight = windowHeight - videoHeight - infoHeight - navHeight
-
       that.setData({
         vistor: options.type == "share", //游客从分享卡片过来
         height: scrollViewHeight,

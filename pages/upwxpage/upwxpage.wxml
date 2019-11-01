@@ -5,6 +5,6 @@
     <text class="logo-title">网上老年大学</text>
     <view class="logo-content">你的微信版本过低，无法正常使用此小程序的服务，请更新到最新版本</view>
     <view class="upwx">更新微信</view>
-    <view class="cancel">取消</view>
+    <navigator class="cancel" target="miniProgram" open-type="exit">取消</navigator>
   </view>
 </view>

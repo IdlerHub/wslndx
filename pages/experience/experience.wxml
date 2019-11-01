@@ -1,2 +1,5 @@
 <!--pages/experience/experience.wxml-->
-<text>体验馆申请</text>
+<view class="container">
+    <view class="title">{{ article.title }}</view>
+    <rich-text nodes="{{article.content }}"></rich-text>
+</view>

@@ -48,6 +48,7 @@
 .dropback {
   position: fixed;
   height: calc(100vh - 128rpx);
+  width: 100%;
   background-color: rgba(0, 0, 0, 0.15);
   visibility: visible; 
   overflow: visible;}
@@ -61,7 +62,7 @@
   position: absolute;
   left: 0;
   top: 0;
-  /* width: 100vw; */
+  width: 100vw;
   height: 100vh;
   overflow: visible; }
 
@@ -98,8 +99,8 @@
   margin-top: 30rpx; }
 
 .vedioAll {
-  /* width: 100%; */
-  position: absolute;
+  width: 100%;
+  position: relative;
   top: calc(100% - 510rpx);
 }
 .vedioAll .vedioAllTop {

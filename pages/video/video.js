@@ -107,6 +107,7 @@ Page({
     this.sy = e.touches[0].pageY
   },
   scrollTouchEnd(e) {
+    console.log(e)
     let list = this.data.list
     let index = this.data.index
     this.ey = e.changedTouches[0].pageY

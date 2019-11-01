@@ -241,7 +241,7 @@ App({
   checkVersion: function() {
     let systemInfo = wx.getSystemInfoSync()
     let wxtype = systemInfo.version.replace(".", '').replace(".", '')
-    if (wxtype < 703) {
+    if (wxtype < 708) {
       wx.reLaunch({
         url: '/pages/upwxpage/upwxpage'
       })

@@ -113,6 +113,12 @@ function share() {
   return httpService.post("User/shareConfig", {})
 }
 
+//POST User/experienceArticle 获取体验官文章
+function experienceArticle() {
+  return httpService.post("User/experienceArticle", {})
+}
+
+
 module.exports = {
   wxLoginCode,
   getAuthCode,
@@ -129,5 +135,6 @@ module.exports = {
   activite,
   signed,
   addFormId,
-  share
+  share,
+  experienceArticle
 }

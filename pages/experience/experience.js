@@ -1,66 +1,26 @@
 // pages/experience/experience.js
+const app = getApp()
 Page({
-
-  /**
-   * 页面的初始数据
-   */
   data: {
-
+    article:{
+      title:'体验官申请资格',
+      content: '<p style="margin-top: 0px; margin-bottom: 20px; padding: 0px; color: rgb(51, 51, 51); font-family: tahoma, 微软雅黑; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em; line-height: 2em;"><span style="font-size: 18px;">人口老龄化问题在近年来越来越突出，人口的老龄化除了要解决养老问题外，老年人的维权问题同样要引起重视。这主要是因为老年人是个易被侵权的群体，且在侵权后难以承担相应的维权费用，为此需要法律援助机构为老年人的维权活动提供“绿色通道”。那么常见的需要法律援助老年人维权都有哪些呢？下面就由小编为大家列举几种，以供大家了解。</span></p><p style="margin-top: 0px; margin-bottom: 20px; padding: 0px; color: rgb(51, 51, 51); font-family: tahoma, 微软雅黑; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em; line-height: 2em;"><span style="font-size: 18px;">根据相关数据分析，涉及老年人法律维权方面的问题主要表现在子女</span><a href="http://www.64365.com/baike/sy1/" title="赡养" target="_blank" style="color: rgb(1, 175, 99); transition: all 0.2s ease 0s; font-size: 18px; text-decoration: underline;"><span style="font-size: 18px;">赡养</span></a><span style="font-size: 18px;">、</span><a href="http://www.64365.com/zs/hyjt/ccfg/" title="财产分割" target="_blank" style="color: rgb(1, 175, 99); transition: all 0.2s ease 0s; font-size: 18px; text-decoration: underline;"><span style="font-size: 18px;">财产分割</span></a><span style="font-size: 18px;">、房屋产权等财产领域以及遗弃、虐待等人身权领域。</span></p><p style="margin-top: 0px; margin-bottom: 20px; padding: 0px; color: rgb(51, 51, 51); font-family: tahoma, 微软雅黑; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em; line-height: 2em;"><span style="font-size: 18px;"><strong>1、遗弃虐待老人</strong></span></p><p style="margin-top: 0px; margin-bottom: 20px; padding: 0px; color: rgb(51, 51, 51); font-family: tahoma, 微软雅黑; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em; line-height: 2em;"><span style="font-size: 18px;">有的子女以赡养为借口，大肆攫取老人财产，或者是与老人共</span><a href="http://www.64365.com/baike/tj/" title="同居" target="_blank" style="color: rgb(1, 175, 99); transition: all 0.2s ease 0s; font-size: 18px; text-decoration: underline;"><span style="font-size: 18px;">同居</span></a><span style="font-size: 18px;">住的子女以赡养、照料老人生活为名，在购</span><a href="http://www.64365.com/baike/mf/" title="买房" target="_blank" style="color: rgb(1, 175, 99); transition: all 0.2s ease 0s; font-size: 18px; text-decoration: underline;"><span style="font-size: 18px;">买房</span></a><span style="font-size: 18px;">屋产权、户口迁入、更改户主等目的达到后，遗弃、虐待老人。</span></p><p style="margin-top: 0px; margin-bottom: 20px; padding: 0px; color: rgb(51, 51, 51); font-family: tahoma, 微软雅黑; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em; line-height: 2em;"><span style="font-size: 18px;"><strong>2、因</strong><strong><a href="http://www.64365.com/baike/jc2/" title="继承" target="_blank" style="color: rgb(1, 175, 99); transition: all 0.2s ease 0s; text-decoration-line: none !important;">继承</a>遗产而侵犯老年人<a href="http://www.64365.com/baike/jichengquan/" title="继承权" target="_blank" style="color: rgb(1, 175, 99); transition: all 0.2s ease 0s; text-decoration-line: none !important;">继承权</a>的纠纷案件</strong></span></p><p style="margin-top: 0px; margin-bottom: 20px; padding: 0px; color: rgb(51, 51, 51); font-family: tahoma, 微软雅黑; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em; line-height: 2em;"><span style="font-size: 18px;">比如，老年人的配偶死亡后，另一方</span><a href="http://www.64365.com/baike/zh/" title="再婚" target="_blank" style="color: rgb(1, 175, 99); transition: all 0.2s ease 0s; font-size: 18px; text-decoration: underline;"><span style="font-size: 18px;">再婚</span></a><span style="font-size: 18px;">需要依法处理或者带走自己财产时，往往会受到子女、亲友或者其他家族人口的阻拦，不让老人处理或者带走遗产，这样会给老人的财产权利造成极大的间接或者直接经济损失。</span></p><p style="margin-top: 0px; margin-bottom: 20px; padding: 0px; color: rgb(51, 51, 51); font-family: tahoma, 微软雅黑; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em; line-height: 2em;"><span style="font-size: 18px;"><strong>3、侵吞老人的房屋产权</strong></span></p><p style="margin-top: 0px; margin-bottom: 20px; padding: 0px; color: rgb(51, 51, 51); font-family: tahoma, 微软雅黑; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em; line-height: 2em;"><span style="font-size: 18px;">有的子女不思老人赡养，巧取豪夺老人财产，其行为让人发指，如共同居住的子女分配、购买住房后，仍然占据老人住房；成年子女冒领本不该属于私有房产主的老人的</span><a href="http://www.64365.com/baike/cqbc/" title="拆迁补偿" target="_blank" style="color: rgb(1, 175, 99); transition: all 0.2s ease 0s; font-size: 18px; text-decoration: underline;"><span style="font-size: 18px;">拆迁补偿</span></a><span style="font-size: 18px;">款，有的还因为</span><a href="http://www.64365.com/baike/fcjf/" title="房产纠纷" target="_blank" style="color: rgb(1, 175, 99); transition: all 0.2s ease 0s; font-size: 18px; text-decoration: underline;"><span style="font-size: 18px;">房产纠纷</span></a><span style="font-size: 18px;">引发了再婚纠纷及赡养纠纷等。</span></p><p style="margin-top: 0px; margin-bottom: 20px; padding: 0px; color: rgb(51, 51, 51); font-family: tahoma, 微软雅黑; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em; line-height: 2em;"><span style="font-size: 18px;"><strong>4、再婚老人的配偶一方去世后引发的</strong><strong><a href="http://www.64365.com/baike/ccjc/" title="财产继承" target="_blank" style="color: rgb(1, 175, 99); transition: all 0.2s ease 0s; text-decoration-line: none !important;">财产继承</a>和老人赡养问题</strong></span></p><p style="margin-top: 0px; margin-bottom: 20px; padding: 0px; color: rgb(51, 51, 51); font-family: tahoma, 微软雅黑; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em; line-height: 2em;"><span style="font-size: 18px;">由于再婚老人的财产所有权模糊，加之原双方子女的干涉等，极易引发利益冲突和再婚老人的财产纠纷。</span></p><p style="margin-top: 0px; margin-bottom: 20px; padding: 0px; color: rgb(51, 51, 51); font-family: tahoma, 微软雅黑; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em; line-height: 2em;"><span style="font-size: 18px;"><strong>5、老人的赡养问题</strong></span></p><p style="margin-top: 0px; margin-bottom: 20px; padding: 0px; color: rgb(51, 51, 51); font-family: tahoma, 微软雅黑; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em; line-height: 2em;"><span style="font-size: 18px;">有的老人子女不孝，不思老人赡养，老人无依无靠、衣食得不到解决。尤其是独居老人，虽然衣食问题得到了解决，但却饱受精神养老问题的困扰。众所周知，由于受生活压力影响和传统观念的影响，许多年轻人习惯上把“养老”理解为是对老人物质与经济上的给予，他们认为只要在物质与经济上供给了就行，而对老人精神方面的需求则考虑甚少，忽视与老人进行感情交流，使得老人难以得到心理慰藉。老年人时常会感到失落、孤独、焦虑。</span></p><p style="margin-top: 0px; margin-bottom: 20px; padding: 0px; color: rgb(51, 51, 51); font-family: tahoma, 微软雅黑; white-space: normal; background-color: rgb(255, 255, 255); text-indent: 2em; line-height: 2em;"><span style="font-size: 18px;">当前老年人的维权</span><a href="http://www.64365.com/baike/ss/" title="诉讼" target="_blank" style="color: rgb(1, 175, 99); transition: all 0.2s ease 0s; font-size: 18px; text-decoration: underline;"><span style="font-size: 18px;">诉讼</span></a><span style="font-size: 18px;">案件主要集中在上述的五方面，其中老人向子女索要</span><a href="http://www.64365.com/baike/shanyangfei/" title="赡养费" target="_blank" style="color: rgb(1, 175, 99); transition: all 0.2s ease 0s; font-size: 18px; text-decoration: underline;"><span style="font-size: 18px;">赡养费</span></a><span style="font-size: 18px;">是法律援助老年人维权中最常见的案件类型。老年人作为社会的弱势群体需要各方的关心与帮助，在侵权事件发生后除了向当地的法律援助机构求助外，也可以向当地的相关部门求助请他们帮忙出面调解。</span></p><p><br/></p>'
+    }
   },
-
-  /**
-   * 生命周期函数--监听页面加载
-   */
   onLoad: function (options) {
 
   },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
   onShow: function () {
-
+    // this.getArticle()
   },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
+  getArticle() {
+    app.user.experienceArticle().then(res => {
+      if(res.code == 1) {
+        this.setData({
+          article: res.data
+        })
+      }
+    })
   }
+
 })
