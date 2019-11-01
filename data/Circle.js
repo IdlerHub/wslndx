@@ -134,6 +134,11 @@ function getMessage(param) {
   return httpService.post("Bokeblog/blogMessageList", param)
 }
 
+/* 收藏博客 */
+function collect(param) {
+  return httpService.post("Bokeblog/collect", param)
+}
+
 module.exports = {
   allCircles,
   noJoinCircles,
@@ -157,5 +162,6 @@ module.exports = {
   fsinfo,
   delComment,
   addForward,
-  getMessage
+  getMessage,
+  collect
 }

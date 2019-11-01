@@ -267,15 +267,35 @@ Page({
     }
   },
   //收藏风采
-  collect(){
-    // wx.showActionSheet({
-    //   itemList: ['收藏'],
-    //   success: () =>{
-    //     console.log('shouchang')
-    //   }
-    // })
+  collect(e){
+    let blog_id = e.currentTarget.dataset.id
+    this.setData({
+      blog_id
+    })
     this.setData({
       showSheet: true
+    })
+  },
+  setCollect() {
+    let param = {
+      blog_id: this.data.blog_id
+    }
+    app.circle.collect(param).then(res => {
+      if(res.code == 1) {
+        this.closeSheet()
+        wx.showToast({
+          title: res.msg,
+          icon: 'success',
+          duration: 1500
+        })
+      } else {
+        this.closeSheet()
+        wx.showToast({
+          title: res.msg,
+          image:'/images/warn.png',
+          duration: 1500
+        })
+      }
     })
   },
   closeSheet() {

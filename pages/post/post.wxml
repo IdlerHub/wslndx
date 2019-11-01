@@ -93,7 +93,7 @@
 </view>
 <view class="ActionSheet" bindtap="closeSheet" wx:if="{{showSheet}}">
   <view class="ActionSheet-box">
-    <view class="ActionSheet-item">
+    <view class="ActionSheet-item" catchtap="setCollect">
       收藏
     </view>
     <view class="ActionSheet-item">
