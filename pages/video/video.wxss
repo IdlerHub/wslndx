@@ -200,7 +200,10 @@
   font-weight:500;
   color:#fff;
   width: 435rpx;
+  margin-top: 11rpx;
+  height: 40rpx;
   overflow: hidden;
+  line-height: 40rpx;
   text-overflow:ellipsis;
   white-space: nowrap;
 }
@@ -218,7 +221,7 @@
   font-size:28rpx;
   font-weight:500;
   color:rgba(51,51,51,1);
-  margin-top: 10rpx;
+  margin-top: 19rpx;
 } .viewMore .viewMoreimg {
   width: 11rpx;
   height: 19rpx;
