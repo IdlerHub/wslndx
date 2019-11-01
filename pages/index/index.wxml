@@ -22,16 +22,16 @@
             </view>
           </view>
         </view>
-        <image class="right" mode="aspectFill" src="{{ $state.imgHost }}/Return.png"></image>
+        <!-- <image class="right" mode="aspectFill" src="{{ $state.imgHost }}/Return.png"></image> -->
       </view>
   </view>
   <view wx:else>
     <view class="top">
-    <view wx:if="{{ $state.authUserInfo }}" bindtap="toUser">
+    <view wx:if="{{ $state.authUserInfo }}" bindtap="toInfo">
       <image class="bg" mode="widthFix" src="{{  $state.userInfo.avatar }}"></image>
       <view class="box">
         <view class="left">
-          <image class="img" mode="aspectFill" src="{{ $state.userInfo.avatar }}"></image>
+          <image class="img" mode="aspectFill" src="{{ $state.userInfo.avatar }}" catchtap="toUser"></image>
           <view class="info">
             <text class="line name">{{  $state.userInfo.nickname }}的老年大学</text>
             <view class="line">
@@ -40,14 +40,14 @@
             </view>
           </view>
         </view>
-        <image class="right" mode="aspectFill" src="{{ $state.imgHost }}/Return.png"></image>
+        <!-- <image class="right" mode="aspectFill" src="{{ $state.imgHost }}/Return.png"></image> -->
       </view>
     </view>
     <button class="authorize" wx:else open-type="getUserInfo" bindgetuserinfo="onGotUserInfo" data-role="user">
-      <open-data class="bg" type="userAvatarUrl"></open-data>
+      <open-data class="bg" type="userAvatarUrl" ></open-data>
       <view class="box">
         <view class="left">
-          <open-data class="img" type="userAvatarUrl"></open-data>
+          <open-data class="img" type="userAvatarUrl" catchtap="toUser"></open-data>
           <view class="info">
             <view class="line name"> <open-data type="userNickName"></open-data>的老年大学 </view>
             <view class="line">
@@ -56,7 +56,7 @@
             </view>
           </view>
         </view>
-        <image class="right" mode="aspectFill" src="{{ $state.imgHost }}/Return.png"></image>
+        <!-- <image class="right" mode="aspectFill" src="{{ $state.imgHost }}/Return.png"></image> -->
       </view>
     </button>
   </view>

@@ -16,6 +16,24 @@ Page({
   onLoad() {
     this.getCircleList()
   },
+  onShow() {
+    let pages = getCurrentPages()
+    let prePage = pages[0]
+    if (prePage.data.releaseParam != null) {
+      this.setData({
+        param: prePage.data.releaseParam,
+        media_type: prePage.data.media_type
+      })
+    }
+  },
+  onUnload() {
+    let pages = getCurrentPages()
+    let prePage = pages[0]
+    prePage.setData({
+      releaseParam: this.data.param,
+      media_type: this.data.media_type
+    })
+  },
   input(e) {
     this.setData({
       "param.content": e.detail.value
@@ -258,6 +276,17 @@ Page({
         app.circle.add(param).then(msg => {
           wx.hideLoading()
           if (msg.code == 1) {
+            let paramInit = {
+              image: [],
+              content: null,
+              video: null,
+              cover: null,
+              fs_id: "",
+              num:0
+            }
+            this.setData({
+              param: paramInit
+            })
             wx.switchTab({ url: "/pages/post/post" })
             app.globalData.rlSuc = true
             // let pages = getCurrentPages()

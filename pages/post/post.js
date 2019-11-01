@@ -11,7 +11,16 @@ Page({
     isRefreshing: false,
     showLoading:false,
     showSheet: false,
-    showGuide:true
+    showGuide:true,
+    releaseParam: {
+      image: [],
+      content: null,
+      video: null,
+      cover: null,
+      fs_id: "",
+      num: 0
+    },
+    media_type:null
   },
   onLoad(options) {
     this.param = { page: 1, pageSize: 10 }
@@ -42,7 +51,6 @@ Page({
       app.globalData.rlSuc = false
     }
     let list = this.data.list
-
     list.forEach(item => {
       if(item.id == app.globalData.detail.id) {
         if(app.globalData.detail.likestatus > 0) {
@@ -57,6 +65,24 @@ Page({
         list
       })
     })
+    if (this.data.releaseParam.content != null || this.data.releaseParam.image[0] || this.data.releaseParam.video != null) {
+      let that = this
+      wx.showModal({
+        content: '保留本次编辑',
+        confirmColor: '#df2020',
+        cancelText:"不保留",
+        confirmText: '保留',
+        success(res) {
+          if (res.confirm) {
+            console.log('用户点击确定')
+          } else if (res.cancel) {
+            that.setData({
+              releaseParam: null
+            })
+          }
+        }
+      })
+    }
   },
   onShareAppMessage: function(ops, b) {
     if (ops.from === "menu") {

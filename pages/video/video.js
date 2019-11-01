@@ -300,6 +300,7 @@ Page({
     }
   },
   switchTab(event) {
+    this.tap()
     let cur = event.detail.current
     this.setData({
       currentTab: cur

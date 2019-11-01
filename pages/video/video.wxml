@@ -11,7 +11,7 @@
   </view>
   <swiper class="swiper" current="{{ currentTab }}" duration="300" bindchange="switchTab">
     <swiper-item>
-      <scroll-view scroll-y="true" bindtap="tap">
+      <scroll-view scroll-x="true" bindtap="tap">
         <video class="myVideo" id="{{ vid }}" src="{{ cur.url }}" controls="{{ false }}" show-center-play-btn="{{ false }}" object-fit="fill" page-gesture autoplay="{{pause}}" loop>
           <!-- 功能  滑动及视频播/停监听-->
           <cover-view wx:if="{{ cur && !$state.baseInfo }}" class="dropback">
@@ -84,7 +84,7 @@
         </video>
       </scroll-view>
     </swiper-item>
-    <swiper-item>
+    <swiper-item style="background:rgba(24,24,24,1);padding-top:{{ 38 + top }}px">
       ;sjlgjdsflkjgkljsdf
     </swiper-item>
   </swiper>
