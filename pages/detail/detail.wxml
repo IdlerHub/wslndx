@@ -96,6 +96,6 @@
     <cover-view class="detailGuide-txt">
       向右滑动到讨论模块,<cover-view>和各地学员一起讨论课程内容</cover-view> 
     </cover-view>
-    <cover-image class="detailGuide-img" src="{{$state.imgHost}}/discussion.png"></cover-image>
+    <cover-image class="detailGuide-img" src="{{$state.imgHost}}/discussion.png" style="top:{{ detail.current_sublesson_id != 0 && !hideRecode ? 738 : '' }}rpx"></cover-image>
   </cover-view>
 </view>

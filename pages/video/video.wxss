@@ -5,12 +5,13 @@
 .tabnav {
   width: 100%;
   position: absolute;
-  top: 27px;
+  top: 0;
   z-index: 200;
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: center;}
+  justify-content: center;
+  background: linear-gradient(#000,transparent);}
   .tabnav .tabnav-item {
     font-size:22px;
     font-family:PingFangSC-Medium,PingFang SC;
@@ -31,7 +32,14 @@
     border-radius:3px;
     margin-top: 6px;
   }
-
+  .tabnav .lose {
+    font-size:36rpx;
+    font-weight:500;
+    color:rgba(250,250,250,1);
+  }
+  .swiper {
+     height: calc(100vh - 128rpx);
+  }
 .myVideo {
   height: calc(100vh - 128rpx);
   width: 100%; }
@@ -40,9 +48,9 @@
 .dropback {
   position: fixed;
   height: calc(100vh - 128rpx);
-  width: 100%;
   background-color: rgba(0, 0, 0, 0.15);
-  visibility: visible; }
+  visibility: visible; 
+  overflow: visible;}
 
 .dropback .frontdrop {
   z-index: 10; }
@@ -53,8 +61,9 @@
   position: absolute;
   left: 0;
   top: 0;
-  width: 100vw;
-  height: 100vh; }
+  /* width: 100vw; */
+  height: 100vh;
+  overflow: visible; }
 
 .userInfo-mask {
   display: flex;
@@ -89,8 +98,8 @@
   margin-top: 30rpx; }
 
 .vedioAll {
-  width: 100%;
-  position: relative;
+  /* width: 100%; */
+  position: absolute;
   top: calc(100% - 510rpx);
 }
 .vedioAll .vedioAllTop {
@@ -98,6 +107,7 @@
   flex-direction: row;
   align-items: center;
   padding-left: 30rpx;
+  overflow: visible;
 }
 /* 底部视频描述 */
 .info {

@@ -9,7 +9,8 @@ Page({
     top: 27,
     pause:false,
     showGuide: true,
-    nextRtight:1
+    nextRtight:1,
+    currentTab:0
     /*  rect: wx.getMenuButtonBoundingClientRect() */
   },
   onLoad(options) {
@@ -18,6 +19,7 @@ Page({
       top: 48
     })
     this.videoContext = wx.createVideoContext(this.data.vid)
+    this.getCategory()
     let pages = getCurrentPages()
     let prePage = pages[pages.length - 2]
     if (prePage && prePage.route == "pages/videoItemize/videoItemize") {
@@ -69,6 +71,11 @@ Page({
         this.callback(msg, temp)
       })
     }
+  },
+  getCategory() {
+    app.video.categoryMore().then(res =>{
+      
+    })
   },
   callback(msg, temp) {
     if (msg.code === 1 && msg.data && msg.data.lists) {
@@ -281,5 +288,21 @@ Page({
     }
   },
   onUnload() {
-  }
+  },
+  switchNav(event) {
+    let cur = event.currentTarget.dataset.current
+    if (this.data.currentTab === cur) {
+      return false
+    } else {
+      this.setData({
+        currentTab: cur
+      })
+    }
+  },
+  switchTab(event) {
+    let cur = event.detail.current
+    this.setData({
+      currentTab: cur
+    })
+  },
 })

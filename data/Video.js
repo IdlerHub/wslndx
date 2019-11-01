@@ -38,11 +38,19 @@ function category(param) {
   return httpService.post("Shortvideo/categoryLists", param)
 }
 
+/**
+ * @description: 获取短视频分类列表
+ */
+function categoryMore(param) {
+  return httpService.post("Shortvideo/Category", param)
+}
+
 module.exports = {
   list,
   praise,
   delPraise,
   share,
   search,
-  category
+  category,
+  categoryMore
 }
