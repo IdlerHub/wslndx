@@ -26,7 +26,7 @@
             <text wx:if="{{ item.university_name }}" class="school">{{ item.university_name }}</text>
           </view>
         </view>
-        <view class="collect" catchtap="collect" data-id="{{item.id}}">...</view>
+        <view class="collect" catchtap="collect" data-id="{{item.id}}" data-status="{{item.collectstatus}}" data-index="{{index}}">...</view>
       </view>
       <view catchtap="navigate" data-id="{{ item.id }}">
         <rich-text wx:if="{{ item.content }}" class="name" nodes="{{ item.content }}" space="emsp"></rich-text>
@@ -92,13 +92,16 @@
   <navBar path="post" />
 </view>
 <view class="ActionSheet" bindtap="closeSheet" wx:if="{{showSheet}}">
-  <view class="ActionSheet-box">
+  <view class="ActionSheet-box" wx:if="{{showSheetBox}}">
     <view class="ActionSheet-item" catchtap="setCollect">
       收藏
     </view>
     <view class="ActionSheet-item">
       取消
     </view>
+  </view>
+   <view class="ActionSheet-cancelBox" catchtap="cancelCollection" wx:else>
+    取消收藏
   </view>
 </view>
 <cover-view class="postGuide" wx:if="{{ showGuide }}">

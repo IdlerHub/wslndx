@@ -100,6 +100,10 @@
         </view>
       </view>
     </view>
+     <view class="ncol" wx:if="{{ circleList.length == 0 }}">
+      <image mode="widthFix" src="{{ $state.imgHost }}/ncol.png"></image>
+      <text class="line">啥都没有呢~\n赶紧去收藏帖子吧</text>
+    </view>
   </swiper-item>
 </swiper>
 <view class="ActionSheet" bindtap="closeSheet" wx:if="{{showSheet}}">

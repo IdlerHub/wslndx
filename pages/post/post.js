@@ -12,6 +12,7 @@ Page({
     showLoading:false,
     showSheet: false,
     showGuide:true,
+    showSheetBox: true,
     releaseParam: {
       image: [],
       content: null,
@@ -295,11 +296,45 @@ Page({
   //收藏风采
   collect(e){
     let blog_id = e.currentTarget.dataset.id
+    let status = e.currentTarget.dataset.status
+    console.log(status)
+    let blog_index = e.currentTarget.dataset.index
     this.setData({
-      blog_id
+      blog_id,
+      blog_index
+    })
+    status == 0 ? this.setData({
+      showSheet: true,
+      showSheetBox: true
+    }) : this.setData({
+      showSheet: true,
+      showSheetBox: false
+    })
+  },
+  cancelCollection() {
+    let param = { blog_id: this.data.blog_id }
+    app.circle.collectCancel(param).then(res => {
+      if (res.code == 1) {
+        let list = this.data.list
+        list[this.data.blog_index].collectstatus = 0
+        this.setData({
+          list
+        })
+        wx.showToast({
+          title: res.msg,
+          icon: 'success',
+          duration: 800
+        })
+      } else {
+        wx.showToast({
+          title: res.msg,
+          image: '/images/warn.png',
+          duration: 800
+        })
+      }
     })
     this.setData({
-      showSheet: true
+      showSheet: false
     })
   },
   setCollect() {
@@ -308,6 +343,11 @@ Page({
     }
     app.circle.collect(param).then(res => {
       if(res.code == 1) {
+        let list = this.data.list
+        list[this.data.blog_index].collectstatus = 1
+        this.setData({
+          list
+        })
         this.closeSheet()
         wx.showToast({
           title: res.msg,

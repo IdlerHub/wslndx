@@ -97,7 +97,6 @@ page .right {
       margin-left: 40rpx; }
 .wrap {
   box-sizing: border-box;
-  padding-bottom: 120rpx;
   background: #eee; }
   .wrap > .item {
     background: #fff;
@@ -278,7 +277,11 @@ page .right {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center; }
+  justify-content: center;
+  position: absolute;
+  top: 0;
+  background: #fff;
+ }
  .ncol text {
     margin-top: -100rpx;
     font-size: 32rpx;
