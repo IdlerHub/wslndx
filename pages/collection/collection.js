@@ -49,9 +49,23 @@ Page({
       wx.stopPullDownRefresh()
     })
   },
-  onReachBottom: function() {
-    this.collectParam.page++
-    this.getCollect()
+  // onReachBottom: function() {
+  //   if(this.currentTab == 0) {
+  //     this.collectParam.page++
+  //     this.getCollect()
+  //   } else {
+  //     this.circleparam.page++
+  //     this.getCircle()
+  //   }  
+  // },
+  scrollEnd() {
+    if (this.data.currentTab == 0) {
+      this.collectParam.page++
+      this.getCollect()
+    } else {
+      this.circleparam.page++
+      this.getCircle()
+    }  
   },
   getCollect(list) {
     let collect = list || this.data.collect

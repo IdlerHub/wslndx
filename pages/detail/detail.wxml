@@ -89,7 +89,8 @@
   </view>
   <button class="authorize" wx:if="{{ $state.baseInfo }}" open-type="getUserInfo" bindgetuserinfo="onGotUserInfo"></button>
   <view class="issueBox">
-    <textarea placeholder="写评论"></textarea>
+    <textarea placeholder="写评论" fixed auto-height show-confirm-bar="{{false}}" cursor-spacing="190rpx" adjust-position="{{ false }}" placeholder-class="placeholder"></textarea>
+    <view class="submit">发布</view>
   </view>
   <!-- 指引 -->
   <cover-view class="detailGuide" wx:if="{{showGuide}}" bindtap="closeGuide">

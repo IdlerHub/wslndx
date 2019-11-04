@@ -314,6 +314,11 @@ rich-text {
     border-top: 1px solid #e9e9e9;
     position: fixed;
     bottom: 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    box-sizing: border-box;
   }
   .issueBox textarea {
     height: 0;
@@ -321,6 +326,19 @@ rich-text {
     min-height: 80rpx;
     background:#F7F7F7;
     z-index: 20;
+    border-radius:40rpx; 
+    padding-left: 38rpx;
+    box-sizing: border-box; 
+  }
+  .placeholder {
+    font-size:38rpx;
+    font-weight:400;
+    color:rgba(153,153,153,1);
+  }
+  .submit {
+    font-size:38rpx;
+    font-weight:400;
+    color:rgba(51,51,51,1);
   }
   /* 指引  */
   .detailGuide {
