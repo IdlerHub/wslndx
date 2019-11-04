@@ -7,16 +7,23 @@ Page({
     tip: true,
     vid: "short-video" + Date.now(),
     top: 27,
+    topT:0,
     pause:false,
     showGuide: true,
     nextRtight:1,
-    currentTab:0
+    currentTab:0,
+    classify:[]
     /*  rect: wx.getMenuButtonBoundingClientRect() */
   },
   onLoad(options) {
     let systemInfo = wx.getSystemInfoSync()
     systemInfo.statusBarHeight == 20 ? '' : this.setData({
       top: 48
+    })
+    systemInfo.statusBarHeight == 20 ? this.setData({
+      topT: 131
+    }) : this.setData({
+      topT: 176
     })
     this.videoContext = wx.createVideoContext(this.data.vid)
     this.getCategory()
@@ -74,7 +81,9 @@ Page({
   },
   getCategory() {
     app.video.categoryMore().then(res =>{
-      
+      this.setData({
+        classify: res.data
+      })
     })
   },
   callback(msg, temp) {

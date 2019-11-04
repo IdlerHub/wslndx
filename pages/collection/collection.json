@@ -1,7 +1,9 @@
 {
   "backgroundTextStyle": "light",
-  "navigationBarTitleText": "收藏课程",
+  "navigationBarTitleText": "我的收藏",
   "navigationBarTextStyle": "black",
   "enablePullDownRefresh": true,
-  "usingComponents": {}
+  "usingComponents": {
+    "formCode": "/components/formCode/formCode"
+  }
 }

@@ -325,7 +325,7 @@
   width: 156rpx;
   height: 156rpx;
   right: 30rpx;
-  bottom: 284rpx;
+  bottom: 414rpx;
   border-radius: 50%;
   background: #df2020;
   font-size: 36rpx;
@@ -336,8 +336,32 @@
   align-items: center; }
   .vistor-home .iconfont {
     width: 50rpx;
-    height: 50rpx; }
-
+    height: 50rpx;
+    margin-bottom: 31rpx;
+    margin-top: -20rpx;
+ }
+  /* 视频分类 */
+  .classify {
+    padding: 0 40rpx 100rpx 40rpx; 
+    box-sizing: border-box;
+    overflow-y: auto;
+  }
+  .classify .classifyBox {
+    display: inline-block;
+    width: 320rpx;
+    height: 320rpx;
+    background: #fff; 
+    margin-top:30rpx;
+    background-size: cover;
+    text-align: center;
+    line-height: 320rpx;
+    font-size:42rpx;
+    font-weight:500;
+    color:rgba(255,255,255,1);
+  }
+  .classify .classifyBox:nth-child(2n) {
+    margin-left: 30rpx;
+  }
     /* 视频指引 */
 .vedioGuide {
   width: 100%;

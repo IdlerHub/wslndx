@@ -139,6 +139,10 @@ function collect(param) {
   return httpService.post("Bokeblog/collect", param)
 }
 
+// Bokeblog/collectCancel 取消收藏博客 
+function collectCancel(param) {
+  return httpService.post("Bokeblog/collectCancel", param)
+}
 module.exports = {
   allCircles,
   noJoinCircles,
@@ -163,5 +167,6 @@ module.exports = {
   delComment,
   addForward,
   getMessage,
-  collect
+  collect,
+  collectCancel
 }

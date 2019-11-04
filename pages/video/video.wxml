@@ -6,7 +6,8 @@
     </view>
     <view  class="{{ currentTab == 0 ? 'lose' : ''}} tabnav-item" bindtap="switchNav" data-current="1">
       <text>分类</text>
-      <view class="bottom" wx:if="{{ currentTab == 1 }}"></view>
+      <view class="bottom" wx:if="{{ currentTab == 1 }}">
+      </view>
     </view>
   </view>
   <swiper class="swiper" current="{{ currentTab }}" duration="300" bindchange="switchTab">
@@ -59,10 +60,10 @@
                 </button>
               </view>
               <!-- 返回首页 -->
-              <cover-view wx:if="{{ vistor || home }}" class="vistor-home" catchtap="tohome">
-                <cover-image src="/images/shouye.png" class="iconfont"></cover-image>
-                <cover-view>首页</cover-view>
-              </cover-view>
+              <view wx:if="{{ vistor || home }}" class="vistor-home" catchtap="tohome">
+                <image src="/images/shouye.png" class="iconfont"></image>
+                <view>首页</view>
+              </view>
             </view>
           </view>
           <!-- 完整视频 -->
@@ -82,8 +83,12 @@
           </cover-view>
         </video>
     </swiper-item>
-    <swiper-item>
-      ;sjlgjdsflkjgkljsdf
+    <swiper-item style="background:#181818" class="classify">
+      <view style="padding-top:{{ topT }}rpx">
+        <view class="classifyBox" wx:for="{{classify}}" wx:key="item.id" style="background:url('{{item.image}}')">
+        {{item.title}}
+      </view>
+      </view>
     </swiper-item>
   </swiper>
   <!-- 点赞动画 -->

@@ -118,6 +118,10 @@ function experienceArticle() {
   return httpService.post("User/experienceArticle", {})
 }
 
+//POST User/collectBlog 查看已收藏博客列表
+function collectBlog(param) {
+  return httpService.post("User/collectBlog", param)
+}
 
 module.exports = {
   wxLoginCode,
@@ -136,5 +140,6 @@ module.exports = {
   signed,
   addFormId,
   share,
-  experienceArticle
+  experienceArticle,
+  collectBlog
 }

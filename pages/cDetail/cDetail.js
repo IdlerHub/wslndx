@@ -20,7 +20,6 @@ Page({
   onUnload() {},
   onShow() {
     let list = this.data.list
-
     list.forEach(item => {
       if (item.id == app.globalData.detail.id) {
         if (app.globalData.detail.likestatus > 0) {

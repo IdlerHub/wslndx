@@ -53,6 +53,7 @@ function banner(param) {
 function paper(param) {
   return httpService.post("Classroom/paper", param)
 }
+
 module.exports = {
   recommend,
   detail,
