@@ -62,8 +62,13 @@ Page({
     app.aldstat.sendEvent("退出", { name: "个人中心页" })
   },
   closeGuide() {
-    this.setData({
-      showGuide: false
+    let param = {
+      guide_name: 'user'
+    }
+    app.user.guideRecordAdd(param).then(res => {
+      if (res.code == 1) {
+        app.getGuide()
+      }
     })
   }
 })

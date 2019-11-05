@@ -32,13 +32,17 @@ Page({
       that.setData({
         vistor: options.type == "share", //游客从分享卡片过来
         height: scrollViewHeight,
-        currentTab: 1,
+        currentTab: 0,
         navScrollLeft: 0,
         id: options.id,
         curid: options.curid || null,
         cur: {}
       })
-
+      if (that.data.$state.newGuide.lesson == 0) {
+        this.setData({
+          currentTab: 1
+        })
+      }
       if (that.data.vistor) {
         setTimeout(() => {
           that.setData({
@@ -76,12 +80,14 @@ Page({
         currentTab: cur
       })
     }
+    this.setHeight()
   },
   switchTab(event) {
     let cur = event.detail.current
     this.setData({
       currentTab: cur
     })
+    this.setHeight()
   },
   getDetail() {
     this.param = {
@@ -259,16 +265,21 @@ Page({
   },
   setHeight() {
     let that = this
-    let nav = this.data.nav
-    let currentTab = this.data.currentTab
-    let query = wx.createSelectorQuery().in(this)
-    query.select(nav[currentTab].class).boundingClientRect()
-    query.exec(res => {
-      let height = res[0].height
-      that.setData({
-        height: height
+    if (this.data.currentTab == 1) {
+      let query = wx.createSelectorQuery().in(this)
+      query.select(".comment").boundingClientRect()
+      query.exec(res => {
+        let height = res[0].height - (-70)
+        that.setData({
+          height: height 
+        })
       })
-    })
+    } else {
+      this.setData({
+        height: 306
+      })
+    }
+    
   },
   getProgress() {
     var lesson = wx.getStorageSync("lessonProgress")
@@ -416,9 +427,9 @@ Page({
         this.getComment([])
         this.setData({
           content: "",
-          write: true
+          write: true,
+          focus:false
         })
-        console.log(params.to_user)
       } else if (msg.code == -2) {
         /* 帖子已经删除 */
         this.setData({
@@ -517,8 +528,16 @@ Page({
     app.aldstat.sendEvent("退出", { name: "课程详情页" })
   },
   closeGuide() {
-    this.setData({
-      showGuide: false
+    let param = {
+      guide_name: 'lesson'
+    }
+    app.user.guideRecordAdd(param).then(res => {
+      if (res.code == 1) {
+        app.getGuide()
+        this.setData({
+          currentTab: 0
+        })
+      }
     })
   }
 })

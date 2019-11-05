@@ -356,19 +356,12 @@ rich-text {
     left: 0;
     z-index: 200;
   }
-   .detailGuide .detailGuide-txt {
-     width: 561rpx;
-    text-align: center;
-    font-size: 40rpx;
-    line-height: 56rpx;
-    font-weight: 500;
-    color: #fff;
-    white-space: normal;
-    letter-spacing: 2rpx;
+   .detailGuide .detailGuide-Msg {
+    width: 590rpx;
+    height: 130rpx;
     position: absolute;
-    top: 441rpx;
-    left: 50%;
-    margin-left: -280rpx;
+    top: 402rpx;
+    left: 80rpx;
    }
 .detailGuide .detailGuide-img {
   width: 140rpx;
@@ -376,6 +369,20 @@ rich-text {
   position: absolute;
   top: 625rpx;
   left: 146rpx;
+}
+.detailGuide .detailGuide-btn {
+  width:176rpx;
+  height:60rpx;
+  border-radius:30rpx;
+  border:1px solid rgba(255,255,255,1);
+  font-size:34rpx;
+  font-weight:400;
+  color:rgba(255,255,255,1);
+  text-align: center;
+  line-height: 60rpx;
+  position: absolute;
+  right: 30rpx;
+  bottom: 130rpx;
 }
 .nodata {
   padding-top: 45rpx;

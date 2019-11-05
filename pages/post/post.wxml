@@ -91,7 +91,7 @@
   <!-- 底部navBar -->
   <navBar path="post" />
 </view>
-<view class="ActionSheet" bindtap="closeSheet" wx:if="{{showSheet}}">
+<view class="ActionSheet" wx:if="{{showSheet}}">
   <view class="ActionSheet-box" wx:if="{{showSheetBox}}">
     <view class="ActionSheet-item" catchtap="setCollect">
       收藏
@@ -104,10 +104,14 @@
     取消收藏
   </view>
 </view>
-<cover-view class="postGuide" wx:if="{{ showGuide }}">
-  <cover-image src="{{$state.imgHost}}/collectMessege.png" class="postGuide-img"></cover-image>
-  <cover-view class="postGuide-txt">
-  点击收藏喜欢的帖子
-   <button bindtap="closeGuide">我知道了</button>
+<cover-view class="postGuide" wx:if="{{ $state.newGuide.blog == 0 }}">
+  <cover-view class="postGuideBox" wx:if="{{guideNum == 1}}">
+    <cover-image src="{{$state.imgHost}}/collectMessege.png" class="postGuide-img"></cover-image>
+    <cover-image src="/images/postMsgone.png" class="postMsgone"></cover-image>
   </cover-view>
+  <cover-view class="postGuideBox" wx:if="{{guideNum == 2}}">
+    <cover-image src="/images/postguide.png" class="postGuide-postguide"></cover-image>
+    <cover-image src="/images/postMsgtwo.png" class="postMsgone"></cover-image>
+  </cover-view>
+  <cover-view class="postGuideBtn" bindtap="nextGuide">{{guideTxt}}</cover-view>
 </cover-view>

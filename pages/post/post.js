@@ -13,6 +13,8 @@ Page({
     showSheet: false,
     showGuide:true,
     showSheetBox: true,
+    guideNum:1,
+    guideTxt:'下一步',
     releaseParam: {
       image: [],
       content: null,
@@ -374,9 +376,22 @@ Page({
       showSheet: false
     })
   },
-  closeGuide() {
-    this.setData({
-      showGuide: false
-    })
+  // 指引联动
+  nextGuide() {
+    if(this.data.guideNum == 1 ) {
+      this.setData({
+        guideNum: 2,
+        guideTxt:'我知道了'
+      })
+    } else {
+      let param = {
+        guide_name: 'blog'
+      }
+      app.user.guideRecordAdd(param).then(res => {
+        if (res.code == 1) {
+          app.getGuide()
+        }
+      })
+    }
   }
 })

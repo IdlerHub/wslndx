@@ -54,6 +54,7 @@ Page({
     let query = wx.createSelectorQuery().in(this)
     query.select(nav[currentTab].class).boundingClientRect()
     query.exec(res => {
+      console.log(res)
       let height = res[0].height
       that.setData({
         height: height
