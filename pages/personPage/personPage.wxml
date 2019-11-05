@@ -1,25 +1,28 @@
-<!--
- * @Date: 2019-06-14 19:54:05
- * @LastEditors: hxz
- * @LastEditTime: 2019-08-10 14:33:27
- -->
+<!--pages/personPage/personPage.wxml-->
+<view wx:if="{{ isRefreshing }}" class="weui-loadmore indexdrop">
+  <view class="weui-loading"></view>
+</view>
 <view class="container">
-  <!-- 下拉刷新 -->
-  <view wx:if="{{ isRefreshing }}" class="weui-loadmore">
-    <view class="weui-loading"></view>
-  </view>
-  <view class="message" wx:if="{{ $state.unRead }}">
-    <view class="msg-btn" catchtap="toMessage">
-      <image class="img" src="{{ $state.lastMan }}" mode="aspectFill"> </image>
-      <text class="news"> {{ $state.unRead }}条新信息</text>
-      <icon class="iconfont icon-arrow-right"></icon>
+  <view class="Pagetop top">
+    <image class="bg" mode="widthFix" src="{{ avatar }}"></image>
+    <view class="box">
+      <view class="left">
+        <image class="img" mode="widthFix" src="{{ avatar }}"></image>
+        <view class="info">
+          <text class="line name">{{ nickname }}</text>
+          <view class="line">
+            <text class="city">{{ addressCity || "暂无" }}</text>
+            <text class="school">{{ university_name || "暂无" }}</text>
+          </view>
+        </view>
+      </view>
     </view>
   </view>
   <view class="wrap">
     <view wx:for="{{ list }}" wx:key="index" class="item">
       <view class="top" catchtap="navigate" data-id="{{ item.id }}">
         <view class="left">
-          <image mode="aspectFill" class="avatarUrl" src="{{ item.avatar }}" data-item="{{ item }}" catchtap="toUser" lazy-load></image>
+          <image mode="aspectFill" class="avatarUrl" src="{{ item.avatar }}" data-uid="{{ item.uid }}" catchtap="toUser" lazy-load></image>
           <view class="text">
             <text class="nickName line">{{ item.nickname }}</text>
             <text class="date">{{ item.createtimes }}</text>
@@ -78,18 +81,6 @@
     </view>
     <mp-loading type="circle" wx:if="{{ showLoading }}"></mp-loading>
   </view>
-  <view class="footer">
-    <view hover-class="none" class="write" bindtap="handleRelse" data-status="{{ $state.userInfo.status }}" data-type="release">
-      <view class="write">
-        <text class="text">发帖</text>
-      </view>
-    </view>
-  </view>
-  <view wx:if="{{ rlAni }}" class="popup">
-    <view class="publishAni"></view>
-  </view>
-  <!-- 底部navBar -->
-  <navBar path="post" />
 </view>
 <view class="ActionSheet" bindtap="closeSheet" wx:if="{{showSheet}}">
   <view class="ActionSheet-box" wx:if="{{showSheetBox}}">
@@ -100,14 +91,7 @@
       取消
     </view>
   </view>
-   <view class="ActionSheet-cancelBox" catchtap="cancelCollection" wx:else>
+  <view class="ActionSheet-cancelBox" catchtap="cancelCollection" wx:else>
     取消收藏
   </view>
 </view>
-<cover-view class="postGuide" wx:if="{{ showGuide }}">
-  <cover-image src="{{$state.imgHost}}/collectMessege.png" class="postGuide-img"></cover-image>
-  <cover-view class="postGuide-txt">
-  点击收藏喜欢的帖子
-   <button bindtap="closeGuide">我知道了</button>
-  </cover-view>
-</cover-view>

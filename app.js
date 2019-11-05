@@ -291,6 +291,9 @@ App({
       url: "/pages/index/index"
     })
   },
+  getGuide() {
+
+  },
   globalData: {
     /*wx.login 返回值 code */
     code: null,

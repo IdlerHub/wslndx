@@ -31,7 +31,8 @@
     "pages/videoTwo/videoTwo",
     "pages/experience/experience",
     "components/navBar/navBar",
-    "pages/upwxpage/upwxpage"
+    "pages/upwxpage/upwxpage",
+    "pages/personPage/personPage"
   ],
   "permission": {
     "scope.userLocation": {

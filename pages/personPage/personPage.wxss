@@ -1,0 +1,249 @@
+@charset "UTF-8";
+/* 环境变量 */
+page {
+  background: #eee; }
+page .Pagetop {
+    position: relative;
+    height: 240rpx;
+    overflow: hidden; }
+    page .container > .top .bg {
+      position: absolute;
+      left: -25rpx;
+      bottom: 0;
+      top: 0;
+      margin: auto;
+      width: 800rpx;
+      filter: blur(20rpx) brightness(0.65);
+      transform: scale(1.2); }
+    page .container > .top .box {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 300rpx;
+      padding: 0 30rpx;
+      box-sizing: border-box; }
+      page .container > .top .box .left {
+        display: flex;
+        align-items: center; 
+        margin-top: -70rpx;}
+        page .container > .top .box .left .img {
+          width: 154rpx;
+          height: 154rpx;
+          border-radius: 50%;
+          border: 2rpx solid #b1adac; }
+        page .container > .top .box .left .info {
+          margin: 0 20rpx; }
+          page .container > .top .box .left .info .line {
+            text-align: left;
+            line-height: 62rpx; }
+          page .container > .top .box .left .info .name {
+            width: 440rpx;
+            font-family: PingFangSC-Medium;
+            font-size: 44rpx;
+            line-height: 62rpx;
+            color: #ffffff; }
+          page .container > .top .box .left .info .city {
+            display: inline-block;
+            font-family: PingFangSC-Regular;
+            font-size: 28rpx;
+            color: #ffffff;
+            line-height: 40rpx;
+            border-radius: 4rpx;
+            background: #999594;
+            padding: 0 15rpx; }
+          page .container > .top .box .left .info .school {
+            margin-left: 20rpx;
+            display: inline-block;
+            font-family: PingFangSC-Regular;
+            font-size: 28rpx;
+            color: #ffffff;
+            line-height: 40rpx;
+            border-radius: 4rpx;
+            background: #999594;
+            padding: 0 15rpx; }
+      page .container > .top .box .iconfont {
+        color: white;
+        margin-top: -70rpx; }
+  page .scoreBg {
+    display: block;
+    width: 730rpx;
+    height: 220rpx;
+    position: absolute;
+    z-index: -1;
+    left: 12rpx;
+  }
+.wrap {
+  box-sizing: border-box;
+  padding-bottom: 120rpx; }
+  .wrap > .item {
+    background: #fff;
+    padding: 0 30rpx;
+    margin-bottom: 20rpx; }
+    .wrap > .item:last-of-type {
+      border-bottom: none; }
+    .wrap > .item .top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 30rpx 0 20rpx; }
+      .wrap > .item .top .date {
+        font-size: 26rpx;
+        color: #bdbdbd; }
+      .wrap > .item .top .left {
+        display: flex;
+        align-items: center; }
+      .wrap > .item .top .avatarUrl {
+        width: 90rpx;
+        height: 90rpx;
+        border-radius: 50%;
+        border: 1rpx solid #d8d8d8;
+        background:#e9e9e9;  }
+      .wrap > .item .top .text {
+        margin-left: 20rpx;
+        width: 400rpx;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap; }
+      .wrap > .item .top .nickName {
+        font-size: 40rpx;
+        color: #343434; }
+      .wrap > .item .top .school {
+        margin-top: 5rpx;
+        margin-left: 21rpx;
+        font-size: 26rpx;
+        color: #bdbdbd; }
+      .wrap > .item .top .collect {
+        padding-bottom: 39rpx;
+        color: #B3B3B3;
+        font-size: 54rpx;
+      }
+    .wrap > .item .name {
+      text-align: justify;
+      line-height: 60rpx;
+      font-size: 40rpx;
+      color: #3a3a3a;
+      word-wrap: break-word;
+      white-space: pre-line; }
+    .wrap > .item .content .img {
+      display: flex;
+      flex-wrap: wrap;
+      align-content: flex-start;
+       }
+      .wrap > .item .content .img image {
+        margin-top: 20rpx; }
+      .wrap > .item .content .img.one {
+        max-height: 100vh;
+        overflow: hidden; }
+        .wrap > .item .content .img.one image {
+          width: 400rpx;
+          background: #e9e9e9; }
+      .wrap > .item .content .img.three image {
+        width: 216rpx;
+        height: 216rpx;
+        margin-right: 20rpx;
+        background: #e9e9e9; }
+        .wrap > .item .content .img.three image:nth-of-type(3n) {
+          margin-right: 0; }
+    .wrap > .item .content video {
+      margin-top: 20rpx;
+      width: 100%;
+      height: 350rpx; }
+    .wrap > .item .content .poster {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      filter: brightness(0.8);
+       background: #e9e9e9;  }
+    .wrap > .item .content .bg {
+      position: relative;
+      margin-top: 20rpx;
+      width: 100%;
+      height: 350rpx; }
+    .wrap > .item .content .play {
+      position: absolute;
+      z-index: 2;
+      width: 74rpx;
+      height: 74rpx;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      margin: auto; }
+    .wrap > .item .label {
+      background: #52d9c3;
+      margin: 20rpx 0;
+      display: block;
+      width: 230rpx;
+      line-height: 44rpx;
+      border-radius: 6rpx;
+      color: #fff;
+      font-size: 28rpx;
+      text-align: center; }
+  .wrap .btn {
+    height: 125rpx;
+    margin-top: 30rpx;
+    position: relative;
+    border-top: 2rpx solid #e8e8e8;
+    display: flex;
+    align-items: center;
+    justify-content: stretch; }
+    .wrap .btn .division {
+      width: 2rpx;
+      height: 40rpx;
+      background: #dbdbdb; }
+  .wrap > .item .top .left .loadingTxt {
+    width: 240rpx;
+    height: 42rpx;
+    background:#f5f6f8;
+    border-radius: 8rpx;
+  }
+  .wrap > .item .top .left .loadingTxt:nth-child(2) {
+    width: 230rpx;
+    height: 32rpx;
+    background:#f5f6f8;
+    border-radius: 8rpx;
+  }
+  .wrap > .item .top .loadingDate {
+    width: 121rpx;
+    height: 43rpx;
+    background:#f5f6f8;
+    border-radius: 8rpx;
+  }
+  .wrap > .item .contentTxt {
+    width: 690rpx;
+    height: 33rpx;
+    background:#f5f6f8;
+    border-radius: 8rpx;
+  }
+.btn > .item {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center; }
+  .btn > .item .iconfont {
+    font-size: 58rpx;
+    color: #bdbdbd;
+    text-align: center; }
+  .btn > .item .container-sub {
+    display: flex;
+    align-items: center; }
+  .btn > .item .praise {
+    width: 125rpx;
+    height: 125rpx;
+    background-size: cover;
+    background-image: url("https://jinling-xcx-dev.obs.cn-north-1.myhuaweicloud.com/images/pro/heart-ani.png");
+    animation-fill-mode: forwards; }
+    .btn > .item .praise.end {
+      background-position: 100% 0; }
+    .btn > .item .praise.ani {
+      animation: ani steps(20) 1s both; }
+    .btn > .item .praise + .text {
+      margin-left: -20rpx; }
+  .btn > .item .text {
+    margin-left: 20rpx;
+    font-family: PingFangSC-Regular;
+    font-size: 28rpx;
+    color: #3a3a3a;
+    letter-spacing: 0;
+    line-height: 40rpx; }

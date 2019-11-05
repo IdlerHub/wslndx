@@ -123,6 +123,16 @@ function collectBlog(param) {
   return httpService.post("User/collectBlog", param)
 }
 
+//POST User/guideRecord 获取指引阅读记录
+function guideRecord(param) {
+  return httpService.post("User/guideRecord", param)
+}
+
+//POST User/guideRecord 增加指引阅读记录
+function guideRecordAdd(param) {
+  return httpService.post("User/guideRecordAdd", param)
+}
+
 module.exports = {
   wxLoginCode,
   getAuthCode,
@@ -141,5 +151,7 @@ module.exports = {
   addFormId,
   share,
   experienceArticle,
-  collectBlog
+  collectBlog,
+  guideRecord,
+  guideRecordAdd
 }

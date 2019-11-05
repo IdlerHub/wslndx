@@ -1,60 +1,35 @@
-/*
- * @Date: 2019-06-14 19:54:05
- * @LastEditors: hxz
- * @LastEditTime: 2019-08-13 16:27:52
- */
-//获取应用实例
+// pages/personPage/personPage.js
 const app = getApp()
 Page({
   data: {
-    rlSucFlag: false,
-    isRefreshing: false,
-    showLoading:false,
-    showSheet: false,
-    showGuide:true,
-    showSheetBox: true,
-    releaseParam: {
-      image: [],
-      content: null,
-      video: null,
-      cover: null,
-      fs_id: "",
-      num: 0
-    },
-    media_type:null
+    list:[]
   },
   onLoad(options) {
-    this.param = { page: 1, pageSize: 10 }
+    console.log(options)
+    options.university_name == "null" ? options.university_name = null :''
+    options.addressCity == "null" ? options.addressCity = null : ''
     this.setData({
-      list: []
+      us_id: options.uid,
+      nickname: options.nickname,
+      university_name: options.university_name,
+      avatar: options.avatar,
+      addressCity: options.addressCity
     })
+    wx.setNavigationBarTitle({
+      title: options.nickname
+    })
+    this.param = { page: 1, pageSize: 10, }
     this.getList([])
-    app.aldstat.sendEvent("菜单", { name: "风采展示" })
+    app.aldstat.sendEvent("菜单", { name: "个人风采" })
   },
-  onShow: function() {
-    if (app.globalData.postShow) {
-      this.setData({
-        list:[]
-      })
-      this.param.page = 1
-      this.getList([]).then(() => {
-      })
-      app.globalData.postShow = false
-    }
-    /* 从cdetail-->发帖 */
-    if (app.globalData.rlSuc) {
-      this.setData({ rlSucFlag: true })
-    }
-    if (this.data.rlSucFlag) {
-      this.rlSuc()
-      /* 确保动画只执行一次 */
-      this.setData({ rlSucFlag: false })
-      app.globalData.rlSuc = false
-    }
+  onReady: function () {
+
+  },
+  onShow: function () {
     let list = this.data.list
     list.forEach(item => {
-      if(item.id == app.globalData.detail.id) {
-        if(app.globalData.detail.likestatus > 0) {
+      if (item.id == app.globalData.detail.id) {
+        if (app.globalData.detail.likestatus > 0) {
           item.likes = app.globalData.detail.likes
           item.likestatus = app.globalData.detail.likestatus
         } else {
@@ -66,26 +41,34 @@ Page({
         list
       })
     })
-    if (this.data.releaseParam.content != null || this.data.releaseParam.image[0] || this.data.releaseParam.video != null) {
-      let that = this
-      wx.showModal({
-        content: '保留本次编辑',
-        confirmColor: '#df2020',
-        cancelText:"不保留",
-        confirmText: '保留',
-        success(res) {
-          if (res.confirm) {
-            console.log('用户点击确定')
-          } else if (res.cancel) {
-            that.setData({
-              releaseParam: null
-            })
-          }
-        }
-      })
-    }
   },
-  onShareAppMessage: function(ops, b) {
+  onHide: function () {
+
+  },
+  onUnload: function () {
+
+  },
+  onPullDownRefresh() {
+    this.param.page = 1
+    this.setData({
+      isRefreshing: true
+    })
+    this.getList([]).then(() => {
+      wx.stopPullDownRefresh()
+      let timer = setTimeout(() => {
+        this.setData({
+          isRefreshing: false
+        })
+        clearTimeout(timer)
+      }, 1000)
+    })
+  },
+  //上拉加载
+  onReachBottom() {
+    this.param.page++
+    this.getList()
+  },
+  onShareAppMessage: function (ops, b) {
     if (ops.from === "menu") {
       return this.menuAppShare()
     }
@@ -103,18 +86,16 @@ Page({
           })
         }
       })
-        return {
-          title: article.content,
-          imageUrl: article.image || article.images[0] || "../../images/sharemessage.jpg",
-          path: "/pages/pDetail/pDetail?id=" + bkid + "&type=share&uid=" + this.data.$state.userInfo.id
-        }
+      return {
+        title: article.content,
+        imageUrl: article.image || article.images[0] || "../../images/sharemessage.jpg",
+        path: "/pages/pDetail/pDetail?id=" + bkid + "&type=share&uid=" + this.data.$state.userInfo.id
+      }
     }
   },
   getList(list) {
-    this.setData({
-      showLoading: true
-    })
     let temp = list || this.data.list
+    this.param.us_id = this.data.us_id
     return app.circle.news(this.param).then(msg => {
       if (msg.code == 1) {
         if (msg.data) {
@@ -122,7 +103,7 @@ Page({
           for (let i in msg.data) {
             arr.push(msg.data[i])
           }
-          arr.forEach(function(item) {
+          arr.forEach(function (item) {
             item.fw = app.util.tow(item.forward)
             item.cw = app.util.tow(item.comments)
             item.lw = app.util.tow(item.likes)
@@ -146,6 +127,7 @@ Page({
     })
   },
   praise(e) {
+    console.log(e)
     let i = e.currentTarget.dataset.index
     let list = this.data.list
     let param = {
@@ -197,28 +179,6 @@ Page({
       list: list
     })
   },
-  // 写帖成功动效
-  rlSuc() {
-    /* 重新到第一页 */
-    console.log('adfasdsad')
-    this.param.page = 1
-    this.getList([]).then(() => {
-      wx.pageScrollTo({
-        scrollTop: 0,
-        duration:0
-      })
-    })
-    this.setData({
-      rlAni: true
-    })
-    let timer = setTimeout(() => {
-      this.setData({
-        rlAni: false
-      })
-      clearTimeout(timer)
-    }, 2000)
-  },
-  //图片预览
   previewImage(e) {
     let urls = e.currentTarget.dataset.urls
     let current = e.currentTarget.dataset.current
@@ -233,39 +193,6 @@ Page({
       url: "../pDetail/pDetail?id=" + id
     })
   },
-  //下拉刷新
-  onPullDownRefresh() {
-    this.param.page = 1
-    this.setData({
-      isRefreshing: true
-    })
-    this.getList([]).then(() => {
-      wx.stopPullDownRefresh()
-      let timer = setTimeout(() => {
-        this.setData({
-          isRefreshing: false
-        })
-        clearTimeout(timer)
-      }, 1000)
-    })
-  },
-  //上拉加载
-  onReachBottom() {
-    this.param.page++
-    this.getList()
-  },
-  toUser(e) {
-    console.log(e)
-    if (this.data.$state.userInfo.id == e.currentTarget.dataset.item.uid) {
-      wx.switchTab({
-        url: "/pages/user/user"
-      })
-    } else {
-      wx.navigateTo({
-        url: `/pages/personPage/personPage?uid=${e.currentTarget.dataset.item.uid}&nickname=${e.currentTarget.dataset.item.nickname}&university_name=${e.currentTarget.dataset.item.university_name}&avatar=${e.currentTarget.dataset.item.avatar}&addressCity=${e.currentTarget.dataset.item.province}`
-      })
-    }
-  },
   toMessage() {
     wx.navigateTo({
       url: "/pages/message/message"
@@ -273,9 +200,7 @@ Page({
   },
   //用于数据统计
   onHide() {
-    app.aldstat.sendEvent("退出", { name: "秀风采页" })
-  },
-  onUnload() {
+    app.aldstat.sendEvent("退出", { name: "个人风采" })
   },
   unShare() {
     wx.showToast({
@@ -299,7 +224,7 @@ Page({
     }
   },
   //收藏风采
-  collect(e){
+  collect(e) {
     let blog_id = e.currentTarget.dataset.id
     let status = e.currentTarget.dataset.status
     console.log(status)
@@ -347,7 +272,7 @@ Page({
       blog_id: this.data.blog_id
     }
     app.circle.collect(param).then(res => {
-      if(res.code == 1) {
+      if (res.code == 1) {
         let list = this.data.list
         list[this.data.blog_index].collectstatus = 1
         this.setData({
@@ -363,7 +288,7 @@ Page({
         this.closeSheet()
         wx.showToast({
           title: res.msg,
-          image:'/images/warn.png',
+          image: '/images/warn.png',
           duration: 1500
         })
       }
@@ -374,9 +299,4 @@ Page({
       showSheet: false
     })
   },
-  closeGuide() {
-    this.setData({
-      showGuide: false
-    })
-  }
 })
