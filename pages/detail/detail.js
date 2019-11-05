@@ -7,7 +7,12 @@ Page({
     nav: [{ name: "剧集" }, { name: "讨论" } ,{ name: "简介" }],
     height: 0,
     tip: true,
-    showGuide: true
+    showGuide: true,
+    comment:[],
+    keyheight:0,
+    write: true,
+    comment:[],
+    focus: false
     /* rect: wx.getMenuButtonBoundingClientRect() */
   },
   onLoad(options) {
@@ -41,7 +46,7 @@ Page({
           })
         }, 5000)
       }
-
+      this.comParam = this.praParam = { lesson_id: options.id || this.data.detail.id, page: 1, pageSize: 10 }
       wx.setNavigationBarTitle({
         title: options.name || ""
       })
@@ -95,6 +100,7 @@ Page({
           detail: msg.data
         })
         this.manage()
+        this.getComment()
       }
     })
   },
@@ -227,6 +233,43 @@ Page({
       }
     })
   },
+  // 获取讨论
+  getComment(list, options) {
+    let comment = list || this.data.comment
+    return app.classroom.commentDetail(this.comParam).then(msg => {
+      if (msg.code == 1) {
+        msg.data.forEach(function(item) {
+          item.reply_array.forEach(v => {
+            v.rtext = `回复<span  class="respond">${v.to_user}</span>:&nbsp;&nbsp;`
+          })
+          comment.push(item)
+        })
+          this.setData({
+            comment: comment
+          })
+        this.setHeight()
+      } else if (msg.code == -2) {
+        /* 帖子已经删除 */
+        this.setData({
+          detail: "",
+          delState: true
+        })
+      }
+    })
+  },
+  setHeight() {
+    let that = this
+    let nav = this.data.nav
+    let currentTab = this.data.currentTab
+    let query = wx.createSelectorQuery().in(this)
+    query.select(nav[currentTab].class).boundingClientRect()
+    query.exec(res => {
+      let height = res[0].height
+      that.setData({
+        height: height
+      })
+    })
+  },
   getProgress() {
     var lesson = wx.getStorageSync("lessonProgress")
     if (this.data.cur.id == lesson.id) {
@@ -238,6 +281,39 @@ Page({
       key: "lessonProgress",
       data: { id: this.data.cur.id, time: e.detail.currentTime }
     })
+  },
+  // 删除讨论
+  delComment: function (e) {
+    let param = { lesson_id: this.data.detail.id, comment_id: e.currentTarget.dataset.item.id }
+    app.classroom
+      .delComment(param)
+      .then(msg => {
+        wx.hideLoading()
+        if (msg.code == 1) {
+          wx.showToast({
+            title: "删除成功",
+            icon:'success',
+            duration: 1500
+          })
+          this.comParam.page = 1
+          this.getComment([])
+        } else if (msg.code == -2) {
+          /* 帖子已经删除 */
+          this.setData({
+            detail: "",
+            delState: true
+          })
+        } else {
+          wx.showToast({
+            title: "删除失败，请稍后重试",
+            image: '/images/warn.png',
+            duration: 1500
+          })
+        }
+      })
+      .finally(() => {
+        console.log("hxz")
+      })
   },
   navitor() {
     wx.navigateTo({
@@ -259,6 +335,182 @@ Page({
   },
   tohome: function() {
     wx.reLaunch({ url: "/pages/index/index" })
+  },
+  // 发布评论
+  release() {
+    if (!!this.data.content.trim()) {
+      if (this.replyParent) {
+        /* 回复别人的回复 */
+        let params = {
+          lesson_id: +this.data.detail.id,
+          comment_id: this.replyParent,
+          reply_type: 2,
+          reply_id: this.replyInfo.reply_id,
+          reply_content: this.data.content,
+          to_user: this.replyInfo.reply_user_id
+        }
+        this.reply(params)
+      } else if (this.replyInfo) {
+        /* 回复评论 */
+        console.log(this.replyInfo)
+        let params = {
+          lesson_id: +this.replyInfo.lesson_id,
+          comment_id: this.replyInfo.id,
+          reply_type: 1,
+          reply_id: -1,
+          reply_content: this.data.content,
+          to_user: this.replyInfo.uid
+        }
+        this.reply(params)
+      } else {
+        let param = { lesson_id: this.data.detail.id, content: this.data.content }
+        this.addComment(param)
+      }
+    }
+  },
+  // 增加评论
+  addComment(param) {
+    app.classroom.addComment(param).then(res => {
+      if(res.code == 1) {
+        this.setData({
+          write: false
+        })
+        wx.showToast({
+          title: '评论成功',
+          icon: 'success',
+          duration: 800
+        })
+        this.comParam.page = 1
+        this.getComment([])
+        this.setData({
+          content: "",
+          write: true,
+          focus: false
+        })
+      } else {
+        wx.showToast({
+          title: res.msg,
+          image: '/images/warn.png',
+          duration: 800
+        })
+      }
+    })
+  },
+  //回复评论
+  reply(params) {
+    wx.showLoading({
+      title: "发布中"
+    })
+    app.classroom.addReply(params).then(msg => {
+      wx.hideLoading()
+      if (msg.code == 1) {
+        this.setData({
+          write: false
+        })
+        wx.showToast({
+          title: "发布成功",
+          icon: "success",
+          duration: 1500
+        })
+        this.comParam.page = 1
+        this.getComment([])
+        this.setData({
+          content: "",
+          write: true
+        })
+        console.log(params.to_user)
+      } else if (msg.code == -2) {
+        /* 帖子已经删除 */
+        this.setData({
+          detail: "",
+          delState: true
+        })
+      } else if (msg.code == -3) {
+        /* 消息已经删除 */
+        wx.showToast({
+          title: "消息已删除",
+          icon: "none",
+          duration: 1500
+        })
+        this.comParam.page = 1
+        this.getComment([])
+      } else {
+        wx.showToast({
+          title: msg.msg || "发布失败",
+          icon: "none",
+          duration: 1500
+        })
+      }
+    })
+  },
+  /* 删除回复 */
+  delReply(e) {
+    console.log(e)
+    let params = { lesson_id: this.data.detail.id, comment_id: e.currentTarget.dataset.parentid, id: e.currentTarget.dataset.item.reply_id }
+    app.classroom.delReply(params).then(msg => {
+      wx.hideLoading()
+      if (msg.code == 1) {
+        wx.showToast({
+          title: "删除成功",
+          icon: "success",
+          duration: 1500
+        })
+        this.comParam.page = 1
+        this.getComment([])
+      } else if (msg.code == -2) {
+        /* 帖子已经删除 */
+        this.setData({
+          detail: "",
+          delState: true
+        })
+      } else {
+        wx.showToast({
+          title: "删除失败，请稍后重试",
+          image: '/images/warn.png',
+          duration: 1500
+        })
+      }
+    })
+  },
+  input(e) {
+    this.setData({
+      content: e.detail.value
+    })
+  },
+  show(e) {
+    console.log(e)
+    if (this.data.$state.userInfo.status !== 'normal') {
+      wx.showModal({
+        content: '由于您近期不合规操作，您的账户已被管理员禁止发帖留言，如有疑问请在个人中心联系客服处理'
+      })
+    } else {
+      if (e && e.target.dataset.reply) {
+        /* 回复别人的评论 或者 回复别人的回复  */
+        this.replyParent = e.target.dataset.parent
+        this.replyInfo = e.target.dataset.reply
+      } else {
+        /* 评论 */
+        this.replyInfo = null
+        this.replyParent = null
+      }
+      this.setData({
+        focus: true
+      })
+    }
+  },
+  keyHeight(e) {
+    if (this.data.keyheight == 0) {
+      this.setData({
+        keyheight: e.detail.height,
+        keyHeight: true
+      })
+    } else {
+      e.detail.height > 0 ? this.setData({
+        keyHeight: true
+      }) : this.setData({
+        keyHeight: false
+      })
+    }
   },
   //用于数据统计
   onHide() {

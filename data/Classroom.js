@@ -54,6 +54,31 @@ function paper(param) {
   return httpService.post("Classroom/paper", param)
 }
 
+//POST Classroom/addComment 课程评论
+function addComment(param) {
+  return httpService.post("Classroom/addComment", param)
+}
+
+//POST Classroom/addReply 课程回复添加
+function addReply(param) {
+  return httpService.post("Classroom/addReply", param)
+}
+
+//POST Classroom/CommentDetail 课程评论详情
+function commentDetail(param) {
+  return httpService.post("Classroom/CommentDetail", param)
+}
+
+//POST Classroom/delComment 课程评论删除
+function delComment(param) {
+  return httpService.post("Classroom/delComment", param)
+}
+
+//POST Classroom/delReply 课程回复删除
+function delReply(param) {
+  return httpService.post("Classroom/delReply", param)
+}
+
 module.exports = {
   recommend,
   detail,
@@ -64,5 +89,10 @@ module.exports = {
   collectCancel,
   share,
   banner,
-  paper
+  paper,
+  addReply,
+  addComment,
+  commentDetail,
+  delComment,
+  delReply
 }

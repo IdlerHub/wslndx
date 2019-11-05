@@ -29,7 +29,8 @@
       <view class="right">
         <view class="progress" wx:if="{{ detail.progress < 100 }}">
           <view class="line">
-            <text class="num">{{ detail.progress ? detail.progress : 0 }}%</text><text class="des">已学习</text>
+            <text class="num">{{ detail.progress ? detail.progress : 0 }}%</text>
+            <text class="des">已学习</text>
           </view>
           <view class="pro-bar">
             <view class="por-cur" wx:if="{{ detail.progress && detail.progress > 0 }}" style="width:{{ detail.progress - 4 }}%"></view>
@@ -52,8 +53,10 @@
         <view class="item {{ currentTab == id ? 'active' : '' }}" data-current="{{ id }}" bindtap="switchNav">{{ item.name }}</view>
       </block>
       <view class="order" wx:if="{{ currentTab == 0 }}" bindtap="order">
-        <view wx:if="{{ sort == 0 }}" class="box"> <image class="icon" mode="aspectFill" src="{{ $state.imgHost }}/order.png"></image>正序</view>
-        <view wx:if="{{ sort == 1 }}" class="box"> <image class="icon" mode="aspectFill" src="{{ $state.imgHost }}/order-fall.png"></image>倒序</view>
+        <view wx:if="{{ sort == 0 }}" class="box">
+          <image class="icon" mode="aspectFill" src="{{ $state.imgHost }}/order.png"></image>正序</view>
+        <view wx:if="{{ sort == 1 }}" class="box">
+          <image class="icon" mode="aspectFill" src="{{ $state.imgHost }}/order-fall.png"></image>倒序</view>
       </view>
     </scroll-view>
     <swiper class="tab" style="height:{{ height }}px" current="{{ currentTab }}" duration="300" bindchange="switchTab">
@@ -65,14 +68,60 @@
               <text class="name">{{ item.sub_id }}. {{ item.title }}</text>
               <text class="time">{{ item.minute }}分钟</text>
             </view>
-            <view class="right"> <image class="icon" mode="aspectFill" src="{{ $state.imgHost }}/play-ash.png"></image><text>播放</text></view>
+            <view class="right">
+              <image class="icon" mode="aspectFill" src="{{ $state.imgHost }}/play-ash.png"></image>
+              <text>播放</text>
+            </view>
           </view>
         </scroll-view>
       </swiper-item>
       <swiper-item class="tab-item">
         <!--讨论  -->
         <scroll-view scroll-y="true" class="discussion">
-          <view wx:for="item in 50" wx:key="item"> 9999</view>
+          <view class="comment">
+            <view wx:for="{{ comment }}" wx:key="index" class="item">
+              <view class="content">
+                <view class="left">
+                  <image class="img" mode="aspectFill" src="{{ item.avatar }}"></image>
+                </view>
+                <view class="right">
+                  <view class="top">
+                    <text class="line name">{{ item.nickname }}</text>
+                    <view class="time-del">
+                      <text class="line time">{{ item.createtimes }}</text>
+                      <view class="del" wx:if="{{ $state.userInfo.id == item.uid }}" catchtap="delComment" data-item="{{ item }}">
+                        <image src="{{ $state.imgHost }}/delete.png" mode="aspectFill" class="icon-del"></image>
+                        <text>删除</text>
+                      </view>
+                    </view>
+                  </view>
+                  <rich-text nodes="{{ item.content }}"></rich-text>
+                  <button wx:if="{{ $state.userInfo.id != item.uid }}" class="reply-btn" data-reply="{{ item }}" catchtap="show">回复</button>
+                </view>
+              </view>
+              <view class="children" wx:for="{{ item.reply_array }}" wx:key="index" wx:for-item="child">
+                <view class="from_user">
+                  <view class="user_info">
+                    <image class="img" mode="aspectFill" src="{{ child.from_user_avatar }}"></image>
+                    <text class="line name">{{ child.from_user }}</text>
+                  </view>
+                  <view class="time-del">
+                    <text class="line time">{{ child.create_time }}</text>
+                    <view class="del" wx:if="{{ $state.userInfo.id == child.reply_user_id }}" catchtap="delReply" data-item="{{ child }}" data-parentid="{{ item.id }}">
+                      <image src="{{ $state.imgHost }}/delete.png" mode="aspectFill" class="icon-del"></image>
+                      <text>删除</text>
+                    </view>
+                  </view>
+                </view>
+                <rich-text nodes="{{ child.rtext + child.reply_content }}"></rich-text>
+                <button wx:if="{{ $state.userInfo.id != child.reply_user_id }}" class="reply-btn" data-reply="{{ child }}" data-parent="{{ item.id }}" catchtap="show">回复</button>
+              </view>
+              <view class="reply_all" wx:if="{{ item.reply_num > 3 }}" data-parentid="{{ item.id }}" catchtap="toCommentDetail"> 查看全部{{ item.reply_num }}条 </view>
+            </view>
+          </view>
+          <view class="nodata" wx:if="{{ comment.length <= 0 }}">
+            <image src="../../images/no-com.png" mode="aspectFill"></image>
+          </view>
         </scroll-view>
       </swiper-item>
       <swiper-item class="tab-item">
@@ -88,14 +137,15 @@
     <text>首页</text>
   </view>
   <button class="authorize" wx:if="{{ $state.baseInfo }}" open-type="getUserInfo" bindgetuserinfo="onGotUserInfo"></button>
-  <view class="issueBox">
-    <textarea placeholder="写评论" fixed auto-height show-confirm-bar="{{false}}" cursor-spacing="190rpx" adjust-position="{{ false }}" placeholder-class="placeholder"></textarea>
-    <view class="submit">发布</view>
+  <view class="issueBox" style="bottom:{{ keyHeight ? keyheight : 0}}px" wx:if="{{write}}">
+    <textarea placeholder="写评论" fixed auto-height show-confirm-bar="{{false}}" cursor-spacing="190rpx" placeholder-class="placeholder" bindinput="input" bindkeyboardheightchange='keyHeight' adjust-position="{{false}}" focus="{{focus}}"></textarea>
+    <view class="submit" catchtap="release">发布</view>
   </view>
   <!-- 指引 -->
   <cover-view class="detailGuide" wx:if="{{showGuide}}" bindtap="closeGuide">
     <cover-view class="detailGuide-txt">
-      向右滑动到讨论模块,<cover-view>和各地学员一起讨论课程内容</cover-view> 
+      向右滑动到讨论模块,
+      <cover-view>和各地学员一起讨论课程内容</cover-view>
     </cover-view>
     <cover-image class="detailGuide-img" src="{{$state.imgHost}}/discussion.png" style="top:{{ detail.current_sublesson_id != 0 && !hideRecode ? 738 : '' }}rpx"></cover-image>
   </cover-view>

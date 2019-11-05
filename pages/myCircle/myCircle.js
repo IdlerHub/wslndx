@@ -12,7 +12,7 @@ Page({
   },
   //options(Object)
   onLoad: function(options) {
-    this.circleParam = { page: 1, pageSize: 10 }
+    this.circleParam = { page: 1, pageSize: 10, }
     this.getCircle([])
   },
   onReady: function() {},
@@ -56,7 +56,7 @@ Page({
             item.auditing = new Date().getTime() - new Date(item.createtime * 1000) < 7000
             circle.push(item)
           })
-        }
+        } 
         this.setData({
           circle: circle
         })
