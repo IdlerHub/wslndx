@@ -374,10 +374,24 @@
 }
 .vedioGuide .animitionBox {
   position: absolute;
-  bottom: 764rpx;
-  left: 267rpx;
+  bottom: 670rpx;
+  left: 280rpx;
   width: 476rpx;
   height: 281rpx;
+}
+.vedioGuide .vedioGuideBtn {
+  width:176rpx;
+  height:60rpx;
+  border-radius:30rpx;
+  border:1px solid rgba(255,255,255,1);
+  font-size:34rpx;
+  font-weight:400;
+  color:rgba(255,255,255,1);
+  text-align: center;
+  line-height: 60rpx;
+  position: absolute;
+  top: 187rpx;
+  right: 30rpx;
 }
 .vedioGuide .animitionBox .vedioGuide-img:nth-child(1) {
   width: 74rpx;
@@ -385,9 +399,8 @@
   margin-right: 10rpx;
 }
 .vedioGuide .animitionBoxtow .vedioGuide-img:nth-child(1) {
-  width: 171rpx;
-  height: 95rpx;
-  margin-left: 50rpx;
+  width: 170rpx;
+  height: 100rpx;
 }
 .vedioGuide .animitionBox .vedioGuide-img:nth-child(2) {
   width: 122rpx;
@@ -406,9 +419,13 @@
 }
 .vedioGuide .vedioGuide-txt {
   position: absolute;
-  left: 115rpx;
-  bottom: 428rpx;
+  left: 202rpx;
+  bottom: 314rpx;
 } 
+.vedioGuide .videoMsgone {
+  width: 386rpx;
+  height: 130rpx;
+}
 .vedioGuide .vedioGuide-txt .vedioGuide-p {
   font-size:40rpx;
   font-weight:500;
@@ -436,7 +453,7 @@
 }
 .vedioGuideBox {
   position: absolute;
-  bottom: 84rpx;
+  bottom: 390rpx;
   left: 30rpx;
 }
 .vedioGuideBox-title {
@@ -462,35 +479,34 @@
   border:1px solid #fff;
 }
 .vedioGuideBox .vedioGuideBox-content {
-  margin-top: 36rpx;
+  margin-bottom: 13px;
+  padding-left: 68rpx;
 }
-.vedioGuideBox .vedioGuideBox-content .pathTop {
+.vedioGuideBox .vedioGuideBox-content .vedioGuideBox-contentImg {
   width: 86rpx;
   height: 80rpx;
-  margin-left: 71rpx;
 }
-.vedioGuideBox .vedioGuideBox-content .vedioGuide-p {
-  width: 371rpx;
-  text-align: center;
-  font-size:40rpx;
-  line-height:56rpx;
-  font-weight:500;
-  color:#fff;
-  white-space: normal;
-  position: relative;
-  z-index: 50;
-  top: -70rpx;
-  left: 166rpx;
+.vedioGuideBox .vedioGuideBox-content  .vedioGuideBox-contentmsg {
+  width: 424rpx;
+  height: 130rpx;
+  margin: 0 0 87rpx 96rpx;
 }
-.vedioGuideBox .vedioGuideBox-content .vedioGuide-btn {
-  margin-top: 0;
-  margin-left: 192rpx;
-}
-.vedioGuidefinal {
+.vedioGuidefinal { 
   width: 100%;
-  left: 215rpx;
-  bottom: 237rpx;
+  left: 108rpx;
+  bottom: -101rpx;
   overflow:visible;
+  height: 800rpx;
+}
+.vedioGuidefinal .vedioGuidefinal-imgmsg {
+  width: 544rpx;
+  height: 130rpx;
+}
+.vedioGuidefinal .vedioGuidefinal-imgMsg {
+  width: 396rpx;
+  height: 130rpx;
+  position: absolute;
+  top: 349rpx;
 }
 .vedioGuide-text {
   width:285rpx;
@@ -506,23 +522,10 @@
 }
 .vedioGuidefinal-img {
   position: absolute;
-  width: 215rpx;
-  height: 303rpx;
-  top: 147rpx;
-  left: 308rpx;
-}
-.vedioGuidefinal-num {
-  position: absolute;
-  top: 274rpx;
-  left: 452rpx;
-}
-.vedioGuidefinal-num .vedioGuidefinal-numt {
-  font-size:30rpx;
-  font-weight:500;
-  color:#666;
-  width: 67rpx;
-  text-align: cneter;
-  margin-bottom: 150rpx;
+  width: 208rpx;
+  height: 316rpx;
+  top: 180rpx;
+  left: 420rpx; 
 }
 @keyframes runAway {
   0% {

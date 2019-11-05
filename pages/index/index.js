@@ -10,7 +10,9 @@ Page({
     interval: 2000,
     duration: 1000,
     currentTab: 0, 
-    showReco:false
+    showReco:false,
+    guideNum: 0,
+    guidetxt: '下一步'
   },
   navHeightList: [],
   onLoad: async function(e) {
@@ -67,8 +69,12 @@ Page({
     app.globalData.currentTab = ''
     /* 更新用户的视频浏览历史 */
     if (app.store.$state.userInfo.mobile) this.getHistory() 
-
     setTimeout(wx.hideLoading, 500)
+    app.getGuide().then(res =>{
+      this.data.$state.newGuide.index == 0 ? this.setData({
+        guideNum:1
+      }) : ''
+    })
   },
   init() {
     return Promise.all([this.getactivite(), this.getRecommend(), this.getCategory(), this.getBanner(), this.getPaper()]).then(values => {
@@ -351,5 +357,27 @@ Page({
     wx.navigateTo({
       url: `../education/education?url=${e.currentTarget.dataset.peper.url}&type=0}`
     })
+  },
+  /* 指引联动 */
+  nextGuide() {
+    if (this.data.guideNum == 1) {
+      this.setData({
+        guideNum: 2
+      })
+    } else if (this.data.guideNum == 2){
+      this.setData({
+        guideNum: 3,
+        guidetxt: '我知道了'
+      })
+    } else {
+      let param = {
+        guide_name: 'index'
+      }
+      app.user.guideRecordAdd(param).then(res => {
+        if(res.code == 1) {
+          app.getGuide()
+        }
+      })
+    }
   }
 })

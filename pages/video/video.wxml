@@ -12,7 +12,7 @@
   </view>
   <swiper class="swiper" current="{{ currentTab }}" duration="300" bindchange="switchTab">
     <swiper-item bindtouchstart="scrollTouchStart" bindtouchend="scrollTouchEnd">
-        <video class="myVideo" id="{{ vid }}" src="{{ cur.url }}" controls="{{ false }}" show-center-play-btn="{{ false }}" object-fit="fill" autoplay loop >
+        <video class="myVideo" id="{{ vid }}" src="{{ cur.url }}" controls="{{ false }}" show-center-play-btn="{{ false }}" object-fit="fill" autoplay="{{ autoplay }}" loop >
           <!-- 功能  滑动及视频播/停监听-->
           <view wx:if="{{ cur && !$state.baseInfo }}" class="dropback">
             <view hover-class="none" catchtap="tap" bindtouchstart="scrollTouchStart" bindtouchend="scrollTouchEnd" wx:if="{{ !$state.baseInfo }}" class="tapbg">
@@ -98,26 +98,27 @@
     <view class="ani" bindanimationend="aniend" data-index="{{ index }}" style="background-image: url({{$state.imgHost}}/heart-ani.png)"></view>
   </view>
   <!-- 视频指引 -->
-  <cover-view class="vedioGuide" wx:if="{{ showGuide }}" bindtap="closeGuide" data-type="all">
+  <cover-view class="vedioGuide" wx:if="{{ $state.newGuide.shortvideo == 0 && showGuide}}" bindtap="closeGuide" data-type="all">
     <cover-view class="animitionBox" wx:if="{{ nextRtight == 1 }}">
       <cover-image src="{{$state.imgHost}}/vertical.png" class="vedioGuide-img"></cover-image>
       <cover-image src="{{$state.imgHost}}/handleLeft.png" class="vedioGuide-img"></cover-image>
     </cover-view>
     <cover-view class="vedioGuide-txt" wx:if="{{ nextRtight == 1 }}">
-      <cover-view class="vedioGuide-p">上下滑动，查看更多精彩视频</cover-view>
-      <cover-view class="vedioGuide-btn" catchtap="nextGuide" data-type="1">下一步</cover-view>
-      <cover-view class="vedioGuide-t" catchtap="closeGuide" data-type="once">跳过</cover-view>
+      <cover-image class="videoMsgone" src="/images/videoMsgone.png"></cover-image>
+      <!-- <cover-view class="vedioGuide-t" catchtap="closeGuide" data-type="once">跳过</cover-view> -->
     </cover-view>
     <cover-view class="animitionBox animitionBoxtow" wx:if="{{ nextRtight == 2 }}">
-      <cover-image src="{{$state.imgHost}}/trabecula.png" class="vedioGuide-img"></cover-image>
+      <cover-image src="/images/videoheng.png" class="vedioGuide-img"></cover-image>
       <cover-image src="{{$state.imgHost}}/handWhit.png" class="vedioGuide-img"></cover-image>
     </cover-view>
     <cover-view class="vedioGuide-txt" wx:if="{{ nextRtight == 2 }}">
-      <cover-view class="vedioGuide-p">向右滑动，查看更多视频分类</cover-view>
-      <cover-view class="vedioGuide-btn" catchtap="nextGuide" data-type="2">下一步</cover-view>
-      <cover-view class="vedioGuide-t" catchtap="closeGuide" data-type="once">跳过</cover-view>
+      <cover-image class="videoMsgone" src="/images/videoMsgtwo.png"></cover-image>
     </cover-view>
     <cover-view class="vedioGuideBox" wx:if="{{ nextRtight == 3 }}">
+       <cover-view class="vedioGuideBox-content">
+        <cover-image class="vedioGuideBox-contentmsg" src="/images/videoMsgthree.png"></cover-image>
+        <cover-image class="vedioGuideBox-contentImg" src="/images/videoPathtop.png"></cover-image>
+      </cover-view>
       <cover-view class="vedioGuideBox-title">
         <cover-image src="{{ cur.image }}" class="cimg"></cover-image>
         <cover-view class="vedioGuideBox-titlep">
@@ -128,25 +129,13 @@
           </cover-view>
         </cover-view>
       </cover-view>
-      <cover-view class="vedioGuideBox-content">
-        <cover-image src="{{$state.imgHost}}/pathTop.png" class="pathTop"></cover-image>
-        <cover-view class="vedioGuide-p">点击头像或按钮
-          <cover-view>查看更多同类内容</cover-view>
-        </cover-view>
-        <cover-view class="vedioGuide-btn" catchtap="nextGuide" data-type="3">下一步</cover-view>
-        <cover-view class="vedioGuide-t" catchtap="closeGuide" data-type="once">跳过</cover-view>
-      </cover-view>
     </cover-view>
     <cover-view class="vedioGuideBox vedioGuidefinal" wx:if="{{ nextRtight == 4 }}">
-      <cover-view class="vedioGuide-text">点赞该视频，小编会更加努力准备更多同类内容</cover-view>
-      <cover-view class="vedioGuide-text">分享该视频，
-        <cover-view></cover-view> 与好友一起观看</cover-view>
-      <cover-image class="vedioGuidefinal-img" src="{{$state.imgHost}}/shareAndheart.png"></cover-image>
-      <cover-view class="vedioGuidefinal-num">
-        <cover-view class="vedioGuidefinal-numt">{{ cur.praise }}</cover-view>
-        <cover-view class="vedioGuidefinal-numt">{{ cur.forward }}</cover-view>
-      </cover-view>
+      <cover-image class='vedioGuidefinal-imgmsg' src="/images/videoMsgfore.png"></cover-image>
+      <cover-image class="vedioGuidefinal-img" src="/images/shareAndheart.png"></cover-image>
+      <cover-image class='vedioGuidefinal-imgMsg' src="/images/videoMsgfive.png"></cover-image>
     </cover-view>
+    <cover-view class="vedioGuideBtn" catchtap="nextGuide">{{guideTxt}}</cover-view>
   </cover-view>
   <navBar path="video" />
 </view>

@@ -34,10 +34,11 @@
           <image class="img" mode="aspectFill" src="{{ $state.userInfo.avatar }}" catchtap="toUser"></image>
           <view class="info">
             <text class="line name">{{  $state.userInfo.nickname }}的老年大学</text>
-            <view class="line">
+            <view class="line" wx:if="{{ guideNum != 1 }}">
               <view class="city" catchtap="toInfo">{{ $state.userInfo.addressCity || "暂无" }}</view>
               <view class="school" catchtap="toInfo">{{ $state.userInfo.school || $state.userInfo.university || "+添加学校标签" }}</view>
             </view>
+            <view wx:else class="line" style="height:50rpx"></view>
           </view>
         </view>
         <!-- <image class="right" mode="aspectFill" src="{{ $state.imgHost }}/Return.png"></image> -->
@@ -50,10 +51,11 @@
           <open-data class="img" type="userAvatarUrl" catchtap="toUser"></open-data>
           <view class="info">
             <view class="line name"> <open-data type="userNickName"></open-data>的老年大学 </view>
-            <view class="line">
+            <view class="line" wx:if="{{ guideNum != 1 }}">
               <view class="city" catchtap="toInfo">{{ $state.userInfo.addressCity || "暂无" }}</view>
               <view class="school" catchtap="toInfo">{{ $state.userInfo.school || $state.userInfo.university || "+添加学校标签" }}</view>
             </view>
+            <view wx:else class="line" style="height:50rpx"></view>
           </view>
         </view>
         <!-- <image class="right" mode="aspectFill" src="{{ $state.imgHost }}/Return.png"></image> -->
@@ -214,3 +216,18 @@
     </view>
   </view>
 </view> 
+<cover-view class="getGuideBox" wx:if="{{ $state.newGuide.index == 0 }}">
+  <cover-view class="numberbox" wx:if="{{guideNum == 1}}">
+    <cover-image src="/images/provice.png" class="provice"></cover-image>
+    <cover-image src="/images/anewName.png" class="anewName"></cover-image>
+  </cover-view>
+  <cover-view class="numberbox" wx:if="{{guideNum == 2}}">
+    <cover-image src="/images/indexclassify.png" class="classify"></cover-image>
+    <cover-image src="/images/indexLeft.png" class="indexLeft"></cover-image>
+  </cover-view>
+  <cover-view class="numberbox" wx:if="{{guideNum == 3}}">
+    <cover-image src="/images/indexSocre.png" class="indexSocre"></cover-image>
+    <cover-image src="/images/indexsocermsg.png" class="indexsocermsg"></cover-image>
+  </cover-view>
+  <cover-view class="nextBtn" catchtap="nextGuide">{{guidetxt}}</cover-view>
+</cover-view> 

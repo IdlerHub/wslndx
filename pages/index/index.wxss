@@ -752,3 +752,75 @@
   position: absolute;
   bottom: 0;
 }
+
+page .getGuideBox {
+  width: 100%;
+  height: 100%;
+  background:rgba(0,0,0,0.65);
+  position: fixed;
+  top: 0;
+  z-index: 200;
+}
+page .getGuideBox .provice {
+  width: 304rpx;
+  height: 194rpx;
+  position: relative;
+  top: 197rpx;
+  left: 181rpx;
+}
+page .getGuideBox .numberbox{
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+page .getGuideBox .anewName {
+  width:342rpx;
+  height: 130rpx;
+  position: relative;
+  top: 285rpx;
+  left: 204rpx;
+}
+page .getGuideBox  .classify {
+  width: 146rpx;
+  height: 240rpx;
+  position: absolute;
+  top: 468rpx;
+  left: 188rpx;
+}
+page .getGuideBox .indexLeft {
+  width: 496rpx;
+  height: 130rpx;
+  position: absolute;
+  top: 794rpx;
+  left: 127rpx;
+}
+page .getGuideBox .indexSocre {
+  width: 150rpx;
+  height: 240rpx;
+  position: absolute;
+  right: 10rpx;
+  top: 464rpx;
+}
+page .getGuideBox .indexsocermsg {
+  width: 424rpx;
+  height: 130rpx;
+  position: absolute;
+  right: 163rpx;
+  top: 794rpx;
+}
+page .getGuideBox .nextBtn {
+  width:176rpx;
+  height:60rpx;
+  text-align: center;
+  line-height: 60rpx;
+  font-size:34rpx;
+  font-weight:400;
+  color:rgba(255,255,255,1);
+  border-radius:30rpx;
+  border:1px solid rgba(255,255,255,1);
+  position: absolute;
+  right: 60rpx;
+  bottom: 130rpx;
+  z-index: 50;
+}
+

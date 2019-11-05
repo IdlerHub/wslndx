@@ -72,7 +72,6 @@ App({
         socket.listen(this.handleMessage)
       },2000)
     }
-
     // if (!this.store.$state.userInfo.mobile) {
     //   wx.redirectTo({ url: "/pages/sign/sign" })
     // } else if (opts.query.type !== "share") {
@@ -291,8 +290,16 @@ App({
       url: "/pages/index/index"
     })
   },
+  // 获取新手指引
   getGuide() {
-
+    return this.user.guideRecord().then(res =>{
+      if(res.code == 1) {
+        let newGuide = res.data
+        this.store.setState({
+          newGuide
+        })
+      }
+    })
   },
   globalData: {
     /*wx.login 返回值 code */

@@ -9,10 +9,12 @@ Page({
     top: 27,
     topT:0,
     pause:false,
-    showGuide: true,
+    showGuide: false,
     nextRtight:1,
     currentTab:0,
-    classify:[]
+    classify:[],
+    autoplay: false,
+    guideTxt: '下一步'
     /*  rect: wx.getMenuButtonBoundingClientRect() */
   },
   onLoad(options) {
@@ -65,6 +67,20 @@ Page({
       })
     }
     app.aldstat.sendEvent("菜单", { name: "短视频" })
+    if (this.data.$state.newGuide.shortvideo == 0) {
+      let share = options.type == "share" 
+      if (!share) {
+        this.setData({
+          autoplay: false,
+          showGuide: true
+        })
+      }
+    } else {
+      this.setData({
+        autoplay: true
+      })
+    }
+    
   },
   getList(list) {
     let temp = list || this.data.list
@@ -267,27 +283,37 @@ Page({
   },
   //指引
   closeGuide(e) {
-    let type = e.currentTarget.dataset.type
-    this.data.nextRtight == 4 ? this.setData({
-      showGuide: false
-    }) : type == 'once' ? this.setData({
-        showGuide: false
-    }) : ''
-    this.data.showGuide == false ? this.videoContext.play() : ''
+    // let type = e.currentTarget.dataset.type
+    // this.data.nextRtight == 4 ? this.setData({
+    //   showGuide: false
+    // }) : type == 'once' ? this.setData({
+    //     showGuide: false
+    // }) : ''
+    // this.data.showGuide == false ? this.videoContext.play() : ''
   },
   nextGuide(e){
-    let type = e.currentTarget.dataset.type
-    if (type == 1) {
+    if (this.data.nextRtight == 1) {
       this.setData({
         nextRtight: 2
       })
-    } else if(type == 2) {
+    } else if (this.data.nextRtight == 2) {
       this.setData({
         nextRtight: 3
       })
-    } else if (type == 3) {
+    } else if (this.data.nextRtight == 3) {
       this.setData({
-        nextRtight: 4
+        nextRtight: 4,
+        guideTxt: '我知道了'
+      })
+    } else {
+      let param = {
+        guide_name: 'shortvideo'
+      }
+      app.user.guideRecordAdd(param).then(res => {
+        if (res.code == 1) {
+          app.getGuide()
+          this.videoContext.play()
+        }
       })
     }
   },
