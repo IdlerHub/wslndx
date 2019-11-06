@@ -10,6 +10,9 @@ Page({
   },
   onLoad(options) {
     this.videoContext = wx.createVideoContext(this.data.vid)
+    wx.setNavigationBarTitle({
+      title: options.title
+    })
     let pages = getCurrentPages()
     let prePage = pages[pages.length - 2]
     if (prePage && prePage.route == "pages/videoItemize/videoItemize") {

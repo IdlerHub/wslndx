@@ -80,7 +80,14 @@ Page({
         autoplay: true
       })
     }
-    
+    let ap = {
+      categoryId: 10,
+      page: 1,
+      pageSize: 10
+    }
+    app.video.search(ap).then(res => {
+      console.log(res)
+    })
   },
   getList(list) {
     let temp = list || this.data.list
@@ -268,6 +275,12 @@ Page({
     if (this.data.limit) return
     wx.navigateTo({
       url: "/pages/videoItemize/videoItemize?categoryId=" + this.data.cur.category_id + "&share=" + this.data.vistor
+    })
+  },
+  navgateto(e) {
+    let id = e.currentTarget.dataset.id
+    wx.navigateTo({
+      url: "/pages/videoItemize/videoItemize?categoryId=" + id + "&share=" + this.data.vistor 
     })
   },
   // 完整视频

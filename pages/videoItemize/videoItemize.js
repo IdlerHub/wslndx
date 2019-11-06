@@ -37,6 +37,9 @@ Page({
             list: res.data.lists,
             category: res.data.total
           })
+          wx.setNavigationBarTitle({
+            title: res.data.total.category_name
+          })
         } else {
           this.setData({
             list: this.data.list.concat(res.data.lists)
@@ -60,7 +63,7 @@ Page({
     let id = e.currentTarget.dataset.id
     let end = this.data.vistor ? "&home=true" : ""
     wx.navigateTo({
-      url: "/pages/videoTwo/videoTwo?id=" + id + "&categoryId=" + this.params.categoryId + end
+      url: "/pages/videoTwo/videoTwo?id=" + id + "&categoryId=" + this.params.categoryId + end + "&title=" + this.data.category.category_name
     })
   },
   tohome: function() {

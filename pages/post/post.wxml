@@ -91,12 +91,12 @@
   <!-- 底部navBar -->
   <navBar path="post" />
 </view>
-<view class="ActionSheet" wx:if="{{showSheet}}">
+<view class="ActionSheet" wx:if="{{showSheet}}" bindtap="closeSheet">
   <view class="ActionSheet-box" wx:if="{{showSheetBox}}">
     <view class="ActionSheet-item" catchtap="setCollect">
       收藏
     </view>
-    <view class="ActionSheet-item">
+    <view class="ActionSheet-item" catchtap="closeSheet">
       取消
     </view>
   </view>

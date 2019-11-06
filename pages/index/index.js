@@ -71,9 +71,12 @@ Page({
     if (app.store.$state.userInfo.mobile) this.getHistory() 
     setTimeout(wx.hideLoading, 500)
     app.getGuide().then(res =>{
-      this.data.$state.newGuide.index == 0 ? this.setData({
-        guideNum:1
-      }) : ''
+      if (this.data.$state.newGuide.index == 0) {
+        this.setData({
+          guideNum: 1
+        })
+        app.setSignIn({ status: false, count: 1 }, true)
+      } 
     })
   },
   init() {

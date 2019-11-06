@@ -29,6 +29,9 @@
           <cover-view class="text">完整视频</cover-view>
         </cover-view>
         <!--底部视频描述-->
+        <cover-view class="videoTitle">
+          {{ cur.title }}
+        </cover-view>
         <cover-view class="info">
           <cover-image class="icon" src="/images/mask.png"></cover-image>
           <cover-view class="synopsis">{{ cur.intro_content }}</cover-view>
