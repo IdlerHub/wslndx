@@ -14,7 +14,8 @@ Page({
     currentTab:0,
     classify:[],
     autoplay: false,
-    guideTxt: '下一步'
+    guideTxt: '下一步',
+    vistor: false
     /*  rect: wx.getMenuButtonBoundingClientRect() */
   },
   onLoad(options) {
@@ -42,7 +43,7 @@ Page({
       /* 短视频推荐 */
       let share = options.type == "share"
       this.setData({
-        vistor: share
+        vistor: true
       })
       /* 分享卡片进来,提示持续15秒 */
       if (share) {

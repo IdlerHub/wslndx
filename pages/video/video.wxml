@@ -1,93 +1,93 @@
 <view class="container">
   <view class="tabnav" style="padding-top:{{ top }}px">
-    <view  class="{{ currentTab == 1 ? 'lose' : ''}} tabnav-item" bindtap="switchNav" data-current="0">
+    <view class="{{ currentTab == 1 ? 'lose' : ''}} tabnav-item" bindtap="switchNav" data-current="0">
       <text>推荐</text>
       <view class="bottom" wx:if="{{ currentTab == 0 }}"></view>
     </view>
-    <view  class="{{ currentTab == 0 ? 'lose' : ''}} tabnav-item" bindtap="switchNav" data-current="1">
+    <view class="{{ currentTab == 0 ? 'lose' : ''}} tabnav-item" bindtap="switchNav" data-current="1">
       <text>分类</text>
       <view class="bottom" wx:if="{{ currentTab == 1 }}">
       </view>
     </view>
   </view>
+  <!-- 我的小程序 -->
+  <view wx:if="{{ vistor && tip }}"  class="vistor-head" style="top:{{top}}px">
+    <view>点击“</view>
+    <cover-image src="/images/xiaochengxu.png" class="iconfont"></cover-image>
+    <view>”添加到我的小程序 </view>
+    <!--  <cover-image src="/images/shouzhi.png" class="iconfont" style="left:{{ rect.left + 10 }}px"></cover-image> -->
+  </view>
   <swiper class="swiper" current="{{ currentTab }}" duration="300" bindchange="switchTab">
     <swiper-item bindtouchstart="scrollTouchStart" bindtouchend="scrollTouchEnd">
-        <video class="myVideo" id="{{ vid }}" src="{{ cur.url }}" controls="{{ false }}" show-center-play-btn="{{ false }}" object-fit="fill" autoplay="{{ autoplay }}" loop >
-          <!-- 功能  滑动及视频播/停监听-->
-          <view wx:if="{{ cur && !$state.baseInfo }}" class="dropback">
-            <view hover-class="none" catchtap="tap" bindtouchstart="scrollTouchStart" bindtouchend="scrollTouchEnd" wx:if="{{ !$state.baseInfo }}" class="tapbg">
-              <!-- 我的小程序 -->
-              <view wx:if="{{ vistor && tip }}" class="vistor-head" style="top:{{top}}px">
-                <view>点击“</view>
-                <cover-image src="/images/xiaochengxu.png" class="iconfont"></cover-image>
-                <view>”添加到我的小程序 </view>
-                <!--  <cover-image src="/images/shouzhi.png" class="iconfont" style="left:{{ rect.left + 10 }}px"></cover-image> -->
-              </view>
-              <!-- 视频停止 -->
-              <image wx:if="{{ pause }}" mode="aspectFill" src="{{ $state.imgHost }}/play-hl.png" class="pause"></image>
-              <view class="vedioAll">
-                <view class="vedioAllTop">
-                  <!-- 加群 -->
-                  <image wx:if="{{ cur.image }}" mode="aspectFill" src="{{ cur.image }}" catchtap="navigate" class="cimg" wx:show="{{nextRtight != 3}}"></image>
-                  <!-- 视频标题 -->
-                  <view class="vedioTitle" wx:if="{{nextRtight != 3}}">
-                    <view class="vedioTitle-p">{{ cur.title }}</view>
-                    <view class="viewMore" catchtap="navigate">
-                      查看更多
-                      <image src="/images/vedioRight.png" class="viewMoreimg"></image>
-                    </view>
+      <video class="myVideo" id="{{ vid }}" src="{{ cur.url }}" controls="{{ false }}" show-center-play-btn="{{ false }}" object-fit="fill" autoplay="{{ autoplay }}" loop>
+        <!-- 功能  滑动及视频播/停监听-->
+        <view wx:if="{{ cur && !$state.baseInfo }}" class="dropback">
+          <view hover-class="none" catchtap="tap" bindtouchstart="scrollTouchStart" bindtouchend="scrollTouchEnd" wx:if="{{ !$state.baseInfo }}" class="tapbg">
+            <!-- 视频停止 -->
+            <image wx:if="{{ pause }}" mode="aspectFill" src="{{ $state.imgHost }}/play-hl.png" class="pause"></image>
+            <view class="vedioAll">
+              <view class="vedioAllTop">
+                <!-- 加群 -->
+                <image wx:if="{{ cur.image }}" mode="aspectFill" src="{{ cur.image }}" catchtap="navigate" class="cimg" wx:show="{{nextRtight != 3}}"></image>
+                <!-- 视频标题 -->
+                <view class="vedioTitle" wx:if="{{nextRtight != 3}}">
+                  <view class="vedioTitle-p">{{ cur.title }}</view>
+                  <view class="viewMore" catchtap="navigate">
+                    查看更多
+                    <image src="/images/vedioRight.png" class="viewMoreimg"></image>
                   </view>
                 </view>
-                <!-- 点赞 -->
-                <view class="praise" catchtap="praise" wx:if="{{nextRtight != 4}}">
-                  <view wx:if="!cur.praising">
-                    <image class="heart" wx:if="{{ cur.praised == 0 }}" mode="aspectFill" src="/images/heart.png"></image>
-                    <image class="heart" wx:else mode="aspectFill" src="{{ $state.imgHost }}/heart-red.png"></image>
-                  </view>
-                  <view wx:if="{{ cur.pw }}" class="text">{{ cur.pw }}</view>
-                  <view wx:else class="text">{{ cur.praise }}</view>
-                </view>
-                <!--底部视频描述-->
-                <view class="info">
-                  <image class="icon" src="/images/mask.png"></image>
-                  <view class="synopsis">{{ cur.intro_content }}</view>
-                </view>
-                <!-- 分享 -->
-                <button wx:if="{{ cur && !$state.baseInfo && nextRtight != 4 }}" class="share" open-type="share" hover-class="btn-hover">
-                  <image mode="aspectFill" src="/images/share.png" class="icon"></image>
-                  <view wx:if="{{ cur.fw }}" class="text">{{ cur.fw }}</view>
-                  <view wx:else class="text">{{ cur.forward }}</view>
-                </button>
               </view>
-              <!-- 返回首页 -->
-              <view wx:if="{{ vistor || home }}" class="vistor-home" catchtap="tohome">
-                <image src="/images/shouye.png" class="iconfont"></image>
-                <view>首页</view>
+              <!-- 点赞 -->
+              <view class="praise" catchtap="praise" wx:if="{{nextRtight != 4}}">
+                <view wx:if="!cur.praising">
+                  <image class="heart" wx:if="{{ cur.praised == 0 }}" mode="aspectFill" src="/images/heart.png"></image>
+                  <image class="heart" wx:else mode="aspectFill" src="{{ $state.imgHost }}/heart-red.png"></image>
+                </view>
+                <view wx:if="{{ cur.pw }}" class="text">{{ cur.pw }}</view>
+                <view wx:else class="text">{{ cur.praise }}</view>
               </view>
+              <!--底部视频描述-->
+              <view class="info">
+                <image class="icon" src="/images/mask.png"></image>
+                <view class="synopsis">{{ cur.intro_content }}</view>
+              </view>
+              <!-- 分享 -->
+              <button wx:if="{{ cur && !$state.baseInfo && nextRtight != 4 }}" class="share" open-type="share" hover-class="btn-hover">
+                <image mode="aspectFill" src="/images/share.png" class="icon"></image>
+                <view wx:if="{{ cur.fw }}" class="text">{{ cur.fw }}</view>
+                <view wx:else class="text">{{ cur.forward }}</view>
+              </button>
+            </view>
+            <!-- 返回首页 -->
+            <view wx:if="{{ vistor }}" class="vistor-home" catchtap="tohome">
+              <image src="/images/shouye.png" class="iconfont"></image>
+              <view>首页</view>
             </view>
           </view>
-          <!-- 完整视频 -->
-          <cover-view class="complete" catchtap="complete" wx:if="{{ cur.target_id }}">
-            <cover-image mode="aspectFill" src="/images/video-white.png" class="icon"></cover-image>
-            <cover-view class="text">完整视频</cover-view>
-          </cover-view>
-          <!-- 授权 -->
-          <cover-view wx:if="{{ cur && $state.baseInfo }}" class="dropback  frontdrop">
-            <cover-view class="userInfo-mask">
-              <cover-view class="userInfo-box">
-                <cover-view class="text">完善微信授权</cover-view>
-                <cover-view class="text">获得更多免费内容</cover-view>
-                <button open-type="getUserInfo" bindgetuserinfo="onGotUserInfo">允许授权</button>
-              </cover-view>
+        </view>
+        <!-- 完整视频 -->
+        <cover-view class="complete" catchtap="complete" wx:if="{{ cur.target_id }}">
+          <cover-image mode="aspectFill" src="/images/video-white.png" class="icon"></cover-image>
+          <cover-view class="text">完整视频</cover-view>
+        </cover-view>
+        <!-- 授权 -->
+        <cover-view wx:if="{{ cur && $state.baseInfo }}" class="dropback  frontdrop">
+          <cover-view class="userInfo-mask">
+            <cover-view class="userInfo-box">
+              <cover-view class="text">完善微信授权</cover-view>
+              <cover-view class="text">获得更多免费内容</cover-view>
+              <button open-type="getUserInfo" bindgetuserinfo="onGotUserInfo">允许授权</button>
             </cover-view>
           </cover-view>
-        </video>
+        </cover-view>
+      </video>
     </swiper-item>
     <swiper-item style="background:#181818" class="classify">
       <view style="padding-top:{{ topT }}rpx">
         <view class="classifyBox" wx:for="{{classify}}" wx:key="item.id" style="background:url('{{item.image}}');background-size:cover" catchtap="navgateto" data-id="{{item.id}}">
-        {{item.title}}
-      </view>
+          {{item.title}}
+        </view>
       </view>
     </swiper-item>
   </swiper>
@@ -115,7 +115,7 @@
       <cover-image class="videoMsgone" src="/images/videoMsgtwo.png"></cover-image>
     </cover-view>
     <cover-view class="vedioGuideBox" wx:if="{{ nextRtight == 3 }}">
-       <cover-view class="vedioGuideBox-content">
+      <cover-view class="vedioGuideBox-content">
         <cover-image class="vedioGuideBox-contentmsg" src="/images/videoMsgthree.png"></cover-image>
         <cover-image class="vedioGuideBox-contentImg" src="/images/videoPathtop.png"></cover-image>
       </cover-view>

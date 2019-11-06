@@ -16,6 +16,7 @@ Component({
         //   url: "/pages/index/index"
         // })
         wx.switchTab({ url: "/pages/index/index" })
+        this.hideIndex()
       }  
     },
     toVideo() {
@@ -26,6 +27,7 @@ Component({
         //   url: "/pages/video/video"
         // })
         wx.switchTab({ url: "/pages/video/video" })
+        this.hideIndex()
       }  
     },
     toPost() {
@@ -37,7 +39,16 @@ Component({
         // })
         wx.switchTab({ url: "/pages/post/post" })
         app.globalData.postShow = true
+        this.hideIndex()
       }  
+    },
+    // 隐藏首页按钮
+    hideIndex() {
+      let pages = getCurrentPages()
+      let prePage = pages[0]
+      prePage.setData({
+        vistor: false
+      })
     },
     toUser() {
       if (this.data.path == 'user') {

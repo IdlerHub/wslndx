@@ -126,7 +126,7 @@
 					"id": 5,
 					"name": "秀风采分享卡片",
 					"pathName": "pages/pDetail/pDetail",
-					"query": "id=721&type=share",
+					"query": "id=12661&type=share",
 					"scene": 1007
 				},
 				{
