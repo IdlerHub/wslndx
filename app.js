@@ -45,14 +45,30 @@ App({
   socket,
   store,
   onLaunch: async function(opts) {
+    let optsStr = decodeURIComponent(opts.query.scene).split('&')
+    let opstObj = {}
+    optsStr.forEach((item, index) => {
+      if(index == 0) {
+        let uid = item.substr(4)
+        opstObj.uid = uid
+      } else {
+        let type = item.substr(5)
+        opstObj.type = type
+      }
+    })
     this.checkVersion()
-    console.log(opts.query.type)
     /* 检查用户从分享卡片启动 */
     if (this.globalData.scenes.indexOf(opts.scene) >= 0) {
       this.globalData.path = "/" + opts.path /* 卡片页面路径 */
       this.globalData.query = opts.query /* 卡片页面参数 */
-      if (opts.query.type == "invite" || opts.query.type == "share") {
-        wx.setStorageSync("invite", opts.query.uid) /* 邀请码记录 */
+      if (opts.query.type == "invite" || opts.query.type == "share" || opstObj.type == "invite") {
+        console.log(opstObj)
+        if (opts.query.uid) {
+          wx.setStorageSync("invite", opts.query.uid) /* 邀请码记录 */
+        } else {
+          wx.setStorageSync("invite", opstObj.uid) /* 邀请码记录 */
+        }
+        
       }
     }
     let userInfo = wx.getStorageSync("userInfo") || {}
@@ -72,11 +88,17 @@ App({
         socket.listen(this.handleMessage)
       },2000)
     }
-    // if (!this.store.$state.userInfo.mobile) {
-    //   wx.redirectTo({ url: "/pages/sign/sign" })
-    // } else if (opts.query.type !== "share") {
-    //   wx.reLaunch({ url: "/pages/index/index" })
-    // }
+    let systemInfo = wx.getSystemInfoSync()
+    let wxtype = systemInfo.version.replace(".", '').replace(".", '')
+    if (wxtype < 703) {
+      wx.reLaunch({
+        url: '/pages/upwxpage/upwxpage'
+      })
+    } else if (!this.store.$state.userInfo.mobile) {
+      wx.redirectTo({ url: "/pages/sign/sign" })
+    } else if (opts.query.type !== "share") {
+      wx.reLaunch({ url: "/pages/index/index" })
+    }
   },
   onShow: function(opts) {
     let lists = ["share", "invite"]
@@ -92,11 +114,11 @@ App({
         }
       }
 
-      if (!this.store.$state.userInfo.mobile) {
-        wx.redirectTo({ url: "/pages/sign/sign" })
-      } else if (opts.path == "pages/loading/loading") {
-        wx.reLaunch({ url: "/pages/index/index" })
-      }
+      // if (!this.store.$state.userInfo.mobile) {
+      //   wx.redirectTo({ url: "/pages/sign/sign" })
+      // } else if (opts.path == "pages/loading/loading") {
+      //   wx.reLaunch({ url: "/pages/index/index" })
+      // }
     }
   },
   onHide() {
@@ -239,13 +261,6 @@ App({
   /* 版本检测 */
   checkVersion: function() {
     let systemInfo = wx.getSystemInfoSync()
-    let wxtype = systemInfo.version.replace(".", '').replace(".", '')
-    if (wxtype < 703) {
-      wx.reLaunch({
-        url: '/pages/upwxpage/upwxpage'
-      })
-      console.log(1)
-    }
     if (wx.canIUse("getUpdateManager")) {
       const updateManager = wx.getUpdateManager()
       updateManager.onCheckForUpdate(function(res) {

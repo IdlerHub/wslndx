@@ -379,6 +379,9 @@ Page({
       app.user.guideRecordAdd(param).then(res => {
         if(res.code == 1) {
           app.getGuide()
+          this.setData({
+            guideNum: 5
+          })
         }
       })
     }
