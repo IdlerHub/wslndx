@@ -145,13 +145,6 @@
 					"pathName": "pages/index/index",
 					"query": " ",
 					"scene": 1001
-				},
-				{
-					"id": -1,
-					"name": "pages/index/index",
-					"pathName": "pages/index/index",
-					"query": "scene=uid%3D602%26type%3Dinvite",
-					"scene": null
 				}
 			]
 		}

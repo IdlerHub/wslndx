@@ -79,6 +79,11 @@ function delReply(param) {
   return httpService.post("Classroom/delReply", param)
 }
 
+//POST Classroom/replyList 课程回复页展示
+function replyList(param) {
+  return httpService.post("Classroom/replyList", param)
+}
+
 module.exports = {
   recommend,
   detail,
@@ -94,5 +99,6 @@ module.exports = {
   addComment,
   commentDetail,
   delComment,
-  delReply
+  delReply,
+  replyList
 }

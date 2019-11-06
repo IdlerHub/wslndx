@@ -263,6 +263,12 @@ Page({
       }
     })
   },
+  onReachBottom() {
+    if (this.data.currentTab == 1) {
+      this.comParam.page++
+      this.getComment()
+    }
+  },
   setHeight() {
     let that = this
     if (this.data.currentTab == 1) {
@@ -490,6 +496,18 @@ Page({
   input(e) {
     this.setData({
       content: e.detail.value
+    })
+  },
+  toCommentDetail(e) {
+    let vm = this
+    wx.navigateTo({
+      url: "/pages/commentDetail/commentDetail?" + "lesson_id=" + this.data.detail.id + "&comment_id=" + e.currentTarget.dataset.parentid,
+      events: {
+        refreshComments: data => {
+          this.comParam.page = 1
+          this.getComment([])
+        }
+      }
     })
   },
   show(e) {
