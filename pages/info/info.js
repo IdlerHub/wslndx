@@ -131,19 +131,7 @@ Page({
     console.log()
     this.submit()
   },
-  submit() {
-    let param = {}
-    this.data.param.address.length > 0 ?  param = {
-      address: '',
-      gender: +this.data.param.gender,
-      university: this.data.param.school,
-      age: this.data.param.age
-    } :  param = {
-      address: this.data.param.address.join(",") ,
-      gender: +this.data.param.gender,
-      university: this.data.param.school,
-      age: this.data.param.age
-    }
+  setUserinfo(param) {
     app.user.profile(param).then(msg => {
       if (msg.code == 1) {
         app.setUser(msg.data.userInfo)
@@ -159,6 +147,30 @@ Page({
         })
       }
     })
+  },
+  submit() {
+    let param = {}
+    this.data.param.address.length > 0 ?  param = {
+      address: '',
+      gender: +this.data.param.gender,
+      university: this.data.param.school,
+      age: this.data.param.age
+    } :  param = {
+      address: this.data.param.address.join(",") ,
+      gender: +this.data.param.gender,
+      university: this.data.param.school,
+      age: this.data.param.age
+    }
+    this.setUserinfo(param)
+  },
+  upUsername(e) {
+    if (e.detail.value.trim() != '') {
+      let param = {
+        nickname: e.detail.value
+      }
+      this.setUserinfo(param)
+    }
+    console.log(e.detail.value)
   },
   //用于数据统计
   onHide() {

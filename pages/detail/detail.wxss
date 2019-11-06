@@ -387,7 +387,6 @@ rich-text {
 .nodata {
   padding-top: 45rpx;
   padding-bottom: 80rpx;
-  border-bottom: 20rpx solid #eee;
   display: flex;
   align-items: center;
   justify-content: center; }

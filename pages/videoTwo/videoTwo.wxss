@@ -66,7 +66,7 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   position: absolute;
-  top: calc(50% + 400rpx);
+  bottom: 250rpx;
   left: 173rpx;
 }
 .info {
@@ -105,7 +105,7 @@
 .cimg {
   position: absolute;
   left: 30rpx;
-  top: calc(50% + 375rpx);
+  bottom: 220rpx;
   width: 110rpx;
   height: 110rpx;
   border-radius: 50%;
@@ -129,9 +129,10 @@
   position: absolute;
   width: 120rpx;
   left: 610rpx;
-  top: calc(50% + 370rpx);
+  bottom: 215rpx;
   text-align: center;
-  overflow: visible; }
+  overflow: visible;
+  z-index: 200; }
 
 .praise .heart {
   margin: 0 auto;
@@ -140,7 +141,7 @@
 
 .praising {
   position: fixed;
-  top: calc(50% + 545rpx);
+  bottom: 208rpx;
   z-index: 5;
   margin-top: -224rpx;
   right: -9rpx; }
@@ -163,7 +164,7 @@
 .share {
   position: fixed;
   left: 610rpx;
-  top: calc(50% + 566rpx);
+  bottom:58rpx;
   width: 120rpx;
   margin-top: -10rpx;
   text-align: center;

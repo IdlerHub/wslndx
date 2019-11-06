@@ -9,7 +9,7 @@
     <!-- 姓名 -->
     <view class="nameInput">
       <view class="nameInput__title">姓名</view>
-      <input placeholder="请填写" class="nameInput__name" placeholder-style="color:#B6B5B5"></input>
+      <input placeholder="{{ userInfo.nickname }}" class="nameInput__name" placeholder-style="color:#B6B5B5" value="{{userName}}" bindblur="upUsername"></input>
     </view>
     <!-- 地区 -->
     <view class="section" wx:if="areaList">

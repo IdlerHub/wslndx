@@ -13,7 +13,7 @@
 <swiper class="swiper" current="{{ currentTab }}" duration="300" bindchange="switchTab">
   <swiper-item>
     <!-- 收藏课程 -->
-    <scroll-view scroll-y bindscrolltolower="scrollEnd" style="height:100%">
+    <scroll-view scroll-y bindscrolltolower="scrollEnd" style="height:100%;background: #eee">
       <navigator url="../detail/detail?id={{ item.id }}&name={{ item.title }}" wx:for="{{ collect }}" wx:key="index" hover-class="none" open-type="navigate" class="item">
         <view class="vedio-content">
           <view class="left">
@@ -39,7 +39,7 @@
       <text class="line">啥都没有呢~\n赶紧去收藏课程吧</text>
     </view>
   </swiper-item>
-  <swiper-item bindtouchstart="scrollTouchStart" bindtouchend="scrollTouchEnd">
+  <swiper-item bindtouchstart="scrollTouchStart" bindtouchend="scrollTouchEnd"  style="background: #eee">
     <scroll-view scroll-y bindscrolltolower="scrollEnd" style="height:100%">
       <view class="wrap">
         <view wx:for="{{ circleList }}" wx:key="index" class="item">

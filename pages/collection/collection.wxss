@@ -60,7 +60,9 @@ page .vedio-content {
   padding: 30rpx 0;
   box-sizing: border-box;
   border-bottom: 1rpx solid #e9e9e9; }
-
+.vedio-content .left {
+  position: relative;
+}
 .vedio-content .left .poster {
   width: 260rpx;
   height: 160rpx;
@@ -74,7 +76,8 @@ page .left .icon {
   left: 0;
   right: 0;
   top: 0;
-  bottom: 0; }
+  bottom: 0;
+  opacity: 0.8; }
 
 page .right {
   flex: 1;

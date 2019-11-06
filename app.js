@@ -48,13 +48,7 @@ App({
     let optsStr = decodeURIComponent(opts.query.scene).split('&')
     let opstObj = {}
     optsStr.forEach((item, index) => {
-      if(index == 0) {
-        let uid = item.substr(4)
-        opstObj.uid = uid
-      } else {
-        let type = item.substr(5)
-        opstObj.type = type
-      }
+      opstObj[item.split('=')[0]]=item.split('=')[1]
     })
     this.checkVersion()
     /* 检查用户从分享卡片启动 */

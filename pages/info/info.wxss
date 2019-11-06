@@ -26,7 +26,7 @@ page{
   text-align: right;
   font-size: 32rpx;
   color: #343434;
-  padding-right: 47rpx;
+  padding-right: 49rpx;
 }
 .section{
   display: flex;

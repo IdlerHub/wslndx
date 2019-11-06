@@ -270,6 +270,10 @@ Page({
       query.select(".comment").boundingClientRect()
       query.exec(res => {
         let height = res[0].height - (-70)
+        console.log(height)
+        height < 100 ? that.setData({
+          height: 700
+        }) :
         that.setData({
           height: height 
         })
