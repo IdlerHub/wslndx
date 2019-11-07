@@ -349,7 +349,7 @@
   height: 100%; }
 
 .write .ph-class {
-  font-size: 44rpx;
+  font-size: 38rpx;
   color: #bdbdbd; }
 
 .write .box {
@@ -362,8 +362,8 @@
   align-items: center;
   background: #f4f4f4; }
   .write .box textarea {
-    width: 597rpx;
-    height: 190rpx;
+    width: 580rpx;
+    min-height: 80rpx;
     background: #ffffff;
     border: 1rpx solid #bdbdbd;
     border-radius: 10rpx;

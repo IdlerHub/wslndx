@@ -84,11 +84,8 @@ App({
     }
     let systemInfo = wx.getSystemInfoSync()
     let wxtype = systemInfo.version.replace(".", '').replace(".", '')
-    if (wxtype < 703) {
-      wx.reLaunch({
-        url: '/pages/upwxpage/upwxpage'
-      })
-    } else if (!this.store.$state.userInfo.mobile) {
+
+    if (!this.store.$state.userInfo.mobile) {
       wx.redirectTo({ url: "/pages/sign/sign" })
     } else if (opts.query.type !== "share") {
       wx.reLaunch({ url: "/pages/index/index" })
@@ -108,11 +105,11 @@ App({
         }
       }
 
-      // if (!this.store.$state.userInfo.mobile) {
-      //   wx.redirectTo({ url: "/pages/sign/sign" })
-      // } else if (opts.path == "pages/loading/loading") {
-      //   wx.reLaunch({ url: "/pages/index/index" })
-      // }
+      if (!this.store.$state.userInfo.mobile) {
+        wx.redirectTo({ url: "/pages/sign/sign" })
+      } else if (opts.path == "pages/loading/loading") {
+        wx.reLaunch({ url: "/pages/index/index" })
+      }
     }
   },
   onHide() {
