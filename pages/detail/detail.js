@@ -20,6 +20,10 @@ Page({
     let that = this
     this.videoContext = wx.createVideoContext("myVideo")
     let windowHeight = wx.getSystemInfoSync().windowHeight
+    let system = wx.getSystemInfoSync().model.indexOf('iPhone') 
+    system == -1 ? this.setData({
+      paddingTop: true
+    }): ''
     let query = wx.createSelectorQuery().in(this)
     query.select("#myVideo").boundingClientRect()
     query.select(".info").boundingClientRect()
