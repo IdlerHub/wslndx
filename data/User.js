@@ -133,6 +133,11 @@ function guideRecordAdd(param) {
   return httpService.post("User/guideRecordAdd", param)
 }
 
+//POST User/dialog 获取弹框
+function dialog(param) {
+  return httpService.post("User/dialog", param)
+}
+
 module.exports = {
   wxLoginCode,
   getAuthCode,
@@ -153,5 +158,6 @@ module.exports = {
   experienceArticle,
   collectBlog,
   guideRecord,
-  guideRecordAdd
+  guideRecordAdd,
+  dialog
 }

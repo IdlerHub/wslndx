@@ -80,10 +80,10 @@ Page({
     })
   },
   init() {
-    return Promise.all([this.getactivite(), this.getRecommend(), this.getCategory(), this.getBanner(), this.getPaper()]).then(values => {
-      this.setData({
-        activity: values[0].data
-      })
+    return Promise.all([this.getactivite(), this.getRecommend(), this.getCategory(), this.getBanner(), this.getPaper(), this.getDialog()]).then(values => {
+      // this.setData({
+      //   activity: values[0].data
+      // })
       this.navHeightList = []
       this.setHeight()
     })
@@ -161,7 +161,7 @@ Page({
     })
   },
   getactivite() {
-    return app.user.activite()
+    // return app.user.activite()
   },
   getBanner() {
     return app.classroom.banner({}).then(res => {
@@ -355,10 +355,18 @@ Page({
       })
     })
   },
+  /*获取首页活动弹框 */
+  getDialog() {
+    app.user.dialog().then(res => {
+      this.setData({
+        dialog: res.data
+      })
+    })
+  },
   jumpPeper(e) {
-    console.log(e.currentTarget.dataset.peper.url)
+    console.log(e.currentTarget.dataset.peper)
     wx.navigateTo({
-      url: `../education/education?url=${e.currentTarget.dataset.peper.url}&type=0}`
+      url: `../education/education?url=${e.currentTarget.dataset.peper}&type=0}`
     })
   },
   /* 指引联动 */
