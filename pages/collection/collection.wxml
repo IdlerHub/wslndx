@@ -103,6 +103,7 @@
           </view>
         </view>
       </view>
+      <view class="noMore" wx:if="{{showNomore && circleList.length != 0}}">已经到底了哦!</view>
     </scroll-view>
     <view class="ncol" wx:if="{{ circleList.length == 0 }}">
       <image mode="widthFix" src="{{ $state.imgHost }}/ncol.png"></image>

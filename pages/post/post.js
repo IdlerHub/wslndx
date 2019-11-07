@@ -144,6 +144,7 @@ Page({
           this.setData({
             list: temp
           })
+          this.setHeight()
         }
         this.setData({
           showLoading: false
@@ -397,5 +398,28 @@ Page({
         }
       })
     }
-  }
+  },
+  setHeight() {
+    let that = this
+    let query = wx.createSelectorQuery().in(this)
+    query.selectAll(".name").boundingClientRect()
+      query.exec(res => {
+        let arr = []
+        res[0].forEach((item, index) => {
+          console.log(item)
+          if (item.height >= 120) {
+            arr.push(index)
+          }
+        })
+        console.log(arr)
+      //   let height = res[0].height - (-70)
+      //   console.log(height)
+      //   height < 100 ? that.setData({
+      //     height: 700
+      //   }) :
+      //     that.setData({
+      //       height: height
+      //     })
+      })
+  },
 })

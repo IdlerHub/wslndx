@@ -81,6 +81,11 @@ Page({
     let temp = list || this.data.circleList
     return app.user.collectBlog(this.circleparam).then(msg => {
       if (msg.code == 1) {
+        msg.data.length == 0 ? this.setData({
+          showNomore : true
+        }) : this.setData({
+          showNomore: false
+        })
         if (msg.data) {
           let arr = [];
           for (let i in msg.data) {
@@ -266,7 +271,8 @@ Page({
       blog_index
     })
     this.setData({
-      showSheet: true
+      showSheet: true,
+      showNomore: false
     })
   },
   closeSheet() {

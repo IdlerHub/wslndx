@@ -224,7 +224,7 @@
   margin-top: 19rpx;
 } .viewMore .viewMoreimg {
   width: 11rpx;
-  height: 21rpx;
+  height: 22rpx;
   margin-left: 10rpx;
 }
 /* 点赞动画 */

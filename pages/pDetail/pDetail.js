@@ -418,64 +418,80 @@ Page({
   },
   //删除评论
   delComment: function(e) {
-    let param = { blog_id: e.currentTarget.dataset.item.blog_id, id: e.currentTarget.dataset.item.id }
-    app.circle
-      .delComment(param)
-      .then(msg => {
-        wx.hideLoading()
-        if (msg.code == 1) {
-          wx.showToast({
-            title: "删除成功",
-            icon: "none",
-            duration: 1500
-          })
-          this.getDetail()
-          this.comParam.page = 1
-          this.getComment([])
-        } else if (msg.code == -2) {
-          /* 帖子已经删除 */
-          this.setData({
-            detail: "",
-            delState: true
-          })
-        } else {
-          wx.showToast({
-            title: "删除失败，请稍后重试",
-            icon: "none",
-            duration: 1500
-          })
+    wx.showModal({
+      content: "确定删除该评论?",
+      confirmColor: '#df2020',
+      success: res => {
+        if (res.confirm) {
+          let param = { blog_id: e.currentTarget.dataset.item.blog_id, id: e.currentTarget.dataset.item.id }
+          app.circle
+            .delComment(param)
+            .then(msg => {
+              wx.hideLoading()
+              if (msg.code == 1) {
+                wx.showToast({
+                  title: "删除成功",
+                  icon: "none",
+                  duration: 1500
+                })
+                this.getDetail()
+                this.comParam.page = 1
+                this.getComment([])
+              } else if (msg.code == -2) {
+                /* 帖子已经删除 */
+                this.setData({
+                  detail: "",
+                  delState: true
+                })
+              } else {
+                wx.showToast({
+                  title: "删除失败，请稍后重试",
+                  icon: "none",
+                  duration: 1500
+                })
+              }
+            })
+            .finally(() => {
+              console.log("hxz")
+            })
         }
-      })
-      .finally(() => {
-        console.log("hxz")
-      })
+      }
+    })
   },
   /* 删除回复 */
   delReply(e) {
-    let params = { blog_id: this.id, comment_id: e.currentTarget.dataset.parentid, id: e.currentTarget.dataset.item.reply_id }
-    app.circle.replydel(params).then(msg => {
-      wx.hideLoading()
-      if (msg.code == 1) {
-        wx.showToast({
-          title: "删除成功",
-          icon: "none",
-          duration: 1500
-        })
-        this.getDetail()
-        this.comParam.page = 1
-        this.getComment([])
-      } else if (msg.code == -2) {
-        /* 帖子已经删除 */
-        this.setData({
-          detail: "",
-          delState: true
-        })
-      } else {
-        wx.showToast({
-          title: "删除失败，请稍后重试",
-          icon: "none",
-          duration: 1500
-        })
+    wx.showModal({
+      content: "确定删除该评论?",
+      confirmColor: '#df2020',
+      success: res => {
+        if (res.confirm) {
+          let params = { blog_id: this.id, comment_id: e.currentTarget.dataset.parentid, id: e.currentTarget.dataset.item.reply_id }
+          app.circle.replydel(params).then(msg => {
+            wx.hideLoading()
+            if (msg.code == 1) {
+              wx.showToast({
+                title: "删除成功",
+                icon: "none",
+                duration: 1500
+              })
+              this.getDetail()
+              this.comParam.page = 1
+              this.getComment([])
+            } else if (msg.code == -2) {
+              /* 帖子已经删除 */
+              this.setData({
+                detail: "",
+                delState: true
+              })
+            } else {
+              wx.showToast({
+                title: "删除失败，请稍后重试",
+                icon: "none",
+                duration: 1500
+              })
+            }
+          })
+        }
       }
     })
   },

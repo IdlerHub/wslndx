@@ -33,7 +33,7 @@
                 <view class="vedioTitle" wx:if="{{nextRtight != 3}}">
                   <view class="vedioTitle-p">{{ cur.title }}</view>
                   <view class="viewMore" catchtap="navigate">
-                    查看更多
+                    <view>查看更多</view> 
                     <image src="/images/vedioRight.png" class="viewMoreimg"></image>
                   </view>
                 </view>
@@ -125,7 +125,7 @@
         <cover-view class="vedioGuideBox-titlep">
           <cover-view class="vedioTitle-p">{{ cur.title }}</cover-view>
           <cover-view class="viewMore">
-            查看更多
+          <cover-view>查看更多</cover-view>
             <cover-image src="/images/guideRight.png" class="viewMoreimg"></cover-image>
           </cover-view>
         </cover-view>
