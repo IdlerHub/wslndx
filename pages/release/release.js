@@ -31,7 +31,8 @@ Page({
     let prePage = pages[0]
     prePage.setData({
       releaseParam: this.data.param,
-      media_type: this.data.media_type
+      media_type: this.data.media_type,
+      showRelease: true
     })
   },
   input(e) {
