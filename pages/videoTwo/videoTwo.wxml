@@ -1,5 +1,5 @@
 <view class="container">
-  <video class="myVideo" id="{{ vid }}" src="{{ cur.url }}" controls="{{ false }}" show-center-play-btn="{{ false }}" object-fit="fill" page-gesture autoplay loop>
+  <video class="myVideo" id="{{ vid }}" src="{{ cur.url }}" controls="{{ false }}" show-center-play-btn="{{ false }}" object-fit="fill" page-gesture autoplay="{{autoplay}}" loop>
     <!-- 功能  滑动及视频播/停监听-->
     <cover-view wx:if="{{ cur && !$state.baseInfo }}" class="dropback">
       <cover-view hover-class="none" bindtap="tap" bindtouchstart="scrollTouchStart" bindtouchend="scrollTouchEnd" wx:if="{{ !$state.baseInfo }}" class="tapbg">

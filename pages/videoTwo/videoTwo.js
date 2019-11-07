@@ -5,7 +5,8 @@ Page({
   data: {
     list: [],
     tip: true,
-    vid: "short-video" + Date.now()
+    vid: "short-video" + Date.now(),
+    autoplay: true
     /*  rect: wx.getMenuButtonBoundingClientRect() */
   },
   onLoad(options) {
@@ -13,6 +14,7 @@ Page({
     wx.setNavigationBarTitle({
       title: options.title
     })
+    this.judgeWifi()
     let pages = getCurrentPages()
     let prePage = pages[pages.length - 2]
     if (prePage && prePage.route == "pages/videoItemize/videoItemize") {
@@ -52,6 +54,56 @@ Page({
     }
     app.aldstat.sendEvent("菜单", { name: "短视频" })
   },
+  judgeWifi() {
+    if (!this.data.$state.flow) {
+      this.setData({
+        autoplay: false
+      })
+      let that = this
+      wx.getConnectedWifi({
+        success: res => {
+          console.log(res)
+          app.playVedio('wifi')
+          that.videoContext.play()
+          that.setData({
+            autoplay: true,
+            pause: false
+          })
+        },
+        fail: res => {
+          console.log(res)
+          that.videoContext.pause()
+          that.setData({
+            autoplay: false,
+            pause: true
+          })
+          wx.showModal({
+            content: '您当前不在Wi-Fi环境，继续播放将会产生流量，是否选择继续播放?',
+            confirmText: '是',
+            cancelText: '否',
+            confirmColor: '#DF2020',
+            success(res) {
+              if (res.confirm) {
+                app.playVedio('flow')
+                that.setData({
+                  autoplay: true,
+                  pause: false
+                })
+                that.videoContext.play()
+              } else if (res.cancel) {
+                that.videoContext.pause()
+                that.setData({
+                  pause: true,
+                  autoplay: false
+                })
+                console.log('用户点击取消')
+              }
+            }
+          })
+        }
+      })
+    }
+  },
   getList(list) {
     let temp = list || this.data.list
     if (this.data.limit) {
@@ -81,6 +133,7 @@ Page({
   tap() {
     if (this.data.pause) {
       this.videoContext.play()
+      this.judgeWifi()
       this.setData({
         pause: false
       })

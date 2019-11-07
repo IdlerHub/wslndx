@@ -184,7 +184,7 @@
 .praising {
   position: fixed;
   right: -30rpx;
-  bottom: 380rpx;
+  bottom: 354rpx;
   z-index: 1000;
   margin-top: -224rpx; }
 
@@ -353,11 +353,27 @@
     background: #fff; 
     margin-top:30rpx;
     background-size: cover;
+    position: relative;
+  }
+  .classify .classifyBox-obscuration {
+    width: 100%;
+    height: 100%;
+    background:rgba(0,0,0,0.2);
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+  .classify .classifyBox-txt {
+    width: 100%;
+    height: 100%;
     text-align: center;
     line-height: 320rpx;
     font-size:42rpx;
     font-weight:500;
     color:rgba(255,255,255,1);
+    position: relative;
+    z-index: 5;
+    letter-spacing: 2rpx;
   }
   .classify .classifyBox:nth-child(2n) {
     margin-left: 30rpx;

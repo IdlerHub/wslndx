@@ -238,9 +238,10 @@ App({
       tabPath: path
     })
   },
-  playVedio() {
+  playVedio(type) {
+    type == 'wifi' ? '' :
     this.store.setState({
-      playVedio: true
+      flow: true
     })
   },
   /* 更新签到信息 */

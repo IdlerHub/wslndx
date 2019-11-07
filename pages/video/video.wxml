@@ -86,7 +86,8 @@
     <swiper-item style="background:#181818" class="classify">
       <view style="padding-top:{{ topT }}rpx">
         <view class="classifyBox" wx:for="{{classify}}" wx:key="item.id" style="background:url('{{item.image}}');background-size:cover" catchtap="navgateto" data-id="{{item.id}}">
-          {{item.title}}
+        <view class="classifyBox-obscuration"></view>
+        <view class="classifyBox-txt">{{item.title}} </view>  
         </view>
       </view>
     </swiper-item>

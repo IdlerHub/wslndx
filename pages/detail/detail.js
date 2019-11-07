@@ -195,13 +195,13 @@ Page({
       sublesson_id: this.data.cur.id
     }
     let that = this
-    if(this.data.$state.playVedio) {
+    if (this.data.$state.flow) {
       that.recordAddVedio(param)
     } else {
       wx.getConnectedWifi({
         success: res => {
           console.log(res)
-          app.playVedio()
+          app.playVedio('wifi')
           that.recordAddVedio(param)
         },
         fail: res => {
@@ -213,7 +213,7 @@ Page({
             confirmColor:'#DF2020',
             success(res) {
               if (res.confirm) {
-                app.playVedio()
+                app.playVedio('flow')
                 that.recordAddVedio(param)
               } else if (res.cancel) {
                 console.log('用户点击取消')

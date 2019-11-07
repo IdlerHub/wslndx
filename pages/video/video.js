@@ -8,7 +8,7 @@ Page({
     vid: "short-video" + Date.now(),
     top: 27,
     topT:0,
-    pause:false,
+    pause:true,
     showGuide: false,
     nextRtight:1,
     currentTab:0,
@@ -43,7 +43,7 @@ Page({
       /* 短视频推荐 */
       let share = options.type == "share"
       this.setData({
-        vistor: true
+        vistor: share
       })
       /* 分享卡片进来,提示持续15秒 */
       if (share) {
@@ -68,27 +68,93 @@ Page({
       })
     }
     app.aldstat.sendEvent("菜单", { name: "短视频" })
+    // if (this.data.$state.newGuide.shortvideo == 0) {
+    //   let share = options.type == "share" 
+    //   if (!share) {
+    //     this.setData({
+    //       autoplay: false,
+    //       showGuide: true
+    //     })
+    //   }
+    // } 
+    // else {
+    //   this.judgeWifi()
+    //   // this.setData({
+    //   //   autoplay: true
+    //   // })
+    // }
+    let ap = {
+      categoryId: 10,
+      page: 1,
+      pageSize: 10
+    }
+  },
+  onShow(){
     if (this.data.$state.newGuide.shortvideo == 0) {
-      let share = options.type == "share" 
+      let share = options.type == "share"
       if (!share) {
         this.setData({
           autoplay: false,
           showGuide: true
         })
       }
-    } else {
+    }
+    else {
+      this.judgeWifi()
+      // this.setData({
+      //   autoplay: true
+      // })
+    }
+  },
+  judgeWifi() {
+    if (!this.data.$state.flow && this.data.$state.newGuide.shortvideo != 0 && this.data.currentTab == 0) {
       this.setData({
-        autoplay: true
+        autoplay: false
+      })
+      let that = this
+      wx.getConnectedWifi({
+        success: res => {
+          console.log(res)
+          app.playVedio('wifi')
+          that.videoContext.play()
+          that.setData({
+              autoplay: true,
+              pause:false
+            })
+        },
+        fail: res => {
+          console.log(res)
+          that.videoContext.pause()
+          that.setData({
+            autoplay: false,
+            pause: true
+          })
+          wx.showModal({
+            content: '您当前不在Wi-Fi环境，继续播放将会产生流量，是否选择继续播放?',
+            confirmText: '是',
+            cancelText: '否',
+            confirmColor: '#DF2020',
+            success(res) {
+              if (res.confirm) {
+                app.playVedio('flow')
+                that.setData({
+                  autoplay: true,
+                  pause: false
+                })
+                that.videoContext.play()
+              } else if (res.cancel) {
+                that.videoContext.pause()
+                that.setData({
+                  pause:true,
+                  autoplay: false
+                })
+                console.log('用户点击取消')
+              }
+            }
+          })
+        }
       })
     }
-    let ap = {
-      categoryId: 10,
-      page: 1,
-      pageSize: 10
-    }
-    app.video.search(ap).then(res => {
-      console.log(res)
-    })
   },
   getList(list) {
     let temp = list || this.data.list
@@ -126,6 +192,7 @@ Page({
   tap() {
     if (this.data.pause) {
       this.videoContext.play()
+      this.judgeWifi()
       this.setData({
         pause: false
       })
@@ -350,8 +417,8 @@ Page({
     }
   },
   switchTab(event) {
-    this.tap()
     let cur = event.detail.current
+    cur == 0 ? this.judgeWifi() : this.videoContext.pause()
     this.setData({
       currentTab: cur
     })
