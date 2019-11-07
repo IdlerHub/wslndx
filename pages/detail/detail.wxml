@@ -138,7 +138,7 @@
   </view>
   <button class="authorize" wx:if="{{ $state.baseInfo }}" open-type="getUserInfo" bindgetuserinfo="onGotUserInfo"></button>
   <view class="issueBox" style="bottom:{{ keyHeight ? keyheight : 0}}px" wx:if="{{write&&currentTab == 1}}">
-    <textarea placeholder="写评论" fixed auto-height show-confirm-bar="{{false}}" cursor-spacing="190rpx" placeholder-class="placeholder" bindinput="input" bindkeyboardheightchange='keyHeight' adjust-position="{{false}}" focus="{{focus}}"></textarea>
+    <textarea placeholder="写评论" fixed auto-height show-confirm-bar="{{false}}" cursor-spacing="190rpx" placeholder-class="placeholder" bindinput="input" bindkeyboardheightchange='keyHeight' adjust-position="{{false}}" focus="{{focus}}" bindblur="bindblur"></textarea>
     <view class="submit" catchtap="release">发布</view>
   </view>
   <!-- 指引 -->

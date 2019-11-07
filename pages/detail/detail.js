@@ -422,7 +422,8 @@ Page({
         this.setData({
           content: "",
           write: true,
-          focus: false
+          focus: false,
+          keyheight: 0
         })
       } else {
         wx.showToast({
@@ -454,7 +455,8 @@ Page({
         this.setData({
           content: "",
           write: true,
-          focus:false
+          focus:false,
+          keyheight:0
         })
       } else if (msg.code == -2) {
         /* 帖子已经删除 */
@@ -555,6 +557,7 @@ Page({
     }
   },
   keyHeight(e) {
+    console.log(e.detail.height)
     if (this.data.keyheight == 0) {
       this.setData({
         keyheight: e.detail.height,
@@ -564,9 +567,15 @@ Page({
       e.detail.height > 0 ? this.setData({
         keyHeight: true
       }) : this.setData({
-        keyHeight: false
+        keyHeight: false,
+        keyheight: 0
       })
     }
+  },
+  bindblur() {
+    this.setData({
+      keyheight: 0
+    })
   },
   //用于数据统计
   onHide() {
