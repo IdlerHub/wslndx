@@ -639,11 +639,18 @@ Page({
     }
   },
   showWrite() {
-    this.setData({
-      write:false,
-      writeTow: true,
-      focus: true
-    })
+    if (this.data.$state.userInfo.status !== 'normal') {
+      wx.showModal({
+        content: '由于您近期不合规操作，您的账户已被管理员禁止发帖留言，如有疑问请在个人中心联系客服处理',
+        confirmColor: '#df2020',
+      })
+    } else {
+      this.setData({
+        write: false,
+        writeTow: true,
+        focus: true
+      })
+    }
   },
   keyHeight(e) {
     console.log(e.detail.height)
