@@ -84,6 +84,16 @@ function replyList(param) {
   return httpService.post("Classroom/replyList", param)
 }
 
+//POST Classroom/sublessonfinish 课程回复页展示
+function sublessonfinish(param) {
+  return httpService.post("Classroom/sublessonfinish", param)
+}
+
+//POST Classroom/sublessons 课程回复页展示
+function sublessons(param) {
+  return httpService.post("Classroom/sublessons", param)
+}
+
 module.exports = {
   recommend,
   detail,
@@ -100,5 +110,7 @@ module.exports = {
   commentDetail,
   delComment,
   delReply,
-  replyList
+  replyList,
+  sublessonfinish,
+  sublessons
 }

@@ -149,9 +149,9 @@
       <textarea placeholder="写评论"   focus="{{ focus }}" fixed  bindinput="input" value='{{content}}' placeholder-class="ph-class" show-confirm-bar="{{ false }}" adjust-position="{{ false }}" bindfocus="textHeight"  hold-keyboard auto-height></textarea>
       <!-- prettier-ignore -->
       <view class="right" catchtap="navigator">
-        <view class="to">
+        <!-- <view class="to">
           <image mode="aspectFit" class="icon" src="{{ $state.imgHost }}/screen.png"></image>
-        </view>
+        </view> -->
         <button class="release" disabled="{{ !content }}" catchtap="release">发布</button>
       </view>
     </view>

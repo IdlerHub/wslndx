@@ -62,8 +62,8 @@
     <swiper class="tab" style="height:{{ height }}px" current="{{ currentTab }}" duration="300" bindchange="switchTab">
       <swiper-item class="tab-item">
         <!--剧集  -->
-        <scroll-view scroll-y="true" class="wrap drama">
-          <view wx:for="{{ detail.sublesson }}" bindtap="select" data-index="{{ index }}" wx:key="index" class="item {{ item.played == 1 ? 'played' : '' }} {{ item.id == cur.id ? 'active' : '' }}">
+        <scroll-view scroll-y="true" class="wrap drama" bindscrolltolower="moreSublessons" >
+          <view wx:for="{{ sublessons }}" bindtap="select" data-index="{{ index }}" wx:key="index" class="item {{ item.played == 1 ? 'played' : '' }} {{ item.id == cur.id ? 'active' : '' }}">
             <view class="left">
               <text class="name">{{ item.sub_id }}. {{ item.title }}</text>
               <text class="time">{{ item.minute }}分钟</text>
@@ -138,7 +138,7 @@
   </view>
   <button class="authorize" wx:if="{{ $state.baseInfo }}" open-type="getUserInfo" bindgetuserinfo="onGotUserInfo"></button>
   <view class="issueBox" style="bottom:{{ keyHeight ? keyheight : 0}}px" wx:if="{{write&&currentTab == 1}}">
-    <textarea placeholder="{{$state.newGuide.lesson == 0 ? '' : '写评论'}}" fixed auto-height show-confirm-bar="{{false}}" cursor-spacing="190rpx" placeholder-class="placeholder" bindinput="input" bindkeyboardheightchange='keyHeight' adjust-position="{{false}}" focus="{{focus}}" bindblur="bindblur" style="padding-top:{{ paddingTop ? 10 : 0 }}px"></textarea>
+    <textarea placeholder="{{$state.newGuide.lesson == 0 ? '' : '写评论'}}" fixed auto-height show-confirm-bar="{{false}}" cursor-spacing="190rpx" placeholder-class="placeholder" bindinput="input" bindkeyboardheightchange='keyHeight' adjust-position="{{false}}" focus="{{focus}}" bindblur="bindblur" style="padding-top:{{ paddingTop ? 10 : 0 }}px;padding-bottom:{{ paddingTop ? 10 : 0 }}px"></textarea>
     <view class="submit" catchtap="release">发布</view>
   </view>
   <!-- 指引 -->

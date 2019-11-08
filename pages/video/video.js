@@ -68,21 +68,16 @@ Page({
       })
     }
     app.aldstat.sendEvent("菜单", { name: "短视频" })
-    // if (this.data.$state.newGuide.shortvideo == 0) {
-    //   let share = options.type == "share" 
-    //   if (!share) {
-    //     this.setData({
-    //       autoplay: false,
-    //       showGuide: true
-    //     })
-    //   }
-    // } 
-    // else {
-    //   this.judgeWifi()
-    //   // this.setData({
-    //   //   autoplay: true
-    //   // })
-    // }
+    let share = options.type == "share" 
+      if (!share) {
+        this.setData({
+          autoplay: false,
+          showGuide: true
+        })
+      }
+      // this.setData({
+      //   autoplay: true
+      // })
     let ap = {
       categoryId: 10,
       page: 1,
@@ -90,24 +85,18 @@ Page({
     }
   },
   onShow(){
-    if (this.data.$state.newGuide.shortvideo == 0) {
-      let share = options.type == "share"
-      if (!share) {
-        this.setData({
-          autoplay: false,
-          showGuide: true
-        })
-      }
-    }
-    else {
-      this.judgeWifi()
+    if (this.data.$state.newGuide) {
+      this.data.$state.newGuide.shortvideo != 0 ?
+       this.judgeWifi() : ''
       // this.setData({
       //   autoplay: true
       // })
+    } else {
+      this.judgeWifi()
     }
   },
   judgeWifi() {
-    if (!this.data.$state.flow && this.data.$state.newGuide.shortvideo != 0 && this.data.currentTab == 0) {
+    if (!this.data.$state.flow  && this.data.currentTab == 0) {
       this.setData({
         autoplay: false
       })
@@ -145,6 +134,7 @@ Page({
                     })
                     that.videoContext.play()
                   } else if (res.cancel) {
+                    app.playVedio('wifi')
                     that.videoContext.pause()
                     that.setData({
                       pause: true,
@@ -163,7 +153,12 @@ Page({
           })
         }
       })
-     
+    } else if (this.data.currentTab == 0) {
+      this.setData({
+        pause: false,
+        autoplay: true
+      })
+      this.videoContext.play()
     }
   },
   getList(list) {
@@ -192,7 +187,6 @@ Page({
         item.pw = app.util.tow(item.praise)
         item.fw = app.util.tow(item.forward)
       })
-
       this.setData({
         list: this.param.position == "end" ? (msg.data.lists || []).concat(temp) : temp.concat(msg.data.lists || [])
       })
@@ -201,7 +195,6 @@ Page({
   },
   tap() {
     if (this.data.pause) {
-      this.videoContext.play()
       this.judgeWifi()
       this.setData({
         pause: false
@@ -269,6 +262,7 @@ Page({
         this.getList()
       }
     }
+    this.vedioRecordAdd()
     app.addVisitedNum(`v${this.data.cur.id}`)
     app.aldstat.sendEvent("短视频播放", { name: this.data.cur.title })
   },
@@ -403,10 +397,21 @@ Page({
       app.user.guideRecordAdd(param).then(res => {
         if (res.code == 1) {
           app.getGuide()
-          this.videoContext.play()
+          this.judgeWifi()
+          this.setData({
+            nextRtight: 5
+          })
         }
       })
     }
+  },
+  vedioRecordAdd() {
+    let param = { shortvideo_id : this.data.cur.id }
+    app.video.recordAdd(param).then( res => {
+      if(res.code == 1 ) {
+        console.log('发送成功')
+      }
+    })
   },
   // 获取用户的微信昵称头像
   onGotUserInfo: function(e) {
@@ -428,7 +433,7 @@ Page({
   },
   switchTab(event) {
     let cur = event.detail.current
-    cur == 0 ? this.judgeWifi() : this.videoContext.pause()
+    cur == 0 ? this.judgeWifi() : ''
     this.setData({
       currentTab: cur
     })

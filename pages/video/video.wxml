@@ -11,7 +11,7 @@
     </view>
   </view>
   <!-- 我的小程序 -->
-  <view wx:if="{{ vistor && tip }}"  class="vistor-head" style="top:{{top}}px">
+  <view wx:if="{{ vistor && tip }}"  class="vistor-head" style="top:{{top - 15}}px">
     <view>点击“</view>
     <cover-image src="/images/xiaochengxu.png" class="iconfont"></cover-image>
     <view>”添加到我的小程序 </view>
@@ -19,10 +19,10 @@
   </view>
   <swiper class="swiper" current="{{ currentTab }}" duration="300" bindchange="switchTab">
     <swiper-item bindtouchstart="scrollTouchStart" bindtouchend="scrollTouchEnd">
-      <video class="myVideo" id="{{ vid }}" src="{{ cur.url }}" controls="{{ false }}" show-center-play-btn="{{ false }}" object-fit="fill" autoplay="{{ autoplay }}" loop>
+      <video class="myVideo" id="{{ vid }}" src="{{ cur.url }}" controls="{{ false }}" show-center-play-btn="{{ false }}" object-fit="fill" autoplay="{{ autoplay }}" loop bindplay="{{vedioRecordAdd}}">
         <!-- 功能  滑动及视频播/停监听-->
         <view wx:if="{{ cur && !$state.baseInfo }}" class="dropback">
-          <view hover-class="none" catchtap="tap" bindtouchstart="scrollTouchStart" bindtouchend="scrollTouchEnd" wx:if="{{ !$state.baseInfo }}" class="tapbg">
+          <view hover-class="none" catchtap="tap" wx:if="{{ !$state.baseInfo }}" class="tapbg">
             <!-- 视频停止 -->
             <image wx:if="{{ pause }}" mode="aspectFill" src="{{ $state.imgHost }}/play-hl.png" class="pause"></image>
             <view class="vedioAll">

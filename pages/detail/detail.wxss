@@ -323,17 +323,12 @@ rich-text {
     z-index: 2;
   }
   .issueBox textarea {
-    height: 0;
-    width:586rpx;
-    font-size:38rpx;
+    width: 586rpx;
     min-height: 80rpx;
-    background:#F7F7F7;
-    z-index: 20;
-    border-radius:40rpx; 
-    padding-left: 38rpx;
-    display: flex;
-    align-items: center;
-    line-height: 20rpx;
+    background:rgba(247,247,247,1);
+    border-radius:40px;
+    padding: 0 26rpx 0 38rpx;
+    font-size: 38rpx;
     box-sizing: border-box; 
   }
   .placeholder {

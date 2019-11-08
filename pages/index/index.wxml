@@ -44,13 +44,17 @@
         <!-- <image class="right" mode="aspectFill" src="{{ $state.imgHost }}/Return.png"></image> -->
       </view>
     </view>
-    <button class="authorize" wx:else open-type="getUserInfo" bindgetuserinfo="onGotUserInfo" data-role="user">
+    <!-- open-type="getUserInfo" bindgetuserinfo="onGotUserInfo" -->
+    <button class="authorize" wx:else  data-role="user" bindtap="toInfo">
       <open-data class="bg" type="userAvatarUrl" ></open-data>
       <view class="box">
         <view class="left">
           <open-data class="img" type="userAvatarUrl" catchtap="toUser"></open-data>
           <view class="info">
-            <view class="line name"> <open-data type="userNickName"></open-data>的老年大学 </view>
+            <view class="line name"> 
+            <!-- <open-data type="userNickName"></open-data> -->
+            {{  $state.userInfo.nickname }}的老年大学 
+            </view>
             <view class="line" wx:if="{{ guideNum != 1 }}">
               <view class="city" catchtap="toInfo">{{ $state.userInfo.addressCity || "暂无" }}</view>
               <view class="school" catchtap="toInfo">{{ $state.userInfo.school || $state.userInfo.university || "+添加学校标签" }}</view>

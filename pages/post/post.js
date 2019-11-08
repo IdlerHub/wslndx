@@ -69,7 +69,7 @@ Page({
         list
       })
     })
-    if ((this.data.releaseParam.content != null || this.data.releaseParam.image[0] || this.data.releaseParam.video != null) && this.data.showRelease) {
+    if (((this.data.releaseParam.content != null && this.data.releaseParam.content != "") || this.data.releaseParam.image[0] || this.data.releaseParam.video != null) && this.data.showRelease) {
       let that = this
       wx.showModal({
         content: '保留本次编辑',
@@ -79,7 +79,7 @@ Page({
         success(res) {
           if (res.confirm) {
             console.log('用户点击确定')
-            this.setData({
+            that.setData({
               showRelease: false
             })
           } else if (res.cancel) {

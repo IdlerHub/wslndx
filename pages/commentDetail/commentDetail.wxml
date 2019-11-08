@@ -43,11 +43,11 @@
 <view class="popup write" wx:if="{{ write }}">
   <view class="bg" bindtap="hide"></view>
   <view class="box">
-    <textarea placeholder="写评论" focus cursor-spacing="190rpx" fixed bindinput="input" value="{{ content }}" placeholder-class="ph-class"></textarea>
+    <textarea placeholder="写评论" focus cursor-spacing="190rpx" fixed bindinput="input" value="{{ content }}" placeholder-class="ph-class" auto-height></textarea>
     <view class="right" catchtap="toComment">
-      <view class="to">
+      <!-- <view class="to">
         <image mode="aspectFit" class="icon" src="{{ $state.imgHost }}/screen.png"></image>
-      </view>
+      </view> -->
       <button class="release" disabled="{{ !content }}" catchtap="release">发布</button>
     </view>
   </view>

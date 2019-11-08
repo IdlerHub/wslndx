@@ -12,7 +12,8 @@ Page({
     keyheight:0,
     write: true,
     comment:[],
-    focus: false
+    focus: false,
+    sublessons:[]
     /* rect: wx.getMenuButtonBoundingClientRect() */
   },
   onLoad(options) {
@@ -42,10 +43,11 @@ Page({
         curid: options.curid || null,
         cur: {}
       })
-      if (that.data.$state.newGuide.lesson == 0) {
+      if (that.data.$state.newGuide) {
+        that.data.$state.newGuide.lesson == 0 ?
         this.setData({
           currentTab: 1
-        })
+        }) : ''
       }
       if (that.data.vistor) {
         setTimeout(() => {
@@ -71,6 +73,7 @@ Page({
         that.getDetail()
       }
     })
+    this.sublessParam = { id: options.id || this.data.detail.id, page: 1, pageSize: 6 }
   },
   onGotUserInfo: function(e) {
     app.updateBase(e)
@@ -107,16 +110,43 @@ Page({
           title: msg.data.title
         })
         this.setData({
-          detail: msg.data
+          detail: msg.data,
+          sublessons: msg.data.sublesson
         })
+        this.getSublessons(msg.data.sublesson)
         this.manage()
         this.getComment()
       }
     })
   },
+  getSublessons(list) {
+    // console.log(this.sublessParam)
+    // let comment = list || this.data.sublessons
+    // comment.push(...res.data)
+    // app.classroom.sublessons(this.sublessParam).then(res => {
+    //   comment.push(...res.data)
+    //   this.setData({
+    //     sublessons: comment
+    //   })
+    // })
+  },
+  moreSublessons() {
+    this.sublessParam.page++
+    this.getSublessons(this.data.sublessons)
+  },
   ended() {
     this.setData({
       playing: false
+    })
+    let param = {
+      lesson_id: this.data.detail.id,
+      sublesson_id: this.data.cur.id
+    }
+    console.log(param)
+    app.classroom.sublessonfinish(param).then(res => {
+      if(res.code == 1) {
+        console.log('发送成功')
+      }
     })
   },
   manage() {
@@ -462,6 +492,8 @@ Page({
           focus:false,
           keyheight:0
         })
+        this.replyInfo = null
+        this.replyParent = null
       } else if (msg.code == -2) {
         /* 帖子已经删除 */
         this.setData({

@@ -6,7 +6,7 @@ Page({
     list: [],
     tip: true,
     vid: "short-video" + Date.now(),
-    autoplay: true
+    autoplay: false
     /*  rect: wx.getMenuButtonBoundingClientRect() */
   },
   onLoad(options) {
@@ -111,6 +111,12 @@ Page({
           })
         } 
       })
+    } else {
+      this.setData({
+        pause: false,
+        autoplay: true
+      })
+      this.videoContext.play()
     }
   },
   getList(list) {
@@ -141,7 +147,6 @@ Page({
   },
   tap() {
     if (this.data.pause) {
-      this.videoContext.play()
       this.judgeWifi()
       this.setData({
         pause: false
@@ -208,6 +213,7 @@ Page({
         this.getList()
       }
     }
+    this.vedioRecordAdd()
     app.addVisitedNum(`v${this.data.cur.id}`)
     app.aldstat.sendEvent("短视频播放", { name: this.data.cur.title })
   },
@@ -299,6 +305,14 @@ Page({
     let cur = this.data.cur
     wx.navigateTo({
       url: "../detail/detail?id=" + cur.target_id
+    })
+  },
+  vedioRecordAdd() {
+    let param = { shortvideo_id: this.data.cur.id }
+    app.video.recordAdd(param).then(res => {
+      if (res.code == 1) {
+        console.log('发送成功')
+      }
     })
   },
   // 用于数据统计

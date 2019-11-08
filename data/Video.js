@@ -45,6 +45,13 @@ function categoryMore(param) {
   return httpService.post("Shortvideo/Category", param)
 }
 
+/**
+ * @description: 短视频播放记录(置顶)
+ */
+function recordAdd(param) {
+  return httpService.post("Shortvideo/recordAdd", param)
+}
+
 module.exports = {
   list,
   praise,
@@ -52,5 +59,6 @@ module.exports = {
   share,
   search,
   category,
-  categoryMore
+  categoryMore,
+  recordAdd
 }
