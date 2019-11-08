@@ -19,7 +19,6 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-
   },
 
   /**
@@ -40,7 +39,7 @@ Page({
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-
+    wx.reLaunch({ url: "/pages/upwxpage/upwxpage" })    
   },
 
   /**
@@ -62,5 +61,17 @@ Page({
    */
   onShareAppMessage: function () {
 
+  },
+  upwx() {
+    wx.setClipboardData({
+      data: 'https://mobile.baidu.com/item?docid=26523238&f0=search_searchContent%400_appBaseNormal%400',
+      success: function (res) {
+        wx.showToast({
+          title: '已成功复制下载新版微信链接，请移步到浏览器粘贴链接下载更新！',
+          icon: 'none',
+          duration: 4000
+        });
+      },
+    })
   }
 })

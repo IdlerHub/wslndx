@@ -274,6 +274,12 @@ Page({
     let tomorowTime = wx.getStorageSync("closeInTime")
   },
   /* 签到 */
+  closeSignIn() {
+    app.setSignIn({ status: 0, count: 1 }, true)
+    this.setData({
+      showIntegration: false
+    })
+  },
   signIn(data) {
     let sign = data.currentTarget.dataset.id == 1
     app.setSignIn({ status: true, count: 1 }, true)
@@ -368,12 +374,12 @@ Page({
   },
   jumpPeper(e) {
     console.log(e.currentTarget.dataset.peper)
+    if (e.currentTarget.dataset.type == 'dialog') {
+      this.closeSignIn()
+    }
     wx.navigateTo({
       url: `../education/education?url=${e.currentTarget.dataset.peper}&type=0}`
     })
-    if (e.currentTarget.dataset.tyoe == 'dialog') {
-      this.signIn()
-    }
   },
   /* 指引联动 */
   nextGuide() {

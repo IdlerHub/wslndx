@@ -359,7 +359,7 @@ Page({
       let query = wx.createSelectorQuery().in(this)
       query.select(".comment").boundingClientRect()
       query.exec(res => {
-        let height = res[0].height - (-70)
+        let height = res[0].height - (-270)
         console.log(height)
         height < 100 ? that.setData({
           height: 700
@@ -660,9 +660,6 @@ Page({
          }
       }
     })
-    // if (system.screenHeight < 500) {
-
-    // }
     if (this.data.$state.userInfo.status !== 'normal') {
       wx.showModal({
         content: '由于您近期不合规操作，您的账户已被管理员禁止发帖留言，如有疑问请在个人中心联系客服处理',

@@ -84,15 +84,18 @@ Page({
       pageSize: 10
     }
   },
-  onShow(){
-    if (this.data.$state.newGuide) {
-      this.data.$state.newGuide.shortvideo != 0 ?
-       this.judgeWifi() : ''
-      // this.setData({
-      //   autoplay: true
-      // })
-    } else {
-      this.judgeWifi()
+  onShow(opts){
+    console.log(opts)
+    if (this.data.$state.userInfo.mobile) {
+      if (this.data.$state.newGuide) {
+        this.data.$state.newGuide.shortvideo != 0 ?
+          this.judgeWifi() : ''
+        // this.setData({
+        //   autoplay: true
+        // })
+      } else {
+        this.judgeWifi()
+      }
     }
   },
   judgeWifi() {

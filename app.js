@@ -45,11 +45,13 @@ App({
   socket,
   store,
   onLaunch: async function(opts) {
+    console.log(opts)
     let optsStr = decodeURIComponent(opts.query.scene).split('&')
     let opstObj = {}
     optsStr.forEach((item, index) => {
       opstObj[item.split('=')[0]]=item.split('=')[1]
     })
+    console.log(opstObj)
     this.checkVersion()
     /* 检查用户从分享卡片启动 */
     if (this.globalData.scenes.indexOf(opts.scene) >= 0) {
@@ -85,7 +87,9 @@ App({
     let systemInfo = wx.getSystemInfoSync()
     let wxtype = systemInfo.version.replace(".", '').replace(".", '')
 
-    if (!this.store.$state.userInfo.mobile) {
+    if (wxtype < 703) {
+      wx.reLaunch({ url: "/pages/upwxpage/upwxpage" })
+    } else if (!this.store.$state.userInfo.mobile) {
       wx.redirectTo({ url: "/pages/sign/sign" })
     } else if (opts.query.type !== "share") {
       wx.reLaunch({ url: "/pages/index/index" })

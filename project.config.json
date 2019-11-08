@@ -152,6 +152,13 @@
 					"pathName": "pages/detail/detail",
 					"query": "id=12661&type=share",
 					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/index/index",
+					"pathName": "pages/index/index",
+					"query": "scene=uid%3D599%26type%3Dinvite",
+					"scene": null
 				}
 			]
 		}
