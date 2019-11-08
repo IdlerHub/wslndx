@@ -17,6 +17,9 @@ Page({
   },
   navHeightList: [],
   onLoad: async function(e) {
+    if (!this.data.$state.userInfo.mobile) {
+      wx.redirectTo({ url: "/pages/sign/sign" })
+    }
     await app.user.signed().then(res => {
       let sign = res.data && res.data.signed
       console.log(sign)
@@ -64,9 +67,6 @@ Page({
   },
   onShow() {
     console.log(app.globalData.currentTab)
-    if (!this.data.$state.userInfo.mobile) {
-      wx.redirectTo({ url: "/pages/sign/sign" })
-    }
     app.globalData.currentTab == 1 ? this.setData({
       currentTab: 1
     }) : ''
