@@ -12,7 +12,8 @@ Page({
     currentTab: 0, 
     showReco:false,
     guideNum: 0,
-    guidetxt: '下一步'
+    guidetxt: '下一步',
+    showSign: false
   },
   navHeightList: [],
   onLoad: async function(e) {
@@ -63,6 +64,9 @@ Page({
   },
   onShow() {
     console.log(app.globalData.currentTab)
+    if (!this.data.$state.userInfo.mobile) {
+      wx.redirectTo({ url: "/pages/sign/sign" })
+    }
     app.globalData.currentTab == 1 ? this.setData({
       currentTab: 1
     }) : ''
@@ -367,9 +371,17 @@ Page({
   /*获取首页活动弹框 */
   getDialog() {
     app.user.dialog().then(res => {
-      this.setData({
-        dialog: res.data
-      })
+      if(res.code == 1) {
+        res.data.url ? this.setData({
+          dialog: res.data
+        }) : this.setData({
+            showSign: true
+        })
+      } else {
+        this.setData({
+          showSign: true
+        })
+      }
     })
   },
   jumpPeper(e) {
