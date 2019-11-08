@@ -218,13 +218,13 @@
     <view class="dialog">
         <image class="bg" src="/images/integrationBg.png" mode="aspectFill" wx:if="{{ !dialog.url }}"></image>
         <view class="ani" catchtap="signIn" data-id="1" wx:if="{{ !dialog.url }}"></view>
-        <image class="bg" src="{{dialog.image}}" mode="aspectFill" catchtap="jumpPeper" data-peper="{{dialog.url}}" wx:else></image>
+        <image class="bg" src="{{dialog.image}}" mode="aspectFill" catchtap="jumpPeper" data-peper="{{dialog.url}}" data-type="dialog" wx:else></image>
       <!-- <button catchtap="signIn" data-id="1">签到领积分</button> -->
       <icon type="cancel" size="37" color="white" data-id="0" catchtap="signIn"></icon>
     </view>
   </view>
 </view> 
-<cover-view class="getGuideBox" wx:if="{{ $state.newGuide.index == 0 }}">
+<cover-view class="getGuideBox" wx:if="{{ $state.newGuide.index == 0 }}" bindtap="nextGuide">
   <cover-view class="numberbox" wx:if="{{guideNum == 1}}">
     <cover-image src="/images/provice.png" class="provice"></cover-image>
     <cover-image src="/images/anewName.png" class="anewName"></cover-image>

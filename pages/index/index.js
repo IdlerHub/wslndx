@@ -371,6 +371,9 @@ Page({
     wx.navigateTo({
       url: `../education/education?url=${e.currentTarget.dataset.peper}&type=0}`
     })
+    if (e.currentTarget.dataset.tyoe == 'dialog') {
+      this.signIn()
+    }
   },
   /* 指引联动 */
   nextGuide() {

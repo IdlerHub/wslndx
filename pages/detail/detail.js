@@ -76,6 +76,9 @@ Page({
     })
     this.sublessParam = { id: options.id || this.data.detail.id, page: 1, pageSize: 10, sort: this.data.sort}
   },
+  onUnload() {
+    this.data.$state.newGuide.lesson == 0 ? this.closeGuide() : ''
+  },
   onGotUserInfo: function(e) {
     app.updateBase(e)
   },
@@ -639,6 +642,27 @@ Page({
     }
   },
   showWrite() {
+    let system = {}
+    wx.getSystemInfo({
+      success: res => {
+        system = res
+      }
+    })
+    let query = wx.createSelectorQuery().in(this)
+    query.select(".container").boundingClientRect()
+    query.exec(res => {
+      console.log(res)
+      if (res[0].top > -100 ) {
+        if (system.screenHeight < 790) {
+          wx.pageScrollTo({
+            scrollTop: 232
+          })
+         }
+      }
+    })
+    // if (system.screenHeight < 500) {
+
+    // }
     if (this.data.$state.userInfo.status !== 'normal') {
       wx.showModal({
         content: '由于您近期不合规操作，您的账户已被管理员禁止发帖留言，如有疑问请在个人中心联系客服处理',

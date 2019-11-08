@@ -77,7 +77,7 @@
     </button>
   </view>
   <navBar path="user" />
-  <cover-view class="userGuide"  wx:if="{{$state.newGuide.user == 0}}">
+  <cover-view class="userGuide"  wx:if="{{$state.newGuide.user == 0}}" bindtap="closeGuide">
     <cover-image class="userGuide-msg" src="/images/userMsg.png"></cover-image>
     <cover-image class="userGuide-img" src="{{$state.imgHost}}/experienceApply.png"></cover-image>
     <cover-view class="userGuide-btn" bindtap="closeGuide">我知道了</cover-view>

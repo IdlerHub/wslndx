@@ -11,7 +11,7 @@ Page({
 
   },
   onShow: function () {
-    // this.getArticle()
+    this.getArticle()
   },
   getArticle() {
     app.user.experienceArticle().then(res => {

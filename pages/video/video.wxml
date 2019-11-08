@@ -99,7 +99,7 @@
     <view class="ani" bindanimationend="aniend" data-index="{{ index }}" style="background-image: url({{$state.imgHost}}/heart-ani.png)"></view>
   </view>
   <!-- 视频指引 -->
-  <cover-view class="vedioGuide" wx:if="{{ $state.newGuide.shortvideo == 0 && showGuide}}" bindtap="closeGuide" data-type="all">
+  <cover-view class="vedioGuide" wx:if="{{ $state.newGuide.shortvideo == 0 && showGuide}}" bindtap="nextGuide" data-type="all">
     <cover-view class="animitionBox" wx:if="{{ nextRtight == 1 }}">
       <cover-image src="{{$state.imgHost}}/vertical.png" class="vedioGuide-img"></cover-image>
       <cover-image src="{{$state.imgHost}}/handleLeft.png" class="vedioGuide-img"></cover-image>

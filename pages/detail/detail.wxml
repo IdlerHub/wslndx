@@ -138,7 +138,6 @@
   </view>
   <button class="authorize" wx:if="{{ $state.baseInfo }}" open-type="getUserInfo" bindgetuserinfo="onGotUserInfo"></button>
   <view class="issueBox"  wx:if="{{write&&currentTab == 1}}" bindtap="showWrite">
-    <!-- <textarea placeholder="{{$state.newGuide.lesson == 0 ? '' : '写评论'}}" fixed auto-height show-confirm-bar="{{false}}" cursor-spacing="190rpx" placeholder-class="placeholder" bindinput="input" bindkeyboardheightchange='keyHeight' adjust-position="{{false}}"  bindblur="bindblur" style="padding-top:{{ paddingTop ? 10 : 0 }}px" maxlength="200"></textarea> -->
     <view class="issueBox-txt">
       写评论
     </view>
@@ -152,7 +151,7 @@
     </view>
   </view>
   <!-- 指引 -->
-  <cover-view class="detailGuide" wx:if="{{$state.newGuide.lesson == 0}}" >
+  <cover-view class="detailGuide" wx:if="{{$state.newGuide.lesson == 0}}" bindtap="closeGuide">
     <cover-image src="/images/detailMsg.png" class="detailGuide-Msg"></cover-image>
     <cover-image class="detailGuide-img" src="{{$state.imgHost}}/discussion.png" style="top:{{ detail.current_sublesson_id != 0 && !hideRecode ? 738 : '' }}rpx"></cover-image>
     <cover-view class="detailGuide-btn" bindtap="closeGuide">我知道了</cover-view>
