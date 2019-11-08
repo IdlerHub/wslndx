@@ -82,9 +82,17 @@ Page({
             that.setData({
               showRelease: false
             })
+            app.store.setState({
+              releaseParam: that.data.releaseParam,
+              media_type: that.data.media_type
+            })
           } else if (res.cancel) {
             that.setData({
               releaseParam: null
+            })
+            app.store.setState({
+              releaseParam: null,
+              media_type: null
             })
           }
         }

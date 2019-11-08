@@ -17,18 +17,23 @@ Page({
     this.getCircleList()
   },
   onShow() {
-    let pages = getCurrentPages()
-    let prePage = pages[0]
-    if (prePage.data.releaseParam != null) {
+    if (this.data.$state.releaseParam != null) {
       this.setData({
-        param: prePage.data.releaseParam,
-        media_type: prePage.data.media_type
+        param: this.data.$state.releaseParam,
+        media_type: this.data.$state.media_type
       })
     }
   },
   onUnload() {
     let pages = getCurrentPages()
-    let prePage = pages[0]
+    let prePage = []
+    pages.forEach(item => {
+      if (item.route == 'pages/myCircle/myCircle') {
+        prePage = item
+      } else if ( item.route == 'pages/post/post') {
+        prePage = item
+      }
+    })
     prePage.setData({
       releaseParam: this.data.param,
       media_type: this.data.media_type,
@@ -287,6 +292,10 @@ Page({
             }
             this.setData({
               param: paramInit
+            })
+            app.store.setState({
+              releaseParam: null,
+              media_type: null
             })
             wx.switchTab({ url: "/pages/post/post" })
             app.globalData.rlSuc = true

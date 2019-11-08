@@ -8,7 +8,15 @@ const app = getApp()
 Page({
   data: {
     circle: [],
-    isRefreshing: false
+    isRefreshing: false,
+    releaseParam: {
+      image: [],
+      content: null,
+      video: null,
+      cover: null,
+      fs_id: "",
+      num: 0
+    }
   },
   //options(Object)
   onLoad: function(options) {
@@ -16,7 +24,38 @@ Page({
     this.getCircle([])
   },
   onReady: function() {},
-  onShow: function() {},
+  onShow: function() {
+    console.log(this.data.releaseParam)
+    if (((this.data.releaseParam.content != null && this.data.releaseParam.content != "") || this.data.releaseParam.image[0] || this.data.releaseParam.video != null) && this.data.showRelease) {
+      let that = this
+      wx.showModal({
+        content: '保留本次编辑',
+        confirmColor: '#df2020',
+        cancelText: "不保留",
+        confirmText: '保留',
+        success(res) {
+          if (res.confirm) {
+            console.log('用户点击确定')
+            that.setData({
+              showRelease: false
+            })
+            app.store.setState({
+              releaseParam: that.data.releaseParam,
+              media_type: that.data.media_type
+            })
+          } else if (res.cancel) {
+            that.setData({
+              releaseParam: null
+            })
+            app.store.setState({
+              releaseParam: null,
+              media_type: null
+            })
+          }
+        }
+      })
+    }
+  },
   onHide: function() {},
   onUnload: function() {
     app.aldstat.sendEvent("退出", { name: "风采展示" })

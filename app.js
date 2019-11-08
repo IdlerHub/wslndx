@@ -87,7 +87,7 @@ App({
     let systemInfo = wx.getSystemInfoSync()
     let wxtype = systemInfo.version.replace(".", '').replace(".", '')
 
-    if (wxtype < 703) {
+    if (wxtype < 606) {
       wx.reLaunch({ url: "/pages/upwxpage/upwxpage" })
     } else if (!this.store.$state.userInfo.mobile) {
       wx.redirectTo({ url: "/pages/sign/sign" })
