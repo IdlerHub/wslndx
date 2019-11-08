@@ -9,6 +9,7 @@
 .topOne {
   background: white;
 }
+
 .topOne .box .left .img {
   background: #f5f6f8;
   border: 0;
@@ -138,7 +139,12 @@
   flex-direction: row;
   justify-content: space-between;
 }
-
+.left .left-btn {
+  position: absolute;
+  z-index: 5;
+  border: none;
+  opacity: 0;
+}
 .jumpout .jumpoutBox {
   position: relative;
   height: 120rpx;

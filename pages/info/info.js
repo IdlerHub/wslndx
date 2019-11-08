@@ -9,7 +9,8 @@ const app = getApp()
 Page({
   data: {
     gender: ["女", "男"],
-    age: ["50以下", "50-60", "60-70", "70以上"]
+    age: ["50以下", "50-60", "60-70", "70以上"],
+    padding: false
   },
   onLoad() {
     let userInfo = JSON.parse(JSON.stringify(this.data.$state.userInfo))
@@ -166,11 +167,16 @@ Page({
   upUsername(e) {
     if (e.detail.value.trim() != '') {
       let param = {
-        nickname: e.detail.value
+        name: e.detail.value
       }
       this.setUserinfo(param)
     }
     console.log(e.detail.value)
+  },
+  focus() {
+    this.setData({
+      padding: true
+    })
   },
   //用于数据统计
   onHide() {

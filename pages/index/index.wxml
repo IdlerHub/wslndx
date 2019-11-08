@@ -45,11 +45,14 @@
       </view>
     </view>
     <!-- open-type="getUserInfo" bindgetuserinfo="onGotUserInfo" -->
-    <button class="authorize" wx:else  data-role="user" bindtap="toInfo">
+    <button class="authorize" wx:else  bindtap="toInfo">
       <open-data class="bg" type="userAvatarUrl" ></open-data>
       <view class="box">
         <view class="left">
-          <open-data class="img" type="userAvatarUrl" catchtap="toUser"></open-data>
+            <button open-type="getUserInfo" bindgetuserinfo="onGotUserInfo" data-role="user" class="img left-btn" catchtap="getSomthin" >
+            
+            </button>
+            <open-data class="img" type="userAvatarUrl" catchtap="toUser"></open-data>
           <view class="info">
             <view class="line name"> 
             <!-- <open-data type="userNickName"></open-data> -->

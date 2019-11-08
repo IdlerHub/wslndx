@@ -63,7 +63,7 @@
       <swiper-item class="tab-item">
         <!--剧集  -->
         <scroll-view scroll-y="true" class="wrap drama" bindscrolltolower="moreSublessons" >
-          <view wx:for="{{ sublessons }}" bindtap="select" data-index="{{ index }}" wx:key="index" class="item {{ item.played == 1 ? 'played' : '' }} {{ item.id == cur.id ? 'active' : '' }}">
+          <view wx:for="{{ sublessons }}" bindtap="select" data-index="{{ index }}" wx:key="index" class="item {{ item.played == 1 ? 'played' : '' }} {{ item.id == cur.id ? 'active' : '' }}" id="sublessonsd">
             <view class="left">
               <text class="name">{{ item.sub_id }}. {{ item.title }}</text>
               <text class="time">{{ item.minute }}分钟</text>
@@ -137,9 +137,19 @@
     <text>首页</text>
   </view>
   <button class="authorize" wx:if="{{ $state.baseInfo }}" open-type="getUserInfo" bindgetuserinfo="onGotUserInfo"></button>
-  <view class="issueBox" style="bottom:{{ keyHeight ? keyheight : 0}}px" wx:if="{{write&&currentTab == 1}}">
-    <textarea placeholder="{{$state.newGuide.lesson == 0 ? '' : '写评论'}}" fixed auto-height show-confirm-bar="{{false}}" cursor-spacing="190rpx" placeholder-class="placeholder" bindinput="input" bindkeyboardheightchange='keyHeight' adjust-position="{{false}}" focus="{{focus}}" bindblur="bindblur" style="padding-top:{{ paddingTop ? 10 : 0 }}px;padding-bottom:{{ paddingTop ? 10 : 0 }}px"></textarea>
-    <view class="submit" catchtap="release">发布</view>
+  <view class="issueBox"  wx:if="{{write&&currentTab == 1}}" bindtap="showWrite">
+    <!-- <textarea placeholder="{{$state.newGuide.lesson == 0 ? '' : '写评论'}}" fixed auto-height show-confirm-bar="{{false}}" cursor-spacing="190rpx" placeholder-class="placeholder" bindinput="input" bindkeyboardheightchange='keyHeight' adjust-position="{{false}}"  bindblur="bindblur" style="padding-top:{{ paddingTop ? 10 : 0 }}px" maxlength="200"></textarea> -->
+    <view class="issueBox-txt">
+      写评论
+    </view>
+    <view class="submit">发布</view>
+  </view>
+   <view class="issueBoxTow" style="bottom:{{ keyHeight ? keyheight : 0}}px" wx:if="{{writeTow&&currentTab == 1}}">
+    <textarea placeholder="{{$state.newGuide.lesson == 0 ? '' : '写评论'}}" fixed show-confirm-bar="{{false}}" cursor-spacing="190rpx" placeholder-class="placeholder" bindinput="input" bindkeyboardheightchange='keyHeight' adjust-position="{{false}}" focus="{{focus}}" bindblur="bindblur"  maxlength="200" value="{{content}}"></textarea>
+    <view class="issueBoxTow-txt">
+        <view class="number">{{contenLength}}/200</view>
+        <view class="submit" catchtap="release">发布</view>
+    </view>
   </view>
   <!-- 指引 -->
   <cover-view class="detailGuide" wx:if="{{$state.newGuide.lesson == 0}}" >

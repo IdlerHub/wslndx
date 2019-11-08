@@ -8,8 +8,8 @@
   <view class="box">
     <!-- 姓名 -->
     <view class="nameInput">
-      <view class="nameInput__title">姓名</view>
-      <input placeholder="{{ userInfo.nickname }}" class="nameInput__name" placeholder-style="color:#B6B5B5" value="{{userName}}" bindblur="upUsername"></input>
+      <view class="nameInput__title">真实姓名</view>
+      <input placeholder="{{ userInfo.name == '' ? '请填写' : userInfo.name }}" class="nameInput__name" placeholder-style="color:#B6B5B5" value="{{userName}}" bindblur="upUsername" bindfocus="focus" style="padding-right:{{padding || param.school != '' ? '24' : '38'}}px"></input>
     </view>
     <!-- 地区 -->
     <view class="section" wx:if="areaList">

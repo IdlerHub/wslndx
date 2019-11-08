@@ -40,7 +40,7 @@
     </view>
   </swiper-item>
   <swiper-item bindtouchstart="scrollTouchStart" bindtouchend="scrollTouchEnd"  style="background: #eee">
-    <scroll-view scroll-y bindscrolltolower="scrollEnd" style="height:100%">
+    <scroll-view scroll-y bindscrolltolower="scrollEnd" style="height:100%;{{circleList.length > 0 ? 'background: #eee' : 'background: #fff'}}">
       <view class="wrap">
         <view wx:for="{{ circleList }}" wx:key="index" class="item">
           <view class="top" catchtap="navigate" data-id="{{ item.id }}">

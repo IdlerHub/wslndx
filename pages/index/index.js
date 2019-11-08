@@ -127,6 +127,9 @@ Page({
     })
     this.setHeight()
   },
+  getSomthin() {
+    console.log('q')
+  },
   getRecommend() {
     let param = { page: 1, pageSize: 10, province: this.data.$state.userInfo.university.split(',')[0] }
     return app.classroom.recommend(param).then(msg => {

@@ -13,7 +13,8 @@ Page({
     write: true,
     comment:[],
     focus: false,
-    sublessons:[]
+    sublessons:[],
+    contenLength: 0
     /* rect: wx.getMenuButtonBoundingClientRect() */
   },
   onLoad(options) {
@@ -73,7 +74,7 @@ Page({
         that.getDetail()
       }
     })
-    this.sublessParam = { id: options.id || this.data.detail.id, page: 1, pageSize: 6 }
+    this.sublessParam = { id: options.id || this.data.detail.id, page: 1, pageSize: 10, sort: this.data.sort}
   },
   onGotUserInfo: function(e) {
     app.updateBase(e)
@@ -99,7 +100,9 @@ Page({
   getDetail() {
     this.param = {
       id: this.data.id,
-      sort: this.data.sort
+      sort: this.data.sort,
+      page: 1,
+      pageSize: 10
     }
     return app.classroom.detail(this.param).then(msg => {
       if (msg.code === 1) {
@@ -113,25 +116,27 @@ Page({
           detail: msg.data,
           sublessons: msg.data.sublesson
         })
-        this.getSublessons(msg.data.sublesson)
         this.manage()
         this.getComment()
       }
     })
   },
   getSublessons(list) {
-    // console.log(this.sublessParam)
-    // let comment = list || this.data.sublessons
-    // comment.push(...res.data)
-    // app.classroom.sublessons(this.sublessParam).then(res => {
-    //   comment.push(...res.data)
-    //   this.setData({
-    //     sublessons: comment
-    //   })
-    // })
+    console.log(this.sublessParam)
+    let comment = list
+    app.classroom.detail(this.sublessParam).then(res => {
+      res.data.sublesson.forEach(function (item) {
+        item.minute = (item.film_length / 60).toFixed(0)
+      })
+      comment.push(...res.data.sublesson)
+      this.setData({
+        sublessons: comment
+      })
+    })
   },
   moreSublessons() {
     this.sublessParam.page++
+    this.sublessParam.sort = this.data.sort
     this.getSublessons(this.data.sublessons)
   },
   ended() {
@@ -148,13 +153,21 @@ Page({
         console.log('发送成功')
       }
     })
+    return app.classroom.detail(this.param).then(msg => {
+      if (msg.code === 1) {
+        this.setData({
+          "detail.progress": msg.data.progress
+        })
+      }
+    })
   },
   manage() {
-    let detail = this.data.detail
+    let  detail = this.data.detail
+    let sublesson = this.data.sublessons
     let current = 0,
-      total = detail.sublesson.length,
+      total = sublesson.length,
       cur = {}
-    detail.sublesson.forEach(item => {
+    sublesson.forEach(item => {
       if (item.played == 1) {
         current++
       }
@@ -166,7 +179,7 @@ Page({
       cur = detail.sublesson[0]
     }
     this.setData({
-      "detail.progress": parseInt((current / total) * 100 + ""),
+      // "detail.progress": parseInt((current / total) * 100 + ""),
       cur: cur
     })
   },
@@ -175,7 +188,32 @@ Page({
     this.setData({
       sort: this.data.sort === 0 ? 1 : 0
     })
-    this.getDetail()
+    let param = {
+      id: this.data.id,
+      sort: this.data.sort,
+      page: 1,
+      pageSize: 6
+    }
+    let query = wx.createSelectorQuery().in(this)
+    query.selectAll("#sublessonsd").boundingClientRect()
+    query.exec(res => {
+      param.pageSize = res[0].length
+      app.classroom.detail(param).then(msg => {
+        if (msg.code === 1) {
+          msg.data.sublesson.forEach(function (item) {
+            item.minute = (item.film_length / 60).toFixed(0)
+          })
+          wx.setNavigationBarTitle({
+            title: msg.data.title
+          })
+          this.setData({
+            detail: msg.data,
+            sublessons: msg.data.sublesson
+          })
+        }
+      })
+    })
+    // this.getDetail()
   },
   // 收藏
   collect() {
@@ -215,7 +253,7 @@ Page({
   // 选择剧集
   select(e) {
     let i = e.currentTarget.dataset.index
-    let list = this.data.detail.sublesson
+    let list = this.data.sublessons
     this.setData({
       cur: list[i]
     })
@@ -457,7 +495,8 @@ Page({
           content: "",
           write: true,
           focus: false,
-          keyheight: 0
+          keyheight: 0,
+          contenLength: 0
         })
       } else {
         wx.showToast({
@@ -490,7 +529,8 @@ Page({
           content: "",
           write: true,
           focus:false,
-          keyheight:0
+          keyheight:0,
+          contenLength: 0
         })
         this.replyInfo = null
         this.replyParent = null
@@ -558,6 +598,9 @@ Page({
     this.setData({
       content: e.detail.value
     })
+    this.setData({
+      contenLength: e.detail.value.length
+    })
   },
   toCommentDetail(e) {
     let vm = this
@@ -588,9 +631,19 @@ Page({
         this.replyParent = null
       }
       this.setData({
-        focus: true
+        write:false,
+        writeTow:true,
+        content:'',
+        focus: true,
       })
     }
+  },
+  showWrite() {
+    this.setData({
+      write:false,
+      writeTow: true,
+      focus: true
+    })
   },
   keyHeight(e) {
     console.log(e.detail.height)
@@ -604,7 +657,9 @@ Page({
         keyHeight: true
       }) : this.setData({
         keyHeight: false,
-        keyheight: 0
+        keyheight: 0,
+        write: true,
+        writeTow: false
       })
     }
   },

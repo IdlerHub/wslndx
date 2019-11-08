@@ -66,6 +66,7 @@ Page({
   showModal(e) {
     wx.showModal({
       content: "确定删除该评论?",
+      confirmColor: '#df2020',
       success: res => {
         if (res.confirm) {
           if (e.currentTarget.dataset.item) {
