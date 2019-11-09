@@ -362,10 +362,10 @@ Page({
       let query = wx.createSelectorQuery().in(this)
       query.select(".comment").boundingClientRect()
       query.exec(res => {
-        let height = res[0].height - (-270)
+        let height = res[0].height - (-110)
         console.log(height)
         height < 100 ? that.setData({
-          height: 700
+          height: 300
         }) :
         that.setData({
           height: height 
@@ -382,8 +382,35 @@ Page({
     if (this.data.cur.id == lesson.id) {
       this.videoContext.seek(lesson.time)
     }
+    // console.log(lesson)
+    // if (lesson) {
+    //   for (let i in lesson) {
+    //     i == this.data.cur.id ? this.videoContext.seek(lesson[this.data.cur.id].time) : ''
+    //   }
+    // }
   },
   timeupdate(e) {
+    // let videoTime = {}
+    // let that = this
+    // videoTime[this.data.cur.id] = { id: this.data.cur.id, time: e.detail.currentTime}
+    // let lesson = wx.getStorageSync("lessonProgress")
+    // console.log(lesson)
+    // if (lesson) {
+    //   for (let i in lesson) {
+    //     i == this.data.cur.id ? lesson[i] = videoTime[this.data.cur.id] : lesson[this.data.cur.id] = videoTime[this.data.cur.id]
+    //   }
+    //   wx.setStorage({
+    //     key: "lessonProgress",
+    //     data: lesson
+    //   })
+    //   console.log(lesson)
+    // } else {
+    //   wx.setStorage({
+    //     key: "lessonProgress",
+    //     data: videoTime 
+    //   })
+    // }
+    
     wx.setStorage({
       key: "lessonProgress",
       data: { id: this.data.cur.id, time: e.detail.currentTime }
@@ -535,7 +562,7 @@ Page({
         this.setData({
           content: "",
           write: true,
-          writeTow: false,
+          writeTow:false,
           focus:false,
           keyheight:0,
           contenLength: 0

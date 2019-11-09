@@ -402,11 +402,20 @@ rich-text {
   }
    .detailGuide .detailGuide-Msg {
     width: 590rpx;
-    height: 130rpx;
     position: absolute;
-    top: 402rpx;
+    top: 380rpx;
     left: 80rpx;
    }
+   .detailGuide .detailGuide-Msgimg {
+    width: 590rpx;
+    height: 130rpx;
+   }
+   .detailGuide .nextGude {
+      margin-top: 80rpx;
+      width: 202rpx;
+      height: 80rpx;
+      margin-left: 165rpx;
+    }
 .detailGuide .detailGuide-img {
   width: 140rpx;
   height: 240rpx;

@@ -268,13 +268,21 @@ page {
   right: 23rpx;
   top: 49rpx;
 }
-
+.postGuide .nextGude {
+  margin-top: 80rpx;
+  width: 202rpx;
+  height: 80rpx;
+  margin-left: 71rpx;
+}
 .postGuide .postGuideBox .postMsgone {
   width: 396rpx;
-  height: 130rpx;
   position: absolute;
   top: 350rpx;
   left: 177rpx;
+}
+.postGuide .postGuideBox .postMsgoneo {
+  width: 396rpx;
+  height: 130rpx;
 }
 .postGuide .postGuideBox .postGuide-postguide {
   width: 306rpx;

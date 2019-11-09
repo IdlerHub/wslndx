@@ -782,9 +782,42 @@ page .getGuideBox .numberbox{
 page .getGuideBox .anewName {
   width:342rpx;
   height: 130rpx;
+}
+page .getGuideBox .numberbox-box {
+  width:342rpx;
   position: relative;
   top: 285rpx;
   left: 204rpx;
+}
+page .getGuideBox .numberbox-boxt {
+  width: 496rpx;
+  position: absolute;
+  top: 794rpx;
+  left: 127rpx; 
+}
+page .getGuideBox .numberbox-boxr {
+  width: 424rpx;
+  position: relative;
+  left: 163rpx;
+  top: 794rpx;
+}
+page .getGuideBox .nextGude {
+  margin-top: 80rpx;
+  width: 202rpx;
+  height: 80rpx;
+  margin-left: 45rpx;
+}
+page .getGuideBox .nextGudet {
+  margin-top: 80rpx;
+  width: 202rpx;
+  height: 80rpx;
+  margin-left: 120rpx;
+}
+page .getGuideBox .nextGuder {
+  margin-top: 80rpx;
+  width: 202rpx;
+  height: 80rpx;
+  margin-left: 78rpx;
 }
 page .getGuideBox  .classify {
   width: 146rpx;
@@ -796,10 +829,8 @@ page .getGuideBox  .classify {
 page .getGuideBox .indexLeft {
   width: 496rpx;
   height: 130rpx;
-  position: absolute;
-  top: 794rpx;
-  left: 127rpx;
 }
+
 page .getGuideBox .indexSocre {
   width: 150rpx;
   height: 240rpx;
@@ -810,9 +841,6 @@ page .getGuideBox .indexSocre {
 page .getGuideBox .indexsocermsg {
   width: 424rpx;
   height: 130rpx;
-  position: absolute;
-  right: 163rpx;
-  top: 794rpx;
 }
 page .getGuideBox .nextBtn {
   width:176rpx;

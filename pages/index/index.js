@@ -13,7 +13,8 @@ Page({
     showReco:false,
     guideNum: 0,
     guidetxt: '下一步',
-    showSign: false
+    showSign: false,
+    guideNum: 1
   },
   navHeightList: [],
   onLoad: async function(e) {

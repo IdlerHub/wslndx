@@ -11,7 +11,7 @@
     </view>
   </view>
   <!-- 我的小程序 -->
-  <view wx:if="{{ vistor && tip }}"  class="vistor-head" style="top:{{top - 15}}px">
+  <view wx:if="{{ vistor && tip }}" class="vistor-head" style="top:{{top - 15}}px">
     <view>点击“</view>
     <cover-image src="/images/xiaochengxu.png" class="iconfont"></cover-image>
     <view>”添加到我的小程序 </view>
@@ -26,18 +26,6 @@
             <!-- 视频停止 -->
             <image wx:if="{{ pause }}" mode="aspectFill" src="{{ $state.imgHost }}/play-hl.png" class="pause"></image>
             <view class="vedioAll">
-              <view class="vedioAllTop">
-                <!-- 加群 -->
-                <image wx:if="{{ cur.image }}" mode="aspectFill" src="{{ cur.image }}" catchtap="navigate" class="cimg" wx:show="{{nextRtight != 3}}"></image>
-                <!-- 视频标题 -->
-                <view class="vedioTitle" wx:if="{{nextRtight != 3}}">
-                  <view class="vedioTitle-p">{{ cur.title }}</view>
-                  <view class="viewMore" catchtap="navigate">
-                    <view>查看更多</view> 
-                    <image src="/images/vedioRight.png" class="viewMoreimg"></image>
-                  </view>
-                </view>
-              </view>
               <!-- 点赞 -->
               <view class="praise" catchtap="praise" wx:if="{{nextRtight != 4}}">
                 <view wx:if="!cur.praising">
@@ -49,8 +37,20 @@
               </view>
               <!--底部视频描述-->
               <view class="info">
+                <view class="vedioAllTop">
+                  <!-- 加群 -->
+                  <image wx:if="{{ cur.image }}" mode="aspectFill" src="{{ cur.image }}" catchtap="navigate" class="cimg" wx:show="{{nextRtight != 3}}"  wx:if="{{nextRtight != 3}}"></image>
+                  <!-- 视频标题 -->
+                  <view class="vedioTitle" wx:if="{{nextRtight != 3}}">
+                    <view class="vedioTitle-p">{{ cur.title }}</view>
+                    <view class="viewMore" catchtap="navigate">
+                      <view>查看更多</view>
+                      <image src="/images/vedioRight.png" class="viewMoreimg"></image>
+                    </view>
+                  </view>
+                </view>
                 <image class="icon" src="/images/mask.png"></image>
-                <view class="synopsis">{{ cur.intro_content }}</view>
+                <view class="synopsis"  wx:if="{{nextRtight != 3}}">{{ cur.intro_content }}</view>
               </view>
               <!-- 分享 -->
               <button wx:if="{{ cur && !$state.baseInfo && nextRtight != 4 }}" class="share" open-type="share" hover-class="btn-hover" catchtap="share">
@@ -86,8 +86,8 @@
     <swiper-item style="background:#181818" class="classify">
       <view style="padding-top:{{ topT }}rpx">
         <view class="classifyBox" wx:for="{{classify}}" wx:key="item.id" style="background:url('{{item.image}}');background-size:cover" catchtap="navgateto" data-id="{{item.id}}">
-        <view class="classifyBox-obscuration"></view>
-        <view class="classifyBox-txt">{{item.title}} </view>  
+          <view class="classifyBox-obscuration"></view>
+          <view class="classifyBox-txt">{{item.title}} </view>
         </view>
       </view>
     </swiper-item>
@@ -99,44 +99,42 @@
     <view class="ani" bindanimationend="aniend" data-index="{{ index }}" style="background-image: url({{$state.imgHost}}/heart-ani.png)"></view>
   </view>
   <!-- 视频指引 -->
-  <cover-view class="vedioGuide" wx:if="{{ $state.newGuide.shortvideo == 0 && showGuide}}" bindtap="nextGuide" data-type="all">
+  <!-- wx:if="{{ $state.newGuide.shortvideo == 0 && showGuide}}" -->
+  <cover-view class="vedioGuide"  data-type="all" wx:if="{{ $state.newGuide.shortvideo == 0 && showGuide}}">
     <cover-view class="animitionBox" wx:if="{{ nextRtight == 1 }}">
       <cover-image src="{{$state.imgHost}}/vertical.png" class="vedioGuide-img"></cover-image>
-      <cover-image src="{{$state.imgHost}}/handleLeft.png" class="vedioGuide-img"></cover-image>
+      <cover-image src="/images/handWhit.gif" class="vedioGuide-img"></cover-image>
     </cover-view>
-    <cover-view class="vedioGuide-txt" wx:if="{{ nextRtight == 1 }}">
+    <cover-view class="vedioGuide-txt" wx:if="{{ nextRtight == 1 }}" catchtap="nextGuide">
       <cover-image class="videoMsgone" src="/images/videoMsgone.png"></cover-image>
+      <cover-image src="/images/nextGude.png" class="nextGude"></cover-image>
       <!-- <cover-view class="vedioGuide-t" catchtap="closeGuide" data-type="once">跳过</cover-view> -->
     </cover-view>
     <cover-view class="animitionBox animitionBoxtow" wx:if="{{ nextRtight == 2 }}">
       <cover-image src="/images/videoheng.png" class="vedioGuide-img"></cover-image>
-      <cover-image src="{{$state.imgHost}}/handWhit.png" class="vedioGuide-img"></cover-image>
+      <cover-image src="/images/handleRight.gif" class="vedioGuide-img"></cover-image>
     </cover-view>
-    <cover-view class="vedioGuide-txt" wx:if="{{ nextRtight == 2 }}">
+    <cover-view class="vedioGuide-txt" wx:if="{{ nextRtight == 2 }}" catchtap="nextGuide">
       <cover-image class="videoMsgone" src="/images/videoMsgtwo.png"></cover-image>
+       <cover-image src="/images/nextGude.png" class="nextGude"></cover-image>
     </cover-view>
     <cover-view class="vedioGuideBox" wx:if="{{ nextRtight == 3 }}">
       <cover-view class="vedioGuideBox-content">
-        <cover-image class="vedioGuideBox-contentmsg" src="/images/videoMsgthree.png"></cover-image>
-        <cover-image class="vedioGuideBox-contentImg" src="/images/videoPathtop.png"></cover-image>
-      </cover-view>
-      <cover-view class="vedioGuideBox-title">
-        <cover-image src="{{ cur.image }}" class="cimg"></cover-image>
-        <cover-view class="vedioGuideBox-titlep">
-          <cover-view class="vedioTitle-p">{{ cur.title }}</cover-view>
-          <cover-view class="viewMore">
-          <cover-view>查看更多</cover-view>
-            <cover-image src="/images/guideRight.png" class="viewMoreimg"></cover-image>
-          </cover-view>
+        <cover-view class="vedioGuideBox-contentmsg" catchtap="nextGuide">
+            <cover-image class="vedioGuideBox-contentmsgin" src="/images/videoMsgthree.png"></cover-image>
+            <cover-image src="/images/nextGude.png" class="nextGude"></cover-image>
         </cover-view>
       </cover-view>
+      <cover-view class="vedioGuideBox-title">
+        <cover-image class="vedioGuideBox-titleimg" src="/images/videocont.png"></cover-image>
+      </cover-view>
     </cover-view>
-    <cover-view class="vedioGuideBox vedioGuidefinal" wx:if="{{ nextRtight == 4 }}">
+    <cover-view class="vedioGuideBox vedioGuidefinal" wx:if="{{ nextRtight == 4 }}" catchtap="nextGuide">
       <cover-image class='vedioGuidefinal-imgmsg' src="/images/videoMsgfore.png"></cover-image>
       <cover-image class="vedioGuidefinal-img" src="/images/shareAndheart.png"></cover-image>
       <cover-image class='vedioGuidefinal-imgMsg' src="/images/videoMsgfive.png"></cover-image>
+      <cover-image src="/images/know.png" class="nextGudet"></cover-image>
     </cover-view>
-    <cover-view class="vedioGuideBtn" catchtap="nextGuide">{{guideTxt}}</cover-view>
   </cover-view>
   <navBar path="video" />
 </view>

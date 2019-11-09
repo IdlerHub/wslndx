@@ -332,10 +332,19 @@ page {
 }
 .userGuide .userGuide-msg {
   width: 494rpx;
-  height: 130rpx;
   position: absolute;
-  top: 394rpx;
+  top: 249rpx;
   left: 128rpx;
+}
+.userGuide .userGuide-msgimg {
+  width: 494rpx;
+  height: 130rpx;
+}
+.userGuide .nextGude {
+  margin-top: 80rpx;
+  width: 202rpx;
+  height: 80rpx;
+  margin-left: 122rpx;
 }
 .userGuide .userGuide-img {
   width: 220rpx;

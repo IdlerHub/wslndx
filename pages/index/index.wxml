@@ -115,7 +115,7 @@
             <view class="skeletonDaram"></view>
         </view>
   </view>
-  <swiper class="tab" style="height:{{ height }}px" current="{{ currentTab }}" duration="300" bindchange="switchTab">
+  <swiper class="tab" style="height:{{ history.last_lesson && currentTab == 0 ? height + 120 : currentTab == 0 ? height + 100 : height }}px" current="{{ currentTab }}" duration="300" bindchange="switchTab">
     <swiper-item class="tab-item">
       <!--推荐  -->
       <view class="wrap recommend">
@@ -218,25 +218,34 @@
     <view class="dialog">
         <image class="bg" src="/images/integrationBg.png" mode="aspectFill" wx:if="{{ showSign}}"></image>
         <view class="ani" catchtap="signIn" data-id="1" wx:if="{{ showSign }}"></view>
-        <view class="bg" style="background: url('{{dialog.image}}') no-repeat center; background-size: contain" src="{{dialog.image}}" mode="aspectFill" catchtap="jumpPeper" data-peper="{{dialog.url}}" data-type="dialog" wx:else></view>
+        <view class="bg" style="background: url('{{dialog.image}}') no-repeat center; background-size: 278px 371px;border-radius:10px" src="{{dialog.image}}" mode="aspectFill" catchtap="jumpPeper" data-peper="{{dialog.url}}" data-type="dialog" wx:else></view>
       <!-- <button catchtap="signIn" data-id="1">签到领积分</button> -->
       <icon type="cancel" size="37" color="white" data-id="0" catchtap="signIn" wx:if="{{ showSign}}"></icon>
       <icon type="cancel" size="37" color="white" data-id="0" catchtap="closeSignIn" wx:else></icon>
     </view>
   </view>
 </view> 
-<cover-view class="getGuideBox" wx:if="{{ $state.newGuide.index == 0 }}" bindtap="nextGuide">
+<!-- wx:if="{{ $state.newGuide.index == 0 }}" -->
+<cover-view class="getGuideBox" wx:if="{{ $state.newGuide.index == 0 }}">
   <cover-view class="numberbox" wx:if="{{guideNum == 1}}">
     <cover-image src="/images/provice.png" class="provice"></cover-image>
-    <cover-image src="/images/anewName.png" class="anewName"></cover-image>
+    <cover-view class="numberbox-box" catchtap="nextGuide">
+        <cover-image src="/images/anewName.png" class="anewName"></cover-image>
+        <cover-image src="/images/nextGude.png" class="nextGude"></cover-image>
+    </cover-view>
   </cover-view>
   <cover-view class="numberbox" wx:if="{{guideNum == 2}}">
     <cover-image src="/images/indexclassify.png" class="classify"></cover-image>
-    <cover-image src="/images/indexLeft.png" class="indexLeft"></cover-image>
+    <cover-view class="numberbox-boxt" catchtap="nextGuide">
+      <cover-image src="/images/indexLeft.png" class="indexLeft"></cover-image>
+      <cover-image src="/images/nextGude.png" class="nextGudet"></cover-image>
+    </cover-view>
   </cover-view>
   <cover-view class="numberbox" wx:if="{{guideNum == 3}}">
     <cover-image src="/images/indexSocre.png" class="indexSocre"></cover-image>
-    <cover-image src="/images/indexsocermsg.png" class="indexsocermsg"></cover-image>
+    <cover-view class="numberbox-boxr" catchtap="nextGuide">
+        <cover-image src="/images/indexsocermsg.png" class="indexsocermsg"></cover-image>
+        <cover-image src="/images/know.png" class="nextGuder"></cover-image>
+    </cover-view>
   </cover-view>
-  <cover-view class="nextBtn" catchtap="nextGuide">{{guidetxt}}</cover-view>
 </cover-view> 

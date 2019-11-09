@@ -295,10 +295,7 @@ Page({
   // 短视频分类
   navigate() {
     /* 只能迭代一层 */
-    if (this.data.limit) return
-    wx.navigateTo({
-      url: "/pages/videoItemize/videoItemize?categoryId=" + this.data.cur.category_id + "&share=" + this.data.vistor
-    })
+    wx.navigateBack({})
   },
   // 完整视频
   complete() {

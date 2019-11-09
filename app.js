@@ -17,6 +17,9 @@ if (store.process == "production") {
   fundebug.init({
     apikey: "b3b256c65b30a1b0eb26f8d9c2cd7855803498f0c667df934be2c72048af93d9",
     releaseStage: "production",
+    monitorMethodCall:  true,  /* 自定义函数的监控 */
+    monitorMethodArguments:  true, /* 监控小程序中的函数调用的参数 */
+    monitorHttpData:  true,       /* 收集 HTTP 请求错误的 body  */
     filters: [
       {
         req: {
@@ -115,9 +118,16 @@ App({
         wx.reLaunch({ url: "/pages/index/index" })
       }
     }
+    if (this.store.$state.userInfo.id) {
+      socket.init(this.store.$state.userInfo.id)
+      socket.listen(this.handleMessage)
+    }
   },
   onHide() {
     this.globalData.backstage = true
+    if (this.store.$state.userInfo.id) {
+      socket.close()
+    }
   },
   wxLogin: async function() {
     await wx.pro.login({}).then(res => {
