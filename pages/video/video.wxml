@@ -53,7 +53,7 @@
                 <view class="synopsis">{{ cur.intro_content }}</view>
               </view>
               <!-- 分享 -->
-              <button wx:if="{{ cur && !$state.baseInfo && nextRtight != 4 }}" class="share" open-type="share" hover-class="btn-hover">
+              <button wx:if="{{ cur && !$state.baseInfo && nextRtight != 4 }}" class="share" open-type="share" hover-class="btn-hover" catchtap="share">
                 <image mode="aspectFill" src="/images/share.png" class="icon"></image>
                 <view wx:if="{{ cur.fw }}" class="text">{{ cur.fw }}</view>
                 <view wx:else class="text">{{ cur.forward }}</view>

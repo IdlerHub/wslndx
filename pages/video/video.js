@@ -72,7 +72,6 @@ Page({
       if (!share) {
         this.setData({
           autoplay: false,
-          showGuide: true
         })
       }
       // this.setData({
@@ -89,7 +88,9 @@ Page({
     if (this.data.$state.userInfo.mobile) {
       if (this.data.$state.newGuide) {
         this.data.$state.newGuide.shortvideo != 0 ?
-          this.judgeWifi() : ''
+          this.judgeWifi() : this.setData({
+            showGuide: true
+          })
         // this.setData({
         //   autoplay: true
         // })
@@ -197,6 +198,7 @@ Page({
     }
   },
   tap() {
+    console.log(555)
     if (this.data.pause) {
       this.judgeWifi()
       this.setData({
@@ -313,6 +315,9 @@ Page({
     })
   },
   // 转发
+  share() {
+    console.log(share)
+  },
   onShareAppMessage: function(ops) {
     if (ops.from === "menu") {
       return this.menuAppShare()
@@ -370,15 +375,6 @@ Page({
     app.aldstat.sendEvent("退出", { name: "短视频页" })
   },
   //指引
-  closeGuide(e) {
-    // let type = e.currentTarget.dataset.type
-    // this.data.nextRtight == 4 ? this.setData({
-    //   showGuide: false
-    // }) : type == 'once' ? this.setData({
-    //     showGuide: false
-    // }) : ''
-    // this.data.showGuide == false ? this.videoContext.play() : ''
-  },
   nextGuide(e){
     if (this.data.nextRtight == 1) {
       this.setData({

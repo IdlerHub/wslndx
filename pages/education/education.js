@@ -31,7 +31,7 @@ Page({
   onShow: function() {},
   onHide: function() {},
   onUnload: function() {
-    wx.reLaunch({
+    wx.switchTab({
       url: '/pages/index/index',
     })
   },

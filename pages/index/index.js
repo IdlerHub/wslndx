@@ -17,9 +17,12 @@ Page({
   },
   navHeightList: [],
   onLoad: async function(e) {
-    if (!this.data.$state.userInfo.mobile) {
-      wx.redirectTo({ url: "/pages/sign/sign" })
-    }
+    setTimeout( res => {
+      if (!this.data.$state.userInfo.mobile) {
+         wx.redirectTo({ url: "/pages/sign/sign" })
+      }
+    }, 3000)
+    
     await app.user.signed().then(res => {
       let sign = res.data && res.data.signed
       console.log(sign)
