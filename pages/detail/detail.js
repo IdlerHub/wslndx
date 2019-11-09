@@ -500,6 +500,7 @@ Page({
         this.setData({
           content: "",
           write: true,
+          writeTow:false,
           focus: false,
           keyheight: 0,
           contenLength: 0
@@ -534,6 +535,7 @@ Page({
         this.setData({
           content: "",
           write: true,
+          writeTow: false,
           focus:false,
           keyheight:0,
           contenLength: 0
