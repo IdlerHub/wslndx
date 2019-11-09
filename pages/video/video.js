@@ -95,7 +95,15 @@ Page({
         //   autoplay: true
         // })
       } else {
-        this.judgeWifi()
+        app.getGuide().then(res => {
+          if (this.data.$state.newGuide.shortvideo != 0) {
+            this.judgeWifi()            
+          } else {
+            this.setData({
+              showGuide: true
+            })
+          }
+        })
       }
     }
   },

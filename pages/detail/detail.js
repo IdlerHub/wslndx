@@ -76,6 +76,9 @@ Page({
     })
     this.sublessParam = { id: options.id || this.data.detail.id, page: 1, pageSize: 10, sort: this.data.sort}
   },
+  onShow() {
+    app.getGuide()
+  },
   onUnload() {
     this.data.$state.newGuide.lesson == 0 ? this.closeGuide() : ''
   },
