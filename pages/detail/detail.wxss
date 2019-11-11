@@ -328,7 +328,7 @@ rich-text {
     background:rgba(247,247,247,1);
     border-radius:40px;
     padding: 0 26rpx 0 38rpx;
-    font-size: 38rpx;
+    font-size: 40rpx;
     box-sizing: border-box; 
   }
   .placeholder {
@@ -367,6 +367,7 @@ rich-text {
   .issueBoxTow textarea {
     width: 100%;
     height: 160rpx;
+    font-size: 38rpx;
   }
   .issueBoxTow .issueBoxTow-txt {
     margin-top: 22rpx;
@@ -403,7 +404,7 @@ rich-text {
    .detailGuide .detailGuide-Msg {
     width: 590rpx;
     position: absolute;
-    top: 380rpx;
+    top: 262rpx;
     left: 80rpx;
    }
    .detailGuide .detailGuide-Msgimg {

@@ -74,7 +74,11 @@
     <button class="nav" open-type="contact" bindcontact="handleContact">
       <image src="/images/userkefu.png" class="iconfont"></image>
       <text>联系客服</text>
-    </button>
+    </button> 
+    <navigator hover-class="none" class="nav" url="/pages/drawPage/drawPage" open-type="navigate">
+      <image src="/images/draw.png" class="iconfont"></image>
+      <text>积分抽奖</text>
+    </navigator>
   </view>
   <navBar path="user" />
   <!-- wx:if="{{$state.newGuide.user == 0}}" -->

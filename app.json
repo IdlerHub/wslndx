@@ -32,7 +32,8 @@
     "pages/experience/experience",
     "components/navBar/navBar",
     "pages/upwxpage/upwxpage",
-    "pages/personPage/personPage"
+    "pages/personPage/personPage",
+    "pages/drawPage/drawPage"
   ],
   "permission": {
     "scope.userLocation": {

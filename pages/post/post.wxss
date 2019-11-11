@@ -277,7 +277,7 @@ page {
 .postGuide .postGuideBox .postMsgone {
   width: 396rpx;
   position: absolute;
-  top: 350rpx;
+  top: 454rpx;
   left: 177rpx;
 }
 .postGuide .postGuideBox .postMsgoneo {

@@ -93,7 +93,7 @@ App({
     if (wxtype < 606) {
       wx.reLaunch({ url: "/pages/upwxpage/upwxpage" })
     } else if (!this.store.$state.userInfo.mobile) {
-      wx.redirectTo({ url: "/pages/sign/sign" })
+      wx.reLaunch({ url: "/pages/sign/sign" })
     } else if (opts.query.type !== "share") {
       wx.reLaunch({ url: "/pages/index/index" })
     }
@@ -113,7 +113,7 @@ App({
       }
 
       if (!this.store.$state.userInfo.mobile) {
-        wx.redirectTo({ url: "/pages/sign/sign" })
+        wx.reLaunch({ url: "/pages/sign/sign" })
       } else if (opts.path == "pages/loading/loading") {
         wx.reLaunch({ url: "/pages/index/index" })
       }

@@ -365,11 +365,16 @@ Page({
         let height = res[0].height - (-110)
         console.log(height)
         height < 100 ? that.setData({
-          height: 300
+          height: 700
         }) :
         that.setData({
           height: height 
         })
+        if (height == 110) {
+          that.setData({
+            height: 400
+          })
+        }
       })
     } else {
       this.setData({

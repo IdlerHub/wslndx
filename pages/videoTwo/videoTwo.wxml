@@ -13,7 +13,7 @@
         <!-- 视频停止 -->
         <cover-image wx:if="{{ pause }}" mode="aspectFill" src="{{ $state.imgHost }}/play-hl.png" class="pause"></cover-image>
         <!-- 加群 -->
-        <cover-image wx:if="{{ cur.image }}" mode="aspectFill" src="{{ cur.image }}" catchtap="navigate" class="cimg"></cover-image>
+        <!-- <cover-image wx:if="{{ cur.image }}" mode="aspectFill" src="{{ cur.image }}" catchtap="navigate" class="cimg"></cover-image> -->
         <!-- 点赞 -->
         <cover-view class="praise" catchtap="praise">
           <cover-view wx:if="!cur.praising">
@@ -29,12 +29,15 @@
           <cover-view class="text">完整视频</cover-view>
         </cover-view>
         <!--底部视频描述-->
-        <cover-view class="videoTitle">
-          {{ cur.title }}
-        </cover-view>
         <cover-view class="info">
+          <cover-view class="vedioAllTop">
+            <!-- 加群 -->
+            <cover-image wx:if="{{ cur.image }}" mode="aspectFill" src="{{ cur.image }}" catchtap="navigate" class="cimg" wx:show="{{nextRtight != 3}}" wx:if="{{nextRtight != 3}}" catchtap="navigate"></cover-image>
+            <!-- 视频标题 -->
+              <cover-view class="vedioTitle-p">{{ cur.category_name }}</cover-view>
+          </cover-view>
           <cover-image class="icon" src="/images/mask.png"></cover-image>
-          <cover-view class="synopsis">{{ cur.intro_content }}</cover-view>
+          <cover-view class="synopsis" wx:if="{{nextRtight != 3}}">{{ cur.intro_content }}</cover-view>
         </cover-view>
         <!-- 返回首页 -->
         <cover-view wx:if="{{ vistor || home }}" class="vistor-home" catchtap="tohome">

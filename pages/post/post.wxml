@@ -105,7 +105,7 @@
   </view>
 </view>
  <!-- wx:if="{{ $state.newGuide.blog == 0 }}" -->
-<cover-view class="postGuide"   wx:if="{{ $state.newGuide.blog == 0 }}">
+<cover-view class="postGuide" wx:if="{{ $state.newGuide.blog == 0 }}">
   <cover-view class="postGuideBox" wx:if="{{guideNum == 1}}">
     <cover-image src="{{$state.imgHost}}/collectMessege.png" class="postGuide-img"></cover-image>
     <cover-view class="postMsgone" bindtap="nextGuide">

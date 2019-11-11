@@ -84,7 +84,11 @@ Page({
           guideNum: 1
         })
         app.setSignIn({ status: false, count: 1 }, true)
-      } 
+      } else {
+        this.setData({
+          guideNum: 5
+        })
+      }
     })
   },
   init() {

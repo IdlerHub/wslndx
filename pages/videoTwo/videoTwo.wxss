@@ -56,62 +56,77 @@
   margin-top: 30rpx; }
 
 /* 底部视频描述 */
-.videoTitle {
-  width:435rpx;
-  height:56rpx;
-  font-size:40rpx;
-  font-weight:500;
-  color:rgba(255,255,255,1);
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  position: absolute;
-  bottom: 250rpx;
-  left: 173rpx;
-}
 .info {
-  position: absolute;
   width: 750rpx;
-  padding: 0 30rpx;
-  bottom: 0;
   box-sizing: border-box;
-  height: 313rpx; }
+  height: 365rpx; 
+  position: absolute;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-content: flex-end;  
+  overflow: visible;
+  }
 
 .info .icon {
-  position: absolute;
   width: 100%;
   height: 100%;
-  top: 0;
-  left: 0;
-  z-index: -1; }
+  z-index: -1;
+  position: absolute; }
 
 .synopsis {
-  height: 130rpx;
-  position: absolute;
-  width: calc(100% - 180rpx);
-  bottom: 48rpx;
-  font-size: 36rpx;
+  left: 30rpx;
+  /* width: calc(100% - 60rpx); */
+  margin: 35rpx 0 65rpx 30rpx;
+  width: 568rpx;
+  bottom: 146rpx;
+  font-size: 34rpx;
   color: #ffffff;
   line-height: 48rpx;
-  overflow: hidden;
   word-break: break-all;
   text-overflow: ellipsis;
   white-space: normal;
   display: -webkit-box;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 3; }
+  -webkit-line-clamp: 3;
+  overflow: visible; }
 
+.vedioAllTop {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  overflow: visible;
+}
+/* 视频标题 */
+.vedioTitle-p {
+  z-index: 5;
+  bottom: 330rpx;
+  left: 169rpx;
+  margin-left: 26rpx;
+}
+ .vedioTitle-p {
+  font-size:40rpx;
+  font-weight:500;
+  color:#fff;
+  width: 435rpx;
+  margin-top: 11rpx;
+  height: 40rpx;
+  overflow: hidden;
+  line-height: 40rpx;
+  text-overflow:ellipsis;
+  white-space: nowrap;
+}
 /* 加群 */
 .cimg {
-  position: absolute;
-  left: 30rpx;
-  bottom: 220rpx;
+  left: 26rpx;
+  margin-left: 30rpx;
+  /* bottom: calc(50% - 345rpx); */
+  bottom: 328rpx;
   width: 110rpx;
   height: 110rpx;
   border-radius: 50%;
-  border: 2rpx solid rgba(255, 255, 255, 0.5); 
-  z-index: 50;
-  }
+  border: 2rpx solid rgba(255, 255, 255, 0.5); }
 
 .join {
   position: absolute;
@@ -125,6 +140,7 @@
   text-align: center;
   color: #fff;
   font-size: 45rpx; }
+
 
 /* 点赞 */
 .praise {

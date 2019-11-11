@@ -42,7 +42,7 @@
                   <image wx:if="{{ cur.image }}" mode="aspectFill" src="{{ cur.image }}" catchtap="navigate" class="cimg" wx:show="{{nextRtight != 3}}"  wx:if="{{nextRtight != 3}}"></image>
                   <!-- 视频标题 -->
                   <view class="vedioTitle" wx:if="{{nextRtight != 3}}">
-                    <view class="vedioTitle-p">{{ cur.title }}</view>
+                    <view class="vedioTitle-p">{{ cur.category_name }}</view>
                     <view class="viewMore" catchtap="navigate">
                       <view>查看更多</view>
                       <image src="/images/vedioRight.png" class="viewMoreimg"></image>

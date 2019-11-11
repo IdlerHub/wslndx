@@ -115,7 +115,7 @@
             <view class="skeletonDaram"></view>
         </view>
   </view>
-  <swiper class="tab" style="height:{{ history.last_lesson && currentTab == 0 ? height + 120 : currentTab == 0 ? height + 100 : height }}px" current="{{ currentTab }}" duration="300" bindchange="switchTab">
+  <swiper class="tab" style="height:{{ history.last_lesson && currentTab == 0 ? height + 80 : currentTab == 0 ? height + 20 : height }}px" current="{{ currentTab }}" duration="300" bindchange="switchTab">
     <swiper-item class="tab-item">
       <!--推荐  -->
       <view class="wrap recommend">
