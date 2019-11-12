@@ -45,6 +45,7 @@ App({
   user: require("data/User.js"),
   video: require("data/Video.js"),
   circle: require("data/Circle.js"),
+  lottery: require("data/Lottery.js"),
   socket,
   store,
   onLaunch: async function(opts) {

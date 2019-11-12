@@ -33,7 +33,8 @@
     "components/navBar/navBar",
     "pages/upwxpage/upwxpage",
     "pages/personPage/personPage",
-    "pages/drawPage/drawPage"
+    "pages/drawPage/drawPage",
+    "pages/winPrize/winPrize"
   ],
   "permission": {
     "scope.userLocation": {

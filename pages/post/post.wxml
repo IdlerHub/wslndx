@@ -109,15 +109,15 @@
   <cover-view class="postGuideBox" wx:if="{{guideNum == 1}}">
     <cover-image src="{{$state.imgHost}}/collectMessege.png" class="postGuide-img"></cover-image>
     <cover-view class="postMsgone" bindtap="nextGuide">
-      <cover-image src="/images/postMsgone.png" class="postMsgoneo"></cover-image>
-      <cover-image src="/images/nextGude.png" class="nextGude"></cover-image>
+      <cover-image src="{{$state.imgHost}}/postMsgone.png" class="postMsgoneo"></cover-image>
+      <cover-image src="{{$state.imgHost}}/nextGude.png" class="nextGude"></cover-image>
     </cover-view>
   </cover-view>
   <cover-view class="postGuideBox" wx:if="{{guideNum == 2}}">
-    <cover-image src="/images/postguide.png" class="postGuide-postguide"></cover-image>
+    <cover-image src="{{$state.imgHost}}/postguide.png" class="postGuide-postguide"></cover-image>
     <cover-view class="postMsgone"  bindtap="nextGuide">
-        <cover-image src="/images/postMsgtwo.png" class="postMsgoneo"></cover-image>
-        <cover-image src="/images/know.png" class="nextGude"></cover-image>
+        <cover-image src="{{$state.imgHost}}/postMsgtwo.png" class="postMsgoneo"></cover-image>
+        <cover-image src="{{$state.imgHost}}/know.png" class="nextGude"></cover-image>
     </cover-view>
   </cover-view>
 </cover-view>

@@ -1,66 +1,187 @@
 // pages/drawPage/drawPage.js
+const app = getApp()
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-
+    showrule:false,
+    activeRed:0,
+    clickLuck: 'clickLuck',
+    index: 0,  // 当前转动到哪个位置，起点位置
+    count: 8,  // 总共有多少个位置
+    timer: 0,  // 每次转动定时器
+    speed: 200,  // 初始转动速度
+    times: 0,    // 转动次数
+    cycle: 50,   // 转动基本次数：即至少需要转动多少次再进入抽奖环节
+    prize: -1,   // 中奖位置
+    click: true,
+    showToast: false, //显示中奖弹窗  
+    lotteryCfgList:[],
+    lotteryres:{},
+    showmeng: true      
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    
+  },
+  onShow() {
+    this.getLotteryCfglist()
+  },
+  getLotteryCfglist() {
+    return app.lottery.lotteryCfgList().then(res =>{ 
+      if (res.code == 1) {
+        this.setData({
+          lotteryCfgList:res.data
+        })
+      }
+    })
+  },
+  getLotteryres() {
+    return app.lottery.lotteryRes().then(res => {
+      if (res.code == 1) {
+        this.setData({
+          lotteryres: res.data
+        })
+      }
+    })
+  },
+  showrule() {
+    this.setData({
+      showrule: true
+    })
+  },
+  closerule() {
+    this.setData({
+      showrule: false
+    })
+  },
+  // 轮盘动画
+  clickLuck() {
+    let that = this
+    wx.showModal({
+      content: '是否消耗25积分开启抽奖?',
+      cancelColor:'#999',
+      confirmColor:'#DF2020',
+      success(res) {
+        if (res.confirm) {
+          that.setData({
+            clickLuck: ''
+          })
+          that.getLotteryres()
+          that.startRoll()
+        } else if (res.cancel) {
+          console.log('用户点击取消')
+        }
+      }
+    })
+  },
+  startRoll() {
+    let times = this.data.times += 1
+    this.setData({
+      times
+    }) // 转动次数
+    this.oneRoll() // 转动过程调用的每一次转动方法，这里是第一次调用初始化 
+    // 如果当前转动次数达到要求 && 目前转到的位置是中奖位置
+    if (this.data.times > this.data.cycle + 10 && this.data.prize === this.data.index) {
+      clearTimeout(this.data.timer)  // 清除转动定时器，停止转动
+      this.setData({
+        prize : -1,
+        times : 0,
+        speed : 200,
+        click : true,
+        timer:0,
+        clickLuck:'clickLuck'
+      })
+      let that = this;
+      setTimeout(res => {
+        if (this.data.lotteryres.get_type == 0) {
+          wx.showToast({
+            title: '很遗憾，您未中奖呢',
+            icon: 'none',
+            duration: 2000
+          })
+        } else {
+          that.setData({
+            showToast: true
+          })
+        }
+      }, 500)
+    } else {
+      if (this.data.times < this.data.cycle) {
+        let speed = this.data.speed -= 10
+        this.setData({
+          speed
+        }) // 加快转动速度
+      } else if (this.data.times === this.data.cycle) {
+        // const index = parseInt(Math.random() * 10, 0) || 0;  // 随机获得一个中奖位置
+        let index = -1
+        this.data.lotteryCfgList.forEach((item, num) => {
+          item.id == this.data.lotteryres.id ? index = num : ''
+        })
+        this.setData({
+          prize: index
+        })
+        // this.prize = index; 中奖位置,可由后台返回 
+        if (this.data.prize > 7) { 
+            this.setData({
+              prize: 7
+            }) 
+          }
+      } else if (this.data.times > this.data.cycle + 10 && ((this.data.prize === 0 && this.data.index === 7) || this.data.prize === this.data.index + 1)) {
+        let speed = this.data.speed += 110
+        this.setData({
+          speed
+        })
+      } else {
+        let speed = this.data.speed += 20
+        this.setData({
+          speed
+        })
+      }
+      if (this.data.speed < 40) { 
+        this.setData({
+          speed: 40 
+        }) 
+        }
+      let timer = setTimeout(this.startRoll, this.data.speed)
+      this.setData({
+        timer
+      })
+    }
   },
 
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
+  // 每一次转动
+  oneRoll() {
+    let index = this.data.index // 当前转动到哪个位置
+    let count = this.data.count // 总共有多少个位置
+    index += 1
+    if (index > count - 1) { index = 0 }
+    this.setData({
+      index
+    })
   },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
+  //中奖记录页面
+  toWinprize() {
+    wx.navigateTo({
+      url: '/pages/winPrize/winPrize',
+    })
+    this.setData({
+      showToast:false
+    })
   },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
+  closeprizr() {
+    this.setData({
+      showToast: false
+    })
   },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
+  closeToast() {
+    this.setData({
+      showToast: false
+    })
   }
 })

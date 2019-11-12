@@ -154,8 +154,8 @@
   <!-- wx:if="{{$state.newGuide.lesson == 0}}" -->
   <cover-view class="detailGuide" wx:if="{{$state.newGuide.lesson == 0}}">
     <cover-view class="detailGuide-Msg" bindtap="closeGuide">
-      <cover-image src="/images/detailMsg.png" class="detailGuide-Msgimg"></cover-image>
-      <cover-image src="/images/know.png" class="nextGude"></cover-image>
+      <cover-image src="{{$state.imgHost}}/detailMsg.png" class="detailGuide-Msgimg"></cover-image>
+      <cover-image src="{{$state.imgHost}}/know.png" class="nextGude"></cover-image>
     </cover-view>
     <cover-image class="detailGuide-img" src="{{$state.imgHost}}/discussion.png" style="top:{{ detail.current_sublesson_id != 0 && !hideRecode ? 738 : '' }}rpx"></cover-image>
   </cover-view>

@@ -228,24 +228,24 @@
 <!-- wx:if="{{ $state.newGuide.index == 0 }}" -->
 <cover-view class="getGuideBox" wx:if="{{ $state.newGuide.index == 0 }}">
   <cover-view class="numberbox" wx:if="{{guideNum == 1}}">
-    <cover-image src="/images/provice.png" class="provice"></cover-image>
+    <cover-image src="{{$state.imgHost}}/provice.png" class="provice"></cover-image>
     <cover-view class="numberbox-box" catchtap="nextGuide">
-        <cover-image src="/images/anewName.png" class="anewName"></cover-image>
-        <cover-image src="/images/nextGude.png" class="nextGude"></cover-image>
+        <cover-image src="{{$state.imgHost}}/anewName.png" class="anewName"></cover-image>
+        <cover-image src="{{$state.imgHost}}/nextGude.png" class="nextGude"></cover-image>
     </cover-view>
   </cover-view>
   <cover-view class="numberbox" wx:if="{{guideNum == 2}}">
-    <cover-image src="/images/indexclassify.png" class="classify"></cover-image>
+    <cover-image src="{{$state.imgHost}}/indexclassify.png" class="classify"></cover-image>
     <cover-view class="numberbox-boxt" catchtap="nextGuide">
-      <cover-image src="/images/indexLeft.png" class="indexLeft"></cover-image>
-      <cover-image src="/images/nextGude.png" class="nextGudet"></cover-image>
+      <cover-image src="{{$state.imgHost}}/indexLeft.png" class="indexLeft"></cover-image>
+      <cover-image src="{{$state.imgHost}}/nextGude.png" class="nextGudet"></cover-image>
     </cover-view>
   </cover-view>
   <cover-view class="numberbox" wx:if="{{guideNum == 3}}">
-    <cover-image src="/images/indexSocre.png" class="indexSocre"></cover-image>
+    <cover-image src="{{$state.imgHost}}/indexSocre.png" class="indexSocre"></cover-image>
     <cover-view class="numberbox-boxr" catchtap="nextGuide">
-        <cover-image src="/images/indexsocermsg.png" class="indexsocermsg"></cover-image>
-        <cover-image src="/images/know.png" class="nextGuder"></cover-image>
+        <cover-image src="{{$state.imgHost}}/indexsocermsg.png" class="indexsocermsg"></cover-image>
+        <cover-image src="{{$state.imgHost}}/know.png" class="nextGuder"></cover-image>
     </cover-view>
   </cover-view>
 </cover-view> 
