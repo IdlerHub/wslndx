@@ -8,6 +8,7 @@ function socket() {
   this.reCount = 3
   this.id = -1
   this.beat = null
+  this.handler = []
 }
 
 import store from "../store"
@@ -16,8 +17,9 @@ socket.prototype = {
   init: function(id, mark) {
     this.id = id
     console.log()
+    //?c=Bokemessage
     this.SocketTask = wx.connectSocket({
-      url: "wss://" + store.socket_host + "?c=Bokemessage&uid=" + id,
+      url: "wss://" + store.socket_host + "?&uid=" + id + "&timestamp=" + store.$state.timestamp + "&sign=" + store.$state.signer,
       header: {
         "content-type": "application/json"
       },
@@ -35,6 +37,12 @@ socket.prototype = {
       this.connectState = true
       this.heartBeat()
       this.reCount = 3
+      setTimeout( () => {
+        this.send({
+          type: 'Prizemessage',
+          data: `{uid：${id}}`
+        })
+      }, 2000)
     })
     if (mark) {
       this.listen(this.handler)
@@ -42,14 +50,22 @@ socket.prototype = {
   },
   listen: function(handler) {
     this.handler = handler
+    // if (!this.handler[0]) {
+    //   this.handler.push(handler)
+    // } else {
+    //   this.handler.forEach(item => {
+    //     item == handler ? '' : this.handler.push(handler)
+    //   })
+    // }
     this.SocketTask.onMessage(res => {
+      console.log(res)
       handler(res)
     })
   },
-  send: function(str) {
+  send: function(param) {
     if (this.reCount && this.SocketTask.readyState) {
       this.SocketTask.send({
-        data: str + "",
+        data: JSON.stringify(param),
         success: res => {
           console.log("success:", res)
         },
@@ -64,7 +80,7 @@ socket.prototype = {
       }
       this.SocketTask.onOpen(() => {
         this.SocketTask.send({
-          data: str + "",
+          data: param,
           success: res => {
             console.log("success:", res)
           },
@@ -83,7 +99,7 @@ socket.prototype = {
   reconnection: function() {
     if (this.reCount > 0) {
       this.reCount--
-      setTimeout(() => this.init(this.id, true), 3000)
+        setTimeout(() => this.init(this.id, true), 3000)
     }
   },
   backstage() {
@@ -104,7 +120,7 @@ socket.prototype = {
         }
       })
     }
-    
+
   }
 }
 

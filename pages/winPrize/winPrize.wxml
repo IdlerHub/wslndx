@@ -11,4 +11,8 @@
       <view class="giftBox-button" style="background:{{ item.is_finish == 1 ? '#ccc' : '' }}" bindtap="conversion" data-id="{{item.id}}" data-finish="{{item.is_finish}}" wx:else>{{ item.is_finish  ? '已领取' : item.show }}</view>
     </view>
   </view>
+  <view class="qstBox" wx:if="{{prizeList.length == 0}}">
+     <image src="/images/drawqs.png"></image>
+     <view class="qst-txt">暂无中奖记录</view>
+  </view>
 </view>

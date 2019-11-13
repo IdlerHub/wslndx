@@ -20,7 +20,10 @@ Page({
     showToast: false, //显示中奖弹窗  
     lotteryCfgList:[],
     lotteryres:{},
-    showmeng: true      
+    showmeng: true,
+    showmask:false,
+    drawRuleNum:'',
+    actionimg:'https://hwcdn.jinlingkeji.cn/images/pro/drawAction.png'      
   },
 
   /**
@@ -44,25 +47,45 @@ Page({
   getLotteryres() {
     return app.lottery.lotteryRes().then(res => {
       if (res.code == 1) {
+        this.startRoll()
         this.setData({
           lotteryres: res.data
+        })
+        if(res.data.get_type == 1) {
+          app.socket.send({
+            type: 'Prizemessage',
+            data: ''
+          })
+        }
+      } else {
+        wx.showToast({
+          title: '很抱歉，您的' + res.msg,
+          icon: 'none'
+        })
+        this.setData({
+          showmask: false
         })
       }
     })
   },
   showrule() {
     this.setData({
-      showrule: true
+      showrule: true,
+      drawRuleNum: 2
     })
   },
   closerule() {
     this.setData({
-      showrule: false
+      showrule: false,
+      drawRuleNum: ''
     })
   },
   // 轮盘动画
   clickLuck() {
     let that = this
+    this.setData({
+      showmask: true
+    })
     wx.showModal({
       content: '是否消耗25积分开启抽奖?',
       cancelColor:'#999',
@@ -70,12 +93,15 @@ Page({
       success(res) {
         if (res.confirm) {
           that.setData({
-            clickLuck: ''
+            clickLuck: '',
           })
           that.getLotteryres()
-          that.startRoll()
         } else if (res.cancel) {
           console.log('用户点击取消')
+          that.setData({
+            showmask: false,
+            clickLuck: 'clickLuck'
+          })
         }
       }
     })

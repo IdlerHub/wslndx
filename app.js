@@ -81,11 +81,17 @@ App({
     this.initStore()
 
     /* 建立socket链接 */
-    
     if (this.store.$state.userInfo.id) {
       setTimeout(()=> {
         socket.init(userInfo.id)
-        socket.listen(this.handleMessage)
+        // socket.listen(this.bokemessage)
+        socket.listen(this.prizemessage)
+        // setTimeout(() => {
+        //   socket.send({
+        //     type: 'Prizemessage',
+        //     data: `{uid：${this.store.$state.userInfo.id}}`
+        //   })
+        // }, 2000)
       },2000)
     }
     let systemInfo = wx.getSystemInfoSync()
@@ -119,9 +125,15 @@ App({
         wx.reLaunch({ url: "/pages/index/index" })
       }
     }
+    let token = wx.getStorageSync("token")
+    let timestamp = parseInt(new Date().getTime() / 1000 + "")
+    this.store.setState({
+      timestamp,
+      signer: this.md5("uid=" + this.store.$state.userInfo.id + "&token=" + token + "&timestamp=" + timestamp)
+     })
     if (this.store.$state.userInfo.id) {
-      socket.init(this.store.$state.userInfo.id)
-      socket.listen(this.handleMessage)
+      // socket.init(this.store.$state.userInfo.id)
+      // socket.listen(this.prizemessage)
     }
   },
   onHide() {
@@ -182,8 +194,8 @@ App({
     wx.setStorageSync("userInfo", data)
     if (data.id) {
       socket.close()
-      socket.init(data.id)
-      socket.listen(this.handleMessage)
+      // socket.init(data.id)
+      // socket.listen(this.bokemessage)
     }
   },
   /* 更新AuthKey */
@@ -299,13 +311,20 @@ App({
       })
     }
   },
-  handleMessage(res) {
+  bokemessage(res) {
     let { num = 0, avatar } = JSON.parse(res.data)
     this.store.setState({
       unRead: num,
       surPass: num > 99,
       lastMan: avatar
     })
+  },
+  prizemessage(res) {
+    let phoneList = JSON.parse(res.data)
+    this.store.setState({
+      phoneList: phoneList.data
+    })
+    // this.globalData.phoneList = phoneList.data
   },
   onPageNotFound() {
     wx.reLaunch({
@@ -342,6 +361,7 @@ App({
     detail:{
       id:0,
       likestatus:0
-    }
+    },
+    phoneList:[]
   }
 })

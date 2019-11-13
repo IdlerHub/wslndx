@@ -3,63 +3,69 @@
   <image src="{{ $state.imgHost }}/drawbg.png" class="drawbg"></image>
   <image src="{{ $state.imgHost }}/drawTitle.png" class="drawTitle"></image>
   <swiper autoplay interval="2000" vertical class="swiper" circular>
-    <swiper-item class="swiper-item">用户136**** 抽奖获得100积分</swiper-item>
-    <swiper-item class="swiper-item">用户136**** 抽奖获得200积分</swiper-item>
-    <swiper-item class="swiper-item">用户136**** 抽奖获得300积分</swiper-item>
+    <swiper-item wx:for="{{$state.phoneList}}" wx:key="{{index}}" class="swiper-item">
+      {{item}}
+    </swiper-item>
   </swiper>
   <view class="drawBigbox">
-    <view class="frame_row">
-      <view class='frame_item'>
-        <view class="mask" wx:if="{{ showmask && index != 0}}"></view>
-        <image class="frame_item-img" src="{{lotteryCfgList[0].image}}"></image>
-        <view class="frame_item-name">{{lotteryCfgList[0].title}}</view>
-      </view>
-      <view class='frame_item'>
-        <view class="mask" wx:if="{{ showmask && index != 1}}"></view>
-         <image class="frame_item-img" src="{{lotteryCfgList[1].image}}"></image>
-        <view class="frame_item-name">{{lotteryCfgList[1].title}}</view>
-      </view>
-      <view class='frame_item'>
-        <view class="mask" wx:if="{{ showmask && index != 2}}"></view>
-         <image class="frame_item-img" src="{{lotteryCfgList[2].image}}"></image>
-        <view class="frame_item-name">{{lotteryCfgList[2].title}}</view>
-      </view>
-    </view>
-    <view class="frame_row">
-      <view class='frame_item'>
-        <view class="mask" wx:if="{{showmask && index != 7}}"></view>
-         <image class="frame_item-img" src="{{lotteryCfgList[7].image}}"></image>
-        <view class="frame_item-name">{{lotteryCfgList[7].title}}</view>
-      </view>
-      <view class='frame_action' bindtap="{{clickLuck}}"></view>
-      <view class='frame_item'>
-        <view class="mask" wx:if="{{showmask && index != 3}}"></view>
-        <image class="frame_item-img" src="{{lotteryCfgList[3].image}}"></image>
-        <view class="frame_item-name">{{lotteryCfgList[3].title}}</view>
-      </view>
-    </view>
-    <view class="frame_row">
-      <view class='frame_item'>
-        <view class="mask" wx:if="{{showmask && index != 6}}"></view>
-        <image class="frame_item-img" src="{{lotteryCfgList[6].image}}"></image>
-        <view class="frame_item-name">{{lotteryCfgList[6].title}}</view>
+    <view class="frame_row-box">
+      <view class="frame_row">
+        <view class='frame_item'>
+          <view class="mask" wx:if="{{ showmask && index != 0}}"></view>
+          <image class="frame_item-img" src="{{lotteryCfgList[0].image}}"></image>
+          <view class="frame_item-name">{{lotteryCfgList[0].title}}</view>
         </view>
-      <view class='frame_item'>
-        <view class="mask" wx:if="{{showmask && index != 5}}"></view>
-        <image class="frame_item-img" src="{{lotteryCfgList[5].image}}"></image>
-        <view class="frame_item-name">{{lotteryCfgList[5].title}}</view>
+        <view class='frame_item'>
+          <view class="mask" wx:if="{{ showmask && index != 1}}"></view>
+          <image class="frame_item-img" src="{{lotteryCfgList[1].image}}"></image>
+          <view class="frame_item-name">{{lotteryCfgList[1].title}}</view>
+        </view>
+        <view class='frame_item'>
+          <view class="mask" wx:if="{{ showmask && index != 2}}"></view>
+          <image class="frame_item-img" src="{{lotteryCfgList[2].image}}"></image>
+          <view class="frame_item-name">{{lotteryCfgList[2].title}}</view>
+        </view>
       </view>
-      <view class='frame_item'>
-        <view class="mask" wx:if="{{showmask && index != 4}}"></view>  
-        <image class="frame_item-img" src="{{lotteryCfgList[4].image}}"></image>
-        <view class="frame_item-name">{{lotteryCfgList[4].title}}</view>
+      <view class="frame_row">
+        <view class='frame_item'>
+          <view class="mask" wx:if="{{showmask && index != 7}}"></view>
+          <image class="frame_item-img" src="{{lotteryCfgList[7].image}}"></image>
+          <view class="frame_item-name">{{lotteryCfgList[7].title}}</view>
+        </view>
+        <view class='frame_action' bindtap="{{clickLuck}}">
+          <image class="frame_action-img" src="{{actionimg}}" style="{{clickLuck != '' ? 'animation: action 0.5s infinite;' : ''  }}"></image>
+        </view>
+        <view class='frame_item'>
+          <view class="mask" wx:if="{{showmask && index != 3}}"></view>
+          <image class="frame_item-img" src="{{lotteryCfgList[3].image}}"></image>
+          <view class="frame_item-name">{{lotteryCfgList[3].title}}</view>
+        </view>
+      </view>
+      <view class="frame_row">
+        <view class='frame_item'>
+          <view class="mask" wx:if="{{showmask && index != 6}}"></view>
+          <image class="frame_item-img" src="{{lotteryCfgList[6].image}}"></image>
+          <view class="frame_item-name">{{lotteryCfgList[6].title}}</view>
+        </view>
+        <view class='frame_item'>
+          <view class="mask" wx:if="{{showmask && index != 5}}"></view>
+          <image class="frame_item-img" src="{{lotteryCfgList[5].image}}"></image>
+          <view class="frame_item-name">{{lotteryCfgList[5].title}}</view>
+        </view>
+        <view class='frame_item'>
+          <view class="mask" wx:if="{{showmask && index != 4}}"></view>
+          <image class="frame_item-img" src="{{lotteryCfgList[4].image}}"></image>
+          <view class="frame_item-name">{{lotteryCfgList[4].title}}</view>
+        </view>
       </view>
     </view>
+    <image src="/images/carousel.gif" class="carousel"></image>
   </view>
   <view class="draw-button">
-    <view class="draw-buttonleft" style="background: url('https://hwcdn.jinlingkeji.cn/images/pro/drawRule.png') no-repeat center; background-size: 100% 100%;" bindtap="showrule">
+    <view class="draw-buttonleft" bindtap="showrule">
+    <image src="/images/drawRule{{drawRuleNum}}.png" style="width: 100%;height:100%"></image>
     </view>
-    <view class="draw-buttonleft" style="background: url('https://hwcdn.jinlingkeji.cn/images/pro/drawRecord.png') no-repeat center;background-size: 100% 100%;"  bindtap="toWinprize">
+    <view class="draw-buttonleft" style="background: url('https://hwcdn.jinlingkeji.cn/images/pro/drawRecord.png') no-repeat center;background-size: 100% 100%;" bindtap="toWinprize">
     </view>
   </view>
   <view class="explain">
@@ -95,9 +101,10 @@
     <view class="prizrbox-title">恭喜获得</view>
     <image src="{{lotteryres.image}}"></image>
     <text class="prizrbox-gifttitle"> {{lotteryres.title}}</text>
-    <button class="prizrbox-button" open-type="contact" bindcontact="handleContact" show-message-card send-message-title="{{ lotteryres.title  +  '奖品序号' + lotteryres.record_id}}" send-message-img="{{lotteryres.image}}" wx:if="{{lotteryres.get_type == 3}}" catchtap="closeToast">联系客服兑换
+    <button class="prizrbox-button" open-type="contact" bindcontact="handleContact" show-message-card send-message-title="{{ lotteryres.title  +  '奖品序号' + lotteryres.record_id}}" send-message-img="{{lotteryres.image}}" wx:if="{{lotteryres.get_type == 1}}"
+      catchtap="closeToast">联系客服兑换
     </button>
-    <view class="prizrbox-button" style="width:200px;margin-left:-100px" catchtap="toWinprize" wx:eles>立即兑换</view>
-    <icon type="cancel" size="46" color="white" data-id="0" catchtap="closeprizr" class="drawRuleBox-cancel"></icon> 
+    <view class="prizrbox-button" style="width:200px;margin-left:-100px" catchtap="toWinprize" wx:if="{{lotteryres.get_type == 2}}">立即领取</view>
+    <icon type="cancel" size="46" color="white" data-id="0" catchtap="closeprizr" class="drawRuleBox-cancel"></icon>
   </view>
 </view>
