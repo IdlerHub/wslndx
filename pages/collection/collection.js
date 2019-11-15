@@ -141,7 +141,11 @@ Page({
           list[i].likestatus = 1
           list[i].likes++
           list[i].praising = true
-          app.socket.send(list[i].uid)
+          // app.socket.send(list[i].uid)
+          app.socket.send({
+            type: 'Bokemessage',
+            data: {uid: list[i].uid}
+          })
           this.setData({
             circleList: list
           })

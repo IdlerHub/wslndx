@@ -293,6 +293,25 @@ Page({
             this.setData({
               param: paramInit
             })
+            if (msg.data.is_first == 'first') {
+              wx.showToast({
+                title: '完成首次发帖获得50积分',
+                icon: 'success',
+                duration: 2000
+              })
+              app.store.setState({
+                'taskStatus[finish_user_info_status]': 1
+              })
+            } else if (msg.data.is_first == 'day') {
+              wx.showToast({
+                title: '完成每日秀风采首次发帖获得20积分',
+                icon: 'success',
+                duration: 2000
+              })
+              app.store.setState({
+                'dayStatus[day_add_boke_status]': 1
+              })
+            }
             app.store.setState({
               releaseParam: null,
               media_type: null

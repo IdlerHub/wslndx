@@ -28,7 +28,11 @@ Page({
           messages: res.data
         })
       }
-      app.socket.send(this.data.$state.userInfo.id)
+      // app.socket.send(this.data.$state.userInfo.id)
+      app.socket.send({
+        type: 'Bokemessage',
+        data: {uid: this.data.$state.userInfo.id}
+      })
     })
   },
 

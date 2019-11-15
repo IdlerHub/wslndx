@@ -174,8 +174,18 @@ Page({
               params.push(attr + "=" + app.globalData.query[attr])
             }
             wx.reLaunch({ url: app.globalData.path + "?" + params.join("&") })
+            wx.showToast({
+              title: '完成注册获得100积分',
+              icon: 'none',
+              duration: 2000
+            })
           } else {
             /*跳转首页*/
+            wx.showToast({
+              title: '完成注册获得100积分',
+              icon: 'none',
+              duration: 2000
+            })
             wx.switchTab({ url: "/pages/index/index" })
           }
         }

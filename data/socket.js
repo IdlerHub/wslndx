@@ -8,18 +8,23 @@ function socket() {
   this.reCount = 3
   this.id = -1
   this.beat = null
-  this.handler = []
+  this.handler = {
+    Bokemessage: 'bokemessage',
+    Prizemessage: 'prizemessage'
+  }
 }
 
 import store from "../store"
-
+import md5 from "../utils/md5.js"
 socket.prototype = {
   init: function(id, mark) {
     this.id = id
-    console.log()
+    let token = wx.getStorageSync("token")
+    this.timestamp = parseInt(new Date().getTime() / 1000 + "")
+    this.sign = md5("uid=" + id + "&token=" + token + "&timestamp=" + this.timestamp)
     //?c=Bokemessage
     this.SocketTask = wx.connectSocket({
-      url: "wss://" + store.socket_host + "?&uid=" + id + "&timestamp=" + store.$state.timestamp + "&sign=" + store.$state.signer,
+      url: "wss://" + store.socket_host + "?&uid=" + id + "&timestamp=" + this.timestamp + "&sign=" + this.sign,
       header: {
         "content-type": "application/json"
       },
@@ -37,29 +42,32 @@ socket.prototype = {
       this.connectState = true
       this.heartBeat()
       this.reCount = 3
-      setTimeout( () => {
+      setTimeout(() => {
         this.send({
           type: 'Prizemessage',
-          data: `{uid：${id}}`
+          data: {
+            uid: id
+          }
+        })
+        this.send({
+          type: 'Bokemessage',
+          data: {
+            uid: id
+          }
         })
       }, 2000)
     })
     if (mark) {
-      this.listen(this.handler)
+      this.listen(this.handler['Bokemessage'])
     }
   },
-  listen: function(handler) {
-    this.handler = handler
-    // if (!this.handler[0]) {
-    //   this.handler.push(handler)
-    // } else {
-    //   this.handler.forEach(item => {
-    //     item == handler ? '' : this.handler.push(handler)
-    //   })
-    // }
+  listen: function(handler, conut) {
+    conut ? this.handler[conut] = handler : ''
     this.SocketTask.onMessage(res => {
-      console.log(res)
-      handler(res)
+      let data = JSON.parse(res.data)
+      if (data) {
+        this.handler[data.type](res)
+      }
     })
   },
   send: function(param) {
@@ -80,7 +88,7 @@ socket.prototype = {
       }
       this.SocketTask.onOpen(() => {
         this.SocketTask.send({
-          data: param,
+          data: JSON.stringify(param),
           success: res => {
             console.log("success:", res)
           },
@@ -93,7 +101,10 @@ socket.prototype = {
   },
   heartBeat() {
     this.beat = setInterval(() => {
-      this.send("")
+      this.send({
+        type: '',
+        data: {}
+      })
     }, 50000)
   },
   reconnection: function() {

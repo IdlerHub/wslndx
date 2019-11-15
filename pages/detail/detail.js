@@ -156,7 +156,16 @@ Page({
     console.log(param)
     app.classroom.sublessonfinish(param).then(res => {
       if(res.code == 1) {
-        console.log('发送成功')
+        if (res.data.is_first == 'first') {
+          wx.showToast({
+            title: '完成首次学习课程获得70积分',
+            icon: 'none',
+            duration: 2000
+          })
+          app.store.setState({
+            'taskStatus[first_learn_status]': 1
+          })
+        }
       }
     })
     return app.classroom.detail(this.param).then(msg => {
@@ -164,6 +173,11 @@ Page({
         this.setData({
           "detail.progress": msg.data.progress
         })
+        msg.data.progress == 100 ? wx.showToast({
+          title: '完成学完一门新课程获得20积分',
+          icon: 'none',
+          duration: 2000
+        }) : ''
       }
     })
   },
@@ -273,43 +287,43 @@ Page({
       sublesson_id: this.data.cur.id
     }
     let that = this
-    if (this.data.$state.flow) {
+    // if (this.data.$state.flow) {
       that.recordAddVedio(param)
-    } else {
-      wx.startWifi({
-        success: res => {
-          wx.getConnectedWifi({
-            success: res => {
-              console.log(res)
-              app.playVedio('wifi')
-              that.recordAddVedio(param)
-            },
-            fail: res => {
-              console.log(res)
-              wx.showModal({
-                content: '您当前不在Wi-Fi环境，继续播放将会产生流量，是否选择继续播放?',
-                confirmText: '是',
-                cancelText: '否',
-                confirmColor: '#DF2020',
-                success(res) {
-                  if (res.confirm) {
-                    app.playVedio('flow')
-                    that.recordAddVedio(param)
-                  } else if (res.cancel) {
-                    console.log('用户点击取消')
-                  }
-                }
-              })
-            }
-          })
-          wx.stopWifi({
-            success: res => {
-              console.log('wifi模块关闭成功')
-            }
-          })
-        },
-      })
-    }
+    // } else {
+    //   wx.startWifi({
+    //     success: res => {
+    //       wx.getConnectedWifi({
+    //         success: res => {
+    //           console.log(res)
+    //           app.playVedio('wifi')
+    //           that.recordAddVedio(param)
+    //         },
+    //         fail: res => {
+    //           console.log(res)
+    //           wx.showModal({
+    //             content: '您当前不在Wi-Fi环境，继续播放将会产生流量，是否选择继续播放?',
+    //             confirmText: '是',
+    //             cancelText: '否',
+    //             confirmColor: '#DF2020',
+    //             success(res) {
+    //               if (res.confirm) {
+    //                 app.playVedio('flow')
+    //                 that.recordAddVedio(param)
+    //               } else if (res.cancel) {
+    //                 console.log('用户点击取消')
+    //               }
+    //             }
+    //           })
+    //         }
+    //       })
+    //       wx.stopWifi({
+    //         success: res => {
+    //           console.log('wifi模块关闭成功')
+    //         }
+    //       })
+    //     },
+    //   })
+    // }
   },
   recordAddVedio(param) {
     app.classroom.recordAdd(param).then(msg => {
@@ -744,6 +758,14 @@ Page({
     app.user.guideRecordAdd(param).then(res => {
       if (res.code == 1) {
         app.getGuide()
+        wx.showToast({
+          title: '完成[云课堂]新手指引获得45积分',
+          icon: 'none',
+          duration: 2000
+        })
+        app.store.setState({
+          'taskStatus[lesson_guide_status]': 1
+        })
         this.setData({
           currentTab: 0
         })

@@ -279,7 +279,7 @@
 
 .comment .right .name {
   font-size: 36rpx;
-  color: #3a3a3a;
+  color:rgba(128,128,128,1);
   line-height: 50rpx; }
 
 .comment .right rich-text {

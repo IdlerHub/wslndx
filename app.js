@@ -49,20 +49,17 @@ App({
   socket,
   store,
   onLaunch: async function(opts) {
-    console.log(opts)
     let optsStr = decodeURIComponent(opts.query.scene).split('&')
     let opstObj = {}
     optsStr.forEach((item, index) => {
       opstObj[item.split('=')[0]]=item.split('=')[1]
     })
-    console.log(opstObj)
     this.checkVersion()
     /* 检查用户从分享卡片启动 */
     if (this.globalData.scenes.indexOf(opts.scene) >= 0) {
       this.globalData.path = "/" + opts.path /* 卡片页面路径 */
       this.globalData.query = opts.query /* 卡片页面参数 */
       if (opts.query.type == "invite" || opts.query.type == "share" || opstObj.type == "invite") {
-        console.log(opstObj)
         if (opts.query.uid) {
           wx.setStorageSync("invite", opts.query.uid) /* 邀请码记录 */
         } else {
@@ -83,15 +80,10 @@ App({
     /* 建立socket链接 */
     if (this.store.$state.userInfo.id) {
       setTimeout(()=> {
-        socket.init(userInfo.id)
-        // socket.listen(this.bokemessage)
-        socket.listen(this.prizemessage)
-        // setTimeout(() => {
-        //   socket.send({
-        //     type: 'Prizemessage',
-        //     data: `{uid：${this.store.$state.userInfo.id}}`
-        //   })
-        // }, 2000)
+        socket.init(this.store.$state.userInfo.id)
+        socket.listen(this.prizemessage, 'Prizemessage')
+        socket.listen(this.bokemessage, 'Bokemessage')
+        this.getTaskStatus()
       },2000)
     }
     let systemInfo = wx.getSystemInfoSync()
@@ -123,17 +115,15 @@ App({
         wx.reLaunch({ url: "/pages/sign/sign" })
       } else if (opts.path == "pages/loading/loading") {
         wx.reLaunch({ url: "/pages/index/index" })
+        console.log("/pages/index/index" )
       }
     }
-    let token = wx.getStorageSync("token")
-    let timestamp = parseInt(new Date().getTime() / 1000 + "")
-    this.store.setState({
-      timestamp,
-      signer: this.md5("uid=" + this.store.$state.userInfo.id + "&token=" + token + "&timestamp=" + timestamp)
-     })
     if (this.store.$state.userInfo.id) {
-      // socket.init(this.store.$state.userInfo.id)
-      // socket.listen(this.prizemessage)
+      setTimeout(() =>{
+        socket.init(this.store.$state.userInfo.id)
+        socket.listen(this.prizemessage, 'Prizemessage')
+        socket.listen(this.bokemessage, 'Bokemessage')
+      }, 2000)
     }
   },
   onHide() {
@@ -157,7 +147,7 @@ App({
           wx.setStorageSync("uid", msg.data.uid)
           wx.setStorageSync("authKey", msg.data.authKey)
           this.setUser(msg.data.userInfo)
-          console.log(msg.data.userInfo)
+          // console.log(msg.data.userInfo)
           wx.reLaunch({
             url: '/pages/index/index',
           })
@@ -194,8 +184,9 @@ App({
     wx.setStorageSync("userInfo", data)
     if (data.id) {
       socket.close()
-      // socket.init(data.id)
-      // socket.listen(this.bokemessage)
+      socket.init(data.id)
+      socket.listen(this.prizemessage, 'Prizemessage')
+      socket.listen(this.bokemessage, 'Bokemessage')
     }
   },
   /* 更新AuthKey */
@@ -217,7 +208,6 @@ App({
     let self = this
     wx.getSetting({
       success: res => {
-        console.log(res)
         if (res.errMsg == "getSetting:ok") {
           let auth = res.authSetting["scope.userInfo"]
           self.store.setState({
@@ -312,7 +302,7 @@ App({
     }
   },
   bokemessage(res) {
-    let { num = 0, avatar } = JSON.parse(res.data)
+    let { num = 0, avatar } = JSON.parse(res.data).data
     this.store.setState({
       unRead: num,
       surPass: num > 99,
@@ -324,7 +314,6 @@ App({
     this.store.setState({
       phoneList: phoneList.data
     })
-    // this.globalData.phoneList = phoneList.data
   },
   onPageNotFound() {
     wx.reLaunch({
@@ -338,6 +327,24 @@ App({
         let newGuide = res.data
         this.store.setState({
           newGuide
+        })
+      }
+    })
+  },
+   // 获取任务状态 
+  getTaskStatus() {
+    this.user.getNewTaskStatus().then(res => {
+      // console.log(res)
+      if(res.code == 1) {
+        this.store.setState({
+          taskStatus: res.data
+        })
+      }
+    })
+    this.user.getDayTaskStatus().then(res => {
+      if (res.code == 1) {
+        this.store.setState({
+          dayStatus: res.data
         })
       }
     })

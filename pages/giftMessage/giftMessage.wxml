@@ -1,0 +1,18 @@
+<!--pages/giftMessage/giftMessage.wxml-->
+<view class="contran">
+  <view>
+    <image src="{{gift.image}}"></image>
+    <view class="gift-title">
+      <text>{{gift.title}}</text>
+      <view class="gitpoints">
+        <view class="need_points">{{gift.need_points}}</view>积分</view>
+    </view>
+    <view class="content">
+      <view class="content-title">商品详情</view>
+      <rich-text nodes="{{ intro_content }}" class="rich-text"></rich-text>
+    </view>
+  </view>
+  <view class="btn-box">
+    <button bindtap="gift">立即兑换</button>
+  </view>
+</view>

@@ -138,6 +138,16 @@ function dialog(param) {
   return httpService.post("User/dialog", param)
 }
 
+//POST User/getNewTaskStatus 获取新手任务状态
+function getNewTaskStatus(param) {
+  return httpService.post("User/getNewTaskStatus", param)
+}
+
+//POST User/getDayTaskStatus 获取每日任务状态
+function getDayTaskStatus(param) {
+  return httpService.post("User/getDayTaskStatus", param)
+}
+
 module.exports = {
   wxLoginCode,
   getAuthCode,
@@ -159,5 +169,7 @@ module.exports = {
   collectBlog,
   guideRecord,
   guideRecordAdd,
-  dialog
+  dialog,
+  getNewTaskStatus,
+  getDayTaskStatus
 }

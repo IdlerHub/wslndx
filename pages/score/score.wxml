@@ -3,26 +3,27 @@
   <view class="weui-loading"></view>
 </view>
 <!-- 头部大背景 -->
-<image class="bg" src="/images/score/score_bg.png">
+<view class="bg">
   <text class="title">您的可用积分</text>
   <text class="scores">{{ totalPoints }}</text>
-</image>
+  <image src="{{$state.imgHost}}/scoreTodraw.png" catchtap="toDraw"></image>
+</view>
 <!-- tabs菜单列表 -->
 <view class="tabs" hover-stop-propagation="true" catchtouchmove="return">
   <view class="tab {{ currentTab == 1 ? 'active' : '' }}" data-index="1" catchtap="switchTap">
-    <image class="icon" src="/images/score/score_source.png" mode="aspectFill"></image>
+    <!-- <image class="icon" src="/images/score/score_source.png" mode="aspectFill"></image> -->
     <text class="dsc">积分获取</text>
     <text class="underline"></text>
   </view>
-  <view class="divi_line"></view>
+  <!-- <view class="divi_line"></view> -->
   <view class="tab {{ currentTab == 2 ? 'active' : '' }}" data-index="2" catchtap="switchTap">
-    <image class="icon" src="/images/score/score_pay.png" mode="aspectFill"></image>
+    <!-- <image class="icon" src="/images/score/score_pay.png" mode="aspectFill"></image> -->
     <text class="dsc">积分兑换</text>
     <text class="underline"></text>
   </view>
-  <view class="divi_line"> </view>
+  <!-- <view class="divi_line"> </view> -->
   <view class="tab {{ currentTab == 3 ? 'active' : '' }}" data-index="3" catchtap="switchTap">
-    <image class="icon" src="/images/score/score_datails.png" mode="aspectFill"></image>
+    <!-- <image class="icon" src="/images/score/score_datails.png" mode="aspectFill"></image> -->
     <text class="dsc">积分明细</text>
     <text class="underline"></text>
   </view>
@@ -32,13 +33,31 @@
   <swiper-item item-id="1">
     <scroll-view class="scroll_container" scroll-y="{{ scrollStatus }}">
       <view class="source_content">
-        <view class="item" wx:for="{{ sources }}" wx:key="index">
-          <text class="title">{{ item.title }}</text>
-          <!-- prettier-ignore -->
-          <text class="score"><text class="num">{{ item.score }}</text>积分</text>
-          <!-- prettier-ignore -->
-          <text wx:if="{{ item.times }}" class="times">每天还有<text class="num">{{ item.times }}</text>次机会</text>
-          <button class="status {{ item.status ? 'finish' : '' }}" bindtap="nav" data-index="{{ index }}" disabled="{{ item.status }}">{{ item.status ? "已完成" : "立即领取" }}</button>
+        <view class="dataMission" wx:if="{{newbie[0]}}">
+          <view class="dayMission">- 新手任务 -</view>
+          <view class="item" wx:for="{{ newbie }}" wx:key="index">
+            <text class="title">{{ item.title }}</text>
+            <!-- prettier-ignore -->
+            <text class="score"><text class="num">+{{ item.score }}</text> 积分 {{item.title == '每日签到' ?'(连签7天+120积分)' : '' }}</text>
+            <!-- prettier-ignore -->
+            <text wx:if="{{ item.times }}" class="times">每天还有<text class="num">{{ item.times }}</text>次机会</text>
+            <button class="status {{ item.status ? 'finish' : '' }}" bindtap="tabnav" data-index="{{ index }}" data-title="{{item.title}}" disabled="{{ item.status }}" wx:if="{{!item.authorization}}"> {{item.status ? "已完成" : "去完成" }}</button>
+            <button bindgetuserinfo="onGotUserInfo" open-type="getUserInfo" class="status {{ item.status ? 'finish' : '' }}" data-index="{{ index }}" data-title="{{item.title}}" disabled="{{ item.status }}" wx:else> {{item.status ? "已完成" : "去完成" }}</button>
+          </view>
+        </view>
+        <view class="dataMission">
+          <view class="dayMission">- 每日任务 -</view>
+          <view class="item" wx:for="{{ sources }}" wx:key="index">
+            <text class="title">{{ item.title }}</text>
+            <!-- prettier-ignore -->
+            <text class="score"><text class="num">+{{ item.score }}</text> 积分 {{item.title == '每日签到' ?'(连签7天+120积分)' : '' }}</text>
+            <!-- prettier-ignore -->
+            <text wx:if="{{ item.times }}" class="times">每天还有<text class="num">{{ item.times }}</text>次机会</text>
+            <button class="status {{ item.status ? 'finish' : '' }}" bindtap="nav" data-index="{{ index }}" data-title="{{item.title}}" disabled="{{ item.status }}" wx:if="{{!item.authorization && item.title != '每日签到' }}">{{item.status ? "已完成" : "去完成" }}</button>
+            <button class="status {{ item.status ? 'finish' : '' }}" bindtap="nav" data-index="{{ index }}" data-title="{{item.title}}" disabled="{{ item.status }}" wx:if="{{ item.title == '每日签到' && !item.status}}">签到</button>
+            <view class="signstatus" wx:if="{{ item.title == '每日签到' && item.status}}" catchtap="showSingbox">已签到7天</view>
+            <button bindgetuserinfo="onGotUserInfo" open-type="getUserInfo" class="status {{ item.status ? 'finish' : '' }}" data-index="{{ index }}" data-title="{{item.title}}" disabled="{{ item.status }}" wx:if="{{item.authorization && item.title != '每日签到'}}">{{item.status ? "已完成" : "去完成" }}</button>
+          </view>
         </view>
       </view>
     </scroll-view>
@@ -46,12 +65,20 @@
   <swiper-item item-id="2">
     <scroll-view class="scroll_container" scroll-y="{{ scrollStatus }}">
       <view class="pay_content">
-        <view class="item" wx:for="{{ paylist }}" wx:key="index">
+        <view class="item" wx:for="{{ newgift }}" wx:key="index" bindtap="toMessage" data-item="{{item}}">
           <image class="bg" src="{{ item.image }}" mode="aspectFill" lazy-load="true"> </image>
           <text class="title">{{ item.title }}</text>
           <text class="score">{{ item.largePoint || item.need_points }}</text>
           <text class="unit">积分</text>
-          <button class="bt {{ item.stock ? '' : 'out' }}" size="mini" data-stock="{{ item.stock }}" data-score="{{ item.need_points }}" data-id="{{ item.id }}" bindtap="gift">兑换</button>
+          <button class="bt {{ item.stock ? '' : 'out' }}" size="mini" data-stock="{{ item.stock }}" data-score="{{ item.need_points }}" data-id="{{ item.id }}" data-type="new" catchtap="gift">兑换</button>
+          <image class="newperson" src="/images/newperson.png"></image>
+        </view>
+        <view class="item" wx:for="{{ paylist }}" wx:key="index" bindtap="toMessage" data-item="{{item}}">
+          <image class="bg" src="{{ item.image }}" mode="aspectFill" lazy-load="true"> </image>
+          <text class="title">{{ item.title }}</text>
+          <text class="score">{{ item.largePoint || item.need_points }}</text>
+          <text class="unit">积分</text>
+          <button class="bt {{ item.stock ? '' : 'out' }}" size="mini" data-stock="{{ item.stock }}" data-score="{{ item.need_points }}" data-id="{{ item.id }}" catchtap="gift">兑换</button>
         </view>
       </view>
     </scroll-view>
@@ -71,10 +98,29 @@
   </swiper-item>
 </swiper>
 <view class="footer" wx:if="{{showHome}}">
-    <navigator url="/pages/index/index" hover-class="none" open-type="reLaunch" class="write" >
-        <view class="write">
-          <icon class="iconfont icon-shouye"></icon>
-          <text>首页</text>
+  <navigator url="/pages/index/index" hover-class="none" open-type="reLaunch" class="write">
+    <view class="write">
+      <icon class="iconfont icon-shouye"></icon>
+      <text>首页</text>
+    </view>
+  </navigator>
+</view>
+<view class="signBox" wx:if="{{showSignbox}}">
+  <view class="signBoxbg">
+    <!-- <image class="signBox-title" src="/images/signBox-title.png"></image> -->
+    <view class="signBox-title" wx:if="singnow">已签到</view>
+    <view class="signBox-title" wx:if="singafter">已连签{{}}天</view>
+    <view class="signBox-signNum">积分+20</view>
+    <view class="signBox-daybox">
+      <view class="signBox-day" wx:for="{{ 7 }}" wx:key="{{index}}">
+        <view class="signBox-daytxt">{{index == 6 ? '+120' : '+20'}}</view>
+        <image class="signBox-dayimg" src="{{$state.imgHost}}/signgold.png"></image>
+        <view class="signBox-daynum">第{{index + 1}}天</view>
+        <view class="mask" wx:if="{{index <= 0}}">
+          <image class="maskCont" src="{{$state.imgHost}}/sigincancel.png"></image>
         </view>
-    </navigator>
+      </view>
+    </view>
+    <icon type="cancel" size="46" color="white" data-id="0" catchtap="closesignBox" class="signBox-cancel"></icon>
+  </view>
 </view>

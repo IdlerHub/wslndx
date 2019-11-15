@@ -239,6 +239,25 @@ Page({
       // 点赞
       app.video.praise(param1).then(msg => {
         if (msg.code == 1) {
+          if (msg.data.is_first == 'first') {
+            wx.showToast({
+              title: '完成短视频首次点赞获得50积分',
+              icon: 'success',
+              duration: 2000
+            })
+            app.store.setState({
+              'taskStatus[first_shortvideo_parise_status]': 1
+            })
+          } else if (msg.data.is_first == 'day') {
+            wx.showToast({
+              title: '完成每日短视频首赞获得20积分',
+              icon: 'success',
+              duration: 2000
+            })
+            app.store.setState({
+              'dayStatus[day_shortvideo_praise_status]': 1
+            })
+          }
           list[index].praised = 1
           list[index].praise++
           list[index].praising = true

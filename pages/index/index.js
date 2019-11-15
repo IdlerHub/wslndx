@@ -78,7 +78,15 @@ Page({
     /* 更新用户的视频浏览历史 */
     if (app.store.$state.userInfo.mobile) this.getHistory() 
     setTimeout(wx.hideLoading, 500)
-    app.getGuide().then(res =>{
+    // app.user.guideRecord().then(res =>{
+      
+    // })
+  },
+  init() {
+    return Promise.all([this.getactivite(), this.getRecommend(), this.getCategory(), this.getBanner(), this.getPaper(), this.getDialog(), this.getGuide()]).then(values => {
+      // this.setData({
+      //   activity: values[0].data
+      // })
       if (this.data.$state.newGuide.index == 0) {
         this.setData({
           guideNum: 1
@@ -89,15 +97,19 @@ Page({
           guideNum: 5
         })
       }
-    })
-  },
-  init() {
-    return Promise.all([this.getactivite(), this.getRecommend(), this.getCategory(), this.getBanner(), this.getPaper(), this.getDialog()]).then(values => {
-      // this.setData({
-      //   activity: values[0].data
-      // })
       this.navHeightList = []
       this.setHeight()
+    })
+  },
+  // 获取新手指引
+  getGuide() {
+    return app.user.guideRecord().then(res => {
+      if (res.code == 1) {
+        let newGuide = res.data
+        app.store.setState({
+          newGuide
+        })
+      }
     })
   },
   setHeight() {

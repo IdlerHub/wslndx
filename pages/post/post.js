@@ -190,7 +190,11 @@ Page({
           list[i].likestatus = 1
           list[i].likes++
           list[i].praising = true
-          app.socket.send(list[i].uid)
+          // app.socket.send(list[i].uid)
+          app.socket.send({
+            type: 'Bokemessage',
+            data: {uid:list[i].uid}
+          })
           this.setData({
             list: list
           })
@@ -215,7 +219,7 @@ Page({
   // 写帖成功动效
   rlSuc() {
     /* 重新到第一页 */
-    console.log('adfasdsad')
+    // console.log('adfasdsad')
     this.param.page = 1
     this.getList([]).then(() => {
       wx.pageScrollTo({
@@ -270,7 +274,7 @@ Page({
     this.getList()
   },
   toUser(e) {
-    console.log(e)
+    // console.log(e)
     if (this.data.$state.userInfo.id == e.currentTarget.dataset.item.uid) {
       wx.switchTab({
         url: "/pages/user/user"
@@ -317,7 +321,7 @@ Page({
   collect(e){
     let blog_id = e.currentTarget.dataset.id
     let status = e.currentTarget.dataset.status
-    console.log(status)
+    // console.log(status)
     let blog_index = e.currentTarget.dataset.index
     this.setData({
       blog_id,
@@ -402,6 +406,14 @@ Page({
       }
       app.user.guideRecordAdd(param).then(res => {
         if (res.code == 1) {
+          wx.showToast({
+            title: '完成[秀风采]新手指引获得45积分',
+            icon: 'none',
+            duration: 2000
+          })
+          app.store.setState({
+            'taskStatus[boke_guide_status]': 1
+          })
           app.getGuide()
         }
       })
@@ -414,12 +426,12 @@ Page({
       query.exec(res => {
         let arr = []
         res[0].forEach((item, index) => {
-          console.log(item)
+          // console.log(item)
           if (item.height >= 120) {
             arr.push(index)
           }
         })
-        console.log(arr)
+        // console.log(arr)
       //   let height = res[0].height - (-70)
       //   console.log(height)
       //   height < 100 ? that.setData({

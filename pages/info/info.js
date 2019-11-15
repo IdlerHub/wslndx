@@ -135,17 +135,27 @@ Page({
   setUserinfo(param) {
     app.user.profile(param).then(msg => {
       if (msg.code == 1) {
+        if (msg.data.is_first == 'first') {
+          wx.showToast({
+            title: '完成完善资料获得65积分',
+            icon: 'success',
+            duration: 2000
+          })
+          app.store.setState({
+            'taskStatus[finish_user_info_status]': 1
+          })
+        }
         app.setUser(msg.data.userInfo)
-        app.classroom.recommend({ page: 1, pageSize: 10, province: this.data.$state.userInfo.university.split(',')[0] }).then(msg => {
-          if (msg.code == 1) {
-            msg.data.forEach(function (item) {
-              item.bw = app.util.tow(item.browse)
-            })
-            app.store.setState({
-              recommend: msg.data
-            })
-          }
-        })
+        // app.classroom.recommend({ page: 1, pageSize: 10, province: this.data.$state.userInfo.university.split(',')[0] }).then(msg => {
+        //   if (msg.code == 1) {
+        //     msg.data.forEach(function (item) {
+        //       item.bw = app.util.tow(item.browse)
+        //     })
+        //     app.store.setState({
+        //       recommend: msg.data
+        //     })
+        //   }
+        // })
       }
     })
   },

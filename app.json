@@ -34,7 +34,8 @@
     "pages/upwxpage/upwxpage",
     "pages/personPage/personPage",
     "pages/drawPage/drawPage",
-    "pages/winPrize/winPrize"
+    "pages/winPrize/winPrize",
+    "pages/giftMessage/giftMessage"
   ],
   "permission": {
     "scope.userLocation": {

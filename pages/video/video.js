@@ -301,6 +301,25 @@ Page({
       // 点赞
       app.video.praise(param1).then(msg => {
         if (msg.code == 1) {
+          if (msg.data.is_first == 'first') {
+            wx.showToast({
+              title: '完成短视频首次点赞获得50积分',
+              icon: 'success',
+              duration: 2000
+            })
+            app.store.setState({
+              'taskStatus[first_shortvideo_parise_status]': 1
+            })
+          } else if (msg.data.is_first == 'day') {
+            wx.showToast({
+              title: '完成每日短视频首赞获得20积分',
+              icon: 'success',
+              duration: 2000
+            })
+            app.store.setState({
+              'dayStatus[day_shortvideo_praise_status]': 1
+            })
+          }
           list[index].praised = 1
           list[index].praise++
           list[index].praising = true
@@ -403,6 +422,14 @@ Page({
       }
       app.user.guideRecordAdd(param).then(res => {
         if (res.code == 1) {
+          wx.showToast({
+            title: '完成[短视频]新手指引获得45积分',
+            icon: 'none',
+            duration: 2000
+          })
+          app.store.setState({
+            'taskStatus[shortvideo_guide_status]': 1
+          })
           app.getGuide()
           this.judgeWifi()
           this.setData({

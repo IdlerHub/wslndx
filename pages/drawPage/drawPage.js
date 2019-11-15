@@ -23,7 +23,7 @@ Page({
     showmeng: true,
     showmask:false,
     drawRuleNum:'',
-    actionimg:'https://hwcdn.jinlingkeji.cn/images/pro/drawAction.png'      
+    recordRuleNum:''    
   },
 
   /**
@@ -34,12 +34,16 @@ Page({
   },
   onShow() {
     this.getLotteryCfglist()
+    this.setData({
+      recordRuleNum: ''
+    })
   },
   getLotteryCfglist() {
     return app.lottery.lotteryCfgList().then(res =>{ 
       if (res.code == 1) {
         this.setData({
-          lotteryCfgList:res.data
+          lotteryCfgList:res.data.list,
+          lottery_count: res.data.today_lottery_count
         })
       }
     })
@@ -51,12 +55,6 @@ Page({
         this.setData({
           lotteryres: res.data
         })
-        if(res.data.get_type == 1) {
-          app.socket.send({
-            type: 'Prizemessage',
-            data: ''
-          })
-        }
       } else {
         wx.showToast({
           title: '很抱歉，您的' + res.msg,
@@ -82,6 +80,7 @@ Page({
   },
   // 轮盘动画
   clickLuck() {
+    if (this.data.lottery_count >= 2 ) return
     let that = this
     this.setData({
       showmask: true
@@ -93,7 +92,12 @@ Page({
       success(res) {
         if (res.confirm) {
           that.setData({
-            clickLuck: '',
+            clickLuck: ''
+          })
+          that.data.lottery_count == 0 ? that.setData({
+            lottery_count: 0.5
+          }) : that.setData({
+            lottery_count: 1.5
           })
           that.getLotteryres()
         } else if (res.cancel) {
@@ -123,6 +127,17 @@ Page({
         timer:0,
         clickLuck:'clickLuck'
       })
+      if (this.data.lotteryres.get_type == 1) {
+          app.socket.send({
+            type: 'Prizemessage',
+            data: ''
+          })
+      }
+      this.data.lottery_count == 0.5 ? this.setData({
+        lottery_count: 1
+      }) : this.data.lottery_count == 1.5 ? this.setData({
+        lottery_count: 2
+      }) : ''
       let that = this;
       setTimeout(res => {
         if (this.data.lotteryres.get_type == 0) {
@@ -197,7 +212,8 @@ Page({
       url: '/pages/winPrize/winPrize',
     })
     this.setData({
-      showToast:false
+      showToast:false,
+      recordRuleNum:'2'
     })
   },
   closeprizr() {
