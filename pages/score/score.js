@@ -207,6 +207,7 @@ Page({
       pageSize: 10
     }
     // this.init()
+    app.getTaskStatus()
     Promise.all([this.init(), this.getGift()]).then(value => {
       let arr = [],brr=[],crr=[],drr=[]
       if (this.data.$state.authUserInfo) {
@@ -408,10 +409,10 @@ Page({
     let name = e.currentTarget.dataset.title
     if (name == '每日签到') {
       /* 签到状态 */
-      // app.setSignIn({
-      //   status: true,
-      //   count: 1
-      // }, true)
+      app.setSignIn({
+        status: true,
+        count: 1
+      }, true)
       this.data.sources.forEach(item => {
         item.title == '每日签到' ? item.status = true : ''
       })

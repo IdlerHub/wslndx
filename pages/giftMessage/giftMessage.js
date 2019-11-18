@@ -1,4 +1,5 @@
 // pages/giftMessage/giftMessage.js
+const app = getApp()
 Page({
 
   /**
