@@ -11,38 +11,12 @@ Page({
     scrollStatus: false,
     paylist: [],
     details: [],
-    newgift: [{
-      add_id: 0,
-      createtime: 1557222609,
-      edit_id: 0,
-      exchange: 9,
-      id: 14,
-      image:"https://jinling-xcx-dev.obs.cn-north-1.myhuaweicloud.com:443/uploads/images/ca68f2ab076f09395e4ccd4d73aafa91.jpg",
-      need_points: 1200,
-      remarks: "创意笔记本",
-      status: 1,
-      stock: 21,
-      title: "创意笔记本",
-      weigh: 14,
-    }, {
-      add_id: 0,
-      createtime: 1557222577,
-      edit_id: 0,
-      exchange: 2,
-      id: 13,
-      image: "https://jinling-xcx-dev.obs.cn-north-1.myhuaweicloud.com:443/uploads/images/ddc4d174893ff518c30d5a193ea8472e.jpg",
-      need_points: 1400,
-      remarks: "中国结（小挂饰）",
-      status: 1,
-      stock: 23,
-      title: "中国结（小挂饰）",
-      weigh: 13
-    }],
     singnow: false,
     singafter: false,
     isRefreshing: false,
     showHome: false,
-    showSignbox: false
+    showSignbox: false,
+    sign_days: 0
   },
   common: {
     scrollTop: 175
@@ -234,7 +208,7 @@ Page({
     }
     // this.init()
     Promise.all([this.init(), this.getGift()]).then(value => {
-      let arr = [],brr=[],crr=[]
+      let arr = [],brr=[],crr=[],drr=[]
       if (this.data.$state.authUserInfo) {
         this.data.sources.forEach((item, index) => {
           if (this.data.$state.dayStatus[item.showStatus.name]) {
@@ -256,7 +230,7 @@ Page({
       this.data.newbie.forEach((item, index) => {
         // console.log(this.data.$state.taskStatus[item.showStatus.name])
         if(this.data.$state.taskStatus[item.showStatus.name] == 0) {
-          brr.push(...this.data.newbie.splice(index, 1)) 
+          brr.push(this.data.newbie[index])
         }
       })
       arr = crr.concat(arr)
@@ -378,7 +352,7 @@ Page({
         let param = {
           gift_id: e.currentTarget.dataset.id
         }
-        if (e.currentTarget.dataset.type) {
+        if (e.currentTarget.dataset.type == 1) {
           wx.showModal({
             content: "新手专享只能兑换一次，是否选择该商品？",
             showCancel: true,
@@ -445,7 +419,9 @@ Page({
         sources: this.data.sources
       })
       this.setData({
-        showSignbox: true
+        showSignbox: true,
+        singnow: true,
+        singafter:false
       })
       this.params = {
         page: 1,
@@ -453,9 +429,19 @@ Page({
       }
       // this.init()
       // this.getGift()
-      // app.user.sign().then(res => {
-      //   this.init()
-      // })
+      app.user.sign().then(res => {
+        // this.init()
+        if(res.code == 1) {
+          app.store.setState({
+            signdays: res.data.sign_days
+          })
+          this.setData({
+            showSignbox: true,
+            singnow: true,
+            singafter: false
+          })
+        }
+      })
     } else {
       if (i != 0) {
         app.globalData.currentTab = 1
@@ -498,7 +484,9 @@ Page({
   // 弹出签到框
   showSingbox() {
     this.setData({
-      showSignbox: true
+      showSignbox: true,
+      singnow: false,
+      singafter: true
     })
   },
   closesignBox() {

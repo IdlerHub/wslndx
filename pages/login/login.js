@@ -197,6 +197,7 @@ Page({
           mask: false
         })
       }
+      app.getTaskStatus()
     })
   },
   checkboxChange: function (e) {

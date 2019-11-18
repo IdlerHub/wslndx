@@ -82,7 +82,7 @@ App({
       setTimeout(()=> {
         socket.init(this.store.$state.userInfo.id)
         socket.listen(this.prizemessage, 'Prizemessage')
-        socket.listen(this.bokemessage, 'Bokemessage')
+        socket.listen(this.bokemessage, 'Bokemessage')        
         this.getTaskStatus()
       },2000)
     }

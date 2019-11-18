@@ -138,6 +138,18 @@ Page({
             type: 'Bokemessage',
             data: {uid: this.data.detail.uid}
           })
+          if (msg.data.is_first == 'first') {
+            wx.showToast({
+              title: '完成完成秀风采首次点赞获得50积分',
+              icon: 'none',
+              duration: 2000
+            })
+            let taskStatus = this.data.$state.taskStatus
+            taskStatus['first_boke_prise_status'] = 1
+            app.store.setState({
+              taskStatus
+            })
+          }
           this.setData({ detail: detail })
         } else if (msg.code == -2) {
           /* 帖子已经删除 */
@@ -269,20 +281,24 @@ Page({
         if (msg.data.is_first == 'first') {
           wx.showToast({
             title: '完成秀风采首次评论获得50积分',
-            icon: 'success',
+            icon: 'none',
             duration: 2000
           })
+          let taskStatus = this.data.$state.taskStatus
+          taskStatus['first_boke_comment_status'] = 1
           app.store.setState({
-            'taskStatus[first_boke_comment_status]': 1
+            taskStatus
           })
         } else if (msg.data.is_first == 'day') {
           wx.showToast({
             title: '完成每日秀风采首评评论获得20积分',
-            icon: 'success',
+            icon: 'none',
             duration: 2000
           })
+          let dayStatus = this.data.$state.dayStatus
+          dayStatus['day_boke_comment_status'] = 1
           app.store.setState({
-            'dayStatus[first_boke_comment_status]': 1
+            dayStatus
           })
         }
         this.getDetail()

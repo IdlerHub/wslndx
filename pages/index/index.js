@@ -7,7 +7,7 @@ Page({
     height: 0,
     isRefreshing: false,
     activity: "",
-    interval: 2000,
+    interval: 3500,
     duration: 1000,
     currentTab: 0, 
     showReco:false,
@@ -20,13 +20,16 @@ Page({
   onLoad: async function(e) {
     setTimeout( res => {
       if (!this.data.$state.userInfo.mobile) {
-         wx.redirectTo({ url: "/pages/sign/sign" })
+        let pages = getCurrentPages()
+        pages[0].route == 'pages/sign/sign' ?  '' :  wx.redirectTo({ url: "/pages/sign/sign" })
       }
     }, 3000)
-    
     await app.user.signed().then(res => {
       let sign = res.data && res.data.signed
       console.log(sign)
+      app.store.setState({
+        signdays: res.data.sign_days
+      })
       app.setSignIn({ status: sign, count: sign ? 1 : this.data.$state.signStatus.count }, true)
     })
     await app.user.share({}).then(res => {
@@ -78,9 +81,6 @@ Page({
     /* 更新用户的视频浏览历史 */
     if (app.store.$state.userInfo.mobile) this.getHistory() 
     setTimeout(wx.hideLoading, 500)
-    // app.user.guideRecord().then(res =>{
-      
-    // })
   },
   init() {
     return Promise.all([this.getactivite(), this.getRecommend(), this.getCategory(), this.getBanner(), this.getPaper(), this.getDialog(), this.getGuide()]).then(values => {
@@ -379,6 +379,20 @@ Page({
         url: "../pDetail/pDetail?id=" + 826
       })
     }
+  },
+  // 跳友方小程序
+  minigo() {
+    wx.navigateToMiniProgram({
+      appId: 'wxa61ccf86d0ba437e',
+      path: 'pages/videoAlbum/main/main?ald_media_id=40100&ald_link_key=53c7d1c6cd994bf6',
+      // envVersion: 'develop',
+      success() {
+        // 打开成功
+      },
+      fail() {
+
+      }
+    })
   },
   getPaper() {
     app.classroom.paper({}).then(res => {

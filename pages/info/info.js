@@ -138,11 +138,13 @@ Page({
         if (msg.data.is_first == 'first') {
           wx.showToast({
             title: '完成完善资料获得65积分',
-            icon: 'success',
+            icon: 'none',
             duration: 2000
           })
+          let taskStatus = this.data.$state.taskStatus
+          taskStatus['finish_user_info_status'] = 1
           app.store.setState({
-            'taskStatus[finish_user_info_status]': 1
+            taskStatus
           })
         }
         app.setUser(msg.data.userInfo)

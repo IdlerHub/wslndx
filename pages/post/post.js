@@ -191,6 +191,18 @@ Page({
           list[i].likes++
           list[i].praising = true
           // app.socket.send(list[i].uid)
+          if (msg.data.is_first == 'first') {
+            wx.showToast({
+              title: '完成完成秀风采首次点赞获得50积分',
+              icon: 'none',
+              duration: 2000
+            })
+            let taskStatus = this.data.$state.taskStatus
+            taskStatus['first_boke_prise_status'] = 1
+            app.store.setState({
+              taskStatus
+            })
+          }
           app.socket.send({
             type: 'Bokemessage',
             data: {uid:list[i].uid}
@@ -411,8 +423,10 @@ Page({
             icon: 'none',
             duration: 2000
           })
+          let taskStatus = this.data.$state.taskStatus
+          taskStatus['boke_guide_status'] = 1
           app.store.setState({
-            'taskStatus[boke_guide_status]': 1
+            taskStatus
           })
           app.getGuide()
         }

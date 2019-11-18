@@ -9,7 +9,7 @@
     </view>
     <view class="content">
       <view class="content-title">商品详情</view>
-      <rich-text nodes="{{ intro_content }}" class="rich-text"></rich-text>
+      <rich-text nodes="{{ gift.content }}" class="rich-text"></rich-text>
     </view>
   </view>
   <view class="btn-box">

@@ -296,20 +296,24 @@ Page({
             if (msg.data.is_first == 'first') {
               wx.showToast({
                 title: '完成首次发帖获得50积分',
-                icon: 'success',
-                duration: 2000
+                icon: 'none',
+                duration: 2500
               })
+              let taskStatus = this.data.$state.taskStatus
+              taskStatus['first_add_boke_status'] = 1
               app.store.setState({
-                'taskStatus[finish_user_info_status]': 1
+                taskStatus
               })
             } else if (msg.data.is_first == 'day') {
               wx.showToast({
                 title: '完成每日秀风采首次发帖获得20积分',
-                icon: 'success',
+                icon: 'none',
                 duration: 2000
               })
+              let dayStatus = this.data.$state.dayStatus
+              dayStatus['day_add_boke_status'] = 1
               app.store.setState({
-                'dayStatus[day_add_boke_status]': 1
+                dayStatus
               })
             }
             app.store.setState({

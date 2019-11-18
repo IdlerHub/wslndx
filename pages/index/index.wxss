@@ -1,7 +1,6 @@
 @charset "UTF-8";
 
 /* 环境变量 */
-
 .container {
   height: 100%vh;
   background: rgba(248, 248, 248, 1);

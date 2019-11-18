@@ -35,7 +35,8 @@ Page({
   onShow() {
     this.getLotteryCfglist()
     this.setData({
-      recordRuleNum: ''
+      recordRuleNum: '',
+      towin: false
     })
   },
   getLotteryCfglist() {
@@ -61,7 +62,7 @@ Page({
           icon: 'none'
         })
         this.setData({
-          showmask: false
+          showmask: false,
         })
       }
     })
@@ -83,7 +84,8 @@ Page({
     if (this.data.lottery_count >= 2 ) return
     let that = this
     this.setData({
-      showmask: true
+      showmask: true,
+      clickLuck: ''
     })
     wx.showModal({
       content: '是否消耗25积分开启抽奖?',
@@ -91,9 +93,6 @@ Page({
       confirmColor:'#DF2020',
       success(res) {
         if (res.confirm) {
-          that.setData({
-            clickLuck: ''
-          })
           that.data.lottery_count == 0 ? that.setData({
             lottery_count: 0.5
           }) : that.setData({
@@ -208,13 +207,18 @@ Page({
   },
   //中奖记录页面
   toWinprize() {
-    wx.navigateTo({
-      url: '/pages/winPrize/winPrize',
-    })
-    this.setData({
-      showToast:false,
-      recordRuleNum:'2'
-    })
+    if (this.data.towin) {
+      return
+    } else {
+      wx.navigateTo({
+        url: '/pages/winPrize/winPrize',
+      })
+      this.setData({
+        showToast: false,
+        recordRuleNum: '2',
+        towin: true
+      })
+    }
   },
   closeprizr() {
     this.setData({

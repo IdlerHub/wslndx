@@ -304,20 +304,24 @@ Page({
           if (msg.data.is_first == 'first') {
             wx.showToast({
               title: '完成短视频首次点赞获得50积分',
-              icon: 'success',
+              icon: 'none',
               duration: 2000
             })
+            let taskStatus = this.data.$state.taskStatus
+            taskStatus['first_shortvideo_parise_status'] = 1
             app.store.setState({
-              'taskStatus[first_shortvideo_parise_status]': 1
+              taskStatus
             })
           } else if (msg.data.is_first == 'day') {
             wx.showToast({
               title: '完成每日短视频首赞获得20积分',
-              icon: 'success',
+              icon: 'none',
               duration: 2000
             })
+            let dayStatus = this.data.$state.dayStatus
+            dayStatus['day_shortvideo_praise_status'] = 1
             app.store.setState({
-              'dayStatus[day_shortvideo_praise_status]': 1
+              dayStatus
             })
           }
           list[index].praised = 1
@@ -427,8 +431,10 @@ Page({
             icon: 'none',
             duration: 2000
           })
+          let taskStatus = this.data.$state.taskStatus
+          taskStatus['shortvideo_guide_status'] = 1
           app.store.setState({
-            'taskStatus[shortvideo_guide_status]': 1
+            taskStatus
           })
           app.getGuide()
           this.judgeWifi()
