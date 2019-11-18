@@ -315,6 +315,9 @@ Page({
           this.setData({
             showIntegration: false
           })
+          app.store.setState({
+            signdays: res.data.sign_days
+          })
         } else {
           wx.showToast({
             title: res.msg,
@@ -336,6 +339,9 @@ Page({
     } else {
       app.user.sign().then(res => {
         console.log('签到成功')
+        app.store.setState({
+          signdays: res.data.sign_days
+        })
       })
     }
   },

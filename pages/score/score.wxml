@@ -111,7 +111,7 @@
       <view class="signBox-day" wx:for="{{ 7 }}" wx:key="{{index}}">
         <view class="signBox-daytxt">{{index == 6 ? '+120' : '+20'}}</view>
         <image class="signBox-dayimg" src="{{$state.imgHost}}/signgold.png"></image>
-        <view class="signBox-daynum">第{{index + 1}}天</view>
+        <view class="signBox-daynum" style="{{$state.signdays >= (index + 1) ? 'color:rgba(254,155,2,1);' : ''}}">第{{index + 1}}天</view>
         <view class="mask" wx:if="{{$state.signdays >= (index + 1)}}">
           <image class="maskCont" src="{{$state.imgHost}}/sigincancel.png"></image>
         </view>
