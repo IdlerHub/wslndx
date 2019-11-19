@@ -27,17 +27,6 @@ Page({
         pages[0].route == 'pages/sign/sign' ?  '' :  wx.redirectTo({ url: "/pages/sign/sign" })
       }
     }, 3000)
-    await app.user.signed().then(res => {
-      let sign = res.data && res.data.signed
-      console.log(sign)
-      app.store.setState({
-        signdays: res.data.sign_days
-      })
-      app.setSignIn({ status: sign, count: sign ? 1 : this.data.$state.signStatus.count }, true)
-    })
-    await app.user.share({}).then(res => {
-      app.setShare(res)
-    })
     let reg = /ios/i
     let pt = 20 //导航状态栏上内边距
     let h = 44 //导航状态栏高度
@@ -67,16 +56,28 @@ Page({
       currentTab:0 /* 从积分页面过来的直接去分类 */,
       navScrollLeft: 0
     })
-    this.init()
-    this.data.$state.signStatus.status == 1 ? '' : this.setData({
-      showIntegration: true
-    })
-    this.integrationTime()
+    if (this.data.$state.userInfo.mobile) {
+      await app.user.signed().then(res => {
+        let sign = res.data && res.data.signed
+        console.log(sign)
+        app.store.setState({
+          signdays: res.data.sign_days
+        })
+        app.setSignIn({ status: sign, count: sign ? 1 : this.data.$state.signStatus.count }, true)
+      })
+      await app.user.share({}).then(res => {
+        app.setShare(res)
+      })
+      this.init()
+      this.data.$state.signStatus.status == 1 ? '' : this.setData({
+        showIntegration: true
+      })
+      this.integrationTime()
+    }
   },
   onReady: function() {
   },
   onShow() {
-    console.log(app.globalData.currentTab)
     app.globalData.currentTab == 1 ? this.setData({
       currentTab: 1
     }) : ''

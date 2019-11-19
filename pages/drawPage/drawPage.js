@@ -68,6 +68,8 @@ Page({
         })
         this.setData({
           showmask: false,
+          lottery_count: 0,
+          clickLuck: 'clickLuck'
         })
       }
     })
