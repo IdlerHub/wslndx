@@ -21,6 +21,9 @@ Page({
     setTimeout( res => {
       if (!this.data.$state.userInfo.mobile) {
         let pages = getCurrentPages()
+        if (pages[0].route == 'pages/login/login') {
+          return
+        }
         pages[0].route == 'pages/sign/sign' ?  '' :  wx.redirectTo({ url: "/pages/sign/sign" })
       }
     }, 3000)
