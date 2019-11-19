@@ -9,6 +9,7 @@ Page({
     showrule:false,
     activeRed:0,
     clickLuck: 'clickLuck',
+    screenHeight: false,
     index: 0,  // 当前转动到哪个位置，起点位置
     count: 8,  // 总共有多少个位置
     timer: 0,  // 每次转动定时器
@@ -30,7 +31,11 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    
+    let systems = wx.getSystemInfoSync()
+    systems.screenHeight > 736 ? this.setData({
+      screenHeight: true
+    }) : ''
+    console.log(systems.screenHeight)
   },
   onShow() {
     this.getLotteryCfglist()

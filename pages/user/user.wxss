@@ -335,7 +335,7 @@ page .list .nav:nth-child(6) text {
 }
 
 page .list .nav:nth-child(7) {
-  width: 230rpx;
+  width: 231rpx;
   position: relative;
   display: flex;
   flex-direction: column;

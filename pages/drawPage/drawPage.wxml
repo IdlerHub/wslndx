@@ -1,6 +1,7 @@
 <!--pages/drawPage/drawPage.wxml-->
+<image class="bbbig" src="{{ screenHeight ?  $state.imgHost + '/drawbgbgbg.png' : $state.imgHost + '/drawBG.png'  }}"></image>
 <view class="container">
-  <image src="{{ $state.imgHost }}/drawBg.png" class="drawbg"></image>
+  <!-- <image src="{{ $state.imgHost }}/drawBg.png" class="drawbg"></image> -->
   <image src="{{ $state.imgHost }}/drawTle.png" class="drawTitle"></image>
   <swiper autoplay interval="2000" vertical class="swiper" circular>
     <swiper-item wx:for="{{$state.phoneList}}" wx:key="{{index}}" class="swiper-item">
@@ -13,24 +14,24 @@
         <view class='frame_item'>
           <view class="mask" wx:if="{{ showmask && index != 0}}"></view>
           <image class="frame_item-img" src="{{lotteryCfgList[0].image}}"></image>
-          <view class="frame_item-name">{{lotteryCfgList[0].title}}</view>
+          <view class="frame_item-name">{{lotteryCfgList[0].short_title}}</view>
         </view>
         <view class='frame_item'>
           <view class="mask" wx:if="{{ showmask && index != 1}}"></view>
           <image class="frame_item-img" src="{{lotteryCfgList[1].image}}"></image>
-          <view class="frame_item-name">{{lotteryCfgList[1].title}}</view>
+          <view class="frame_item-name">{{lotteryCfgList[1].short_title}}</view>
         </view>
         <view class='frame_item'>
           <view class="mask" wx:if="{{ showmask && index != 2}}"></view>
           <image class="frame_item-img" src="{{lotteryCfgList[2].image}}"></image>
-          <view class="frame_item-name">{{lotteryCfgList[2].title}}</view>
+          <view class="frame_item-name">{{lotteryCfgList[2].short_title}}</view>
         </view>
       </view>
       <view class="frame_row">
         <view class='frame_item'>
           <view class="mask" wx:if="{{showmask && index != 7}}"></view>
           <image class="frame_item-img" src="{{lotteryCfgList[7].image}}"></image>
-          <view class="frame_item-name">{{lotteryCfgList[7].title}}</view>
+          <view class="frame_item-name">{{lotteryCfgList[7].short_title}}</view>
         </view>
         <view class='frame_action' bindtap="{{clickLuck}}">
           <image class="frame_action-img" src="https://hwcdn.jinlingkeji.cn/images/pro/drawAction.png" style="{{clickLuck != '' ? 'animation: action 0.5s infinite;' : ''  }}" wx:if="{{lottery_count == 0}}"></image>
@@ -41,24 +42,24 @@
         <view class='frame_item'>
           <view class="mask" wx:if="{{showmask && index != 3}}"></view>
           <image class="frame_item-img" src="{{lotteryCfgList[3].image}}"></image>
-          <view class="frame_item-name">{{lotteryCfgList[3].title}}</view>
+          <view class="frame_item-name">{{lotteryCfgList[3].short_title}}</view>
         </view>
       </view>
       <view class="frame_row">
         <view class='frame_item'>
           <view class="mask" wx:if="{{showmask && index != 6}}"></view>
           <image class="frame_item-img" src="{{lotteryCfgList[6].image}}"></image>
-          <view class="frame_item-name">{{lotteryCfgList[6].title}}</view>
+          <view class="frame_item-name">{{lotteryCfgList[6].short_title}}</view>
         </view>
         <view class='frame_item'>
           <view class="mask" wx:if="{{showmask && index != 5}}"></view>
           <image class="frame_item-img" src="{{lotteryCfgList[5].image}}"></image>
-          <view class="frame_item-name">{{lotteryCfgList[5].title}}</view>
+          <view class="frame_item-name">{{lotteryCfgList[5].short_title}}</view>
         </view>
         <view class='frame_item'>
           <view class="mask" wx:if="{{showmask && index != 4}}"></view>
           <image class="frame_item-img" src="{{lotteryCfgList[4].image}}"></image>
-          <view class="frame_item-name">{{lotteryCfgList[4].title}}</view>
+          <view class="frame_item-name">{{lotteryCfgList[4].short_title}}</view>
         </view>
       </view>
     </view>

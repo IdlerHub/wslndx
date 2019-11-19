@@ -62,7 +62,7 @@
     <swiper class="tab" style="height:{{ height }}px" current="{{ currentTab }}" duration="300" bindchange="switchTab">
       <swiper-item class="tab-item">
         <!--剧集  -->
-        <scroll-view scroll-y="true" class="wrap drama" bindscrolltolower="moreSublessons" >
+        <scroll-view scroll-y="true" class="wrap drama" bindscrolltolower="{{moreSublessons}}" >
           <view wx:for="{{ sublessons }}" bindtap="select" data-index="{{ index }}" wx:key="index" class="item {{ item.played == 1 ? 'played' : '' }} {{ item.id == cur.id ? 'active' : '' }}" id="sublessonsd">
             <view class="left">
               <text class="name">{{ item.sub_id }}. {{ item.title }}</text>

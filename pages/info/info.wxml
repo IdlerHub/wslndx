@@ -9,7 +9,7 @@
     <!-- 姓名 -->
     <view class="nameInput">
       <view class="nameInput__title">真实姓名</view>
-      <input placeholder="{{ userInfo.name == '' ? '请填写' : userInfo.name }}" class="nameInput__name" placeholder-style="color:#B6B5B5" value="{{userName}}" bindblur="upUsername" bindfocus="focus" style="padding-right:{{padding || param.school != '' ? '24' : '38'}}px"></input>
+      <input placeholder="{{ userInfo.name == '' ? '请填写(非必填)' : userInfo.name }}" class="nameInput__name" placeholder-style="color:#B6B5B5" value="{{userName}}" bindblur="upUsername" bindfocus="focus" style="padding-right:{{padding || param.school != '' ? '24' : '38'}}px"></input>
     </view>
     <!-- 地区 -->
     <view class="section" wx:if="areaList">

@@ -16,7 +16,8 @@ Page({
     isRefreshing: false,
     showHome: false,
     showSignbox: false,
-    sign_days: 0
+    sign_days: 0,
+    paddingAdd:false
   },
   common: {
     scrollTop: 175
@@ -55,7 +56,7 @@ Page({
           }
         },
         {
-          title: "每日短视频首赞",
+          title: "每日短视频首次点赞",
           score: 20,
           status: false,
           page: "/pages/video/video",
@@ -77,7 +78,7 @@ Page({
           }
         },
         {
-          title: "每日秀风采首评",
+          title: "每日秀风采首次评论",
           score: 20,
           status: false,
           page: "/pages/post/post",
@@ -311,13 +312,15 @@ Page({
   },
   onReachBottom: function() {
     this.setData({
-      scrollStatus: true
+      scrollStatus: true,
+      paddingAdd: true
     })
   },
   onPageScroll: function(e) {
     if (e.scrollTop < this.common.scrollTop) {
       this.data.scrollStatus && this.setData({
-        scrollStatus: false
+        scrollStatus: false,
+        paddingAdd: false
       })
     }
   },
@@ -358,7 +361,7 @@ Page({
             content: "新手专享只能兑换一次，是否选择该商品？",
             showCancel: true,
             cancelText: "取消",
-            cancelColor: "#000000",
+            cancelColor: "#999",
             confirmText: "确认",
             confirmColor: "#df2020",
             success: res => {

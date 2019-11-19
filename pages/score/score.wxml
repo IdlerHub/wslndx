@@ -32,7 +32,7 @@
 <swiper class="swiper" current="{{ currentTab - 1 }}" bindchange="swiperChange">
   <swiper-item item-id="1">
     <scroll-view class="scroll_container" scroll-y="{{ scrollStatus }}">
-      <view class="source_content">
+      <view class="source_content" style="padding-top:{{paddingAdd ? '25' : ''}}px">
         <view class="dataMission" wx:if="{{newbie[0]}}">
           <view class="dayMission">- 新手任务 -</view>
           <view class="item" wx:for="{{ newbie }}" wx:key="index">

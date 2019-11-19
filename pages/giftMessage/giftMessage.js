@@ -37,7 +37,7 @@ Page({
             content: "新手专享只能兑换一次，是否选择该商品？?",
             showCancel: true,
             cancelText: "暂时不换",
-            cancelColor: "#000000",
+            cancelColor: "#999",
             confirmText: "确定兑换",
             confirmColor: "#df2020",
             success: res => {

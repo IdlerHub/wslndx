@@ -140,7 +140,7 @@
             </swiper-item>
           </block>
             <swiper-item>
-              <image src="https://jinling-xcx-dev.obs.cn-north-1.myhuaweicloud.com:443//uploads/images/a908a11bc73eebf64c127cd01a2d933b.jpg" class="slide-image" width="355" height="150" catchtap="minigo" />
+              <image src="{{$state.imgHost}}/banner.png" class="slide-image" width="355" height="150" catchtap="minigo" />
             </swiper-item>
         </swiper>
         <view class="item" bindtap="jumpPeper" data-peper="{{paperMsg.url}}" wx:if="{{paperMsg.image}}">

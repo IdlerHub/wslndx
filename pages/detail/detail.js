@@ -14,7 +14,8 @@ Page({
     comment:[],
     focus: false,
     sublessons:[],
-    contenLength: 0
+    contenLength: 0,
+    moreSublessons: 'moreSublessons'
     /* rect: wx.getMenuButtonBoundingClientRect() */
   },
   onLoad(options) {
@@ -136,11 +137,15 @@ Page({
       })
       comment.push(...res.data.sublesson)
       this.setData({
-        sublessons: comment
+        sublessons: comment,
+        moreSublessons: 'moreSublessons'
       })
     })
   },
   moreSublessons() {
+    this.setData({
+      moreSublessons:''
+    })
     this.sublessParam.page++
     this.sublessParam.sort = this.data.sort
     this.getSublessons(this.data.sublessons)
@@ -154,9 +159,11 @@ Page({
       sublesson_id: this.data.cur.id
     }
     console.log(param)
+    let show = true
     app.classroom.sublessonfinish(param).then(res => {
       if(res.code == 1) {
         if (res.data.is_first == 'first') {
+          show = false
           wx.showToast({
             title: '完成首次学习课程获得70积分',
             icon: 'none',
@@ -169,18 +176,20 @@ Page({
           })
         }
       }
-    })
-    return app.classroom.detail(this.param).then(msg => {
-      if (msg.code === 1) {
-        this.setData({
-          "detail.progress": msg.data.progress
-        })
-        msg.data.progress == 100 ? wx.showToast({
-          title: '完成学完一门新课程获得20积分',
-          icon: 'none',
-          duration: 2000
-        }) : ''
-      }
+      app.classroom.detail(this.param).then(msg => {
+        if (msg.code === 1) {
+          this.setData({
+            "detail.progress": msg.data.progress
+          })
+          if(show) {
+            msg.data.progress == 100 ? wx.showToast({
+              title: '完成学完一门新课程获得20积分',
+              icon: 'none',
+              duration: 2000
+            }) : ''
+          }
+        }
+      })
     })
   },
   manage() {

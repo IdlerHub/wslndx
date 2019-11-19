@@ -40,10 +40,10 @@
           <cover-view class="synopsis" wx:if="{{nextRtight != 3}}">{{ cur.intro_content }}</cover-view>
         </cover-view>
         <!-- 返回首页 -->
-        <cover-view wx:if="{{ vistor || home }}" class="vistor-home" catchtap="tohome">
+        <!-- <cover-view wx:if="{{ vistor || home }}" class="vistor-home" catchtap="tohome">
           <cover-image src="/images/shouye.png" class="iconfont"></cover-image>
           <cover-view>首页</cover-view>
-        </cover-view>
+        </cover-view> -->
       </cover-view>
       <!-- 分享 -->
       <button wx:if="{{ cur && !$state.baseInfo }}" class="share" open-type="share" hover-class="btn-hover">
