@@ -383,7 +383,9 @@ Page({
       wx.navigateTo({
         url: `../detail/detail?id=${item.video_id}&name=${item.title}`
       })
-    } else {
+    } else if (item.jump_type == 4) {
+      this.minigo(item.clickurl)
+    }else {
       /* 文章 */
       wx.navigateTo({
         url: "../pDetail/pDetail?id=" + 826
@@ -391,10 +393,11 @@ Page({
     }
   },
   // 跳友方小程序
-  minigo() {
+  minigo(url) {
+    let system = JSON.parse(url)
     wx.navigateToMiniProgram({
-      appId: 'wxa61ccf86d0ba437e',
-      path: 'pages/videoAlbum/main/main?ald_media_id=40100&ald_link_key=53c7d1c6cd994bf6',
+      appId: system.appid,
+      path: system.url,
       // envVersion: 'develop',
       success() {
         // 打开成功
