@@ -434,7 +434,7 @@ Page({
       // this.init()
       // this.getGift()
       app.user.sign().then(res => {
-        // this.init()
+        this.init()
         if(res.code == 1) {
           app.store.setState({
             signdays: res.data.sign_days
