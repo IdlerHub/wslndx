@@ -33,7 +33,7 @@
           <image class="frame_item-img" src="{{lotteryCfgList[7].image}}"></image>
           <view class="frame_item-name">{{lotteryCfgList[7].short_title}}</view>
         </view>
-        <view class='frame_action' bindtap="{{clickLuck}}">
+        <view class='frame_action' bindtap="{{clickLuck}}" bindtouchstart="touchstart" bindtouchend="touchend">
           <image class="frame_action-img" src="https://hwcdn.jinlingkeji.cn/images/pro/drawAction.png" style="{{clickLuck != '' ? 'animation: action 0.5s infinite;' : ''  }}" wx:if="{{lottery_count == 0}}"></image>
           <image class="frame_action-img" src="/images/drawAction3.png" wx:if="{{lottery_count == 0.5 || lottery_count == 1.5 }}"></image>
           <image class="frame_action-img" src="/images/drawone.png" wx:if="{{lottery_count == 1 }}" style="{{clickLuck != '' ? 'animation: action 0.5s infinite;' : ''  }}"></image>

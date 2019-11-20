@@ -86,35 +86,55 @@ Page({
       drawRuleNum: ''
     })
   },
+  touchstart(e) {
+    this.touchStartTime = e.timeStamp;
+  },
+  touchend(e) {
+    this.touchEndTime = e.timeStamp;
+  },
   // 轮盘动画
-  clickLuck() {
-    if (this.data.lottery_count >= 2 ) return
+  clickLuck(e) {
     let that = this
-    this.setData({
-      showmask: true,
-      clickLuck: ''
-    })
-    wx.showModal({
-      content: '是否消耗25积分开启抽奖?',
-      cancelColor:'#999',
-      confirmColor:'#DF2020',
-      success(res) {
-        if (res.confirm) {
-          that.data.lottery_count == 0 ? that.setData({
-            lottery_count: 0.5
-          }) : that.setData({
-            lottery_count: 1.5
-          })
-          that.getLotteryres()
-        } else if (res.cancel) {
-          console.log('用户点击取消')
-          that.setData({
-            showmask: false,
-            clickLuck: 'clickLuck'
-          })
-        }
+    console.log(that.touchEndTime - that.touchStartTime)
+    if (that.touchEndTime - that.touchStartTime < 350) {
+      // 当前点击的时间
+      let currentTime = e.timeStamp;
+      console.log(currentTime)
+      let lastTapTime = that.lastTapTime || currentTime - 310;
+      // 更新最后一次点击时间
+      that.lastTapTime = currentTime;
+      // 如果两次点击时间在300毫秒内，则认为是双击事件
+      console.log(currentTime - lastTapTime)
+      if (currentTime - lastTapTime > 300) {
+        // do something 点击事件具体执行那个业务
+        if (this.data.lottery_count >= 2) return
+        this.setData({
+          showmask: true,
+          clickLuck: ''
+        })
+        wx.showModal({
+          content: '是否消耗25积分开启抽奖?',
+          cancelColor: '#999',
+          confirmColor: '#DF2020',
+          success(res) {
+            if (res.confirm) {
+              that.data.lottery_count == 0 ? that.setData({
+                lottery_count: 0.5
+              }) : that.setData({
+                lottery_count: 1.5
+              })
+              that.getLotteryres()
+            } else if (res.cancel) {
+              console.log('用户点击取消')
+              that.setData({
+                showmask: false,
+                clickLuck: 'clickLuck'
+              })
+            }
+          }
+        })  
       }
-    })
+    }
   },
   startRoll() {
     let times = this.data.times += 1
