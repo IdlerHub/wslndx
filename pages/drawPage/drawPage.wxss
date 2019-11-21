@@ -276,6 +276,7 @@ page .bbbig {
   left: 50%;
   margin-left: -100rpx;
   border-radius:10rpx;
+  background: #fff;
 }
 .prizrBigbox .prizrbox .prizrbox-gifttitle {
   width: 100%;
