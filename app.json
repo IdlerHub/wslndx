@@ -35,7 +35,8 @@
     "pages/personPage/personPage",
     "pages/drawPage/drawPage",
     "pages/winPrize/winPrize",
-    "pages/giftMessage/giftMessage"
+    "pages/giftMessage/giftMessage",
+    "pages/search/search"
   ],
   "permission": {
     "scope.userLocation": {
@@ -75,7 +76,7 @@
       }
     ]
   },
-  "navigateToMiniProgramAppIdList":[
+  "navigateToMiniProgramAppIdList": [
     "wxa61ccf86d0ba437e",
     "wx92d650b253f8f2e3",
     "wxb92e40c1a0520a27"

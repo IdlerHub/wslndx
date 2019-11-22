@@ -5,7 +5,7 @@
  */
 import Store from "wxministore"
 const app = getApp()
-let env = "production"
+let env = "producton"
 let imgHost
 let activityUrl
 let API_URL
