@@ -1,17 +1,24 @@
 <!--pages/search/search.wxml-->
 <view class="container">
-  <view class="search-top">
+  <view class="search-top" wx:if="{{focus}}">
     <view class="search-box">
         <image src="http://118.89.201.75/images/searchp.png"></image>
-        <input placeholder="搜索课程名称" placeholder-style="color:#999;"  confirm-type="search" hold-keyboard type="text" class="search-txt" focus="focus" bindkeyboardheightchange="keychange" bindblur="bindblur"></input>
+        <input placeholder="搜索课程名称" placeholder-style="color:#999;"  confirm-type="search"  type="text" class="search-txt" focus="focus" bindkeyboardheightchange="keychange" value="{{text}}"></input>
+    </view>
+    <view class="cancle" bindtap="backhome">取消</view>
+  </view>
+  <view class="search-top" wx:else>
+    <view class="search-box">
+        <image src="http://118.89.201.75/images/searchp.png"></image>
+        <input placeholder="搜索课程名称" placeholder-style="color:#999;"  confirm-type="search"  type="text" class="search-txt" bindkeyboardheightchange="keychange" value="{{text}}"></input>
     </view>
     <view class="cancle" bindtap="backhome">取消</view>
   </view>
   <view class="voice-box" style="bottom:{{voiceheight}}px">
-      <view style="background:url({{voiceImg}});background-size:100% 100%;" class="voice-image" catchtouchmove="touchmove" catchtouchstart="touchstart" catchtouchend="touchend"></view>
+      <view style="background:url({{voiceImg}});background-size:100% 100%;" class="voice-image" catchtouchstart="touchstart" catchtouchend="touchend"></view>
       <div class="voice-water1" wx:if="{{voiceActon}}"></div>
       <div class="voice-water1 voice-water2" wx:if="{{voiceActon}}"></div>
       <!-- <div class="voice-water1 voice-water3"></div> -->
-      <view class="voice-txt" style="color:{{ voiceActon ? '#fff' :'' }}">按住说话</view>
+      <view class="voice-txt" style="height:12rpx;"> {{voiceActon? '' : '按住说话'}}</view>
   </view>
 </view>
