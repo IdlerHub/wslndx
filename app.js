@@ -215,6 +215,10 @@ App({
             baseInfo: !auth && self.store.$state.visitedNum.length > 10
           })
         }
+        let record = res.authSetting['scope.record']
+        self.store.setState({
+          authRecord: record || false,
+        })
       }
     })
   },

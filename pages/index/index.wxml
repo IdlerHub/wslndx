@@ -70,28 +70,15 @@
       </button>
     </view>
   </view>
-  <navigator class="search" url="/pages/search/search" >
-  </navigator>
-  <!-- 农场和电台 -->
-  <view class="jumpout" wx:if="{{ !recommend }}">
-    <navigator class="jumpoutBox" url="/pages/education/education?type=farm">
-      <image class="img" mode="widthFix"></image>
-      <text>开心农场</text>
+  <!-- 搜索/积分 -->
+  <view class="search-box">
+    <navigator class="search-left" url="/pages/search/search">
+      <image src="http://118.89.201.75/images/searchp.png"></image>
+      <text>搜索课程名称</text>
     </navigator>
-    <navigator class="jumpoutBox" url="/pages/education/education?type=station">
-      <image class="img" mode="widthFix"></image>
-      <text>老年电台</text>
-    </navigator>
-  </view>
-  <view class="jumpout" wx:else>
-    <navigator class="jumpoutBox" url="/pages/education/education?type=farm">
-      <image class="img" mode="widthFix" src="{{  !recommend ? '' : $state.imgHost + '/farm.png' }}"></image>
-      <text>开心农场</text>
-    </navigator>
-    <navigator class="jumpoutBox" url="/pages/education/education?type=station">
-      <image class="img" mode="widthFix" src="{{  !recommend ? '' : $state.imgHost + '/station.png'}}"></image>
-      <text>老年电台</text>
-    </navigator>
+    <view class="integral" bindtap="toScore">
+      <view class="integralImg"></view>
+    </view>
   </view>
   <navigationBar wx:if="{{ scroll }}" id="navigationBar" placeholderBg="#F8F8F8" color="#000000" title="网上老年大学" back="{{ false }}" background="#F8F8F8"></navigationBar>
   <view class="nav" wx:if="{{ !recommend }}">
@@ -121,10 +108,6 @@
     <swiper-item class="tab-item">
       <!--推荐  -->
       <view class="wrap recommend">
-        <view class="now" wx:if="{{ history.last_lesson }}" bindtap="historyTap" data-id="{{ history.last_lesson.id }}" data-title="{{ history.last_lesson.title }}">
-          <view class="line">继续播放：{{ history.last_lesson.title + "第" + history.last_lesson.sub_id + "讲" }}</view>
-          <image class="icon" mode="widthFix" src="{{ $state.imgHost }}/rectangle.png"></image>
-        </view>
         <!-- 答题（已隐藏） -->
         <!-- <button wx:if="{{ activity }}" class="outer-link" hover-class="none" open-type="getUserInfo" bindgetuserinfo="onGotUserInfo" data-role="education">
           <image src="{{ activity.image }}"></image>
@@ -142,6 +125,27 @@
             </swiper-item>
           </block>
         </swiper>
+        <!-- 农场和电台 -->
+        <view class="jumpout" wx:if="{{ !recommend }}">
+          <navigator class="jumpoutBox" url="/pages/education/education?type=farm">
+            <image class="img" mode="widthFix"></image>
+            <text>开心农场</text>
+          </navigator>
+          <navigator class="jumpoutBox" url="/pages/education/education?type=station">
+            <image class="img" mode="widthFix"></image>
+            <text>老年电台</text>
+          </navigator>
+        </view>
+        <view class="jumpout" wx:else>
+          <navigator class="jumpoutBox" url="/pages/education/education?type=farm">
+            <image class="img" mode="widthFix" src="{{  !recommend ? '' : $state.imgHost + '/farm.png' }}"></image>
+            <text>开心农场</text>
+          </navigator>
+          <navigator class="jumpoutBox" url="/pages/education/education?type=station">
+            <image class="img" mode="widthFix" src="{{  !recommend ? '' : $state.imgHost + '/station.png'}}"></image>
+            <text>老年电台</text>
+          </navigator>
+        </view>
         <view class="item" bindtap="jumpPeper" data-peper="{{paperMsg.url}}" wx:if="{{paperMsg.image}}">
           <view class="content">
             <view class="left">
@@ -191,6 +195,12 @@
   </swiper>
   <!-- 底部tabbar -->
   <navBar path='index'></navBar>
+  <!-- 学习历史 -->
+  <view class="now" wx:if="{{history.last_lesson && currentTab == 0}}" bindtap="historyTap" data-id="{{ history.last_lesson.id }}" data-title="{{ history.last_lesson.title }}" style="animation:{{ history.last_lesson && shownow && shownowt ? 'nowshow' : 'nowclose'}}  0.5s ; bottom:{{history.last_lesson && shownow && shownowt? '138rpx' : '-88rpx'}} ">
+    <image src="/images/play-red.png"></image>
+    <view class="line">{{ history.last_lesson.title + "第" + history.last_lesson.sub_id + "讲" }}</view>
+    <image src="http://118.89.201.75/images/nowcancle.png" catchtap="closenow"></image>
+  </view>
   <!-- 签到拿积分 -->
   <view class="integration" wx:if="{{ !$state.signStatus.count && recommend }}" catchtouchmove="return">
     <view class="dialog">

@@ -1,27 +1,23 @@
 // pages/search/search.js
+const app = getApp()
 const plugin = requirePlugin("WechatSI")
 // 获取**全局唯一**的语音识别管理器**recordRecoManager**
 const manager = plugin.getRecordRecognitionManager()
 
 const innerAudioContext = wx.createInnerAudioContext();
 Page({
-
-  /**
-   * 页面的初始数据
-   */
   data: {
     voiceImg: 'http://118.89.201.75/images/voicebtn.png',
     voiceActon: false,
     voiceheight: '',
     focus: true,
-    text:''
+    text: ''
   },
-
-  /**
-   * 生命周期函数--监听页面加载
-   */
   onLoad: function(options) {
     this.initRecord()
+  },
+  onShow() {
+    this.getRecordAuth()
   },
 
   /**
@@ -44,6 +40,55 @@ Page({
   onShareAppMessage: function() {
 
   },
+  // 权限询问
+  authrecord() {
+    this.setData({
+      focus: false
+    })
+    if (this.data.$state.authRecordfail) {
+      wx.showModal({
+        content: '您已拒绝授权使用麦克风录音权限，请打开获取麦克风授权！否则无法使用小程序部分功能',
+        confirmText: '去授权',
+        confirmColor: "#df2020",
+        success: res => {
+          if (res.confirm) {
+            wx.openSetting({})
+          }
+        }
+      })
+    }
+    if (!this.data.$state.authRecord) {
+      wx.authorize({
+        scope: 'scope.record',
+        success() {
+          // 用户已经同意小程序使用录音功能，后续调用 wx.startRecord 接口不会弹窗询问
+          console.log("succ auth")
+          app.store.setState({
+            authRecord: true
+          })
+        },
+        fail() {
+          console.log("fail auth")
+          app.store.setState({
+            authRecordfail: true
+          })
+        }
+      })
+    }
+  },
+  getRecordAuth: function() {
+    wx.getSetting({
+      success(res) {
+        let record = res.authSetting['scope.record']
+        app.store.setState({
+          authRecord: record || false,
+        })
+      },
+      fail(res) {
+        console.log("fail")
+      }
+    })
+  },
   /**
    * 初始化语音识别回调
    */
@@ -58,7 +103,7 @@ Page({
     // 识别结束事件
     manager.onStop = (res) => {
       // 取出录音文件识别出来的文字信息
-      let text = this.data.text + res.result.replace('。','')
+      let text = this.data.text + res.result.replace('。', '')
       // 获取音频文件临时地址
       let duration = res.duration
       if (text == '') {
@@ -136,4 +181,21 @@ Page({
       voiceheight: e.detail.height + (systems.screenHeight * 0.05)
     })
   },
+  txtchange(e) {
+    console.log(e.detail.value)
+    this.data.text == '' ? this.setData({
+      text: e.detail.value
+    }) : this.setData({
+      text: this.data.text + e.detail.value
+    })
+  },
+  cleartxt() {
+    this.setData({
+      text: '',
+      focus: false
+    })
+    this.setData({
+      focus: true
+    })
+  }
 })

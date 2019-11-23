@@ -36,6 +36,8 @@ let store = new Store({
   state: {
     userInfo: {} /* 用户信息 */,
     authUserInfo: false /* （微信用户信息）授权状态 */,
+    authRecord: false /* （微信用户录音）授权状态 */,
+    authRecordfail: false /* （微信用户录音）授权拒绝状态 */,
     visitedNum: [] /* 最多10个未授权视频 */,
     baseInfo: false /* 提示已超过10个视频，要求授权 */,
     authKey: "" /* 小程序进入h5的身份标识 */,

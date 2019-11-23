@@ -14,7 +14,9 @@ Page({
     guideNum: 0,
     guidetxt: '下一步',
     showSign: false,
-    guideNum: 1
+    guideNum: 1,
+    shownow: true,
+    shownowt: true
   },
   navHeightList: [],
   onLoad: async function(e) {
@@ -250,6 +252,15 @@ Page({
           scroll: false
         })
     }
+    let scrollTop = this.data.scrollTop
+    this.setData({
+      scrollTop: e.scrollTop
+    })
+    e.scrollTop - scrollTop > 0  ? this.setData({
+      shownow: false
+    }) : this.setData({
+        shownow: true
+    })
   },
   //继续播放
   historyTap: function(e) {
@@ -258,6 +269,11 @@ Page({
     })
     //用于数据统计
     app.aldstat.sendEvent("继续播放", { name: e.currentTarget.dataset.title })
+  },
+  closenow() {
+    this.setData({
+      shownowt: false
+    })
   },
   //点击推荐课堂
   detailTap: function(e) {

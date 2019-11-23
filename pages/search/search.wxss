@@ -19,23 +19,25 @@ page {
 .container .search-top .search-box {
   width: 584rpx;
   height: 88rpx;
+  padding: 0 30rpx;
   background: rgba(247, 247, 247, 1);
   border-radius: 8rpx;
   box-sizing: border-box;
   display: flex;
   align-items: center;
+  justify-content: space-between;
 }
 
-.container .search-top image {
-  width: 56rpx;
-  height: 56rpx;
-  margin: 0 23rpx;
-}
-
-.container .search-top image {
+.container .search-top .search-box image:nth-child(1) {
   width: 44rpx;
   height: 44rpx;
-  margin: 0 23rpx 0 30rpx;
+  margin-right:23rpx;
+}
+
+.container .search-top .search-box image:nth-child(3) {
+  width: 36rpx;
+  height: 36rpx;
+  margin-left: 15rpx;
 }
 
 .container .search-top .search-txt {
