@@ -1,21 +1,36 @@
 //index.js
 //获取应用实例
 const app = getApp()
+const plugin = requirePlugin("WechatSI")
+// 获取**全局唯一**的语音识别管理器**recordRecoManager**
+const manager = plugin.getRecordRecognitionManager()
+const innerAudioContext = wx.createInnerAudioContext();
 Page({
   data: {
     sort: 0,
-    nav: [{ name: "剧集" }, { name: "讨论" } ,{ name: "简介" }],
+    nav: [{
+      name: "剧集"
+    }, {
+      name: "讨论"
+    }, {
+      name: "简介"
+    }],
     height: 0,
     tip: true,
     showGuide: true,
-    comment:[],
-    keyheight:0,
+    comment: [],
+    keyheight: 0,
     write: true,
-    comment:[],
+    comment: [],
     focus: false,
-    sublessons:[],
+    sublessons: [],
     contenLength: 0,
-    moreSublessons: 'moreSublessons'
+    moreSublessons: 'moreSublessons',
+    placeholder: '写评论',
+    showvoice: false,
+    replycomment: '欢迎发表观点',
+    voicetime: 0,
+    showvoiceauto: false
     /* rect: wx.getMenuButtonBoundingClientRect() */
   },
   onLoad(options) {
@@ -23,10 +38,10 @@ Page({
     let that = this
     this.videoContext = wx.createVideoContext("myVideo")
     let windowHeight = wx.getSystemInfoSync().windowHeight
-    let system = wx.getSystemInfoSync().model.indexOf('iPhone') 
+    let system = wx.getSystemInfoSync().model.indexOf('iPhone')
     system == -1 ? this.setData({
       paddingTop: true
-    }): ''
+    }) : ''
     let query = wx.createSelectorQuery().in(this)
     query.select("#myVideo").boundingClientRect()
     query.select(".info").boundingClientRect()
@@ -47,9 +62,9 @@ Page({
       })
       if (that.data.$state.newGuide) {
         that.data.$state.newGuide.lesson == 0 ?
-        this.setData({
-          currentTab: 1
-        }) : ''
+          this.setData({
+            currentTab: 1
+          }) : ''
       }
       if (that.data.vistor) {
         setTimeout(() => {
@@ -58,7 +73,11 @@ Page({
           })
         }, 5000)
       }
-      this.comParam = this.praParam = { lesson_id: options.id || this.data.detail.id, page: 1, pageSize: 10 }
+      this.comParam = this.praParam = {
+        lesson_id: options.id || this.data.detail.id,
+        page: 1,
+        pageSize: 10
+      }
       wx.setNavigationBarTitle({
         title: options.name || ""
       })
@@ -75,10 +94,16 @@ Page({
         that.getDetail()
       }
     })
-    this.sublessParam = { id: options.id || this.data.detail.id, page: 1, pageSize: 10, sort: this.data.sort}
+    this.sublessParam = {
+      id: options.id || this.data.detail.id,
+      page: 1,
+      pageSize: 10,
+      sort: this.data.sort
+    }
   },
   onShow() {
     app.getGuide()
+    this.initRecord()
   },
   onUnload() {
     this.data.$state.newGuide.lesson == 0 ? this.closeGuide() : ''
@@ -132,7 +157,7 @@ Page({
     console.log(this.sublessParam)
     let comment = list
     app.classroom.detail(this.sublessParam).then(res => {
-      res.data.sublesson.forEach(function (item) {
+      res.data.sublesson.forEach(function(item) {
         item.minute = (item.film_length / 60).toFixed(0)
       })
       comment.push(...res.data.sublesson)
@@ -144,10 +169,10 @@ Page({
   },
   moreSublessons() {
     this.setData({
-      moreSublessons:''
+      moreSublessons: ''
     })
     this.sublessParam.page++
-    this.sublessParam.sort = this.data.sort
+      this.sublessParam.sort = this.data.sort
     this.getSublessons(this.data.sublessons)
   },
   ended() {
@@ -161,7 +186,7 @@ Page({
     console.log(param)
     let show = true
     app.classroom.sublessonfinish(param).then(res => {
-      if(res.code == 1) {
+      if (res.code == 1) {
         if (res.data.is_first == 'first') {
           wx.showToast({
             title: '完成首次学习课程获得70积分',
@@ -191,7 +216,7 @@ Page({
     })
   },
   manage() {
-    let  detail = this.data.detail
+    let detail = this.data.detail
     let sublesson = this.data.sublessons
     let current = 0,
       total = sublesson.length,
@@ -230,7 +255,7 @@ Page({
       param.pageSize = res[0].length
       app.classroom.detail(param).then(msg => {
         if (msg.code === 1) {
-          msg.data.sublesson.forEach(function (item) {
+          msg.data.sublesson.forEach(function(item) {
             item.minute = (item.film_length / 60).toFixed(0)
           })
           wx.setNavigationBarTitle({
@@ -249,7 +274,9 @@ Page({
   collect() {
     /*todo:考虑去掉that*/
     let that = this
-    let param = { lesson_id: this.param.id }
+    let param = {
+      lesson_id: this.param.id
+    }
     if (this.data.detail.collected == 1) {
       wx.showModal({
         title: "",
@@ -277,7 +304,9 @@ Page({
         }
       })
       //用于数据统计
-      app.aldstat.sendEvent("课程收藏", { name: this.data.title })
+      app.aldstat.sendEvent("课程收藏", {
+        name: this.data.title
+      })
     }
   },
   // 选择剧集
@@ -361,9 +390,9 @@ Page({
           })
           comment.push(item)
         })
-          this.setData({
-            comment: comment
-          })
+        this.setData({
+          comment: comment
+        })
         this.setHeight()
       } else if (msg.code == -2) {
         /* 帖子已经删除 */
@@ -377,7 +406,7 @@ Page({
   onReachBottom() {
     if (this.data.currentTab == 1) {
       this.comParam.page++
-      this.getComment()
+        this.getComment()
     }
   },
   setHeight() {
@@ -389,11 +418,11 @@ Page({
         let height = res[0].height - (-110)
         console.log(height)
         height < 100 ? that.setData({
-          height: 700
-        }) :
-        that.setData({
-          height: height 
-        })
+            height: 700
+          }) :
+          that.setData({
+            height: height
+          })
         if (height == 110) {
           that.setData({
             height: 400
@@ -439,20 +468,26 @@ Page({
     //     data: videoTime 
     //   })
     // }
-    
+
     wx.setStorage({
       key: "lessonProgress",
-      data: { id: this.data.cur.id, time: e.detail.currentTime }
+      data: {
+        id: this.data.cur.id,
+        time: e.detail.currentTime
+      }
     })
   },
   // 删除讨论
-  delComment: function (e) {
+  delComment: function(e) {
     wx.showModal({
       content: "确定删除该评论?",
       confirmColor: '#df2020',
       success: res => {
         if (res.confirm) {
-          let param = { lesson_id: this.data.detail.id, comment_id: e.currentTarget.dataset.item.id }
+          let param = {
+            lesson_id: this.data.detail.id,
+            comment_id: e.currentTarget.dataset.item.id
+          }
           app.classroom
             .delComment(param)
             .then(msg => {
@@ -497,7 +532,10 @@ Page({
     }
     if (ops.from === "button") {
       console.log("ShareAppMessage  button")
-      app.classroom.share({ lesson_id: this.data.id, sublesson_id: this.data.cur.id })
+      app.classroom.share({
+        lesson_id: this.data.id,
+        sublesson_id: this.data.cur.id
+      })
       return {
         title: this.data.detail.title,
         path: "/pages/detail/detail?id=" + this.data.id + "&curid=" + this.data.cur.id + "&type=share&uid=" + this.data.$state.userInfo.id
@@ -505,7 +543,9 @@ Page({
     }
   },
   tohome: function() {
-    wx.reLaunch({ url: "/pages/index/index" })
+    wx.reLaunch({
+      url: "/pages/index/index"
+    })
   },
   // 发布评论
   release() {
@@ -534,7 +574,10 @@ Page({
         }
         this.reply(params)
       } else {
-        let param = { lesson_id: this.data.detail.id, content: this.data.content }
+        let param = {
+          lesson_id: this.data.detail.id,
+          content: this.data.content
+        }
         this.addComment(param)
       }
     }
@@ -542,9 +585,10 @@ Page({
   // 增加评论
   addComment(param) {
     app.classroom.addComment(param).then(res => {
-      if(res.code == 1) {
+      if (res.code == 1) {
         this.setData({
-          write: false
+          write: false,
+          placeholder: '发评论'
         })
         wx.showToast({
           title: '评论成功',
@@ -556,7 +600,7 @@ Page({
         this.setData({
           content: "",
           write: true,
-          writeTow:false,
+          writeTow: false,
           focus: false,
           keyheight: 0,
           contenLength: 0
@@ -579,7 +623,8 @@ Page({
       wx.hideLoading()
       if (msg.code == 1) {
         this.setData({
-          write: false
+          write: false,
+          placeholder: '发评论'
         })
         wx.showToast({
           title: "发布成功",
@@ -591,9 +636,9 @@ Page({
         this.setData({
           content: "",
           write: true,
-          writeTow:false,
-          focus:false,
-          keyheight:0,
+          writeTow: false,
+          focus: false,
+          keyheight: 0,
           contenLength: 0
         })
         this.replyInfo = null
@@ -629,7 +674,11 @@ Page({
       confirmColor: '#df2020',
       success: res => {
         if (res.confirm) {
-          let params = { lesson_id: this.data.detail.id, comment_id: e.currentTarget.dataset.parentid, id: e.currentTarget.dataset.item.reply_id }
+          let params = {
+            lesson_id: this.data.detail.id,
+            comment_id: e.currentTarget.dataset.parentid,
+            id: e.currentTarget.dataset.item.reply_id
+          }
           app.classroom.delReply(params).then(msg => {
             wx.hideLoading()
             if (msg.code == 1) {
@@ -689,18 +738,27 @@ Page({
         /* 回复别人的评论 或者 回复别人的回复  */
         this.replyParent = e.target.dataset.parent
         this.replyInfo = e.target.dataset.reply
+        this.setData({
+          placeholder: '回复 @' + e.currentTarget.dataset.reply.nickname
+        })
       } else {
         /* 评论 */
         this.replyInfo = null
         this.replyParent = null
       }
       this.setData({
-        write:false,
-        writeTow:true,
-        content:'',
+        write: false,
+        writeTow: true,
+        content: '',
         focus: true,
       })
     }
+  },
+  showvoice() {
+    this.setData({
+      showvoice: true,
+      write: false
+    })
   },
   showWrite() {
     let system = {}
@@ -713,12 +771,12 @@ Page({
     query.select(".container").boundingClientRect()
     query.exec(res => {
       console.log(res)
-      if (res[0].top > -100 ) {
+      if (res[0].top > -100) {
         if (system.screenHeight < 790) {
           wx.pageScrollTo({
             scrollTop: 232
           })
-         }
+        }
       }
     })
     if (this.data.$state.userInfo.status !== 'normal') {
@@ -759,7 +817,9 @@ Page({
   },
   //用于数据统计
   onHide() {
-    app.aldstat.sendEvent("退出", { name: "课程详情页" })
+    app.aldstat.sendEvent("退出", {
+      name: "课程详情页"
+    })
   },
   closeGuide() {
     let param = {
@@ -783,5 +843,82 @@ Page({
         })
       }
     })
+  },
+  // 语音
+  /**
+   * 初始化语音识别回调
+   */
+  initRecord: function() {
+    //有新的识别内容返回，则会调用此事件
+    manager.onRecognize = (res) => {
+      this.setData({
+        newtxt: res.result
+      })
+    }
+
+    // 识别结束事件
+    manager.onStop = (res) => {
+      // 取出录音文件识别出来的文字信息
+      let text = this.data.text + res.result.replace('。', '')
+      // 获取音频文件临时地址
+      let filePath = res.tempFilePath
+      let duration = res.duration
+      if (text == '') {
+        this.showRecordEmptyTip()
+        return
+      }
+      this.setData({
+        text,
+        filePath
+      })
+    }
+
+    // 识别错误事件
+    manager.onError = (res) => {
+      this.setData({
+        recording: false,
+        bottomButtonDisabled: false,
+      })
+    }
+  },
+  touchstart() {
+    this.setData({
+      voiceActon: true
+    })
+    this.voicetime()
+    manager.start({
+      lang: "zh_CN",
+    })
+  },
+  touchend() {
+    manager.stop()
+    if (this.data.voicetime < 1) {
+      wx.showToast({
+        title: '说话时间过短',
+        icon: 'none',
+        duration:2000
+      })
+    } else {
+      this.setData({
+        showvoiceauto: true
+      })
+    }
+    this.setData({
+      voiceActon: false
+    })
+  },
+  // 计时器
+  voicetime() {
+    let time = 0
+    let it = setInterval(() => {
+      time += 1
+      if(!this.data.voiceActon){
+        clearInterval(it)
+      } else {
+        this.setData({
+          voicetime: time
+        })
+      }
+    }, 1000)
   }
 })

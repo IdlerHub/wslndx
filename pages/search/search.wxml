@@ -19,7 +19,6 @@
       <view style="background:url({{voiceImg}});background-size:100% 100%;" class="voice-image" catchtouchstart="touchstart" catchtouchend="touchend"></view>
       <div class="voice-water1" wx:if="{{voiceActon}}"></div>
       <div class="voice-water1 voice-water2" wx:if="{{voiceActon}}"></div>
-      <!-- <div class="voice-water1 voice-water3"></div> -->
       <view class="voice-txt" style="height:12rpx;"> {{voiceActon? '' : '按住说话'}}</view>
   </view>
   <view class="voice-box" style="bottom:{{voiceheight}}px" wx:else>
