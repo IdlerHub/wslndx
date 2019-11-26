@@ -198,7 +198,19 @@
   height: 4rpx;
   background: #df2020;
 }
+.nav .tabclassify {
+  height: 100%;
+  float: right;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: cneter;
+}
+.nav .tabclassify image {
+  width: 46rpx;
+  height: 46rpx;
 
+}
 .nav .integral {
   height: 100%;
   float: right;
@@ -787,33 +799,33 @@ page .getGuideBox {
   top: 0;
   z-index: 200;
 }
-page .getGuideBox .provice {
-  width: 304rpx;
-  height: 194rpx;
+page .getGuideBox .guidsearch {
+  width: 564rpx;
+  height: 224rpx;
   position: relative;
-  top: 197rpx;
-  left: 181rpx;
+  top: 316rpx;
+  left: 30rpx;
 }
 page .getGuideBox .numberbox{
   width: 100%;
   height: 100%;
   position: relative;
 }
-page .getGuideBox .anewName {
-  width:342rpx;
-  height: 130rpx;
+page .getGuideBox .searchlabel {
+  width:420rpx;
+  height: 290rpx;
 }
 page .getGuideBox .numberbox-box {
-  width:342rpx;
+  width:420rpx;
   position: relative;
-  top: 285rpx;
-  left: 204rpx;
+  top: 400rpx;
+  left: 165rpx;
 }
 page .getGuideBox .numberbox-boxt {
-  width: 496rpx;
+  width: 430rpx;
   position: absolute;
-  top: 794rpx;
-  left: 127rpx; 
+  top: 888rpx;
+  left: 160rpx; 
 }
 page .getGuideBox .numberbox-boxr {
   width: 424rpx;
@@ -839,16 +851,32 @@ page .getGuideBox .nextGuder {
   height: 80rpx;
   margin-left: 78rpx;
 }
-page .getGuideBox  .classify {
-  width: 146rpx;
-  height: 240rpx;
+page .getGuideBox  .guidtab {
+  width: 670rpx;
+  height: 120rpx;
   position: absolute;
-  top: 468rpx;
-  left: 188rpx;
+  top: 426rpx;
+  left: 10rpx;
+}
+page .getGuideBox  .gesture {
+  overflow: visible;
+  position: absolute;
+  top: 612rpx;
+  left: 262rpx;
+}
+page .getGuideBox  .gesture .indexGuide-img{
+  width: 178rpx;
+  height: 106rpx;
+}
+page .getGuideBox  .gesture .indexGuide-imgactive{
+  width: 175rpx;
+  height: 167rpx;
+  margin-top: -78rpx;
+  margin-left: 36rpx;
 }
 page .getGuideBox .indexLeft {
-  width: 496rpx;
-  height: 130rpx;
+  width: 430rpx;
+  height: 290rpx;
 }
 
 page .getGuideBox .indexSocre {

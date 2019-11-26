@@ -30,7 +30,10 @@ Page({
     showvoice: false,
     replycomment: '欢迎发表观点',
     voicetime: 0,
-    showvoiceauto: false
+    showvoiceauto: false,
+    voicetextstatus: '',
+    content: '',
+    voiceplayimg: 'http://118.89.201.75/images/triangle.png'
     /* rect: wx.getMenuButtonBoundingClientRect() */
   },
   onLoad(options) {
@@ -104,9 +107,31 @@ Page({
   onShow() {
     app.getGuide()
     this.initRecord()
+    this.getRecordAuth()
+    if (this.data.$state.lessVoice) {
+      
+    }
   },
   onUnload() {
     this.data.$state.newGuide.lesson == 0 ? this.closeGuide() : ''
+    this.setsotrevoice()
+  },
+  onHide() {
+    this.setsotrevoice()
+  },
+  //语音存储本地
+  setsotrevoice() {
+    if (this.data.filePath && this.data.filePath != '') {
+      let lessVoice = {
+        lessId: this.data.cur.id,
+        voiceContent: this.data.content,
+        voiceFilePath: this.data.filePath,
+        voiceTime: this.data.voicetime
+      }
+      app.store.setState({
+        lessVoice
+      })
+    }
   },
   onGotUserInfo: function(e) {
     app.updateBase(e)
@@ -605,6 +630,7 @@ Page({
           keyheight: 0,
           contenLength: 0
         })
+        this.relacevoice()
       } else {
         wx.showToast({
           title: res.msg,
@@ -643,6 +669,7 @@ Page({
         })
         this.replyInfo = null
         this.replyParent = null
+        this.relacevoice()
       } else if (msg.code == -2) {
         /* 帖子已经删除 */
         this.setData({
@@ -735,11 +762,15 @@ Page({
       })
     } else {
       if (e && e.target.dataset.reply) {
+        console.log(this.replyParent, this.replyInfo)
         /* 回复别人的评论 或者 回复别人的回复  */
+        this.replyInfo == null ? '' : this.replyInfo.nickname == e.target.dataset.reply.nickname ? '' : this.setData({
+          content: ''
+        })
         this.replyParent = e.target.dataset.parent
         this.replyInfo = e.target.dataset.reply
         this.setData({
-          placeholder: '回复 @' + e.currentTarget.dataset.reply.nickname
+          placeholder: '回复 @' + e.currentTarget.dataset.reply.nickname,
         })
       } else {
         /* 评论 */
@@ -749,18 +780,11 @@ Page({
       this.setData({
         write: false,
         writeTow: true,
-        content: '',
         focus: true,
       })
     }
   },
-  showvoice() {
-    this.setData({
-      showvoice: true,
-      write: false
-    })
-  },
-  showWrite() {
+  setscrollto() {
     let system = {}
     wx.getSystemInfo({
       success: res => {
@@ -779,6 +803,9 @@ Page({
         }
       }
     })
+  },
+  showvoice() {
+    this.setscrollto()
     if (this.data.$state.userInfo.status !== 'normal') {
       wx.showModal({
         content: '由于您近期不合规操作，您的账户已被管理员禁止发帖留言，如有疑问请在个人中心联系客服处理',
@@ -786,10 +813,31 @@ Page({
       })
     } else {
       this.setData({
+        showvoice: true,
         write: false,
-        writeTow: true,
-        focus: true
       })
+    }
+  },
+  showWrite() {
+    this.setscrollto()
+    if (this.data.$state.userInfo.status !== 'normal') {
+      wx.showModal({
+        content: '由于您近期不合规操作，您的账户已被管理员禁止发帖留言，如有疑问请在个人中心联系客服处理',
+        confirmColor: '#df2020',
+      })
+    } else {
+      this.replyInfo == null ? '' : this.setData({
+        content: ''
+      })
+      this.setData({
+        write: false,
+        showvoice: false,
+        writeTow: true,
+        focus: true,
+        placeholder: '写评论'
+      })
+      this.replyInfo = null
+      this.replyParent = null
     }
   },
   keyHeight(e) {
@@ -845,6 +893,55 @@ Page({
     })
   },
   // 语音
+  // 权限询问
+  authrecord() {
+    this.setData({
+      focus: false
+    })
+    if (this.data.$state.authRecordfail) {
+      wx.showModal({
+        content: '您已拒绝授权使用麦克风录音权限，请打开获取麦克风授权！否则无法使用小程序部分功能',
+        confirmText: '去授权',
+        confirmColor: "#df2020",
+        success: res => {
+          if (res.confirm) {
+            wx.openSetting({})
+          }
+        }
+      })
+    }
+    if (!this.data.$state.authRecord) {
+      wx.authorize({
+        scope: 'scope.record',
+        success() {
+          // 用户已经同意小程序使用录音功能，后续调用 wx.startRecord 接口不会弹窗询问
+          console.log("succ auth")
+          app.store.setState({
+            authRecord: true
+          })
+        },
+        fail() {
+          console.log("fail auth")
+          app.store.setState({
+            authRecordfail: true
+          })
+        }
+      })
+    }
+  },
+  getRecordAuth: function () {
+    wx.getSetting({
+      success(res) {
+        let record = res.authSetting['scope.record']
+        app.store.setState({
+          authRecord: record || false,
+        })
+      },
+      fail(res) {
+        console.log("fail")
+      }
+    })
+  },
   /**
    * 初始化语音识别回调
    */
@@ -859,16 +956,19 @@ Page({
     // 识别结束事件
     manager.onStop = (res) => {
       // 取出录音文件识别出来的文字信息
-      let text = this.data.text + res.result.replace('。', '')
+      let text = this.data.content + res.result
       // 获取音频文件临时地址
       let filePath = res.tempFilePath
       let duration = res.duration
       if (text == '') {
-        this.showRecordEmptyTip()
+        this.setData({
+          voicetextstatus: '未能识别到文字'
+        })
         return
       }
       this.setData({
-        text,
+        content: text,
+        voicetextstatus: '',
         filePath
       })
     }
@@ -883,7 +983,8 @@ Page({
   },
   touchstart() {
     this.setData({
-      voiceActon: true
+      voiceActon: true,
+      voicetextstatus: '正在语音转文字…'
     })
     this.voicetime()
     manager.start({
@@ -905,6 +1006,36 @@ Page({
     }
     this.setData({
       voiceActon: false
+    })
+  },
+  // 语音播放
+  playvoice() {
+    innerAudioContext.src = this.data.filePath;
+    console.log(this.data.filePath)
+    innerAudioContext.play()
+    innerAudioContext.onPlay(() => {
+      this.setData({
+        voiceplayimg: 'http://118.89.201.75/images/voicepause.png'
+      })
+    })
+    innerAudioContext.onEnded(() => {
+      this.setData({
+        voiceplayimg: 'http://118.89.201.75/images/triangle.png'
+      })
+    })
+  },
+  relacevoice() {
+    this.setData({
+      showvoiceauto: false,
+      content: '',
+      voicetime: 0,
+      filePath:''
+    })
+  },
+  closevoiceBox() {
+    this.setData({
+      showvoice: false,
+      write: true
     })
   },
   // 计时器

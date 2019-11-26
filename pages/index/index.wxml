@@ -91,8 +91,8 @@
         <view class="item {{ currentTab == id ? 'active' : '' }}">{{ item.name }}</view>
       </formCode>
     </block>
-    <view class="integral" bindtap="toScore">
-      <view class="integralImg"></view>
+    <view class="tabclassify">
+      <image src="http://118.89.201.75/images/tabclassify.png"></image>
     </view>
   </scroll-view>
   <view class="skeleton" wx:for="{{5}}" wx:if="{{ !recommend }}" wx:key="{{index}}">
@@ -216,17 +216,19 @@
 <!-- wx:if="{{ $state.newGuide.index == 0 }}" -->
 <cover-view class="getGuideBox" wx:if="{{ $state.newGuide.index == 0 }}">
   <cover-view class="numberbox" wx:if="{{guideNum == 1}}">
-    <cover-image src="{{$state.imgHost}}/provice.png" class="provice"></cover-image>
+    <cover-image src="http://118.89.201.75/images/indexguidsearch.png" class="guidsearch"></cover-image>
     <cover-view class="numberbox-box" catchtap="nextGuide">
-      <cover-image src="{{$state.imgHost}}/anewName.png" class="anewName"></cover-image>
-      <cover-image src="{{$state.imgHost}}/nextGude.png" class="nextGude"></cover-image>
+      <cover-image src="http://118.89.201.75/images/indexguidsearchlabel.png" class="searchlabel"></cover-image>
     </cover-view>
   </cover-view>
   <cover-view class="numberbox" wx:if="{{guideNum == 2}}">
-    <cover-image src="{{$state.imgHost}}/indexclassify.png" class="classify"></cover-image>
+    <cover-image src="http://118.89.201.75/images/indexguidtab.png" class="guidtab"></cover-image>
+    <cover-view class="gesture">
+      <cover-image src="{{$state.imgHost}}/videoheng.png" class="indexGuide-img"></cover-image>
+      <cover-image src="/images/handleRight.gif" class="indexGuide-imgactive"></cover-image>
+    </cover-view>
     <cover-view class="numberbox-boxt" catchtap="nextGuide">
-      <cover-image src="{{$state.imgHost}}/indexLeft.png" class="indexLeft"></cover-image>
-      <cover-image src="{{$state.imgHost}}/nextGude.png" class="nextGudet"></cover-image>
+      <cover-image src="http://118.89.201.75/images/indexguidtablable.png" class="indexLeft"></cover-image>
     </cover-view>
   </cover-view>
   <cover-view class="numberbox" wx:if="{{guideNum == 3}}">

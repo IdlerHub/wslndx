@@ -138,6 +138,7 @@
   </view>
   <button class="authorize" wx:if="{{ $state.baseInfo }}" open-type="getUserInfo" bindgetuserinfo="onGotUserInfo"></button>
   <view class="issueBox" wx:if="{{write&&currentTab == 1}}" bindtap="showWrite">
+    <view class="redball" wx:if="{{showvoiceauto}}"></view>
     <image src="http://118.89.201.75/images/voicebig.png" class="bigvoice" catchtap="showvoice"></image>
     <view class="issueBox-txt">
       {{ replycomment }}
@@ -149,32 +150,42 @@
       bindblur="bindblur" maxlength="200" value="{{content}}"></textarea>
     <view class="issueBoxTow-txt">
       <view class="number">{{contenLength}}/200</view>
-      <view class="submit" catchtap="release">发布</view>
+      <view class="issueBoxTow-btn">
+        <view class="voicebtn" catchtap="showvoice">
+          <view class="redball" wx:if="{{showvoiceauto}}">
+          </view>
+          <image src="http://118.89.201.75/images/voicesmall.png"></image>
+          <view>语音</view>
+        </view>
+        <view class="submit" catchtap="release">发布</view>
+      </view>
     </view>
   </view>
   <view class="voiceBox" wx:if="{{showvoice}}">
-    <view class="voiceBoxmask"></view>
+    <view class="voiceBoxmask" catchtap="closevoiceBox"></view>
     <view class="voiceContent">
-      <text>{{placeholder}}</text>
+      <text style="color:{{content != '' ? 'rgba(46,46,46,1)': ''}}" class="placeholder" catchtap="showWrite">{{ content == '' ? placeholder : content }}</text>
       <view class="voiceaction" wx:if="{{!showvoiceauto}}">
         <view class="voice-box">
           <text wx:if="{{voicetime != 0}}">{{voicetime}}"</text>
-          <view style="background:url('http://118.89.201.75/images/voicebtnr.png');background-size:100% 100%;" class="voice-image" catchtouchstart="touchstart" catchtouchend="touchend"></view>
+          <view style="background:url('http://118.89.201.75/images/voicebtnr.png');background-size:100% 100%;" class="voice-image" catchtouchstart="touchstart" catchtouchend="touchend" wx:if="{{$state.authRecord}}"></view>
+          <view style="background:url('http://118.89.201.75/images/voicebtnr.png');background-size:100% 100%;" class="voice-image" catchtap="authrecord" catchtouchstart="authrecord" wx:else></view>
           <div class="voice-water1" wx:if="{{voiceActon}}"></div>
           <div class="voice-water1 voice-water2" wx:if="{{voiceActon}}"></div>
           <view class="voice-txt" style="height:12rpx;"> {{voiceActon? '' : '按住说话'}}</view>
         </view>
       </view>
       <view class="voiceaction" wx:else>
-        <view class="voiceauto-box">
+        <view class="voiceauto-box" catchtap="playvoice">
           <view class="voiceauto">
-            <image src="http://118.89.201.75/images/triangle.png"></image>
+            <image src="{{voiceplayimg}}"></image>
             <image src="{{voicetime < 10 ? 'http://118.89.201.75/images/combinedlong.png' : 'http://118.89.201.75/images/combinedso.png'}}"></image>
             <text>{{voicetime}}"</text>
           </view>
+          <view class="voicetextstatus" wx:if="{{voicetextstatus != ''}}">{{voicetextstatus}}</view>
         </view>
-        <view class="voiceanew">重录</view>
-        <view class="voicerelease">发布</view>
+        <view class="voiceanew" catchtap="relacevoice">重录</view>
+        <view class="voicerelease" catchtap="release">发布</view>
       </view>
     </view>
   </view>
