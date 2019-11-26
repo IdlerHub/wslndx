@@ -85,16 +85,18 @@
     <view class="integral navintegral">
     </view>
   </view>
-  <scroll-view scroll-x="true" class="nav {{ scroll ? 'fixed' : '' }}" style="top:{{ top }}px" scroll-left="{{ navScrollLeft }}" scroll-with-animation="{{ true }}" wx:else>
-    <block wx:for="{{ nav }}" wx:for-index="id" wx:for-item="item" wx:key="id">
-      <formCode bind:handler="switchNav" data-current="{{ id }}">
-        <view class="item {{ currentTab == id ? 'active' : '' }}">{{ item.name }}</view>
-      </formCode>
-    </block>
+  <view class="nav {{ scroll ? 'fixed' : '' }}" style="top:{{ top }}px" wx:else>
+    <scroll-view class="nav" style="display:flex" scroll-x="true" scroll-left="{{ navScrollLeft }}" scroll-with-animation="{{ true }}" enable-flex>
+      <block wx:for="{{ nav }}" wx:for-index="id" wx:for-item="item" wx:key="id">
+        <formCode bind:handler="switchNav" data-current="{{ id }}">
+          <view class="item {{ currentTab == id ? 'active' : '' }}">{{ item.name }}</view>
+        </formCode>
+      </block>
+    </scroll-view>
     <view class="tabclassify">
       <image src="http://118.89.201.75/images/tabclassify.png"></image>
     </view>
-  </scroll-view>
+  </view>
   <view class="skeleton" wx:for="{{5}}" wx:if="{{ !recommend }}" wx:key="{{index}}">
     <view class="skeletonBox">
       <view class="skeletonImg"></view>
@@ -104,7 +106,7 @@
       <view class="skeletonDaram"></view>
     </view>
   </view>
-  <swiper class="tab" style="height:{{ history.last_lesson && currentTab == 0 ? height + 80 : currentTab == 0 ? height + 20 : height }}px" current="{{ currentTab }}" duration="300" bindchange="switchTab">
+  <swiper class="tab" style="height:{{ height }}px" current="{{ currentTab }}" duration="300" bindchange="switchTab">
     <swiper-item class="tab-item">
       <!--推荐  -->
       <view class="wrap recommend">
@@ -196,7 +198,7 @@
   <!-- 底部tabbar -->
   <navBar path='index'></navBar>
   <!-- 学习历史 -->
-  <view class="now" wx:if="{{history.last_lesson && currentTab == 0}}" bindtap="historyTap" data-id="{{ history.last_lesson.id }}" data-title="{{ history.last_lesson.title }}" style="animation:{{ history.last_lesson && shownow && shownowt ? 'nowshow' : 'nowclose'}}  0.5s ; bottom:{{history.last_lesson && shownow && shownowt? '138rpx' : '-88rpx'}} ">
+  <view class="now" wx:if="{{history.last_lesson}}" bindtap="historyTap" data-id="{{ history.last_lesson.id }}" data-title="{{ history.last_lesson.title }}" style="animation:{{ history.last_lesson && shownow && shownowt ? 'nowshow' : 'nowclose'}}  0.5s ; bottom:{{history.last_lesson && shownow && shownowt? '138rpx' : '-88rpx'}} ">
     <image src="/images/play-red.png"></image>
     <view class="line">{{ history.last_lesson.title + "第" + history.last_lesson.sub_id + "讲" }}</view>
     <image src="http://118.89.201.75/images/nowcancle.png" catchtap="closenow"></image>

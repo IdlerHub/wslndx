@@ -11,10 +11,75 @@ Page({
     voiceActon: false,
     voiceheight: '',
     focus: true,
-    text: ''
+    text: '',
+    lessList: [{
+        add_id: 0,
+        big_image: "",
+        browse: 62197,
+        category_id: 21,
+        collection: 64120,
+        createtime: 1552911670,
+        current_sublesson_id: 0,
+        duration: 2,
+        edit_id: 0,
+        film_length_all: 603,
+        honor: null,
+        id: 123,
+        image: "https://jinling-xcx-dev.obs.cn-north-1.myhuaweicloud.com:443//uploads/images/3121797d90955e4eb9a8bc6fac575455.jpg",
+        intro: null,
+        intro_content: "<p>游有所学，精思善疑</p>",
+        lesson_count: 5,
+        name: null,
+        province: 0,
+        rec_status: 0,
+        remarks: "",
+        settop: 0,
+        share: 0,
+        show_big: 0,
+        status: 1,
+        subtitle: "游有所学，精思善疑",
+        teacher_id: 0,
+        title: "孔子游学",
+        weigh: null
+      },
+      {
+        add_id: 0,
+        big_image: "",
+        browse: 65446,
+        category_id: 21,
+        collection: 61230,
+        createtime: 1552910916,
+        current_sublesson_id: 0,
+        duration: 2,
+        edit_id: 0,
+        film_length_all: 730,
+        honor: null,
+        id: 121,
+        image: "https://jinling-xcx-dev.obs.cn-north-1.myhuaweicloud.com:443//uploads/images/246bb5fc204c57f2becc8809a0ab9beb.jpg",
+        intro: null,
+        intro_content: "<p>历史中存在太多静等着我们去发现的文化</p>",
+        lesson_count: 60,
+        name: null,
+        province: 0,
+        rec_status: 0,
+        remarks: "",
+        settop: 0,
+        share: 0,
+        show_big: 0,
+        status: 1,
+        subtitle: "历史中存在太多静等着我们去发现的文化",
+        teacher_id: 0,
+        title: "文史江湖",
+        weigh: null
+      }
+    ]
   },
   onLoad: function(options) {
     this.initRecord()
+    this.param = {
+      page: 1,
+      pageSize: 10
+    }
   },
   onShow() {
     this.getRecordAuth()
@@ -105,6 +170,7 @@ Page({
       // 取出录音文件识别出来的文字信息
       let text = this.data.text + res.result.replace('。', '')
       // 获取音频文件临时地址
+      let filePath = res.tempFilePath
       let duration = res.duration
       if (text == '') {
         this.showRecordEmptyTip()
@@ -120,11 +186,38 @@ Page({
         // util.showTips('录音时间过短')
         return
       }
+      app.circle
+        .upload(filePath, 2)
+        .then(msg => {
+          msg = JSON.parse(msg)
+          console.log(msg)
+          if (msg.code == 1) {
+            this.setData({
+              "param.video": msg.data.url,
+              "param.cover": msg.data.cover,
+              "param.asset_id": msg.data.asset_id,
+              media_type: type
+            })
+            this.judge()
+          } else {
+            wx.showToast({
+              title: ms.msg,
+              icon: "none",
+              duration: 1500
+            })
+          }
+        })
+        .catch(err => {
+          wx.showToast({
+            title: "上传失败！",
+            icon: "none",
+            duration: 1500
+          })
+        })
       this.setData({
         text
       })
     }
-
     // 识别错误事件
     manager.onError = (res) => {
       this.setData({
@@ -183,10 +276,8 @@ Page({
   },
   txtchange(e) {
     console.log(e.detail.value)
-    this.data.text == '' ? this.setData({
+    this.setData({
       text: e.detail.value
-    }) : this.setData({
-      text: this.data.text + e.detail.value
     })
   },
   cleartxt() {

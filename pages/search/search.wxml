@@ -2,27 +2,46 @@
 <view class="container">
   <view class="search-top" wx:if="{{focus}}">
     <view class="search-box">
-        <image src="http://118.89.201.75/images/searchp.png"></image>
-        <input placeholder="搜索课程名称" placeholder-style="color:#999;"  confirm-type="search"  type="text" class="search-txt" focus="focus" bindkeyboardheightchange="keychange" value="{{text}}" bindinput="txtchange"></input>
-        <image src="http://118.89.201.75/images/searchcancle.png" catchtap="cleartxt" wx:if="{{text != ''}}"></image>
+      <image src="http://118.89.201.75/images/searchp.png"></image>
+      <form>
+        <input placeholder="搜索课程名称" placeholder-style="color:#999;" confirm-type="search" type="text" class="search-txt" focus="focus" bindkeyboardheightchange="keychange" value="{{text}}" bindinput="txtchange"></input>
+        <button wx:if="{{text != ''}}" form-type="reset" catchtap="cleartxt"></button> 
+      </form>
     </view>
     <view class="cancle" bindtap="backhome">取消</view>
   </view>
   <view class="search-top" wx:else>
     <view class="search-box">
-        <image src="http://118.89.201.75/images/searchp.png"></image>
-        <input placeholder="搜索课程名称" placeholder-style="color:#999;"  confirm-type="search"  type="text" class="search-txt" bindkeyboardheightchange="keychange" value="{{text}}"></input>
+      <image src="http://118.89.201.75/images/searchp.png"></image>
+      <input placeholder="搜索课程名称" placeholder-style="color:#999;" confirm-type="search" type="text" class="search-txt" bindkeyboardheightchange="keychange" value="{{text}}"></input>
     </view>
     <view class="cancle" bindtap="backhome">取消</view>
   </view>
+  <view class="wrap">
+    <view catchtap="detailTap" wx:for="{{ lessList }}" wx:key="index" class="item" data-item="{{ item }}">
+      <view class="left">
+        <image class="poster" mode="aspectFill" src="{{ item.image }}"></image>
+        <image class="icon" mode="aspectFill" src="{{ $state.imgHost }}/play.png"></image>
+      </view>
+      <view class="right">
+        <text class="line name">{{ item.title }}</text>
+        <text class="line actor" wx:if="{{ item.teacher_id == 0 }}">{{ item.subtitle }}</text>
+        <text class="line actor" wx:else>{{ item.name }}-{{ item.honor }}</text>
+        <text class="line info">
+          <text class="dramaNum"><text class="key">剧集</text>{{ item.lesson_count }}集</text>
+        <text class="playNum"><text class="key">播放</text>{{ item.thousand || item.browse }}</text>
+        </text>
+      </view>
+    </view>
+  </view>
   <view class="voice-box" style="bottom:{{voiceheight}}px" wx:if="{{$state.authRecord}}">
-      <view style="background:url({{voiceImg}});background-size:100% 100%;" class="voice-image" catchtouchstart="touchstart" catchtouchend="touchend"></view>
-      <div class="voice-water1" wx:if="{{voiceActon}}"></div>
-      <div class="voice-water1 voice-water2" wx:if="{{voiceActon}}"></div>
-      <view class="voice-txt" style="height:12rpx;"> {{voiceActon? '' : '按住说话'}}</view>
+    <view style="background:url({{voiceImg}});background-size:100% 100%;" class="voice-image" catchtouchstart="touchstart" catchtouchend="touchend"></view>
+    <div class="voice-water1" wx:if="{{voiceActon}}"></div>
+    <div class="voice-water1 voice-water2" wx:if="{{voiceActon}}"></div>
+    <view class="voice-txt" style="height:12rpx;"> {{voiceActon? '' : '按住说话'}}</view>
   </view>
   <view class="voice-box" style="bottom:{{voiceheight}}px" wx:else>
-      <view style="background:url({{voiceImg}});background-size:100% 100%;" class="voice-image" bindtap="authrecord" catchtouchstart="authrecord"></view>
-      <view class="voice-txt" style="height:12rpx;"> {{voiceActon? '' : '按住说话'}}</view>
+    <view style="background:url({{voiceImg}});background-size:100% 100%;" class="voice-image" bindtap="authrecord" catchtouchstart="authrecord"></view>
+    <view class="voice-txt" style="height:12rpx;"> {{voiceActon? '' : '按住说话'}}</view>
   </view>
 </view>

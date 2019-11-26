@@ -25,7 +25,6 @@ page {
   box-sizing: border-box;
   display: flex;
   align-items: center;
-  justify-content: space-between;
 }
 
 .container .search-top .search-box image:nth-child(1) {
@@ -34,16 +33,36 @@ page {
   margin-right:23rpx;
 }
 
-.container .search-top .search-box image:nth-child(3) {
+/* .container .search-top .search-box image:nth-child(3) {
   width: 36rpx;
   height: 36rpx;
   margin-left: 15rpx;
+} */
+.container .search-top .search-box  form{
+  display: flex;
+  flex: 1;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: row;
+  position: relative;
 }
-
+.container .search-top .search-box button {
+  width: 36rpx;
+  height: 36rpx;
+  background: url('http://118.89.201.75/images/searchcancle.png') no-repeat center;
+  background-size: 100% 100%;
+  position: absolute;
+  right: 0;
+  top: 50%;
+  margin-top: -18rpx;
+  z-index: 5;
+}
 .container .search-top .search-txt {
   flex: 1;
   font-size: 36rpx;
   color: rgba(46, 46, 46, 1);
+  padding-top: 5rpx;
+  padding-right: 8rpx;
 }
 
 .container .search-top .cancle {
@@ -103,3 +122,71 @@ page {
     opacity: 0;
   }
 }
+.container .wrap {
+  padding: 0 30rpx;
+  box-sizing: border-box;
+}
+.wrap .item {
+  display: flex;
+  align-items: center;
+  padding: 30rpx 0;
+  box-sizing: border-box;
+  border-bottom: 1rpx solid #e9e9e9;
+}
+.wrap .item:last-of-type {
+  border-bottom: none;
+}
+.wrap .item .left {
+  position: relative;
+  width: 260rpx;
+  height: 160rpx;
+}
+.wrap .left .poster {
+  width: 260rpx;
+  height: 160rpx;
+  border-radius: 8rpx;
+}
+.wrap .left .icon {
+  position: absolute;
+  width: 52rpx;
+  height: 52rpx;
+  margin: auto;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  opacity: 0.7;
+}
+.wrap .right {
+  flex: 1;
+  width: 410rpx;
+  margin-left: 20rpx;
+}
+.wrap .right .name {
+  line-height: 53rpx;
+  font-size: 38rpx;
+  color:rgba(46,46,46,1);
+  letter-spacing: 0;
+  font-weight: 500;
+}
+.wrap .right .actor {
+  line-height: 37rpx;
+  font-size: 26rpx;
+  color: #999;
+  letter-spacing: 0;
+  margin: 10rpx 0;
+}
+.wrap .right .info {
+  line-height: 40rpx;
+  font-size: 28rpx;
+  color: #bfbfbf;
+  letter-spacing: 0;
+}
+.wrap .right .info .key {
+  color: #999;
+  margin-right: 12rpx;
+}
+.playNum {
+  margin-left: 40rpx;
+}
+

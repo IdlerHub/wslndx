@@ -148,6 +148,11 @@ function getDayTaskStatus(param) {
   return httpService.post("User/getDayTaskStatus", param)
 }
 
+//POST User/userLessonCategory 获取用户课程用户分类
+function getLessonCategory(param) {
+  return httpService.post("User/userLessonCategory", param)
+}
+
 module.exports = {
   wxLoginCode,
   getAuthCode,
@@ -171,5 +176,6 @@ module.exports = {
   guideRecordAdd,
   dialog,
   getNewTaskStatus,
-  getDayTaskStatus
+  getDayTaskStatus,
+  getLessonCategory
 }

@@ -180,7 +180,7 @@ Page({
     })
   },
   getCategory() {
-    return app.classroom.category().then(msg => {
+    app.classroom.category().then(msg => {
       if (msg.code == 1) {
         msg.data.forEach((v, i) => {
           let t = v.lists.length
@@ -189,6 +189,20 @@ Page({
         })
         this.setData({
           category: msg.data
+        })
+      }
+    })
+    app.user.getLessonCategory().then(msg => {
+      if (msg.code == 1) {
+        console.log(msg.data)
+        let arr = this.data.nav
+        msg.data.user_lesson_category.forEach(i => {
+          i['class'] = '.category'
+          arr.push(i)
+        })
+        this.setData({
+          categorytotle: msg.data,
+          nav: arr
         })
       }
     })

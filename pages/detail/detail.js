@@ -959,6 +959,7 @@ Page({
       let text = this.data.content + res.result
       // 获取音频文件临时地址
       let filePath = res.tempFilePath
+      console.log(filePath)
       let duration = res.duration
       if (text == '') {
         this.setData({
