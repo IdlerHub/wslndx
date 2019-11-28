@@ -94,6 +94,11 @@ function sublessons(param) {
   return httpService.post("Classroom/sublessons", param)
 }
 
+//POST Classroom/search 课程搜索
+function lessSearch(param) {
+  return httpService.post("Classroom/search", param)
+}
+
 module.exports = {
   recommend,
   detail,
@@ -112,5 +117,6 @@ module.exports = {
   delReply,
   replyList,
   sublessonfinish,
-  sublessons
+  sublessons,
+  lessSearch
 }

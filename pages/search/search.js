@@ -12,77 +12,16 @@ Page({
     voiceheight: '',
     focus: true,
     text: '',
-    lessList: [{
-        add_id: 0,
-        big_image: "",
-        browse: 62197,
-        category_id: 21,
-        collection: 64120,
-        createtime: 1552911670,
-        current_sublesson_id: 0,
-        duration: 2,
-        edit_id: 0,
-        film_length_all: 603,
-        honor: null,
-        id: 123,
-        image: "https://jinling-xcx-dev.obs.cn-north-1.myhuaweicloud.com:443//uploads/images/3121797d90955e4eb9a8bc6fac575455.jpg",
-        intro: null,
-        intro_content: "<p>游有所学，精思善疑</p>",
-        lesson_count: 5,
-        name: null,
-        province: 0,
-        rec_status: 0,
-        remarks: "",
-        settop: 0,
-        share: 0,
-        show_big: 0,
-        status: 1,
-        subtitle: "游有所学，精思善疑",
-        teacher_id: 0,
-        title: "孔子游学",
-        weigh: null
-      },
-      {
-        add_id: 0,
-        big_image: "",
-        browse: 65446,
-        category_id: 21,
-        collection: 61230,
-        createtime: 1552910916,
-        current_sublesson_id: 0,
-        duration: 2,
-        edit_id: 0,
-        film_length_all: 730,
-        honor: null,
-        id: 121,
-        image: "https://jinling-xcx-dev.obs.cn-north-1.myhuaweicloud.com:443//uploads/images/246bb5fc204c57f2becc8809a0ab9beb.jpg",
-        intro: null,
-        intro_content: "<p>历史中存在太多静等着我们去发现的文化</p>",
-        lesson_count: 60,
-        name: null,
-        province: 0,
-        rec_status: 0,
-        remarks: "",
-        settop: 0,
-        share: 0,
-        show_big: 0,
-        status: 1,
-        subtitle: "历史中存在太多静等着我们去发现的文化",
-        teacher_id: 0,
-        title: "文史江湖",
-        weigh: null
-      }
-    ]
+    lessList: []
   },
   onLoad: function(options) {
-    this.initRecord()
     this.param = {
-      page: 1,
-      pageSize: 10
+      page_size: 10
     }
   },
   onShow() {
     this.getRecordAuth()
+    this.initRecord()
   },
 
   /**
@@ -96,7 +35,7 @@ Page({
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function() {
-
+    this.lesssearch()
   },
 
   /**
@@ -104,6 +43,16 @@ Page({
    */
   onShareAppMessage: function() {
 
+  },
+  detailTap: function (e) {
+    let title = e.currentTarget.dataset.item.title.replace('<p style="width:410rpx;display: block;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">', '').replace('</p>', '').replace('<span style="color:#DF2020">', '').replace('</span>', '')
+    wx.navigateTo({
+      url: `../detail/detail?id=${e.currentTarget.dataset.item.id}&name=${title}`
+    })
+    //用于数据统计
+    app.aldstat.sendEvent("搜索课程点击", {
+      name: e.currentTarget.dataset.item.title
+    })
   },
   // 权限询问
   authrecord() {
@@ -168,9 +117,8 @@ Page({
     // 识别结束事件
     manager.onStop = (res) => {
       // 取出录音文件识别出来的文字信息
-      let text = this.data.text + res.result.replace('。', '')
+      let text = this.data.text + res.result.replace('。', '').replace('，', '')
       // 获取音频文件临时地址
-      let filePath = res.tempFilePath
       let duration = res.duration
       if (text == '') {
         this.showRecordEmptyTip()
@@ -186,37 +134,13 @@ Page({
         // util.showTips('录音时间过短')
         return
       }
-      app.circle
-        .upload(filePath, 2)
-        .then(msg => {
-          msg = JSON.parse(msg)
-          console.log(msg)
-          if (msg.code == 1) {
-            this.setData({
-              "param.video": msg.data.url,
-              "param.cover": msg.data.cover,
-              "param.asset_id": msg.data.asset_id,
-              media_type: type
-            })
-            this.judge()
-          } else {
-            wx.showToast({
-              title: ms.msg,
-              icon: "none",
-              duration: 1500
-            })
-          }
-        })
-        .catch(err => {
-          wx.showToast({
-            title: "上传失败！",
-            icon: "none",
-            duration: 1500
-          })
-        })
       this.setData({
         text
       })
+      this.param = {
+        page_size:10
+      }
+      this.lesssearch()
     }
     // 识别错误事件
     manager.onError = (res) => {
@@ -256,16 +180,14 @@ Page({
     })
     this.setData({
       voiceImg: 'http://118.89.201.75/images/voicebtnr.png',
-      voiceActon: true,
-      focus: false
+      voiceActon: true
     })
   },
   touchend() {
     manager.stop()
     this.setData({
       voiceImg: 'http://118.89.201.75/images/voicebtn.png',
-      voiceActon: false,
-      focus: true
+      voiceActon: false
     })
   },
   keychange(e) {
@@ -283,10 +205,36 @@ Page({
   cleartxt() {
     this.setData({
       text: '',
-      focus: false
+      focus: false,
+      lessList:[]
     })
     this.setData({
       focus: true
+    })
+  },
+  earchlesss(){
+    this.param = {
+      page_size:10
+    }
+    this.lesssearch()
+  },
+  lesssearch(list) {
+    this.param['keyword'] = this.data.text
+    let lesslist = list || this.data.lessList
+    app.classroom.lessSearch(this.param).then(res => {
+      if (res.code == 1) {
+        let lessList = res.data.data
+        this.param['scroll_id'] = res.data.scroll_id
+        lessList.forEach(item => {
+          item.title = `<p style="width:410rpx;display: block;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">${item.title.replace('<highlight>', '<span style="color:#DF2020">').replace('</highlight>', '</span>')}</p>`
+          item.subtitle = `<p style="width:410rpx;display: block;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">${item.subtitle.replace('<highlight>', '<span style="color:#DF2020">').replace('</highlight>', '</span>')}</p>`
+          item.bw = app.util.tow(item.browse)
+        })
+        lesslist.push(...lessList)
+        this.setData({
+          lessList: lesslist
+        })
+      }
     })
   }
 })

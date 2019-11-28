@@ -50,7 +50,8 @@ let store = new Store({
     shareImgurl: '',
     shareTitle:'',
     recommend:'',
-    playVedio: false
+    playVedio: false,
+    lessDiscussion:{}
   },
   pageLisener: {
     onLoad(opts) {

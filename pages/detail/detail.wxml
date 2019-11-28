@@ -8,6 +8,9 @@
     </cover-view>
     <cover-image wx:if="{{ !playing }}" mode="widthFix" src="{{ detail.image }}" class="poster" bindtap="recordAdd"></cover-image>
     <cover-image wx:if="{{ !playing }}" mode="aspectFill" src="{{ $state.imgHost }}/play.png" class="play" bindtap="recordAdd"></cover-image>
+    <!-- <cover-view class="videomask">
+
+    </cover-view> -->
   </video>
   <view class="info">
     <view class="top">
@@ -138,22 +141,20 @@
   </view>
   <button class="authorize" wx:if="{{ $state.baseInfo }}" open-type="getUserInfo" bindgetuserinfo="onGotUserInfo"></button>
   <view class="issueBox" wx:if="{{write&&currentTab == 1}}" bindtap="showWrite">
-    <view class="redball" wx:if="{{showvoiceauto}}"></view>
-    <image src="http://118.89.201.75/images/voicebig.png" class="bigvoice" catchtap="showvoice"></image>
-    <view class="issueBox-txt">
-      {{ replycomment }}
+    <image src="http://118.89.201.75/images/voicebig.png" class="bigvoice" catchtap="showvoice" data-type="content"></image>
+    <view class="issueBox-txt" style="color:{{content != '' ? 'rgba(46,46,46,1)': ''}}">
+      {{ content != '' ? content : replycomment }}
     </view>
     <view class="submit">发布</view>
   </view>
-  <view class="issueBoxTow" style="bottom:{{ keyHeight ? keyheight : 0}}px" wx:if="{{writeTow&&currentTab == 1}}">
-    <textarea placeholder="{{$state.newGuide.lesson == 0 ? '' : placeholder }}" fixed show-confirm-bar="{{false}}" cursor-spacing="190rpx" placeholder-class="placeholder" bindinput="input" bindkeyboardheightchange='keyHeight' adjust-position="{{false}}" focus="{{focus}}"
-      bindblur="bindblur" maxlength="200" value="{{content}}"></textarea>
+  <view class="issueBoxTow" style="bottom :{{ keyHeight ? keyheight : 0}}px;height:{{replyplaceholder != '' ? '181' : ''}}px" wx:if="{{writeTow&&currentTab == 1}}">
+    <text class="replayplaceholder" wx:if="{{replyplaceholder != ''}}">{{replyplaceholder}}</text>
+    <textarea placeholder="{{$state.newGuide.lesson == 0 ? '' : placeholder }}" fixed show-confirm-bar="{{false}}"  placeholder-class="placeholder" bindinput="input" bindkeyboardheightchange='keyHeight' adjust-position="{{false}}" focus="{{focus}}" 
+      bindblur="bindblur" maxlength="200" value="{{replyshow ? replycontent: content}}" cursor-spacing="190rpx"></textarea>
     <view class="issueBoxTow-txt">
       <view class="number">{{contenLength}}/200</view>
       <view class="issueBoxTow-btn">
         <view class="voicebtn" catchtap="showvoice">
-          <view class="redball" wx:if="{{showvoiceauto}}">
-          </view>
           <image src="http://118.89.201.75/images/voicesmall.png"></image>
           <view>语音</view>
         </view>
@@ -164,7 +165,9 @@
   <view class="voiceBox" wx:if="{{showvoice}}">
     <view class="voiceBoxmask" catchtap="closevoiceBox"></view>
     <view class="voiceContent">
-      <text style="color:{{content != '' ? 'rgba(46,46,46,1)': ''}}" class="placeholder" catchtap="showWrite">{{ content == '' ? placeholder : content }}</text>
+      <text class="replyplaceholder" wx:if="{{replyshow}}">{{replyplaceholder}}</text>
+      <text style="color:{{content != '' && !replyshow ? 'rgba(46,46,46,1)': replycontent !== '' && replyshow ? 'rgba(46,46,46,1)' : ''}}" class="placeholder" catchtap="showWrite" data-type="voice" wx:if="{{!replyshow}}">{{ content == '' ? placeholder : content }}</text>
+      <text style="color:{{content != '' && !replyshow ? 'rgba(46,46,46,1)': replycontent !== '' && replyshow ? 'rgba(46,46,46,1)' : ''}}" class="placeholder" catchtap="showWrite" data-type="voice" wx:else>{{ replycontent == '' ? placeholder : replycontent }}</text>
       <view class="voiceaction" wx:if="{{!showvoiceauto}}">
         <view class="voice-box">
           <text wx:if="{{voicetime != 0}}">{{voicetime}}"</text>
@@ -199,3 +202,5 @@
     <cover-image class="detailGuide-img" src="{{$state.imgHost}}/discussion.png" style="top:{{ detail.current_sublesson_id != 0 && !hideRecode ? 738 : '' }}rpx"></cover-image>
   </cover-view>
 </view>
+<!-- 积分动画 -->
+<!-- <integralAnimation integral="+20 积分" integralContent="每日完成短视频点赞"></integralAnimation> -->

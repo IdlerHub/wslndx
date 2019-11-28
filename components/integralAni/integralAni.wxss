@@ -1,0 +1,23 @@
+/* components/integralAni/integralAni.wxss */
+.integralmark {
+  width: 100%;
+  height: 100%;
+  background:rgba(0,0,0,0.65);
+  position: fixed;
+  top: 0;
+}
+.integralmark  .integraimg {
+  width: 360rpx;
+  height: 360rpx;
+  background: url("https://hwcdn.jinlingkeji.cn/images/pro/IntegralAnimation.png");
+  animation: ani steps(22, end) infinite 1s 1s;
+  position: absolute;
+  top: 390rpx;
+  left: 50%;
+  margin-left: -180rpx;
+}
+@keyframes integraani {
+  0% {
+    background-position: 0%; }
+  100% {
+    background-position: 100%; } }

@@ -29,11 +29,14 @@ Page({
     placeholder: '写评论',
     showvoice: false,
     replycomment: '欢迎发表观点',
+    replyplaceholder:'',
     voicetime: 0,
     showvoiceauto: false,
     voicetextstatus: '',
     content: '',
-    voiceplayimg: 'http://118.89.201.75/images/triangle.png'
+    voivetext:'',
+    voiceplayimg: 'http://118.89.201.75/images/triangle.png',
+    replyshow:false
     /* rect: wx.getMenuButtonBoundingClientRect() */
   },
   onLoad(options) {
@@ -103,30 +106,29 @@ Page({
       pageSize: 10,
       sort: this.data.sort
     }
+    if (this.data.$state.lessDiscussion[options.id]) {
+      this.setData({
+        content: this.data.$state.lessDiscussion[options.id].replycontent,
+        contenLength: this.data.$state.lessDiscussion[options.id].replycontent.length
+      })
+    }
   },
   onShow() {
     app.getGuide()
     this.initRecord()
     this.getRecordAuth()
-    if (this.data.$state.lessVoice) {
-      
-    }
   },
   onUnload() {
     this.data.$state.newGuide.lesson == 0 ? this.closeGuide() : ''
-    this.setsotrevoice()
   },
   onHide() {
-    this.setsotrevoice()
   },
   //语音存储本地
   setsotrevoice() {
     if (this.data.filePath && this.data.filePath != '') {
       let lessVoice = {
         lessId: this.data.cur.id,
-        voiceContent: this.data.content,
-        voiceFilePath: this.data.filePath,
-        voiceTime: this.data.voicetime
+        voiceContent: this.data.content
       }
       app.store.setState({
         lessVoice
@@ -201,15 +203,17 @@ Page({
     this.getSublessons(this.data.sublessons)
   },
   ended() {
+    this.data.sublessons.forEach(item => {
+      item.id == this.data.cur.id ? item.played = 1 : ''
+    })
     this.setData({
-      playing: false
+      playing: false,
+      sublessons: this.data.sublessons
     })
     let param = {
       lesson_id: this.data.detail.id,
       sublesson_id: this.data.cur.id
     }
-    console.log(param)
-    let show = true
     app.classroom.sublessonfinish(param).then(res => {
       if (res.code == 1) {
         if (res.data.is_first == 'first') {
@@ -351,48 +355,48 @@ Page({
       sublesson_id: this.data.cur.id
     }
     let that = this
-    if (this.data.$state.flow) {
+    // if (this.data.$state.flow) {
       that.recordAddVedio(param)
-    } else {
-      wx.startWifi({
-        success: res => {
-          wx.getConnectedWifi({
-            success: res => {
-              console.log(res)
-              app.playVedio('wifi')
-              that.recordAddVedio(param)
-            },
-            fail: res => {
-              console.log(res)
-              wx.showModal({
-                content: '您当前不在Wi-Fi环境，继续播放将会产生流量，是否选择继续播放?',
-                confirmText: '是',
-                cancelText: '否',
-                confirmColor: '#DF2020',
-                success(res) {
-                  if (res.confirm) {
-                    app.playVedio('flow')
-                    that.recordAddVedio(param)
-                  } else if (res.cancel) {
-                    console.log('用户点击取消')
-                  }
-                }
-              })
-            }
-          })
-          wx.stopWifi({
-            success: res => {
-              console.log('wifi模块关闭成功')
-            }
-          })
-        },
-      })
-    }
+    // } else {
+    //   wx.startWifi({
+    //     success: res => {
+    //       wx.getConnectedWifi({
+    //         success: res => {
+    //           console.log(res)
+    //           app.playVedio('wifi')
+    //           that.recordAddVedio(param)
+    //         },
+    //         fail: res => {
+    //           console.log(res)
+    //           wx.showModal({
+    //             content: '您当前不在Wi-Fi环境，继续播放将会产生流量，是否选择继续播放?',
+    //             confirmText: '是',
+    //             cancelText: '否',
+    //             confirmColor: '#DF2020',
+    //             success(res) {
+    //               if (res.confirm) {
+    //                 app.playVedio('flow')
+    //                 that.recordAddVedio(param)
+    //               } else if (res.cancel) {
+    //                 console.log('用户点击取消')
+    //               }
+    //             }
+    //           })
+    //         }
+    //       })
+    //       wx.stopWifi({
+    //         success: res => {
+    //           console.log('wifi模块关闭成功')
+    //         }
+    //       })
+    //     },
+    //   })
+    // }
   },
   recordAddVedio(param) {
     app.classroom.recordAdd(param).then(msg => {
       if (msg.code == 1) {
-        this.getDetail().then(() => {
+        // this.getDetail().then(() => {
           this.getProgress()
           this.videoContext.play()
           this.setData({
@@ -400,7 +404,7 @@ Page({
             hideRecode: true
           })
           app.addVisitedNum(`k${this.data.cur.id}`)
-        })
+        // })
       }
     })
   },
@@ -574,7 +578,7 @@ Page({
   },
   // 发布评论
   release() {
-    if (!!this.data.content.trim()) {
+    if (!!this.data.content.trim() || !!this.data.replycontent.trim()) {
       if (this.replyParent) {
         /* 回复别人的回复 */
         let params = {
@@ -582,7 +586,7 @@ Page({
           comment_id: this.replyParent,
           reply_type: 2,
           reply_id: this.replyInfo.reply_id,
-          reply_content: this.data.content,
+          reply_content: this.data.replycontent,
           to_user: this.replyInfo.reply_user_id
         }
         this.reply(params)
@@ -594,7 +598,7 @@ Page({
           comment_id: this.replyInfo.id,
           reply_type: 1,
           reply_id: -1,
-          reply_content: this.data.content,
+          reply_content: this.data.replycontent,
           to_user: this.replyInfo.uid
         }
         this.reply(params)
@@ -622,6 +626,11 @@ Page({
         })
         this.comParam.page = 1
         this.getComment([])
+        let lessDiscussion = this.data.$state.lessDiscussion
+        lessDiscussion[this.data.detail.id].replycontent = ""
+        app.store.setState({
+          lessDiscussion
+        })
         this.setData({
           content: "",
           write: true,
@@ -657,10 +666,22 @@ Page({
           icon: "success",
           duration: 1500
         })
+        let lessDiscussion = this.data.$state.lessDiscussion
+        if (this.replyParent) {
+          lessDiscussion[this.data.detail.id].replyParent[this.replyParent] = ''
+          app.store.setState({
+            lessDiscussion
+          })
+        } else {
+          lessDiscussion[this.data.detail.id].replyInfo[this.replyInfo.id] = ''
+          app.store.setState({
+            lessDiscussion
+          })
+        }
         this.comParam.page = 1
         this.getComment([])
         this.setData({
-          content: "",
+          replycontent: "",
           write: true,
           writeTow: false,
           focus: false,
@@ -735,12 +756,35 @@ Page({
     })
   },
   input(e) {
-    this.setData({
-      content: e.detail.value
-    })
-    this.setData({
-      contenLength: e.detail.value.length
-    })
+    if (this.data.replyshow) {
+      this.setData({
+        replycontent: e.detail.value,
+        contenLength: e.detail.value.length
+      })
+      let lessDiscussion = this.data.$state.lessDiscussion
+      lessDiscussion[this.data.detail.id] ? '' : lessDiscussion[this.data.detail.id] = {}
+      if (this.replyParent) {
+        lessDiscussion[this.data.detail.id]['replyParent'] ? '' : lessDiscussion[this.data.detail.id]['replyParent'] = {}
+        lessDiscussion[this.data.detail.id]['replyParent'][this.replyParent] = this.data.replycontent
+      } else if (this.replyInfo) {
+        lessDiscussion[this.data.detail.id]['replyInfo'] ? '' : lessDiscussion[this.data.detail.id]['replyInfo'] = {}
+        lessDiscussion[this.data.detail.id]['replyInfo'][this.replyInfo.id] = this.data.replycontent
+      }
+      app.store.setState({
+        lessDiscussion
+      })
+    } else {
+      this.setData({
+        content: e.detail.value,
+        contenLength: e.detail.value.length
+      })
+      let lessDiscussion = this.data.$state.lessDiscussion
+      lessDiscussion[this.data.detail.id] ? '' : lessDiscussion[this.data.detail.id] = {}
+      lessDiscussion[this.data.detail.id]['replycontent'] = this.data.content
+      app.store.setState({
+        lessDiscussion
+      })
+    }
   },
   toCommentDetail(e) {
     let vm = this
@@ -755,23 +799,68 @@ Page({
     })
   },
   show(e) {
-    console.log(e)
     if (this.data.$state.userInfo.status !== 'normal') {
       wx.showModal({
         content: '由于您近期不合规操作，您的账户已被管理员禁止发帖留言，如有疑问请在个人中心联系客服处理'
       })
     } else {
       if (e && e.target.dataset.reply) {
-        console.log(this.replyParent, this.replyInfo)
         /* 回复别人的评论 或者 回复别人的回复  */
-        this.replyInfo == null ? '' : this.replyInfo.nickname == e.target.dataset.reply.nickname ? '' : this.setData({
-          content: ''
-        })
         this.replyParent = e.target.dataset.parent
         this.replyInfo = e.target.dataset.reply
-        this.setData({
-          placeholder: '回复 @' + e.currentTarget.dataset.reply.nickname,
-        })
+        if (this.replyParent == null) {
+          if (this.data.$state.lessDiscussion[this.data.detail.id]) {
+            if (this.data.$state.lessDiscussion[this.data.detail.id].replyInfo) {
+              this.data.$state.lessDiscussion[this.data.detail.id].replyInfo[this.replyInfo.id] ?
+              this.setData({
+                replycontent: this.data.$state.lessDiscussion[this.data.detail.id].replyInfo[this.replyInfo.id],
+                replyplaceholder: '回复 ' + e.currentTarget.dataset.reply.nickname,
+                contenLength: this.data.$state.lessDiscussion[this.data.detail.id].replyInfo[this.replyInfo.id].length
+                }) : this.setData({
+                  replycontent: '',
+                  replyplaceholder: '回复 ' + e.currentTarget.dataset.reply.nickname,
+                  contenLength: 0
+                })
+            } else {
+              this.setData({
+                replycontent: '',
+                replyplaceholder: '回复 ' + e.currentTarget.dataset.reply.nickname,
+                contenLength: 0
+              })
+            }
+          } else {
+            this.setData({
+              replycontent: '',
+              replyplaceholder: '回复 ' + e.currentTarget.dataset.reply.nickname,
+              contenLength:0
+            })
+          }
+        } else if (this.data.$state.lessDiscussion[this.data.detail.id]) {
+          if (this.data.$state.lessDiscussion[this.data.detail.id].replyParent) {
+            this.data.$state.lessDiscussion[this.data.detail.id].replyParent[this.replyParent] ?
+            this.setData({
+              replycontent: this.data.$state.lessDiscussion[this.data.detail.id].replyParent[this.replyParent],
+              replyplaceholder: '回复 ' + e.currentTarget.dataset.reply.nickname,
+              contenLength: this.data.$state.lessDiscussion[this.data.detail.id].replyParent[this.replyParent].length
+              }) : this.setData({
+                replycontent: '',
+                replyplaceholder: '回复 ' + e.currentTarget.dataset.reply.nickname,
+                contenLength: 0
+              })
+          } else {
+            this.setData({
+              replycontent: '',
+              replyplaceholder: '回复 ' + e.currentTarget.dataset.reply.nickname,
+              contenLength:0
+            })
+          }
+        } else {
+          this.setData({
+            replycontent: '',
+            replyplaceholder: '回复 ' + e.currentTarget.dataset.reply.nickname,
+          })
+        }
+          
       } else {
         /* 评论 */
         this.replyInfo = null
@@ -781,6 +870,7 @@ Page({
         write: false,
         writeTow: true,
         focus: true,
+        replyshow: true
       })
     }
   },
@@ -804,7 +894,7 @@ Page({
       }
     })
   },
-  showvoice() {
+  showvoice(e) {
     this.setscrollto()
     if (this.data.$state.userInfo.status !== 'normal') {
       wx.showModal({
@@ -812,13 +902,23 @@ Page({
         confirmColor: '#df2020',
       })
     } else {
-      this.setData({
-        showvoice: true,
-        write: false,
-      })
+      if (!e.target.dataset.type) {
+        this.setData({
+          showvoice: true,
+          write: false,
+        })
+      } else {
+        this.setData({
+          showvoice: true,
+          write: false,
+          replyshow: false
+        })
+        this.replyInfo = null
+        this.replyParent = null
+      }
     }
   },
-  showWrite() {
+  showWrite(e) {
     this.setscrollto()
     if (this.data.$state.userInfo.status !== 'normal') {
       wx.showModal({
@@ -826,18 +926,29 @@ Page({
         confirmColor: '#df2020',
       })
     } else {
-      this.replyInfo == null ? '' : this.setData({
-        content: ''
-      })
-      this.setData({
-        write: false,
-        showvoice: false,
-        writeTow: true,
-        focus: true,
-        placeholder: '写评论'
-      })
-      this.replyInfo = null
-      this.replyParent = null
+      if (e.target.dataset.type) {
+        this.setData({
+          write: false,
+          showvoice: false,
+          writeTow: true,
+          focus: true,
+          showvoiceauto: false,
+          voicetime: 0
+        })
+      } else {
+        this.setData({
+          write: false,
+          showvoice: false,
+          writeTow: true,
+          focus: true,
+          showvoiceauto: false,
+          voicetime: 0,
+          replyplaceholder: '',
+          replyshow: false
+        })
+        this.replyInfo = null
+        this.replyParent = null
+      }
     }
   },
   keyHeight(e) {
@@ -956,7 +1067,8 @@ Page({
     // 识别结束事件
     manager.onStop = (res) => {
       // 取出录音文件识别出来的文字信息
-      let text = this.data.content + res.result
+      let text = res.result
+      this.data.replyshow ? text =  this.data.replycontent + text : text =  this.data.content + text
       // 获取音频文件临时地址
       let filePath = res.tempFilePath
       console.log(filePath)
@@ -967,8 +1079,34 @@ Page({
         })
         return
       }
+      this.data.replyshow ? this.setData({
+        replycontent: text
+      }) : this.setData({
+        content: text
+      })
+      if (this.data.replyshow) {
+        let lessDiscussion = this.data.$state.lessDiscussion
+        lessDiscussion[this.data.detail.id] ? '' : lessDiscussion[this.data.detail.id] = {}
+        if (this.replyParent) {
+          lessDiscussion[this.data.detail.id]['replyParent'] ? '' : lessDiscussion[this.data.detail.id]['replyParent'] = {}
+          lessDiscussion[this.data.detail.id]['replyParent'][this.replyParent] = this.data.replycontent
+        } else if (this.replyInfo) {
+          lessDiscussion[this.data.detail.id]['replyInfo'] ? '' : lessDiscussion[this.data.detail.id]['replyInfo'] = {}
+          lessDiscussion[this.data.detail.id]['replyInfo'][this.replyInfo.id] = this.data.replycontent
+        }
+        app.store.setState({
+          lessDiscussion
+        })
+      } else {
+        let lessDiscussion = this.data.$state.lessDiscussion
+        lessDiscussion[this.data.detail.id] ? '' : lessDiscussion[this.data.detail.id] = {}
+        lessDiscussion[this.data.detail.id]['replycontent'] = this.data.content
+        app.store.setState({
+          lessDiscussion
+        })
+      }
       this.setData({
-        content: text,
+        voicetext: res.result,
         voicetextstatus: '',
         filePath
       })
@@ -1026,12 +1164,40 @@ Page({
     })
   },
   relacevoice() {
-    this.setData({
-      showvoiceauto: false,
-      content: '',
-      voicetime: 0,
-      filePath:''
-    })
+    let text = '', voicetext = this.data.voicetext, lessDiscussion = this.data.$state.lessDiscussion
+    if(this.data.replyshow) {
+      text = this.data.replycontent.replace(voicetext, '')
+      this.setData({
+        showvoiceauto: false,
+        replycontent: text,
+        voicetime: 0,
+        filePath: ''
+      })
+      if(this.replyParent) {
+        lessDiscussion[this.data.detail.id].replyParent[this.replyParent] = text
+        app.store.setData({
+          lessDiscussion
+        })
+      } else {
+        lessDiscussion[this.data.detail.id].replyInfo[this.replyInfo.id] = text
+        app.store.setData({
+          lessDiscussion
+        })
+      }
+    } else {
+      text = this.data.content.replace(voicetext, '')
+      this.setData({
+        showvoiceauto: false,
+        content: text,
+        voicetime: 0,
+        filePath: ''
+      })
+      lessDiscussion[this.data.detail.id].replycontent = text
+      app.store.setData({
+        lessDiscussion
+      })
+    }
+    
   },
   closevoiceBox() {
     this.setData({

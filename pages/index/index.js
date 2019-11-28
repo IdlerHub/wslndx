@@ -50,12 +50,12 @@ Page({
       console.log(res)
       that.headerHeight = res[0].height + pt + h
       that.navHeight = res[1].height
+      that.navWidth = res[1].width
     })
     this.setData({
       recommend: [],
       category: [],
       history: {},
-      currentTab:0 /* 从积分页面过来的直接去分类 */,
       navScrollLeft: 0
     })
     if (this.data.$state.userInfo.mobile) {
@@ -143,6 +143,16 @@ Page({
     if (this.data.currentTab !== cur) {
       this.setData({
         currentTab: cur
+      })
+    }
+    if (this.data.currentTab == 0) {
+      this.setData({
+        navScrollLeft: 0
+      })
+    } else if ((this.data.currentTab + 1) == this.data.nav.length) {
+      console.log(this.navWidth)
+      this.setData({
+        navScrollLeft: this.navWidth + 60
       })
     }
   },

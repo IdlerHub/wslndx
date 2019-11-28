@@ -85,11 +85,11 @@
     <view class="integral navintegral">
     </view>
   </view>
-  <view class="nav {{ scroll ? 'fixed' : '' }}" style="top:{{ top }}px" wx:else>
-    <scroll-view class="nav" style="display:flex" scroll-x="true" scroll-left="{{ navScrollLeft }}" scroll-with-animation="{{ true }}" enable-flex>
+  <view class="nav {{ scroll ? 'fixed' : '' }}" style="top:{{ top }}px;padding-right:20px" wx:else>
+    <scroll-view class="nav" style="display:flex;padding-right: 20px" scroll-x="true" scroll-left="{{ navScrollLeft }}" scroll-with-animation="true" enable-flex scroll-into-view="item{{currentTab < 4 ? 0 : currentTab - 3}}">
       <block wx:for="{{ nav }}" wx:for-index="id" wx:for-item="item" wx:key="id">
         <formCode bind:handler="switchNav" data-current="{{ id }}">
-          <view class="item {{ currentTab == id ? 'active' : '' }}">{{ item.name }}</view>
+          <view class="item {{ [currentTab == id ? 'active' : '',id == 0 ? 'itemone' : ''] }}" style="margin-right:{{id + 1 == nav.length ? '40rpx' : ''}}" id="item{{id}}">{{ item.name }}</view>
         </formCode>
       </block>
     </scroll-view>

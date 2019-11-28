@@ -36,7 +36,8 @@
     "pages/drawPage/drawPage",
     "pages/winPrize/winPrize",
     "pages/giftMessage/giftMessage",
-    "pages/search/search"
+    "pages/search/search",
+    "components/integralAni/integralAni"
   ],
   "permission": {
     "scope.userLocation": {
