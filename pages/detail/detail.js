@@ -26,7 +26,7 @@ Page({
     sublessons: [],
     contenLength: 0,
     moreSublessons: 'moreSublessons',
-    placeholder: '写评论',
+    placeholder: '添加你的评论',
     showvoice: false,
     replycomment: '欢迎发表观点',
     replyplaceholder:'',

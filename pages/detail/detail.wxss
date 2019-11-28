@@ -446,15 +446,6 @@ rich-text {
     color:rgba(102,102,102,1);
     position: relative;
   }
-  .issueBoxTow .issueBoxTow-txt .voicebtn .redball {
-    width:20rpx;
-    height:20rpx;
-    background:rgba(223,32,32,1);
-    border-radius: 100%;
-    position: absolute;
-    top: 0;
-    right: 10rpx;
-  }
   .issueBoxTow .issueBoxTow-txt .voicebtn image{
     width:25rpx;
     height:36rpx;

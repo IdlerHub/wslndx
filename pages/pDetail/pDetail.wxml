@@ -146,13 +146,50 @@
     <view class="bg" bindtap="hide" bindtouchstart="touchStart"></view>
     <view class="box" style="{{ textHeight ? 'bottom:'+ textHeight : ''}}">
       <!-- prettier-ignore -->
-      <textarea placeholder="写评论"   focus="{{ focus }}" fixed  bindinput="input" value='{{content}}' placeholder-class="ph-class" show-confirm-bar="{{ false }}" adjust-position="{{ false }}" bindfocus="textHeight"  hold-keyboard></textarea>
+      <text class="replayplaceholder" wx:if="{{replyplaceholder != ''}}">{{replyplaceholder}}</text>
+      <textarea placeholder="{{placeholder}}"   focus="{{ focus }}" fixed  bindinput="input" value='{{ replyshow ? replycontent : content}}' placeholder-class="ph-class" show-confirm-bar="{{ false }}" adjust-position="{{ false }}" bindfocus="textHeight"  hold-keyboard maxlength="200"></textarea>
       <!-- prettier-ignore -->
       <view class="right" catchtap="navigator">
-        <view class="to">
-          <image mode="aspectFit" class="icon" src="{{ $state.imgHost }}/screen.png"></image>
+        <view class="number">
+         {{contenLength}}/200
         </view>
-        <button class="release" disabled="{{ !content }}" catchtap="release">发布</button>
+        <view class="right_r">
+          <view class="voicebtn" catchtap="showvoice">
+            <image src="http://118.89.201.75/images/voicesmall.png"></image>
+            <view>语音</view>
+          </view>
+          <button class="release" disabled="{{ !content }}" catchtap="release">发布</button>
+        </view>
+      </view>
+    </view>
+  </view>
+  <view class="voiceBox" wx:if="{{showvoice}}">
+    <view class="voiceBoxmask" catchtap="closevoiceBox"></view>
+    <view class="voiceContent">
+      <text class="replyplaceholder" wx:if="{{replyshow}}">{{replyplaceholder}}</text>
+      <text style="color:{{content != '' && !replyshow ? 'rgba(46,46,46,1)': replycontent !== '' && replyshow ? 'rgba(46,46,46,1)' : ''}}" class="placeholder" catchtap="showWrite" data-type="voice" wx:if="{{!replyshow}}">{{ content == '' ? placeholder : content }}</text>
+      <text style="color:{{content != '' && !replyshow ? 'rgba(46,46,46,1)': replycontent !== '' && replyshow ? 'rgba(46,46,46,1)' : ''}}" class="placeholder" catchtap="showWrite" data-type="voice" wx:else>{{ replycontent == '' ? placeholder : replycontent }}</text>
+      <view class="voiceaction" wx:if="{{!showvoiceauto}}">
+        <view class="voice-box">
+          <text wx:if="{{voicetime != 0}}">{{voicetime}}"</text>
+          <view style="background:url('http://118.89.201.75/images/voicebtnr.png');background-size:100% 100%;" class="voice-image" catchtouchstart="touchstart" catchtouchend="touchend" wx:if="{{$state.authRecord}}"></view>
+          <view style="background:url('http://118.89.201.75/images/voicebtnr.png');background-size:100% 100%;" class="voice-image" catchtap="authrecord" catchtouchstart="authrecord" wx:else></view>
+          <div class="voice-water1" wx:if="{{voiceActon}}"></div>
+          <div class="voice-water1 voice-water2" wx:if="{{voiceActon}}"></div>
+          <view class="voice-txt" style="height:12rpx;"> {{voiceActon? '' : '按住说话'}}</view>
+        </view>
+      </view>
+      <view class="voiceaction" wx:else>
+        <view class="voiceauto-box" catchtap="playvoice">
+          <view class="voiceauto">
+            <image src="{{voiceplayimg}}"></image>
+            <image src="{{voicetime < 10 ? 'http://118.89.201.75/images/combinedlong.png' : 'http://118.89.201.75/images/combinedso.png'}}"></image>
+            <text>{{voicetime}}"</text>
+          </view>
+          <view class="voicetextstatus" wx:if="{{voicetextstatus != ''}}">{{voicetextstatus}}</view>
+        </view>
+        <view class="voiceanew" catchtap="relacevoice">重录</view>
+        <view class="voicerelease" catchtap="release">发布</view>
       </view>
     </view>
   </view>

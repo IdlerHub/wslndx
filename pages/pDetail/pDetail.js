@@ -6,12 +6,27 @@
 //index.js
 //获取应用实例
 const app = getApp()
+const plugin = requirePlugin("WechatSI")
+// 获取**全局唯一**的语音识别管理器**recordRecoManager**
+const manager = plugin.getRecordRecognitionManager()
+const innerAudioContext = wx.createInnerAudioContext();
 Page({
   data: {
     nav: [{ name: "评论", class: ".comment", num: 0 }, { name: "点赞", class: ".praise", num: 0 }],
     isRefreshing: false,
     tip: true,
-    delState: false
+    delState: false,
+    contenLength: 0,
+    showvoice: false,
+    placeholder: '添加你的评论',
+    content:'',
+    replycontent:'',
+    voicetime: 0,
+    showvoiceauto: false,
+    voicetextstatus: '',
+    voivetext: '',
+    voiceplayimg: 'http://118.89.201.75/images/triangle.png',
+    replyshow: false
     /* rect: wx.getMenuButtonBoundingClientRect() */
   },
   onLoad(options) {
@@ -41,6 +56,10 @@ Page({
         }
       })
     }
+  },
+  onShow() {
+    this.initRecord()
+    this.getRecordAuth()
   },
   onUnload() {
     wx.onMemoryWarning(function () {
@@ -193,10 +212,17 @@ Page({
         /* 回复别人的评论 或者 回复别人的回复  */
         this.replyParent = e.target.dataset.parent
         this.replyInfo = e.target.dataset.reply
+        this.setData({
+          replyplaceholder: '回复 ' + e.currentTarget.dataset.reply.nickname,
+          replyshow:true
+        })
       } else {
         /* 评论 */
         this.replyInfo = null
         this.replyParent = null
+        this.setData({
+          replyplaceholder: ''
+        })
       }
       // wx.pageScrollTo({
       //   scrollTop: 1000
@@ -228,7 +254,8 @@ Page({
   },
   input(e) {
     this.setData({
-      content: e.detail.value
+      content: e.detail.value,
+      contenLength: e.detail.value.length
     })
   },
   // 发布评论
@@ -617,5 +644,238 @@ Page({
       icon: "none",
       duration: 1500
     })
+  },
+  showvoice(e) {
+    this.setData({
+      showvoice: true,
+      write: false,
+    }) 
+  },
+  showWrite(e) {
+      this.setData({
+        write: true,
+        showvoice: false,
+        writeTow: true,
+        focus: true,
+        showvoiceauto: false,
+        voicetime: 0,
+        replyshow: false
+      })
+  },
+  // 语音
+  // 权限询问
+  authrecord() {
+    this.setData({
+      focus: false
+    })
+    if (this.data.$state.authRecordfail) {
+      wx.showModal({
+        content: '您已拒绝授权使用麦克风录音权限，请打开获取麦克风授权！否则无法使用小程序部分功能',
+        confirmText: '去授权',
+        confirmColor: "#df2020",
+        success: res => {
+          if (res.confirm) {
+            wx.openSetting({})
+          }
+        }
+      })
+    }
+    if (!this.data.$state.authRecord) {
+      wx.authorize({
+        scope: 'scope.record',
+        success() {
+          // 用户已经同意小程序使用录音功能，后续调用 wx.startRecord 接口不会弹窗询问
+          console.log("succ auth")
+          app.store.setState({
+            authRecord: true
+          })
+        },
+        fail() {
+          console.log("fail auth")
+          app.store.setState({
+            authRecordfail: true
+          })
+        }
+      })
+    }
+  },
+  getRecordAuth: function () {
+    wx.getSetting({
+      success(res) {
+        let record = res.authSetting['scope.record']
+        app.store.setState({
+          authRecord: record || false,
+        })
+      },
+      fail(res) {
+        console.log("fail")
+      }
+    })
+  },
+  /**
+ * 初始化语音识别回调
+ */
+  initRecord: function () {
+    //有新的识别内容返回，则会调用此事件
+    manager.onRecognize = (res) => {
+      this.setData({
+        newtxt: res.result
+      })
+    }
+
+    // 识别结束事件
+    manager.onStop = (res) => {
+      // 取出录音文件识别出来的文字信息
+      let text = res.result
+      this.data.replyshow ? text = this.data.replycontent + text : text = this.data.content + text
+      // 获取音频文件临时地址
+      let filePath = res.tempFilePath
+      console.log(filePath)
+      let duration = res.duration
+      if (text == '') {
+        this.setData({
+          voicetextstatus: '未能识别到文字'
+        })
+        return
+      }
+      this.data.replyshow ? this.setData({
+        replycontent: text
+      }) : this.setData({
+        content: text
+      })
+      // if (this.data.replyshow) {
+      //   let lessDiscussion = this.data.$state.lessDiscussion
+      //   lessDiscussion[this.data.detail.id] ? '' : lessDiscussion[this.data.detail.id] = {}
+      //   if (this.replyParent) {
+      //     lessDiscussion[this.data.detail.id]['replyParent'] ? '' : lessDiscussion[this.data.detail.id]['replyParent'] = {}
+      //     lessDiscussion[this.data.detail.id]['replyParent'][this.replyParent] = this.data.replycontent
+      //   } else if (this.replyInfo) {
+      //     lessDiscussion[this.data.detail.id]['replyInfo'] ? '' : lessDiscussion[this.data.detail.id]['replyInfo'] = {}
+      //     lessDiscussion[this.data.detail.id]['replyInfo'][this.replyInfo.id] = this.data.replycontent
+      //   }
+      //   app.store.setState({
+      //     lessDiscussion
+      //   })
+      // } else {
+      //   let lessDiscussion = this.data.$state.lessDiscussion
+      //   lessDiscussion[this.data.detail.id] ? '' : lessDiscussion[this.data.detail.id] = {}
+      //   lessDiscussion[this.data.detail.id]['replycontent'] = this.data.content
+      //   app.store.setState({
+      //     lessDiscussion
+      //   })
+      // }
+      this.setData({
+        voicetext: res.result,
+        voicetextstatus: '',
+        filePath
+      })
+    }
+
+    // 识别错误事件
+    manager.onError = (res) => {
+      this.setData({
+        recording: false,
+        bottomButtonDisabled: false,
+      })
+    }
+  },
+  touchstart() {
+    this.setData({
+      voiceActon: true,
+      voicetextstatus: '正在语音转文字…'
+    })
+    this.voicetime()
+    manager.start({
+      lang: "zh_CN",
+    })
+  },
+  touchend() {
+    manager.stop()
+    if (this.data.voicetime < 1) {
+      wx.showToast({
+        title: '说话时间过短',
+        icon: 'none',
+        duration: 2000
+      })
+    } else {
+      this.setData({
+        showvoiceauto: true
+      })
+    }
+    this.setData({
+      voiceActon: false
+    })
+  },
+  // 语音播放
+  playvoice() {
+    innerAudioContext.src = this.data.filePath;
+    console.log(this.data.filePath)
+    innerAudioContext.play()
+    innerAudioContext.onPlay(() => {
+      this.setData({
+        voiceplayimg: 'http://118.89.201.75/images/voicepause.png'
+      })
+    })
+    innerAudioContext.onEnded(() => {
+      this.setData({
+        voiceplayimg: 'http://118.89.201.75/images/triangle.png'
+      })
+    })
+  },
+  relacevoice() {
+    let text = '', voicetext = this.data.voicetext, lessDiscussion = this.data.$state.lessDiscussion
+    if (this.data.replyshow) {
+      text = this.data.replycontent.replace(voicetext, '')
+      this.setData({
+        showvoiceauto: false,
+        replycontent: text,
+        voicetime: 0,
+        filePath: ''
+      })
+      if (this.replyParent) {
+        lessDiscussion[this.data.detail.id].replyParent[this.replyParent] = text
+        app.store.setData({
+          lessDiscussion
+        })
+      } else {
+        lessDiscussion[this.data.detail.id].replyInfo[this.replyInfo.id] = text
+        app.store.setData({
+          lessDiscussion
+        })
+      }
+    } else {
+      text = this.data.content.replace(voicetext, '')
+      this.setData({
+        showvoiceauto: false,
+        content: text,
+        voicetime: 0,
+        filePath: ''
+      })
+      lessDiscussion[this.data.detail.id].replycontent = text
+      app.store.setData({
+        lessDiscussion
+      })
+    }
+
+  },
+  closevoiceBox() {
+    this.setData({
+      showvoice: false,
+      write: true
+    })
+  },
+  // 计时器
+  voicetime() {
+    let time = 0
+    let it = setInterval(() => {
+      time += 1
+      if (!this.data.voiceActon) {
+        clearInterval(it)
+      } else {
+        this.setData({
+          voicetime: time
+        })
+      }
+    }, 1000)
   }
 })
