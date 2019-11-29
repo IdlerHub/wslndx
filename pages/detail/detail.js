@@ -25,6 +25,7 @@ Page({
     focus: false,
     sublessons: [],
     contenLength: 0,
+    replycontenLength: 0,
     moreSublessons: 'moreSublessons',
     placeholder: '添加你的评论',
     showvoice: false,
@@ -637,9 +638,11 @@ Page({
           writeTow: false,
           focus: false,
           keyheight: 0,
-          contenLength: 0
+          contenLength: 0,
+          showvoice: false,
+          voicetime:0,
+          showvoiceauto: false
         })
-        this.relacevoice()
       } else {
         wx.showToast({
           title: res.msg,
@@ -686,11 +689,13 @@ Page({
           writeTow: false,
           focus: false,
           keyheight: 0,
-          contenLength: 0
+          contenLength: 0,
+          showvoice: false,
+          voicetime: 0,
+          showvoiceauto: false
         })
         this.replyInfo = null
         this.replyParent = null
-        this.relacevoice()
       } else if (msg.code == -2) {
         /* 帖子已经删除 */
         this.setData({
@@ -759,7 +764,7 @@ Page({
     if (this.data.replyshow) {
       this.setData({
         replycontent: e.detail.value,
-        contenLength: e.detail.value.length
+        replycontenLength: e.detail.value.length
       })
       let lessDiscussion = this.data.$state.lessDiscussion
       lessDiscussion[this.data.detail.id] ? '' : lessDiscussion[this.data.detail.id] = {}
@@ -815,24 +820,24 @@ Page({
               this.setData({
                 replycontent: this.data.$state.lessDiscussion[this.data.detail.id].replyInfo[this.replyInfo.id],
                 replyplaceholder: '回复 ' + e.currentTarget.dataset.reply.nickname,
-                contenLength: this.data.$state.lessDiscussion[this.data.detail.id].replyInfo[this.replyInfo.id].length
+                  replycontenLength: this.data.$state.lessDiscussion[this.data.detail.id].replyInfo[this.replyInfo.id].length
                 }) : this.setData({
                   replycontent: '',
                   replyplaceholder: '回复 ' + e.currentTarget.dataset.reply.nickname,
-                  contenLength: 0
+                  replycontenLength: 0
                 })
             } else {
               this.setData({
                 replycontent: '',
                 replyplaceholder: '回复 ' + e.currentTarget.dataset.reply.nickname,
-                contenLength: 0
+                replycontenLength: 0
               })
             }
           } else {
             this.setData({
               replycontent: '',
               replyplaceholder: '回复 ' + e.currentTarget.dataset.reply.nickname,
-              contenLength:0
+              replycontenLength:0
             })
           }
         } else if (this.data.$state.lessDiscussion[this.data.detail.id]) {
@@ -841,17 +846,17 @@ Page({
             this.setData({
               replycontent: this.data.$state.lessDiscussion[this.data.detail.id].replyParent[this.replyParent],
               replyplaceholder: '回复 ' + e.currentTarget.dataset.reply.nickname,
-              contenLength: this.data.$state.lessDiscussion[this.data.detail.id].replyParent[this.replyParent].length
+              replycontenLength: this.data.$state.lessDiscussion[this.data.detail.id].replyParent[this.replyParent].length
               }) : this.setData({
                 replycontent: '',
                 replyplaceholder: '回复 ' + e.currentTarget.dataset.reply.nickname,
-                contenLength: 0
+                replycontenLength: 0
               })
           } else {
             this.setData({
               replycontent: '',
               replyplaceholder: '回复 ' + e.currentTarget.dataset.reply.nickname,
-              contenLength:0
+              replycontenLength:0
             })
           }
         } else {
@@ -933,7 +938,8 @@ Page({
           writeTow: true,
           focus: true,
           showvoiceauto: false,
-          voicetime: 0
+          voicetime: 0,
+          replycontenLength: this.data.replycontent.length
         })
       } else {
         this.setData({
@@ -944,7 +950,8 @@ Page({
           showvoiceauto: false,
           voicetime: 0,
           replyplaceholder: '',
-          replyshow: false
+          replyshow: false,
+          contenLength: this.data.content.length
         })
         this.replyInfo = null
         this.replyParent = null
@@ -1202,7 +1209,9 @@ Page({
   closevoiceBox() {
     this.setData({
       showvoice: false,
-      write: true
+      write: true,
+      showvoiceauto:false,
+      voicetime:0
     })
   },
   // 计时器

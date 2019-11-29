@@ -151,14 +151,15 @@
       <!-- prettier-ignore -->
       <view class="right" catchtap="navigator">
         <view class="number">
-         {{contenLength}}/200
+         {{ replyshow ? replycontenLength : contenLength}}/200
         </view>
         <view class="right_r">
           <view class="voicebtn" catchtap="showvoice">
             <image src="http://118.89.201.75/images/voicesmall.png"></image>
             <view>语音</view>
           </view>
-          <button class="release" disabled="{{ !content }}" catchtap="release">发布</button>
+          <button class="release" disabled="{{ !content  }}" catchtap="release" wx:if="{{!replyshow}}">发布</button>
+          <button class="release" disabled="{{ !replycontent  }}" catchtap="release" wx:else>发布</button>
         </view>
       </view>
     </view>
@@ -168,7 +169,7 @@
     <view class="voiceContent">
       <text class="replyplaceholder" wx:if="{{replyshow}}">{{replyplaceholder}}</text>
       <text style="color:{{content != '' && !replyshow ? 'rgba(46,46,46,1)': replycontent !== '' && replyshow ? 'rgba(46,46,46,1)' : ''}}" class="placeholder" catchtap="showWrite" data-type="voice" wx:if="{{!replyshow}}">{{ content == '' ? placeholder : content }}</text>
-      <text style="color:{{content != '' && !replyshow ? 'rgba(46,46,46,1)': replycontent !== '' && replyshow ? 'rgba(46,46,46,1)' : ''}}" class="placeholder" catchtap="showWrite" data-type="voice" wx:else>{{ replycontent == '' ? placeholder : replycontent }}</text>
+      <text style="color:{{content != '' && !replyshow ? 'rgba(46,46,46,1)': replycontent !== '' && replyshow ? 'rgba(46,46,46,1)' : ''}}" class="placeholder" catchtap="showWrite" data-type="voice" wx:else>{{ placeholder != '' ? placeholder : replycontent }}</text>
       <view class="voiceaction" wx:if="{{!showvoiceauto}}">
         <view class="voice-box">
           <text wx:if="{{voicetime != 0}}">{{voicetime}}"</text>

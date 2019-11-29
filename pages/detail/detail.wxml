@@ -152,7 +152,7 @@
     <textarea placeholder="{{$state.newGuide.lesson == 0 ? '' : placeholder }}" fixed show-confirm-bar="{{false}}"  placeholder-class="placeholder" bindinput="input" bindkeyboardheightchange='keyHeight' adjust-position="{{false}}" focus="{{focus}}" 
       bindblur="bindblur" maxlength="200" value="{{replyshow ? replycontent: content}}" cursor-spacing="190rpx"></textarea>
     <view class="issueBoxTow-txt">
-      <view class="number">{{contenLength}}/200</view>
+      <view class="number">{{ replyshow ? replycontenLength : contenLength}}/200</view>
       <view class="issueBoxTow-btn">
         <view class="voicebtn" catchtap="showvoice">
           <image src="http://118.89.201.75/images/voicesmall.png"></image>

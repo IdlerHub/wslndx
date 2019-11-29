@@ -17,6 +17,7 @@ Page({
     tip: true,
     delState: false,
     contenLength: 0,
+    replycontenLength: 0,
     showvoice: false,
     placeholder: '添加你的评论',
     content:'',
@@ -54,6 +55,12 @@ Page({
           this.getComment([], options.comment)
           this.getPraise()
         }
+      })
+    }
+    if (this.data.$state.blogcomment[options.id.trim()]) {
+      this.setData({
+        content: this.data.$state.blogcomment[options.id.trim()].replycontent,
+        contenLength: this.data.$state.blogcomment[options.id.trim()].replycontent.length
       })
     }
   },
@@ -216,12 +223,27 @@ Page({
           replyplaceholder: '回复 ' + e.currentTarget.dataset.reply.nickname,
           replyshow:true
         })
+        if (this.data.$state.blogcomment[this.data.detail.id]) {
+          if (this.replyParent && this.data.$state.blogcomment[this.data.detail.id]['replyParent']) {
+            this.data.$state.blogcomment[this.data.detail.id]['replyParent'][this.replyParent] ?
+            this.setData({
+                replycontent: this.data.$state.blogcomment[this.data.detail.id]['replyParent'][this.replyParent],
+                replycontenLength: this.data.$state.blogcomment[this.data.detail.id]['replyParent'][this.replyParent].length || 0
+            }) : ''
+          } else if (this.data.$state.blogcomment[this.data.detail.id]['replyInfo']){
+            this.data.$state.blogcomment[this.data.detail.id]['replyInfo'][this.replyInfo.id] ? this.setData({
+              replycontent: this.data.$state.blogcomment[this.data.detail.id]['replyInfo'][this.replyInfo.id],
+              replycontenLength: this.data.$state.blogcomment[this.data.detail.id]['replyInfo'][this.replyInfo.id].length || 0
+            }) : ''
+          }
+        }
       } else {
         /* 评论 */
         this.replyInfo = null
         this.replyParent = null
         this.setData({
-          replyplaceholder: ''
+          replyplaceholder: '',
+          replyshow:false
         })
       }
       // wx.pageScrollTo({
@@ -241,26 +263,49 @@ Page({
   touchStart() {
     setTimeout(()=> {
       this.setData({
-        write: false,
-        content: ""
+        write: false
       })
     },200)
   },
   hide() {
     this.setData({
-      write: false,
-      content: ""
+      write: false
     })
   },
   input(e) {
-    this.setData({
-      content: e.detail.value,
-      contenLength: e.detail.value.length
-    })
+    if (this.data.replyshow) {
+      this.setData({
+        replycontent: e.detail.value,
+        replycontenLength: e.detail.value.length
+      })
+      let blogcomment = this.data.$state.blogcomment
+      blogcomment[this.data.detail.id] ? '' : blogcomment[this.data.detail.id] = {}
+      if (this.replyParent) {
+        blogcomment[this.data.detail.id]['replyParent'] ? '' : blogcomment[this.data.detail.id]['replyParent'] = {}
+        blogcomment[this.data.detail.id]['replyParent'][this.replyParent] = this.data.replycontent
+      } else {
+        blogcomment[this.data.detail.id]['replyInfo'] ? '' : blogcomment[this.data.detail.id]['replyInfo'] = {}
+        blogcomment[this.data.detail.id]['replyInfo'][this.replyInfo.id] = this.data.replycontent
+      }
+      app.store.setState({
+        blogcomment
+      })
+    } else {
+      this.setData({
+        content: e.detail.value,
+        contenLength: e.detail.value.length
+      })
+      let blogcomment = this.data.$state.blogcomment
+      blogcomment[this.data.detail.id] ? '' : blogcomment[this.data.detail.id] = {}
+      blogcomment[this.data.detail.id]['replycontent'] = this.data.content
+      app.store.setState({
+        blogcomment
+      })
+    }
   },
   // 发布评论
   release() {
-    if (!!this.data.content.trim()) {
+    if (!!this.data.content.trim() || !!this.data.replycontent.trim()) {
       if (this.replyParent) {
         /* 回复别人的回复 */
         let params = {
@@ -268,7 +313,7 @@ Page({
           comment_id: this.replyParent,
           reply_type: 2,
           reply_id: this.replyInfo.reply_id,
-          reply_content: this.data.content,
+          reply_content: this.data.replycontent,
           to_user: this.replyInfo.reply_user_id
         }
         this.reply(params)
@@ -279,7 +324,7 @@ Page({
           comment_id: this.replyInfo.id,
           reply_type: 1,
           reply_id: -1,
-          reply_content: this.data.content,
+          reply_content: this.data.replycontent,
           to_user: this.replyInfo.uid
         }
         this.reply(params)
@@ -292,7 +337,9 @@ Page({
   post(param) {
     this.setData({
       write: false,
-      content: ""
+      showvoice: false,
+      voicetime:0,
+      showvoiceauto: false
     })
     wx.showLoading({
       title: "发布中"
@@ -304,6 +351,11 @@ Page({
           title: "发布成功",
           icon: "none",
           duration: 1500
+        })
+        let blogcomment = this.data.$state.blogcomment 
+        blogcomment[this.data.detail.id]['replycontent'] = ''
+        app.store.setState({
+          blogcomment
         })
         if (msg.data.is_first == 'first') {
           wx.showToast({
@@ -329,6 +381,9 @@ Page({
           })
         }
         this.getDetail()
+        this.setData({
+          content: ''
+        })
         this.comParam.page = 1
         // app.socket.send(this.data.detail.uid)
         app.socket.send({
@@ -569,7 +624,9 @@ Page({
   reply(params) {
     this.setData({
       write: false,
-      content: ""
+      showvoice: false,
+      voicetime: 0,
+      showvoiceauto: false
     })
     wx.showLoading({
       title: "发布中"
@@ -581,6 +638,21 @@ Page({
           title: "发布成功",
           icon: "none",
           duration: 1500
+        })
+        let blogcomment = this.data.$state.blogcomment
+        if(this.replyParent) {
+          blogcomment[this.data.detail.id]['replyParent'][this.replyParent] = ''
+          this.setData({
+            replycontent: ""
+          })
+        } else {
+          blogcomment[this.data.detail.id]['replyInfo'][this.replyInfo.id] = ''
+          this.setData({
+            replycontent: ""
+          })
+        }
+        app.store.setState({
+          blogcomment
         })
         this.getDetail()
         this.comParam.page = 1
@@ -658,9 +730,17 @@ Page({
         writeTow: true,
         focus: true,
         showvoiceauto: false,
-        voicetime: 0,
-        replyshow: false
+        voicetime: 0
       })
+      if(this.replyshow) {
+        this.setData({
+          replycontenLength: this.data.replycontent.length
+        })
+      } else {
+        this.setData({
+          contenLength: this.data.content.length
+        })
+      }
   },
   // 语音
   // 权限询问
@@ -743,27 +823,27 @@ Page({
       }) : this.setData({
         content: text
       })
-      // if (this.data.replyshow) {
-      //   let lessDiscussion = this.data.$state.lessDiscussion
-      //   lessDiscussion[this.data.detail.id] ? '' : lessDiscussion[this.data.detail.id] = {}
-      //   if (this.replyParent) {
-      //     lessDiscussion[this.data.detail.id]['replyParent'] ? '' : lessDiscussion[this.data.detail.id]['replyParent'] = {}
-      //     lessDiscussion[this.data.detail.id]['replyParent'][this.replyParent] = this.data.replycontent
-      //   } else if (this.replyInfo) {
-      //     lessDiscussion[this.data.detail.id]['replyInfo'] ? '' : lessDiscussion[this.data.detail.id]['replyInfo'] = {}
-      //     lessDiscussion[this.data.detail.id]['replyInfo'][this.replyInfo.id] = this.data.replycontent
-      //   }
-      //   app.store.setState({
-      //     lessDiscussion
-      //   })
-      // } else {
-      //   let lessDiscussion = this.data.$state.lessDiscussion
-      //   lessDiscussion[this.data.detail.id] ? '' : lessDiscussion[this.data.detail.id] = {}
-      //   lessDiscussion[this.data.detail.id]['replycontent'] = this.data.content
-      //   app.store.setState({
-      //     lessDiscussion
-      //   })
-      // }
+      if (this.data.replyshow) {
+        let blogcomment = this.data.$state.blogcomment
+        blogcomment[this.data.detail.id] ? '' : blogcomment[this.data.detail.id] = {}
+        if (this.replyParent) {
+          blogcomment[this.data.detail.id]['replyParent'] ? '' : blogcomment[this.data.detail.id]['replyParent'] = {}
+          blogcomment[this.data.detail.id]['replyParent'][this.replyParent] = this.data.replycontent
+        } else if (this.replyInfo) {
+          blogcomment[this.data.detail.id]['replyInfo'] ? '' : blogcomment[this.data.detail.id]['replyInfo'] = {}
+          blogcomment[this.data.detail.id]['replyInfo'][this.replyInfo.id] = this.data.replycontent
+        }
+        app.store.setState({
+          blogcomment
+        })
+      } else {
+        let blogcomment = this.data.$state.blogcomment
+        blogcomment[this.data.detail.id] ? '' : blogcomment[this.data.detail.id] = {}
+        blogcomment[this.data.detail.id]['replycontent'] = this.data.content
+        app.store.setState({
+          blogcomment
+        })
+      }
       this.setData({
         voicetext: res.result,
         voicetextstatus: '',
@@ -823,7 +903,7 @@ Page({
     })
   },
   relacevoice() {
-    let text = '', voicetext = this.data.voicetext, lessDiscussion = this.data.$state.lessDiscussion
+    let text = '', voicetext = this.data.voicetext, blogcomment = this.data.$state.lessDiscussion
     if (this.data.replyshow) {
       text = this.data.replycontent.replace(voicetext, '')
       this.setData({
@@ -833,14 +913,14 @@ Page({
         filePath: ''
       })
       if (this.replyParent) {
-        lessDiscussion[this.data.detail.id].replyParent[this.replyParent] = text
+        blogcomment[this.data.detail.id].replyParent[this.replyParent] = text
         app.store.setData({
-          lessDiscussion
+          blogcomment
         })
       } else {
-        lessDiscussion[this.data.detail.id].replyInfo[this.replyInfo.id] = text
+        blogcomment[this.data.detail.id].replyInfo[this.replyInfo.id] = text
         app.store.setData({
-          lessDiscussion
+          blogcomment
         })
       }
     } else {
@@ -851,9 +931,9 @@ Page({
         voicetime: 0,
         filePath: ''
       })
-      lessDiscussion[this.data.detail.id].replycontent = text
+      blogcomment[this.data.detail.id].replycontent = text
       app.store.setData({
-        lessDiscussion
+        blogcomment
       })
     }
 
@@ -861,7 +941,7 @@ Page({
   closevoiceBox() {
     this.setData({
       showvoice: false,
-      write: true
+      write: false
     })
   },
   // 计时器
