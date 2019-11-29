@@ -7,6 +7,7 @@
   "usingComponents": {
     "navigationBar": "/components/navigationBar/navigationBar",
     "formCode": "/components/formCode/formCode",
-    "navBar": "/components/navBar/navBar"
+    "navBar": "/components/navBar/navBar",
+    "drag-sort": "/components/dragSort/dragSort"
   }
 }

@@ -87,15 +87,15 @@
   </view>
   <view class="nav {{ scroll ? 'fixed' : '' }}" style="top:{{ top }}px;padding-right:20px" wx:else>
     <scroll-view class="nav" style="display:flex;padding-right: 20px" scroll-x="true" scroll-left="{{ navScrollLeft }}" scroll-with-animation="true" enable-flex scroll-into-view="item{{currentTab < 4 ? 0 : currentTab - 3}}">
-      <block wx:for="{{ nav }}" wx:for-index="id" wx:for-item="item" wx:key="id">
-        <formCode bind:handler="switchNav" data-current="{{ id }}">
+      <block wx:for="{{ nav }}" wx:for-index="id" wx:for-item="item" wx:key="index">
+        <formCode bind:handler="switchNav" data-current="{{ id }}" data-id="{{item.id}}">
           <view class="item {{ [currentTab == id ? 'active' : '',id == 0 ? 'itemone' : ''] }}" style="margin-right:{{id + 1 == nav.length ? '40rpx' : ''}}" id="item{{id}}">{{ item.name }}</view>
         </formCode>
       </block>
     </scroll-view>
-    <view class="tabclassify">
+    <navigator class="tabclassify" url="/pages/drag/drag?index={{currentTab}}">
       <image src="http://118.89.201.75/images/tabclassify.png"></image>
-    </view>
+    </navigator>
   </view>
   <view class="skeleton" wx:for="{{5}}" wx:if="{{ !recommend }}" wx:key="{{index}}">
     <view class="skeletonBox">
@@ -109,16 +109,7 @@
   <swiper class="tab" style="height:{{ height }}px" current="{{ currentTab }}" duration="300" bindchange="switchTab">
     <swiper-item class="tab-item">
       <!--推荐  -->
-      <view class="wrap recommend">
-        <!-- 答题（已隐藏） -->
-        <!-- <button wx:if="{{ activity }}" class="outer-link" hover-class="none" open-type="getUserInfo" bindgetuserinfo="onGotUserInfo" data-role="education">
-          <image src="{{ activity.image }}"></image>
-          <view class="dsc">
-            <text class="line">{{ activity.title }}</text>
-            <text class="line">{{ activity.description }}</text>
-            <image class="icon" mode="aspectFill" src="/images/instant.png"></image>
-          </view>
-        </button> -->
+      <view class="wrap recommend" id="recommend1">
         <!-- 广告位banner -->
         <swiper indicator-dots="{{imgUrls.length > 1 ? true : false}}" autoplay interval="{{interval}}" duration="{{duration}}" circular class="swiper" wx:if="{{imgUrls[0].image}}">
           <block wx:for="{{imgUrls}}" wx:key="index">
@@ -180,15 +171,22 @@
         </view>
       </view>
     </swiper-item>
-    <swiper-item class="tab-item">
-      <!--分类  -->
-      <view class="wrap category">
-        <view wx:for="{{ category }}" wx:key="index" class="kind" wx:for-item="item1">
-          <text class="title">{{ item1.title }}</text>
-          <view class="list">
-            <view class="item" wx:for="{{ item1.lists }}" wx:key="index" wx:for-item="item2" catchtap="categoryTap" data-item="{{ item2 }}">
-              <image class="img" mode="widthFix" src="{{ item2.image }}" lazy-load="true"></image>
-              <text class="name">{{ item2.name }}</text>
+    <swiper-item class="tab-item" wx:for="{{nav}}" wx:key="index" wx:if="{{!index == 0}}">
+      <view class="wrap recommend" id="recommend{{item.id}}" >
+          <view catchtap="detailTap" wx:for="{{ catrecommend[item.id] }}" wx:key="index" class="item" data-item="{{ item }}">
+          <view class="content">
+            <view class="left">
+              <image class="poster" mode="aspectFill" src="{{ item.image }}" lazy-load="true"></image>
+              <image class="icon" mode="aspectFill" src="{{ $state.imgHost }}/play.png"></image>
+            </view>
+            <view class="right">
+              <text class="line name">{{ item.title }}</text>
+              <text class="line actor" wx:if="{{ item.teacher_id == 0 }}">{{ item.subtitle }}</text>
+              <text class="line actor" wx:else>{{ item.name }}-{{ item.honor }}</text>
+              <text class="line info">
+                <text class="dramaNum"><text class="key">剧集</text>{{ item.lesson_count }}集</text>
+              <text class="playNum"><text class="key">播放</text>{{ item.bw || item.browse }}</text>
+              </text>
             </view>
           </view>
         </view>
@@ -241,3 +239,12 @@
     </cover-view>
   </cover-view>
 </cover-view>
+<!-- <view class="dragsort">
+  <navigationBar  id="navigationBar" placeholderBg="#F8F8F8" color="#000000" title="网上老年大学" back="{{ false }}" background="#F8F8F8"></navigationBar>
+  <drag-sort 
+    originSort="{{ nav }}"
+    alternative="{{ categorytotle.user_define_lesson_category }}"
+    bindhandlerSort="sort"
+    wx:if="{{showLessonCategory}}"
+  ></drag-sort>
+</view> -->

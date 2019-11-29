@@ -37,6 +37,7 @@
     "pages/winPrize/winPrize",
     "pages/giftMessage/giftMessage",
     "pages/search/search",
+    "pages/drag/drag",
     "components/integralAni/integralAni"
   ],
   "permission": {

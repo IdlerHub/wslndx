@@ -3,7 +3,7 @@
 const app = getApp()
 Page({
   data: {
-    nav: [{ name: "推荐", class: ".recommend" }, { name: "分类", class: ".category" }],
+    nav: [{ id:1,name: "推荐", class: "#recommend1", unMove: true }],
     height: 0,
     isRefreshing: false,
     activity: "",
@@ -33,7 +33,6 @@ Page({
     let pt = 20 //导航状态栏上内边距
     let h = 44 //导航状态栏高度
     let systemInfo = wx.getSystemInfoSync()
-    console.log(systemInfo.statusBarHeight)
     pt = systemInfo.statusBarHeight
     if (!reg.test(systemInfo.system)) {
       h = 48
@@ -47,7 +46,6 @@ Page({
     query.select(".top").boundingClientRect()
     query.select(".nav").boundingClientRect()
     query.exec(res => {
-      console.log(res)
       that.headerHeight = res[0].height + pt + h
       that.navHeight = res[1].height
       that.navWidth = res[1].width
@@ -56,12 +54,12 @@ Page({
       recommend: [],
       category: [],
       history: {},
-      navScrollLeft: 0
+      navScrollLeft: 0,
+      catrecommend:[]
     })
     if (this.data.$state.userInfo.mobile) {
       await app.user.signed().then(res => {
         let sign = res.data && res.data.signed
-        console.log(sign)
         app.store.setState({
           signdays: res.data.sign_days
         })
@@ -139,18 +137,18 @@ Page({
     }
   },
   switchNav(event) {
-    let cur = event.currentTarget.dataset.current
+    let cur = event.currentTarget.dataset.current, id = event.currentTarget.dataset.id
     if (this.data.currentTab !== cur) {
       this.setData({
         currentTab: cur
       })
     }
+    // this.geteCatrcommend(id)
     if (this.data.currentTab == 0) {
       this.setData({
         navScrollLeft: 0
       })
     } else if ((this.data.currentTab + 1) == this.data.nav.length) {
-      console.log(this.navWidth)
       this.setData({
         navScrollLeft: this.navWidth + 60
       })
@@ -165,7 +163,21 @@ Page({
     this.setData({
       currentTab: cur
     })
-    this.setHeight()
+    if(cur != 0) {
+      let id = this.data.nav[cur].id
+      this.geteCatrcommend(id)
+    } else {
+      this.setHeight()
+    }
+  },
+  lastswitchTab(event) {
+    let arr = this.data.nav, num = 0
+    arr.forEach((i,index) => {
+      i.id == event ? num = index : ''
+    })
+    this.setData({
+      currentTab: num
+    })
   },
   getSomthin() {
     console.log('q')
@@ -189,33 +201,46 @@ Page({
       }
     })
   },
-  getCategory() {
-    app.classroom.category().then(msg => {
-      if (msg.code == 1) {
-        msg.data.forEach((v, i) => {
-          let t = v.lists.length
-          let r = v.lists.length % 3
-          v.lists.length = r ? t + (3 - r) : t
+  geteCatrcommend(id) {
+    let temp = []
+    return app.classroom.lessons(this.categoryParams[id]).then(msg => {
+      if (msg.code === 1) {
+        msg.data.forEach(function (item) {
+          item.thousand = app.util.tow(item.browse)
         })
+        let catrecommend = this.data.catrecommend
+        catrecommend[id] = temp.concat(msg.data)
         this.setData({
-          category: msg.data
+          catrecommend 
         })
+        setTimeout(() => {
+          this.setHeight()
+        }, 500)
       }
     })
+  },
+  getCategory() {
+    this.categoryParams = {}
     app.user.getLessonCategory().then(msg => {
       if (msg.code == 1) {
-        console.log(msg.data)
-        let arr = this.data.nav
-        msg.data.user_lesson_category.forEach(i => {
-          i['class'] = '.category'
+        let arr = this.data.nav.slice(0, 1)
+        msg.data.user_lesson_category.forEach((i,index) => {
+          this.categoryParams[i.id] = {
+            category_id: i.id,
+            page: 1,
+            pageSize: 10 
+          }
+          i['class'] = '#recommend' + i.id
           arr.push(i)
         })
         this.setData({
-          categorytotle: msg.data,
           nav: arr
         })
       }
     })
+  },
+  changeCategory() {
+
   },
   getactivite() {
     // return app.user.activite()
@@ -231,7 +256,6 @@ Page({
     let historyParam = { page: 1, pageSize: 10 }
     return app.user.history(historyParam).then(msg => {
       if (msg.code == 1) {
-        console.log(this.data.history)
         this.setData({
           "history.last_lesson": msg.data.last_lesson || ""
         }) 
@@ -411,7 +435,6 @@ Page({
   onReachBottom() {},
   /* 广告位值跳转 */ 
   bannerGo(e) {
-    console.log(e.currentTarget.dataset.item)
     let item = e.currentTarget.dataset.item;
     if (item.jump_type == 1) {
       /* 外链 */
@@ -449,7 +472,6 @@ Page({
   },
   getPaper() {
     app.classroom.paper({}).then(res => {
-      console.log(res)
       this.setData({
         paperMsg: res.data
       })
@@ -472,7 +494,6 @@ Page({
     })
   },
   jumpPeper(e) {
-    console.log(e.currentTarget.dataset.peper)
     if (e.currentTarget.dataset.type == 'dialog') {
       this.closeSignIn()
     }

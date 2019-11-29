@@ -153,6 +153,11 @@ function getLessonCategory(param) {
   return httpService.post("User/userLessonCategory", param)
 }
 
+//POST User/collectLessonCategory 获取用户课程用户分类
+function collectLessonCategory(param) {
+  return httpService.post("User/collectLessonCategory", param)
+}
+
 module.exports = {
   wxLoginCode,
   getAuthCode,
@@ -177,5 +182,6 @@ module.exports = {
   dialog,
   getNewTaskStatus,
   getDayTaskStatus,
-  getLessonCategory
+  getLessonCategory,
+  collectLessonCategory
 }

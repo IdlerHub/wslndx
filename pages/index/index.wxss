@@ -181,7 +181,7 @@
   letter-spacing: 0;
 }
 .nav .itemone {
-  margin-left: 10rpx;
+  padding-left: 10rpx;
 }
 
 .nav .item.active {
@@ -941,4 +941,13 @@ page .getGuideBox .nextBtn {
   font-family:PingFangSC-Regular,PingFang SC;
   font-weight:400;
   color:rgba(153,153,153,1);
+}
+.dragsort {
+  width: 100%;
+  min-height: 100%;
+  background: #fff;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 5000;
 }
