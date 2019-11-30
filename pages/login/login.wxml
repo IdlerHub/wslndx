@@ -32,3 +32,5 @@
     <button class="submit" hover-class="button-hover" form-type="submit">登录</button>
   </form>
 </view>
+<!-- 积分动画 -->
+<integralAnimation integral="+100 积分" integralContent="完成注册" wx:if="{{showintegral}}"></integralAnimation>

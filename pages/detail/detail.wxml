@@ -8,9 +8,7 @@
     </cover-view>
     <cover-image wx:if="{{ !playing }}" mode="widthFix" src="{{ detail.image }}" class="poster" bindtap="recordAdd"></cover-image>
     <cover-image wx:if="{{ !playing }}" mode="aspectFill" src="{{ $state.imgHost }}/play.png" class="play" bindtap="recordAdd"></cover-image>
-    <!-- <cover-view class="videomask">
-
-    </cover-view> -->
+    <cover-view class="videomask" wx:if="{{showintegral}}"></cover-view>
   </video>
   <view class="info">
     <view class="top">
@@ -141,7 +139,7 @@
   </view>
   <button class="authorize" wx:if="{{ $state.baseInfo }}" open-type="getUserInfo" bindgetuserinfo="onGotUserInfo"></button>
   <view class="issueBox" wx:if="{{write&&currentTab == 1}}" bindtap="showWrite">
-    <image src="http://118.89.201.75/images/voicebig.png" class="bigvoice" catchtap="showvoice" data-type="content"></image>
+    <image src="{{$state.imgHost}}/voicebig.png" class="bigvoice" catchtap="showvoice" data-type="content"></image>
     <view class="issueBox-txt" style="color:{{content != '' ? 'rgba(46,46,46,1)': ''}}">
       {{ content != '' ? content : replycomment }}
     </view>
@@ -155,7 +153,7 @@
       <view class="number">{{ replyshow ? replycontenLength : contenLength}}/200</view>
       <view class="issueBoxTow-btn">
         <view class="voicebtn" catchtap="showvoice">
-          <image src="http://118.89.201.75/images/voicesmall.png"></image>
+          <image src="{{$state.imgHost}}/voicesmall.png"></image>
           <view>语音</view>
         </view>
         <view class="submit" catchtap="release">发布</view>
@@ -171,8 +169,8 @@
       <view class="voiceaction" wx:if="{{!showvoiceauto}}">
         <view class="voice-box">
           <text wx:if="{{voicetime != 0}}">{{voicetime}}"</text>
-          <view style="background:url('http://118.89.201.75/images/voicebtnr.png');background-size:100% 100%;" class="voice-image" catchtouchstart="touchstart" catchtouchend="touchend" wx:if="{{$state.authRecord}}"></view>
-          <view style="background:url('http://118.89.201.75/images/voicebtnr.png');background-size:100% 100%;" class="voice-image" catchtap="authrecord" catchtouchstart="authrecord" wx:else></view>
+          <view style="background:url('{{$state.imgHost}}/voicebtnr.png');background-size:100% 100%;" class="voice-image" catchtouchstart="touchstart" catchtouchend="touchend" wx:if="{{$state.authRecord}}"></view>
+          <view style="background:url('{{$state.imgHost}}/voicebtnr.png');background-size:100% 100%;" class="voice-image" catchtap="authrecord" catchtouchstart="authrecord" wx:else></view>
           <div class="voice-water1" wx:if="{{voiceActon}}"></div>
           <div class="voice-water1 voice-water2" wx:if="{{voiceActon}}"></div>
           <view class="voice-txt" style="height:12rpx;"> {{voiceActon? '' : '按住说话'}}</view>
@@ -182,7 +180,7 @@
         <view class="voiceauto-box" catchtap="playvoice">
           <view class="voiceauto">
             <image src="{{voiceplayimg}}"></image>
-            <image src="{{voicetime < 10 ? 'http://118.89.201.75/images/combinedlong.png' : 'http://118.89.201.75/images/combinedso.png'}}"></image>
+            <image src="{{$state.imgHost}}{{voicetime < 10 ? '/combinedlong.png' : '/combinedso.png'}}"></image>
             <text>{{voicetime}}"</text>
           </view>
           <view class="voicetextstatus" wx:if="{{voicetextstatus != ''}}">{{voicetextstatus}}</view>
@@ -203,4 +201,4 @@
   </cover-view>
 </view>
 <!-- 积分动画 -->
-<!-- <integralAnimation integral="+20 积分" integralContent="每日完成短视频点赞"></integralAnimation> -->
+<integralAnimation integral="{{integral}}" integralContent="{{integralContent}}" wx:if="{{showintegral}}"></integralAnimation>

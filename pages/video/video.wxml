@@ -82,6 +82,7 @@
           </cover-view>
         </cover-view>
       </video>
+      
     </swiper-item>
     <swiper-item style="background:#181818" class="classify">
       <view style="padding-top:{{ topT }}rpx">
@@ -138,3 +139,5 @@
   </cover-view>
   <navBar path="video" />
 </view>
+<!-- 积分动画 -->
+<integralAnimation integral="{{integral}}" integralContent="{{integralContent}}" wx:if="{{showintegral}}"></integralAnimation>

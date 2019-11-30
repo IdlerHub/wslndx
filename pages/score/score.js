@@ -502,7 +502,11 @@ Page({
     let item = e.currentTarget.dataset.item
     console.log(item)
     wx.navigateTo({
-      url: '/pages/giftMessage/giftMessage?content=' + JSON.stringify(item) + "&totalPoints=" + this.data.totalPoints,
+      url: '/pages/giftMessage/giftMessage?totalPoints=' + this.data.totalPoints,
+      success: function (res) {
+        // 通过eventChannel向被打开页面传送数据
+        res.eventChannel.emit('acceptDataFromOpenerPage', { data: item })
+      }
     })
   }
 })

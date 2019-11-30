@@ -34,3 +34,5 @@
         </formCode>
     </view>
 </view>
+<!-- 积分动画 -->
+<integralAnimation integral="{{integral}}" integralContent="{{integralContent}}" wx:if="{{showintegral}}"></integralAnimation>

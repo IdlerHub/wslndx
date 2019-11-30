@@ -73,7 +73,7 @@
   <!-- 搜索/积分 -->
   <view class="search-box">
     <navigator class="search-left" url="/pages/search/search">
-      <image src="http://118.89.201.75/images/searchp.png"></image>
+      <image src="{{$state.imgHost}}/searchp.png"></image>
       <text>搜索课程名称</text>
     </navigator>
     <view class="integral" bindtap="toScore">
@@ -94,10 +94,10 @@
       </block>
     </scroll-view>
     <navigator class="tabclassify" url="/pages/drag/drag?index={{currentTab}}">
-      <image src="http://118.89.201.75/images/tabclassify.png"></image>
+      <image src="{{$state.imgHost}}/tabclassify.png"></image>
     </navigator>
   </view>
-  <view class="skeleton" wx:for="{{5}}" wx:if="{{ !recommend }}" wx:key="{{index}}">
+  <view class="skeleton" wx:for="{{5}}" wx:if="{{ !recommend[0] }}" wx:key="{{index}}">
     <view class="skeletonBox">
       <view class="skeletonImg"></view>
       <view class="skeletonTitle"></view>
@@ -199,7 +199,7 @@
   <view class="now" wx:if="{{history.last_lesson}}" bindtap="historyTap" data-id="{{ history.last_lesson.id }}" data-title="{{ history.last_lesson.title }}" style="animation:{{ history.last_lesson && shownow && shownowt ? 'nowshow' : 'nowclose'}}  0.5s ; bottom:{{history.last_lesson && shownow && shownowt? '138rpx' : '-88rpx'}} ">
     <image src="/images/play-red.png"></image>
     <view class="line">{{ history.last_lesson.title + "第" + history.last_lesson.sub_id + "讲" }}</view>
-    <image src="http://118.89.201.75/images/nowcancle.png" catchtap="closenow"></image>
+    <image src="{{$state.imgHost}}/nowcancle.png" catchtap="closenow"></image>
   </view>
   <!-- 签到拿积分 -->
   <view class="integration" wx:if="{{ !$state.signStatus.count && recommend }}" catchtouchmove="return">
@@ -216,35 +216,25 @@
 <!-- wx:if="{{ $state.newGuide.index == 0 }}" -->
 <cover-view class="getGuideBox" wx:if="{{ $state.newGuide.index == 0 }}">
   <cover-view class="numberbox" wx:if="{{guideNum == 1}}">
-    <cover-image src="http://118.89.201.75/images/indexguidsearch.png" class="guidsearch"></cover-image>
+    <cover-image src="{{$state.imgHost}}/indexguidsearch.png" class="guidsearch"></cover-image>
     <cover-view class="numberbox-box" catchtap="nextGuide">
-      <cover-image src="http://118.89.201.75/images/indexguidsearchlabel.png" class="searchlabel"></cover-image>
+      <cover-image src="{{$state.imgHost}}/indexguidsearchlabel.png" class="searchlabel"></cover-image>
     </cover-view>
   </cover-view>
   <cover-view class="numberbox" wx:if="{{guideNum == 2}}">
-    <cover-image src="http://118.89.201.75/images/indexguidtab.png" class="guidtab"></cover-image>
+    <cover-image src="{{$state.imgHost}}/indexguidtab.png" class="guidtab"></cover-image>
     <cover-view class="gesture">
       <cover-image src="{{$state.imgHost}}/videoheng.png" class="indexGuide-img"></cover-image>
       <cover-image src="/images/handleRight.gif" class="indexGuide-imgactive"></cover-image>
     </cover-view>
     <cover-view class="numberbox-boxt" catchtap="nextGuide">
-      <cover-image src="http://118.89.201.75/images/indexguidtablable.png" class="indexLeft"></cover-image>
+      <cover-image src="{{$state.imgHost}}/indexguidtablable.png" class="indexLeft"></cover-image>
     </cover-view>
   </cover-view>
   <cover-view class="numberbox" wx:if="{{guideNum == 3}}">
-    <cover-image src="{{$state.imgHost}}/indexSocre.png" class="indexSocre"></cover-image>
+    <cover-image src="{{$state.imgHost}}/categoryicon.png" class="indexSocre"></cover-image>
     <cover-view class="numberbox-boxr" catchtap="nextGuide">
-      <cover-image src="{{$state.imgHost}}/indexsocermsg.png" class="indexsocermsg"></cover-image>
-      <cover-image src="{{$state.imgHost}}/know.png" class="nextGuder"></cover-image>
+      <cover-image src="{{$state.imgHost}}/categoryicontxt.png" class="indexsocermsg"></cover-image>
     </cover-view>
   </cover-view>
 </cover-view>
-<!-- <view class="dragsort">
-  <navigationBar  id="navigationBar" placeholderBg="#F8F8F8" color="#000000" title="网上老年大学" back="{{ false }}" background="#F8F8F8"></navigationBar>
-  <drag-sort 
-    originSort="{{ nav }}"
-    alternative="{{ categorytotle.user_define_lesson_category }}"
-    bindhandlerSort="sort"
-    wx:if="{{showLessonCategory}}"
-  ></drag-sort>
-</view> -->

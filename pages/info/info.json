@@ -4,6 +4,6 @@
   "navigationBarTextStyle": "black",
   "enablePullDownRefresh": false,
   "usingComponents": {
-    
+    "integralAnimation": "/components/integralAni/integralAni"
   }
 }

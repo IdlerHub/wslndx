@@ -6,6 +6,7 @@
   "usingComponents": {
     "formCode": "/components/formCode/formCode",
     "navBar": "/components/navBar/navBar",
-    "mp-loading": "/components/loading/loading"
+    "mp-loading": "/components/loading/loading",
+    "integralAnimation": "/components/integralAni/integralAni"
   }
 }

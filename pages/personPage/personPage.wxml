@@ -1,4 +1,11 @@
 <!--pages/personPage/personPage.wxml-->
+<wxs module="fn">
+  module.exports = {
+      search: function(str){
+        return str.search('gif');
+      }
+  }
+</wxs>
 <view wx:if="{{ isRefreshing }}" class="weui-loadmore indexdrop">
   <view class="weui-loading"></view>
 </view>
@@ -35,7 +42,7 @@
         <rich-text wx:if="{{ item.content }}" class="name" nodes="{{ item.content }}" space="emsp"></rich-text>
         <view class="content" wx:if="{{ item.images.length > 0 }}">
           <view class="img one" wx:if="{{ item.images.length == 1 }}">
-            <image mode="widthFix" wx:for="{{ item.images }}" wx:for-item="items" wx:key="index" src="{{ item.image_compress + '/resize,p_50' }}" data-urls="{{ item.images }}" data-current="{{ items }}" data-index="{{ index }}" catchtap="previewImage" lazy-load></image>
+            <image mode="widthFix" wx:for="{{ item.images }}" wx:for-item="items" wx:key="index" src="{{ fn.search(item.images[0]) > 0 ?  item.images : item.image_compress + '/resize,p_50'  }}" data-urls="{{ item.images }}" data-current="{{ items }}" data-index="{{ index }}" catchtap="previewImage" lazy-load></image>
           </view>
           <view class="img three" wx:if="{{ item.images.length > 1 }}">
             <image mode="aspectFill" wx:for="{{ item.images }}" wx:for-item="items" wx:key="index" src="{{ item.image_compress[index] + '/resize,p_25' }}" data-urls="{{ item.images }}" data-current="{{ items }}" data-index="{{ index }}" catchtap="previewImage" lazy-load></image>
@@ -95,3 +102,5 @@
     取消收藏
   </view>
 </view>
+<!-- 积分动画 -->
+<integralAnimation integral="{{integral}}" integralContent="{{integralContent}}" wx:if="{{showintegral}}"></integralAnimation>

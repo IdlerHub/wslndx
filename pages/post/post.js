@@ -24,7 +24,8 @@ Page({
       num: 0
     },
     showRelease: false,
-    media_type:null
+    media_type:null,
+    showintegral: false
   },
   onLoad(options) {
     this.param = { page: 1, pageSize: 10 }
@@ -192,16 +193,16 @@ Page({
           list[i].praising = true
           // app.socket.send(list[i].uid)
           if (msg.data.is_first == 'first') {
-            wx.showToast({
-              title: '完成完成秀风采首次点赞获得50积分',
-              icon: 'none',
-              duration: 2000
+            this.setData({
+              integral: '+50 积分',
+              integralContent: '完成秀风采首次点赞',
+              showintegral: true
             })
-            let taskStatus = this.data.$state.taskStatus
-            taskStatus['first_boke_prise_status'] = 1
-            app.store.setState({
-              taskStatus
-            })
+            setTimeout(() => {
+              this.setData({
+                showintegral: false
+              })
+            }, 3000)
           }
           app.socket.send({
             type: 'Bokemessage',
@@ -418,16 +419,16 @@ Page({
       }
       app.user.guideRecordAdd(param).then(res => {
         if (res.code == 1) {
-          wx.showToast({
-            title: '完成[秀风采]新手指引获得45积分',
-            icon: 'none',
-            duration: 2000
+          this.setData({
+            integral: '+45 积分',
+            integralContent: '完成[秀风采]新手指引',
+            showintegral: true
           })
-          let taskStatus = this.data.$state.taskStatus
-          taskStatus['boke_guide_status'] = 1
-          app.store.setState({
-            taskStatus
-          })
+          setTimeout(()=> {
+            this.setData({
+              showintegral: false
+            })
+          }, 3000)
           app.getGuide()
         }
       })

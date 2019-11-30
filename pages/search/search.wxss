@@ -48,7 +48,7 @@ page {
 .container .search-top .search-box button {
   width: 36rpx;
   height: 36rpx;
-  background: url('http://118.89.201.75/images/searchcancle.png') no-repeat center;
+  background: url('https://hwcdn.jinlingkeji.cn/images/pro/searchcancle.png') no-repeat center;
   background-size: 100% 100%;
   position: absolute;
   right: 0;

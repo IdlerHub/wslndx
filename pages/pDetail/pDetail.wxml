@@ -155,7 +155,7 @@
         </view>
         <view class="right_r">
           <view class="voicebtn" catchtap="showvoice">
-            <image src="http://118.89.201.75/images/voicesmall.png"></image>
+            <image src="{{$state.imgHost}}/voicesmall.png"></image>
             <view>语音</view>
           </view>
           <button class="release" disabled="{{ !content  }}" catchtap="release" wx:if="{{!replyshow}}">发布</button>
@@ -173,8 +173,8 @@
       <view class="voiceaction" wx:if="{{!showvoiceauto}}">
         <view class="voice-box">
           <text wx:if="{{voicetime != 0}}">{{voicetime}}"</text>
-          <view style="background:url('http://118.89.201.75/images/voicebtnr.png');background-size:100% 100%;" class="voice-image" catchtouchstart="touchstart" catchtouchend="touchend" wx:if="{{$state.authRecord}}"></view>
-          <view style="background:url('http://118.89.201.75/images/voicebtnr.png');background-size:100% 100%;" class="voice-image" catchtap="authrecord" catchtouchstart="authrecord" wx:else></view>
+          <view style="background:url('{{$state.imgHost}}/voicebtnr.png');background-size:100% 100%;" class="voice-image" catchtouchstart="touchstart" catchtouchend="touchend" wx:if="{{$state.authRecord}}"></view>
+          <view style="background:url('{{$state.imgHost}}/voicebtnr.png');background-size:100% 100%;" class="voice-image" catchtap="authrecord" catchtouchstart="authrecord" wx:else></view>
           <div class="voice-water1" wx:if="{{voiceActon}}"></div>
           <div class="voice-water1 voice-water2" wx:if="{{voiceActon}}"></div>
           <view class="voice-txt" style="height:12rpx;"> {{voiceActon? '' : '按住说话'}}</view>
@@ -184,7 +184,7 @@
         <view class="voiceauto-box" catchtap="playvoice">
           <view class="voiceauto">
             <image src="{{voiceplayimg}}"></image>
-            <image src="{{voicetime < 10 ? 'http://118.89.201.75/images/combinedlong.png' : 'http://118.89.201.75/images/combinedso.png'}}"></image>
+            <image src="{{$state.imgHost}}{{voicetime < 10 ? '/combinedlong.png' : '/combinedso.png'}}"></image>
             <text>{{voicetime}}"</text>
           </view>
           <view class="voicetextstatus" wx:if="{{voicetextstatus != ''}}">{{voicetextstatus}}</view>
@@ -199,3 +199,5 @@
     <text>首页</text>
   </view>
 </view>
+<!-- 积分动画 -->
+<integralAnimation integral="{{integral}}" integralContent="{{integralContent}}" wx:if="{{showintegral}}"></integralAnimation>

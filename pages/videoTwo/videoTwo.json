@@ -3,5 +3,8 @@
   "navigationBarTitleText": "短视频",
   "navigationBarTextStyle": "black",
   "enablePullDownRefresh": false,
-  "disableScroll": true
+  "disableScroll": true,
+  "usingComponents": {
+    "integralAnimation": "/components/integralAni/integralAni"
+  }
 }

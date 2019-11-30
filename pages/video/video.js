@@ -15,7 +15,8 @@ Page({
     classify:[],
     autoplay: false,
     guideTxt: '下一步',
-    vistor: false
+    vistor: false,
+    showintegral:false
     /*  rect: wx.getMenuButtonBoundingClientRect() */
   },
   onLoad(options) {
@@ -302,27 +303,27 @@ Page({
       app.video.praise(param1).then(msg => {
         if (msg.code == 1) {
           if (msg.data.is_first == 'first') {
-            wx.showToast({
-              title: '完成短视频首次点赞获得50积分',
-              icon: 'none',
-              duration: 2000
+            this.setData({
+              integral: '+50 积分',
+              integralContent: '完成短视频首次点赞',
+              showintegral: true
             })
-            let taskStatus = this.data.$state.taskStatus
-            taskStatus['first_shortvideo_parise_status'] = 1
-            app.store.setState({
-              taskStatus
-            })
+            setTimeout(() => {
+              this.setData({
+                showintegral: false
+              })
+            }, 3000)
           } else if (msg.data.is_first == 'day') {
-            wx.showToast({
-              title: '完成每日短视频首赞获得20积分',
-              icon: 'none',
-              duration: 2000
+            this.setData({
+              integral: '+20 积分',
+              integralContent: '完成每日短视频首赞',
+              showintegral: true
             })
-            let dayStatus = this.data.$state.dayStatus
-            dayStatus['day_shortvideo_praise_status'] = 1
-            app.store.setState({
-              dayStatus
-            })
+            setTimeout(() => {
+              this.setData({
+                showintegral: false
+              })
+            }, 3000)
           }
           list[index].praised = 1
           list[index].praise++
@@ -426,21 +427,19 @@ Page({
       }
       app.user.guideRecordAdd(param).then(res => {
         if (res.code == 1) {
-          wx.showToast({
-            title: '完成[短视频]新手指引获得45积分',
-            icon: 'none',
-            duration: 2000
-          })
-          let taskStatus = this.data.$state.taskStatus
-          taskStatus['shortvideo_guide_status'] = 1
-          app.store.setState({
-            taskStatus
-          })
           app.getGuide()
-          this.judgeWifi()
           this.setData({
-            nextRtight: 5
+            nextRtight: 5,
+            integral:'+45 积分',
+            integralContent: '完成[短视频]新手指引',
+            showintegral: true
           })
+          setTimeout(() => {
+            this.setData({
+              showintegral: false
+            })
+            this.judgeWifi()
+          }, 3000)
         }
       })
     }

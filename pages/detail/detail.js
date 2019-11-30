@@ -36,8 +36,9 @@ Page({
     voicetextstatus: '',
     content: '',
     voivetext:'',
-    voiceplayimg: 'http://118.89.201.75/images/triangle.png',
-    replyshow:false
+    voiceplayimg: 'https://hwcdn.jinlingkeji.cn/images/pro/triangle.png',
+    replyshow:false,
+    showintegral: false
     /* rect: wx.getMenuButtonBoundingClientRect() */
   },
   onLoad(options) {
@@ -218,24 +219,24 @@ Page({
     app.classroom.sublessonfinish(param).then(res => {
       if (res.code == 1) {
         if (res.data.is_first == 'first') {
-          wx.showToast({
-            title: '完成首次学习课程获得70积分',
-            icon: 'none',
-            duration: 2000
-          })
-          let taskStatus = this.data.$state.taskStatus
-          taskStatus['first_learn_status'] = 1
-          app.store.setState({
-            taskStatus
+          this.setData({
+            integral: "+70 积分",
+            integralContent: "完成首次学习课程",
+            showintegral: true,
           })
         } else if (res.data.is_first == 'finish') {
-          wx.showToast({
-            title: '完成学完一门新课程获得20积分',
-            icon: 'none',
-            duration: 2000
+          this.setData({
+            integral: "+20 积分",
+            integralContent: "完成学完一门新课程",
+            showintegral: true,
           })
         }
       }
+      setTimeout(() => {
+        this.setData({
+          showintegral: false
+        })
+      },3000)
       app.classroom.detail(this.param).then(msg => {
         if (msg.code === 1) {
           this.setData({
@@ -356,43 +357,43 @@ Page({
       sublesson_id: this.data.cur.id
     }
     let that = this
-    // if (this.data.$state.flow) {
+    if (this.data.$state.flow) {
       that.recordAddVedio(param)
-    // } else {
-    //   wx.startWifi({
-    //     success: res => {
-    //       wx.getConnectedWifi({
-    //         success: res => {
-    //           console.log(res)
-    //           app.playVedio('wifi')
-    //           that.recordAddVedio(param)
-    //         },
-    //         fail: res => {
-    //           console.log(res)
-    //           wx.showModal({
-    //             content: '您当前不在Wi-Fi环境，继续播放将会产生流量，是否选择继续播放?',
-    //             confirmText: '是',
-    //             cancelText: '否',
-    //             confirmColor: '#DF2020',
-    //             success(res) {
-    //               if (res.confirm) {
-    //                 app.playVedio('flow')
-    //                 that.recordAddVedio(param)
-    //               } else if (res.cancel) {
-    //                 console.log('用户点击取消')
-    //               }
-    //             }
-    //           })
-    //         }
-    //       })
-    //       wx.stopWifi({
-    //         success: res => {
-    //           console.log('wifi模块关闭成功')
-    //         }
-    //       })
-    //     },
-    //   })
-    // }
+    } else {
+      wx.startWifi({
+        success: res => {
+          wx.getConnectedWifi({
+            success: res => {
+              console.log(res)
+              app.playVedio('wifi')
+              that.recordAddVedio(param)
+            },
+            fail: res => {
+              console.log(res)
+              wx.showModal({
+                content: '您当前不在Wi-Fi环境，继续播放将会产生流量，是否选择继续播放?',
+                confirmText: '是',
+                cancelText: '否',
+                confirmColor: '#DF2020',
+                success(res) {
+                  if (res.confirm) {
+                    app.playVedio('flow')
+                    that.recordAddVedio(param)
+                  } else if (res.cancel) {
+                    console.log('用户点击取消')
+                  }
+                }
+              })
+            }
+          })
+          wx.stopWifi({
+            success: res => {
+              console.log('wifi模块关闭成功')
+            }
+          })
+        },
+      })
+    }
   },
   recordAddVedio(param) {
     app.classroom.recordAdd(param).then(msg => {
@@ -994,19 +995,22 @@ Page({
     app.user.guideRecordAdd(param).then(res => {
       if (res.code == 1) {
         app.getGuide()
-        wx.showToast({
-          title: '完成[云课堂]新手指引获得45积分',
-          icon: 'none',
-          duration: 2000
-        })
         let taskStatus = this.data.$state.taskStatus
         taskStatus['lesson_guide_status'] = 1
         app.store.setState({
           taskStatus
         })
         this.setData({
-          currentTab: 0
+          currentTab: 0,
+          integral: "+45 积分",
+          integralContent: "完成[云课堂]新手指引",
+          showintegral: true,
         })
+        setTimeout(() => {
+          this.setData({
+            showintegral: false
+          })
+        }, 3000)
       }
     })
   },
@@ -1161,12 +1165,12 @@ Page({
     innerAudioContext.play()
     innerAudioContext.onPlay(() => {
       this.setData({
-        voiceplayimg: 'http://118.89.201.75/images/voicepause.png'
+        voiceplayimg: 'https://hwcdn.jinlingkeji.cn/images/pro/voicepause.png'
       })
     })
     innerAudioContext.onEnded(() => {
       this.setData({
-        voiceplayimg: 'http://118.89.201.75/images/triangle.png'
+        voiceplayimg: 'https://hwcdn.jinlingkeji.cn/images/pro/triangle.png'
       })
     })
   },

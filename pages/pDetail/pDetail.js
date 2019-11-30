@@ -26,8 +26,9 @@ Page({
     showvoiceauto: false,
     voicetextstatus: '',
     voivetext: '',
-    voiceplayimg: 'http://118.89.201.75/images/triangle.png',
-    replyshow: false
+    voiceplayimg: 'https://hwcdn.jinlingkeji.cn/images/pro/triangle.png',
+    replyshow: false,
+    showintegral:false
     /* rect: wx.getMenuButtonBoundingClientRect() */
   },
   onLoad(options) {
@@ -165,16 +166,16 @@ Page({
             data: {uid: this.data.detail.uid}
           })
           if (msg.data.is_first == 'first') {
-            wx.showToast({
-              title: '完成完成秀风采首次点赞获得50积分',
-              icon: 'none',
-              duration: 2000
+            this.setData({
+              integral: '+50 积分',
+              integralContent: '完成秀风采首次点赞',
+              showintegral: true
             })
-            let taskStatus = this.data.$state.taskStatus
-            taskStatus['first_boke_prise_status'] = 1
-            app.store.setState({
-              taskStatus
-            })
+            setTimeout(() => {
+              this.setData({
+                showintegral: false
+              })
+            }, 3000)
           }
           this.setData({ detail: detail })
         } else if (msg.code == -2) {
@@ -347,37 +348,38 @@ Page({
     app.circle.comment(param).then(msg => {
       wx.hideLoading()
       if (msg.code == 1) {
-        wx.showToast({
-          title: "发布成功",
-          icon: "none",
-          duration: 1500
-        })
         let blogcomment = this.data.$state.blogcomment 
         blogcomment[this.data.detail.id]['replycontent'] = ''
         app.store.setState({
           blogcomment
         })
         if (msg.data.is_first == 'first') {
-          wx.showToast({
-            title: '完成秀风采首次评论获得50积分',
-            icon: 'none',
-            duration: 2000
+          this.setData({
+            integral: '+50 积分',
+            integralContent: '完成秀风采首次评论',
+            showintegral: true
           })
-          let taskStatus = this.data.$state.taskStatus
-          taskStatus['first_boke_comment_status'] = 1
-          app.store.setState({
-            taskStatus
-          })
+          setTimeout(() => {
+            this.setData({
+              showintegral: false
+            })
+          }, 3000)
         } else if (msg.data.is_first == 'day') {
-          wx.showToast({
-            title: '完成每日秀风采首评评论获得20积分',
-            icon: 'none',
-            duration: 2000
+          this.setData({
+            integral: '+20 积分',
+            integralContent: '完成每日秀风采首评评论',
+            showintegral: true
           })
-          let dayStatus = this.data.$state.dayStatus
-          dayStatus['day_boke_comment_status'] = 1
-          app.store.setState({
-            dayStatus
+          setTimeout(() => {
+            this.setData({
+              showintegral: false
+            })
+          }, 3000)
+        } else {
+          wx.showToast({
+            title: "发布成功",
+            icon: "none",
+            duration: 1500
           })
         }
         this.getDetail()
@@ -893,12 +895,12 @@ Page({
     innerAudioContext.play()
     innerAudioContext.onPlay(() => {
       this.setData({
-        voiceplayimg: 'http://118.89.201.75/images/voicepause.png'
+        voiceplayimg: 'https://hwcdn.jinlingkeji.cn/images/pro/voicepause.png'
       })
     })
     innerAudioContext.onEnded(() => {
       this.setData({
-        voiceplayimg: 'http://118.89.201.75/images/triangle.png'
+        voiceplayimg: 'https://hwcdn.jinlingkeji.cn/images/pro/triangle.png'
       })
     })
   },

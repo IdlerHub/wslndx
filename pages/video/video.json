@@ -5,7 +5,8 @@
   "enablePullDownRefresh": false,
   "disableScroll": true,
   "usingComponents": {
-    "navBar": "/components/navBar/navBar"
+    "navBar": "/components/navBar/navBar",
+    "integralAnimation": "/components/integralAni/integralAni"
   },
   "navigationStyle": "custom"
 }

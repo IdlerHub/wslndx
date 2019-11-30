@@ -2,7 +2,7 @@
 <view class="container">
   <view class="search-top" wx:if="{{focus}}">
     <view class="search-box">
-      <image src="http://118.89.201.75/images/searchp.png"></image>
+      <image src="{{$state.imgHost}}/searchp.png"></image>
       <form>
         <input placeholder="搜索课程名称" placeholder-style="color:#999;" confirm-type="search" type="text" class="search-txt" focus="focus" bindkeyboardheightchange="keychange" value="{{text}}" bindinput="txtchange" bindconfirm="earchlesss"></input>
         <button wx:if="{{text != ''}}" form-type="reset" catchtap="cleartxt"></button> 
@@ -12,7 +12,7 @@
   </view>
   <view class="search-top" wx:else>
     <view class="search-box">
-      <image src="http://118.89.201.75/images/searchp.png"></image>
+      <image src="{{$state.imgHost}}/searchp.png"></image>
       <input placeholder="搜索课程名称" placeholder-style="color:#999;" confirm-type="search" type="text" class="search-txt" bindkeyboardheightchange="keychange" value="{{text}}"></input>
     </view>
     <view class="cancle" bindtap="backhome">取消</view>

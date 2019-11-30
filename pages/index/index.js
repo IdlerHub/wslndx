@@ -166,15 +166,29 @@ Page({
     if(cur != 0) {
       let id = this.data.nav[cur].id
       this.geteCatrcommend(id)
-    } else {
-      this.setHeight()
     }
+    this.categoryscroll ? '' : this.categoryscroll = {}
+    setTimeout(() => {
+      this.setHeight()
+      this.categoryscroll[this.data.nav[this.data.currentTab].id] ? wx.pageScrollTo({
+      scrollTop: this.categoryscroll[this.data.nav[this.data.currentTab].id],
+      duration: 100
+    }) : wx.pageScrollTo({
+      scrollTop: 0,
+      duration: 100
+    })
+    }, 600)
   },
   lastswitchTab(event) {
     let arr = this.data.nav, num = 0
     arr.forEach((i,index) => {
       i.id == event ? num = index : ''
     })
+    if (this.data.catrecommend[event]) {
+      if (!this.data.catrecommend[event][0]) this.geteCatrcommend(event)
+    } else {
+      this.geteCatrcommend(event)
+    }
     this.setData({
       currentTab: num
     })
@@ -192,16 +206,14 @@ Page({
         this.setData({
           recommend: msg.data
         })
-        // setTimeout(() => {
-        //   this.setData({
-        //     showReco: true
-        //   })
-        // }, 250)
         wx.hideLoading()
       }
     })
   },
   geteCatrcommend(id) {
+    if (this.data.catrecommend[id]){
+      if (this.data.catrecommend[id][0]) return
+    }
     let temp = []
     return app.classroom.lessons(this.categoryParams[id]).then(msg => {
       if (msg.code === 1) {
@@ -239,9 +251,6 @@ Page({
       }
     })
   },
-  changeCategory() {
-
-  },
   getactivite() {
     // return app.user.activite()
   },
@@ -273,16 +282,6 @@ Page({
       url: "../info/info"
     })
   },
-  // toVideo() {
-  //   wx.navigateTo({
-  //     url: "../video/video"
-  //   })
-  // },
-  // toPost() {
-  //   wx.navigateTo({
-  //     url: "../post/post"
-  //   })
-  // },
   toScore() {
     wx.navigateTo({
       url: "/pages/score/score?type=index"
@@ -309,6 +308,8 @@ Page({
     }) : this.setData({
         shownow: true
     })
+    this.categoryscroll ? '' : this.categoryscroll = {}
+    this.categoryscroll[this.data.nav[this.data.currentTab].id] = e.scrollTop
   },
   //继续播放
   historyTap: function(e) {
@@ -432,7 +433,36 @@ Page({
       }, 1000)
     })
   },
-  onReachBottom() {},
+  onReachBottom() {
+    if(this.data.currentTab != 0) {
+      let id = this.data.nav[this.data.currentTab].id
+      let temp = this.data.catrecommend[id]
+      this.categoryParams[id].page++
+      console.log(this.categoryParams, 8953498758345843578)
+      return app.classroom.lessons(this.categoryParams[id]).then(msg => {
+        if (msg.code === 1) {
+          msg.data.forEach(function (item) {
+            item.thousand = app.util.tow(item.browse)
+          })
+          this.data.catrecommend[id] = temp.concat(msg.data)
+          console.log(this.data.catrecommend[id])
+          this.setData({
+            catrecommend: this.data.catrecommend
+          })
+          let query = wx.createSelectorQuery().in(this)
+          let that = this, nav = this.data.nav, currentTab = this.data.currentTab
+          query.select(nav[currentTab].class).boundingClientRect()
+          query.exec(res => {
+            let height = res[0].height
+            that.navHeightList[currentTab] = height
+            that.setData({
+              height: height
+            })
+          })
+        }
+      })
+    }
+  },
   /* 广告位值跳转 */ 
   bannerGo(e) {
     let item = e.currentTarget.dataset.item;

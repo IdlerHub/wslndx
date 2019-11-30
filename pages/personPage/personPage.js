@@ -2,7 +2,8 @@
 const app = getApp()
 Page({
   data: {
-    list:[]
+    list:[],
+    showintegral: false
   },
   onLoad(options) {
     console.log(options)
@@ -163,16 +164,16 @@ Page({
             data: {uid: list[i].uid }
           })
           if (msg.data.is_first == 'first') {
-            wx.showToast({
-              title: '完成完成秀风采首次点赞获得50积分',
-              icon: 'none',
-              duration: 2000
+            this.setData({
+              integral: '+50 积分',
+              integralContent: '完成秀风采首次点赞',
+              showintegral: true
             })
-            let taskStatus = this.data.$state.taskStatus
-            taskStatus['first_boke_prise_status'] = 1
-            app.store.setState({
-              taskStatus
-            })
+            setTimeout(() => {
+              this.setData({
+                showintegral: false
+              })
+            }, 3000)
           }
           this.setData({
             list: list

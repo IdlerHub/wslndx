@@ -13,6 +13,6 @@
     </view>
   </view>
   <view class="btn-box">
-    <button bindtap="gift">立即兑换</button>
+    <button bindtap="gift" style="{{!this.data.gift.stock ? 'background: gray': ''}}">立即兑换</button>
   </view>
 </view>

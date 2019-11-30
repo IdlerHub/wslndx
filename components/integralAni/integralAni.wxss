@@ -5,16 +5,37 @@
   background:rgba(0,0,0,0.65);
   position: fixed;
   top: 0;
+  z-index: 500;
 }
 .integralmark  .integraimg {
   width: 360rpx;
   height: 360rpx;
   background: url("https://hwcdn.jinlingkeji.cn/images/pro/IntegralAnimation.png");
-  animation: ani steps(22, end) infinite 1s 1s;
+  animation: ani steps(22, end) infinite 1s;
   position: absolute;
   top: 390rpx;
   left: 50%;
   margin-left: -180rpx;
+}
+.integral {
+    width: 100%;
+    font-size:50rpx;
+    font-family:PingFangSC-Medium,PingFang SC;
+    font-weight:500;
+    color:rgba(254,155,2,1);
+    text-align: center;
+    position: absolute;
+    top: 370rpx;
+}
+.integralContent {
+  width: 100%;
+  font-size:36rpx;
+  font-family:PingFangSC-Regular,PingFang SC;
+  font-weight:400;
+  color:rgba(255,255,255,1);
+  text-align: center;
+  position: absolute;
+  top: 453rpx;
 }
 @keyframes integraani {
   0% {

@@ -11,7 +11,8 @@ Page({
       num:0
     },
     media_type: null,
-    showFlag: false
+    showFlag: false,
+    showintegral: false
   },
   onLoad() {
     this.getCircleList()
@@ -289,39 +290,37 @@ Page({
               cover: null,
               fs_id: "",
               num:0
-            }
+            }, integral = ''
             this.setData({
               param: paramInit
             })
             if (msg.data.is_first == 'first') {
-              wx.showToast({
-                title: '完成首次发帖获得50积分',
-                icon: 'none',
-                duration: 2500
+              this.setData({
+                integral: '+50 积分',
+                integralContent: '完成首次发帖',
+                showintegral: true
               })
-              let taskStatus = this.data.$state.taskStatus
-              taskStatus['first_add_boke_status'] = 1
-              app.store.setState({
-                taskStatus
-              })
+              integral = 'first'
             } else if (msg.data.is_first == 'day') {
-              wx.showToast({
-                title: '完成每日秀风采首次发帖获得20积分',
-                icon: 'none',
-                duration: 2000
+              this.setData({
+                integral: '+20 积分',
+                integralContent: '完成每日秀风采首次发帖',
+                showintegral: true
               })
-              let dayStatus = this.data.$state.dayStatus
-              dayStatus['day_add_boke_status'] = 1
-              app.store.setState({
-                dayStatus
-              })
+              integral = 'day'
             }
             app.store.setState({
               releaseParam: null,
               media_type: null
             })
-            wx.switchTab({ url: "/pages/post/post" })
             app.globalData.rlSuc = true
+            if (integral == 'first' || integral == 'day') {
+              setTimeout(() => {
+                wx.switchTab({ url: "/pages/post/post" })
+              },3000)
+            } else {
+              wx.switchTab({ url: "/pages/post/post" })
+            }
             // let pages = getCurrentPages()
             // let prePage = pages[pages.length - 2]
             // if (prePage.route == "pages/cDetail/cDetail") {

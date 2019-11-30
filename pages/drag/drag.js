@@ -13,7 +13,8 @@ Page({
     touch: false /* 排序列表是否在编辑状态中  */,
     /* 备选 */
     moldY: 0,
-    altList: [] /* 备选列表 */
+    altList: [] /* 备选列表 */,
+    guideNum: 1
   },
   private: {
     startX: 0 /* 拖动目标标准坐标(计算偏移的基准点)  */,
@@ -28,12 +29,6 @@ Page({
   },
   onLoad: function (ops) {
     this.currentTab = ops.index
-    setTimeout(() => {
-      this.data.sortList[ops.index]['class'] = true
-      this.setData({
-        sortList: this.data.sortList
-      })
-    }, 500)
     let pages = getCurrentPages();
     this.beforePage = pages[0];
   },
@@ -51,6 +46,7 @@ Page({
         msg.data.user_lesson_category.forEach((i, index) => {
           arr1.push(i)
         })
+        arr1[this.currentTab]['class'] = true
         const res = wx.getSystemInfoSync();
         let sortArr = arr1;
         sortArr.forEach((v, i) => {
@@ -94,8 +90,8 @@ Page({
         this.beforePage.getCategory()
         setTimeout(() => {
           this.beforePage.lastswitchTab(number)
-        },500)
-      }, 500)
+        },200)
+      }, 200)
     }
     this.setData({
       touch: !this.data.touch
@@ -386,6 +382,27 @@ Page({
     if (!this.data.touch) {
         this.beforePage.lastswitchTab(e.currentTarget.dataset.id)
         wx.navigateBack()
+    }
+  },
+  nextguid() {
+    if (this.data.guideNum == 1) {
+      this.setData({
+        guideNum: 2,
+        touch: !this.data.touch
+      })
+    } else {
+      this.setData({
+        guideNum: 3,
+        touch: !this.data.touch
+      })
+      let param = {
+        guide_name: 'lesson_category'
+      }
+      app.user.guideRecordAdd(param).then(res => {
+        if (res.code == 1) {
+          app.getGuide()
+        }
+      })
     }
   }
 });

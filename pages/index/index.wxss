@@ -173,7 +173,7 @@
 .nav .item {
   line-height: 100rpx;
   display: inline-block;
-  width: 120rpx;
+  width: 118rpx;
   text-align: center;
   font-family: PingFangSC-Regular;
   font-size: 36rpx;
@@ -181,7 +181,7 @@
   letter-spacing: 0;
 }
 .nav .itemone {
-  padding-left: 10rpx;
+  padding-left: 14rpx;
 }
 
 .nav .item.active {
@@ -834,10 +834,10 @@ page .getGuideBox .numberbox-boxt {
   left: 160rpx; 
 }
 page .getGuideBox .numberbox-boxr {
-  width: 424rpx;
+  width: 460rpx;
   position: relative;
   left: 163rpx;
-  top: 794rpx;
+  top: 697rpx;
 }
 page .getGuideBox .nextGude {
   margin-top: 80rpx;
@@ -886,15 +886,15 @@ page .getGuideBox .indexLeft {
 }
 
 page .getGuideBox .indexSocre {
-  width: 150rpx;
-  height: 240rpx;
+  width: 136rpx;
+  height: 180rpx;
   position: absolute;
-  right: 10rpx;
-  top: 464rpx;
+  right: 30rpx;
+  top: 451rpx;
 }
 page .getGuideBox .indexsocermsg {
-  width: 424rpx;
-  height: 130rpx;
+  width: 460rpx;
+  height: 290rpx;
 }
 page .getGuideBox .nextBtn {
   width:176rpx;

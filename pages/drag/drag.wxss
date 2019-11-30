@@ -98,3 +98,40 @@
 .linehight {
   color:rgba(223,32,32,1) !important;
 }
+.guide {
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.65);
+  position: fixed;
+  top: 0;
+}
+.guideone .guidetwoimg{
+  width: 142rpx;
+  height: 170rpx;
+  position: absolute;
+  right: 30rpx;
+  top: 59rpx;
+}
+.guideone .guidetwotxt{
+  width: 382rpx;
+  height: 290rpx;
+  position: absolute;
+  left: 50%;
+  margin-left: -191rpx;
+  top: 300rpx;
+}
+.guidetwo .guidetwoimg{
+  width: 483rpx;
+  height: 126rpx;
+  position: absolute;
+  right: 5rpx;
+  top: 124rpx;
+}
+.guidetwo .guidetwotxt{
+  width: 302rpx;
+  height: 290rpx;
+  position: absolute;
+  left: 50%;
+  margin-left: -151rpx;
+  top: 360rpx;
+}

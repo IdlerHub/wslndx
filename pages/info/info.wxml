@@ -61,3 +61,5 @@
     </view>
   </view>
 </view>
+<!-- 积分动画 -->
+<integralAnimation integral="+65 积分" integralContent="完成完善资料" wx:if="{{showintegral}}"></integralAnimation>

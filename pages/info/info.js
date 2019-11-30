@@ -10,7 +10,8 @@ Page({
   data: {
     gender: ["女", "男"],
     age: ["50以下", "50-60", "60-70", "70以上"],
-    padding: false
+    padding: false,
+    showintegral: false
   },
   onLoad() {
     let userInfo = JSON.parse(JSON.stringify(this.data.$state.userInfo))
@@ -136,16 +137,14 @@ Page({
     app.user.profile(param).then(msg => {
       if (msg.code == 1) {
         if (msg.data.is_first == 'first') {
-          wx.showToast({
-            title: '完成完善资料获得65积分',
-            icon: 'none',
-            duration: 2000
+          this.setData({
+            showintegral: true
           })
-          let taskStatus = this.data.$state.taskStatus
-          taskStatus['finish_user_info_status'] = 1
-          app.store.setState({
-            taskStatus
-          })
+          setTimeout(() => {
+            this.setData({
+              showintegral: false
+            })
+          }, 3000)
         }
         app.setUser(msg.data.userInfo)
         // app.classroom.recommend({ page: 1, pageSize: 10, province: this.data.$state.userInfo.university.split(',')[0] }).then(msg => {

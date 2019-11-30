@@ -10,7 +10,8 @@ Page({
     mode: 1,
     authenable: false,
     check:true,
-    btnName: "获取验证码"
+    btnName: "获取验证码",
+    showintegral: false
   },
   params: { tel: "", authCode: "", telFormat: false, codeFormat: false, mode: 1, tempCode: null },
   /**
@@ -173,20 +174,20 @@ Page({
             for (let attr in app.globalData.query) {
               params.push(attr + "=" + app.globalData.query[attr])
             }
-            wx.reLaunch({ url: app.globalData.path + "?" + params.join("&") })
-            wx.showToast({
-              title: '完成注册获得100积分',
-              icon: 'none',
-              duration: 2000
+            this.setData({
+              showintegral: true
             })
+            setTimeout(() => {
+              wx.reLaunch({ url: app.globalData.path + "?" + params.join("&") })
+            }, 3000)
           } else {
             /*跳转首页*/
-            wx.showToast({
-              title: '完成注册获得100积分',
-              icon: 'none',
-              duration: 2000
+            this.setData({
+              showintegral: true
             })
-            wx.switchTab({ url: "/pages/index/index" })
+            setTimeout(() => {
+              wx.switchTab({ url: "/pages/index/index" })
+            }, 3000)
           }
         }
       } else {
