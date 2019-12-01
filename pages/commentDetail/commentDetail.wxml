@@ -19,7 +19,7 @@
       </view>
     </view>
     <rich-text nodes="{{ detail.content }}"></rich-text>
-    <button wx:if="{{ detail.uid && $state.userInfo.id != detail.uid }}" class="reply-btn" catchtap="show">回复</button>
+    <button wx:if="{{ detail.uid && $state.userInfo.id != detail.uid }}" class="reply-btn" data-detail="{{ detail }}" catchtap="show">回复</button>
   </view>
 </view>
 <view class="children" wx:for="{{ detail.reply_array }}" wx:key="index" wx:for-item="child">
@@ -37,18 +37,60 @@
     </view>
   </view>
   <rich-text nodes="{{ child.rtext + child.reply_content }}"></rich-text>
-  <button wx:if="{{ $state.userInfo.id != child.reply_user_id }}" class="reply-btn" data-reply="{{ child }}" catchtap="show">回复</button>
+  <button wx:if="{{ $state.userInfo.id != child.reply_user_id }}" class="reply-btn" data-reply="{{ child }}" data-detail="{{ child }}"catchtap="show">回复</button>
 </view>
 
-<view class="popup write" wx:if="{{ write }}">
-  <view class="bg" bindtap="hide"></view>
-  <view class="box">
-    <textarea placeholder="写评论" focus cursor-spacing="190rpx" fixed bindinput="input" value="{{ content }}" placeholder-class="ph-class"></textarea>
-    <view class="right" catchtap="toComment">
-      <view class="to">
-        <image mode="aspectFit" class="icon" src="{{ $state.imgHost }}/screen.png"></image>
+<view class="popup write" id="write" wx:if="{{ write }}">
+  <view class="bg" bindtap="hide" bindtouchstart="touchStart"></view>
+  <view class="box" style="{{ textHeight ? 'bottom:'+ textHeight : ''}}">
+    <!-- prettier-ignore -->
+    <text class="replayplaceholder" wx:if="{{replyplaceholder != ''}}">{{replyplaceholder}}</text>
+    <textarea placeholder="添加你的评论" focus="{{ focus }}" fixed bindinput="input" value='{{content}}' placeholder-class="ph-class" show-confirm-bar="{{ false }}" adjust-position="{{ false }}" bindfocus="textHeight" hold-keyboard
+      maxlength="200"></textarea>
+    <!-- prettier-ignore -->
+    <view class="right" catchtap="navigator">
+      <view class="number">
+        {{contenLength}}/200
       </view>
-      <button class="release" disabled="{{ !content }}" catchtap="release">发布</button>
+      <view class="right_r">
+        <view class="voicebtn" catchtap="showvoice">
+          <image src="{{$state.imgHost}}/voicesmall.png"></image>
+          <view>语音</view>
+        </view>
+        <button class="release" disabled="{{ !content  }}" catchtap="release" wx:if="{{!replyshow}}">发布</button>
+        <button class="release" disabled="{{ !replycontent  }}" catchtap="release" wx:else>发布</button>
+      </view>
+    </view>
+  </view>
+</view>
+
+<view class="voiceBox" wx:if="{{showvoice}}">
+  <view class="voiceBoxmask" catchtap="closevoiceBox"></view>
+  <view class="voiceContent">
+    <text class="replyplaceholder" wx:if="{{replyshow}}">{{replyplaceholder}}</text>
+    <text style="color:{{content != '' && !replyshow ? 'rgba(46,46,46,1)': replycontent !== '' && replyshow ? 'rgba(46,46,46,1)' : ''}}" class="placeholder" catchtap="showWrite" data-type="voice" wx:if="{{!replyshow}}">{{ content == '' ? placeholder : content }}</text>
+    <text style="color:{{content != '' && !replyshow ? 'rgba(46,46,46,1)': replycontent !== '' && replyshow ? 'rgba(46,46,46,1)' : ''}}" class="placeholder" catchtap="showWrite" data-type="voice" wx:else>{{ placeholder != '' ? placeholder : replycontent }}</text>
+    <view class="voiceaction" wx:if="{{!showvoiceauto}}">
+      <view class="voice-box">
+        <text wx:if="{{voicetime != 0}}">{{voicetime}}"</text>
+        <view style="background:url('{{$state.imgHost}}/voicebtnr.png');background-size:100% 100%;" class="voice-image" catchtouchstart="touchstart" catchtouchend="touchend" wx:if="{{$state.authRecord}}"></view>
+        <view style="background:url('{{$state.imgHost}}/voicebtnr.png');background-size:100% 100%;" class="voice-image" catchtap="authrecord" catchtouchstart="authrecord" wx:else></view>
+        <div class="voice-water1" wx:if="{{voiceActon}}"></div>
+        <div class="voice-water1 voice-water2" wx:if="{{voiceActon}}"></div>
+        <view class="voice-txt" style="height:12rpx;"> {{voiceActon? '' : '按住说话'}}</view>
+      </view>
+    </view>
+    <view class="voiceaction" wx:else>
+      <view class="voiceauto-box" catchtap="playvoice">
+        <view class="voiceauto">
+          <image src="{{voiceplayimg}}"></image>
+          <image src="{{$state.imgHost}}{{voicetime < 10 ? '/combinedlong.png' : '/combinedso.png'}}"></image>
+          <text>{{voicetime}}"</text>
+        </view>
+        <view class="voicetextstatus" wx:if="{{voicetextstatus != ''}}">{{voicetextstatus}}</view>
+      </view>
+      <view class="voiceanew" catchtap="relacevoice">重录</view>
+      <view class="voicerelease" catchtap="release">发布</view>
     </view>
   </view>
 </view>

@@ -5,7 +5,10 @@
  */
 // pages/commentDetail/commentDetail.js
 const app = getApp()
-
+const plugin = requirePlugin("WechatSI")
+// 获取**全局唯一**的语音识别管理器**recordRecoManager**
+const manager = plugin.getRecordRecognitionManager()
+const innerAudioContext = wx.createInnerAudioContext();
 Page({
   /**
    * 页面的初始数据
@@ -13,7 +16,16 @@ Page({
   data: {
     detail: {},
     content: "",
-    opts: {}
+    opts: {},
+    contenLength: 0,
+    showvoice: false,
+    voicetime: 0,
+    showvoiceauto: false,
+    voicetextstatus: '',
+    voivetext: '',
+    voiceplayimg: 'https://hwcdn.jinlingkeji.cn/images/pro/triangle.png',
+    replyshow: false,
+    showintegral: false
   },
 
   /**
@@ -35,7 +47,10 @@ Page({
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function() {},
+  onShow: function() {
+    this.initRecord()
+    this.getRecordAuth()
+  },
   /**
    * 获取评论详情
    */
@@ -177,8 +192,11 @@ Page({
         confirmColor: '#df2020',
       })
     } else {
+      console.log(e)
       this.setData({
-        write: true
+        write: true,
+        replyplaceholder: '回复 ' + e.currentTarget.dataset.detail.nickname,
+        replyshow: true
       })
      }
   },
@@ -288,5 +306,227 @@ Page({
         }
       }
     })
+  },
+  // 语音
+  // 权限询问
+  authrecord() {
+    this.setData({
+      focus: false
+    })
+    if (this.data.$state.authRecordfail) {
+      wx.showModal({
+        content: '您已拒绝授权使用麦克风录音权限，请打开获取麦克风授权！否则无法使用小程序部分功能',
+        confirmText: '去授权',
+        confirmColor: "#df2020",
+        success: res => {
+          if (res.confirm) {
+            wx.openSetting({})
+          }
+        }
+      })
+    }
+    if (!this.data.$state.authRecord) {
+      wx.authorize({
+        scope: 'scope.record',
+        success() {
+          // 用户已经同意小程序使用录音功能，后续调用 wx.startRecord 接口不会弹窗询问
+          console.log("succ auth")
+          app.store.setState({
+            authRecord: true
+          })
+        },
+        fail() {
+          console.log("fail auth")
+          app.store.setState({
+            authRecordfail: true
+          })
+        }
+      })
+    }
+  },
+  getRecordAuth: function () {
+    wx.getSetting({
+      success(res) {
+        let record = res.authSetting['scope.record']
+        app.store.setState({
+          authRecord: record || false,
+        })
+      },
+      fail(res) {
+        console.log("fail")
+      }
+    })
+  },
+  /**
+* 初始化语音识别回调
+*/
+  initRecord: function () {
+    //有新的识别内容返回，则会调用此事件
+    manager.onRecognize = (res) => {
+      this.setData({
+        newtxt: res.result
+      })
+    }
+
+    // 识别结束事件
+    manager.onStop = (res) => {
+      // 取出录音文件识别出来的文字信息
+      let text = res.result
+      this.data.replyshow ? text = this.data.replycontent + text : text = this.data.content + text
+      // 获取音频文件临时地址
+      let filePath = res.tempFilePath
+      console.log(filePath)
+      let duration = res.duration
+      if (text == '') {
+        this.setData({
+          voicetextstatus: '未能识别到文字'
+        })
+        return
+      }
+      this.data.replyshow ? this.setData({
+        replycontent: text
+      }) : this.setData({
+        content: text
+      })
+      if (this.data.replyshow) {
+        let blogcomment = this.data.$state.blogcomment
+        blogcomment[this.data.detail.id] ? '' : blogcomment[this.data.detail.id] = {}
+        if (this.replyParent) {
+          blogcomment[this.data.detail.id]['replyParent'] ? '' : blogcomment[this.data.detail.id]['replyParent'] = {}
+          blogcomment[this.data.detail.id]['replyParent'][this.replyParent] = this.data.replycontent
+        } else if (this.replyInfo) {
+          blogcomment[this.data.detail.id]['replyInfo'] ? '' : blogcomment[this.data.detail.id]['replyInfo'] = {}
+          blogcomment[this.data.detail.id]['replyInfo'][this.replyInfo.id] = this.data.replycontent
+        }
+        app.store.setState({
+          blogcomment
+        })
+      } else {
+        let blogcomment = this.data.$state.blogcomment
+        blogcomment[this.data.detail.id] ? '' : blogcomment[this.data.detail.id] = {}
+        blogcomment[this.data.detail.id]['replycontent'] = this.data.content
+        app.store.setState({
+          blogcomment
+        })
+      }
+      this.setData({
+        voicetext: res.result,
+        voicetextstatus: '',
+        filePath
+      })
+    }
+
+    // 识别错误事件
+    manager.onError = (res) => {
+      this.setData({
+        recording: false,
+        bottomButtonDisabled: false,
+      })
+    }
+  },
+  showvoice(e) {
+    this.setData({
+      showvoice: true,
+      write: false,
+    })
+  },
+  touchstart() {
+    this.setData({
+      voiceActon: true,
+      voicetextstatus: '正在语音转文字…'
+    })
+    this.voicetime()
+    manager.start({
+      lang: "zh_CN",
+    })
+  },
+  touchend() {
+    manager.stop()
+    if (this.data.voicetime < 1) {
+      wx.showToast({
+        title: '说话时间过短',
+        icon: 'none',
+        duration: 2000
+      })
+    } else {
+      this.setData({
+        showvoiceauto: true
+      })
+    }
+    this.setData({
+      voiceActon: false
+    })
+  },
+  // 语音播放
+  playvoice() {
+    innerAudioContext.src = this.data.filePath;
+    console.log(this.data.filePath)
+    innerAudioContext.play()
+    innerAudioContext.onPlay(() => {
+      this.setData({
+        voiceplayimg: 'https://hwcdn.jinlingkeji.cn/images/pro/voicepause.png'
+      })
+    })
+    innerAudioContext.onEnded(() => {
+      this.setData({
+        voiceplayimg: 'https://hwcdn.jinlingkeji.cn/images/pro/triangle.png'
+      })
+    })
+  },
+  relacevoice() {
+    let text = '', voicetext = this.data.voicetext, blogcomment = this.data.$state.lessDiscussion
+    if (this.data.replyshow) {
+      text = this.data.content.replace(voicetext, '')
+      this.setData({
+        showvoiceauto: false,
+        replycontent: text,
+        voicetime: 0,
+        filePath: ''
+      })
+      if (this.replyParent) {
+        blogcomment[this.data.detail.id].replyParent[this.replyParent] = text
+        app.store.setData({
+          blogcomment
+        })
+      } else {
+        blogcomment[this.data.detail.id].replyInfo[this.replyInfo.id] = text
+        app.store.setData({
+          blogcomment
+        })
+      }
+    } else {
+      text = this.data.content.replace(voicetext, '')
+      this.setData({
+        showvoiceauto: false,
+        content: text,
+        voicetime: 0,
+        filePath: ''
+      })
+      blogcomment[this.data.detail.id].replycontent = text
+      app.store.setData({
+        blogcomment
+      })
+    }
+
+  },
+  closevoiceBox() {
+    this.setData({
+      showvoice: false,
+      write: false
+    })
+  },
+  // 计时器
+  voicetime() {
+    let time = 0
+    let it = setInterval(() => {
+      time += 1
+      if (!this.data.voiceActon) {
+        clearInterval(it)
+      } else {
+        this.setData({
+          voicetime: time
+        })
+      }
+    }, 1000)
   }
 })
