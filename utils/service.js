@@ -1,67 +1,73 @@
 /*
  * @Date: 2019-05-28 09:50:08
  * @LastEditors: hxz
- * @LastEditTime: 2019-08-13 17:45:01
+ * @LastEditTime: 2019-12-02 15:30:19
  */
+import { promisifyAll } from "miniprogram-api-promise";
+const wxp = {};
+promisifyAll(wx, wxp);
+
 //配置
-const content_type = ["application/json", "application/x-www-form-urlencoded"]
+const content_type = ["application/json", "application/x-www-form-urlencoded"];
 let header = {
   "content-type": content_type[0]
-}
+};
 
 //验证code
 function handle(res) {
   switch (res.statusCode) {
     case 401:
-      wx.clearStorage()
-      getApp().wxLogin()
-      break
+      wx.clearStorage();
+      getApp().wxLogin();
+      break;
     case 404:
       wx.showToast({
         title: "找不到资源",
         icon: "none",
         duration: 2000
-      })
-      break
+      });
+      break;
     case 500:
       wx.showToast({
         title: "服务器出错",
         icon: "none",
         duration: 2000
-      })
-      break
+      });
+      break;
     default:
   }
   switch (res.data.code) {
     case -1:
       // 重新登录
-      wx.clearStorage()
+      wx.clearStorage();
       getApp()
         .wxLogin()
         .then(() => {
-          wx.startPullDownRefresh()
-        })
-      break
+          wx.startPullDownRefresh();
+        });
+      break;
   }
 }
 
 // post  return  promise
 function post(path, param = {}, noToken, type) {
-  wx.showNavigationBarLoading()
-  let url = getApp().API_URL + path
+  wx.showNavigationBarLoading();
+  let url = getApp().API_URL + path;
   if (!noToken) {
-    let token = wx.getStorageSync("token")
-    if (!token) return
-    param.uid = wx.getStorageSync("uid")
-    param.timestamp = parseInt(new Date().getTime() / 1000 + "")
-    param.sign = getApp().md5("uid=" + param.uid + "&token=" + token + "&timestamp=" + param.timestamp)
+    let token = wx.getStorageSync("token");
+    if (!token) return;
+    param.uid = wx.getStorageSync("uid");
+    param.timestamp = parseInt(new Date().getTime() / 1000 + "");
+    param.sign = getApp().md5(
+      "uid=" + param.uid + "&token=" + token + "&timestamp=" + param.timestamp
+    );
   }
   if (type) {
-    header["content-type"] = content_type[type]
+    header["content-type"] = content_type[type];
   } else {
-    header["content-type"] = content_type[0]
+    header["content-type"] = content_type[0];
   }
-  return wx.pro
+  return wxp
     .request({
       method: "POST",
       header: header,
@@ -70,38 +76,40 @@ function post(path, param = {}, noToken, type) {
     })
     .then(
       function(res) {
-        handle(res)
-        return res.data
+        handle(res);
+        return res.data;
       },
       function(res) {
-        return res.data
+        return res.data;
       }
     )
     .catch(err => {
-      throw new Error(error)
+      throw new Error(error);
     })
     .finally(() => {
-      wx.hideNavigationBarLoading()
-    })
+      wx.hideNavigationBarLoading();
+    });
 }
 
 // delete
 function del(path, param, noToken, type) {
-  wx.showNavigationBarLoading()
-  let url = getApp().API_URL + path
+  wx.showNavigationBarLoading();
+  let url = getApp().API_URL + path;
   if (!noToken) {
-    let token = wx.getStorageSync("token")
-    if (!token) return
-    param.uid = wx.getStorageSync("uid")
-    param.timestamp = parseInt(new Date().getTime() / 1000 + "")
-    param.sign = getApp().md5("uid=" + param.uid + "&token=" + token + "&timestamp=" + param.timestamp)
+    let token = wx.getStorageSync("token");
+    if (!token) return;
+    param.uid = wx.getStorageSync("uid");
+    param.timestamp = parseInt(new Date().getTime() / 1000 + "");
+    param.sign = getApp().md5(
+      "uid=" + param.uid + "&token=" + token + "&timestamp=" + param.timestamp
+    );
   }
   if (type) {
-    header["content-type"] = content_type[type]
+    header["content-type"] = content_type[type];
   } else {
-    header["content-type"] = content_type[0]
+    header["content-type"] = content_type[0];
   }
-  return wx.pro
+  return wxp
     .request({
       method: "DELETE",
       header: header,
@@ -110,30 +118,30 @@ function del(path, param, noToken, type) {
     })
     .then(
       function(res) {
-        handle(res)
-        return res.data
+        handle(res);
+        return res.data;
       },
       function(res) {
-        return res.data
+        return res.data;
       }
     )
     .finally(() => {
-      wx.hideNavigationBarLoading()
-    })
+      wx.hideNavigationBarLoading();
+    });
 }
 
 //文件上传
 function upload(path, file, noLoading) {
-  wx.showNavigationBarLoading()
-  let url = getApp().API_URL + path
+  wx.showNavigationBarLoading();
+  let url = getApp().API_URL + path;
   if (!noLoading) {
     wx.showLoading({
       title: "上传中",
       mask: true
-    })
+    });
   }
 
-  return wx.pro
+  return wxp
     .uploadFile({
       url: url,
       filePath: file,
@@ -143,21 +151,22 @@ function upload(path, file, noLoading) {
     })
     .then(
       function(res) {
-        handle(res)
-        return res.data
+        handle(res);
+        return res.data;
       },
       function(res) {
-        return res
+        return res;
       }
     )
     .finally(() => {
-      if (!noLoading) wx.hideLoading()
-      wx.hideNavigationBarLoading()
-    })
+      if (!noLoading) wx.hideLoading();
+      wx.hideNavigationBarLoading();
+    });
 }
 
 module.exports = {
   post: post,
   del: del,
-  upload: upload
-}
+  upload: upload,
+  wxp: wxp
+};
