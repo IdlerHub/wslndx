@@ -7,8 +7,6 @@ Page({
     height: 0,
     isRefreshing: false,
     activity: "",
-    interval: 3500,
-    duration: 1000,
     currentTab: 0, 
     showReco:false,
     guideNum: 0,
@@ -174,7 +172,7 @@ Page({
       scrollTop: this.categoryscroll[this.data.nav[this.data.currentTab].id],
       duration: 100
     }) : wx.pageScrollTo({
-      scrollTop: 0,
+      scrollTop: 218,
       duration: 100
     })
     }, 600)

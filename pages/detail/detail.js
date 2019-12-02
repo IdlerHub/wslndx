@@ -805,6 +805,7 @@ Page({
     })
   },
   show(e) {
+    console.log(e)
     if (this.data.$state.userInfo.status !== 'normal') {
       wx.showModal({
         content: '由于您近期不合规操作，您的账户已被管理员禁止发帖留言，如有疑问请在个人中心联系客服处理'
@@ -846,24 +847,24 @@ Page({
             this.data.$state.lessDiscussion[this.data.detail.id].replyParent[this.replyParent] ?
             this.setData({
               replycontent: this.data.$state.lessDiscussion[this.data.detail.id].replyParent[this.replyParent],
-              replyplaceholder: '回复 ' + e.currentTarget.dataset.reply.nickname,
+                replyplaceholder: '回复 ' + e.currentTarget.dataset.reply.from_user,
               replycontenLength: this.data.$state.lessDiscussion[this.data.detail.id].replyParent[this.replyParent].length
               }) : this.setData({
                 replycontent: '',
-                replyplaceholder: '回复 ' + e.currentTarget.dataset.reply.nickname,
+                replyplaceholder: '回复 ' + e.currentTarget.dataset.reply.from_user,
                 replycontenLength: 0
               })
           } else {
             this.setData({
               replycontent: '',
-              replyplaceholder: '回复 ' + e.currentTarget.dataset.reply.nickname,
+              replyplaceholder: '回复 ' + e.currentTarget.dataset.reply.from_user,
               replycontenLength:0
             })
           }
         } else {
           this.setData({
             replycontent: '',
-            replyplaceholder: '回复 ' + e.currentTarget.dataset.reply.nickname,
+            replyplaceholder: '回复 ' + e.currentTarget.dataset.reply.from_user,
           })
         }
           
@@ -932,7 +933,7 @@ Page({
         confirmColor: '#df2020',
       })
     } else {
-      if (e.target.dataset.type) {
+      if (this.data.replyshow) {
         this.setData({
           write: false,
           showvoice: false,
@@ -940,7 +941,7 @@ Page({
           focus: true,
           showvoiceauto: false,
           voicetime: 0,
-          replycontenLength: this.data.replycontent.length
+          replycontenLength: this.data.replycontent.length || 0
         })
       } else {
         this.setData({
@@ -952,7 +953,7 @@ Page({
           voicetime: 0,
           replyplaceholder: '',
           replyshow: false,
-          contenLength: this.data.content.length
+          contenLength: this.data.content.length || 0
         })
         this.replyInfo = null
         this.replyParent = null

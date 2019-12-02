@@ -44,7 +44,7 @@
 		"minified": true,
 		"newFeature": true,
 		"coverView": true,
-		"nodeModules": false,
+		"nodeModules": true,
 		"autoAudits": false,
 		"uglifyFileName": false,
 		"checkInvalidKey": true,

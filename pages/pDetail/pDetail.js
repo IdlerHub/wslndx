@@ -736,11 +736,11 @@ Page({
       })
       if(this.replyshow) {
         this.setData({
-          replycontenLength: this.data.replycontent.length
+          replycontenLength: this.data.replycontent.length || 0
         })
       } else {
         this.setData({
-          contenLength: this.data.content.length
+          contenLength: this.data.content.length || 0
         })
       }
   },
@@ -905,7 +905,7 @@ Page({
     })
   },
   relacevoice() {
-    let text = '', voicetext = this.data.voicetext, blogcomment = this.data.$state.lessDiscussion
+    let text = '', voicetext = this.data.voicetext, blogcomment = this.data.$state.blogcomment
     if (this.data.replyshow) {
       text = this.data.replycontent.replace(voicetext, '')
       this.setData({

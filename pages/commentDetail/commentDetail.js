@@ -97,14 +97,19 @@ Page({
    * 删除评论
    * */
   delComment() {
-    if(this.data.detail.lesson_id) {
-      let param = { lesson_id: this.data.detail.lesson_id, comment_id: this.data.detail.id }
+    if (this.data.detail.lesson_id) {
+      let param = {
+        lesson_id: this.data.detail.lesson_id,
+        comment_id: this.data.detail.id
+      }
       app.classroom.delComment(param).then(msg => {
         if (msg.code == 1) {
           this.toast("删除成功")
           this.emitEvent()
           setTimeout(() => {
-            wx.navigateBack({ delta: 1 })
+            wx.navigateBack({
+              delta: 1
+            })
           }, 1500)
         } else if (msg.code == -2) {
           /* 帖子已经删除 */
@@ -116,13 +121,18 @@ Page({
         }
       })
     } else {
-      let param = { blog_id: this.data.detail.blog_id, id: this.data.detail.id }
+      let param = {
+        blog_id: this.data.detail.blog_id,
+        id: this.data.detail.id
+      }
       app.circle.delComment(param).then(msg => {
         if (msg.code == 1) {
           this.toast("删除成功")
           this.emitEvent()
           setTimeout(() => {
-            wx.navigateBack({ delta: 1 })
+            wx.navigateBack({
+              delta: 1
+            })
           }, 1500)
         } else if (msg.code == -2) {
           /* 帖子已经删除 */
@@ -136,8 +146,12 @@ Page({
     }
   },
   delReply(e) {
-    if(this.data.detail.lesson_id) {
-      let params = { lesson_id: this.data.detail.lesson_id, comment_id: this.data.detail.id , id: e.currentTarget.dataset.item.reply_id }
+    if (this.data.detail.lesson_id) {
+      let params = {
+        lesson_id: this.data.detail.lesson_id,
+        comment_id: this.data.detail.id,
+        id: e.currentTarget.dataset.item.reply_id
+      }
       app.classroom.delReply(params).then(msg => {
         if (msg.code == 1) {
           this.toast("删除成功")
@@ -153,7 +167,11 @@ Page({
         }
       })
     } else {
-      let params = { blog_id: this.data.detail.blog_id, comment_id: this.data.detail.id, id: e.currentTarget.dataset.item.reply_id }
+      let params = {
+        blog_id: this.data.detail.blog_id,
+        comment_id: this.data.detail.id,
+        id: e.currentTarget.dataset.item.reply_id
+      }
       app.circle.replydel(params).then(msg => {
         if (msg.code == 1) {
           this.toast("删除成功")
@@ -169,7 +187,7 @@ Page({
         }
       })
     }
-    
+
   },
   toast(msg) {
     wx.showToast({
@@ -185,6 +203,7 @@ Page({
   },
   /* 打开输入框 */
   show(e) {
+    console.log(e)
     this.replyInfo = e.target.dataset.reply
     if (this.data.$state.userInfo.status !== 'normal') {
       wx.showModal({
@@ -192,13 +211,52 @@ Page({
         confirmColor: '#df2020',
       })
     } else {
-      console.log(e)
-      this.setData({
-        write: true,
-        replyplaceholder: '回复 ' + e.currentTarget.dataset.detail.nickname,
-        replyshow: true
-      })
-     }
+      if (this.replyInfo) {
+        this.setData({
+          write: true,
+          replyplaceholder: '回复 ' + e.currentTarget.dataset.reply.from_user,
+          replyshow: true,
+          focus: true
+        })
+      } else {
+        this.setData({
+          write: true,
+          replyplaceholder: '回复 ' + e.currentTarget.dataset.detail.nickname,
+          replyshow: true,
+          focus: true
+        })
+      }
+
+      if (this.data.detail.lesson_id) {
+        if (this.data.$state.lessDiscussion[this.data.detail.lesson_id]) {
+          if (this.replyInfo && this.data.$state.lessDiscussion[this.data.detail.lesson_id]['replyParent']) {
+            this.data.$state.lessDiscussion[this.data.detail.lesson_id]['replyParent'][this.data.detail.id] ?
+              this.setData({
+                content: this.data.$state.lessDiscussion[this.data.detail.lesson_id]['replyParent'][this.data.detail.id],
+                contenLength: this.data.$state.lessDiscussion[this.data.detail.lesson_id]['replyParent'][this.data.detail.id].length || 0
+              }) : this.setData({
+                content: '',
+                contenLength: 0
+              })
+          } else if (!this.replyInfo && this.data.$state.lessDiscussion[this.data.detail.lesson_id]['replyInfo']) {
+            this.data.$state.lessDiscussion[this.data.detail.lesson_id]['replyInfo'][this.data.detail.id] ? this.setData({
+              content: this.data.$state.lessDiscussion[this.data.detail.lesson_id]['replyInfo'][this.data.detail.id],
+              contenLength: this.data.$state.lessDiscussion[this.data.detail.lesson_id]['replyInfo'][this.data.detail.id].length || 0
+            }) : this.setData({
+              content: '',
+              contenLength: 0
+            })
+          } else {
+            this.setData({
+              content: '',
+              contenLength: 0
+            })
+          }
+        }
+      } else {
+
+      }
+    }
   },
   /* 关闭输出框 */
   hide() {
@@ -210,14 +268,42 @@ Page({
   /* 输入的内容 */
   input(e) {
     this.setData({
-      content: e.detail.value
+      content: e.detail.value,
+      contenLength: e.detail.value.length
     })
+    if (this.data.detail.blog_id) {
+      let blogcomment = this.data.$state.blogcomment
+      blogcomment[this.data.detail.blog_id] ? '' : blogcomment[this.data.detail.blog_id] = {}
+      if (this.replyInfo) {
+        blogcomment[this.data.detail.blog_id]['replyParent'] ? '' : blogcomment[this.data.detail.blog_id]['replyParent'] = {}
+        blogcomment[this.data.detail.blog_id]['replyParent'][this.data.detail.id] = this.data.content
+      } else {
+        blogcomment[this.data.detail.blog_id]['replyInfo'] ? '' : blogcomment[this.data.detail.blog_id]['replyInfo'] = {}
+        blogcomment[this.data.detail.blog_id]['replyInfo'][this.data.detail.id] = this.data.content
+      }
+      app.store.setState({
+        blogcomment
+      })
+    } else {
+      let lessDiscussion = this.data.$state.lessDiscussion
+      lessDiscussion[this.data.detail.lesson_id] ? '' : lessDiscussion[this.data.detail.lesson_id] = {}
+      if (this.replyInfo) {
+        lessDiscussion[this.data.detail.lesson_id]['replyParent'] ? '' : lessDiscussion[this.data.detail.lesson_id]['replyParent'] = {}
+        lessDiscussion[this.data.detail.lesson_id]['replyParent'][this.data.detail.id] = this.data.content
+      } else {
+        lessDiscussion[this.data.detail.lesson_id]['replyInfo'] ? '' : lessDiscussion[this.data.detail.lesson_id]['replyInfo'] = {}
+        lessDiscussion[this.data.detail.lesson_id]['replyInfo'][this.data.detail.id] = this.data.content
+      }
+      app.store.setState({
+        lessDiscussion
+      })
+    }
   },
   /* 发送回复 */
   release() {
     if (!!this.data.content.trim()) {
       /* 回复别人的回复 reply_type=2   /  回复评论主体 reply_type=1   */
-      if (this.data.detail.lesson_id)  {
+      if (this.data.detail.lesson_id) {
         let params = {
           lesson_id: this.data.detail.lesson_id,
           comment_id: this.data.detail.id,
@@ -242,16 +328,34 @@ Page({
   },
   /* 回复评论 */
   reply(params) {
-    this.hide()
+    // this.hide()
     wx.showLoading({
       title: "发布中"
     })
-    if(this.data.detail.lesson_id) {
+    if (this.data.detail.lesson_id) {
+      console.log(this.replyInfo)
       app.classroom.addReply(params).then(msg => {
         if (msg.code == 1) {
           this.toast("回复成功")
           this.emitEvent()
           this.getlesData()
+          let lessDiscussion = this.data.$state.lessDiscussion
+          if (this.replyInfo) {
+            lessDiscussion[this.data.detail.lesson_id]['replyParent'][this.data.detail.id] = ''
+          } else {
+            lessDiscussion[this.data.detail.lesson_id]['replyInfo'][this.data.detail.id] = ''
+          }
+          app.store.setState({
+            lessDiscussion
+          })
+          this.setData({
+            content: "",
+            showvoice: false,
+            showvoiceauto: false,
+            voicetime: 0,
+            contenLength: 0,
+            write: false
+          })
         } else if (msg.code == -2) {
           this.toast("帖子已删除,回复失败")
         } else if (msg.code == -3) {
@@ -266,6 +370,23 @@ Page({
           this.toast("回复成功")
           this.emitEvent()
           this.getData()
+          let blogcomment = this.data.$state.blogcomment
+          if (this.replyInfo) {
+            blogcomment[this.data.detail.blog_id]['replyParent'][this.data.detail.id] = ''
+          } else {
+            blogcomment[this.data.detail.blog_id]['replyInfo'][this.data.detail.id] = ''
+          }
+          app.store.setState({
+            blogcomment
+          })
+          this.setData({
+            content: "",
+            showvoice: false,
+            showvoiceauto: false,
+            voicetime: 0,
+            contenLength: 0,
+            write: false
+          })
         } else if (msg.code == -2) {
           this.toast("帖子已删除,回复失败")
         } else if (msg.code == -3) {
@@ -307,6 +428,26 @@ Page({
       }
     })
   },
+  textHeight(e) {
+    this.setData({
+      textHeight: e.detail.height + 'px'
+    })
+  },
+  hide() {
+    this.setData({
+      write: false
+    })
+  },
+  showWrite(e) {
+    this.setData({
+      write: true,
+      showvoice: false,
+      focus: true,
+      showvoiceauto: false,
+      voicetime: 0,
+      contenLength: this.data.content.length || 0
+    })
+  },
   // 语音
   // 权限询问
   authrecord() {
@@ -344,7 +485,7 @@ Page({
       })
     }
   },
-  getRecordAuth: function () {
+  getRecordAuth: function() {
     wx.getSetting({
       success(res) {
         let record = res.authSetting['scope.record']
@@ -358,9 +499,9 @@ Page({
     })
   },
   /**
-* 初始化语音识别回调
-*/
-  initRecord: function () {
+   * 初始化语音识别回调
+   */
+  initRecord: function() {
     //有新的识别内容返回，则会调用此事件
     manager.onRecognize = (res) => {
       this.setData({
@@ -388,25 +529,31 @@ Page({
       }) : this.setData({
         content: text
       })
-      if (this.data.replyshow) {
+      if (this.data.detail.blog_id) {
         let blogcomment = this.data.$state.blogcomment
-        blogcomment[this.data.detail.id] ? '' : blogcomment[this.data.detail.id] = {}
-        if (this.replyParent) {
-          blogcomment[this.data.detail.id]['replyParent'] ? '' : blogcomment[this.data.detail.id]['replyParent'] = {}
-          blogcomment[this.data.detail.id]['replyParent'][this.replyParent] = this.data.replycontent
-        } else if (this.replyInfo) {
-          blogcomment[this.data.detail.id]['replyInfo'] ? '' : blogcomment[this.data.detail.id]['replyInfo'] = {}
-          blogcomment[this.data.detail.id]['replyInfo'][this.replyInfo.id] = this.data.replycontent
+        blogcomment[this.data.detail.blog_id] ? '' : blogcomment[this.data.detail.blog_id] = {}
+        if (this.replyInfo) {
+          blogcomment[this.data.detail.blog_id]['replyParent'] ? '' : blogcomment[this.data.detail.blog_id]['replyParent'] = {}
+          blogcomment[this.data.detail.blog_id]['replyParent'][this.data.detail.id] = this.data.content
+        } else {
+          blogcomment[this.data.detail.blog_id]['replyInfo'] ? '' : blogcomment[this.data.detail.blog_id]['replyInfo'] = {}
+          blogcomment[this.data.detail.blog_id]['replyInfo'][this.detail.id] = this.data.content
         }
         app.store.setState({
           blogcomment
         })
       } else {
-        let blogcomment = this.data.$state.blogcomment
-        blogcomment[this.data.detail.id] ? '' : blogcomment[this.data.detail.id] = {}
-        blogcomment[this.data.detail.id]['replycontent'] = this.data.content
+        let lessDiscussion = this.data.$state.lessDiscussion
+        lessDiscussion[this.data.detail.lesson_id] ? '' : lessDiscussion[this.data.detail.lesson_id] = {}
+        if (this.replyInfo) {
+          lessDiscussion[this.data.detail.lesson_id]['replyParent'] ? '' : blogcomment[this.data.detail.lesson_id]['replyParent'] = {}
+          lessDiscussion[this.data.detail.lesson_id]['replyParent'][this.data.detail.id] = this.data.content
+        } else {
+          lessDiscussion[this.data.detail.lesson_id]['replyInfo'] ? '' : lessDiscussion[this.data.detail.lesson_id]['replyInfo'] = {}
+          lessDiscussion[this.data.detail.lesson_id]['replyInfo'][this.detail.id] = this.data.content
+        }
         app.store.setState({
-          blogcomment
+          lessDiscussion
         })
       }
       this.setData({
@@ -474,38 +621,50 @@ Page({
     })
   },
   relacevoice() {
-    let text = '', voicetext = this.data.voicetext, blogcomment = this.data.$state.lessDiscussion
-    if (this.data.replyshow) {
-      text = this.data.content.replace(voicetext, '')
+    let text = '',
+      voicetext = this.data.voicetext
+    if (this.replyInfo) {
+      this.data.content == '' ? '' : text = this.data.content.replace(voicetext, '')
       this.setData({
         showvoiceauto: false,
         replycontent: text,
         voicetime: 0,
         filePath: ''
       })
-      if (this.replyParent) {
-        blogcomment[this.data.detail.id].replyParent[this.replyParent] = text
+      if (this.data.detail.lesson_id) {
+        let lessDiscussion = this.data.$state.lessDiscussion
+        lessDiscussion[this.data.detail.id].replyParent[this.data.detail.id] = text
         app.store.setData({
-          blogcomment
+          lessDiscussion
         })
       } else {
-        blogcomment[this.data.detail.id].replyInfo[this.replyInfo.id] = text
+        let blogcomment = this.data.$state.blogcomment
+        blogcomment[this.data.detail.id].replyParent[this.data.detail.id] = text
         app.store.setData({
           blogcomment
         })
       }
     } else {
-      text = this.data.content.replace(voicetext, '')
+      this.data.content == '' ? '' : text = this.data.content.replace(voicetext, '')
       this.setData({
         showvoiceauto: false,
-        content: text,
+        replycontent: text,
         voicetime: 0,
         filePath: ''
       })
-      blogcomment[this.data.detail.id].replycontent = text
-      app.store.setData({
-        blogcomment
-      })
+      if (this.data.detail.lesson_id) {
+        let lessDiscussion = this.data.$state.lessDiscussion
+        lessDiscussion[this.data.detail.id].replyInfo[this.data.detail.id] = text
+        app.store.setData({
+          lessDiscussion
+        })
+      } else {
+        let blogcomment = this.data.$state.blogcomment
+        blogcomment[this.data.detail.id].replyInfo[this.data.detail.id] = text
+        app.store.setData({
+          blogcomment
+        })
+      }
     }
 
   },
