@@ -179,6 +179,9 @@ Page({
         })
         this.manage()
         this.getComment()
+        setTimeout(() => {
+          this.tolesson()
+        }, 800)
       }
     })
   },
@@ -271,14 +274,15 @@ Page({
   // 排序
   order() {
     this.setData({
-      sort: this.data.sort === 0 ? 1 : 0
+      sort: this.data.sort === 0 ? 1 : 0,
+      scrollviewtop: 0
     })
     this.sublessParam.page = 1
     let param = {
       id: this.data.id,
       sort: this.data.sort,
       page: 1,
-      pageSize: 10
+      pageSize: 100
     }
     let query = wx.createSelectorQuery().in(this)
     query.selectAll("#sublessonsd").boundingClientRect()
@@ -297,6 +301,10 @@ Page({
             sublessons: msg.data.sublesson
           })
         }
+        setTimeout(() => {
+          this.tolesson()
+        }, 800)
+        
       })
     })
     // this.getDetail()
@@ -435,10 +443,10 @@ Page({
     })
   },
   onReachBottom() {
-    if (this.data.currentTab == 1) {
-      this.comParam.page++
-        this.getComment()
-    }
+    // if (this.data.currentTab == 1) {
+    //   this.comParam.page++
+    //     this.getComment()
+    // }
   },
   setHeight() {
     let that = this
@@ -465,6 +473,19 @@ Page({
         height: 306
       })
     }
+  },
+  tolesson() {
+    let that = this, id = ".sublessonsd" + this.data.detail.current_sublesson_id
+    if (this.data.currentTab == 0) {
+      let query = wx.createSelectorQuery().in(this)
+      query.select(id).boundingClientRect()
+      query.exec(res => {
+        console.log(res[0]) 
+        this.setData({
+          scrollviewtop: res[0].top - 500
+        })
+      })
+    } 
   },
   getProgress() {
     var lesson = wx.getStorageSync("lessonProgress")
