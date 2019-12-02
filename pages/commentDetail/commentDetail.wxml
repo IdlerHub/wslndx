@@ -41,7 +41,7 @@
 </view>
 
 <view class="popup write" id="write" wx:if="{{ write }}">
-  <view class="bg" bindtap="hide" bindtouchstart="touchStart"></view>
+  <view class="bg" bindtap="hide" bindtouchstart="hide"></view>
   <view class="box" style="{{ textHeight ? 'bottom:'+ textHeight : ''}}">
     <!-- prettier-ignore -->
     <text class="replayplaceholder" wx:if="{{replyplaceholder != ''}}">{{replyplaceholder}}</text>
@@ -57,8 +57,7 @@
           <image src="{{$state.imgHost}}/voicesmall.png"></image>
           <view>语音</view>
         </view>
-        <button class="release" disabled="{{ !content  }}" catchtap="release" wx:if="{{!replyshow}}">发布</button>
-        <button class="release" disabled="{{ !replycontent  }}" catchtap="release" wx:else>发布</button>
+        <button class="release" disabled="{{ !content  }}" catchtap="release">发布</button>
       </view>
     </view>
   </view>
@@ -68,8 +67,7 @@
   <view class="voiceBoxmask" catchtap="closevoiceBox"></view>
   <view class="voiceContent">
     <text class="replyplaceholder" wx:if="{{replyshow}}">{{replyplaceholder}}</text>
-    <text style="color:{{content != '' && !replyshow ? 'rgba(46,46,46,1)': replycontent !== '' && replyshow ? 'rgba(46,46,46,1)' : ''}}" class="placeholder" catchtap="showWrite" data-type="voice" wx:if="{{!replyshow}}">{{ content == '' ? placeholder : content }}</text>
-    <text style="color:{{content != '' && !replyshow ? 'rgba(46,46,46,1)': replycontent !== '' && replyshow ? 'rgba(46,46,46,1)' : ''}}" class="placeholder" catchtap="showWrite" data-type="voice" wx:else>{{ placeholder != '' ? placeholder : replycontent }}</text>
+    <text style="color:{{content != '' ? 'rgba(46,46,46,1)' : ''}}" class="placeholder" catchtap="showWrite" data-type="voice">{{ content == '' ? '添加你的评论' : content }}</text>
     <view class="voiceaction" wx:if="{{!showvoiceauto}}">
       <view class="voice-box">
         <text wx:if="{{voicetime != 0}}">{{voicetime}}"</text>

@@ -31,9 +31,9 @@ Page({
     this.currentTab = ops.index
     let pages = getCurrentPages();
     this.beforePage = pages[0];
+    this.getCategory()
   },
   onShow() {
-    this.getCategory()
   },
   onUnload() {
   },

@@ -35,7 +35,7 @@ Page({
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function() {
-    this.lesssearch()
+    this.lesssearch(true)
   },
 
   /**
@@ -220,7 +220,8 @@ Page({
   },
   lesssearch(list) {
     this.param['keyword'] = this.data.text
-    let lesslist = list || this.data.lessList
+    let lesslist =  []
+    list ? lesslist = this.data.lessList : ''
     app.classroom.lessSearch(this.param).then(res => {
       if (res.code == 1) {
         let lessList = res.data.data
@@ -232,7 +233,7 @@ Page({
         })
         lesslist.push(...lessList)
         this.setData({
-          lessList: lesslist
+          lessList: lesslist,
         })
       }
     })

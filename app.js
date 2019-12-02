@@ -90,9 +90,16 @@ App({
         this.getTaskStatus();
       }, 2000);
     }
-    let systemInfo = wx.getSystemInfoSync();
-    let wxtype = systemInfo.version.replace(".", "").replace(".", "");
-
+    let systemInfo = wx.getSystemInfoSync()
+    let wxtype = systemInfo.version.replace(".", '').replace(".", '')
+    let platform = systemInfo.platform
+    console.log(platform == 'windows')
+    if (platform == 'windows') {
+      console.log(34234234234)
+      this.playVedio('flow')
+      console.log(this.store.$state.flow)
+    }
+    // console.log(platform)
     if (wxtype < 606) {
       wx.reLaunch({ url: "/pages/upwxpage/upwxpage" });
     } else if (!this.store.$state.userInfo.mobile) {
