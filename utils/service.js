@@ -77,18 +77,18 @@ function post(path, param = {}, noToken, type) {
     .then(
       function(res) {
         handle(res);
+        wx.hideNavigationBarLoading();
         return res.data;
       },
       function(res) {
+        wx.hideNavigationBarLoading();
         return res.data;
       }
     )
     .catch(err => {
+      wx.hideNavigationBarLoading();
       throw new Error(error);
     })
-    .finally(() => {
-      wx.hideNavigationBarLoading();
-    });
 }
 
 // delete
@@ -119,15 +119,14 @@ function del(path, param, noToken, type) {
     .then(
       function(res) {
         handle(res);
+        wx.hideNavigationBarLoading();
         return res.data;
       },
       function(res) {
+        wx.hideNavigationBarLoading();
         return res.data;
       }
     )
-    .finally(() => {
-      wx.hideNavigationBarLoading();
-    });
 }
 
 //文件上传
@@ -152,16 +151,16 @@ function upload(path, file, noLoading) {
     .then(
       function(res) {
         handle(res);
+        if (!noLoading) wx.hideLoading();
+        wx.hideNavigationBarLoading();
         return res.data;
       },
       function(res) {
+        if (!noLoading) wx.hideLoading();
+        wx.hideNavigationBarLoading();
         return res;
       }
     )
-    .finally(() => {
-      if (!noLoading) wx.hideLoading();
-      wx.hideNavigationBarLoading();
-    });
 }
 
 module.exports = {

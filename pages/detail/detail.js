@@ -545,9 +545,6 @@ Page({
                 })
               }
             })
-            .finally(() => {
-              console.log("hxz")
-            })
         }
       }
     })

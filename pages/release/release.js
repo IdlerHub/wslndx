@@ -127,6 +127,11 @@ Page({
             duration: 1500
           })
         }
+
+        val.splice(0, 1)
+        if (val.length > 0) {
+          return this.next(val, type)
+        }
       })
       .catch(err => {
         let image = this.data.param.image
@@ -141,8 +146,6 @@ Page({
             "param.image": image
           }) 
         }
-        
-      }).finally ( ()=>{
         val.splice(0, 1)
         if (val.length > 0) {
           return this.next(val, type)

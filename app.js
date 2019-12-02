@@ -4,8 +4,6 @@
  * @LastEditTime: 2019-12-02 15:30:51
  */
 import { wxp } from "./utils/service";
-/*添加微信官方接口转化为promise*/
-const wxpro = require("wx-promise-pro");
 /*埋点统计*/
 const ald = require("./utils/ald-stat.js");
 /* 全局状态管理 */
