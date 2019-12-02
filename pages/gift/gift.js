@@ -2,7 +2,12 @@
 Page({
   data: {},
   //options(Object)
-  onLoad: function(options) {},
+  onLoad: function(options) {
+    this.setData({
+      name: options.name,
+      image: options.image
+    })
+  },
   onReady: function() {},
   onShow: function() {},
   onHide: function() {},

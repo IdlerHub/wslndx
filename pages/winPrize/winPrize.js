@@ -6,12 +6,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    prizeList:[
-      { iamge: 'https://jinling-xcx-dev.obs.cn-north-1.myhuaweicloud.com:443/uploads/images/blog/20191111/cdb3b947bb3c2ddeee7dfdf2d68c39af.jpg', title: '精致礼物盒1份', data: '2019-09-21', time:'10:40',type:'gift'},
-      { iamge: 'https://jinling-xcx-dev.obs.cn-north-1.myhuaweicloud.com:443/uploads/images/blog/20191111/cdb3b947bb3c2ddeee7dfdf2d68c39af.jpg', title: '精致礼物盒1份', data: '2019-09-21', time: '10:40', type: 'gift' },
-      { iamge: 'https://jinling-xcx-dev.obs.cn-north-1.myhuaweicloud.com:443/uploads/images/blog/20191111/cdb3b947bb3c2ddeee7dfdf2d68c39af.jpg', title: '20积分', data: '2019-09-21', time: '10:40', type: 'score' },
-      { iamge: 'https://jinling-xcx-dev.obs.cn-north-1.myhuaweicloud.com:443/uploads/images/blog/20191111/cdb3b947bb3c2ddeee7dfdf2d68c39af.jpg', title: '20积分', data: '2019-09-21', time: '10:40', type: 'score' },
-    ],
+    prizeList:[],
     duijiang:'兑奖',
     lingqu:'领取'
   },

@@ -9,7 +9,7 @@
     <view class="weui-loading"></view>
     <!-- <view class='weui-loadmore-tips'>加载中...</view> -->
   </view>
-  <view class="top topOne" wx:if="{{ !recommend }}">
+  <view class="top topOne" wx:if="{{ !recommend[0] }}">
     <image class="bg" mode="widthFix"></image>
     <view class="box">
       <view class="left">
@@ -97,7 +97,7 @@
       <image src="{{$state.imgHost}}/tabclassify.png"></image>
     </navigator>
   </view>
-  <view class="skeleton" wx:for="{{5}}" wx:if="{{ !recommend[0] }}" wx:key="{{index}}">
+  <view class="skeleton" wx:for="{{5}}" wx:if="{{ !recommend[0] }}" wx:key="index">
     <view class="skeletonBox">
       <view class="skeletonImg"></view>
       <view class="skeletonTitle"></view>

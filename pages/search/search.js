@@ -18,6 +18,13 @@ Page({
     this.param = {
       page_size: 10
     }
+    wx.onKeyboardHeightChange(res => {
+      console.log(res.height)
+      let systems = wx.getSystemInfoSync()
+      res.height == 0 ? '' :this.setData({
+        voiceheight: res.height + (systems.screenHeight * 0.05)
+      })
+    })
   },
   onShow() {
     this.getRecordAuth()
@@ -224,11 +231,12 @@ Page({
     list ? lesslist = this.data.lessList : ''
     app.classroom.lessSearch(this.param).then(res => {
       if (res.code == 1) {
+        if (!res.data.data) return
         let lessList = res.data.data
-        this.param['scroll_id'] = res.data.scroll_id
+        this.param['scroll_id'] = res.data.scroll_id,
         lessList.forEach(item => {
-          item.title = `<p style="width:410rpx;display: block;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">${item.title.replace('<highlight>', '<span style="color:#DF2020">').replace('</highlight>', '</span>')}</p>`
-          item.subtitle = `<p style="width:410rpx;display: block;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">${item.subtitle.replace('<highlight>', '<span style="color:#DF2020">').replace('</highlight>', '</span>')}</p>`
+          item.title = `<p style="width:410rpx;display: block;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">${item.title.replace(/<highlight>/g, '<span style="color:#DF2020">').replace(/<\/highlight>/g, '</span>')}</p>`
+          item.subtitle = `<p style="width:410rpx;display: block;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">${item.subtitle.replace(/<highlight>/g, '<span style="color:#DF2020">').replace(/<\/highlight>/g, '</span>')}</p>`
           item.bw = app.util.tow(item.browse)
         })
         lesslist.push(...lessList)

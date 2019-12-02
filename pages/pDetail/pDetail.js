@@ -61,7 +61,7 @@ Page({
     if (this.data.$state.blogcomment[options.id.trim()]) {
       this.setData({
         content: this.data.$state.blogcomment[options.id.trim()].replycontent,
-        contenLength: this.data.$state.blogcomment[options.id.trim()].replycontent.length
+        contenLength: this.data.$state.blogcomment[options.id.trim()].replycontent != '' ? this.data.$state.blogcomment[options.id.trim()].replycontent.length : 0
       })
     }
   },
@@ -229,12 +229,14 @@ Page({
             this.data.$state.blogcomment[this.data.detail.id]['replyParent'][this.replyParent] ?
             this.setData({
                 replycontent: this.data.$state.blogcomment[this.data.detail.id]['replyParent'][this.replyParent],
-                replycontenLength: this.data.$state.blogcomment[this.data.detail.id]['replyParent'][this.replyParent].length || 0
+                replycontenLength: this.data.$state.blogcomment[this.data.detail.id]['replyParent'][this.replyParent].length || 0,
+                replyshow: true
             }) : ''
           } else if (this.data.$state.blogcomment[this.data.detail.id]['replyInfo']){
             this.data.$state.blogcomment[this.data.detail.id]['replyInfo'][this.replyInfo.id] ? this.setData({
               replycontent: this.data.$state.blogcomment[this.data.detail.id]['replyInfo'][this.replyInfo.id],
-              replycontenLength: this.data.$state.blogcomment[this.data.detail.id]['replyInfo'][this.replyInfo.id].length || 0
+              replycontenLength: this.data.$state.blogcomment[this.data.detail.id]['replyInfo'][this.replyInfo.id].length || 0,
+              replyshow: true
             }) : ''
           }
         }
@@ -384,7 +386,8 @@ Page({
         }
         this.getDetail()
         this.setData({
-          content: ''
+          content: '',
+          contenLength: 0
         })
         this.comParam.page = 1
         // app.socket.send(this.data.detail.uid)
@@ -811,7 +814,7 @@ Page({
       let filePath = res.tempFilePath
       console.log(filePath)
       let duration = res.duration
-      if (text == '') {
+      if (res.result == '') {
         this.setData({
           voicetextstatus: '未能识别到文字'
         })

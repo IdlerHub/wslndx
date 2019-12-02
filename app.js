@@ -91,8 +91,8 @@ App({
     let systemInfo = wx.getSystemInfoSync()
     let wxtype = systemInfo.version.replace(".", '').replace(".", '')
     let platform = systemInfo.platform
-    console.log(platform == 'windows')
-    if (platform == 'windows') {
+    console.log(platform)
+    if (platform == 'windows' || platform == 'mac') {
       console.log(34234234234)
       this.playVedio('flow')
       console.log(this.store.$state.flow)

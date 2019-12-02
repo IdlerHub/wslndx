@@ -53,7 +53,7 @@ Page({
                 app.user.exchange(param).then(res => {
                   if (res.code == 1) {
                     wx.navigateTo({
-                      url: "/pages/gift/gift"
+                      url: "/pages/gift/gift?name=" + this.data.gift.title + '&image=' +  this.data.gift.image
                     })
                   }
                 })
@@ -74,7 +74,7 @@ Page({
                 app.user.exchange(param).then(res => {
                   if (res.code == 1) {
                     wx.navigateTo({
-                      url: "/pages/gift/gift"
+                      url: "/pages/gift/gift?name=" + this.data.gift.title + '&image=' + this.data.gift.image
                     })
                   }
                 })
