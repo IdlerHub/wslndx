@@ -1,7 +1,7 @@
 /*
  * @Date: 2019-05-28 09:50:08
  * @LastEditors: hxz
- * @LastEditTime: 2019-12-02 15:22:31
+ * @LastEditTime: 2019-12-02 15:30:19
  */
 import { promisifyAll } from "miniprogram-api-promise";
 const wxp = {};
