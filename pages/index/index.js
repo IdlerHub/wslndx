@@ -163,7 +163,7 @@ Page({
     })
     if(cur != 0) {
       let id = this.data.nav[cur].id
-      this.geteCatrcommend(id)
+      this.geteCatrcommend(id, cur)
     }
     this.categoryscroll ? '' : this.categoryscroll = {}
     setTimeout(() => {
@@ -182,14 +182,14 @@ Page({
     arr.forEach((i,index) => {
       i.id == event ? num = index : ''
     })
-    if (this.data.catrecommend[event]) {
-      if (!this.data.catrecommend[event][0]) this.geteCatrcommend(event)
-    } else {
-      this.geteCatrcommend(event)
-    }
     this.setData({
       currentTab: num
     })
+    if (this.data.catrecommend[event]) {
+      if (!this.data.catrecommend[event][0]) this.geteCatrcommend(event, this.data.currentTab)
+    } else {
+      this.geteCatrcommend(event, this.data.currentTab)
+    }
   },
   getSomthin() {
     console.log('q')
@@ -208,7 +208,7 @@ Page({
       }
     })
   },
-  geteCatrcommend(id) {
+  geteCatrcommend(id, currtab) {
     if (this.data.catrecommend[id]){
       if (this.data.catrecommend[id][0]) return
     }
@@ -224,6 +224,7 @@ Page({
           catrecommend 
         })
         setTimeout(() => {
+          if (currtab != this.data.currentTab) return
           this.setHeight()
         }, 500)
       }
