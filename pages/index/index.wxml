@@ -3,6 +3,13 @@
  * @LastEditors: hxz
  * @LastEditTime: 2019-08-13 12:01:10
  -->
+<wxs module="fn">
+  module.exports = {
+      search: function(str){
+        return str.search('gif');
+      }
+  }
+</wxs>
 <view class="container">
   <!-- 下拉刷新 -->
   <view wx:if="{{ isRefreshing }}" class="weui-loadmore indexdrop">

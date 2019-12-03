@@ -145,36 +145,27 @@ Page({
     if (this.data.currentTab == 0) {
       this.setData({
         navScrollLeft: 0
-      })
-    } else if ((this.data.currentTab + 1) == this.data.nav.length) {
-      this.setData({
-        navScrollLeft: this.navWidth + 60
-      })
-    }
+      })}
   },
   getFeatureCode(e) {
     console.log(e)
     console.log(e.detail.formId)
   },
   switchTab(event) {
-    let cur = event.detail.current
-    this.setData({
-      currentTab: cur
-    })
+    let cur = event.detail.current , that = this
+    this.timer ? clearTimeout(this.timer) : ''
+    this.timer = setTimeout(() => {
+      that.setData({
+        currentTab: cur
+      })
+    }, 500)
+    
     if(cur != 0) {
       let id = this.data.nav[cur].id
       this.geteCatrcommend(id, cur)
     }
-    this.categoryscroll ? '' : this.categoryscroll = {}
     setTimeout(() => {
       this.setHeight()
-      this.categoryscroll[this.data.nav[this.data.currentTab].id] ? wx.pageScrollTo({
-      scrollTop: this.categoryscroll[this.data.nav[this.data.currentTab].id],
-      duration: 100
-    }) : wx.pageScrollTo({
-      scrollTop: 218,
-      duration: 100
-    })
     }, 600)
   },
   lastswitchTab(event) {
@@ -307,8 +298,6 @@ Page({
     }) : this.setData({
         shownow: true
     })
-    this.categoryscroll ? '' : this.categoryscroll = {}
-    this.categoryscroll[this.data.nav[this.data.currentTab].id] = e.scrollTop
   },
   //继续播放
   historyTap: function(e) {
