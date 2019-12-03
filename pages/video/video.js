@@ -312,7 +312,7 @@ Page({
               this.setData({
                 showintegral: false
               })
-            }, 3000)
+            }, 2000)
           } else if (msg.data.is_first == 'day') {
             this.setData({
               integral: '+20 积分',
@@ -323,7 +323,7 @@ Page({
               this.setData({
                 showintegral: false
               })
-            }, 3000)
+            }, 2000)
           }
           list[index].praised = 1
           list[index].praise++
@@ -439,7 +439,7 @@ Page({
               showintegral: false
             })
             this.judgeWifi()
-          }, 3000)
+          }, 2000)
         }
       })
     }

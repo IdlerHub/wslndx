@@ -254,7 +254,7 @@ Page({
         this.setData({
           showintegral: false
         })
-      },3000)
+      },2000)
       app.classroom.detail(this.param).then(msg => {
         if (msg.code === 1) {
           this.setData({
@@ -1066,7 +1066,7 @@ Page({
           this.setData({
             showintegral: false
           })
-        }, 3000)
+        }, 2000)
       }
     })
   },

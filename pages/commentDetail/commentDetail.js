@@ -24,8 +24,7 @@ Page({
     voicetextstatus: '',
     voivetext: '',
     voiceplayimg: 'https://hwcdn.jinlingkeji.cn/images/pro/triangle.png',
-    replyshow: false,
-    showintegral: false
+    replyshow: false
   },
 
   /**

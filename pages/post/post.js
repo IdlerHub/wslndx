@@ -202,7 +202,7 @@ Page({
               this.setData({
                 showintegral: false
               })
-            }, 3000)
+            }, 2000)
           }
           app.socket.send({
             type: 'Bokemessage',
@@ -428,7 +428,7 @@ Page({
             this.setData({
               showintegral: false
             })
-          }, 3000)
+          }, 2000)
           app.getGuide()
         }
       })

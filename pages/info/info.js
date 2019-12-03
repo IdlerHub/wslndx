@@ -144,7 +144,7 @@ Page({
             this.setData({
               showintegral: false
             })
-          }, 3000)
+          }, 2000)
         }
         app.setUser(msg.data.userInfo)
         // app.classroom.recommend({ page: 1, pageSize: 10, province: this.data.$state.userInfo.university.split(',')[0] }).then(msg => {

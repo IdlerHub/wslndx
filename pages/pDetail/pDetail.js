@@ -175,7 +175,7 @@ Page({
               this.setData({
                 showintegral: false
               })
-            }, 3000)
+            }, 2000)
           }
           this.setData({ detail: detail })
         } else if (msg.code == -2) {
@@ -365,7 +365,7 @@ Page({
             this.setData({
               showintegral: false
             })
-          }, 3000)
+          }, 2000)
         } else if (msg.data.is_first == 'day') {
           this.setData({
             integral: '+20 积分',
@@ -376,7 +376,7 @@ Page({
             this.setData({
               showintegral: false
             })
-          }, 3000)
+          }, 2000)
         } else {
           wx.showToast({
             title: "发布成功",

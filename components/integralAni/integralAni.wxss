@@ -11,7 +11,7 @@
   width: 360rpx;
   height: 360rpx;
   background: url("https://hwcdn.jinlingkeji.cn/images/pro/IntegralAnimation.png");
-  animation: ani steps(22, end) infinite 1s;
+  animation: ani steps(22, end) 2s;
   position: absolute;
   top: 390rpx;
   left: 50%;

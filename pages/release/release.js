@@ -320,9 +320,11 @@ Page({
             if (integral == 'first' || integral == 'day') {
               setTimeout(() => {
                 wx.switchTab({ url: "/pages/post/post" })
-              },3000)
+              },2000)
             } else {
-              wx.switchTab({ url: "/pages/post/post" })
+              setTimeout(() => {
+                wx.switchTab({ url: "/pages/post/post" })
+              }, 2000)
             }
             // let pages = getCurrentPages()
             // let prePage = pages[pages.length - 2]

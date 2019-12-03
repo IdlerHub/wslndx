@@ -179,7 +179,7 @@ Page({
             })
             setTimeout(() => {
               wx.reLaunch({ url: app.globalData.path + "?" + params.join("&") })
-            }, 3000)
+            }, 2000)
           } else {
             /*跳转首页*/
             this.setData({
@@ -187,7 +187,7 @@ Page({
             })
             setTimeout(() => {
               wx.switchTab({ url: "/pages/index/index" })
-            }, 3000)
+            }, 2000)
           }
         }
       } else {

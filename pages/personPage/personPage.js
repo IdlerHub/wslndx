@@ -173,7 +173,7 @@ Page({
               this.setData({
                 showintegral: false
               })
-            }, 3000)
+            }, 2000)
           }
           this.setData({
             list: list

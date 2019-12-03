@@ -25,7 +25,9 @@ Page({
     ratio: 1 /* 适配比率 */,
     curX: 0,
     curY: 0,
-    move: false /* 判断目标元素是否移动过 : 没移动过则不执行touchend(否则会闪动)   */
+    move: false, /* 判断目标元素是否移动过 : 没移动过则不执行touchend(否则会闪动)   */
+    anime: false,
+    queue: []
   },
   onLoad: function (ops) {
     this.currentTab = ops.index
@@ -108,7 +110,7 @@ Page({
   /* 获取拖动目标及其初始位置 */
   touchstart(e) {
     let id = e.currentTarget.dataset.id;
-    if (!this.data.touch || id == undefined) return;
+    if (!this.data.touch || id == undefined || this.private.anime) return;
     let block = this.data.sortList.find(v => v.id == id);
     this.private.startX = block.x;
     this.private.startY = block.y;
@@ -163,9 +165,25 @@ Page({
   compare(val) {
     if (val == this.private.startSort) return;
     if (val > this.private.startSort) {
-      this.sortMove(this.private.startSort + 1, val, -1);
+      this.private.queue.unshift({
+        start: this.private.startSort + 1,
+        end: val,
+        arrow: -1
+      });
     } else {
-      this.sortMove(val, this.private.startSort - 1, +1);
+      this.private.queue.unshift({
+        start: val,
+        end: this.private.startSort - 1,
+        arrow: +1
+      });
+    }
+    let { x, y } = this.getPosition(val);
+    this.private.startX = x;
+    this.private.startY = y;
+    this.private.startSort = val;
+    if (!this.private.anime && this.private.queue) {
+      this.private.anime = true;
+      this.sortMove("start");
     }
   },
   /* 停止拖动 */
@@ -175,33 +193,40 @@ Page({
     /* 若当前目标在飞动状态则不执行 */
     if (
       e.target.dataset.id == e.currentTarget.dataset.id &&
-      this.private.move
+      this.private.move &&
+      !this.private.anime
+
     ) {
-      let index = this.data.sortList.findIndex(
-        v => v.id == this.data.currentItem
-      );
-      let curBlock = this.data.sortList[index];
-      curBlock.x = this.private.curX;
-      curBlock.y = this.private.curY;
+      this.targetStop()
+    }
+  },
+  targetStop() {
+    let index = this.data.sortList.findIndex(
+      v => v.id == this.data.currentItem
+    );
+    let curBlock = this.data.sortList[index];
+    curBlock.x = this.private.curX;
+    curBlock.y = this.private.curY;
+    let key = "sortList[" + index + "]";
+    this.private.move = false;
+    console.log("touchend");
+    this.setData({
+      [key]: curBlock
+    });
+    /* 确保最后一次change的值已修改完成 ，否则可能touchend先修改，change在这之后又修改回去 */
+    setTimeout(() => {
+      curBlock.x = this.private.startX;
+      curBlock.y = this.private.startY;
       let key = "sortList[" + index + "]";
-      this.private.move = false;
       this.setData({
         currentItem: -1,
         [key]: curBlock
       });
-      /* 确保最后一次change的值已修改完成 ，否则可能touchend先修改，change在这之后又修改回去 */
-      setTimeout(() => {
-        curBlock.x = this.private.startX;
-        curBlock.y = this.private.startY;
-        let key = "sortList[" + index + "]";
-        this.setData({
-          [key]: curBlock
-        });
-      }, 50);
-    }
+    }, 50);
   },
   /* 拖动重新排序 */
-  sortMove(start, end, arrow) {
+  sortMove(way) {
+    let { start, end, arrow } = this.private.queue.pop();
     let arr = this.data.sortList;
     if (arrow > 0) {
       for (let i = end; i >= start; i--) {
@@ -232,11 +257,17 @@ Page({
     }
     let curIndex = arr.findIndex(v => v.id == this.data.currentItem);
     let curBlock = arr[curIndex];
-    curBlock.sort += arrow > 0 ? start - end - 1 : end - start + 1;
-    let { x, y } = this.getPosition(curBlock.sort);
-    this.private.startX = x;
-    this.private.startY = y;
-    this.private.startSort = curBlock.sort;
+    curBlock.sort = arrow > 0 ? start : end;
+
+    setTimeout(() => {
+      if (this.private.queue.length) {
+        this.sortMove("iteration");
+      } else {
+        console.log("anime end");
+        this.private.anime = false;
+        !this.private.sortState && this.targetStop();
+      }
+    }, 50);
   },
   /* 计算位置 */
   getPosition(sort) {
