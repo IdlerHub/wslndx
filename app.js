@@ -92,10 +92,8 @@ App({
     let wxtype = systemInfo.version.replace(".", '').replace(".", '')
     let platform = systemInfo.platform
     console.log(platform)
-    if (platform == 'windows' || platform == 'mac') {
-      console.log(34234234234)
+    if (platform == 'windows' || platform == 'mac' || platform == 'macos') {
       this.playVedio('flow')
-      console.log(this.store.$state.flow)
     }
     // console.log(platform)
     if (wxtype < 606) {

@@ -43,9 +43,11 @@ Page({
   },
   onLoad(options) {
     /*todo:考虑去掉that*/
+    console.log(options)
     let that = this
     this.videoContext = wx.createVideoContext("myVideo")
     let windowHeight = wx.getSystemInfoSync().windowHeight
+    console.log(windowHeight)
     let system = wx.getSystemInfoSync().model.indexOf('iPhone')
     system == -1 ? this.setData({
       paddingTop: true
@@ -89,13 +91,26 @@ Page({
       wx.setNavigationBarTitle({
         title: options.name || ""
       })
-      if (options.play) {
+      if (options.play && !options.lessonid) {
         that.setData({
           hideRecode: true
         })
         that.getDetail(function() {
           wx.nextTick(() => {
             that.recordAdd()
+          })
+        })
+      } else if (options.play && options.lessonid) {
+        that.getDetail().then(function () {
+          wx.nextTick(() => {
+            let index = 0 
+            that.data.sublessons.forEach((item,i) => {
+              item.id == options.lessonid ? index = i : ''
+            })
+            that.select(index,true) 
+            setTimeout(() => {
+              that.tolesson()
+            }, 800)
           })
         })
       } else if (that.data.$state.userInfo.mobile) {
@@ -126,17 +141,17 @@ Page({
   onHide() {
   },
   //语音存储本地
-  setsotrevoice() {
-    if (this.data.filePath && this.data.filePath != '') {
-      let lessVoice = {
-        lessId: this.data.cur.id,
-        voiceContent: this.data.content
-      }
-      app.store.setState({
-        lessVoice
-      })
-    }
-  },
+  // setsotrevoice() {
+  //   if (this.data.filePath && this.data.filePath != '') {
+  //     let lessVoice = {
+  //       lessId: this.data.cur.id,
+  //       voiceContent: this.data.content
+  //     }
+  //     app.store.setState({
+  //       lessVoice
+  //     })
+  //   }
+  // },
   onGotUserInfo: function(e) {
     app.updateBase(e)
   },
@@ -349,8 +364,13 @@ Page({
     }
   },
   // 选择剧集
-  select(e) {
-    let i = e.currentTarget.dataset.index
+  select(e,type) {
+    let i = 0
+    if (type != undefined) {
+      i = e
+    } else {
+      i = e.currentTarget.dataset.index
+    }
     let list = this.data.sublessons
     this.setData({
       cur: list[i]
@@ -365,43 +385,43 @@ Page({
       sublesson_id: this.data.cur.id
     }
     let that = this
-    // if (this.data.$state.flow) {
+    if (this.data.$state.flow) {
       that.recordAddVedio(param)
-    // } else {
-    //   wx.startWifi({
-    //     success: res => {
-    //       wx.getConnectedWifi({
-    //         success: res => {
-    //           console.log(res)
-    //           app.playVedio('wifi')
-    //           that.recordAddVedio(param)
-    //         },
-    //         fail: res => {
-    //           console.log(res)
-    //           wx.showModal({
-    //             content: '您当前不在Wi-Fi环境，继续播放将会产生流量，是否选择继续播放?',
-    //             confirmText: '是',
-    //             cancelText: '否',
-    //             confirmColor: '#DF2020',
-    //             success(res) {
-    //               if (res.confirm) {
-    //                 app.playVedio('flow')
-    //                 that.recordAddVedio(param)
-    //               } else if (res.cancel) {
-    //                 console.log('用户点击取消')
-    //               }
-    //             }
-    //           })
-    //         }
-    //       })
-    //       wx.stopWifi({
-    //         success: res => {
-    //           console.log('wifi模块关闭成功')
-    //         }
-    //       })
-    //     },
-    //   })
-    // }
+    } else {
+      wx.startWifi({
+        success: res => {
+          wx.getConnectedWifi({
+            success: res => {
+              console.log(res)
+              app.playVedio('wifi')
+              that.recordAddVedio(param)
+            },
+            fail: res => {
+              console.log(res)
+              wx.showModal({
+                content: '您当前不在Wi-Fi环境，继续播放将会产生流量，是否选择继续播放?',
+                confirmText: '是',
+                cancelText: '否',
+                confirmColor: '#DF2020',
+                success(res) {
+                  if (res.confirm) {
+                    app.playVedio('flow')
+                    that.recordAddVedio(param)
+                  } else if (res.cancel) {
+                    console.log('用户点击取消')
+                  }
+                }
+              })
+            }
+          })
+          wx.stopWifi({
+            success: res => {
+              console.log('wifi模块关闭成功')
+            }
+          })
+        },
+      })
+    }
   },
   recordAddVedio(param) {
     app.classroom.recordAdd(param).then(msg => {
@@ -468,7 +488,7 @@ Page({
           })
         }
       })
-    } else {
+    }  else {
       this.setData({
         height: 306
       })
@@ -481,9 +501,9 @@ Page({
       query.select(id).boundingClientRect()
       query.exec(res => {
         console.log(res[0]) 
-        this.setData({
-          scrollviewtop: res[0].top - 500
-        })
+        res[0] ? this.setData({
+          scrollviewtop: res[0].top - 520
+        }) : ''
       })
     } 
   },
@@ -493,34 +513,49 @@ Page({
       this.videoContext.seek(lesson.time)
     }
     // console.log(lesson)
-    // if (lesson) {
-    //   for (let i in lesson) {
-    //     i == this.data.cur.id ? this.videoContext.seek(lesson[this.data.cur.id].time) : ''
+    // if (lesson && lesson[this.data.cur.lesson_id]) {
+    //   for (let i in lesson[this.data.cur.lesson_id]) {
+    //     i == this.data.cur.id ? this.videoContext.seek(lesson[this.data.cur.lesson_id][i].time) : ''
     //   }
     // }
   },
   timeupdate(e) {
-    // let videoTime = {}
-    // let that = this
-    // videoTime[this.data.cur.id] = { id: this.data.cur.id, time: e.detail.currentTime}
     // let lesson = wx.getStorageSync("lessonProgress")
-    // console.log(lesson)
     // if (lesson) {
-    //   for (let i in lesson) {
-    //     i == this.data.cur.id ? lesson[i] = videoTime[this.data.cur.id] : lesson[this.data.cur.id] = videoTime[this.data.cur.id]
+    //   if (lesson[this.data.cur.lesson_id]) {
+    //     if (lesson[this.data.cur.lesson_id][this.data.cur.lesson_id]) {
+    //       for (let i in lesson[this.data.cur.lesson_id]) {
+    //         i == this.data.cur.id ? lesson[this.data.cur.lesson_id][i].time = e.detail.currentTime : ''
+    //       }
+    //       wx.setStorage({
+    //         key: "lessonProgress",
+    //         data: lesson
+    //       })
+    //     }else {
+    //       lesson[this.data.cur.lesson_id][this.data.cur.id] = { id: this.data.cur.id, time: e.detail.currentTime }
+    //       wx.setStorage({
+    //         key: "lessonProgress",
+    //         data: lesson
+    //       })
+    //     }
+    //   } else {
+    //     lesson[this.data.cur.lesson_id] = {}
+    //     lesson[this.data.cur.lesson_id][this.data.cur.id] = { id: this.data.cur.id, time: e.detail.currentTime }
+    //     wx.setStorage({
+    //       key: "lessonProgress",
+    //       data: lesson
+    //     })
     //   }
-    //   wx.setStorage({
-    //     key: "lessonProgress",
-    //     data: lesson
-    //   })
     //   console.log(lesson)
     // } else {
+    //   let videoTime = {}
+    //   videoTime[this.data.cur.lesson_id] = {}
+    //   videoTime[this.data.cur.lesson_id][this.data.cur.id] = { id: this.data.cur.id, time: e.detail.currentTime}
     //   wx.setStorage({
     //     key: "lessonProgress",
-    //     data: videoTime 
+    //     data: videoTime
     //   })
     // }
-
     wx.setStorage({
       key: "lessonProgress",
       data: {
@@ -913,7 +948,7 @@ Page({
       if (res[0].top > -100) {
         if (system.screenHeight < 790) {
           wx.pageScrollTo({
-            scrollTop: 232
+            scrollTop: 250
           })
         }
       }
@@ -931,11 +966,13 @@ Page({
         this.setData({
           showvoice: true,
           write: false,
+          writeTow: false,
         })
       } else {
         this.setData({
           showvoice: true,
           write: false,
+          writeTow:false,
           replyshow: false
         })
         this.replyInfo = null

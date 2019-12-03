@@ -73,7 +73,6 @@ Page({
   },
   edit() {
     if (this.data.touch) {
-      setTimeout(() => {
         let arr = this.data.sortList, num = '',number = 0
         arr.sort((a, b) => {
           return a.sort - b.sort
@@ -86,12 +85,12 @@ Page({
         let param = {
           category_str: num.substring(1)
         }
-        this.addCategory(param)
-        this.beforePage.getCategory()
-        setTimeout(() => {
-          this.beforePage.lastswitchTab(number)
-        },200)
-      }, 200)
+        this.addCategory(param).then(() => {
+          this.beforePage.getCategory()
+          setTimeout(() => {
+            this.beforePage.lastswitchTab(number)
+          }, 200)
+        })
     }
     this.setData({
       touch: !this.data.touch
@@ -285,13 +284,14 @@ Page({
       let param = {
         category_str: num.substring(1)
       }
-      this.addCategory(param)
-      this.beforePage.getCategory()
+      this.addCategory(param).then(() => {
+        this.beforePage.getCategory()
+      })  
     }, 500)
   },
   /* 收藏分类 */
   addCategory(param) {
-    app.user.collectLessonCategory(param).then(res => {
+     return app.user.collectLessonCategory(param).then(res => {
       if (res.code == 1) {
 
       }
@@ -340,9 +340,10 @@ Page({
       let param = {
         category_str: num.substring(1)
       }
-      this.addCategory(param)
-      this.beforePage.getCategory()
-    }, 1000)
+      this.addCategory(param).then(() => {
+        this.beforePage.getCategory()
+      })
+    }, 500)
   },
   /* 备选列表元素飞动停止 */
   addfly(e) {
