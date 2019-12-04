@@ -3,7 +3,8 @@
  * @LastEditors: hxz
  * @LastEditTime: 2019-08-13 21:10:47
  -->
-<view class="content">
+ <view style="padding-left:30rpx">
+  <view class="content">
   <view class="left">
     <image class="img" mode="aspectFill" src="{{ detail.avatar }}"></image>
   </view>
@@ -39,6 +40,7 @@
   <rich-text nodes="{{ child.rtext + child.reply_content }}"></rich-text>
   <button wx:if="{{ $state.userInfo.id != child.reply_user_id }}" class="reply-btn" data-reply="{{ child }}" data-detail="{{ child }}"catchtap="show">回复</button>
 </view>
+ </view>
 
 <view class="popup write" id="write" wx:if="{{ write }}">
   <view class="bg" bindtap="hide" bindtouchstart="hide"></view>

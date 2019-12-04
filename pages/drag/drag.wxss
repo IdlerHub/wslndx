@@ -124,8 +124,8 @@
   width: 483rpx;
   height: 126rpx;
   position: absolute;
-  right: 5rpx;
-  top: 124rpx;
+  right: 0rpx;
+  top: 120rpx;
 }
 .guidetwo .guidetwotxt{
   width: 302rpx;

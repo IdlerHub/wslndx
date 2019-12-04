@@ -211,6 +211,7 @@ Page({
     })
   },
   show(e) {
+    console.log(e)
     if (this.data.$state.userInfo.status !== 'normal') {
       wx.showModal({
         content: '由于您近期不合规操作，您的账户已被管理员禁止发帖留言，如有疑问请在个人中心联系客服处理'
@@ -221,23 +222,24 @@ Page({
         this.replyParent = e.target.dataset.parent
         this.replyInfo = e.target.dataset.reply
         this.setData({
-          replyplaceholder: '回复 ' + e.currentTarget.dataset.reply.nickname,
+          replyplaceholder: e.currentTarget.dataset.reply.nickname != undefined ? '回复 ' + e.currentTarget.dataset.reply.nickname : '回复 ' + e.currentTarget.dataset.reply.from_user ,
           replyshow:true
         })
         if (this.data.$state.blogcomment[this.data.detail.id]) {
           if (this.replyParent && this.data.$state.blogcomment[this.data.detail.id]['replyParent']) {
             this.data.$state.blogcomment[this.data.detail.id]['replyParent'][this.replyParent] ?
             this.setData({
-                replycontent: this.data.$state.blogcomment[this.data.detail.id]['replyParent'][this.replyParent],
+                replycontent: this.data.$state.blogcomment[this.data.detail.id]['replyParent'][this.replyParent] || '',
                 replycontenLength: this.data.$state.blogcomment[this.data.detail.id]['replyParent'][this.replyParent].length || 0,
                 replyshow: true
             }) : ''
           } else if (this.data.$state.blogcomment[this.data.detail.id]['replyInfo']){
-            this.data.$state.blogcomment[this.data.detail.id]['replyInfo'][this.replyInfo.id] ? this.setData({
-              replycontent: this.data.$state.blogcomment[this.data.detail.id]['replyInfo'][this.replyInfo.id],
-              replycontenLength: this.data.$state.blogcomment[this.data.detail.id]['replyInfo'][this.replyInfo.id].length || 0,
+            console.log(this.data.$state.blogcomment[this.data.detail.id]['replyInfo'][this.replyInfo.id])
+            this.setData({
+              replycontent: this.data.$state.blogcomment[this.data.detail.id]['replyInfo'][this.replyInfo.id] != undefined? this.data.$state.blogcomment[this.data.detail.id]['replyInfo'][this.replyInfo.id] : '',
+              replycontenLength: this.data.$state.blogcomment[this.data.detail.id]['replyInfo'][this.replyInfo.id] != undefined ? this.data.$state.blogcomment[this.data.detail.id]['replyInfo'][this.replyInfo.id].length : 0,
               replyshow: true
-            }) : ''
+            }) 
           }
         }
       } else {
@@ -800,13 +802,16 @@ Page({
   initRecord: function () {
     //有新的识别内容返回，则会调用此事件
     manager.onRecognize = (res) => {
+      clearInterval(this.timer)
       this.setData({
-        newtxt: res.result
+        newtxt: res.result,
+        voiceActon: false
       })
     }
 
     // 识别结束事件
     manager.onStop = (res) => {
+      clearInterval(this.timer)
       // 取出录音文件识别出来的文字信息
       let text = res.result
       this.data.replyshow ? text = this.data.replycontent + text : text = this.data.content + text
@@ -849,15 +854,18 @@ Page({
       this.setData({
         voicetext: res.result,
         voicetextstatus: '',
-        filePath
+        filePath,
+        voiceActon: false
       })
     }
 
     // 识别错误事件
     manager.onError = (res) => {
+      clearInterval(this.timer)
       this.setData({
         recording: false,
         bottomButtonDisabled: false,
+        voiceActon: false
       })
     }
   },
@@ -948,16 +956,17 @@ Page({
   },
   // 计时器
   voicetime() {
+    clearInterval(this.timer)
     let time = 0
-    let it = setInterval(() => {
+    this.timer = setInterval(() => {
       time += 1
       if (!this.data.voiceActon) {
-        clearInterval(it)
-      } else {
-        this.setData({
-          voicetime: time
-        })
+        clearInterval(this.timer)
+        return
       }
+      this.setData({
+        voicetime: time
+      })
     }, 1000)
   }
 })

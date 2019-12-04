@@ -70,8 +70,8 @@
           <text class="title">{{ item.title }}</text>
           <text class="score">{{ item.largePoint || item.need_points }}</text>
           <text class="unit">积分</text>
-          <button class="bt {{ item.stock ? '' : 'out' }}" size="mini" data-stock="{{ item.stock }}" data-score="{{ item.need_points }}" data-id="{{ item.id }}" catchtap="gift" data-type="{{item.is_new}}">兑换</button>
-          <image class="newperson" src="/images/newperson.png" wx:if="{{item.is_new == 1}}"></image>
+          <button class="bt {{ item.stock ? '' : 'out' }}" size="mini" data-stock="{{ item.stock }}" data-score="{{ item.need_points }}" data-id="{{ item.id }}" data-title="{{item.title}}" data-image="{{item.image}}" catchtap="gift" data-type="{{item.is_new}}">兑换</button>
+          <image class="newperson" src="{{$state.imgHost}}/newperson.png" wx:if="{{item.is_new == 1}}"></image>
         </view>
       </view>
     </scroll-view>

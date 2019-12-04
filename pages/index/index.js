@@ -139,7 +139,7 @@ Page({
   },
   switchNav(event) {
     let cur = event.currentTarget.dataset.current, id = event.currentTarget.dataset.id
-    if (this.data.currentTab !== cur) {
+    if (this.data.currentTab != cur) {
       this.setData({
         currentTab: cur
       })
@@ -158,9 +158,9 @@ Page({
     let cur = event.detail.current, that = this, currren = this.data.currentTab
     this.timer ? clearTimeout(this.timer) : ''
     this.timer = setTimeout(() => {
-      that.setData({
-        currentTab: cur
-      })
+      this.data.currentTab != cur ? cur == that.setData({
+        currentTab: cur 
+      }) : ''
     }, 300)
     
     if(cur != 0) {

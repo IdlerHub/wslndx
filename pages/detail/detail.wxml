@@ -138,14 +138,14 @@
     <text>首页</text>
   </view>
   <button class="authorize" wx:if="{{ $state.baseInfo }}" open-type="getUserInfo" bindgetuserinfo="onGotUserInfo"></button>
-  <view class="issueBox" wx:if="{{write&&currentTab == 1}}" bindtap="showWrite">
+  <view class="issueBox" wx:if="{{write&&currentTab == 1}}" bindtap="showWrite" data-type="reply">
     <image src="{{$state.imgHost}}/voicebig.png" class="bigvoice" catchtap="showvoice" data-type="content"></image>
     <view class="issueBox-txt" style="color:{{content != '' ? 'rgba(46,46,46,1)': ''}}">
       {{ content != '' ? content : replycomment }}
     </view>
     <view class="submit">发布</view>
   </view>
-  <view class="issueBoxTow" style="bottom :{{ keyHeight ? keyheight : 0}}px;height:{{replyplaceholder != '' ? '181' : ''}}px" wx:if="{{writeTow&&currentTab == 1}}">
+  <view class="issueBoxTow" style="bottom :{{ keyheight != 0 ? keyheight : 0}}px;height:{{replyplaceholder != '' ? '181' : ''}}px" wx:if="{{writeTow&&currentTab == 1}}">
     <text class="replayplaceholder" wx:if="{{replyplaceholder != ''}}">{{replyplaceholder}}</text>
     <textarea placeholder="{{$state.newGuide.lesson == 0 ? '' : placeholder }}" fixed show-confirm-bar="{{false}}"  placeholder-class="placeholder" bindinput="input" bindkeyboardheightchange="keyheight" adjust-position="{{false}}" focus="{{focus}}" 
       bindblur="bindblur" maxlength="200" value="{{replyshow ? replycontent: content}}" cursor-spacing="190rpx"></textarea>

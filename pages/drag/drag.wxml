@@ -33,7 +33,7 @@
     >
       <icon
         type="clear"
-        size="20"
+        size="19"
         catchtap="remove"
         data-index="{{ i }}"
         wx:if="{{ touch && !item.unMove && !item.fly }}"
@@ -107,7 +107,7 @@
     <image src="{{$state.imgHost}}/dragguidetowtxt.png" class="guidetwotxt" bindtap="nextguid"></image>
   </view>
   <view class="guidetwo" wx:if="{{guideNum == 2}}">
-    <image src="{{$state.imgHost}}/dragguideone.png" class="guidetwoimg"></image>
+    <image src="/images/longpress.gif" class="guidetwoimg"></image>
     <image src="{{$state.imgHost}}/dragguideonetxt.png" class="guidetwotxt" bindtap="nextguid"></image>
   </view>
 </view>

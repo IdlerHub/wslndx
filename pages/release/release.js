@@ -8,8 +8,7 @@ Page({
       video: null,
       cover: null,
       fs_id: "",
-      num:0,
-      placeholder:'placeholder'
+      num:0
     },
     media_type: null,
     showFlag: false,
@@ -302,16 +301,14 @@ Page({
               this.setData({
                 integral: '+50 积分',
                 integralContent: '完成首次发帖',
-                showintegral: true,
-                placeholder: ''
+                showintegral: true
               })
               integral = 'first'
             } else if (msg.data.is_first == 'day') {
               this.setData({
                 integral: '+20 积分',
                 integralContent: '完成每日秀风采首次发帖',
-                showintegral: true,
-                placeholder:''
+                showintegral: true
               })
               integral = 'day'
             }

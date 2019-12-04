@@ -12,7 +12,9 @@ Page({
     voiceheight: '',
     focus: true,
     text: '',
-    lessList: []
+    lessList: [],
+    showqst: false,
+    showvioce: true
   },
   onLoad: function(options) {
     this.param = {
@@ -24,7 +26,9 @@ Page({
       let systems = wx.getSystemInfoSync()
       this.voiceheight == 0 ? this.voiceheight = res.height : ''
       this.voiceheight != 0 ? res.height == 0 ? '' :this.setData({
-        voiceheight: this.voiceheight + (systems.screenHeight * 0.05)
+        voiceheight: this.voiceheight + (systems.screenHeight * 0.05),
+        showvioce: true,
+        showqst: false
       }) : ''
     })
   },
@@ -238,7 +242,14 @@ Page({
     list ? lesslist = this.data.lessList : ''
     app.classroom.lessSearch(this.param).then(res => {
       if (res.code == 1) {
-        if (!res.data.data) return
+        if (!res.data.data) {
+          this.setData({
+            showqst: true,
+            showvioce: false,
+            voiceActon: false
+          })
+          return
+        }
         let lessList = res.data.data
         this.param['scroll_id'] = res.data.scroll_id,
         lessList.forEach(item => {
@@ -248,7 +259,9 @@ Page({
         })
         lesslist.push(...lessList)
         this.setData({
+          showvioce: false,
           lessList: lesslist,
+          voiceActon: false
         })
       }
     })

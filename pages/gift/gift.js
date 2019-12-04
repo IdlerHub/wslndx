@@ -7,6 +7,7 @@ Page({
       name: options.name,
       image: options.image
     })
+    console.log(this.data.name, this.data.image)
   },
   onReady: function() {},
   onShow: function() {},

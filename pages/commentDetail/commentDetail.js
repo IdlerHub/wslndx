@@ -503,16 +503,19 @@ Page({
   initRecord: function() {
     //有新的识别内容返回，则会调用此事件
     manager.onRecognize = (res) => {
+      clearInterval(this.timer)
       this.setData({
-        newtxt: res.result
+        newtxt: res.result,
+        voiceActon: false
       })
     }
 
     // 识别结束事件
     manager.onStop = (res) => {
+      clearInterval(this.timer)
       // 取出录音文件识别出来的文字信息
       let text = res.result
-      this.data.replyshow ? text = this.data.replycontent + text : text = this.data.content + text
+      text = this.data.content + text
       // 获取音频文件临时地址
       let filePath = res.tempFilePath
       console.log(filePath)
@@ -523,10 +526,13 @@ Page({
         })
         return
       }
-      this.data.replyshow ? this.setData({
-        replycontent: text
-      }) : this.setData({
-        content: text
+      this.setData({
+        content: text,
+        contentlenghth: text.length,
+        voicetext: res.result,
+        voicetextstatus: '',
+        filePath,
+        voiceActon: false
       })
       if (this.data.detail.blog_id) {
         let blogcomment = this.data.$state.blogcomment
@@ -536,7 +542,7 @@ Page({
           blogcomment[this.data.detail.blog_id]['replyParent'][this.data.detail.id] = this.data.content
         } else {
           blogcomment[this.data.detail.blog_id]['replyInfo'] ? '' : blogcomment[this.data.detail.blog_id]['replyInfo'] = {}
-          blogcomment[this.data.detail.blog_id]['replyInfo'][this.detail.id] = this.data.content
+          blogcomment[this.data.detail.blog_id]['replyInfo'][this.data.detail.id] = this.data.content
         }
         app.store.setState({
           blogcomment
@@ -549,24 +555,21 @@ Page({
           lessDiscussion[this.data.detail.lesson_id]['replyParent'][this.data.detail.id] = this.data.content
         } else {
           lessDiscussion[this.data.detail.lesson_id]['replyInfo'] ? '' : lessDiscussion[this.data.detail.lesson_id]['replyInfo'] = {}
-          lessDiscussion[this.data.detail.lesson_id]['replyInfo'][this.detail.id] = this.data.content
+          lessDiscussion[this.data.detail.lesson_id]['replyInfo'][this.data.detail.id] = this.data.content
         }
         app.store.setState({
           lessDiscussion
         })
       }
-      this.setData({
-        voicetext: res.result,
-        voicetextstatus: '',
-        filePath
-      })
     }
 
     // 识别错误事件
     manager.onError = (res) => {
+      clearInterval(this.timer)
       this.setData({
         recording: false,
         bottomButtonDisabled: false,
+        voiceActon: false
       })
     }
   },
@@ -675,16 +678,17 @@ Page({
   },
   // 计时器
   voicetime() {
+    clearInterval(this.timer)
     let time = 0
-    let it = setInterval(() => {
+    this.timer = setInterval(() => {
       time += 1
       if (!this.data.voiceActon) {
-        clearInterval(it)
-      } else {
-        this.setData({
-          voicetime: time
-        })
+        clearInterval(this.timer)
+        return
       }
+      this.setData({
+        voicetime: time
+      })
     }, 1000)
   }
 })

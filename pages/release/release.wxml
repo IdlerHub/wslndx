@@ -1,6 +1,6 @@
 <view class="container">
     <view class='wrap'>
-        <textarea placeholder="{{placeholder}}" focus="true" bindinput="input" value="{{param.content}}" placeholder-class="ph-class" />
+        <textarea placeholder="{{showintegral ? '' : '说点什么吧...'}}" focus="true" bindinput="input" value="{{param.content}}" placeholder-class="ph-class" />
         <view class='box'>
             <view class='img' wx:key="index" wx:for="{{param.image}}">
                 <image class='image' mode='aspectFill' src="{{item}}" data-index='{{index}}' data-url="{{item}}" catchtap='selectImg'></image>

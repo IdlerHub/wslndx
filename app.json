@@ -14,7 +14,6 @@
     "pages/certificate/certificate",
     "pages/info/info",
     "pages/user/user",
-    "pages/category/category",
     "pages/login/login",
     "pages/score/score",
     "pages/collection/collection",

@@ -582,7 +582,7 @@ Page({
               if (msg.code == 1) {
                 wx.showToast({
                   title: "删除成功",
-                  icon: 'success',
+                  icon: 'none',
                   duration: 1500
                 })
                 this.comParam.page = 1
@@ -676,7 +676,7 @@ Page({
         })
         wx.showToast({
           title: '评论成功',
-          icon: 'success',
+          icon: 'none',
           duration: 800
         })
         this.comParam.page = 1
@@ -720,7 +720,7 @@ Page({
         })
         wx.showToast({
           title: "发布成功",
-          icon: "success",
+          icon: "none",
           duration: 1500
         })
         let lessDiscussion = this.data.$state.lessDiscussion
@@ -791,7 +791,7 @@ Page({
             if (msg.code == 1) {
               wx.showToast({
                 title: "删除成功",
-                icon: "success",
+                icon: "none",
                 duration: 1500
               })
               this.comParam.page = 1
@@ -973,14 +973,14 @@ Page({
     }
   },
   showWrite(e) {
-    this.setscrollto()
+    
     if (this.data.$state.userInfo.status !== 'normal') {
       wx.showModal({
         content: '由于您近期不合规操作，您的账户已被管理员禁止发帖留言，如有疑问请在个人中心联系客服处理',
         confirmColor: '#df2020',
       })
     } else {
-      if (this.data.replyshow) {
+      if (this.data.replyshow && !e.currentTarget.dataset.type) {
         this.setData({
           write: false,
           showvoice: false,
@@ -1121,14 +1121,17 @@ Page({
   initRecord: function() {
     //有新的识别内容返回，则会调用此事件
     manager.onRecognize = (res) => {
+      clearInterval(this.timer)
       this.setData({
-        newtxt: res.result
+        newtxt: res.result,
+        voiceActon: false
       })
     }
 
     // 识别结束事件
     manager.onStop = (res) => {
       // 取出录音文件识别出来的文字信息
+      clearInterval(this.timer)
       let text = res.result
       this.data.replyshow ? text =  this.data.replycontent + text : text =  this.data.content + text
       // 获取音频文件临时地址
@@ -1137,7 +1140,8 @@ Page({
       let duration = res.duration
       if (res.result == '') {
         this.setData({
-          voicetextstatus: '未能识别到文字'
+          voicetextstatus: '未能识别到文字',
+          voiceActon: false
         })
         return
       }
@@ -1170,15 +1174,18 @@ Page({
       this.setData({
         voicetext: res.result,
         voicetextstatus: '',
-        filePath
+        filePath,
+        voiceActon: false
       })
     }
 
     // 识别错误事件
     manager.onError = (res) => {
+      clearInterval(this.timer)
       this.setData({
         recording: false,
         bottomButtonDisabled: false,
+        voiceActon: false
       })
     }
   },
@@ -1254,8 +1261,8 @@ Page({
         voicetime: 0,
         filePath: ''
       })
-      lessDiscussion[this.data.detail.id].replycontent = text
-      app.store.setData({
+      lessDiscussion[this.data.detail.id] ? lessDiscussion[this.data.detail.id].replycontent = text : ''
+      app.store.setState({
         lessDiscussion
       })
     }
@@ -1271,16 +1278,17 @@ Page({
   },
   // 计时器
   voicetime() {
+    clearInterval(this.timer)
     let time = 0
-    let it = setInterval(() => {
+    this.timer = setInterval(() => {
       time += 1
-      if(!this.data.voiceActon){
-        clearInterval(it)
-      } else {
-        this.setData({
-          voicetime: time
-        })
-      }
+      if (!this.data.voiceActon) {
+        clearInterval(this.timer)
+        return
+      } 
+      this.setData({
+        voicetime: time
+      })
     }, 1000)
   }
 })

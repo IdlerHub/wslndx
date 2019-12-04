@@ -369,7 +369,7 @@ Page({
                 app.user.exchange(param).then(res => {
                   if (res.code == 1) {
                     wx.navigateTo({
-                      url: "/pages/gift/gift"
+                      url: "/pages/gift/gift?name=" + e.currentTarget.dataset.title + "&image=" + e.currentTarget.dataset.image
                     })
                   }
                 })
@@ -390,7 +390,7 @@ Page({
                 app.user.exchange(param).then(res => {
                   if (res.code == 1) {
                     wx.navigateTo({
-                      url: "/pages/gift/gift"
+                      url: "/pages/gift/gift?name=" + e.currentTarget.dataset.title + "&image=" + e.currentTarget.dataset.image
                     })
                   }
                 })
