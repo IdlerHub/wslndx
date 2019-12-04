@@ -117,23 +117,25 @@ Page({
   setHeight() {
     let nav = this.data.nav
     let currentTab = this.data.currentTab
-    console.log(this.navHeightList[currentTab])
     if (this.navHeightList[currentTab]) {
-      this.setData({
+      this.navHeightList[currentTab] < 300 ? this.getheight(nav, currentTab) : this.setData({
         height: this.navHeightList[currentTab]
       })
     } else {
-      let query = wx.createSelectorQuery().in(this)
-      let that = this
-      query.select(nav[currentTab].class).boundingClientRect()
-      query.exec(res => {
-        let height = res[0].height
-        that.navHeightList[currentTab] = height
-        that.setData({
-          height: height
-        })
-      })
+      this.getheight(nav, currentTab)
     }
+  },
+  getheight(nav, currentTab) {
+    let query = wx.createSelectorQuery().in(this)
+    let that = this
+    query.select(nav[currentTab].class).boundingClientRect()
+    query.exec(res => {
+      let height = res[0].height
+      that.navHeightList[currentTab] = height
+      that.setData({
+        height: height
+      })
+    })
   },
   switchNav(event) {
     let cur = event.currentTarget.dataset.current, id = event.currentTarget.dataset.id
