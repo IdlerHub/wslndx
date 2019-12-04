@@ -537,12 +537,12 @@ Page({
       })
       if (this.data.detail.blog_id) {
         let blogcomment = this.data.$state.blogcomment
-        blogcomment[this.data.detail.blog_id] ? '' : blogcomment[this.data.detail.blog_id] = {}
+        blogcomment[this.data.detail.blog_id] != undefined ? '' : blogcomment[this.data.detail.blog_id] = {}
         if (this.replyInfo) {
-          blogcomment[this.data.detail.blog_id]['replyParent'] ? '' : blogcomment[this.data.detail.blog_id]['replyParent'] = {}
+          blogcomment[this.data.detail.blog_id]['replyParent'] != undefined ? '' : blogcomment[this.data.detail.blog_id]['replyParent'] = {}
           blogcomment[this.data.detail.blog_id]['replyParent'][this.data.detail.id] = this.data.content
         } else {
-          blogcomment[this.data.detail.blog_id]['replyInfo'] ? '' : blogcomment[this.data.detail.blog_id]['replyInfo'] = {}
+          blogcomment[this.data.detail.blog_id]['replyInfo'] != undefined ? '' : blogcomment[this.data.detail.blog_id]['replyInfo'] = {}
           blogcomment[this.data.detail.blog_id]['replyInfo'][this.data.detail.id] = this.data.content
         }
         app.store.setState({
@@ -550,12 +550,12 @@ Page({
         })
       } else {
         let lessDiscussion = this.data.$state.lessDiscussion
-        lessDiscussion[this.data.detail.lesson_id] ? '' : lessDiscussion[this.data.detail.lesson_id] = {}
+        lessDiscussion[this.data.detail.lesson_id] != undefined ? '' : lessDiscussion[this.data.detail.lesson_id] = {}
         if (this.replyInfo) {
-          lessDiscussion[this.data.detail.lesson_id]['replyParent'] ? '' : blogcomment[this.data.detail.lesson_id]['replyParent'] = {}
+          lessDiscussion[this.data.detail.lesson_id]['replyParent'] != undefined ? '' : blogcomment[this.data.detail.lesson_id]['replyParent'] = {}
           lessDiscussion[this.data.detail.lesson_id]['replyParent'][this.data.detail.id] = this.data.content
         } else {
-          lessDiscussion[this.data.detail.lesson_id]['replyInfo'] ? '' : lessDiscussion[this.data.detail.lesson_id]['replyInfo'] = {}
+          lessDiscussion[this.data.detail.lesson_id]['replyInfo'] != undefined ? '' : lessDiscussion[this.data.detail.lesson_id]['replyInfo'] = {}
           lessDiscussion[this.data.detail.lesson_id]['replyInfo'][this.data.detail.id] = this.data.content
         }
         app.store.setState({
@@ -624,48 +624,75 @@ Page({
     })
   },
   relacevoice() {
-    let text = '',
-      voicetext = this.data.voicetext
+    let text = '',voicetext = this.data.voicetext
     if (this.replyInfo) {
       this.data.content == '' ? '' : text = this.data.content.replace(voicetext, '')
       this.setData({
         showvoiceauto: false,
-        replycontent: text,
+        content: text,
         voicetime: 0,
         filePath: ''
       })
-      if (this.data.detail.lesson_id) {
-        let lessDiscussion = this.data.$state.lessDiscussion
-        lessDiscussion[this.data.detail.id].replyParent[this.data.detail.id] = text
-        app.store.setData({
-          lessDiscussion
+      if (this.data.detail.blog_id) {
+        let blogcomment = this.data.$state.blogcomment
+        blogcomment[this.data.detail.blog_id] ? '' : blogcomment[this.data.detail.blog_id] = {}
+        if (this.replyInfo) {
+          blogcomment[this.data.detail.blog_id]['replyParent'] ? '' : blogcomment[this.data.detail.blog_id]['replyParent'] = {}
+          blogcomment[this.data.detail.blog_id]['replyParent'][this.data.detail.id] = this.data.content
+        } else {
+          blogcomment[this.data.detail.blog_id]['replyInfo'] ? '' : blogcomment[this.data.detail.blog_id]['replyInfo'] = {}
+          blogcomment[this.data.detail.blog_id]['replyInfo'][this.data.detail.id] = this.data.content
+        }
+        app.store.setState({
+          blogcomment
         })
       } else {
-        let blogcomment = this.data.$state.blogcomment
-        blogcomment[this.data.detail.id].replyParent[this.data.detail.id] = text
-        app.store.setData({
-          blogcomment
+        let lessDiscussion = this.data.$state.lessDiscussion
+        lessDiscussion[this.data.detail.lesson_id] ? '' : lessDiscussion[this.data.detail.lesson_id] = {}
+        if (this.replyInfo) {
+          lessDiscussion[this.data.detail.lesson_id]['replyParent'] ? '' : lessDiscussion[this.data.detail.lesson_id]['replyParent'] = {}
+          lessDiscussion[this.data.detail.lesson_id]['replyParent'][this.data.detail.id] = this.data.content
+        } else {
+          lessDiscussion[this.data.detail.lesson_id]['replyInfo'] ? '' : lessDiscussion[this.data.detail.lesson_id]['replyInfo'] = {}
+          lessDiscussion[this.data.detail.lesson_id]['replyInfo'][this.data.detail.id] = this.data.content
+        }
+        app.store.setState({
+          lessDiscussion
         })
       }
     } else {
       this.data.content == '' ? '' : text = this.data.content.replace(voicetext, '')
       this.setData({
         showvoiceauto: false,
-        replycontent: text,
+        content: text,
         voicetime: 0,
         filePath: ''
       })
-      if (this.data.detail.lesson_id) {
-        let lessDiscussion = this.data.$state.lessDiscussion
-        lessDiscussion[this.data.detail.id].replyInfo[this.data.detail.id] = text
-        app.store.setData({
-          lessDiscussion
+      if (this.data.detail.blog_id) {
+        let blogcomment = this.data.$state.blogcomment
+        blogcomment[this.data.detail.blog_id] ? '' : blogcomment[this.data.detail.blog_id] = {}
+        if (this.replyInfo) {
+          blogcomment[this.data.detail.blog_id]['replyParent'] ? '' : blogcomment[this.data.detail.blog_id]['replyParent'] = {}
+          blogcomment[this.data.detail.blog_id]['replyParent'][this.data.detail.id] = this.data.content
+        } else {
+          blogcomment[this.data.detail.blog_id]['replyInfo'] ? '' : blogcomment[this.data.detail.blog_id]['replyInfo'] = {}
+          blogcomment[this.data.detail.blog_id]['replyInfo'][this.data.detail.id] = this.data.content
+        }
+        app.store.setState({
+          blogcomment
         })
       } else {
-        let blogcomment = this.data.$state.blogcomment
-        blogcomment[this.data.detail.id].replyInfo[this.data.detail.id] = text
-        app.store.setData({
-          blogcomment
+        let lessDiscussion = this.data.$state.lessDiscussion
+        lessDiscussion[this.data.detail.lesson_id] ? '' : lessDiscussion[this.data.detail.lesson_id] = {}
+        if (this.replyInfo) {
+          lessDiscussion[this.data.detail.lesson_id]['replyParent'] ? '' : lessDiscussion[this.data.detail.lesson_id]['replyParent'] = {}
+          lessDiscussion[this.data.detail.lesson_id]['replyParent'][this.data.detail.id] = this.data.content
+        } else {
+          lessDiscussion[this.data.detail.lesson_id]['replyInfo'] ? '' : lessDiscussion[this.data.detail.lesson_id]['replyInfo'] = {}
+          lessDiscussion[this.data.detail.lesson_id]['replyInfo'][this.data.detail.id] = this.data.content
+        }
+        app.store.setState({
+          lessDiscussion
         })
       }
     }
@@ -674,7 +701,8 @@ Page({
   closevoiceBox() {
     this.setData({
       showvoice: false,
-      write: false
+      write: false,
+      showvoiceauto: false
     })
   },
   // 计时器
