@@ -973,14 +973,14 @@ Page({
     }
   },
   showWrite(e) {
-    
+    console.log(e)
     if (this.data.$state.userInfo.status !== 'normal') {
       wx.showModal({
         content: '由于您近期不合规操作，您的账户已被管理员禁止发帖留言，如有疑问请在个人中心联系客服处理',
         confirmColor: '#df2020',
       })
     } else {
-      if (this.data.replyshow && !e.currentTarget.dataset.type) {
+      if (this.data.replyshow && e.currentTarget.dataset.type == 'voice') {
         this.setData({
           write: false,
           showvoice: false,
