@@ -50,6 +50,8 @@ Page({
         })
         arr1[this.currentTab]['class'] = true
         const res = wx.getSystemInfoSync();
+        this.private.ratio = Math.floor((res.windowWidth * 100) / 375) / 100;
+
         let sortArr = arr1;
         sortArr.forEach((v, i) => {
           v.sort = i;
@@ -65,7 +67,6 @@ Page({
           v.x = x;
           v.y = y + originY;
         });
-        this.private.ratio = Math.floor((res.windowWidth * 100) / 375) / 100;
         this.setData({
           sortList: sortArr,
           altList: altArr
@@ -75,7 +76,7 @@ Page({
   },
   edit() {
     if (this.data.touch) {
-        let arr = this.data.sortList, num = '',number = 0
+      let arr = JSON.parse(JSON.stringify(this.data.sortList)), num = '',number = 0
         arr.sort((a, b) => {
           return a.sort - b.sort
         })

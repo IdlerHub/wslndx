@@ -1015,7 +1015,7 @@ Page({
       }
     }
   },
-  keyHeight(e) {
+  keyheight(e) {
     console.log(e.detail.height)
     if (this.data.keyheight == 0) {
       this.setData({
@@ -1035,7 +1035,10 @@ Page({
   },
   bindblur() {
     this.setData({
-      keyheight: 0
+      keyHeight: false,
+      keyheight: 0,
+      write: true,
+      writeTow: false
     })
   },
   //用于数据统计

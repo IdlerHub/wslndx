@@ -199,15 +199,21 @@ Page({
   },
   keychange(e) {
     let systems = wx.getSystemInfoSync()
-    e.detail.height == 0 ? '' : this.setData({
-      voiceheight: e.detail.height + (systems.screenHeight * 0.05)
-    })
+    wx.onKeyboardHeightChange(res => {
+      console.log(res.height)
+      res.height != 0 ? this.setData({
+        voiceheight: res.heightt + (systems.screenHeight * 0.05)
+      }) : ''
+    })   
   },
   txtchange(e) {
     console.log(e.detail.value)
     this.setData({
       text: e.detail.value
     })
+    e.detail.value.length == 0 ? this.setData({
+      lessList: []
+    }) : ''
   },
   cleartxt() {
     this.setData({
