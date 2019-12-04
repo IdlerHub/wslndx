@@ -117,6 +117,7 @@ Page({
   setHeight() {
     let nav = this.data.nav
     let currentTab = this.data.currentTab
+    console.log(this.navHeightList[currentTab])
     if (this.navHeightList[currentTab]) {
       this.setData({
         height: this.navHeightList[currentTab]
@@ -165,8 +166,8 @@ Page({
       this.geteCatrcommend(id, cur)
     }
     setTimeout(() => {
-      currren != this.data.currentTab ? '' : this.setHeight()
-    }, 700)
+      this.setHeight()
+    }, 500)
   },
   lastswitchTab(event) {
     let arr = this.data.nav, num = 0
@@ -215,8 +216,7 @@ Page({
           catrecommend 
         })
         setTimeout(() => {
-          if (currtab != this.data.currentTab) return
-          this.setHeight()
+          currtab != this.data.currentTab ? '' : this.setHeight()
         }, 600)
       }
     })

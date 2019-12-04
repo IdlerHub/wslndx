@@ -864,6 +864,7 @@ Page({
         content: '由于您近期不合规操作，您的账户已被管理员禁止发帖留言，如有疑问请在个人中心联系客服处理'
       })
     } else {
+      this.setscrollto()
       if (e && e.target.dataset.reply) {
         /* 回复别人的评论 或者 回复别人的回复  */
         this.replyParent = e.target.dataset.parent
@@ -935,22 +936,13 @@ Page({
     }
   },
   setscrollto() {
-    let system = {}
-    wx.getSystemInfo({
-      success: res => {
-        system = res
-      }
-    })
     let query = wx.createSelectorQuery().in(this)
     query.select(".container").boundingClientRect()
     query.exec(res => {
-      console.log(res)
       if (res[0].top > -100) {
-        if (system.screenHeight < 790) {
           wx.pageScrollTo({
             scrollTop: 250
           })
-        }
       }
     })
   },
