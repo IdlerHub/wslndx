@@ -152,21 +152,21 @@ Page({
     console.log(e.detail.formId)
   },
   switchTab(event) {
-    let cur = event.detail.current , that = this
+    let cur = event.detail.current, that = this, currren = this.data.currentTab
     this.timer ? clearTimeout(this.timer) : ''
     this.timer = setTimeout(() => {
       that.setData({
         currentTab: cur
       })
-    }, 500)
+    }, 300)
     
     if(cur != 0) {
       let id = this.data.nav[cur].id
       this.geteCatrcommend(id, cur)
     }
     setTimeout(() => {
-      this.setHeight()
-    }, 600)
+      currren != this.data.currentTab ? '' : this.setHeight()
+    }, 700)
   },
   lastswitchTab(event) {
     let arr = this.data.nav, num = 0
@@ -217,7 +217,7 @@ Page({
         setTimeout(() => {
           if (currtab != this.data.currentTab) return
           this.setHeight()
-        }, 500)
+        }, 600)
       }
     })
   },

@@ -18,12 +18,14 @@ Page({
     this.param = {
       page_size: 10
     }
+    this.voiceheight = 0
     wx.onKeyboardHeightChange(res => {
       console.log(res.height)
       let systems = wx.getSystemInfoSync()
-      res.height == 0 ? '' :this.setData({
-        voiceheight: res.height + (systems.screenHeight * 0.05)
-      })
+      this.voiceheight == 0 ? this.voiceheight = res.height : ''
+      this.voiceheight != 0 ? res.height == 0 ? '' :this.setData({
+        voiceheight: this.voiceheight + (systems.screenHeight * 0.05)
+      }) : ''
     })
   },
   onShow() {
@@ -199,15 +201,14 @@ Page({
   },
   keychange(e) {
     let systems = wx.getSystemInfoSync()
-    wx.onKeyboardHeightChange(res => {
-      console.log(res.height)
-      res.height != 0 ? this.setData({
-        voiceheight: res.heightt + (systems.screenHeight * 0.05)
-      }) : ''
-    })   
+    // wx.onKeyboardHeightChange(res => {
+    //   console.log(res.height)
+    //   res.height != 0 ? this.setData({
+    //     voiceheight: res.heightt + (systems.screenHeight * 0.05)
+    //   }) : ''
+    // })   
   },
   txtchange(e) {
-    console.log(e.detail.value)
     this.setData({
       text: e.detail.value
     })

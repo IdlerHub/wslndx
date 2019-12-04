@@ -4,11 +4,11 @@
     <view class="search-box">
       <image src="{{$state.imgHost}}/searchp.png"></image>
       <form wx:if="{{focus}}">
-        <input placeholder="搜索课程名称" placeholder-style="color:#999;" confirm-type="search" type="text" class="search-txt" focus="focus" bindkeyboardheightchange="keychange" value="{{text}}" bindinput="txtchange" bindconfirm="earchlesss"></input>
+        <input placeholder="搜索课程名称" placeholder-style="color:#999;" confirm-type="search" type="text" class="search-txt" focus="focus"  value="{{text}}" bindinput="txtchange" bindconfirm="earchlesss"></input>
         <button wx:if="{{text != ''}}" form-type="reset" catchtap="cleartxt"></button> 
       </form>
       <form wx:else>
-        <input  placeholder-style="color:#999;" confirm-type="search" type="text" class="search-txt" focus="focus" bindkeyboardheightchange="keychange" value="{{text}}" bindinput="txtchange" bindconfirm="earchlesss"></input>
+        <input  placeholder-style="color:#999;" confirm-type="search" type="text" class="search-txt" focus="focus"  value="{{text}}" bindinput="txtchange" bindconfirm="earchlesss"></input>
         <button wx:if="{{text != ''}}" form-type="reset" catchtap="cleartxt"></button> 
       </form>
     </view>
