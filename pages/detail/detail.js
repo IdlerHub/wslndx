@@ -1132,6 +1132,7 @@ Page({
     manager.onStop = (res) => {
       // 取出录音文件识别出来的文字信息
       clearInterval(this.timer)
+      if(!this.data.showvoiceauto) return
       let text = res.result
       this.data.replyshow ? text =  this.data.replycontent + text : text =  this.data.content + text
       // 获取音频文件临时地址

@@ -514,6 +514,7 @@ Page({
     manager.onStop = (res) => {
       clearInterval(this.timer)
       // 取出录音文件识别出来的文字信息
+      if (!this.data.showvoiceauto) return
       let text = res.result
       text = this.data.content + text
       // 获取音频文件临时地址
