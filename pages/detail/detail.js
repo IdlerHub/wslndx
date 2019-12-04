@@ -1004,6 +1004,13 @@ Page({
         })
         this.replyInfo = null
         this.replyParent = null
+        let system = {}
+        wx.getSystemInfo({
+          success: res => {
+            system = res
+          }
+        })
+        if (system.screenHeight <= 700) this.setscrollto()
       }
     }
   },

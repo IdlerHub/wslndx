@@ -52,7 +52,8 @@ page {
   background-size: 36rpx 36rpx;
   position: absolute;
   right: -30rpx;
-  top: -9px;
+  top: 50%;
+  margin-top: -44rpx;
   z-index: 5;
 }
 .container .search-top .search-txt {
