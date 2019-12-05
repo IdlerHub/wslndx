@@ -279,6 +279,12 @@ Page({
       url: "/pages/score/score?type=index"
     })
   },
+  touchstart() {
+    this.shownow = true
+  },
+  touchend() {
+    this.shownow = false
+  },
   onPageScroll(e) {
     if (e.scrollTop >= this.headerHeight - this.navHeight) {
       !this.data.scroll &&
@@ -291,13 +297,14 @@ Page({
           scroll: false
         })
     }
+    if (e.scrollTop < 0) return
     let scrollTop = this.data.scrollTop
     this.setData({
       scrollTop: e.scrollTop
     })
     e.scrollTop - scrollTop > 0  ? this.setData({
       shownow: false
-    }) : this.setData({
+    }) : this.shownow && this.setData({
         shownow: true
     })
   },
@@ -424,6 +431,7 @@ Page({
     })
   },
   onReachBottom() {
+    console.log(112211)
     if(this.data.currentTab != 0) {
       let id = this.data.nav[this.data.currentTab].id
       let temp = this.data.catrecommend[id]
@@ -431,9 +439,14 @@ Page({
       console.log(this.categoryParams, 8953498758345843578)
       return app.classroom.lessons(this.categoryParams[id]).then(msg => {
         if (msg.code === 1) {
+          let next = true
           msg.data.forEach(function (item) {
             item.thousand = app.util.tow(item.browse)
+            temp.forEach( i => {
+              i.id == item.id ? next = false : ''
+            })
           })
+          if(!next) return
           this.data.catrecommend[id] = temp.concat(msg.data)
           console.log(this.data.catrecommend[id])
           this.setData({
@@ -452,6 +465,14 @@ Page({
         }
       })
     }
+    this.setData({
+      onReachBottom: true
+    })
+    setTimeout(()=>{
+      this.setData({
+        onReachBottom: false
+      })
+    }, 1000)
   },
   /* 广告位值跳转 */ 
   bannerGo(e) {
@@ -471,7 +492,7 @@ Page({
     }else {
       /* 文章 */
       wx.navigateTo({
-        url: "../pDetail/pDetail?id=" + 826
+        url: "../pDetail/pDetail?id=" + item.article_id
       })
     }
   },

@@ -4,6 +4,7 @@
   "navigationBarTextStyle": "black",
   "navigationStyle": "custom",
   "enablePullDownRefresh": true,
+    "onReachBottomDistance": 0,
   "usingComponents": {
     "navigationBar": "/components/navigationBar/navigationBar",
     "formCode": "/components/formCode/formCode",

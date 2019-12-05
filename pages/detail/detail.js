@@ -129,6 +129,23 @@ Page({
         contenLength: this.data.$state.lessDiscussion[options.id].replycontent != '' ? this.data.$state.lessDiscussion[options.id].replycontent.length : 0
       })
     }
+    wx.onKeyboardHeightChange(res => {
+      if (this.data.keyheight == 0) {
+        this.setData({
+          keyheight: res.height,
+          keyHeight: true
+        })
+      } else {
+        res.height > 0 ? this.setData({
+          keyHeight: true
+        }) : this.setData({
+          keyHeight: false,
+          keyheight: 0,
+          write: true,
+          writeTow: false
+        })
+      }
+    })
   },
   onShow() {
     app.getGuide()
@@ -365,13 +382,13 @@ Page({
   },
   // 选择剧集
   select(e,type) {
-    let i = 0
+    let i = 0, list = this.data.sublessons
     if (type != undefined) {
       i = e
     } else {
       i = e.currentTarget.dataset.index
+      if (this.data.cur.id == list[i].id) return   
     }
-    let list = this.data.sublessons
     this.setData({
       cur: list[i]
     })
@@ -632,9 +649,15 @@ Page({
     })
   },
   // 发布评论
-  release() {
+  release(e) {
     if (!!this.data.content.trim() || !!this.data.replycontent.trim()) {
-      if (this.replyParent) {
+      if(e.currentTarget.dataset.type) {
+        let param = {
+          lesson_id: this.data.detail.id,
+          content: this.data.content
+        }
+        this.addComment(param)
+      } else if (this.replyParent) {
         /* 回复别人的回复 */
         let params = {
           lesson_id: +this.data.detail.id,
@@ -1015,22 +1038,6 @@ Page({
     }
   },
   keyheight(e) {
-    console.log(e.detail.height)
-    if (this.data.keyheight == 0) {
-      this.setData({
-        keyheight: e.detail.height,
-        keyHeight: true
-      })
-    } else {
-      e.detail.height > 0 ? this.setData({
-        keyHeight: true
-      }) : this.setData({
-        keyHeight: false,
-        keyheight: 0,
-        write: true,
-        writeTow: false
-      })
-    }
   },
   bindblur() {
     this.setData({

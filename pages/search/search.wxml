@@ -8,7 +8,7 @@
         <button wx:if="{{text != ''}}" form-type="reset" catchtap="cleartxt"></button> 
       </form>
       <form wx:else>
-        <input  placeholder-style="color:#999;" confirm-type="search" type="text" class="search-txt" focus="focus"  value="{{text}}" bindinput="txtchange" bindconfirm="earchlesss"></input>
+        <input  placeholder-style="color:#999;" confirm-type="search" type="text" class="search-txt"  value="{{text}}" bindinput="txtchange" bindconfirm="earchlesss"></input>
         <button wx:if="{{text != ''}}" form-type="reset" catchtap="cleartxt"></button> 
       </form>
     </view>

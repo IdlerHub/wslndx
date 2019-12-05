@@ -90,7 +90,7 @@
         <view class="voicetextstatus" wx:if="{{voicetextstatus != ''}}">{{voicetextstatus}}</view>
       </view>
       <view class="voiceanew" catchtap="relacevoice">重录</view>
-      <view class="voicerelease" catchtap="release">发布</view>
+      <view class="voicerelease" catchtap="release" style="{{content != '' ? '' : 'background:rgba(230,230,230,1);color:rgba(179,179,179,1);'}}">发布</view>
     </view>
   </view>
 </view>

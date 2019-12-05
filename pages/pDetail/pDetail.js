@@ -952,7 +952,9 @@ Page({
   closevoiceBox() {
     this.setData({
       showvoice: false,
-      write: false
+      write: false,
+      showvoiceauto:false,
+      voicetime: 0
     })
   },
   // 计时器

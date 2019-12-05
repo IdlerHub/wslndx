@@ -7,7 +7,7 @@ const manager = plugin.getRecordRecognitionManager()
 const innerAudioContext = wx.createInnerAudioContext();
 Page({
   data: {
-    voiceImg: 'https://hwcdn.jinlingkeji.cn/images/pro/voicebtn.png',
+    voiceImg: 'https://hwcdn.jinlingkeji.cn/images/pro/voicebtn2.png',
     voiceActon: false,
     voiceheight: '',
     focus: true,
@@ -199,7 +199,7 @@ Page({
   touchend() {
     manager.stop()
     this.setData({
-      voiceImg: 'https://hwcdn.jinlingkeji.cn/images/pro/voicebtn.png',
+      voiceImg: 'https://hwcdn.jinlingkeji.cn/images/pro/voicebtn2.png',
       voiceActon: false
     })
   },

@@ -702,7 +702,8 @@ Page({
     this.setData({
       showvoice: false,
       write: false,
-      showvoiceauto: false
+      showvoiceauto: false,
+      voicetime: 0
     })
   },
   // 计时器
