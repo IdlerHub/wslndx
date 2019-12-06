@@ -30,7 +30,7 @@
         </text>
       </view>
     </view>
-    <view class="qst" wx:if="{{showqst}}">
+    <view class="qst" wx:if="{{showqst && !lessList[0]}}">
       <image class="ast-img" src="/images/no-com.png"></image>
     </view>
   </view>

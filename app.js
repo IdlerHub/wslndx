@@ -101,7 +101,7 @@ App({
     } else if (!this.store.$state.userInfo.mobile) {
       wx.reLaunch({ url: "/pages/sign/sign" });
     } else if (opts.query.type !== "share") {
-      wx.reLaunch({ url: "/pages/index/index" });
+      wx.switchTab({ url: "/pages/index/index" });
     }
   },
   onShow: function(opts) {

@@ -5,7 +5,7 @@
  */
 import Store from "wxministore"
 // "/* @echo NODE_ENV */"
-let env = "develop"
+let env = "/* @echo NODE_ENV */"
 let imgHost
 let activityUrl
 let API_URL
@@ -19,12 +19,18 @@ if (env == "develop") {
   mpVersion = "v17" /* 版本管理 */
   API_URL = "https://develop.jinlingkeji.cn/api/v17/" /* 数据服务器 */
   socket_host = "develop.jinlingkeji.cn:8182"
-} else {
+} else if (env == "/* @echo NODE_ENV */"){
   /* 发布环境 */
   imgHost = "https://hwcdn.jinlingkeji.cn/images/pro"
   activityUrl = "https://gqjy.jinlingkeji.cn/?"
   mpVersion = "v17"
   API_URL = "https://apielb.jinlingkeji.cn/api/v17/"
+  socket_host = "api.jinlingkeji.cn:8182"
+} else {
+  imgHost = "https://hwcdn.jinlingkeji.cn/images/pro"
+  activityUrl = "https://gqjy.jinlingkeji.cn/?"
+  mpVersion = "v17"
+  API_URL = "https://lndxmid.jinlingkeji.cn/api/v17/"
   socket_host = "api.jinlingkeji.cn:8182"
 }
 

@@ -43,7 +43,7 @@
             <image mode="widthFix" wx:for="{{ item.images }}" wx:for-item="items" wx:key="index" src="{{ fn.search(item.images[0]) > 0 ?  item.images : item.image_compress + '/resize,p_50' }}" data-urls="{{ item.images }}" data-current="{{ items }}" data-index="{{ index }}" catchtap="previewImage" lazy-load></image>
           </view>
           <view class="img three" wx:if="{{ item.images.length > 1 }}">
-            <image mode="aspectFill" wx:for="{{ item.images }}" wx:for-item="items" wx:key="index" src="{{ fn.search(item.images[index]) > 0 ? item.images[index] : item.image_compress[index] + '/resize,p_25' }}" data-urls="{{ item.images }}" data-current="{{ items }}" data-index="{{ index }}" catchtap="previewImage" lazy-load></image>
+            <image mode="aspectFill" wx:for="{{ item.images }}" wx:for-item="items" wx:key="index" src="{{ fn.search(item.images[index]) > 0 ? item.images[index] : item.image_compress[index] + '/resize,m_fixed,w_216,h_216' }}" data-urls="{{ item.images }}" data-current="{{ items }}" data-index="{{ index }}" catchtap="previewImage" lazy-load></image>
           </view>
         </view>
         <!-- wx:if="{{ item.url }}" -->

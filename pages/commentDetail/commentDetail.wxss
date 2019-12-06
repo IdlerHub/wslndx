@@ -314,7 +314,7 @@ page {
 .voiceBox .voiceContent .voiceaction .voiceanew {
   width:160rpx;
   height:68rpx;
-  background:rgba(242,242,242,1);
+  background:rgba(255,235,235,1);
   border-radius:34rpx;
   position: absolute;
   left: 100rpx;
@@ -322,7 +322,7 @@ page {
   font-size:36rpx;
   font-family:PingFangSC-Regular,PingFang SC;
   font-weight:400;
-  color:rgba(102,102,102,1);
+  color:rgba(223,32,32,1);
   text-align: center;
   line-height: 68rpx;
 }

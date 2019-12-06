@@ -183,7 +183,7 @@
           <view catchtap="detailTap" wx:for="{{ catrecommend[item.id] }}" wx:key="index" class="item" data-item="{{ item }}">
           <view class="content">
             <view class="left">
-              <image class="poster" mode="aspectFill" src="{{ item.image }}" lazy-load="true"></image>
+              <image class="poster" mode="aspectFill" src="{{ item.image }}?x-image-process=image/resize,m_fixed,w_260,h_160/quality,Q_80" lazy-load="true"></image>
               <image class="icon" mode="aspectFill" src="{{ $state.imgHost }}/play.png"></image>
             </view>
             <view class="right">
@@ -209,7 +209,7 @@
     <image src="{{$state.imgHost}}/nowcancle.png" catchtap="closenow"></image>
   </view>
   <!-- 签到拿积分 -->
-  <view class="integration" wx:if="{{ !$state.signStatus.count && recommend }}" catchtouchmove="return">
+  <view class="integration" wx:if="{{ !$state.signStatus.count && recommend[0] }}" catchtouchmove="return">
     <view class="dialog">
       <image class="bg" src="/images/integrationBg.png" mode="aspectFill" wx:if="{{ showSign}}"></image>
       <view class="ani" catchtap="signIn" data-id="1" wx:if="{{ showSign }}"></view>
