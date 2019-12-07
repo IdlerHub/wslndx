@@ -66,7 +66,11 @@ page {
     font-size: 40rpx;
     color: #343434;
     word-wrap: break-word;
-    white-space: pre-line; }
+    white-space: pre-line; 
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 5;
+    overflow: hidden;}
   .circle .content {
     overflow: hidden; }
     .circle .content video {

@@ -124,7 +124,11 @@ page .Pagetop {
       font-size: 40rpx;
       color: #3a3a3a;
       word-wrap: break-word;
-      white-space: pre-line; }
+      white-space: pre-line; 
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 5;
+      overflow: hidden;}
     .wrap > .item .content .img {
       display: flex;
       flex-wrap: wrap;
