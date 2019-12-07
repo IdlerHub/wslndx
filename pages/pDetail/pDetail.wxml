@@ -4,6 +4,13 @@
  * @LastEditTime: 2019-08-12 20:30:54
  -->
 <!-- 下拉刷新 -->
+<wxs module="fn">
+  module.exports = {
+      search: function(str){
+        return str.search('gif');
+      }
+  }
+</wxs>
 <view wx:if="{{ isRefreshing }}" class="weui-loadmore">
   <view class="weui-loading"></view>
 </view>
@@ -27,10 +34,10 @@
       <rich-text wx:if="{{ detail.content }}" class="name" nodes="{{ detail.content }}"></rich-text>
       <view class="content" wx:if="{{ detail.images.length > 0 }}">
         <view class="img one" wx:if="{{ detail.images.length == 1 }}">
-          <image mode="widthFix" wx:for="{{ detail.images }}" wx:for-item="items" wx:key="index" src="{{ detail.image_compress + '/resize,p_50' }}" data-urls="{{ detail.images }}" data-current="{{ items }}" catchtap="previewImage"></image>
+          <image mode="widthFix" wx:for="{{ detail.images }}" wx:for-item="items" wx:key="index" src="{{ fn.search(detail.images[0]) > 0 ?  detail.images : detail.image_compress + '/resize,p_50' }}" data-urls="{{ detail.images }}" data-current="{{ items }}" catchtap="previewImage"></image>
         </view>
         <view class="img three" wx:if="{{ detail.images.length > 1 }}">
-          <image mode="aspectFill" wx:for="{{ detail.images }}" wx:for-item="items" wx:key="index" src="{{ detail.image_compress[index] + '/resize,p_25' }}" data-urls="{{ detail.images }}" data-current="{{ items }}" catchtap="previewImage"></image>
+          <image mode="aspectFill" wx:for="{{ detail.images }}" wx:for-item="items" wx:key="index" src="{{ fn.search(detail.images[index]) > 0 ? detail.images[index] : detail.image_compress[index] + '/resize,m_fixed,w_216,h_216' }}" data-urls="{{ detail.images }}" data-current="{{ items }}" catchtap="previewImage"></image>
         </view>
       </view>
       <view class="content" wx:if="{{ detail.url }}">

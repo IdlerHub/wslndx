@@ -125,7 +125,6 @@ App({
         wx.reLaunch({ url: "/pages/sign/sign" });
       } else if (opts.path == "pages/loading/loading") {
         wx.reLaunch({ url: "/pages/index/index" });
-        console.log("/pages/index/index");
       }
     }
     if (this.store.$state.userInfo.id) {

@@ -2,7 +2,9 @@
 //获取应用实例
 const app = getApp()
 Page({
-  data: {},
+  data: {
+    none: false
+  },
   onLoad(options) {
     this.setData({
       course: options["name"]
@@ -24,7 +26,7 @@ Page({
     this.context.setTextBaseline("top")
     this.context.fillText(userInfo.nickname, 107 * r + (200 * r - this.context.measureText(userInfo.nickname).width) / 2, 340 * r, 200 * r)
     this.context.setFontSize(36 * r)
-    this.context.fillText(course, 180 * r + (310 * r - this.context.measureText(course).width) / 2, 425 * r, 310 * r)
+    this.context.fillText(course, 180 * r  + (310 * r - this.context.measureText(course).width) / 2, 425 * r, 310 * r)
     this.context.setTextAlign("right")
     this.context.setFontSize(28 * r)
     this.context.fillText(app.util.dateUnit(), 595 * r, 780 * r)
@@ -40,7 +42,8 @@ Page({
         canvasId: "myCanvas",
         success(res) {
           that.setData({
-            img: res.tempFilePath
+            img: res.tempFilePath,
+            none: true
           })
         },
         fail: res => {

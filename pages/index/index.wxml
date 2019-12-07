@@ -162,7 +162,7 @@
         <view catchtap="detailTap" wx:for="{{ recommend }}" wx:key="index" class="item" data-item="{{ item }}">
           <view class="content {{ item.show_big ? 'big' : '' }}">
             <view class="left">
-              <image class="poster" mode="aspectFill" src="{{ (item.show_big && item.big_image) || item.image }}" lazy-load="true"></image>
+              <image class="poster" mode="aspectFill" src="{{ item.show_big ? item.big_image + '?x-image-process=image/resize,m_fixed,w_690,h_360/quality,Q_80' : item.image + '?x-image-process=image/resize,m_fixed,w_260,h_160/quality,Q_80'  }}" lazy-load="true"></image>
               <image class="icon" mode="aspectFill" src="{{ $state.imgHost }}/play.png"></image>
             </view>
             <view class="right">
@@ -178,7 +178,7 @@
         </view>
       </view>
     </swiper-item>
-    <swiper-item class="tab-item" wx:for="{{nav}}" wx:key="index" wx:if="{{!index == 0}}">
+    <swiper-item class="tab-item" wx:for="{{nav}}" wx:key="index" wx:if="{{!index == 0}}" item-id="{{item.name}}">
       <view class="wrap recommend" id="recommend{{item.id}}" >
           <view catchtap="detailTap" wx:for="{{ catrecommend[item.id] }}" wx:key="index" class="item" data-item="{{ item }}">
           <view class="content">
