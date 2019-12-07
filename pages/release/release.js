@@ -322,9 +322,7 @@ Page({
                 wx.switchTab({ url: "/pages/post/post" })
               },2000)
             } else {
-              setTimeout(() => {
                 wx.switchTab({ url: "/pages/post/post" })
-              }, 2000)
             }
             // let pages = getCurrentPages()
             // let prePage = pages[pages.length - 2]
