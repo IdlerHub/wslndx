@@ -247,6 +247,9 @@ Page({
     // return app.user.activite()
   },
   getBanner() {
+    this.setData({
+      currentTab:0
+    })
     return app.classroom.banner({}).then(res => {
       this.setData({
         imgUrls: res.data
@@ -537,6 +540,7 @@ Page({
   jumpPeper(e) {
     if (e.currentTarget.dataset.type == 'dialog') {
       this.closeSignIn()
+      app.aldstat.sendEvent("活动弹框点击", { '活动弹框点击': '活动弹框点击' })
     }
     wx.navigateTo({
       url: `../education/education?url=${e.currentTarget.dataset.peper}&type=0}`

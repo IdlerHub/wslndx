@@ -3,13 +3,6 @@
  * @LastEditors: hxz
  * @LastEditTime: 2019-08-13 12:01:10
  -->
-<wxs module="fn">
-  module.exports = {
-      search: function(str){
-        return str.search('gif');
-      }
-  }
-</wxs>
 <view class="container">
   <!-- 下拉刷新 -->
   <view wx:if="{{ isRefreshing }}" class="weui-loadmore indexdrop">
@@ -118,7 +111,7 @@
       <!--推荐  -->
       <view class="wrap recommend" id="recommend1">
         <!-- 广告位banner -->
-        <swiper indicator-dots="{{imgUrls.length > 1 ? true : false}}" autoplay interval="3500" duration="1000" circular class="swiper" wx:if="{{imgUrls[0].image}}">
+        <swiper indicator-dots="{{imgUrls.length > 1 ? true : false}}" autoplay interval="3500" duration="1000" circular class="swiper" wx:if="{{imgUrls[0].image}}" current="{{currentTab}}">
           <block wx:for="{{imgUrls}}" wx:key="index">
             <swiper-item>
               <image src="{{item.image}}" class="slide-image" width="355" height="150" catchtap="bannerGo" data-item="{{ item }}" />
@@ -179,8 +172,17 @@
       </view>
     </swiper-item>
     <swiper-item class="tab-item" wx:for="{{nav}}" wx:key="index" wx:if="{{!index == 0}}" item-id="{{item.name}}">
-      <view class="wrap recommend" id="recommend{{item.id}}" >
-          <view catchtap="detailTap" wx:for="{{ catrecommend[item.id] }}" wx:key="index" class="item" data-item="{{ item }}">
+      <view class="skeleton" wx:for="{{5}}" wx:for-item="iten" wx:if="{{ !catrecommend[item.id][0] }}" wx:key="index">
+        <view class="skeletonBox">
+          <view class="skeletonImg"></view>
+          <view class="skeletonTitle"></view>
+          <view class="skeletonContent"></view>
+          <view class="skeletonDaram"></view>
+          <view class="skeletonDaram"></view>
+        </view>
+      </view>
+      <view class="wrap recommend" id="recommend{{item.id}}">
+        <view catchtap="detailTap" wx:for="{{ catrecommend[item.id] }}" wx:key="index" class="item" data-item="{{ item }}">
           <view class="content">
             <view class="left">
               <image class="poster" mode="aspectFill" src="{{ item.image }}?x-image-process=image/resize,m_fixed,w_260,h_160/quality,Q_80" lazy-load="true"></image>

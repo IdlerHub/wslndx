@@ -61,7 +61,9 @@ page {
     font-size: 28rpx;
     text-align: center; }
   .circle .name {
-    text-align: justify;
+    /* text-align: justify; */
+    text-justify: newspaper;
+    word-break: break-all;
     line-height: 56rpx;
     font-size: 40rpx;
     color: #343434;

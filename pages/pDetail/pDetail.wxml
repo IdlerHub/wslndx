@@ -156,7 +156,7 @@
       <text class="replayplaceholder" wx:if="{{replyplaceholder != ''}}">{{replyplaceholder}}</text>
       <textarea placeholder="{{placeholder}}"   focus="{{ focus }}" fixed  bindinput="input" value='{{ replyshow ? replycontent : content}}' placeholder-class="ph-class" show-confirm-bar="{{ false }}" adjust-position="{{ false }}" bindfocus="textHeight"  hold-keyboard maxlength="200"></textarea>
       <!-- prettier-ignore -->
-      <view class="right" catchtap="navigator">
+      <view class="right">
         <view class="number">
          {{ replyshow ? replycontenLength : contenLength}}/200
         </view>

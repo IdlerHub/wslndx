@@ -14,7 +14,10 @@ let header = {
 };
 
 //验证code
-function handle(res) {
+function handle(req, res) {
+  if (res.statusCode != 200){
+    getApp().fundebug.notifyHttpError(req,res)
+  }
   switch (res.statusCode) {
     case 401:
       wx.clearStorage();
@@ -67,16 +70,18 @@ function post(path, param = {}, noToken, type) {
   } else {
     header["content-type"] = content_type[0];
   }
+
+  let req = {
+    method: "POST",
+    header: header,
+    data: param || {},
+    url: url
+  }
   return wxp
-    .request({
-      method: "POST",
-      header: header,
-      data: param || {},
-      url: url
-    })
+    .request(req)
     .then(
       function(res) {
-        handle(res);
+        handle(req, res);
         wx.hideNavigationBarLoading();
         return res.data;
       },
@@ -87,7 +92,6 @@ function post(path, param = {}, noToken, type) {
     )
     .catch(err => {
       wx.hideNavigationBarLoading();
-      throw new Error(error);
     })
 }
 

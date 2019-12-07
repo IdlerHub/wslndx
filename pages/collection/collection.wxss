@@ -150,7 +150,9 @@ page .right {
         font-size: 54rpx;
       }
     .wrap > .item .name {
-      text-align: justify;
+      /* text-align: justify; */
+      text-justify: newspaper;
+      word-break: break-all;
       line-height: 60rpx;
       font-size: 40rpx;
       color: #3a3a3a;

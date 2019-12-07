@@ -11,27 +11,29 @@ import store from "./store";
 /* sse */
 const socket = require("data/socket.js");
 /* 接入bug平台 */
-if (store.process == "production") {
-  var fundebug = require("fundebug-wxjs");
-  fundebug.init({
-    apikey: "b3b256c65b30a1b0eb26f8d9c2cd7855803498f0c667df934be2c72048af93d9",
-    releaseStage: "production",
-    monitorMethodCall: true /* 自定义函数的监控 */,
-    monitorMethodArguments: true /* 监控小程序中的函数调用的参数 */,
-    monitorHttpData: true /* 收集 HTTP 请求错误的 body  */,
-    filters: [
-      {
-        req: {
-          url: /log\.aldwx\.com/,
-          method: /^GET$/
-        }
-      },
-      {
-        error: /getHistory/
+var fundebug = require("fundebug-wxjs");
+fundebug.init({
+  apikey: "b3b256c65b30a1b0eb26f8d9c2cd7855803498f0c667df934be2c72048af93d9",
+  releaseStage: store.process,
+  monitorMethodCall: true /* 自定义函数的监控 */,
+  monitorMethodArguments: true /* 监控小程序中的函数调用的参数 */,
+  monitorHttpData: true /* 收集 HTTP 请求错误的 body  */,
+  setSystemInfo: true,
+  filters: [
+    {
+      req: {
+        url: /log\.aldwx\.com/,
+        method: /^GET$/
       }
-    ]
-  });
-}
+    },
+    {
+      error: /getHistory/
+    }
+  ],
+  metaData:{
+    storeData: store.$state
+  }
+});
 
 //app.js
 App({
@@ -47,6 +49,7 @@ App({
   lottery: require("data/Lottery.js"),
   socket,
   store,
+  fundebug,
   onLaunch: async function(opts) {
     let optsStr = decodeURIComponent(opts.query.scene).split("&");
     let opstObj = {};
@@ -101,7 +104,7 @@ App({
     } else if (!this.store.$state.userInfo.mobile) {
       wx.reLaunch({ url: "/pages/sign/sign" });
     } else if (opts.query.type !== "share") {
-      wx.switchTab({ url: "/pages/index/index" });
+      // wx.switchTab({ url: "/pages/index/index" });
     }
   },
   onShow: function(opts) {
