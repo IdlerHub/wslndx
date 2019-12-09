@@ -14,7 +14,7 @@ let header = {
 };
 
 //验证code
-function handle(req, res) {
+function handle(req,res) {
   if (res.statusCode != 200){
     getApp().fundebug.notifyHttpError(req,res)
   }
@@ -113,16 +113,17 @@ function del(path, param, noToken, type) {
   } else {
     header["content-type"] = content_type[0];
   }
+  let req = {
+    method: "DELETE",
+    header: header,
+    url: url,
+    data: param || {}
+  }
   return wxp
-    .request({
-      method: "DELETE",
-      header: header,
-      url: url,
-      data: param || {}
-    })
+    .request(req)
     .then(
       function(res) {
-        handle(res);
+        handle(req, res);
         wx.hideNavigationBarLoading();
         return res.data;
       },
@@ -143,18 +144,18 @@ function upload(path, file, noLoading) {
       mask: true
     });
   }
-
+  let req = {
+    url: url,
+    filePath: file,
+    header: header,
+    name: "file",
+    formData: {}
+  }
   return wxp
-    .uploadFile({
-      url: url,
-      filePath: file,
-      header: header,
-      name: "file",
-      formData: {}
-    })
+    .uploadFile(req)
     .then(
       function(res) {
-        handle(res);
+        handle(req, res);
         if (!noLoading) wx.hideLoading();
         wx.hideNavigationBarLoading();
         return res.data;

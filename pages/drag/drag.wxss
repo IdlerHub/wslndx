@@ -39,6 +39,7 @@
   min-height: 58rpx;
   padding: 0;
   text-align: center;
+  padding-right: 10rpx; 
 }
 
 .container {
