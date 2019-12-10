@@ -434,12 +434,10 @@ Page({
     })
   },
   onReachBottom() {
-    console.log(112211)
     if(this.data.currentTab != 0) {
       let id = this.data.nav[this.data.currentTab].id
       let temp = this.data.catrecommend[id]
       this.categoryParams[id].page++
-      console.log(this.categoryParams, 8953498758345843578)
       return app.classroom.lessons(this.categoryParams[id]).then(msg => {
         if (msg.code === 1) {
           let next = true
@@ -451,7 +449,6 @@ Page({
           })
           if(!next) return
           this.data.catrecommend[id] = temp.concat(msg.data)
-          console.log(this.data.catrecommend[id])
           this.setData({
             catrecommend: this.data.catrecommend
           })

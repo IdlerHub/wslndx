@@ -7,6 +7,7 @@
 }
 .topOne {
   background: white;
+  animation: skeleton 1.5s infinite;
 }
 
 .topOne .box .left .img {
@@ -276,6 +277,7 @@
   background: white;
   overflow: hidden;
   box-sizing: border-box;
+  animation: skeleton 1.5s infinite;
 }
 
 .skeleton .skeletonImg {
@@ -311,6 +313,18 @@
   border-radius: 3rpx;
   float: right;
   margin: 15rpx 0 15rpx 0;
+}
+
+@keyframes skeleton {
+    0% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.5;
+    }
+    100%{
+        opacity: 1;
+    }
 }
 
 .item .right .title {

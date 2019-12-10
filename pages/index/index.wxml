@@ -9,7 +9,7 @@
     <view class="weui-loading"></view>
     <!-- <view class='weui-loadmore-tips'>加载中...</view> -->
   </view>
-  <view class="top topOne" wx:if="{{ !recommend[0] }}">
+  <view class="top topOne topskeleton" wx:if="{{ !recommend[0] }}">
     <image class="bg" mode="widthFix"></image>
     <view class="box">
       <view class="left">

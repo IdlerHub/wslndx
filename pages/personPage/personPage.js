@@ -6,7 +6,6 @@ Page({
     showintegral: false
   },
   onLoad(options) {
-    console.log(options)
     options.university_name == "null" ? options.university_name = null :''
     options.addressCity == "null" ? options.addressCity = null : ''
     this.setData({
@@ -22,6 +21,7 @@ Page({
     this.param = { page: 1, pageSize: 10, }
     this.getList([])
     app.aldstat.sendEvent("菜单", { name: "个人风采" })
+    this.pages = getCurrentPages()[0]
   },
   onReady: function () {
 
@@ -143,6 +143,7 @@ Page({
           this.setData({
             list: list
           })
+          this.pages.pagePraise(e.currentTarget.dataset.id)
         } else if (msg.code == -2) {
           wx.showToast({
             title: "帖子已删除",
@@ -178,6 +179,7 @@ Page({
           this.setData({
             list: list
           })
+          this.pages.pagePraise(e.currentTarget.dataset.id)
         } else if (msg.code == -2) {
           wx.showToast({
             title: "帖子已删除",

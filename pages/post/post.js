@@ -161,7 +161,26 @@ Page({
       }
     })
   },
-  praise(e) {
+  pagePraise(id) {
+    let list = this.data.list , i = 0
+    list.forEach((item, index) => {
+      item.id == id ? i = index : ''
+    })
+    if (list[i].likestatus == 1) {
+      list[i].likestatus = 0
+      list[i].likes--
+      this.setData({
+        list: list
+      })
+    } else {
+      list[i].likestatus = 1
+      list[i].likes++
+      this.setData({
+        list: list
+      })
+    }
+  },
+  praise(e,index) {
     let i = e.currentTarget.dataset.index
     let list = this.data.list
     let param = {

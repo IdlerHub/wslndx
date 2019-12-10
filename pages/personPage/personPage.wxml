@@ -78,7 +78,7 @@
         </view>
         <text class="division"></text>
         <!-- 点赞 -->
-        <formCode bind:handler="praise" class="item" data-index="{{ index }}">
+        <formCode bind:handler="praise" class="item" data-index="{{ index }}" data-id="{{item.id}}">
           <view class="container-sub">
             <view class="praise  {{ item.likestatus ? 'end' : '' }} {{ item.praising ? 'ani' : '' }}" data-index="{{ index }}" bindanimationend="aniend"></view>
             <text class="text">{{ item.lw || item.likes }} </text>
