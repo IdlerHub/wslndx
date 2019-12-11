@@ -307,7 +307,7 @@ Page({
             } else if (msg.data.is_first == 'day') {
               this.setData({
                 integral: '+20 积分',
-                integralContent: '完成每日秀风采首次发帖',
+                integralContent: '完成每日[秀风采]首次发帖',
                 showintegral: true
               })
               integral = 'day'

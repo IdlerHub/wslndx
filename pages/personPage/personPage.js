@@ -167,7 +167,7 @@ Page({
           if (msg.data.is_first == 'first') {
             this.setData({
               integral: '+50 积分',
-              integralContent: '完成秀风采首次点赞',
+              integralContent: '完成[秀风采]首次点赞',
               showintegral: true
             })
             setTimeout(() => {

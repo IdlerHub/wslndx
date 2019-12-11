@@ -305,7 +305,7 @@ Page({
           if (msg.data.is_first == 'first') {
             this.setData({
               integral: '+50 积分',
-              integralContent: '完成短视频首次点赞',
+              integralContent: '完成[短视频]首次点赞',
               showintegral: true
             })
             setTimeout(() => {
@@ -316,7 +316,7 @@ Page({
           } else if (msg.data.is_first == 'day') {
             this.setData({
               integral: '+20 积分',
-              integralContent: '完成每日短视频首赞',
+              integralContent: '完成每日[短视频]首赞',
               showintegral: true
             })
             setTimeout(() => {

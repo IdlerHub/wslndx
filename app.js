@@ -95,7 +95,7 @@ App({
     let wxtype = systemInfo.version.replace(".", '').replace(".", '')
     let platform = systemInfo.platform
     console.log(platform)
-    if (platform == 'windows' || platform == 'mac' || platform == 'macOS') {
+    if (platform == 'windows' || platform == 'mac' || platform == 'macOS' || platform == 'devtools') {
       this.playVedio('flow')
     }
     // console.log(platform)
