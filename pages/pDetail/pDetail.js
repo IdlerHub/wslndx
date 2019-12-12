@@ -33,7 +33,8 @@ Page({
   },
   onLoad(options) {
     this.id = options.id
-    this.comParam = this.praParam = { blog_id: this.id, page: 1, pageSize: 10 }
+    this.comParam = { blog_id: this.id, page: 1, pageSize: 10 }
+    this.praParam = { blog_id: this.id, page: 1, pageSize: 10 }
     this.setData({
       detail: "",
       comment: [],
@@ -81,11 +82,11 @@ Page({
     let query = wx.createSelectorQuery().in(this)
     query.select(nav[currentTab].class).boundingClientRect()
     query.exec(res => {
-      console.log(res)
       let height = res[0].height
       that.setData({
         height: height
       })
+      console.log(height)
     })
   },
   switchNav(event) {
@@ -443,7 +444,7 @@ Page({
           this.setData({
             comment: comment
           })
-        this.setHeight()
+          this.setHeight()
         if (options) {
           this.data.comment.length > 0 ? this.setData({
             write: false
@@ -466,8 +467,10 @@ Page({
           this.setData({
             praise: praise.concat(msg.data || [])
           })
-        }, 500)     
-        this.setHeight()
+        }, 500)
+        setTimeout(() => {
+          this.setHeight()
+        }, 1000)
       } else if (msg.code == -2) {
         /* 帖子已经删除 */
         this.setData({
