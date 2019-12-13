@@ -28,7 +28,7 @@
     top: 370rpx;
 }
 .integralContent {
-  width: 400rpx;
+  width: 800rpx;
   font-size:36rpx;
   font-family:PingFangSC-Regular,PingFang SC;
   font-weight:400;
@@ -37,7 +37,7 @@
   position: absolute;
   top: 453rpx;
   left: 50%;
-  margin-left: -200rpx;
+  margin-left: -400rpx;
 }
 @keyframes integraani {
   0% {

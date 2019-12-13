@@ -5,7 +5,7 @@
  */
 import Store from "wxministore"
 // "/* @echo NODE_ENV */"
-let env = "develop"
+let env = "production"
 let imgHost
 let activityUrl
 let API_URL
