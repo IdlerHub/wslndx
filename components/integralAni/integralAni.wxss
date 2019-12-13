@@ -8,7 +8,7 @@
   z-index: 500;
 }
 .integralmark  .integraimg {
-  width: 360rpx;
+  width: 180px;
   height: 360rpx;
   background: url("https://hwcdn.jinlingkeji.cn/images/pro/IntegralAnimation.png");
   animation: ani steps(22, end) 2s;
