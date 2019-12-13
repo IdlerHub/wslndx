@@ -1,6 +1,6 @@
 <view class="container">
-  <canvas style="width: 690rpx; height: 912rpx; positon:fixed;top:-1000rpx;display:{{none ? 'none': ''}}" canvas-id="myCanvas"></canvas>
-  <image src="{{ img }}" style="width: 690rpx; height: 912rpx;"></image>
+  <canvas style="width: 690rpx; height: 912rpx;" canvas-id="myCanvas"></canvas>
+  <!-- <image src="{{ img }}" style="width: 690rpx; height: 912rpx;"></image> -->
   <cover-view class="operate">
     <button class="save" bindtap="save" hover-class="btn-hover">
       <cover-view class="download">

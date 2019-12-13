@@ -18,18 +18,19 @@ Page({
     let course = this.data.course
     this.context = wx.createCanvasContext("myCanvas", this)
     let r = wx.getSystemInfoSync().windowWidth / 750
+    console.log(r)
     // 背景图
     this.context.drawImage("../../images/certificate.png", 0, 0, 690 * r, 912 * r)
     // 文字
     this.context.fillStyle='#3A3A3A'
-    this.context.font = `${40 * r }px sans-serif`
+    this.context.font = `20px sans-serif`
     this.context.setTextBaseline("top")
     this.context.fillText(userInfo.nickname, 107 * r + (200 * r - this.context.measureText(userInfo.nickname).width) / 2, 340 * r, 200 * r)
-    this.context.font = `${36 * r}px sans-serif` 
+    this.context.font = `18px sans-serif` 
     this.context.fillText(course, 180 * r  + (310 * r - this.context.measureText(course).width) / 2, 425 * r, 310 * r)
-    this.context.setTextAlign("right")
-    this.context.font = `${28 * r }px sans-serif`
-    this.context.fillText(app.util.dateUnit(), 595 * r, 780 * r)
+    this.context.font = `14px sans-serif`
+    this.context.fillText(app.util.dateUnit(), 390 * r, 780 * r)
+    // this.context.setTextAlign("right")
     let that = this
     this.context.draw(true, () => {
       wx.canvasToTempFilePath({
