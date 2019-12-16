@@ -24,14 +24,6 @@
       <icon class="iconfont icon-arrow-right"></icon>
     </view>
   </navigator>
-  <!-- <view class="score">
-    <image src="{{ $state.imgHost }}/userbg.png" class="scoreBg"></image>
-    <view class="contain">
-      <text class="num">{{ my_score }}</text>
-      <text class="dsc">可用积分</text>
-    </view>
-    <text class="score-btn" bindtap="toScore">兑换礼品</text>
-  </view> -->
   <view class="navgationto">
     <view class="navgationBox" bindtap="toScore">
       <image src="{{ $state.imgHost }}/integralbg.png"></image>
@@ -75,7 +67,7 @@
       <image src="{{ $state.imgHost }}/userkefu.png" class="iconfont"></image>
       <text>联系客服</text>
     </button> 
-    <navigator hover-class="none" class="nav" url="/pages/drawPage/drawPage" open-type="navigate">
+    <navigator hover-class="none" class="nav" url="/pages/drawPage/drawPage" open-type="navigate" bindtap="drawPage">
       <image src="{{ $state.imgHost }}/draw.png" class="iconfont"></image>
       <text>积分抽奖</text>
     </navigator>

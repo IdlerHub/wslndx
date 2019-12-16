@@ -16,7 +16,7 @@
 
 <view class="block">
   <block wx:for="{{ list }}" wx:key="index">
-    <image class="item" src="{{ item.img_url }}" lazy-load mode="aspectFill" data-id="{{ item.id }}" bindtap="nav">
+    <image class="item" src="{{ item.img_url }}" lazy-load mode="aspectFill" data-id="{{ item.id }}" bindtap="nav" data-name="{{item.title}}">
       <view class="praise">
         <icon class="iconfont {{ item.praised ? 'icon-collection' : ' icon-praise' }}"></icon>
         <text class="num">{{ item.praise }} </text>

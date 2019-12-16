@@ -149,6 +149,9 @@ Page({
       this.setData({
         navScrollLeft: 0
       })}
+    app.aldstat.sendEvent("栏目按钮点击", {
+      name: this.data.nav[cur].name
+    })
   },
   getFeatureCode(e) {
     console.log(e)
@@ -281,6 +284,7 @@ Page({
     wx.navigateTo({
       url: "/pages/score/score?type=index"
     })
+    app.aldstat.sendEvent("首页积分兑换按钮点击")
   },
   touchstart() {
     this.shownow = true
@@ -330,9 +334,15 @@ Page({
       url: `../detail/detail?id=${e.currentTarget.dataset.item.id}&name=${e.currentTarget.dataset.item.title}`
     })
     //用于数据统计
-    app.aldstat.sendEvent("推荐栏目课程点击", {
-      name: e.currentTarget.dataset.item.title
-    })
+    if(e.currentTarget.dataset.type) {
+      app.aldstat.sendEvent("栏目课程点击", {
+        name: e.currentTarget.dataset.item.title
+      })
+    } else {
+      app.aldstat.sendEvent("推荐栏目课程点击", {
+        name: e.currentTarget.dataset.item.title
+      })
+    }
   },
   //分类点击
   categoryTap: function(data) {
@@ -495,6 +505,7 @@ Page({
         url: "../pDetail/pDetail?id=" + item.article_id
       })
     }
+    app.aldstat.sendEvent("首页轮播图点击")
   },
   // 跳友方小程序
   minigo(url) {

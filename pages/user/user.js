@@ -46,16 +46,20 @@ Page({
       clearTimeout(timer)
     }, 1000)
   },
-  handleContact(e) {},
+  handleContact(e) {
+    app.aldstat.sendEvent("个人中心联系客服按钮点击")
+  },
   toScore() {
     wx.navigateTo({
       url: "/pages/score/score?type=index"
     })
+    app.aldstat.sendEvent("个人中心积分兑换按钮点击")
   },
   toInvite() {
     wx.navigateTo({
       url: "/pages/invitation/invitation"
     })
+    app.aldstat.sendEvent("个人中心邀请好友按钮点击")
   },
   //用于数据统计
   onUnload() {
@@ -70,5 +74,8 @@ Page({
         app.getGuide()
       }
     })
+  },
+  drawPage() {
+    app.aldstat.sendEvent("个人中心积分抽奖按钮点击")
   }
 })

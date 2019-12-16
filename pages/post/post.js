@@ -230,6 +230,7 @@ Page({
           this.setData({
             list: list
           })
+          app.aldstat.sendEvent("秀风采点赞按钮点击")
         } else if (msg.code == -2) {
           wx.showToast({
             title: "帖子已删除",
@@ -342,11 +343,17 @@ Page({
         content: '由于您近期不合规操作，您的账户已被管理员禁止发帖留言，如有疑问请在个人中心联系客服处理'
       })
     } else {
-      status.currentTarget.dataset.type == 'reply' ? wx.navigateTo({
-        url: `/pages/pDetail/pDetail?id= ${status.currentTarget.dataset.id}&comment`,
-      }) : wx.navigateTo({
-        url: '/pages/release/release',
-      })
+      if(status.currentTarget.dataset.type == 'reply' ) {
+        wx.navigateTo({
+          url: `/pages/pDetail/pDetail?id= ${status.currentTarget.dataset.id}&comment`,
+        })
+        app.aldstat.sendEvent("秀风评论按钮点击")
+      } else {
+        wx.navigateTo({
+          url: '/pages/release/release',
+        })
+        app.aldstat.sendEvent("秀风采发帖按钮点击")
+      }
     }
   },
   //收藏风采

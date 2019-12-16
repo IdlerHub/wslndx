@@ -354,6 +354,8 @@ Page({
         currentTab: id
       })
     }
+    id == 2 ? app.aldstat.sendEvent("积分页积分兑换按钮点击") : ''
+
   },
   gift(e) {
     if (!e.currentTarget.dataset.stock) {
@@ -487,6 +489,7 @@ Page({
     wx: wx.navigateTo({
       url: '/pages/drawPage/drawPage',
     })
+    app.aldstat.sendEvent("积分页积分抽奖按钮点击")
   },
   onGotUserInfo(e) {
     if (e.detail.errMsg === "getUserInfo:ok") {

@@ -394,6 +394,9 @@ Page({
     wx.navigateTo({
       url: "/pages/videoItemize/videoItemize?categoryId=" + id + "&share=" + this.data.vistor 
     })
+    app.aldstat.sendEvent("短视频首页推荐/分类点击",{
+      name: e.currentTarget.dataset.name
+    })
   },
   // 完整视频
   complete() {

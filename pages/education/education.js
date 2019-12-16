@@ -1,4 +1,5 @@
 //Page Object
+const app = getApp()
 Page({
   data: {
     url: ""
@@ -7,8 +8,10 @@ Page({
     console.log(options.type)
     if (options.type === 'farm') {
       this.junmpOut('https://h5xyx.jinlingkeji.cn')
+      app.aldstat.sendEvent("开心农场点击")
     } else if (options.type === 'station') {
       this.junmpOut('https://open.ximalaya.com/site/index/174/ca5492cf55806b41713dada77a1d2ed5')
+      app.aldstat.sendEvent("老年电台点击")
     } else {
       console.log(options)
       if (options.login) {

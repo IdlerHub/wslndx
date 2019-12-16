@@ -182,7 +182,7 @@
         </view>
       </view>
       <view class="wrap recommend" id="recommend{{item.id}}">
-        <view catchtap="detailTap" wx:for="{{ catrecommend[item.id] }}" wx:key="index" class="item" data-item="{{ item }}">
+        <view catchtap="detailTap" wx:for="{{ catrecommend[item.id] }}" wx:key="index" class="item" data-item="{{ item }}" data-type="tabvideo">
           <view class="content">
             <view class="left">
               <image class="poster" mode="aspectFill" src="{{ item.image }}?x-image-process=image/resize,m_fixed,w_260,h_160/quality,Q_80" lazy-load="true"></image>

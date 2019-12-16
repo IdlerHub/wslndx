@@ -65,6 +65,10 @@ Page({
     wx.navigateTo({
       url: "/pages/videoTwo/videoTwo?id=" + id + "&categoryId=" + this.params.categoryId + end + "&title=" + this.data.category.category_name
     })
+    app.aldstat.sendEvent("短视频对应分类下视频点击",{
+      'videoCategory': this.data.category.category_name,
+      'videoName': e.currentTarget.dataset.name
+    })
   },
   tohome: function() {
     wx.reLaunch({ url: "/pages/index/index" })

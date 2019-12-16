@@ -3,7 +3,6 @@
     "pages/index/index",
     "pages/loading/loading",
     "pages/video/video",
-    "pages/comment/comment",
     "pages/release/release",
     "pages/post/post",
     "pages/circle/circle",

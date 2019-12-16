@@ -179,6 +179,7 @@ Page({
             }, 2000)
           }
           this.setData({ detail: detail })
+          app.aldstat.sendEvent("秀风采点赞按钮点击")
         } else if (msg.code == -2) {
           /* 帖子已经删除 */
           this.setData({
@@ -251,6 +252,7 @@ Page({
           replyplaceholder: '',
           replyshow:false
         })
+        app.aldstat.sendEvent("秀风评论按钮点击")
       }
       // wx.pageScrollTo({
       //   scrollTop: 1000
@@ -411,23 +413,6 @@ Page({
           icon: "none",
           duration: 1500
         })
-      }
-    })
-  },
-  navigator() {
-    let vm = this
-    this.setData({
-      write: false
-    })
-    wx.navigateTo({
-      url: "../comment/comment?content=" + (this.data.content != undefined ? this.data.content : ""),
-      events: {
-        commentContent: res => {
-          vm.setData({
-            content: res.data
-          })
-          vm.release()
-        }
       }
     })
   },

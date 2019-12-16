@@ -1,7 +1,0 @@
-<view class="container">
-  <textarea placeholder="写评论" auto-focus bindinput="input" value="{{content}}" placeholder-class="ph-class" />
-  <view class='footer'>
-    <button class='item' disabled="{{!content}}" bindtap='cancel'>取消</button>
-    <button class='item' disabled="{{!content}}" bindtap='release'>发布</button>
-  </view>
-</view>
