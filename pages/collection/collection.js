@@ -295,5 +295,9 @@ Page({
     this.setData({
       currentTab: type
     })
+  },
+  /*长按复制内容 */
+  copythat(e) {
+    app.copythat(e.target.dataset.content)
   }
 })

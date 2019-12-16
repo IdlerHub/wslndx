@@ -31,7 +31,7 @@
         </view>
         <text class="date">{{ detail.createtimes }}</text>
       </view>
-      <rich-text wx:if="{{ detail.content }}" class="name" nodes="{{ detail.content }}"></rich-text>
+      <rich-text wx:if="{{ detail.content }}" class="name" nodes="{{ detail.content }}" catchlongpress="copythat" data-content="{{ detail.content }}"></rich-text>
       <view class="content" wx:if="{{ detail.images.length > 0 }}">
         <view class="img one" wx:if="{{ detail.images.length == 1 }}">
           <image mode="widthFix" wx:for="{{ detail.images }}" wx:for-item="items" wx:key="index" src="{{ fn.search(detail.images[0]) > 0 ?  detail.images : detail.image_compress + '/resize,p_50' }}" data-urls="{{ detail.images }}" data-current="{{ items }}" catchtap="previewImage"></image>
@@ -83,7 +83,7 @@
                   </view>
                 </view>
               </view>
-              <rich-text nodes="{{ item.content }}"></rich-text>
+              <rich-text nodes="{{ item.content }}" catchlongpress="copythat" data-content="{{ item.content }}"></rich-text>
               <button wx:if="{{ $state.userInfo.id != item.uid }}" class="reply-btn" data-reply="{{ item }}" catchtap="show">回复</button>
             </view>
           </view>
@@ -101,7 +101,7 @@
                 </view>
               </view>
             </view>
-            <rich-text nodes="{{ child.rtext + child.reply_content }}"></rich-text>
+            <rich-text nodes="{{ child.rtext + child.reply_content }}" catchlongpress="copythat" data-content="{{ child.reply_content }}"></rich-text>
             <button wx:if="{{ $state.userInfo.id != child.reply_user_id }}" class="reply-btn" data-reply="{{ child }}" data-parent="{{ item.id }}" catchtap="show">回复</button>
           </view>
           <view class="reply_all" wx:if="{{ item.reply_num > 3 }}" data-parentid="{{ item.id }}" catchtap="toCommentDetail"> 查看全部{{ item.reply_num }}条 </view>

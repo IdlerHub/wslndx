@@ -88,7 +88,6 @@ App({
         socket.init(this.store.$state.userInfo.id);
         socket.listen(this.prizemessage, "Prizemessage");
         socket.listen(this.bokemessage, "Bokemessage");
-        this.getTaskStatus();
       }, 2000);
     }
     let systemInfo = wx.getSystemInfoSync()
@@ -373,6 +372,23 @@ App({
         });
       }
     });
+  },
+  /*长按复制内容 */
+  copythat(e) {
+    wx.setClipboardData({
+      data: e,
+      success (res) {
+        wx.getClipboardData({
+          success (res) {
+            wx.showToast({
+              title: '内容复制成功',
+              icon: 'none',
+              duration: 2500
+            })
+          }
+        })
+      }
+    })
   },
   globalData: {
     /*wx.login 返回值 code */

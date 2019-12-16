@@ -19,7 +19,7 @@
         </view>
       </view>
     </view>
-    <rich-text nodes="{{ detail.content }}"></rich-text>
+    <rich-text nodes="{{ detail.content }}" catchlongpress="copythat" data-content="{{ detail.content }}"></rich-text>
     <button wx:if="{{ detail.uid && $state.userInfo.id != detail.uid }}" class="reply-btn" data-detail="{{ detail }}" catchtap="show">回复</button>
   </view>
 </view>
@@ -37,7 +37,7 @@
       </view>
     </view>
   </view>
-  <rich-text nodes="{{ child.rtext + child.reply_content }}"></rich-text>
+  <rich-text nodes="{{ child.rtext + child.reply_content }}" catchlongpress="copythat" data-content="{{ child.reply_content }}"></rich-text>
   <button wx:if="{{ $state.userInfo.id != child.reply_user_id }}" class="reply-btn" data-reply="{{ child }}" data-detail="{{ child }}"catchtap="show">回复</button>
 </view>
  </view>

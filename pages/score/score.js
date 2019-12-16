@@ -89,6 +89,17 @@ Page({
           }
         },
         {
+          title: "每日课程首次讨论",
+          score: 10,
+          status: false,
+          page: "/pages/index/index",
+          authorization: true,
+          showStatus: {
+            name: 'day_boke_comment_status',
+            status: false
+          }
+        },
+        {
           title: "每日签到",
           score: 20,
           status: false,
