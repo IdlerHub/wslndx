@@ -149,9 +149,6 @@ Page({
       this.setData({
         navScrollLeft: 0
       })}
-    app.aldstat.sendEvent("栏目按钮点击", {
-      name: this.data.nav[cur].name
-    })
   },
   getFeatureCode(e) {
     console.log(e)
@@ -169,6 +166,9 @@ Page({
     if(cur != 0) {
       let id = this.data.nav[cur].id
       this.geteCatrcommend(id, cur)
+      app.aldstat.sendEvent("栏目按钮点击", {
+        name: this.data.nav[cur].name
+      })
     }
     setTimeout(() => {
       this.setHeight()
@@ -284,7 +284,9 @@ Page({
     wx.navigateTo({
       url: "/pages/score/score?type=index"
     })
-    app.aldstat.sendEvent("首页积分兑换按钮点击")
+    app.aldstat.sendEvent("首页按钮点击",{
+      name:'积分兑换'
+    })
   },
   touchstart() {
     this.shownow = true
@@ -335,7 +337,7 @@ Page({
     })
     //用于数据统计
     if(e.currentTarget.dataset.type) {
-      app.aldstat.sendEvent("栏目课程点击", {
+      app.aldstat.sendEvent(`栏目(${this.data.nav[this.data.currentTab].name})课程点击`, {
         name: e.currentTarget.dataset.item.title
       })
     } else {
@@ -492,20 +494,31 @@ Page({
       wx.navigateTo({
         url: `../education/education?type=0&url=${item.clickurl}&login=${item.is_login}`
       })
+      app.aldstat.sendEvent("首页轮播-公众号点击",{
+        title:item.title
+      })
     } else if (item.jump_type == 2) {
       /* 视频 */
       wx.navigateTo({
         url: `../detail/detail?id=${item.video_id}&name=${item.title}`
       })
+      app.aldstat.sendEvent("首页轮播-视频点击",{
+        title:item.title
+      })
     } else if (item.jump_type == 4) {
       this.minigo(item.clickurl)
+      app.aldstat.sendEvent("首页轮播-跳小程序点击",{
+        title:item.title
+      })
     }else {
       /* 文章 */
       wx.navigateTo({
         url: "../pDetail/pDetail?id=" + item.article_id
       })
+      app.aldstat.sendEvent("首页轮播-博客点击",{
+        title:item.title
+      })
     }
-    app.aldstat.sendEvent("首页轮播图点击")
   },
   // 跳友方小程序
   minigo(url) {
@@ -548,7 +561,7 @@ Page({
   jumpPeper(e) {
     if (e.currentTarget.dataset.type == 'dialog') {
       this.closeSignIn()
-      app.aldstat.sendEvent("活动弹框点击", { '活动弹框点击': '活动弹框点击' })
+      app.aldstat.sendEvent("活动弹框点击")
     }
     wx.navigateTo({
       url: `../education/education?url=${e.currentTarget.dataset.peper}&type=0}`

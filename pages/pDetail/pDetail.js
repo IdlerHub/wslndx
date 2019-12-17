@@ -179,7 +179,9 @@ Page({
             }, 2000)
           }
           this.setData({ detail: detail })
-          app.aldstat.sendEvent("秀风采点赞按钮点击")
+          app.aldstat.sendEvent("秀风按钮点击",{
+            name:'点赞按钮'
+          })
         } else if (msg.code == -2) {
           /* 帖子已经删除 */
           this.setData({
@@ -252,7 +254,9 @@ Page({
           replyplaceholder: '',
           replyshow:false
         })
-        app.aldstat.sendEvent("秀风评论按钮点击")
+        app.aldstat.sendEvent("秀风按钮点击",{
+          name:'评论按钮'
+        })
       }
       // wx.pageScrollTo({
       //   scrollTop: 1000

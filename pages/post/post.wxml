@@ -23,6 +23,11 @@
       <icon class="iconfont icon-arrow-right"></icon>
     </view>
   </view>
+  <view class="stick">
+    <image src="/images/Stick.png"></image>
+    <view class="stickText">网上老年大学全新英语直播课释放空间规划的历史将会给</view>
+    <image src="/images/stickright.png"></image>
+  </view>
   <view class="wrap">
     <view wx:for="{{ list }}" wx:key="index" class="item">
       <view class="top" catchtap="navigate" data-id="{{ item.id }}">

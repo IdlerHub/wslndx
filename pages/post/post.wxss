@@ -32,6 +32,36 @@ page {
       line-height: 36px;
       color: #808080; }
 
+.stick {
+  width: 100%;
+  height: 128rpx;
+  padding: 0 30rpx;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #fff;
+  margin-bottom: 20rpx;
+}
+.stick image:nth-child(1) {
+  width: 64rpx;
+  height: 64rpx;
+  margin-right: 24rpx;
+}
+.stick .stickText {
+  flex: 1;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-size:40rpx;
+  font-weight:400;
+  color:#3a3a3a;
+}
+.stick image:nth-child(3) {
+  width: 18rpx;
+  height: 31rpx;
+  margin-left: 25rpx;
+}
 .wrap {
   box-sizing: border-box;
   padding-bottom: 120rpx; }
