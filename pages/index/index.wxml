@@ -211,14 +211,20 @@
     <image src="{{$state.imgHost}}/nowcancle.png" catchtap="closenow"></image>
   </view>
   <!-- 签到拿积分 -->
-  <view class="integration" wx:if="{{ !$state.signStatus.count && recommend[0] }}" catchtouchmove="return">
+  <view class="integration" wx:if="{{ !$state.signStatus.count && recommend[0] && !dialog.image}}" catchtouchmove="return">
     <view class="dialog">
-      <image class="bg" src="/images/integrationBg.png" mode="aspectFill" wx:if="{{ showSign}}"></image>
-      <view class="ani" catchtap="signIn" data-id="1" wx:if="{{ showSign }}"></view>
-      <view class="bg" style="background: url('{{dialog.image}}') no-repeat center; background-size: 278px 371px;border-radius:10px" src="{{dialog.image}}" mode="aspectFill" catchtap="jumpPeper" data-peper="{{dialog.url}}" data-type="dialog" wx:else></view>
+      <image class="bg" src="/images/integrationBg.png" mode="aspectFill"></image>
+      <view class="ani" catchtap="signIn" data-id="1"></view>
       <!-- <button catchtap="signIn" data-id="1">签到领积分</button> -->
-      <icon type="cancel" size="37" color="white" data-id="0" catchtap="signIn" wx:if="{{ showSign}}"></icon>
-      <icon type="cancel" size="37" color="white" data-id="0" catchtap="closeSignIn" wx:else></icon>
+      <icon type="cancel" size="37" color="white" data-id="0" catchtap="signIn"></icon>
+    </view>
+  </view>
+  <!-- 活动弹窗 -->
+  <view class="integration" wx:if="{{ recommend[0] && dialog.image}}" catchtouchmove="return">
+    <view class="dialog">
+      <view class="bg" style="background: url('{{dialog.image}}') no-repeat center; background-size: 278px 371px;border-radius:10px" src="{{dialog.image}}" mode="aspectFill" catchtap="jumpPeper" data-peper="{{dialog.url}}" data-type="dialog"></view>
+      <!-- <button catchtap="signIn" data-id="1">签到领积分</button> -->
+      <icon type="cancel" size="37" color="white" data-id="0" catchtap="closeSignIn"></icon>
     </view>
   </view>
 </view>

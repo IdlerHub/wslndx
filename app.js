@@ -263,11 +263,6 @@ App({
       }
     });
   },
-  tabBar(path) {
-    this.store.setState({
-      tabPath: path
-    });
-  },
   playVedio(type) {
     type == "wifi"
       ? ""

@@ -630,11 +630,35 @@ Page({
     app.circle.reply(params).then(msg => {
       wx.hideLoading()
       if (msg.code == 1) {
-        wx.showToast({
-          title: "发布成功",
-          icon: "none",
-          duration: 1500
-        })
+        if (msg.data.is_first == 'first') {
+          this.setData({
+            integral: '+50 积分',
+            integralContent: '完成[秀风采]首次评论',
+            showintegral: true
+          })
+          setTimeout(() => {
+            this.setData({
+              showintegral: false
+            })
+          }, 2000)
+        } else if (msg.data.is_first == 'day') {
+          this.setData({
+            integral: '+20 积分',
+            integralContent: '完成每日[秀风采]首评评论',
+            showintegral: true
+          })
+          setTimeout(() => {
+            this.setData({
+              showintegral: false
+            })
+          }, 2000)
+        } else {
+          wx.showToast({
+            title: "发布成功",
+            icon: "none",
+            duration: 1500
+          })
+        }
         let blogcomment = this.data.$state.blogcomment
         if(this.replyParent) {
           blogcomment[this.data.detail.id]['replyParent'][this.replyParent] = ''

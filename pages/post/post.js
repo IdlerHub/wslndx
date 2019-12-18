@@ -33,6 +33,7 @@ Page({
       list: []
     })
     this.getList([])
+    this.gettop()
     app.aldstat.sendEvent("菜单", { name: "风采展示" })
   },
   onShow: function() {
@@ -43,6 +44,7 @@ Page({
       this.param.page = 1
       this.getList([]).then(() => {
       })
+      this.gettop()
       app.globalData.postShow = false
     }
     /* 从cdetail-->发帖 */
@@ -157,6 +159,16 @@ Page({
         }
         this.setData({
           showLoading: false
+        })
+      }
+    })
+  },
+  gettop() {
+    return app.circle.bokeblogTop().then(res => {
+      if(res.code == 1 ) {
+        console.log(res)
+        this.setData({
+          bokeTop: res.data
         })
       }
     })
@@ -302,6 +314,7 @@ Page({
         clearTimeout(timer)
       }, 1000)
     })
+    this.gettop()
   },
   //上拉加载
   onReachBottom() {

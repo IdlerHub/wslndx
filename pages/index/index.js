@@ -11,7 +11,6 @@ Page({
     showReco:false,
     guideNum: 0,
     guidetxt: '下一步',
-    showSign: false,
     guideNum: 1,
     shownow: true,
     shownowt: true
@@ -67,9 +66,6 @@ Page({
         app.setShare(res)
       })
       this.init()
-      this.data.$state.signStatus.status == 1 ? '' : this.setData({
-        showIntegration: true
-      })
       this.integrationTime()
     }
   },
@@ -273,7 +269,6 @@ Page({
     wx.switchTab({
       url: "../user/user"
     })
-    app.tabBar('user')
   },
   toInfo() {
     wx.navigateTo({
@@ -382,7 +377,7 @@ Page({
   closeSignIn() {
     app.setSignIn({ status: 0, count: 1 }, true)
     this.setData({
-      showIntegration: false
+      dialog:{}
     })
   },
   signIn(data) {
@@ -393,9 +388,6 @@ Page({
         if (res.code == 1) {
           /* 前往积分页面 */
           wx.navigateTo({ url: "/pages/score/score?type=index" })
-          this.setData({
-            showIntegration: false
-          })
           app.store.setState({
             signdays: res.data.sign_days
           })
@@ -546,14 +538,8 @@ Page({
   getDialog() {
     app.user.dialog().then(res => {
       if(res.code == 1) {
-        res.data.url ? this.setData({
-          dialog: res.data
-        }) : this.setData({
-            showSign: true
-        })
-      } else {
         this.setData({
-          showSign: true
+          dialog: res.data
         })
       }
     })

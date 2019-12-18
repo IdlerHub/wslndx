@@ -143,6 +143,11 @@ function collect(param) {
 function collectCancel(param) {
   return httpService.post("Bokeblog/collectCancel", param)
 }
+
+/* 获取置顶博客 */
+function bokeblogTop(param) {
+  return httpService.post("Bokeblog/top", param)
+}
 module.exports = {
   allCircles,
   noJoinCircles,
@@ -168,5 +173,6 @@ module.exports = {
   addForward,
   getMessage,
   collect,
-  collectCancel
+  collectCancel,
+  bokeblogTop
 }

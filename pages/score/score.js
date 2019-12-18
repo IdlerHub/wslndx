@@ -95,7 +95,7 @@ Page({
           page: "/pages/index/index",
           authorization: true,
           showStatus: {
-            name: 'day_boke_comment_status',
+            name: 'day_lesson_comment_status',
             status: false
           }
         },

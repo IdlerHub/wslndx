@@ -217,28 +217,6 @@ Page({
       }
     })
   },
-  getSublessons(list) {
-    console.log(this.sublessParam)
-    let comment = list
-    app.classroom.detail(this.sublessParam).then(res => {
-      res.data.sublesson.forEach(function(item) {
-        item.minute = (item.film_length / 60).toFixed(0)
-      })
-      comment.push(...res.data.sublesson)
-      this.setData({
-        sublessons: comment,
-        moreSublessons: 'moreSublessons'
-      })
-    })
-  },
-  moreSublessons() {
-    this.setData({
-      moreSublessons: ''
-    })
-    this.sublessParam.page++
-      this.sublessParam.sort = this.data.sort
-    this.getSublessons(this.data.sublessons)
-  },
   ended() {
     this.data.sublessons.forEach(item => {
       item.id == this.data.cur.id ? item.played = 1 : ''
@@ -480,10 +458,10 @@ Page({
     })
   },
   onReachBottom() {
-    // if (this.data.currentTab == 1) {
-    //   this.comParam.page++
-    //     this.getComment()
-    // }
+    if (this.data.currentTab == 1) {
+        this.comParam.page++
+        this.getComment()
+    }
   },
   setHeight() {
     let that = this
@@ -697,11 +675,24 @@ Page({
           write: false,
           placeholder: '发评论'
         })
-        wx.showToast({
-          title: '评论成功',
-          icon: 'none',
-          duration: 800
-        })
+        if(res.data.is_first == 'day') {
+          this.setData({
+            integral: "+10 积分",
+            integralContent: "完成[云课堂]每日课程首次讨论",
+            showintegral: true,
+          })
+          setTimeout(() => {
+            this.setData({
+              showintegral: false
+            })
+          }, 2000);
+        } else {
+          wx.showToast({
+            title: '评论成功',
+            icon: 'none',
+            duration: 800
+          })
+        }
         this.comParam.page = 1
         this.getComment([])
         let lessDiscussion = this.data.$state.lessDiscussion
@@ -741,11 +732,24 @@ Page({
           write: false,
           placeholder: '发评论'
         })
-        wx.showToast({
-          title: "发布成功",
-          icon: "none",
-          duration: 1500
-        })
+        if(msg.data.is_first == 'day') {
+          this.setData({
+            integral: "+10 积分",
+            integralContent: "完成[云课堂]每日课程首次讨论",
+            showintegral: true,
+          })
+          setTimeout(() => {
+            this.setData({
+              showintegral: false
+            })
+          }, 2000);
+        } else {
+          wx.showToast({
+            title: '评论成功',
+            icon: 'none',
+            duration: 800
+          })
+        }
         let lessDiscussion = this.data.$state.lessDiscussion
         if (this.replyParent) {
           lessDiscussion[this.data.detail.id].replyParent[this.replyParent] = ''

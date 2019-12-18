@@ -12,9 +12,6 @@ Component({
       if(this.data.path == 'index') {
         return
       }else {
-        // wx.redirectTo({
-        //   url: "/pages/index/index"
-        // })
         wx.switchTab({ url: "/pages/index/index" })
         this.hideIndex()
       }  
@@ -23,9 +20,6 @@ Component({
       if (this.data.path == 'video') {
         return
       } else {
-        // wx.redirectTo({
-        //   url: "/pages/video/video"
-        // })
         wx.switchTab({ url: "/pages/video/video" })
         this.hideIndex()
       }  
@@ -34,9 +28,6 @@ Component({
       if (this.data.path == 'post') {
         return
       } else {
-        // wx.redirectTo({
-        //   url: "/pages/post/post"
-        // })
         wx.switchTab({ url: "/pages/post/post" })
         app.globalData.postShow = true
         this.hideIndex()
@@ -54,9 +45,6 @@ Component({
       if (this.data.path == 'user') {
         return
       } else {
-        // wx.redirectTo({
-        //   url:"/pages/user/user"
-        // })
         wx.switchTab({ url: "/pages/user/user" })
       }  
     },

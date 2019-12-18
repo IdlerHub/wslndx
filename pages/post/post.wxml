@@ -23,9 +23,9 @@
       <icon class="iconfont icon-arrow-right"></icon>
     </view>
   </view>
-  <view class="stick">
+  <view class="stick" catchtap="navigate" data-id="{{ bokeTop.id }}" wx:if="{{bokeTop.content}}">
     <image src="/images/Stick.png"></image>
-    <view class="stickText">网上老年大学全新英语直播课释放空间规划的历史将会给</view>
+    <rich-text class="stickText" nodes="{{ bokeTop.content }}" catchlongpress="copythat" data-content="{{ bokeTop.content }}"></rich-text>
     <image src="/images/stickright.png"></image>
   </view>
   <view class="wrap">
@@ -120,7 +120,7 @@
  <!-- wx:if="{{ $state.newGuide.blog == 0 }}" -->
 <cover-view class="postGuide" wx:if="{{ $state.newGuide.blog == 0 }}">
   <cover-view class="postGuideBox" wx:if="{{guideNum == 1}}">
-    <cover-image src="{{$state.imgHost}}/collectMessege.png" class="postGuide-img"></cover-image>
+    <cover-image src="{{$state.imgHost}}/collectMessege.png" class="postGuide-img" style="top:{{ bokeTop.content ? 101 : '' }}px"></cover-image>
     <cover-view class="postMsgone" bindtap="nextGuide">
       <cover-image src="{{$state.imgHost}}/postMsgone.png" class="postMsgoneo"></cover-image>
       <cover-image src="{{$state.imgHost}}/nextGude.png" class="nextGude"></cover-image>
