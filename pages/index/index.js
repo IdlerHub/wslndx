@@ -13,7 +13,8 @@ Page({
     guidetxt: '下一步',
     guideNum: 1,
     shownow: true,
-    shownowt: true
+    shownowt: true,
+    showdialog: true
   },
   navHeightList: [],
   onLoad: async function(e) {
@@ -87,7 +88,8 @@ Page({
       // })
       if (this.data.$state.newGuide.index == 0) {
         this.setData({
-          guideNum: 1
+          guideNum: 1,
+          showdialog: false
         })
         app.setSignIn({ status: false, count: 1 }, true)
       } else {
@@ -332,24 +334,14 @@ Page({
     })
     //用于数据统计
     if(e.currentTarget.dataset.type) {
-      app.aldstat.sendEvent(`栏目(${this.data.nav[this.data.currentTab].name})课程点击`, {
+      app.aldstat.sendEvent( "栏目-"+this.data.nav[this.data.currentTab].name+"-课程点击", {
         name: e.currentTarget.dataset.item.title
       })
     } else {
-      app.aldstat.sendEvent("推荐栏目课程点击", {
+      app.aldstat.sendEvent("首页推荐栏目课程点击", {
         name: e.currentTarget.dataset.item.title
       })
     }
-  },
-  //分类点击
-  categoryTap: function(data) {
-    data.currentTarget.dataset.item &&
-      data.currentTarget.dataset.item.id &&
-      wx.navigateTo({
-        url: `../category/category?id=${data.currentTarget.dataset.item.id}&name=${data.currentTarget.dataset.item.name}&img=${data.currentTarget.dataset.item.top_image}`
-      })
-    //用于数据统计
-    app.aldstat.sendEvent("点击分类按钮", { name: "点击分类按钮" })
   },
   //用于数据统计
   onHide() {

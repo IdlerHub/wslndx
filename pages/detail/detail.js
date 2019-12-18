@@ -157,18 +157,6 @@ Page({
   },
   onHide() {
   },
-  //语音存储本地
-  // setsotrevoice() {
-  //   if (this.data.filePath && this.data.filePath != '') {
-  //     let lessVoice = {
-  //       lessId: this.data.cur.id,
-  //       voiceContent: this.data.content
-  //     }
-  //     app.store.setState({
-  //       lessVoice
-  //     })
-  //   }
-  // },
   onGotUserInfo: function(e) {
     app.updateBase(e)
   },
@@ -217,6 +205,18 @@ Page({
       }
     })
   },
+  setIntegral(integral,integralContent) {
+    this.setData({
+      integral,
+      integralContent,
+      showintegral: true,
+    })
+    setTimeout(() => {
+      this.setData({
+        showintegral: false
+      })
+    },2000)
+  },
   ended() {
     this.data.sublessons.forEach(item => {
       item.id == this.data.cur.id ? item.played = 1 : ''
@@ -232,24 +232,11 @@ Page({
     app.classroom.sublessonfinish(param).then(res => {
       if (res.code == 1) {
         if (res.data.is_first == 'first') {
-          this.setData({
-            integral: "+70 积分",
-            integralContent: "完成首次学习课程",
-            showintegral: true,
-          })
+          this.setIntegral("+70 积分", "完成首次学习课程")
         } else if (res.data.is_first == 'finish') {
-          this.setData({
-            integral: "+20 积分",
-            integralContent: "完成学完一门新课程",
-            showintegral: true,
-          })
+          this.setIntegral("+20 积分", "完成学完一门新课程")
         }
       }
-      setTimeout(() => {
-        this.setData({
-          showintegral: false
-        })
-      },2000)
       app.classroom.detail(this.param).then(msg => {
         if (msg.code === 1) {
           this.setData({
@@ -673,19 +660,19 @@ Page({
       if (res.code == 1) {
         this.setData({
           write: false,
-          placeholder: '发评论'
+          placeholder: '发评论',
+          content: "",
+          write: true,
+          writeTow: false,
+          focus: false,
+          keyheight: 0,
+          contenLength: 0,
+          showvoice: false,
+          voicetime:0,
+          showvoiceauto: false
         })
         if(res.data.is_first == 'day') {
-          this.setData({
-            integral: "+10 积分",
-            integralContent: "完成[云课堂]每日课程首次讨论",
-            showintegral: true,
-          })
-          setTimeout(() => {
-            this.setData({
-              showintegral: false
-            })
-          }, 2000);
+          this.setIntegral("+10 积分", "完成[云课堂]每日课程首次讨论")
         } else {
           wx.showToast({
             title: '评论成功',
@@ -699,17 +686,6 @@ Page({
         lessDiscussion[this.data.detail.id].replycontent = ""
         app.store.setState({
           lessDiscussion
-        })
-        this.setData({
-          content: "",
-          write: true,
-          writeTow: false,
-          focus: false,
-          keyheight: 0,
-          contenLength: 0,
-          showvoice: false,
-          voicetime:0,
-          showvoiceauto: false
         })
       } else {
         wx.showToast({
@@ -730,19 +706,19 @@ Page({
       if (msg.code == 1) {
         this.setData({
           write: false,
-          placeholder: '发评论'
+          placeholder: '发评论',
+          replycontent: "",
+          write: true,
+          writeTow: false,
+          focus: false,
+          keyheight: 0,
+          contenLength: 0,
+          showvoice: false,
+          voicetime: 0,
+          showvoiceauto: false
         })
         if(msg.data.is_first == 'day') {
-          this.setData({
-            integral: "+10 积分",
-            integralContent: "完成[云课堂]每日课程首次讨论",
-            showintegral: true,
-          })
-          setTimeout(() => {
-            this.setData({
-              showintegral: false
-            })
-          }, 2000);
+          this.setIntegral("+10 积分", "完成[云课堂]每日课程首次讨论")
         } else {
           wx.showToast({
             title: '评论成功',
@@ -764,17 +740,6 @@ Page({
         }
         this.comParam.page = 1
         this.getComment([])
-        this.setData({
-          replycontent: "",
-          write: true,
-          writeTow: false,
-          focus: false,
-          keyheight: 0,
-          contenLength: 0,
-          showvoice: false,
-          voicetime: 0,
-          showvoiceauto: false
-        })
         this.replyInfo = null
         this.replyParent = null
       } else if (msg.code == -2) {
@@ -1069,17 +1034,7 @@ Page({
         app.store.setState({
           taskStatus
         })
-        this.setData({
-          currentTab: 0,
-          integral: "+45 积分",
-          integralContent: "完成[云课堂]新手指引",
-          showintegral: true,
-        })
-        setTimeout(() => {
-          this.setData({
-            showintegral: false
-          })
-        }, 2000)
+        this.setIntegral("+45 积分", "完成[云课堂]新手指引")
       }
     })
   },

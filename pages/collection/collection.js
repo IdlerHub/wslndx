@@ -49,15 +49,15 @@ Page({
       wx.stopPullDownRefresh()
     })
   },
-  // onReachBottom: function() {
-  //   if(this.currentTab == 0) {
-  //     this.collectParam.page++
-  //     this.getCollect()
-  //   } else {
-  //     this.circleparam.page++
-  //     this.getCircle()
-  //   }  
-  // },
+  onReachBottom: function() {
+    if(this.currentTab == 0) {
+      this.collectParam.page++
+      this.getCollect()
+    } else {
+      this.circleparam.page++
+      this.getCircle()
+    }  
+  },
   scrollEnd() {
     if (this.data.currentTab == 0) {
       this.collectParam.page++

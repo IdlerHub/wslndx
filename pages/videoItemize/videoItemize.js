@@ -65,7 +65,7 @@ Page({
     wx.navigateTo({
       url: "/pages/videoTwo/videoTwo?id=" + id + "&categoryId=" + this.params.categoryId + end + "&title=" + this.data.category.category_name
     })
-    app.aldstat.sendEvent(`短视频类别-${this.data.category.category_name}`,{
+    app.aldstat.sendEvent("短视频类别-"+this.data.category.category_name,{
       'videoName': e.currentTarget.dataset.name
     })
   },
