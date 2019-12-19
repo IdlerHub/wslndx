@@ -18,7 +18,6 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (option) {
-    console.log(option)
     if(option.phone) {
       console.log(app.globalData)
       this.setData({

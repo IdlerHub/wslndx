@@ -722,7 +722,7 @@
   height: 742rpx;
   border-radius: 10rpx;
   left: calc((100% - 556rpx) / 2);
-  top: calc((100% - 860rpx) / 2);
+  top: calc((100% - 742rpx) / 2);
   text-align: center;
 }
 

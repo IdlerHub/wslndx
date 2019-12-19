@@ -532,9 +532,11 @@ Page({
     if(this.pageType) return
     app.user.dialog().then(res => {
       if(res.code == 1) {
+        res.data[0] ?
         this.setData({
-          dialog: res.data
-        })
+          dialog: res.data,
+          showdialog: true
+        }) : 0
       }
     })
   },
