@@ -21,10 +21,19 @@ page {
       font-size: 28rpx;
       color: #bdbdbd; }
   .wrap .name {
-    text-align: justify;
+    text-justify: newspaper;
+    word-break: break-all;
+    width: 100%;
     line-height: 60rpx;
     font-size: 40rpx;
-    color: #3a3a3a; }
+    color: #3a3a3a;
+    word-wrap: break-word;
+    white-space: pre-line;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 5;
+    overflow: hidden; 
+    /* text-align: justify; */ }
   .wrap .img {
     display: flex;
     flex-wrap: wrap;

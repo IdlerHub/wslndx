@@ -31,7 +31,7 @@
         <text class="date">{{ item.createtimes }}</text>
       </view>
       <view bindtap="navigate" data-id="{{ item.id }}">
-        <rich-text wx:if="{{ item.content }}" class="name" nodes="{{ item.content }}"></rich-text>
+        <rich-text wx:if="{{ item.content }}" class="name" nodes="{{ item.content }}" catchlongpress="copythat" data-content="{{ item.content }}"></rich-text>
         <view class="content" wx:if="{{ item.images.length > 0 }}">
           <view class="img one" wx:if="{{ item.images.length == 1 }}">
             <image mode="widthFix" wx:for="{{ item.images }}" wx:for-item="items" wx:key="index" src="{{ item.image_compress }}" data-urls="{{ item.images }}" data-current="{{ items }}" catchtap="previewImage"></image>
