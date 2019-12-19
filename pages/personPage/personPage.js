@@ -179,7 +179,7 @@ Page({
           this.setData({
             list: list
           })
-          app.aldstat.sendEvent("秀风按钮点击",{
+          app.aldstat.sendEvent("秀风采按钮点击",{
             name:'点赞按钮'
           })
           this.pages.pagePraise(e.currentTarget.dataset.id)
@@ -243,7 +243,7 @@ Page({
       }) : wx.navigateTo({
         url: '/pages/release/release',
       })
-      app.aldstat.sendEvent("秀风按钮点击",{
+      app.aldstat.sendEvent("秀风采按钮点击",{
         name:'评论按钮'
       })
     }

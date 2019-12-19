@@ -179,7 +179,7 @@ Page({
             }, 2000)
           }
           this.setData({ detail: detail })
-          app.aldstat.sendEvent("秀风按钮点击",{
+          app.aldstat.sendEvent("秀风采按钮点击",{
             name:'点赞按钮'
           })
         } else if (msg.code == -2) {
@@ -254,7 +254,7 @@ Page({
           replyplaceholder: '',
           replyshow:false
         })
-        app.aldstat.sendEvent("秀风按钮点击",{
+        app.aldstat.sendEvent("秀风采按钮点击",{
           name:'评论按钮'
         })
       }
