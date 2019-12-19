@@ -259,6 +259,7 @@ Page({
       if (res.code == 1) {
         res.data.lists.forEach(v => {
           v.time = app.util.formatTime(new Date(v.createtime * 1000))
+          console.log(v.time)
         })
         if (this.params.page == 1) {
           /* 每天分享课程最多3次获取积分 */
@@ -273,7 +274,6 @@ Page({
           //     item.status = remain <= 0
           //   }
           // })
-
           this.setData({
             totalPoints: res.data.mypoints,
             details: res.data.lists

@@ -18,6 +18,7 @@ Page({
   },
   navHeightList: [],
   onLoad: async function(e) {
+    e.type != undefined ?  this.pageType = e.type : ''
     setTimeout( res => {
       if (!this.data.$state.userInfo.mobile) {
         let pages = getCurrentPages()
@@ -369,7 +370,7 @@ Page({
   closeSignIn() {
     app.setSignIn({ status: 0, count: 1 }, true)
     this.setData({
-      dialog:{}
+      showdialog: false
     })
   },
   signIn(data) {
@@ -528,6 +529,7 @@ Page({
   },
   /*获取首页活动弹框 */
   getDialog() {
+    if(this.pageType) return
     app.user.dialog().then(res => {
       if(res.code == 1) {
         this.setData({

@@ -186,7 +186,7 @@ Page({
               showintegral: true
             })
             setTimeout(() => {
-              wx.switchTab({ url: "/pages/index/index" })
+              wx.reLaunch({ url: "/pages/index/index?type=login" })
             }, 2000)
           }
         }

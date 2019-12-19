@@ -220,9 +220,9 @@
     </view>
   </view>
   <!-- 活动弹窗 -->
-  <view class="integration" wx:if="{{ recommend[0] && dialog.image && showdialog}}" catchtouchmove="return">
+  <view class="integration" wx:if="{{ recommend[0] && dialog[0].image && showdialog}}" catchtouchmove="return">
     <view class="dialog">
-      <view class="bg" style="background: url('{{dialog.image}}') no-repeat center; background-size: 278px 371px;border-radius:10px" src="{{dialog.image}}" mode="aspectFill" catchtap="jumpPeper" data-peper="{{dialog.url}}" data-type="dialog"></view>
+      <view class="bg" style="background: url('{{dialog[0].image}}') no-repeat center; background-size: 278px 371px;border-radius:10px" src="{{dialog[0].image}}" mode="aspectFill" catchtap="jumpPeper" data-peper="{{dialog[0].url}}" data-type="dialog"></view>
       <!-- <button catchtap="signIn" data-id="1">签到领积分</button> -->
       <icon type="cancel" size="37" color="white" data-id="0" catchtap="closeSignIn"></icon>
     </view>

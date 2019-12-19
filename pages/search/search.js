@@ -4,7 +4,7 @@ const plugin = requirePlugin("WechatSI")
 // 获取**全局唯一**的语音识别管理器**recordRecoManager**
 const manager = plugin.getRecordRecognitionManager()
 
-const innerAudioContext = wx.createInnerAudioContext();
+// const innerAudioContext = wx.createInnerAudioContext();
 Page({
   data: {
     voiceImg: 'https://hwcdn.jinlingkeji.cn/images/pro/voicebtn2.png',
