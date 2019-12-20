@@ -36,7 +36,8 @@
               <text class="line name">{{  $state.userInfo.nickname }}的老年大学</text>
               <view class="line" wx:if="{{ guideNum != 1 }}">
                 <view class="city" catchtap="toInfo">{{ $state.userInfo.addressCity || "暂无" }}</view>
-                <view class="school" catchtap="toInfo">{{ $state.userInfo.school || $state.userInfo.university || "+添加学校标签" }}</view>
+                <view class="school" catchtap="toInfo">
+                  {{ $state.userInfo.school || $state.userInfo.university || "+添加学校标签" }}</view>
               </view>
               <view wx:else class="line" style="height:50rpx"></view>
             </view>
@@ -49,7 +50,8 @@
         <open-data class="bg" type="userAvatarUrl"></open-data>
         <view class="box">
           <view class="left">
-            <button open-type="getUserInfo" bindgetuserinfo="onGotUserInfo" data-role="user" class="img left-btn" catchtap="getSomthin">
+            <button open-type="getUserInfo" bindgetuserinfo="onGotUserInfo" data-role="user" class="img left-btn"
+              catchtap="getSomthin">
 
             </button>
             <open-data class="img" type="userAvatarUrl" catchtap="toUser"></open-data>
@@ -60,7 +62,8 @@
               </view>
               <view class="line" wx:if="{{ guideNum != 1 }}">
                 <view class="city" catchtap="toInfo">{{ $state.userInfo.addressCity || "暂无" }}</view>
-                <view class="school" catchtap="toInfo">{{ $state.userInfo.school || $state.userInfo.university || "+添加学校标签" }}</view>
+                <view class="school" catchtap="toInfo">
+                  {{ $state.userInfo.school || $state.userInfo.university || "+添加学校标签" }}</view>
               </view>
               <view wx:else class="line" style="height:50rpx"></view>
             </view>
@@ -80,16 +83,19 @@
       <view class="integralImg"></view>
     </view>
   </view>
-  <navigationBar wx:if="{{ scroll }}" id="navigationBar" placeholderBg="#F8F8F8" color="#000000" title="网上老年大学" back="{{ false }}" background="#F8F8F8"></navigationBar>
+  <navigationBar wx:if="{{ scroll }}" id="navigationBar" placeholderBg="#F8F8F8" color="#000000" title="网上老年大学"
+    back="{{ false }}" background="#F8F8F8"></navigationBar>
   <view class="nav" wx:if="{{ !recommend }}">
     <view class="integral navintegral">
     </view>
   </view>
   <view class="nav {{ scroll ? 'fixed' : '' }}" style="top:{{ top }}px;padding-right:20px;overflow: hidden;" wx:else>
-    <scroll-view class="nav" style="display:flex;padding-right: 20px" scroll-x="true" scroll-left="{{ navScrollLeft }}" scroll-with-animation="true" enable-flex scroll-into-view="item{{currentTab < 4 ? 0 : currentTab - 3}}">
+    <scroll-view class="nav" style="display:flex;padding-right: 20px" scroll-x="true" scroll-left="{{ navScrollLeft }}"
+      scroll-with-animation="true" enable-flex scroll-into-view="item{{currentTab < 4 ? 0 : currentTab - 3}}">
       <block wx:for="{{ nav }}" wx:for-index="id" wx:for-item="item" wx:key="index">
         <formCode bind:handler="switchNav" data-current="{{ id }}" data-id="{{item.id}}">
-          <view class="item {{ [currentTab == id ? 'active' : '',id == 0 ? 'itemone' : ''] }}" style="margin-right:{{id + 1 == nav.length ? '40rpx' : ''}}" id="item{{id}}">{{ item.name }}</view>
+          <view class="item {{ [currentTab == id ? 'active' : '',id == 0 ? 'itemone' : ''] }}"
+            style="margin-right:{{id + 1 == nav.length ? '40rpx' : ''}}" id="item{{id}}">{{ item.name }}</view>
         </formCode>
       </block>
     </scroll-view>
@@ -97,7 +103,7 @@
       <image src="{{$state.imgHost}}/tabclassify.png"></image>
     </navigator>
   </view>
-  <view class="skeleton" wx:for="{{5}}" wx:if="{{ !recommend[0] }}" wx:key="index">
+  <view class="skeleton" wx:for="{{5}}" wx:if="{{ !recommend[0]}}" wx:key="index">
     <view class="skeletonBox">
       <view class="skeletonImg"></view>
       <view class="skeletonTitle"></view>
@@ -106,15 +112,20 @@
       <view class="skeletonDaram"></view>
     </view>
   </view>
-  <swiper class="tab" style="height:{{ height }}px" current="{{ currentTab }}" duration="300" bindchange="switchTab" bindtouchstart="touchstart" bindtouchend="touchend">
+
+
+  <swiper class="tab" style="height:{{ height }}px" current="{{ currentTab }}" duration="300" bindchange="switchTab"
+    bindtouchstart="touchstart" bindtouchend="touchend">
     <swiper-item class="tab-item">
       <!--推荐  -->
       <view class="wrap recommend" id="recommend1">
         <!-- 广告位banner -->
-        <swiper indicator-dots="{{imgUrls.length > 1 ? true : false}}" autoplay interval="3500" duration="1000" circular class="swiper" wx:if="{{imgUrls[0].image}}" current="{{currentTab}}">
+        <swiper indicator-dots="{{imgUrls.length > 1 ? true : false}}" autoplay interval="3500" duration="1000" circular
+          class="swiper" wx:if="{{imgUrls[0].image}}" current="{{currentTab}}">
           <block wx:for="{{imgUrls}}" wx:key="index">
             <swiper-item>
-              <image src="{{item.image}}" class="slide-image" width="355" height="150" catchtap="bannerGo" data-item="{{ item }}" />
+              <image src="{{item.image}}" class="slide-image" width="355" height="150" catchtap="bannerGo"
+                data-item="{{ item }}" />
             </swiper-item>
           </block>
         </swiper>
@@ -147,7 +158,7 @@
             <view class="right">
               <text class="title">{{ paperMsg.title }}</text>
               <text class="line info">
-                  <text class="createtime">{{ paperMsg.createtime }}</text>
+                <text class="createtime">{{ paperMsg.createtime }}</text>
               </text>
             </view>
           </view>
@@ -155,7 +166,9 @@
         <view catchtap="detailTap" wx:for="{{ recommend }}" wx:key="index" class="item" data-item="{{ item }}">
           <view class="content {{ item.show_big ? 'big' : '' }}">
             <view class="left">
-              <image class="poster" mode="aspectFill" src="{{ item.show_big ? item.big_image + '?x-image-process=image/resize,m_fixed,w_690,h_360/quality,Q_80' : item.image + '?x-image-process=image/resize,m_fixed,w_260,h_160/quality,Q_80'  }}" lazy-load="true"></image>
+              <image class="poster" mode="aspectFill"
+                src="{{ item.show_big ? item.big_image + '?x-image-process=image/resize,m_fixed,w_690,h_360/quality,Q_80' : item.image + '?x-image-process=image/resize,m_fixed,w_260,h_160/quality,Q_80'  }}"
+                lazy-load="true"></image>
               <image class="icon" mode="aspectFill" src="{{ $state.imgHost }}/play.png"></image>
             </view>
             <view class="right">
@@ -164,7 +177,7 @@
               <text class="line actor" wx:else>{{ item.name }}-{{ item.honor }}</text>
               <text class="line info">
                 <text class="dramaNum"><text class="key">剧集</text>{{ item.lesson_count }}集</text>
-              <text class="playNum"><text class="key">播放</text>{{ item.bw || item.browse }}</text>
+                <text class="playNum"><text class="key">播放</text>{{ item.bw || item.browse }}</text>
               </text>
             </view>
           </view>
@@ -172,20 +185,24 @@
       </view>
     </swiper-item>
     <swiper-item class="tab-item" wx:for="{{nav}}" wx:key="index" wx:if="{{!index == 0}}" item-id="{{item.name}}">
-      <view class="skeleton" wx:for="{{5}}" wx:for-item="iten" wx:if="{{ !catrecommend[item.id][0] }}" wx:key="index">
-        <view class="skeletonBox">
-          <view class="skeletonImg"></view>
-          <view class="skeletonTitle"></view>
-          <view class="skeletonContent"></view>
-          <view class="skeletonDaram"></view>
-          <view class="skeletonDaram"></view>
-        </view>
-      </view>
       <view class="wrap recommend" id="recommend{{item.id}}">
-        <view catchtap="detailTap" wx:for="{{ catrecommend[item.id] }}" wx:key="index" class="item" data-item="{{ item }}" data-type="tabvideo">
+        <view class="skeleton" wx:for="{{5}}" wx:for-item="iten"
+          wx:if="{{ !catrecommend[item.id][0] }}" wx:key="index">
+          <view class="skeletonBox">
+            <view class="skeletonImg"></view>
+            <view class="skeletonTitle"></view>
+            <view class="skeletonContent"></view>
+            <view class="skeletonDaram"></view>
+            <view class="skeletonDaram"></view>
+          </view>
+        </view>
+        <view catchtap="detailTap" wx:for="{{ catrecommend[item.id] }}" wx:key="index" class="item"
+          data-item="{{ item }}" data-type="tabvideo">
           <view class="content">
             <view class="left">
-              <image class="poster" mode="aspectFill" src="{{ item.image }}?x-image-process=image/resize,m_fixed,w_260,h_160/quality,Q_80" lazy-load="true"></image>
+              <image class="poster" mode="aspectFill"
+                src="{{ item.image }}?x-image-process=image/resize,m_fixed,w_260,h_160/quality,Q_80" lazy-load="true">
+              </image>
               <image class="icon" mode="aspectFill" src="{{ $state.imgHost }}/play.png"></image>
             </view>
             <view class="right">
@@ -194,7 +211,7 @@
               <text class="line actor" wx:else>{{ item.name }}-{{ item.honor }}</text>
               <text class="line info">
                 <text class="dramaNum"><text class="key">剧集</text>{{ item.lesson_count }}集</text>
-              <text class="playNum"><text class="key">播放</text>{{ item.bw || item.browse }}</text>
+                <text class="playNum"><text class="key">播放</text>{{ item.bw || item.browse }}</text>
               </text>
             </view>
           </view>
@@ -205,13 +222,16 @@
   <!-- 底部tabbar -->
   <navBar path='index'></navBar>
   <!-- 学习历史 -->
-  <view class="now" wx:if="{{history.last_lesson}}" bindtap="historyTap" data-id="{{ history.last_lesson.id }}" data-title="{{ history.last_lesson.title }}" style="animation:{{ history.last_lesson && shownow && shownowt ? 'nowshow' : 'nowclose'}}  0.5s ; bottom:{{history.last_lesson && shownow && shownowt? '138rpx' : '-88rpx'}} ">
+  <view class="now" wx:if="{{history.last_lesson}}" bindtap="historyTap" data-id="{{ history.last_lesson.id }}"
+    data-title="{{ history.last_lesson.title }}"
+    style="animation:{{ history.last_lesson && shownow && shownowt ? 'nowshow' : 'nowclose'}}  0.5s ; bottom:{{history.last_lesson && shownow && shownowt? '138rpx' : '-88rpx'}} ">
     <image src="/images/play-red.png"></image>
     <view class="line">{{ history.last_lesson.title + "第" + history.last_lesson.sub_id + "讲" }}</view>
     <image src="{{$state.imgHost}}/nowcancle.png" catchtap="closenow"></image>
   </view>
   <!-- 签到拿积分 -->
-  <view class="integration" wx:if="{{ !$state.signStatus.count && recommend[0] && !dialog[0].image}}" catchtouchmove="return">
+  <view class="integration" wx:if="{{ !$state.signStatus.count && recommend[0] && !dialog[0].image}}"
+    catchtouchmove="return">
     <view class="dialog">
       <image class="bg" src="/images/integrationBg.png" mode="aspectFill"></image>
       <view class="ani" catchtap="signIn" data-id="1"></view>
@@ -222,7 +242,10 @@
   <!-- 活动弹窗 -->
   <view class="integration" wx:if="{{ recommend[0] && dialog[0].image && showdialog}}" catchtouchmove="return">
     <view class="dialog">
-      <view class="bg" style="background: url('{{dialog[0].image}}') no-repeat center; background-size: 100% 100%;border-radius:10px" src="{{dialog[0].image}}" mode="aspectFill" catchtap="jumpPeper" data-peper="{{dialog[0].url}}" data-type="dialog"></view>
+      <view class="bg"
+        style="background: url('{{dialog[0].image}}') no-repeat center; background-size: 100% 100%;border-radius:10px"
+        src="{{dialog[0].image}}" mode="aspectFill" catchtap="jumpPeper" data-peper="{{dialog[0].url}}"
+        data-type="dialog"></view>
       <!-- <button catchtap="signIn" data-id="1">签到领积分</button> -->
       <icon type="cancel" size="37" color="white" data-id="0" catchtap="closeSignIn"></icon>
     </view>

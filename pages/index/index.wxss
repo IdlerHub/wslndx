@@ -400,6 +400,7 @@
   width: 260rpx;
   height: 160rpx;
   border-radius: 8rpx;
+  background: #f5f6f8;
 }
 
 .recommend .left .icon {
