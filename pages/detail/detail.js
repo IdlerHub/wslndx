@@ -431,6 +431,7 @@ Page({
           })
           comment.push(item)
         })
+        this.comment = JSON.parse(JSON.stringify(comment))
         this.setData({
           comment: comment
         })
@@ -1268,5 +1269,29 @@ Page({
    /*长按复制内容 */
    copythat(e) {
     app.copythat(e.target.dataset.content)
+    if(e.target.dataset.type == 'comment') {
+      this.data.comment[e.target.dataset.index].content = "<span style='background:#f2f2f2'>"+ this.data.comment[e.target.dataset.index].content +'</span>'
+      this.setData({
+        comment: this.data.comment
+      })
+      setTimeout(() => {
+        this.data.comment[e.target.dataset.index].content = this.comment[e.target.dataset.index].content
+         this.setData({
+          comment: this.data.comment
+         }) 
+      }, 2500);
+    } else {
+      console.log(e)
+      this.data.comment[e.target.dataset.index].reply_array[e.target.dataset.chilindex].reply_content = "<span style='background:#f2f2f2'>"+ this.data.comment[e.target.dataset.index].reply_array[e.target.dataset.chilindex].reply_content +'</span>'
+      this.setData({
+        comment: this.data.comment
+      })
+      setTimeout(() => {
+        this.data.comment[e.target.dataset.index].reply_array[e.target.dataset.chilindex].reply_content = this.comment[e.target.dataset.index].reply_array[e.target.dataset.chilindex].reply_content
+         this.setData({
+          comment: this.data.comment
+         }) 
+      }, 2500);
+    }
   }
 })

@@ -25,7 +25,7 @@
   </view>
   <view class="stick" catchtap="navigate" data-id="{{ bokeTop.id }}" wx:if="{{bokeTop.content}}">
     <image src="/images/Stick.png"></image>
-    <rich-text class="stickText" nodes="{{ bokeTop.content }}" catchlongpress="copythat" data-content="{{ bokeTop.content }}"></rich-text>
+    <rich-text class="stickText" nodes="{{ bokeTop.content }}"></rich-text>
     <image src="/images/stickright.png"></image>
   </view>
   <view class="wrap">
@@ -42,7 +42,7 @@
         <view class="collect" catchtap="collect" data-id="{{item.id}}" data-status="{{item.collectstatus}}" data-index="{{index}}">...</view>
       </view>
       <view catchtap="navigate" data-id="{{ item.id }}">
-        <rich-text wx:if="{{ item.content }}" class="name" nodes="{{ item.content }}" space="emsp" catchlongpress="copythat" data-content="{{ item.content }}"></rich-text>
+        <rich-text wx:if="{{ item.content }}" class="name" nodes="{{ item.content }}"></rich-text>
         <view class="content" wx:if="{{ item.images.length > 0 }}">
           <view class="img one" wx:if="{{ item.images.length == 1 }}">
             <image mode="widthFix" wx:for="{{ item.images }}" wx:for-item="items" wx:key="index" src="{{ fn.search(item.images[0]) > 0 ?  item.images : item.image_compress + '/resize,p_50' }}" data-urls="{{ item.images }}" data-current="{{ items }}" data-index="{{ index }}" catchtap="previewImage" lazy-load></image>

@@ -96,11 +96,11 @@
                       </view>
                     </view>
                   </view>
-                  <rich-text nodes="{{ item.content }}" catchlongpress="copythat" data-content="{{ item.content }}"></rich-text>
+                  <rich-text nodes="{{ item.content }}" catchlongpress="copythat" data-content="{{ item.content }}" data-type="comment" data-index="{{index}}"></rich-text>
                   <button wx:if="{{ $state.userInfo.id != item.uid }}" class="reply-btn" data-reply="{{ item }}" catchtap="show">回复</button>
                 </view>
               </view>
-              <view class="children" wx:for="{{ item.reply_array }}" wx:key="index" wx:for-item="child">
+              <view class="children" wx:for="{{ item.reply_array }}" wx:key="index" wx:for-item="child" wx:for-index="number">
                 <view class="from_user">
                   <view class="user_info">
                     <image class="img" mode="aspectFill" src="{{ child.from_user_avatar }}"></image>
@@ -114,7 +114,7 @@
                     </view>
                   </view>
                 </view>
-                <rich-text nodes="{{ child.rtext + child.reply_content }}" catchlongpress="copythat" data-content="{{ child.reply_content }}"></rich-text>
+                <rich-text nodes="{{ child.rtext + child.reply_content }}" catchlongpress="copythat" data-content="{{ child.reply_content }}" data-index="{{index}}" data-chilindex="{{number}}"></rich-text>
                 <button wx:if="{{ $state.userInfo.id != child.reply_user_id }}" class="reply-btn" data-reply="{{ child }}" data-parent="{{ item.id }}" catchtap="show">回复</button>
               </view>
               <view class="reply_all" wx:if="{{ item.reply_num > 3 }}" data-parentid="{{ item.id }}" catchtap="toCommentDetail"> 查看全部{{ item.reply_num }}条 </view>

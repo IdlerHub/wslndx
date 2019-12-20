@@ -20,7 +20,7 @@
       <view class="delete" data-index="{{ index }}" catchtap="del"> <image mode="aspectFill" src="{{ $state.imgHost }}/delete.png"></image>删除</view>
     </view>
     <view bindtap="navigate" data-id="{{ item.id }}">
-      <rich-text class="name" space="emsp" nodes="{{ item.content }}" catchlongpress="copythat" data-content="{{ item.content }}"></rich-text>
+      <rich-text class="name" space="emsp" nodes="{{ item.content }}"></rich-text>
       <view class="content" wx:if="{{ item.images.length > 0 }}">
         <view class="img one" wx:if="{{ item.images.length == 1 }}">
           <image mode="widthFix" src="{{ item.image_compress[0] }}" data-urls="{{ item.images }}" data-current="{{ item.images[0] }}" catchtap="previewImage"></image>
