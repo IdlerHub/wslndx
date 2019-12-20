@@ -1270,7 +1270,7 @@ Page({
    copythat(e) {
     app.copythat(e.target.dataset.content)
     if(e.target.dataset.type == 'comment') {
-      this.data.comment[e.target.dataset.index].content = "<span style='background:#f2f2f2'>"+ this.data.comment[e.target.dataset.index].content +'</span>'
+      this.data.comment[e.target.dataset.index].content = "<span style='background:#f6eeee'>"+ this.data.comment[e.target.dataset.index].content +'</span>'
       this.setData({
         comment: this.data.comment
       })
@@ -1282,7 +1282,7 @@ Page({
       }, 2500);
     } else {
       console.log(e)
-      this.data.comment[e.target.dataset.index].reply_array[e.target.dataset.chilindex].reply_content = "<span style='background:#f2f2f2'>"+ this.data.comment[e.target.dataset.index].reply_array[e.target.dataset.chilindex].reply_content +'</span>'
+      this.data.comment[e.target.dataset.index].reply_array[e.target.dataset.chilindex].reply_content = "<span style='background:#f6eeee'>"+ this.data.comment[e.target.dataset.index].reply_array[e.target.dataset.chilindex].reply_content +'</span>'
       this.setData({
         comment: this.data.comment
       })

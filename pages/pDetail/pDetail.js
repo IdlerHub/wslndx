@@ -995,7 +995,7 @@ Page({
     app.copythat(e.target.dataset.content)
     if(e.target.dataset.type == 'content') {
       this.setData({
-        'detail.content': "<span style='background:#f2f2f2'>"+ this.data.detail.content +'</span>'
+        'detail.content': "<span style='background:#f6eeee'>"+ this.data.detail.content +'</span>'
       })
       setTimeout(() => {
          this.setData({
@@ -1003,7 +1003,7 @@ Page({
          }) 
       }, 2500);
     } else if(e.target.dataset.type == 'reply'){
-      this.data.comment[e.target.dataset.index].content = "<span style='background:#f2f2f2'>"+ this.data.comment[e.target.dataset.index].content +'</span>'
+      this.data.comment[e.target.dataset.index].content = "<span style='background:#f6eeee'>"+ this.data.comment[e.target.dataset.index].content +'</span>'
       this.setData({
         comment: this.data.comment
       })
@@ -1014,7 +1014,7 @@ Page({
          }) 
       }, 2500);
     } else {
-      this.data.comment[e.target.dataset.index].reply_array[e.target.dataset.chiindex].reply_content = "<span style='background:#f2f2f2'>"+ this.data.comment[e.target.dataset.index].reply_array[e.target.dataset.chiindex].reply_content +'</span>'
+      this.data.comment[e.target.dataset.index].reply_array[e.target.dataset.chiindex].reply_content = "<span style='background:#f6eeee'>"+ this.data.comment[e.target.dataset.index].reply_array[e.target.dataset.chiindex].reply_content +'</span>'
       this.setData({
         comment: this.data.comment
       })
