@@ -586,6 +586,7 @@
 .now image:nth-child(3) {
   width: 30rpx;
   height: 30rpx;
+  margin-left: 20rpx;
 }
 .now  .line {
   min-width: 510rpx;
@@ -595,7 +596,6 @@
   0% {
     bottom: -88rpx;
   }
-
   100% {
     bottom: 138rpx;
   }

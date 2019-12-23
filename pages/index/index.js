@@ -27,7 +27,7 @@ Page({
         }
         pages[0].route == 'pages/sign/sign' ?  '' :  wx.redirectTo({ url: "/pages/sign/sign" })
       }
-    }, 3000)
+    }, 5000)
     let reg = /ios/i
     let pt = 20 //导航状态栏上内边距
     let h = 44 //导航状态栏高度
