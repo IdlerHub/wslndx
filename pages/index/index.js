@@ -250,7 +250,7 @@ Page({
   },
   getBanner() {
     this.setData({
-      currentTab:0
+      bannercurrentTab:0
     })
     return app.classroom.banner({}).then(res => {
       this.setData({

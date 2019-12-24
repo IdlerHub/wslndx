@@ -147,6 +147,7 @@ App({
   wxLogin: async function() {
     await wxp.login({}).then(res => {
       this.globalData.code = res.code;
+      console.log(res.code)
     });
     await this.user.wxLoginCode({ code: this.globalData.code }).then(msg => {
       if (msg.code === 1) {
