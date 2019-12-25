@@ -216,6 +216,9 @@ Page({
     this.setData({
       text: e.detail.value
     })
+    this.param = {
+      page_size:10
+    }
     e.detail.value.length < 1 ? this.setData({
       lessList: [],
       showqst: false,
