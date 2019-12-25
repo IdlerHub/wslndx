@@ -166,7 +166,6 @@ Page({
   gettop() {
     return app.circle.bokeblogTop().then(res => {
       if(res.code == 1 ) {
-        console.log(res)
         this.setData({
           bokeTop: res.data
         })

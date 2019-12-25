@@ -143,6 +143,7 @@ Page({
         currentTab: cur
       })
     }
+    console.log(cur)
     // this.geteCatrcommend(id)
     if (this.data.currentTab == 0) {
       this.setData({

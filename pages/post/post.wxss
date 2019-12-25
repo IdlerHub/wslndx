@@ -50,9 +50,10 @@ page {
 }
 .stick .stickText {
   flex: 1;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
   overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
   font-size:40rpx;
   font-weight:400;
   color:#3a3a3a;

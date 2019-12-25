@@ -112,8 +112,6 @@
       <view class="skeletonDaram"></view>
     </view>
   </view>
-
-
   <swiper class="tab" style="height:{{ height }}px" current="{{ currentTab }}" duration="300" bindchange="switchTab"
     bindtouchstart="touchstart" bindtouchend="touchend">
     <swiper-item class="tab-item">
