@@ -836,7 +836,6 @@ Page({
       this.data.replyshow ? text = this.data.replycontent + text : text = this.data.content + text
       // 获取音频文件临时地址
       let filePath = res.tempFilePath
-      console.log(filePath)
       let duration = res.duration
       if (res.result == '') {
         this.setData({

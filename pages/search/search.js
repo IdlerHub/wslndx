@@ -204,7 +204,7 @@ Page({
     })
   },
   keychange(e) {
-    let systems = wx.getSystemInfoSync()
+    // let systems = wx.getSystemInfoSync()
     // wx.onKeyboardHeightChange(res => {
     //   console.log(res.height)
     //   res.height != 0 ? this.setData({
@@ -216,9 +216,11 @@ Page({
     this.setData({
       text: e.detail.value
     })
-    e.detail.value.length == 0 ? this.setData({
-      lessList: []
-    }) : ''
+    e.detail.value.length < 1 ? this.setData({
+      lessList: [],
+      showqst: false,
+      showvioce: true
+    }) : this.lesssearch()
   },
   cleartxt() {
     this.setData({
