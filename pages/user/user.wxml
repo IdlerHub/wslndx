@@ -71,6 +71,14 @@
       <image src="{{ $state.imgHost }}/draw.png" class="iconfont"></image>
       <text>积分抽奖</text>
     </navigator>
+    <navigator hover-class="none" class="nav" url="/pages/usermesseage/usermesseage" open-type="navigate" bindtap="drawPage">
+      <image src="{{ $state.imgHost }}/draw.png" class="iconfont"></image>
+      <text>我的消息</text>
+    </navigator>
+    <navigator hover-class="none" class="nav" url="/pages/drawPage/drawPage" open-type="navigate" bindtap="drawPage">
+      <image src="{{ $state.imgHost }}/draw.png" class="iconfont"></image>
+      <text>我的关注</text>
+    </navigator>
   </view>
   <navBar path="user" />
   <!-- wx:if="{{$state.newGuide.user == 0}}" -->

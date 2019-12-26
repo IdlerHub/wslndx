@@ -69,7 +69,7 @@
   </view>
 </view>
 <view class="footer">
-  <navigator url="../release/release" hover-class="none" open-type="navigate" class="write">
+  <navigator url="../release/release?title={{circle.title}}" hover-class="none" open-type="navigate" class="write">
     <image mode="aspectFill" class="icon" src="{{ $state.imgHost }}/write.png"></image>
     <text class="text">写帖</text>
   </navigator>

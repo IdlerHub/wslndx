@@ -36,7 +36,8 @@
     "pages/giftMessage/giftMessage",
     "pages/search/search",
     "pages/drag/drag",
-    "components/integralAni/integralAni"
+    "components/integralAni/integralAni",
+    "pages/usermesseage/usermesseage"
   ],
   "permission": {
     "scope.userLocation": {

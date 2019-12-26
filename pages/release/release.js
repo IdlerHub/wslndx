@@ -14,8 +14,10 @@ Page({
     showFlag: false,
     showintegral: false
   },
-  onLoad() {
-    this.getCircleList()
+  onLoad(ops) {
+    console.log(ops)
+    ops.title ? this.circleTitle = ops.title : ''
+    this.getCircleList(ops.title)
   },
   onShow() {
     if (this.data.$state.releaseParam != null) {
@@ -242,12 +244,22 @@ Page({
     })
   },
   // 获取所有圈子信息
-  getCircleList() {
+  getCircleList(title) {
     app.circle.joinedCircles().then(msg => {
       if (msg.code == 1) {
-        this.setData({
-          allCircle: msg.data
-        })
+        if(title) {
+          msg.data.forEach(item => {
+            item.title == title ? item.isSel = true : ''
+          })
+          this.setData({
+            showFlag: true,
+            allCircle: msg.data
+          })
+        } else {
+          this.setData({
+            allCircle: msg.data
+          })
+        }
       }
     })
   },
