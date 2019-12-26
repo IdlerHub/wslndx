@@ -2,7 +2,8 @@
   "backgroundTextStyle": "light",
   "navigationBarTitleText": "秀风采",
   "navigationBarTextStyle": "black",
-  "enablePullDownRefresh": true,
+  "navigationStyle": "custom",
+  "disableScroll":true,
   "usingComponents": {
     "formCode": "/components/formCode/formCode",
     "navBar": "/components/navBar/navBar",

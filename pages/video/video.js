@@ -6,7 +6,7 @@ Page({
     list: [],
     tip: true,
     vid: "short-video" + Date.now(),
-    top: 27,
+    top: 20,
     topT:0,
     pause:true,
     showGuide: false,
@@ -21,13 +21,11 @@ Page({
   },
   onLoad(options) {
     let systemInfo = wx.getSystemInfoSync()
-    systemInfo.statusBarHeight == 20 ? '' : this.setData({
-      top: 48
-    })
-    systemInfo.statusBarHeight == 20 ? this.setData({
-      topT: 131
+    systemInfo.statusBarHeight < 30 ? this.setData({
+      topT: 118
     }) : this.setData({
-      topT: 176
+      top: 48,
+      topT: 168
     })
     this.videoContext = wx.createVideoContext(this.data.vid)
     this.getCategory()

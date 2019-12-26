@@ -25,7 +25,10 @@ Page({
     },
     showRelease: false,
     media_type:null,
-    showintegral: false
+    showintegral: false,
+    top: 20,
+    currentTab:0,
+    scrolltop: 0
   },
   onLoad(options) {
     this.param = { page: 1, pageSize: 10 }
@@ -34,6 +37,19 @@ Page({
     })
     this.getList([])
     this.gettop()
+    let that = this
+    let query = wx.createSelectorQuery().in(this)
+    let systemInfo = wx.getSystemInfoSync()
+    query.selectAll(".tabnav").boundingClientRect()
+      query.exec(res => {
+        console.log(res[0][0])
+        systemInfo.statusBarHeight < 30 ? this.setData({
+          topT: res[0][0].height + 10
+        }) : this.setData({
+          top: 48,
+          topT: res[0][0].height + 28
+        }) 
+      })
     app.aldstat.sendEvent("菜单", { name: "风采展示" })
   },
   onShow: function() {
@@ -299,26 +315,45 @@ Page({
     })
   },
   //下拉刷新
-  onPullDownRefresh() {
-    this.param.page = 1
-    this.setData({
-      isRefreshing: true
-    })
-    this.getList([]).then(() => {
-      wx.stopPullDownRefresh()
-      let timer = setTimeout(() => {
-        this.setData({
-          isRefreshing: false
-        })
-        clearTimeout(timer)
-      }, 1000)
-    })
-    this.gettop()
+  itemtouch(e) {
+    if(this.data.scrolltop == 0) {
+      var moveY= e.touches[0].clientY;
+      var diffY = this.startY - moveY;
+      console.log(this.startY,moveY,diffY)
+      if(diffY>-10) {
+        return
+      } else {
+        this.param.page = 1
+      this.setData({
+        isRefreshing: true
+      })
+      this.getList([]).then(() => {
+        wx.stopPullDownRefresh()
+        let timer = setTimeout(() => {
+          this.setData({
+            isRefreshing: false
+          })
+          clearTimeout(timer)
+        }, 1000)
+      })
+      this.gettop()
+      }
+    }
   },
   //上拉加载
-  onReachBottom() {
+  scrolltolower() {
     this.param.page++
     this.getList()
+  },
+  touchStart(e) {
+    if (e.touches.length == 1) {
+        this.startY=e.touches[0].clientY
+    }
+  },
+  scrollinfo(e) {
+    this.setData({
+      scrolltop: e.detail.scrollTop
+    })
   },
   toUser(e) {
     // console.log(e)
@@ -336,6 +371,22 @@ Page({
     wx.navigateTo({
       url: "/pages/message/message"
     })
+  },
+  switchTab(event) {
+    let cur = event.detail.current
+    this.setData({
+      currentTab: cur
+    })
+  },
+  switchNav(event) {
+    let cur = event.currentTarget.dataset.current
+    if (this.data.currentTab === cur) {
+      return false
+    } else {
+      this.setData({
+        currentTab: cur
+      })
+    }
   },
   //用于数据统计
   onHide() {
@@ -490,15 +541,6 @@ Page({
             arr.push(index)
           }
         })
-        // console.log(arr)
-      //   let height = res[0].height - (-70)
-      //   console.log(height)
-      //   height < 100 ? that.setData({
-      //     height: 700
-      //   }) :
-      //     that.setData({
-      //       height: height
-      //     })
       })
   },
   /*长按复制内容 */

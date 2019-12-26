@@ -2,6 +2,42 @@
 /* 环境变量 */
 page {
   background: #eee; }
+
+  .tabnav {
+    width: 100%;
+    position: fixed;
+    top: 0;
+    z-index: 1000;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    background: rgba(238,238,238,1);
+    padding-bottom: 20rpx;}
+    .tabnav .tabnav-item {
+      font-size:22px;
+      font-family:PingFangSC-Medium,PingFang SC;
+      font-weight:600;
+      color:rgba(51,51,51,1);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .tabnav .tabnav-item:nth-child(1) {
+      margin-right: 96rpx;
+    }
+    .tabnav .lose {
+      font-size:20px;
+      font-weight:500;
+      color:rgba(153,153,153,1);
+    }
+    .swiper {
+      height: calc(100vh - 280rpx);
+    }
+    .containerWrap {
+      height: 100%;
+    }
 .message {
   background: white;
   height: 120rpx;
@@ -64,8 +100,7 @@ page {
   margin-left: 25rpx;
 }
 .wrap {
-  box-sizing: border-box;
-  padding-bottom: 120rpx; }
+  box-sizing: border-box; }
   .wrap > .item {
     background: #fff;
     padding: 0 30rpx;
