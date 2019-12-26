@@ -319,8 +319,7 @@ Page({
     if(this.data.scrolltop == 0) {
       var moveY= e.touches[0].clientY;
       var diffY = this.startY - moveY;
-      console.log(this.startY,moveY,diffY)
-      if(diffY>-10) {
+      if(diffY> -80 ) {
         return
       } else {
         this.param.page = 1
