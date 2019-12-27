@@ -23,6 +23,7 @@
           </view>
         </view>
       </view>
+      <view class="attention">关注</view>
     </view>
   </view>
   <view class="wrap">

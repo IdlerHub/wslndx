@@ -16,7 +16,7 @@
       </view>
     </view>
     <view class="join joined" wx:if="{{ circle.joined == 1 }}">已加入</view>
-    <view class="join" wx:else bindtap="join">+加入</view>
+    <view class="join" wx:else bindtap="join">加入</view>
   </view>
   <view class="wrap">
     <view wx:for="{{ list }}" wx:key="index" class="item">

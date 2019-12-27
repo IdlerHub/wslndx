@@ -65,6 +65,25 @@ page .Pagetop {
       page .container > .top .box .iconfont {
         color: white;
         margin-top: -70rpx; }
+      page .container > .top .box .attention {
+        position: absolute;
+        top: 51rpx;
+        right: 30rpx;
+        width:136rpx;
+        height:56rpx;
+        background:rgba(255,255,255,1);
+        border-radius:6rpx;
+        font-size:32rpx;
+        font-weight:600;
+        color:rgba(223,32,32,1);
+        text-align: center;
+        line-height: 56rpx;
+      }
+      page .container > .top .box .attentionold {
+        background:rgba(153,149,148,1);
+        font-weight:500;
+        color:rgba(255,255,255,1);
+      }
   page .scoreBg {
     display: block;
     width: 730rpx;
