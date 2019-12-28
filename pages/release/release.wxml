@@ -13,7 +13,7 @@
             <view class='ub' wx:if="{{!hide}}" bindtap='addImg'>+</view>
         </view>
     </view>
-    <view class="cBox" wx:if="{{allCircle.length > 0 && $state.userInfo.fs_id == 0 }}">
+    <view class="cBox" wx:if="{{allCircle.length > 0 && $state.userInfo.fs_id == 0 && !circleTitle}}">
         <view class="hd">
             <text>是否同步到圈子 </text>
             <switch checked bindchange="switchChange" checked="{{showFlag}}" />
@@ -23,6 +23,12 @@
                 <text>{{item.title}}</text>
                 <image src="../../images/icon-sel.png" mode="aspectFill" wx:if="{{item.isSel}}"></image>
             </view>
+        </view>
+    </view>
+    <view class="cBox" wx:else>
+        <view class="hd">
+            <text>是否同步到{{circleTitle}} </text>
+            <switch checked bindchange="switchChange" checked="{{showFlag}}" />
         </view>
     </view>
     <view class='footer'>
