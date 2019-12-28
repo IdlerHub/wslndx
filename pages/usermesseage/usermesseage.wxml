@@ -1,2 +1,16 @@
 <!--pages/usermesseage/usermesseage.wxml-->
-<text>pages/usermesseage/usermesseage.wxml</text>
+<view class="contrain">
+  <view class="newitem" wx:for="{{newsList}}" wx:key="index" bindtap="tomessage" data-item="{{item}}">
+    <view class="news-time">{{item.creattime}}</view>
+    <view class="newsBox">
+      <view class="news-title">
+        {{item.title}}
+      </view>
+      <rich-text nodes="{{item.content}}" class="tichtext" style="display: -webkit-box;-webkit-box-orient: vertical;-webkit-line-clamp: 4;overflow: hidden;"></rich-text>
+      <view class="tonews">
+        <text>查看详情</text>
+        <image src="/images/stickright.png"></image>
+      </view>
+    </view>
+  </view>
+</view>

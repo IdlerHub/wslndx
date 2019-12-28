@@ -1,1 +1,65 @@
 /* pages/usermesseage/usermesseage.wxss */
+page {
+  background:rgba(242,242,242,1);
+}
+.contrain {
+  width: 100%;
+  padding: 30rpx 30rpx 80rpx 30rpx;
+  box-sizing: border-box;
+}
+.contrain .newitem {
+  margin-bottom: 34rpx;
+}
+.contrain .newitem .news-time{
+  text-align: center;
+  font-size:28rpx;
+  font-family:PingFang-SC-Medium,PingFang-SC;
+  font-weight:500;
+  color:rgba(153,153,153,1);
+  margin-bottom: 12rpx;
+}
+.newsBox {
+  width: 100%;
+  padding: 31rpx 30rpx;
+  box-sizing: border-box;
+  background: #fff;
+  overflow: hidden;
+  border-radius:8rpx;
+}
+.newsBox .news-title{
+  width: 100%;
+  font-size:40rpx;
+  font-family:PingFangSC-Medium,PingFang SC;
+  font-weight:500;
+  color:rgba(51,51,51,1);
+  margin-bottom: 8rpx;
+  overflow: hidden;
+  text-overflow:ellipsis;
+  white-space: nowrap;
+}
+.newsBox .richtext {
+  font-size:36rpx;
+  font-family:PingFangSC-Regular,PingFang SC;
+  font-weight:400;
+  color:rgba(58,58,58,1);
+  line-height:54rpx;
+}
+.newsBox .tonews{
+  width: 100%;
+  margin-top: 18rpx;
+  padding-top: 31rpx;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid rgba(237,237,237,1);
+}
+.newsBox .tonews text {
+  font-size:32rpx;
+  font-family:PingFangSC-Regular,PingFang SC;
+  font-weight:400;
+  color:rgba(153,153,153,1);
+}
+.newsBox .tonews image {
+  width:14rpx;
+  height:25rpx;
+}
