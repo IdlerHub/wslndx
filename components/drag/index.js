@@ -1,3 +1,4 @@
+const app = getApp()
 Component({
 	properties: {
 		// 数据源
@@ -5,7 +6,6 @@ Component({
 			type: Array,
 			value: []
 		},
-		// 列数
 		columns: {
 			type: Number,
 			value: 1,
@@ -22,7 +22,7 @@ Component({
 			type: Number,
 			value: 0,
 			observer: 'dataChange'
-		},
+		}
 	},
 	data: {
 		/* 渲染数据 */
@@ -61,8 +61,22 @@ Component({
 		dragging: false, // 是否在拖拽中
 		overOnePage: false, // 整个区域是否超过一个屏幕
 		itemTransition: false, // item 变换是否需要过渡动画, 首次渲染不需要
+		isEdit: false
 	},
 	methods: {
+		edit() {
+			this.data.isEdit ? this.setData({
+				isEdit: false
+			}) : this.setData({
+				isEdit: true
+			})
+		},
+		//取消加圈
+		fnCancelJoin(e) {
+			let curItem = e.currentTarget.dataset.item
+			let param = { fs_id: curItem.id }
+			app.circle.cancelJoin(param)
+		},
 		/**
 		 * 点击每一项后触发事件
 		 */
@@ -118,7 +132,8 @@ Component({
 				tranX: startTranX,
 				tranY: startTranY,
 			});
-			wx.vibrateShort();
+			console.log(this.data)
+			// wx.vibrateShort();
 		},
 		touchMove(e) {
 			// 获取触摸点信息
@@ -185,7 +200,7 @@ Component({
 			// 获取 originKey 和 endKey
 			let originKey = parseInt(e.currentTarget.dataset.key),
 				endKey = this.calculateMoving(tranX, tranY);
-
+				console.log(originKey,endKey)
 			// 如果是固定 item 则 return
 			if (this.isFixed(endKey)) return;
 
@@ -217,7 +232,6 @@ Component({
 
 			let endKey = i + this.data.columns * j;
 			endKey = endKey >= this.data.list.length ? this.data.list.length - 1 : endKey;
-
 			return endKey
 		},
 		/**
@@ -286,7 +300,7 @@ Component({
 			this.setData({list: list});
 
 			if (!vibrate) return;
-			if (platform !== "devtools") wx.vibrateShort();
+			// if (platform !== "devtools") wx.vibrateShort();
 			let listData = [];
 			list.forEach((item) => {
 				listData[item.key] = item.data
@@ -352,7 +366,6 @@ Component({
 				this.createSelectorQuery().select(".item-wrap").boundingClientRect((res) => {
 					// (列表的底部到页面顶部距离 > 屏幕高度 - 底部固定区域高度) 用该公式来计算是否超过一页
 					let overOnePage = res.bottom > windowHeight - realBottomSize;
-
 					this.setData({
 						itemWrapDom: res,
 						overOnePage: overOnePage
@@ -384,9 +397,42 @@ Component({
 			this.getPosition(list, false);
 			// 异步加载数据时候, 延迟执行 initDom 方法, 防止基础库 2.7.1 版本及以下无法正确获取 dom 信息
 			setTimeout(() => this.initDom(), 10);
-		}
-	},
+		},
+		getList() {
+    //获取没有加入的圈子list
+			app.circle.noJoinCircles().then(msg => {
+				if (msg.code === 1) {
+					this.setData({
+						noJoinList: msg.data
+					})
+				}
+			})
+  	},
+		//加入加圈
+		fnJoin(e) {
+			// let curItem = e.currentTarget.dataset.item, index = e.currentTarget.dataset.index
+			// let param = { fs_id: curItem.id }
+			// this.setData({
+			// 	addIndex: index,
+			// 	addItem: true
+			// })
+			// this.settiome = setTimeout(() => {
+			// 	app.circle.join(param).then(res => {
+			// 		this.data.listData.splice(1,0,curItem)
+			// 		this.init()
+			// 		setTimeout(() => {
+			// 			this.data.noJoinList.splice(index,1)
+			// 			this.setData({
+			// 				noJoinList: this.data.noJoinList,
+			// 				addItem: false
+			// 			})
+			// 		}, 200);
+			// 	})
+			// }, 500);
+		},
+},
 	ready() {
 		this.init();
-	}
+		this.getList()
+	},  
 });

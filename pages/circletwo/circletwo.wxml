@@ -1,0 +1,3 @@
+
+<drag id="drag" bind:click="itemClick" columns="{{size}}" list-data="{{joinList}}" nojoinlist="{{noJoinList}}" addItem="{{addItem}}" top-size="110" bottom-size="{{isIphoneX ? 380 : 300 }}" bind:change="change" wx:if="{{noJoinList[0].image}}" bind:fnJoin="fnJoin"></drag>
+

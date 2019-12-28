@@ -1,9 +1,17 @@
+<view class="join-top">
+	<view class="join-title">
+		<view	class="title">我的圈子</view>
+	  <view class="titlemessge">长按标签拖动排序</view>
+	</view>
+	<view class="join-btn" bindtap="edit"> {{isEdit ? "完成" : '编辑'}}</view>
+</view>
+<!-- style="overflow-x: {{overOnePage ? 'hidden' : 'initial'}}" -->
 <view>
-	<view style="overflow-x: {{overOnePage ? 'hidden' : 'initial'}}">
+	<view>
 		<view class="item-wrap" style="height: {{ itemWrapHeight }}px;">
 			<view class="item {{cur == index? 'cur':''}} {{curZ == index? 'zIndex':''}} {{itemTransition && index !== cur ? 'itemTransition':''}} {{item.fixed ? 'fixed' : ''}}"
 				  wx:for="{{list}}"
-				  wx:key="{{index}}"
+				  wx:key="index"
 				  id="item{{index}}"
 				  data-key="{{item.key}}"
 				  data-index="{{index}}"
@@ -14,23 +22,26 @@
 					catch:touchend="{{dragging?'touchEnd':''}}">
 
 				<!-- start:请在该区域编写自己的渲染逻辑 -->
-				<view class="info" wx:if="{{columns >= 2}}">
-					<view class="info__item">
-						<image class="image" src="{{item.data.images}}"></image>
+					<view class="infoitem">
+						<image src="{{item.data.bimage}}"></image>
+						<view class="nojoin-btn joininfo" wx:if="{{isEdit}}" catchtap="fnCancelJoin" data-item="{{item.data}}">
+							<image src="../../images/icon-del.png" class="icon-add"></image> 
+							<text>取消</text>
+						</view>
 					</view>
-				</view>
-				<view wx:else class="cell">
-					<view class="cell__hd">
-						<image class="image" mode="aspectFill" src="{{item.data.images}}" alt=""/>
-					</view>
-					<view class="cell__bd">
-						<view class="name">{{item.data.title}}</view>
-						<view class="des">{{item.data.description}}</view>
-					</view>
-				</view>
 				<!-- end:请在该区域编写自己的渲染逻辑 -->
 
 			</view>
+		</view>
+	</view>
+</view>
+<view class="nojoin">
+	<view class="nojoin-title" style="{{addItem ? 'transform: translate(0,135px) 1.5s': ''}}">其他圈子</view>
+	<view class="infoitem {{ addIndex == index ? addItem ? 'close' : '' : '' }}" wx:for="{{noJoinList}}" wx:key="index">
+		<image src="{{item.bimage}}"></image>
+		<view class="nojoin-btn" catchtap="fnJoin" data-item="{{item}}" data-index="{{index}}">
+			<image src="../../images/icon-add.png" class="icon-add"></image> 
+      <text>加圈</text>
 		</view>
 	</view>
 </view>

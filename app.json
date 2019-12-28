@@ -37,7 +37,8 @@
     "pages/search/search",
     "pages/drag/drag",
     "components/integralAni/integralAni",
-    "pages/usermesseage/usermesseage"
+    "pages/usermesseage/usermesseage",
+    "pages/circletwo/circletwo"
   ],
   "permission": {
     "scope.userLocation": {

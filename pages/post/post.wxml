@@ -33,6 +33,7 @@
           <icon class="iconfont icon-arrow-right"></icon>
         </view>
       </view>
+      
       <view class="stick" catchtap="navigate" data-id="{{ bokeTop.id }}" wx:if="{{bokeTop.content}}">
         <image src="/images/Stick.png"></image>
         <rich-text class="stickText" nodes="{{ bokeTop.content }}"></rich-text>
