@@ -148,6 +148,12 @@ function collectCancel(param) {
 function bokeblogTop(param) {
   return httpService.post("Bokeblog/top", param)
 }
+
+/* 展示默认博客列表 */
+function defaultCircle(param) {
+  return httpService.post("Friendscircle/defaultCircle", param)
+}
+
 module.exports = {
   allCircles,
   noJoinCircles,
@@ -174,5 +180,6 @@ module.exports = {
   getMessage,
   collect,
   collectCancel,
-  bokeblogTop
+  bokeblogTop,
+  defaultCircle
 }

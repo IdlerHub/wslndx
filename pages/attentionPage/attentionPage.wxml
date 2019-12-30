@@ -1,2 +1,14 @@
 <!--pages/attentionPage/attentionPage.wxml-->
-<text>pages/attentionPage/attentionPage.wxml</text>
+<view class="container">
+  <view wx:for="{{list}}" wx:key="index" class="item">
+    <image src="{{item.avatar}}"></image>
+    <view class="titlecon">
+      <view class="title-name">
+        <text class="name">{{item.name}}</text>
+        <text class="label" wx:if="{{item.type}}">{{item.type}}</text>
+      </view>
+      <view class="univers">{{item.university_name}}</view>
+    </view>
+    <view class="{{item.status == '关注'? 'joinbtn' : 'btn'}}" catchtap="closeattention" data-index="{{index}}">{{item.status}}</view>
+  </view>
+</view>

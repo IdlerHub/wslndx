@@ -62,76 +62,6 @@ Page({
       })
       this.gettop()
       app.globalData.postShow = false
-      let joinedList =  [
-        {
-          "id": 16,
-          "title": "艺术书画",
-          "image": "https:\/\/jinling-xcx-dev.obs.cn-north-1.myhuaweicloud.com:443\/\/uploads\/images\/15f9b176a7a5136f34e6b0cd009aaddc.png",
-          "bimage": "https:\/\/jinling-xcx-dev.obs.cn-north-1.myhuaweicloud.com:443\/\/uploads\/images\/414bf9f4b62b5cf45a36af612dbec095.png",
-          "admin_name": "廖老师说艺术",
-          "admin_image": "https:\/\/jinling-xcx-dev.obs.cn-north-1.myhuaweicloud.com:443\/\/uploads\/images\/2621dc5d6de8710c8704fbe60cb08c27.png",
-          "admin_qrcode_image": "https:\/\/jinling-xcx-dev.obs.cn-north-1.myhuaweicloud.com:443\/\/uploads\/images\/b724a4f28fd4779804f7678cc9ea8773.png",
-          "members": 39,
-          "createtime": 1552742048,
-          "weigh": 16,
-          "status": 1
-        },
-        {
-          "id": 15,
-          "title": "舞蹈健身",
-          "image": "https:\/\/jinling-xcx-dev.obs.cn-north-1.myhuaweicloud.com:443\/\/uploads\/images\/baec05d0aca4fd5712e15db2333edd9f.png",
-          "bimage": "https:\/\/jinling-xcx-dev.obs.cn-north-1.myhuaweicloud.com:443\/\/uploads\/images\/22a2f0c273baf9b81bf4f1e442641d61.png",
-          "admin_name": "何老师教健身",
-          "admin_image": "https:\/\/jinling-xcx-dev.obs.cn-north-1.myhuaweicloud.com:443\/\/uploads\/images\/4b50b28a6d3132464a80db63ee4ccc18.png",
-          "admin_qrcode_image": "https:\/\/jinling-xcx-dev.obs.cn-north-1.myhuaweicloud.com:443\/\/uploads\/images\/a2935916fa958c775eedac667d11832c.png",
-          "members": 34,
-          "createtime": 1552741973,
-          "weigh": 15,
-          "status": 1
-        },
-        {
-          "id": 14,
-          "title": "音乐汇",
-          "image": "https:\/\/jinling-xcx-dev.obs.cn-north-1.myhuaweicloud.com:443\/\/uploads\/images\/1be98bda104e0eeeba7553414aa83bb5.png",
-          "bimage": "https:\/\/jinling-xcx-dev.obs.cn-north-1.myhuaweicloud.com:443\/\/uploads\/images\/0640bc07d1165b75f09d81550633bcf1.png",
-          "admin_name": "林老师赏音乐",
-          "admin_image": "https:\/\/jinling-xcx-dev.obs.cn-north-1.myhuaweicloud.com:443\/\/uploads\/images\/9092adf399a0995b1cc0a8c7ed2b307e.png",
-          "admin_qrcode_image": "https:\/\/jinling-xcx-dev.obs.cn-north-1.myhuaweicloud.com:443\/\/uploads\/images\/6686f7dd0590088dafb6f997c484f67f.png",
-          "members": 14,
-          "createtime": 1552741915,
-          "weigh": 14,
-          "status": 1
-        },
-        {
-          "id": 12,
-          "title": "健康养生",
-          "image": "https:\/\/jinling-xcx-dev.obs.cn-north-1.myhuaweicloud.com:443\/\/uploads\/images\/8069f0a0fe1c9e0a515fb4012a54d41a.png",
-          "bimage": "https:\/\/jinling-xcx-dev.obs.cn-north-1.myhuaweicloud.com:443\/\/uploads\/images\/c5921126a28ee385a4f5591cbb56d6ef.png",
-          "admin_name": "许老师谈养生",
-          "admin_image": "https:\/\/jinling-xcx-dev.obs.cn-north-1.myhuaweicloud.com:443\/\/uploads\/images\/c0406fd88359fc55439b199c253ec0e6.png",
-          "admin_qrcode_image": "https:\/\/jinling-xcx-dev.obs.cn-north-1.myhuaweicloud.com:443\/\/uploads\/images\/c2e90c2688bbaeace015ee01cb6f659b.png",
-          "members": 9,
-          "createtime": 1552741759,
-          "weigh": 12,
-          "status": 1
-        },
-        {
-          "id": 11,
-          "title": "爱旅行",
-          "image": "https:\/\/jinling-xcx-dev.obs.cn-north-1.myhuaweicloud.com:443\/\/uploads\/images\/4667972a6f081bc70ce736b1a927e852.png",
-          "bimage": "https:\/\/jinling-xcx-dev.obs.cn-north-1.myhuaweicloud.com:443\/\/uploads\/images\/41caa13fc13f0c1d2591a6b023a928e8.png",
-          "admin_name": "邱老师爱旅行",
-          "admin_image": "https:\/\/jinling-xcx-dev.obs.cn-north-1.myhuaweicloud.com:443\/\/uploads\/images\/246e5d280a732f5cb9e37cc8de5b3d8a.png",
-          "admin_qrcode_image": "https:\/\/jinling-xcx-dev.obs.cn-north-1.myhuaweicloud.com:443\/\/uploads\/images\/aa70847df9325acb06baf45030a6ab4f.png",
-          "members": 20,
-          "createtime": 1552741707,
-          "weigh": 11,
-          "status": 1
-        }
-      ]
-      this.setData({
-        joinedList
-      })
     }
     /* 从cdetail-->发帖 */
     if (app.globalData.rlSuc) {
@@ -250,10 +180,18 @@ Page({
     })
   },
   gettop() {
-    return app.circle.bokeblogTop().then(res => {
+    app.circle.bokeblogTop().then(res => {
       if(res.code == 1 ) {
         this.setData({
           bokeTop: res.data
+        })
+      }
+    })
+    app.circle.defaultCircle().then(res => {
+      console.log(res)
+      if(res.code == 1) {
+        this.setData({
+          joinedList: res.data
         })
       }
     })

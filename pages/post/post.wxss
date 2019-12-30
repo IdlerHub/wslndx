@@ -82,6 +82,7 @@ page {
   display: inline-block;
   text-align: center;
   margin-left: 24rpx;
+  position: relative;
 }
 .circle-scroll .scroll-view:nth-child(1) {
   margin-left: 30rpx;
@@ -93,6 +94,20 @@ page {
   width:152rpx;
   height:152rpx;
   border-radius:6rpx;
+}
+.circle-scroll .scroll-view .label {
+  width:72rpx;
+  height:36rpx;
+  background:rgba(223,32,32,1);
+  border-radius:0rpx 0 8rpx 0;
+  font-size:26rpx;
+  font-weight:500;
+  color:rgba(255,255,255,1);
+  line-height:36rpx;
+  text-align: center;
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 .circle-scroll .scroll-view text{
   display: block;

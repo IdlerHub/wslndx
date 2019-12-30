@@ -190,12 +190,18 @@ Page({
       })
     }
   },
+  showbig() {
+    this.setData({
+      showbig:true
+    })
+  },
+  closeewm() {
+    this.setData({
+      showbig:false
+    })
+  },
   //用于数据统计
   onHide() {
     app.aldstat.sendEvent("退出", { name: "学友圈详情页" })
   },
-  /*长按复制内容 */
-  copythat(e) {
-    app.copythat(e.target.dataset.content)
-  }
 })

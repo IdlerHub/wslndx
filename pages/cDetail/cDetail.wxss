@@ -81,7 +81,7 @@ page {
     color: #3a3a3a;
     letter-spacing: 0;
     line-height: 40rpx; }
-
+    
 .img.one {
   max-height: 100vh;
   overflow: hidden; }
@@ -211,6 +211,14 @@ page {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap; }
+    .header .text .textBox {
+      display: flex;
+      align-items: center;
+    }
+    .header .text image {
+      width: 44rpx;
+      height: 44rpx;
+      margin:0 0 0 20rpx; }
   .header .name {
     font-size: 50rpx;
     line-height: 50rpx;
@@ -237,3 +245,37 @@ page {
     line-height: 68rpx; }
   .header .joined {
     color: rgba(204,204,204,1); }
+.ewm {
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.65);
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+}
+.ewm .ewmBox {
+  width:460rpx;
+  height:504rpx;
+  background:rgba(255,255,255,1);
+  border-radius:12rpx;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: -252rpx;
+  margin-left: -230rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.ewm .ewmBox .ewmImg {
+  width:348rpx;
+  height:348rpx;
+}
+.ewm .ewmBox .ewmTxt {
+  font-size:36rpx;
+  font-weight:400;
+  color:rgba(51,51,51,1);
+  margin-top: 10rpx;
+}
