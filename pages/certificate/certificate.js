@@ -27,7 +27,7 @@ Page({
     this.context.setTextBaseline("top")
     this.context.fillText(userInfo.nickname, 107 * r + (200 * r - this.context.measureText(userInfo.nickname).width) / 2, 340 * r, 200 * r)
     this.context.font = `18px sans-serif` 
-    this.context.measureText(course).width > 170 ? this.context.fillText(course, 180 * r  + (356 * r - this.context.measureText(course).width) / 2, 425 * r, 310 * r) :
+    this.context.measureText(course).width > 170 ? this.context.fillText(course, 180 * r  + (348 * r - this.context.measureText(course).width) / 2, 425 * r, 310 * r) :
     this.context.fillText(course, 180 * r  + (310 * r - this.context.measureText(course).width) / 2, 425 * r, 310 * r)
     console.log(this.context.measureText(course).width)
     this.context.font = `14px sans-serif` 
