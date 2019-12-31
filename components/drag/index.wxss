@@ -102,11 +102,6 @@
 }
 .close {
   position: relative;
-  /* transition: left -800rpx; */
-  /* transform: translateY(-800); */
-  /* animation: runTop 3s ; */
-  /* transform: translate(-1000px,0); */
-  /* transition: transform 1s; */
   animation: runto 1s;
 }
 .into {

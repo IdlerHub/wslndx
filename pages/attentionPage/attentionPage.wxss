@@ -1,4 +1,7 @@
 /* pages/attentionPage/attentionPage.wxss */
+page {
+  height: 100%;
+}
 .container {
   width: 100%;
   padding: 0 30rpx;
@@ -71,4 +74,7 @@
   color:#fff;
   line-height:68rpx;
   text-align: center;
+}
+.qstBox {
+  height: 100%;
 }

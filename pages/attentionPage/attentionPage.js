@@ -1,7 +1,7 @@
 // pages/attentionPage/attentionPage.js
 Page({
   data: {
-
+    list:[]
   },
   onLoad: function (options) {
     let list = [
@@ -9,9 +9,9 @@ Page({
       {uid: 820, name: '致晨' , uoniversity:'中国网上老年大学', avatar: "https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTK27aiaK27euzIBs2AtqvjQsc4Imx3gCmge8V9PTSgzSNHxmxFbq4UAGskdsZy15TovjRkBIyYcc6Q/132", university_name:'网上老年大学',status:'取消关注'},
       {uid: 514, name: '习文' , uoniversity:'中国网上老年大学', avatar: "https://wx.qlogo.cn/mmopen/vi_32/DYAIOgq83eqt2q4GrGt6ezzukyg1OBI14LghpLHmWASnyXmxFDlVfmxia4xdUDCqyjO3GNjd9f7YWBuVwBPl1fA/132",university_name:'网上老年大学',type:"爱旅行",status:'取消关注'},
     ]
-    this.setData({
-      list
-    })
+    // this.setData({
+    //   list
+    // })
   },
   closeattention(e) {
     let index = e.currentTarget.dataset.index

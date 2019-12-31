@@ -64,37 +64,6 @@ Component({
 		isEdit: false
 	},
 	methods: {
-		edit() {
-			if(this.data.isEdit) {
-				this.setData({
-					isEdit: false
-				}) 
-				let arr = JSON.parse(JSON.stringify(this.data.list)) , brr = []
-				arr.sort((a, b) => {
-          return a.key - b.key
-				})
-				arr.forEach(item => {
-					brr[item.key] = item.data
-				})
-				this.setData({
-					listData: brr
-				})
-				this.init()
-			} else {
-				this.setData({
-					isEdit: true
-				})
-			}
-		},
-		//取消加圈
-		fnCancelJoin(e) {
-			let curItem = e.currentTarget.dataset.item
-			let param = { fs_id: curItem.id }
-			app.circle.cancelJoin(param)
-		},
-		/**
-		 * 点击每一项后触发事件
-		 */
 		itemClick(e) {
 			let {index} = e.currentTarget.dataset;
 			let item = this.data.list[index];
@@ -104,22 +73,16 @@ Component({
 				data: item.data
 			});
 		},
-		/**
-		 * 长按触发移动排序
-		 */
 		longPress(e) {
 			// 获取触摸点信息
 			let startTouch = e.changedTouches[0];
 			if (!startTouch) return;
-
 			// 如果是固定项则返回
 			let index = e.currentTarget.dataset.index;
 			if (this.isFixed(index)) return;
-
 			// 防止多指触发 drag 动作, 如果已经在 drag 中则返回, touchstart 事件中有效果
 			if (this.data.dragging) return;
 			this.setData({dragging: true});
-
 			let {
 					pageX: startPageX,
 					pageY: startPageY
@@ -130,14 +93,12 @@ Component({
 				} = this.data,
 				startTranX = 0,
 				startTranY = 0;
-
 			if (this.data.columns > 1) {
 				// 多列的时候计算X轴初始位移, 使 item 水平中心移动到点击处
 				startTranX = startPageX - itemDom.width / 2 - itemWrapDom.left;
 			}
 			// 计算Y轴初始位移, 使 item 垂直中心移动到点击处
 			startTranY = startPageY - itemDom.height / 2 - itemWrapDom.top;
-
 			this.setData({
 				startTouch: startTouch,
 				startTranX: startTranX,
@@ -155,9 +116,7 @@ Component({
 			// 获取触摸点信息
 			let currentTouch = e.changedTouches[0];
 			if (!currentTouch) return;
-
 			if (!this.data.dragging) return;
-
 			let {
 					windowHeight,
 					realTopSize,
@@ -179,17 +138,13 @@ Component({
 					identifier: currentId,
 					clientY: currentClientY
 				} = currentTouch;
-
 			// 如果不是同一个触发点则返回
 			if (startId !== currentId) return;
-
 			// 通过 当前坐标点, 初始坐标点, 初始偏移量 来计算当前偏移量
 			let tranX = currentPageX - startPageX + startTranX,
 				tranY = currentPageY - startPageY + startTranY;
-
 			// 单列时候X轴初始不做位移
 			if (this.data.columns === 1) tranX = 0;
-
 			// 判断是否超过一屏幕, 超过则需要判断当前位置动态滚动page的位置
 			if (this.data.overOnePage) {
 				if (currentClientY > windowHeight - itemDom.height - realBottomSize) {
@@ -206,24 +161,20 @@ Component({
 					});
 				}
 			}
-
 			// 设置当前激活元素偏移量
 			this.setData({
 				tranX: tranX,
 				tranY: tranY
 			});
-
 			// 获取 originKey 和 endKey
 			let originKey = parseInt(e.currentTarget.dataset.key),
 				endKey = this.calculateMoving(tranX, tranY);
 				console.log(originKey,endKey)
 			// 如果是固定 item 则 return
 			if (this.isFixed(endKey)) return;
-
 			// 防止拖拽过程中发生乱序问题
 			if (originKey === endKey || preOriginKey === originKey) return;
 			this.setData({preOriginKey: originKey});
-
 			// 触发排序
 			this.insert(originKey, endKey);
 		},
@@ -231,28 +182,19 @@ Component({
 			if (!this.data.dragging) return;
 			this.clearData();
 		},
-		/**
-		 * 根据当前的手指偏移量计算目标key
-		 */
 		calculateMoving(tranX, tranY) {
 			let {itemDom} = this.data;
-
 			let rows = Math.ceil(this.data.list.length / this.data.columns) - 1,
 				i = Math.round(tranX / itemDom.width),
 				j = Math.round(tranY / itemDom.height);
-
 			i = i > (this.data.columns - 1) ? (this.data.columns - 1) : i;
 			i = i < 0 ? 0 : i;
 			j = j < 0 ? 0 : j;
 			j = j > rows ? rows : j;
-
 			let endKey = i + this.data.columns * j;
 			endKey = endKey >= this.data.list.length ? this.data.list.length - 1 : endKey;
 			return endKey
 		},
-		/**
-		 * 根据起始key和目标key去重新计算每一项的新的key
-		 */
 		insert(origin, end) {
 			this.setData({itemTransition: true});
 			let list;
@@ -280,9 +222,6 @@ Component({
 				this.getPosition(list);
 			}
 		},
-		/**
-		 * 正序拖动 key 值和固定项判断逻辑
-		 */
 		l2r(key, origin) {
 			if (key === origin) return origin;
 			if (this.data.list[key].fixed) {
@@ -291,9 +230,6 @@ Component({
 				return key;
 			}
 		},
-		/**
-		 * 倒序拖动 key 值和固定项判断逻辑
-		 */
 		r2l(key, origin) {
 			if (key === origin) return origin;
 			if (this.data.list[key].fixed) {
@@ -302,19 +238,14 @@ Component({
 				return key;
 			}
 		},
-		/**
-		 * 根据排序后 list 数据进行位移计算
-		 */
 		getPosition(data, vibrate = true) {
 			let {platform} = this.data;
-
 			let list = data.map((item, index) => {
 				item.x = item.key % this.data.columns;
 				item.y = Math.floor(item.key / this.data.columns);
 				return item;
 			});
 			this.setData({list: list});
-
 			if (!vibrate) return;
 			// if (platform !== "devtools") wx.vibrateShort();
 			let listData = [];
@@ -323,17 +254,11 @@ Component({
 			});
 			this.triggerEvent('change', {listData: listData});
 		},
-		/**
-		 * 判断是否是固定的 item
-		 */
 		isFixed(key) {
 			let list = this.data.list;
 			if (list && list[key] && list[key].fixed) return 1;
 			return 0;
 		},
-		/**
-		 * 清除参数
-		 */
 		clearData() {
 			this.setData({
 				preOriginKey: -1,
@@ -349,36 +274,27 @@ Component({
 				})
 			}, 300)
 		},
-		/**
-		 * 监听列数变化, 如果改变重新初始化参数
-		 */
 		dataChange(newVal, oldVal) {
 			this.init();
 		},
-		/**
-		 *  初始化获取 dom 信息
-		 */
 		initDom() {
-			wx.pageScrollTo({scrollTop: 0, duration: 0});
+			// wx.pageScrollTo({scrollTop: 0, duration: 0});
 			let {windowWidth, windowHeight, platform} = wx.getSystemInfoSync();
 			let remScale = (windowWidth || 375) / 375,
 				realTopSize = this.data.topSize * remScale / 2,
 				realBottomSize = this.data.bottomSize * remScale / 2;
-
 			this.setData({
 				windowHeight: windowHeight,
 				platform: platform,
 				realTopSize: realTopSize,
 				realBottomSize: realBottomSize
 			});
-
 			this.createSelectorQuery().select(".item").boundingClientRect((res) => {
 				let rows = Math.ceil(this.data.list.length / this.data.columns);
 				this.setData({
 					itemDom: res,
 					itemWrapHeight: rows * res.height
 				});
-
 				this.createSelectorQuery().select(".item-wrap").boundingClientRect((res) => {
 					// (列表的底部到页面顶部距离 > 屏幕高度 - 底部固定区域高度) 用该公式来计算是否超过一页
 					let overOnePage = res.bottom > windowHeight - realBottomSize;
@@ -389,9 +305,6 @@ Component({
 				}).exec();
 			}).exec();
 		},
-		/**
-		 *  初始化
-		 */
 		init() {
 			this.clearData();
 			this.setData({itemTransition: false});
@@ -423,35 +336,124 @@ Component({
 					})
 				}
 			})
-  	},
+		},
+		edit() {
+			if(this.data.isEdit) {
+				this.setData({
+					isEdit: false
+				}) 
+				let arr = JSON.parse(JSON.stringify(this.data.list)) , brr = [], param = {} , num = ''
+				arr.sort((a, b) => {
+          return a.key - b.key
+				})
+				arr.forEach(item => {
+					brr[item.key] = item.data
+				})
+				this.setData({
+					listData: brr
+				})
+				this.data.listData.forEach((i, index) => {
+          num = `${num},${i.id}`
+        })
+        param = {
+          fs_id: num.substring(1)
+				}
+				app.circle.join(param).then(res => {})
+				this.init()
+			} else {
+				this.setData({
+					isEdit: true
+				})
+			}
+		},
 		//加入加圈
 		fnJoin(e) {
-			let curItem = e.currentTarget.dataset.item, index = e.currentTarget.dataset.index, num = ''
+			let curItem = e.currentTarget.dataset.item, index = e.currentTarget.dataset.index, num1 = '', num2 = '',arr = JSON.parse(JSON.stringify(this.data.list)) ,  brr = []
 			this.setData({
 				addItem: curItem,
 				addIndex: index,
 				addaction: true
 			})
-			this.data.listData.splice(0,0,curItem)
-			this.init()
-			this.settiome = setTimeout(() => {
+			if(this.data.isEdit) {
+				this.data.listData.splice(0,0,curItem)
 				this.data.listData.forEach((i, index) => {
-          num = `${num},${i.id}`
-        })
-        let param = {
-          category_str: num.substring(1)
-        }
-				app.circle.join(param).then(res => {
-					setTimeout(() => {
-						this.data.noJoinList.splice(index,1)
-						this.setData({
-							noJoinList: this.data.noJoinList,
-							addaction: false,
-							addItem:{}
-						})
-					}, 200);
+					num1 = `${num1},${i.id}`
 				})
-			}, 500);
+				let param = {
+					fs_id: num1.substring(1)
+				}
+				arr.sort((a, b) => {
+          return a.key - b.key
+				})
+				arr.forEach(item => {
+					brr[item.key] = item.data
+				})
+				brr.splice(0,0,curItem)
+				this.setData({
+					listData: brr
+				})
+				this.init()
+				app.circle.join(param).then(res => {
+						setTimeout(() => {
+							this.data.noJoinList.splice(index,1)
+							this.setData({
+								noJoinList: this.data.noJoinList,
+								addaction: false,
+								addItem:{}
+							})
+						}, 800);
+					})
+			} else {
+				this.data.listData.splice(0,0,curItem)
+				this.init()
+				this.settiome = setTimeout(() => {
+					this.data.listData.forEach((i, index) => {
+						num2 = `${num2},${i.id}`
+					})
+					let param = {
+						fs_id: num2.substring(1)
+					}
+					app.circle.join(param).then(res => {
+						setTimeout(() => {
+							this.data.noJoinList.splice(index,1)
+							this.setData({
+								noJoinList: this.data.noJoinList,
+								addaction: false,
+								addItem:{}
+							})
+						}, 200);
+					})
+				}, 500);
+			}
+		},
+		//取消加圈
+		fnCancelJoin(e) {
+			let curItem = e.currentTarget.dataset.item, index = e.currentTarget.dataset.index, arr = JSON.parse(JSON.stringify(this.data.list)), brr = [] 
+			this.setData({
+				delItem: curItem,
+				delIndex: index,
+				delaction: true
+			})
+			this.data.noJoinList.splice(0,0,curItem)
+			arr.sort((a, b) => {
+				return a.key - b.key
+			})
+			arr.forEach(item => {
+				brr[item.key] = item.data
+			})
+			brr.splice(index,1)
+			// this.data.listData.splice(index,1)
+			this.setData({
+				noJoinList: this.data.noJoinList,
+				listData: brr
+			})
+			setTimeout(() => {
+				this.init()
+				this.setData({
+					delItem:{},
+					delaction:false
+				})
+			}, 800);
 		},
 },
 	ready() {

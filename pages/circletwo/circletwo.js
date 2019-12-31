@@ -4,7 +4,7 @@ Page({
 	data: {
 		isIphoneX: app.globalData.isIphoneX,
 		size: 1,
-    addItem: false
+    showcopm:false
 	},
 	change(e) {
 		this.setData({
@@ -26,14 +26,6 @@ Page({
 		});
   },
   getList() {
-    //获取没有加入的圈子list
-    app.circle.noJoinCircles().then(msg => {
-      if (msg.code === 1) {
-        this.setData({
-          noJoinList: msg.data
-        })
-      }
-    })
     //获取已经加入的圈子list
     return app.circle.joinedCircles().then(msg => {
        if (msg.code === 1) {
@@ -41,7 +33,8 @@ Page({
           item.fixed = false
         })
         this.setData({
-          joinList: msg.data
+          joinList: msg.data,
+          showcopm:true
         })
       }
     })
@@ -53,41 +46,6 @@ Page({
       this.drag = this.selectComponent('#drag');
       this.drag.dataChange();
     })
-  },
-  fnJoin(id) {
-    // if (this.settiome) return
-    let param = id.detail
-    this.setData({
-      addItem: true
-    })
-    this.settiome = setTimeout(() => {
-      app.circle.join(param).then(res => {
-        // res.code == 1 ? this.getList().then(() => {
-        //   this.drag = this.selectComponent('#drag');
-        //   this.drag.dataChange();
-        // }) : ''
-        // this.setData({
-        //   addItem: false
-        // })
-        app.circle.noJoinCircles().then(msg => {
-          if (msg.code === 1) {
-            this.setData({
-              noJoinList: msg.data
-            })
-          }
-        })
-        this.setData({
-          addItem: false
-        })
-      })
-    }, 1500);
-    
+  }
 
-  },
-  //取消加圈
-  fnCancelJoin(e) {
-    let curItem = e.currentTarget.dataset.item
-    let param = { fs_id: curItem.id }
-    // app.circle.cancelJoin(param)
-  },
 })

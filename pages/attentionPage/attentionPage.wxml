@@ -1,5 +1,5 @@
 <!--pages/attentionPage/attentionPage.wxml-->
-<view class="container">
+<view class="container" wx:if="{{list[0].name}}">
   <view wx:for="{{list}}" wx:key="index" class="item">
     <image src="{{item.avatar}}"></image>
     <view class="titlecon">
@@ -11,4 +11,7 @@
     </view>
     <view class="{{item.status == '关注'? 'joinbtn' : 'btn'}}" catchtap="closeattention" data-index="{{index}}">{{item.status}}</view>
   </view>
+</view>
+<view class="qstBox" wx:else>
+
 </view>
