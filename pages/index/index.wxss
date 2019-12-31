@@ -396,10 +396,18 @@
   height: 160rpx;
 }
 
+.recommend .item .left .status {
+  width: 90rpx;
+  height: 52rpx;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
 .recommend .left .poster {
   width: 260rpx;
   height: 160rpx;
-  border-radius: 8rpx;
+  border-radius: 12rpx;
   background: #f5f6f8;
 }
 

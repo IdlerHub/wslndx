@@ -13,5 +13,7 @@
   </view>
 </view>
 <view class="qstBox" wx:else>
-
+  <image src="/images/delBlog.png"></image>
+  <view class="txt">啥都没有呢</view>
+  <view class="txt">赶快去关注有趣的人吧！</view>
 </view>
