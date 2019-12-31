@@ -65,11 +65,26 @@ Component({
 	},
 	methods: {
 		edit() {
-			this.data.isEdit ? this.setData({
-				isEdit: false
-			}) : this.setData({
-				isEdit: true
-			})
+			if(this.data.isEdit) {
+				this.setData({
+					isEdit: false
+				}) 
+				let arr = JSON.parse(JSON.stringify(this.data.list)) , brr = []
+				arr.sort((a, b) => {
+          return a.key - b.key
+				})
+				arr.forEach(item => {
+					brr[item.key] = item.data
+				})
+				this.setData({
+					listData: brr
+				})
+				this.init()
+			} else {
+				this.setData({
+					isEdit: true
+				})
+			}
 		},
 		//取消加圈
 		fnCancelJoin(e) {
@@ -131,6 +146,7 @@ Component({
 				curZ: index,
 				tranX: startTranX,
 				tranY: startTranY,
+				isEdit:true
 			});
 			console.log(this.data)
 			// wx.vibrateShort();
@@ -410,25 +426,32 @@ Component({
   	},
 		//加入加圈
 		fnJoin(e) {
-			// let curItem = e.currentTarget.dataset.item, index = e.currentTarget.dataset.index
-			// let param = { fs_id: curItem.id }
-			// this.setData({
-			// 	addIndex: index,
-			// 	addItem: true
-			// })
-			// this.settiome = setTimeout(() => {
-			// 	app.circle.join(param).then(res => {
-			// 		this.data.listData.splice(1,0,curItem)
-			// 		this.init()
-			// 		setTimeout(() => {
-			// 			this.data.noJoinList.splice(index,1)
-			// 			this.setData({
-			// 				noJoinList: this.data.noJoinList,
-			// 				addItem: false
-			// 			})
-			// 		}, 200);
-			// 	})
-			// }, 500);
+			let curItem = e.currentTarget.dataset.item, index = e.currentTarget.dataset.index, num = ''
+			this.setData({
+				addItem: curItem,
+				addIndex: index,
+				addaction: true
+			})
+			this.data.listData.splice(0,0,curItem)
+			this.init()
+			this.settiome = setTimeout(() => {
+				this.data.listData.forEach((i, index) => {
+          num = `${num},${i.id}`
+        })
+        let param = {
+          category_str: num.substring(1)
+        }
+				app.circle.join(param).then(res => {
+					setTimeout(() => {
+						this.data.noJoinList.splice(index,1)
+						this.setData({
+							noJoinList: this.data.noJoinList,
+							addaction: false,
+							addItem:{}
+						})
+					}, 200);
+				})
+			}, 500);
 		},
 },
 	ready() {

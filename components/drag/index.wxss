@@ -101,16 +101,30 @@
   color:rgba(102,102,102,1);
 }
 .close {
+  position: relative;
   /* transition: left -800rpx; */
   /* transform: translateY(-800); */
   /* animation: runTop 3s ; */
-  transform: translate(-1000px,0);
-  transition: transform 1s;
-  /* animation: runTop 1s; */
+  /* transform: translate(-1000px,0); */
+  /* transition: transform 1s; */
+  animation: runto 1s;
 }
-@keyframes runTop {
+.into {
+  position: relative;
+  animation: runin 1s;
+}
+.infoitemtwo {
+  position: absolute;
+}
+@keyframes runto {
   from {
-    transform: scale(1); }
+    right: 0; }
   to {
-    transform: scale(0);
+    right: -380px;
    } }
+@keyframes runin {
+from {
+  right: -380px; }
+to {
+  right: 0;
+  } }

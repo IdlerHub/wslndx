@@ -52,7 +52,6 @@ Page({
     this.getList().then(() => {
       this.drag = this.selectComponent('#drag');
       this.drag.dataChange();
-      console.log(this.data.joinList, this.data.noJoinList)
     })
   },
   fnJoin(id) {

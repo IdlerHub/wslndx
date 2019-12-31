@@ -80,7 +80,6 @@ Page({
         arr.sort((a, b) => {
           return a.sort - b.sort
         })
-        console.log(arr)
         arr.forEach((i, index) => {
           index != 0 ? num = `${num},${i.id}` : ''
           i['class'] ? number = i.id : ''

@@ -5,6 +5,9 @@
 	</view>
 	<view class="join-btn" bindtap="edit"> {{isEdit ? "完成" : '编辑'}}</view>
 </view>
+<view class="infoitem into infoitemtwo" wx:if="{{addaction}}">
+	<image src="{{addItem.bimage}}"></image>
+</view>
 <!-- style="overflow-x: {{overOnePage ? 'hidden' : 'initial'}}" -->
 <view>
 	<view>
@@ -22,7 +25,7 @@
 					catch:touchend="{{dragging?'touchEnd':''}}">
 
 				<!-- start:请在该区域编写自己的渲染逻辑 -->
-					<view class="infoitem">
+					<view class="infoitem" style="opacity:{{index == 0 && addaction ? 0 : 1}}">
 						<image src="{{item.data.bimage}}"></image>
 						<view class="nojoin-btn joininfo" wx:if="{{isEdit}}" catchtap="fnCancelJoin" data-item="{{item.data}}">
 							<image src="../../images/icon-del.png" class="icon-add"></image> 
@@ -36,8 +39,8 @@
 	</view>
 </view>
 <view class="nojoin">
-	<view class="nojoin-title" style="{{addItem ? 'transform: translate(0,135px) 1.5s': ''}}">其他圈子</view>
-	<view class="infoitem {{ addIndex == index ? addItem ? 'close' : '' : '' }}" wx:for="{{noJoinList}}" wx:key="index">
+	<view class="nojoin-title">其他圈子</view>
+	<view class="infoitem {{ addIndex == index ? addaction ? 'close' : '' : '' }}" wx:for="{{noJoinList}}" wx:key="index">
 		<image src="{{item.bimage}}"></image>
 		<view class="nojoin-btn" catchtap="fnJoin" data-item="{{item}}" data-index="{{index}}">
 			<image src="../../images/icon-add.png" class="icon-add"></image> 
