@@ -1,20 +1,23 @@
 // pages/messagePage/messagePage.js
+const app = getApp()
 Page({
   data: {
 
   },
-  onLoad: function (options) {
-    let that = this
-    const eventChannel = this.getOpenerEventChannel()
-    eventChannel.on('acceptDataFromOpenerPage', function (data) {
-      that.setData({
-        message: data.data
-      })
+  onLoad: function (ops) {
+    let id = ops.id
+    this.getMessage(id)
+  },
+  getMessage(id) {
+    let param = { id }
+    app.user.messageDetail(param).then(msg => {
       wx.setNavigationBarTitle({
-        title: data.data.title
+        title: msg.data.title,
+      })
+      this.setData({
+        content: msg.data.content
       })
     })
-  },
-
+  }
 
 })

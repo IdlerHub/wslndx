@@ -1,2 +1,2 @@
 <!--pages/messagePage/messagePage.wxml-->
-<rich-text class="contrain" nodes="{{message.content}}" space="emsp" type = "text"></rich-text>
+<rich-text class="contrain" nodes="{{content}}" space="emsp" type = "text"></rich-text>

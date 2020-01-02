@@ -65,13 +65,18 @@ Component({
 	},
 	methods: {
 		itemClick(e) {
-			let {index} = e.currentTarget.dataset;
+			let {index} = e.currentTarget.dataset, id = e.currentTarget.dataset.id
 			let item = this.data.list[index];
 			this.triggerEvent('click', {
 				oldKey: index,
 				newKey: item.key,
 				data: item.data
 			});
+		},
+		gotoCdetail(e) {
+			wx.navigateTo({
+				url: "/pages/cDetail/cDetail?id=" + e.currentTarget.dataset.id
+			})
 		},
 		longPress(e) {
 			// 获取触摸点信息
@@ -106,8 +111,7 @@ Component({
 				cur: index,
 				curZ: index,
 				tranX: startTranX,
-				tranY: startTranY,
-				isEdit:true
+				tranY: startTranY
 			});
 			console.log(this.data)
 			// wx.vibrateShort();
@@ -180,6 +184,23 @@ Component({
 		},
 		touchEnd() {
 			if (!this.data.dragging) return;
+			let arr = JSON.parse(JSON.stringify(this.data.list)) , brr = [], param = {} , num = ''
+				arr.sort((a, b) => {
+          return a.key - b.key
+				})
+				arr.forEach(item => {
+					brr[item.key] = item.data
+				})
+				this.setData({
+					listData: brr
+				})
+				this.data.listData.forEach((i, index) => {
+          num = `${num},${i.id}`
+        })
+        param = {
+          fs_id: num.substring(1)
+				}
+				app.circle.join(param).then(res => {})
 			this.clearData();
 		},
 		calculateMoving(tranX, tranY) {
@@ -341,25 +362,7 @@ Component({
 			if(this.data.isEdit) {
 				this.setData({
 					isEdit: false
-				}) 
-				let arr = JSON.parse(JSON.stringify(this.data.list)) , brr = [], param = {} , num = ''
-				arr.sort((a, b) => {
-          return a.key - b.key
 				})
-				arr.forEach(item => {
-					brr[item.key] = item.data
-				})
-				this.setData({
-					listData: brr
-				})
-				this.data.listData.forEach((i, index) => {
-          num = `${num},${i.id}`
-        })
-        param = {
-          fs_id: num.substring(1)
-				}
-				app.circle.join(param).then(res => {})
-				this.init()
 			} else {
 				this.setData({
 					isEdit: true
@@ -374,36 +377,6 @@ Component({
 				addIndex: index,
 				addaction: true
 			})
-			if(this.data.isEdit) {
-				this.data.listData.splice(0,0,curItem)
-				this.data.listData.forEach((i, index) => {
-					num1 = `${num1},${i.id}`
-				})
-				let param = {
-					fs_id: num1.substring(1)
-				}
-				arr.sort((a, b) => {
-          return a.key - b.key
-				})
-				arr.forEach(item => {
-					brr[item.key] = item.data
-				})
-				brr.splice(0,0,curItem)
-				this.setData({
-					listData: brr
-				})
-				this.init()
-				app.circle.join(param).then(res => {
-						setTimeout(() => {
-							this.data.noJoinList.splice(index,1)
-							this.setData({
-								noJoinList: this.data.noJoinList,
-								addaction: false,
-								addItem:{}
-							})
-						}, 800);
-					})
-			} else {
 				this.data.listData.splice(0,0,curItem)
 				this.init()
 				this.settiome = setTimeout(() => {
@@ -414,21 +387,23 @@ Component({
 						fs_id: num2.substring(1)
 					}
 					app.circle.join(param).then(res => {
-						setTimeout(() => {
+						wx.showToast({
+							title: "您已成功加入\r\n【" + curItem.title + "】学友圈",
+							icon: "none",
+							duration: 1500
+						})
 							this.data.noJoinList.splice(index,1)
 							this.setData({
 								noJoinList: this.data.noJoinList,
 								addaction: false,
 								addItem:{}
 							})
-						}, 200);
 					})
-				}, 500);
-			}
+				}, 150);
 		},
 		//取消加圈
 		fnCancelJoin(e) {
-			let curItem = e.currentTarget.dataset.item, index = e.currentTarget.dataset.index, arr = JSON.parse(JSON.stringify(this.data.list)), brr = [] 
+			let curItem = e.currentTarget.dataset.item, index = e.currentTarget.dataset.index, arr = JSON.parse(JSON.stringify(this.data.list)), brr = [], num = ''
 			this.setData({
 				delItem: curItem,
 				delIndex: index,
@@ -449,11 +424,24 @@ Component({
 			})
 			setTimeout(() => {
 				this.init()
+				brr.forEach((i, index) => {
+					num = `${num},${i.id}`
+				})
+				let param = {
+					fs_id: num.substring(1)
+				}
+				app.circle.join(param).then(res => {
+					wx.showToast({
+						title: "您已成功取消\r\n【" + curItem.title + "】学友圈",
+						icon: "none",
+						duration: 1500
+					})
+				})
 				this.setData({
 					delItem:{},
 					delaction:false
 				})
-			}, 800);
+			}, 150);
 		},
 },
 	ready() {

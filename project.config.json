@@ -162,6 +162,13 @@
 					"pathName": "pages/index/index",
 					"query": "scene=uid%3D599%26type%3Dinvite",
 					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/circle/circle",
+					"pathName": "pages/circle/circle",
+					"query": "id=12661&type=share",
+					"scene": null
 				}
 			]
 		}

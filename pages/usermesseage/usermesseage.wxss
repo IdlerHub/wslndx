@@ -37,7 +37,7 @@ page {
   text-overflow:ellipsis;
   white-space: nowrap;
 }
-.newsBox .richtext {
+.newsBox .tichtext {
   font-size:36rpx;
   font-family:PingFangSC-Regular,PingFang SC;
   font-weight:400;
@@ -62,4 +62,7 @@ page {
 .newsBox .tonews image {
   width:14rpx;
   height:25rpx;
+}
+.readed {
+  color:rgba(153,153,153,1) !important;
 }

@@ -43,8 +43,8 @@ Page({
   },
   onShow() {
     this.getList().then(() => {
-      // this.drag = this.selectComponent('#drag');
-      // this.drag.dataChange();
+      this.drag = this.selectComponent('#drag');
+      this.drag.dataChange();
     })
   }
 

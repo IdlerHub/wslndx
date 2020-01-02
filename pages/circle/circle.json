@@ -3,5 +3,7 @@
   "navigationBarTitleText": "圈子",
   "navigationBarTextStyle": "black",
   "enablePullDownRefresh": false,
-  "usingComponents": {}
+  "usingComponents": {
+		"drag": "../../components/drag/index"
+  }
 }

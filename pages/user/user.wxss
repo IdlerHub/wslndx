@@ -300,11 +300,11 @@ page .list .nav:nth-child(5) {
 
 page .list .nav:nth-child(5) .iconfont {
   width: 64rpx;
-  height: 60rpx;
+  height: 56rpx;
 }
 
 page .list .nav:nth-child(5) text {
-  margin-top: 18rpx;
+  margin-top: 22rpx;
   font-family: PingFangSC-Regular;
   font-size: 36rpx;
   color: rgba(102, 102, 102, 1);
@@ -371,8 +371,8 @@ page .list .nav:nth-child(8) {
 }
 
 page .list .nav:nth-child(8) .iconfont {
-  width: 51rpx;
-  height: 62rpx;
+  width: 46rpx;
+  height: 60rpx;
 }
 
 page .list .nav:nth-child(8) text {

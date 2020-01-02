@@ -1,14 +1,14 @@
 <!--pages/usermesseage/usermesseage.wxml-->
 <view class="contrain">
-  <view class="newitem" wx:for="{{newsList}}" wx:key="index" bindtap="tomessage" data-item="{{item}}">
-    <view class="news-time">{{item.creattime}}</view>
+  <view class="newitem" wx:for="{{newsList}}" wx:key="index" bindtap="tomessage" data-id="{{item.id}}">
+    <view class="news-time" > {{item.createtime}}</view>
     <view class="newsBox">
-      <view class="news-title">
+      <view class="news-title" style="color:{{ item.is_read ? 'rgba(153,153,153,1) ' : ''}}">
         {{item.title}}
       </view>
-      <rich-text nodes="{{item.content}}" class="tichtext" style="display: -webkit-box;-webkit-box-orient: vertical;-webkit-line-clamp: 4;overflow: hidden;"></rich-text>
+      <rich-text nodes="{{item.content}}" class="tichtext" style="display: -webkit-box;-webkit-box-orient: vertical;-webkit-line-clamp: 4;overflow: hidden; color:{{ item.is_read ? 'rgba(204,204,204,1)' : ''}} ;"></rich-text>
       <view class="tonews">
-        <text>查看详情</text>
+        <text style="color:{{ item.is_read ? 'rgba(153,153,153,1) ' : ''}}">查看详情</text>
         <image src="/images/stickright.png"></image>
       </view>
     </view>

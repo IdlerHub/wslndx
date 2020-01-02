@@ -40,7 +40,8 @@
     "pages/usermesseage/usermesseage",
     "pages/circletwo/circletwo",
     "pages/messagePage/messagePage",
-    "pages/attentionPage/attentionPage"
+    "pages/attentionPage/attentionPage",
+    "pages/circlethree/circlethree"
   ],
   "permission": {
     "scope.userLocation": {

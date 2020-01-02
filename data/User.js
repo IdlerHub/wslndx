@@ -158,6 +158,17 @@ function collectLessonCategory(param) {
   return httpService.post("User/collectLessonCategory", param)
 }
 
+//POST Message/index 获取用户消息列表
+function getMessage(param) {
+  return httpService.post("Message/index", param)
+}
+
+//POST Message/detail 消息详情
+function messageDetail(param) {
+  return httpService.post("Message/detail", param)
+}
+
+
 module.exports = {
   wxLoginCode,
   getAuthCode,
@@ -183,5 +194,7 @@ module.exports = {
   getNewTaskStatus,
   getDayTaskStatus,
   getLessonCategory,
-  collectLessonCategory
+  collectLessonCategory,
+  getMessage,
+  messageDetail
 }

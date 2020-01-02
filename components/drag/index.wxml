@@ -1,11 +1,14 @@
-<view class="join-top">
+<view class="join-top" wx:if="{{list[0].data.bimage}}">
 	<view class="join-title">
 		<view	class="title">我的圈子</view>
 	  <view class="titlemessge">长按标签拖动排序</view>
 	</view>
 	<view class="join-btn" bindtap="edit"> {{isEdit ? "完成" : '编辑'}}</view>
 </view>
-<view class="infoitem into infoitemtwo" wx:if="{{addaction}}">
+<!-- <view class="infoitem into infoitemtwo" wx:if="{{addaction}}">
+	<image src="{{addItem.bimage}}"></image>
+</view> -->
+<view class="infoitem infoitemtwo" wx:if="{{addaction}}">
 	<image src="{{addItem.bimage}}"></image>
 </view>
 <!-- style="overflow-x: {{overOnePage ? 'hidden' : 'initial'}}" -->
@@ -25,8 +28,8 @@
 					catch:touchend="{{dragging?'touchEnd':''}}">
 
 				<!-- start:请在该区域编写自己的渲染逻辑 -->
-					<view class="infoitem {{delIndex == index  && delaction ? 'close' : ''}}" style="opacity:{{index == 0 && addaction ? 0 : 1}}">
-						<image src="{{item.data.bimage}}"></image>
+					<view class="infoitem" style="opacity:{{index == 0 && addaction ? 0 : 1}}">
+						<image src="{{item.data.bimage}}" catchtap="gotoCdetail" data-id="{{item.data.id}}"></image>
 						<view class="nojoin-btn joininfo" wx:if="{{isEdit}}" catchtap="fnCancelJoin" data-item="{{item.data}}" data-index="{{index}}">
 							<image src="../../images/icon-del.png" class="icon-add"></image> 
 							<text>取消</text>
@@ -38,17 +41,17 @@
 		</view>
 	</view>
 </view>
-<view class="nojoin">
+<view class="nojoin" wx:if="{{noJoinList[0].bimage}}">
 	<view class="nojoin-title">其他圈子</view>
-	<view class="infoitem into infoitemtwo" wx:if="{{delaction}}">
+	<view class="infoitem  infoitemtwo" wx:if="{{delaction}}">
 		<image src="{{delItem.bimage}}"></image>
 		<view class="nojoin-btn" catchtap="fnJoin" data-item="{{item}}" data-index="{{index}}">
 			<image src="../../images/icon-add.png" class="icon-add"></image> 
       <text>加圈</text>
 		</view>
 	</view>
-	<view class="infoitem {{ addIndex == index ? addaction ? 'close' : '' : '' }}" wx:for="{{noJoinList}}" wx:key="index" style="opacity:{{index == 0 && delaction ? 0 : 1}}">
-		<image src="{{item.bimage}}"></image>
+	<view class="infoitem" wx:for="{{noJoinList}}" wx:key="index" style="opacity:{{index == 0 && delaction ? 0 : 1}};">
+		<image src="{{item.bimage}}" catchtap="gotoCdetail" data-id="{{item.id}}"></image>
 		<view class="nojoin-btn" catchtap="fnJoin" data-item="{{item}}" data-index="{{index}}">
 			<image src="../../images/icon-add.png" class="icon-add"></image> 
       <text>加圈</text>
