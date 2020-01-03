@@ -13,6 +13,7 @@ page {
   box-sizing: border-box;
   display: flex;
   align-items: center;
+  border-bottom: 1px solid rgba(237,237,237,1) ;
 }
 .item image {
   width:90rpx;

@@ -1,15 +1,15 @@
 <!--pages/attentionPage/attentionPage.wxml-->
-<view class="container" wx:if="{{list[0].name}}">
-  <view wx:for="{{list}}" wx:key="index" class="item">
+<view class="container" wx:if="{{list[0].nickname}}">
+  <view wx:for="{{list}}" wx:key="index" class="item" bindtap="touser" data-index="{{index}}">
     <image src="{{item.avatar}}"></image>
     <view class="titlecon">
       <view class="title-name">
-        <text class="name">{{item.name}}</text>
-        <text class="label" wx:if="{{item.type}}">{{item.type}}</text>
+        <text class="name">{{item.nickname}}</text>
+        <text class="label" wx:if="{{item.fs != null}}">{{item.fs}}</text>
       </view>
-      <view class="univers">{{item.university_name}}</view>
+      <view class="univers">{{item.university}}</view>
     </view>
-    <view class="{{item.status == '关注'? 'joinbtn' : 'btn'}}" catchtap="closeattention" data-index="{{index}}">{{item.status}}</view>
+    <view class="{{item.status == '关注'? 'joinbtn' : 'btn'}}" catchtap="closeattention" data-index="{{index}}" data-status="{{item.status}}">{{item.status}}</view>
   </view>
 </view>
 <view class="qstBox" wx:else>

@@ -168,6 +168,20 @@ function messageDetail(param) {
   return httpService.post("Message/detail", param)
 }
 
+//POST User/following 关注用户
+function following(param) {
+  return httpService.post("User/following", param)
+}
+
+//POST User/cancelFollowing 取消关注用户
+function cancelFollowing(param) {
+  return httpService.post("User/cancelFollowing", param)
+}
+
+//POST User/userFollowing 用户关注列表
+function userFollowing(param) {
+  return httpService.post("User/userFollowing", param)
+}
 
 module.exports = {
   wxLoginCode,
@@ -196,5 +210,8 @@ module.exports = {
   getLessonCategory,
   collectLessonCategory,
   getMessage,
-  messageDetail
+  messageDetail,
+  following,
+  cancelFollowing,
+  userFollowing
 }

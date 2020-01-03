@@ -324,8 +324,28 @@ Page({
       showSheet: false
     })
   },
-  /*长按复制内容 */
-  copythat(e) {
-    app.copythat(e.target.dataset.content)
+  attention() {
+    let param = { follower_uid: this.data.us_id }
+    app.user.following(param).then(res => {
+      if(res.code == 1) {
+        wx.showToast({
+          title: '您已成功关注' + this.data.nickname,
+          icon: 'none',
+          duration: 1500
+        })
+      }
+    })
+  },
+  clsocancelFollowing() {
+    let param = { follower_uid: this.data.us_id }
+    app.user.cancelFollowing(param).then(res => {
+      if(res.code == 1) {
+        wx.showToast({
+          title: '取消关注成功',
+          icon: 'none',
+          duration: 1500
+        })
+      }
+    })
   }
 })
