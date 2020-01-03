@@ -13,7 +13,8 @@ Page({
       nickname: options.nickname,
       university_name: options.university_name,
       avatar: options.avatar,
-      addressCity: options.addressCity
+      addressCity: options.addressCity,
+      isFollow:  options.follow
     })
     wx.setNavigationBarTitle({
       title: options.nickname
@@ -333,18 +334,37 @@ Page({
           icon: 'none',
           duration: 1500
         })
+        this.setData({
+          isFollow: 1
+        })
+        this.pages.setfollow(this.data.us_id, true)
       }
     })
   },
   clsocancelFollowing() {
-    let param = { follower_uid: this.data.us_id }
-    app.user.cancelFollowing(param).then(res => {
-      if(res.code == 1) {
-        wx.showToast({
-          title: '取消关注成功',
-          icon: 'none',
-          duration: 1500
-        })
+    let param = { follower_uid: this.data.us_id }, that = this
+    wx.showModal({
+      content: '是否取消关注？',
+      confirmColor:'#DF2020',
+      cancelColor:'#999999',
+      confirmText:'是',
+      cancelText:'否',
+      success (res) {
+        if (res.confirm) {
+          app.user.cancelFollowing(param).then(res => {
+            if(res.code == 1) {
+              wx.showToast({
+                title: '取消关注成功',
+                icon: 'none',
+                duration: 1500
+              })
+              that.setData({
+                isFollow: 0
+              })
+              that.pages.setfollow(that.data.us_id)
+            }
+          })
+        } 
       }
     })
   }

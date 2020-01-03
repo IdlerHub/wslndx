@@ -23,7 +23,7 @@
           </view>
         </view>
       </view>
-      <view class="attention" bindtap="attention">关注</view>
+      <view class="attention {{isFollow == 1 ? 'attentionold' : ''}}" bindtap="{{isFollow == 1  ? 'clsocancelFollowing' : 'attention'}}">{{isFollow == 1  ? '已关注' : '关注'}}</view>
     </view>
   </view>
   <view class="wrap">

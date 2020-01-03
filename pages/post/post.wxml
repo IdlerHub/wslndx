@@ -14,6 +14,7 @@
 <view class="tabnav" style="padding-top:{{ top }}px">
   <view class="{{ currentTab == 1 ? 'lose' : ''}} tabnav-item" bindtap="switchNav" data-current="0">
     <text>推荐</text>
+    <view class="smallred" wx:if="{{currentTab == 1 && $state.unRead}}"></view>
   </view>
   <view class="{{ currentTab == 0 ? 'lose' : ''}} tabnav-item" bindtap="switchNav" data-current="1">
     <text>关注</text>
@@ -139,20 +140,13 @@
       <view wx:if="{{ isRefreshing }}" class="weui-loadmore">
         <view class="weui-loading"></view>
       </view>
-      <view class="message" wx:if="{{ $state.unRead }}">
-        <view class="msg-btn" catchtap="toMessage">
-          <image class="img" src="{{ $state.lastMan }}" mode="aspectFill"> </image>
-          <text class="news"> {{ $state.unRead }}条新信息</text>
-          <icon class="iconfont icon-arrow-right"></icon>
-        </view>
-      </view>
-      <view class="stick" catchtap="navigate" data-id="{{ bokeTop.id }}" wx:if="{{bokeTop.content}}">
-        <image src="/images/Stick.png"></image>
-        <rich-text class="stickText" nodes="{{ bokeTop.content }}"></rich-text>
-        <image src="/images/stickright.png"></image>
-      </view>
       <view class="wrap">
-        <view wx:for="{{ list }}" wx:key="index" class="item">
+        <view class="qstBox" wx:if="{{!flowList[0].avatar}}">
+          <image src="/images/delBlog.png"></image>
+          <view class="txt">啥都没有呢</view>
+          <view class="txt">赶快去关注有趣的人吧！</view>
+        </view>
+        <view wx:for="{{ flowList }}" wx:key="index" class="item">
           <view class="top" catchtap="navigate" data-id="{{ item.id }}">
             <view class="left">
               <image mode="aspectFill" class="avatarUrl" src="{{ item.avatar }}" data-item="{{ item }}"
@@ -229,6 +223,7 @@
         </view>
       </view>
       <mp-loading type="circle" wx:if="{{ showLoading }}"></mp-loading>
+      <view class="upbottom" wx:if="{{showBottom && flowList[0].content}}">已经到底咯~</view>
     </scroll-view>
   </swiper-item>
 </swiper>
@@ -262,8 +257,8 @@
 <cover-view class="postGuide" wx:if="{{ $state.newGuide.blog == 0 }}">
   <cover-view class="postGuideBox" wx:if="{{guideNum == 1}}">
     <cover-image src="{{$state.imgHost}}/collectMessege.png" class="postGuide-img"
-      style="top:{{ bokeTop.content ? 101 : '' }}px"></cover-image>
-    <cover-view class="postMsgone" bindtap="nextGuide">
+      style="top:{{ bokeTop.content ? 327 : 250 }}px"></cover-image>
+    <cover-view class="postMsgone" bindtap="nextGuide" style="top:{{ bokeTop.content ? 437 : 362 }}px">
       <cover-image src="{{$state.imgHost}}/postMsgone.png" class="postMsgoneo"></cover-image>
       <cover-image src="{{$state.imgHost}}/nextGude.png" class="nextGude"></cover-image>
     </cover-view>

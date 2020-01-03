@@ -28,12 +28,14 @@ Page({
     showintegral: false,
     top: 20,
     currentTab:0,
-    scrolltop: 0
+    scrolltop: 0,
+    showBottom: false
   },
   onLoad(options) {
-    this.param = { page: 1, pageSize: 10 }
+    this.param = [ { page : 1 ,pageSize: 10,is_follow: 0 } , {page: 1,pageSize: 10,is_follow: 1}]
     this.setData({
-      list: []
+      list: [],
+      flowList:[]
     })
     this.getList([])
     this.gettop()
@@ -55,9 +57,12 @@ Page({
   onShow: function() {
     if (app.globalData.postShow) {
       this.setData({
-        list:[]
+        list:[],
+        flowList:[],
+        currentTab:0,
+        showBottom: false
       })
-      this.param.page = 1
+      this.param = [ { page : 1 ,pageSize: 10,is_follow: 0 } , {page: 1,pageSize: 10,is_follow: 1}]
       this.getList([]).then(() => {
       })
       this.gettop()
@@ -147,10 +152,15 @@ Page({
     this.setData({
       showLoading: true
     })
-    let temp = list || this.data.list
-    return app.circle.news(this.param).then(msg => {
+    let temp =  []
+    this.data.currentTab == 0 ? temp = list || this.data.list : temp = list || this.data.flowList
+    return app.circle.news(this.param[this.data.currentTab]).then(msg => {
       if (msg.code == 1) {
         if (msg.data) {
+          msg.data[0] ? '' : this.setData({
+            showBottom: true
+          })
+          console.log(msg.data[0] && this.param[1].page == 1)
           let arr = [];
           for (let i in msg.data) {
             arr.push(msg.data[i])
@@ -168,8 +178,10 @@ Page({
             item.auditing = item.check_status
           })
           temp.push(...arr)
-          this.setData({
+          this.data.currentTab == 0 ? this.setData({
             list: temp
+          }) : this.setData({
+            flowList: temp
           })
           this.setHeight()
         }
@@ -290,7 +302,7 @@ Page({
   rlSuc() {
     /* 重新到第一页 */
     // console.log('adfasdsad')
-    this.param.page = 1
+    this.param[this.data.currentTab].page = 1
     this.getList([])
     this.setData({
       rlAni: true,
@@ -328,7 +340,7 @@ Page({
       if(diffY> -10 ) {
         return
       } else {
-        this.param.page = 1
+        this.param[this.data.currentTab].page = 1
       this.setData({
         isRefreshing: true
       })
@@ -347,7 +359,8 @@ Page({
   },
   //上拉加载
   scrolltolower() {
-    this.param.page++
+    if(this.data.currentTab == 1 && this.data.showBottom) return 
+    this.param[this.data.currentTab].page++
     this.getList()
   },
   touchStart(e) {
@@ -368,7 +381,7 @@ Page({
       })
     } else {
       wx.navigateTo({
-        url: `/pages/personPage/personPage?uid=${e.currentTarget.dataset.item.uid}&nickname=${e.currentTarget.dataset.item.nickname}&university_name=${e.currentTarget.dataset.item.university_name}&avatar=${e.currentTarget.dataset.item.avatar}&addressCity=${e.currentTarget.dataset.item.province}`
+        url: `/pages/personPage/personPage?uid=${e.currentTarget.dataset.item.uid}&nickname=${e.currentTarget.dataset.item.nickname}&university_name=${e.currentTarget.dataset.item.university_name}&avatar=${e.currentTarget.dataset.item.avatar}&addressCity=${e.currentTarget.dataset.item.province}&follow=${e.currentTarget.dataset.item.is_follow}`
       })
     }
   },
@@ -380,8 +393,10 @@ Page({
   switchTab(event) {
     let cur = event.detail.current
     this.setData({
-      currentTab: cur
+      currentTab: cur,
+      showBottom: false
     })
+    this.data.currentTab == 1 && !this.data.flowList[0] ? this.getList([]) : ''
   },
   switchNav(event) {
     let cur = event.currentTarget.dataset.current
@@ -551,5 +566,34 @@ Page({
   /*长按复制内容 */
   copythat(e) {
     app.copythat(e.target.dataset.content)
+  },
+  setfollow(id, follow) {
+    if(follow) {
+      this.data.list.forEach(item => {
+        item.uid == id ? item.is_follow = 1 : ''
+      })
+      if(this.data.flowList[0]) {
+        this.data.flowList.forEach(item => {
+          item.uid == id ? item.is_follow = 1 : ''
+        })
+      }
+      this.setData({
+        list: this.data.list,
+        flowList: this.data.flowList
+      })
+    } else {
+      this.data.list.forEach(item => {
+        item.uid == id ? item.is_follow = 0 : ''
+      })
+      if(this.data.flowList[0]) {
+        this.data.flowList.forEach(item => {
+          item.uid == id ? item.is_follow = 0 : ''
+        })
+      }
+      this.setData({
+        list: this.data.list,
+        flowList: this.data.list
+      })
+    }
   }
 })
