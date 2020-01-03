@@ -77,8 +77,13 @@
   </navigator>
 </view>
 <view class="ewm" bindtap="closeewm" wx:if="{{showbig}}">
-  <view class="ewmBox">
+  <view class="ewmBox" catch:longpress="longPress">
     <image src="/images/ewm121212.png" class="ewmImg"></image>
     <view class="ewmTxt">扫码加入爱旅行社群</view>
   </view>
+  <view class="shett" wx:if="{{showT}}">
+    <view class="shet-item" catchtap="saveImg">保存相册</view>
+    <view class="shet-item" catchtap="closeT">取消</view>
+  </view>
 </view>
+

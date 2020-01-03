@@ -5,7 +5,8 @@ Page({
   data: {
     list: [],
     circle: null,
-    isRefreshing: false
+    isRefreshing: false,
+    showT: false
   },
   onLoad(options) {
     this.id = options.id
@@ -199,6 +200,19 @@ Page({
     this.setData({
       showbig:false
     })
+  },
+  longPress() {
+    this.setData({
+      showT: true
+    })
+  },
+  closeT() {
+    this.setData({
+      showT: false
+    })
+  },
+  saveImg() {
+
   },
   //用于数据统计
   onHide() {
