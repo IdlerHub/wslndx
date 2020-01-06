@@ -16,6 +16,9 @@ Page({
       wx.setNavigationBarTitle({
         title: this.data.circle.title
       })
+      app.aldstat.sendEvent("学友圈点击",{
+        name: this.data.circle.title
+      })
     })
   },
   onUnload() {},

@@ -260,9 +260,8 @@ page {
   background:rgba(255,255,255,1);
   border-radius:12rpx;
   position: absolute;
-  top: 50%;
+  top: 400rpx;
   left: 50%;
-  margin-top: -252rpx;
   margin-left: -230rpx;
   display: flex;
   flex-direction: column;
