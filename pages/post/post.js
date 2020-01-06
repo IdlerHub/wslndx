@@ -78,7 +78,7 @@ Page({
       this.setData({ rlSucFlag: false })
       app.globalData.rlSuc = false
     }
-    let list = this.data.list
+    let list = this.data.list, flowList = this.data.flowList
     list.forEach(item => {
       if(item.id == app.globalData.detail.id) {
         if(app.globalData.detail.likestatus > 0) {
@@ -89,9 +89,21 @@ Page({
           item.likestatus = app.globalData.detail.likestatus
         }
       }
-      this.setData({
-        list
-      })
+    })
+    flowList.forEach(item => {
+      if(item.id == app.globalData.detail.id) {
+        if(app.globalData.detail.likestatus > 0) {
+          item.likes = app.globalData.detail.likes
+          item.likestatus = app.globalData.detail.likestatus
+        } else {
+          item.likes = app.globalData.detail.likes
+          item.likestatus = app.globalData.detail.likestatus
+        }
+      }
+    })
+    this.setData({
+      list,
+      flowList
     })
     if (((this.data.releaseParam.content != null && this.data.releaseParam.content != "") || this.data.releaseParam.image[0] || this.data.releaseParam.video != null) && this.data.showRelease) {
       let that = this
@@ -336,7 +348,6 @@ Page({
     if(this.data.scrolltop == 0) {
       var moveY= e.touches[0].clientY;
       var diffY = this.startY - moveY;
-      console.log(diffY)
       if(diffY> -10 ) {
         return
       } else {

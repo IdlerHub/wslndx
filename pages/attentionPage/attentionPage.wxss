@@ -15,7 +15,7 @@ page {
   align-items: center;
   border-bottom: 1px solid rgba(237,237,237,1) ;
 }
-.item image {
+.item .avatar {
   width:90rpx;
   height:90rpx;
   border-radius: 50%;
@@ -38,14 +38,10 @@ page {
   margin-right: 8rpx;
 }
 .item .title-name .label {
-  height: 42rpx;
-  padding: 0 13rpx;
-  background:rgba(255,235,235,1);
-  border-radius:3rpx;
-  font-size:28rpx;
-  font-weight:500;
-  color:rgba(223,32,32,1);
-  line-height:42rpx;
+  width:40rpx;
+  height:47rpx;
+  margin-bottom: -12rpx;
+
 }
 .item .univers {
   height:30rpx;

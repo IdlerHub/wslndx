@@ -186,7 +186,9 @@ page {
         white-space: nowrap; }
       .wrap > .item .top .nickName {
         font-size: 40rpx;
-        color: #343434; }
+        color: #343434;
+        display: flex;
+        align-items: center; }
       .wrap > .item .top .school {
         margin-top: 5rpx;
         margin-left: 21rpx;
@@ -196,6 +198,12 @@ page {
         padding-bottom: 39rpx;
         color: #B3B3B3;
         font-size: 54rpx;
+      }
+      .wrap > .item .top .fs {
+        width:40rpx;
+        height:47rpx;
+        margin-bottom: -12rpx;
+        margin-left: 12rpx;
       }
     .wrap > .item .name {
       text-justify: newspaper;

@@ -1,11 +1,11 @@
 <!--pages/attentionPage/attentionPage.wxml-->
 <view class="container" wx:if="{{list[0].nickname}}">
   <view wx:for="{{list}}" wx:key="index" class="item" bindtap="touser" data-index="{{index}}">
-    <image src="{{item.avatar}}"></image>
+    <image src="{{item.avatar}}" class="avatar"></image>
     <view class="titlecon">
       <view class="title-name">
         <text class="name">{{item.nickname}}</text>
-        <text class="label" wx:if="{{item.fs != null}}">{{item.fs}}</text>
+        <image class="label" wx:if="{{item.fs != null}}" src="/images/approve.png"></image>
       </view>
       <view class="univers">{{item.university}}</view>
     </view>

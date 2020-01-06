@@ -162,7 +162,6 @@ Page({
         if (msg.code == 1) {
           /* 开启动画 */
           detail.praising = true
-          // app.socket.send(this.data.detail.uid)
           app.socket.send({
             type: 'Bokemessage',
             data: {uid: this.data.detail.uid}

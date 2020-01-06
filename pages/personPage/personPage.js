@@ -28,21 +28,6 @@ Page({
 
   },
   onShow: function () {
-    let list = this.data.list
-    list.forEach(item => {
-      if (item.id == app.globalData.detail.id) {
-        if (app.globalData.detail.likestatus > 0) {
-          item.likes = app.globalData.detail.likes
-          item.likestatus = app.globalData.detail.likestatus
-        } else {
-          item.likes = app.globalData.detail.likes
-          item.likestatus = app.globalData.detail.likestatus
-        }
-      }
-      this.setData({
-        list
-      })
-    })
   },
   onHide: function () {
 
