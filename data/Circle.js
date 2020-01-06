@@ -25,6 +25,12 @@ function join(param) {
   return httpService.post("Userfriendscircle/add", param)
 }
 
+//POST Userfriendscircle/addOne 单个加入学有圈
+function addOne(param) {
+  return httpService.post("Userfriendscircle/addOne", param)
+}
+
+
 //POST Userfriendscircle/add 取消加圈
 function cancelJoin(param) {
   return httpService.post("Friendscircle/cancel", param)
@@ -181,5 +187,6 @@ module.exports = {
   collect,
   collectCancel,
   bokeblogTop,
-  defaultCircle
+  defaultCircle,
+  addOne
 }

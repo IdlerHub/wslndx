@@ -26,7 +26,7 @@ Page({
     showRelease: false,
     media_type:null,
     showintegral: false,
-    top: 20,
+    top: 26,
     currentTab:0,
     scrolltop: 0,
     showBottom: false
@@ -39,14 +39,13 @@ Page({
     })
     this.getList([])
     this.gettop()
-    let that = this
     let query = wx.createSelectorQuery().in(this)
     let systemInfo = wx.getSystemInfoSync()
     query.selectAll(".tabnav").boundingClientRect()
       query.exec(res => {
         console.log(res[0][0])
         systemInfo.statusBarHeight < 30 ? this.setData({
-          topT: res[0][0].height + 10
+          topT: res[0][0].height
         }) : this.setData({
           top: 48,
           topT: res[0][0].height + 28
@@ -241,18 +240,36 @@ Page({
   },
   praise(e,index) {
     let i = e.currentTarget.dataset.index
-    let list = this.data.list
+    let list = this.data.list , flowList = this.data.flowList
     let param = {
-      blog_id: list[i].id
+      blog_id: e.currentTarget.dataset.id
     }
     if (list[i].likestatus == 1) {
       // 取消点赞
       app.circle.delPraise(param).then(msg => {
         if (msg.code == 1) {
-          list[i].likestatus = 0
-          list[i].likes--
+          if(e.currentTarget.dataset.type) {
+            list[i].likestatus = 0
+            list[i].likes--
+            flowList.forEach( item => {
+              if(item.id == e.currentTarget.dataset.id) {
+                item.likestatus = 0
+                item.likes--
+              }
+            })
+          } else {
+            flowList[i].likestatus = 0
+            flowList[i].likes--
+            list.forEach( item => {
+              if(item.id == e.currentTarget.dataset.id) {
+                item.likestatus = 0
+                item.likes--
+              }
+            })
+          }
           this.setData({
-            list: list
+            list: list,
+            flowList
           })
         } else if (msg.code == -2) {
           wx.showToast({
@@ -266,9 +283,27 @@ Page({
       // 点赞
       app.circle.praise(param).then(msg => {
         if (msg.code == 1) {
-          list[i].likestatus = 1
-          list[i].likes++
-          list[i].praising = true
+          if(e.currentTarget.dataset.type) {
+            list[i].likestatus = 1
+            list[i].likes++
+            list[i].praising = true
+            flowList.forEach(item => {
+              if(item.id = e.currentTarget.dataset.id) {
+                item.likestatus = 1
+                item.likes ++ 
+              }
+            })
+          } else {
+            flowList[i].likestatus = 1
+            flowList[i].likes++
+            flowList[i].praising = true
+            list.forEach(item => {
+              if(item.id = e.currentTarget.dataset.id) {
+                item.likestatus = 1
+                item.likes ++ 
+              }
+            })
+          }
           // app.socket.send(list[i].uid)
           if (msg.data.is_first == 'first') {
             this.setData({
@@ -284,10 +319,11 @@ Page({
           }
           app.socket.send({
             type: 'Bokemessage',
-            data: {uid:list[i].uid}
+            data: {uid:e.currentTarget.dataset.uid}
           })
           this.setData({
-            list: list
+            list: list,
+            flowList
           })
           app.aldstat.sendEvent("秀风采按钮点击",{
             name:'点赞按钮'

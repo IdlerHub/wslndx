@@ -375,12 +375,23 @@ page .list .nav:nth-child(8) .iconfont {
   height: 60rpx;
 }
 
-page .list .nav:nth-child(8) text {
+page .list .nav:nth-child(8) .news {
   margin-top: 18rpx;
   font-family: PingFangSC-Regular;
   font-size: 36rpx;
   color: rgba(102, 102, 102, 1);
   line-height: 36rpx;
+  position: relative;
+}
+page .list .nav:nth-child(8) .news .smallred {
+  width:20rpx;
+  height:20rpx;
+  background:rgba(223,32,32,1);
+  border:1px solid rgba(247,247,247,1);
+  border-radius: 50%;
+  position: absolute;
+  top: -11rpx;
+  right: -9rpx;
 }
 page .list .nav:nth-child(9) {
   width: 231rpx;

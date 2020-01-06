@@ -73,7 +73,7 @@
     </navigator>
     <navigator hover-class="none" class="nav" url="/pages/usermesseage/usermesseage" open-type="navigate" bindtap="drawPage">
       <image src="{{ $state.imgHost }}/messeageicon.png" class="iconfont"></image>
-      <text>我的消息</text>
+      <view class="news">我的消息 <view class="smallred"></view> </view>
     </navigator>
     <navigator hover-class="none" class="nav" url="/pages/attentionPage/attentionPage" open-type="navigate" bindtap="drawPage">
       <image src="{{ $state.imgHost }}/attentionicon.png" class="iconfont"></image>

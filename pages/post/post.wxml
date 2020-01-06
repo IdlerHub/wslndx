@@ -123,7 +123,7 @@
             </view>
             <text class="division"></text>
             <!-- 点赞 -->
-            <formCode bind:handler="praise" class="item" data-index="{{ index }}">
+            <formCode bind:handler="praise" class="item" data-index="{{ index }}" data-type="true" data-id="{{item.id}}" data-uid="{{item.uid}}">
               <view class="container-sub">
                 <view class="praise  {{ item.likestatus ? 'end' : '' }} {{ item.praising ? 'ani' : '' }}"
                   data-index="{{ index }}" bindanimationend="aniend"></view>
@@ -218,7 +218,7 @@
             </view>
             <text class="division"></text>
             <!-- 点赞 -->
-            <formCode bind:handler="praise" class="item" data-index="{{ index }}">
+            <formCode bind:handler="praise" class="item" data-index="{{ index }}" data-id="{{item.id}}" data-uid="{{item.uid}}">
               <view class="container-sub">
                 <view class="praise  {{ item.likestatus ? 'end' : '' }} {{ item.praising ? 'ani' : '' }}"
                   data-index="{{ index }}" bindanimationend="aniend"></view>

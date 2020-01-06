@@ -28,7 +28,7 @@ page {
       border-radius: 50%;
       position: absolute;
       top: 0;
-      right: -6rpx;
+      right: -20rpx;
     }
     .tabnav .tabnav-item:nth-child(1) {
       margin-right: 96rpx;
