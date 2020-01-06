@@ -108,7 +108,7 @@ Page({
   join() {
     let circle = this.data.circle
     let param = { fs_id: this.id }
-    return app.circle.join(param).then(msg => {
+    return app.circle.addOne(param).then(msg => {
       if (msg.code === 1) {
         wx.showToast({
           title: "您已成功加入\r\n【" + circle.title + "】学友圈",
@@ -198,7 +198,8 @@ Page({
   },
   closeewm() {
     this.setData({
-      showbig:false
+      showbig:false,
+      showT: false
     })
   },
   longPress() {
@@ -212,7 +213,32 @@ Page({
     })
   },
   saveImg() {
-
+    let that = this
+    wx.getImageInfo({
+      src: this.data.circle.group_qrcode_image,
+      success (res) {
+        wx.saveImageToPhotosAlbum({
+          filePath: res.path,
+          success() {
+            wx.showToast({
+              title: '保存成功',
+              icon: 'none',
+              duration: 1500
+            })
+            that.setData({
+              showT: false
+            })
+          },
+          fail() {
+            wx.showToast({
+              title: '保存失败',
+              icon: 'none',
+              duration: 1500
+            })
+          }
+        })
+      }
+    })
   },
   //用于数据统计
   onHide() {

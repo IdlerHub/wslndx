@@ -42,6 +42,9 @@ Page({
 	onLoad() {
   },
   onShow() {
+    this.setData({
+      showcopm: false
+    })
     this.getList().then(() => {
       this.drag = this.selectComponent('#drag');
       this.drag.dataChange();

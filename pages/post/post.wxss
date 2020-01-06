@@ -78,11 +78,12 @@ page {
   padding:30rpx 0 24rpx 0;
   box-sizing: border-box;
   margin-bottom: 20rpx;
-}
+  overflow:hidden;}
 .circle-scroll {
   display: flex;
   white-space:nowrap;
   align-items: center;
+  overflow:hidden;
 }
 .circle-scroll .scroll-view {
   display: inline-block;

@@ -391,7 +391,7 @@ page .list .nav:nth-child(8) .news .smallred {
   border-radius: 50%;
   position: absolute;
   top: -11rpx;
-  right: -9rpx;
+  right: -14rpx;
 }
 page .list .nav:nth-child(9) {
   width: 231rpx;
