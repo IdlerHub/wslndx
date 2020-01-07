@@ -79,7 +79,8 @@ Page({
     }) : ''
     app.globalData.currentTab = ''
     /* 更新用户的视频浏览历史 */
-    if (app.store.$state.userInfo.mobile) this.getHistory() 
+    if (app.store.$state.userInfo.mobile) this.getHistory()
+
     setTimeout(wx.hideLoading, 500)
   },
   init() {
@@ -574,5 +575,20 @@ Page({
         }
       })
     }
+  },
+  // 课程完成状态
+  doneless(id) {
+    this.data.recommend.forEach(item => {
+      item.id == id ? item.is_finish = 1 : ''
+    })
+    this.data.catrecommend.forEach(item => {
+      item.forEach(i => {
+        i.id == id ? i.is_finish = 1 : ''
+      })
+    })
+    this.setData({
+      recommend: this.data.recommend,
+      catrecommend: this.data.catrecommend
+    })
   }
 })

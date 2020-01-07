@@ -270,5 +270,14 @@ Page({
         })
       }
     })
+  },
+  // 课程完成状态
+  doneless(id) {
+    this.data.lessList.forEach(item => {
+      item.id == id ? item.is_finish = 1 : ''
+    })
+    this.setData({
+      lessList: this.data.lessList
+    })
   }
 })
