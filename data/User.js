@@ -148,6 +148,10 @@ function getDayTaskStatus(param) {
   return httpService.post("User/getDayTaskStatus", param)
 }
 
+//POST User/lessonFinishStatus 获取用户课程完成状态
+function lessonFinishStatus(param) {
+  return httpService.post("User/lessonFinishStatus", param)
+}
 //POST User/userLessonCategory 获取用户课程用户分类
 function getLessonCategory(param) {
   return httpService.post("User/userLessonCategory", param)
@@ -213,5 +217,6 @@ module.exports = {
   messageDetail,
   following,
   cancelFollowing,
-  userFollowing
+  userFollowing,
+  lessonFinishStatus
 }

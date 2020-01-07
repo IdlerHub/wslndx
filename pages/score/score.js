@@ -50,6 +50,7 @@ Page({
           status: false,
           page: "/pages/index/index?tabs=1",
           authorization: false,
+          total:3,
           showStatus: {
             name: '',
             status: false
@@ -220,7 +221,7 @@ Page({
     }
     // this.init()
     app.getTaskStatus()
-    Promise.all([this.init(), this.getGift()]).then(value => {
+    Promise.all([this.init(), this.getGift(),this.getlessonFinishStatus()]).then(value => {
       let arr = [],brr=[],crr=[],drr=[]
       if (this.data.$state.authUserInfo) {
         this.data.sources.forEach((item, index) => {
@@ -284,6 +285,30 @@ Page({
             details: this.data.details.concat(res.data.lists)
           })
         }
+      }
+    })
+  },
+  getlessonFinishStatus() {
+    return app.user.lessonFinishStatus().then(res => {
+      if(res.code == 1) {
+        if(res.data.finish_status) {
+          this.data.sources.forEach(item => {
+            if(item.title == '学完一门新课程') {
+              item.status = true 
+              item.total = res.data.today_remain_count
+            }
+          })
+        } else {
+          this.data.sources.forEach(item => {
+            if(item.title == '学完一门新课程') {
+              item.total = res.data.today_remain_count
+            }
+          })
+        } 
+        this.setData({
+            sources: this.data.sources,
+            lessonFinishStatus: res.data
+        })
       }
     })
   },

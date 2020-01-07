@@ -52,7 +52,7 @@
             <!-- prettier-ignore -->
             <text class="score"><text class="num">+{{ item.score }}</text> 积分 {{item.title == '每日签到' ?'(连签7天+120积分)' : '' }}</text>
             <!-- prettier-ignore -->
-            <text wx:if="{{ item.times }}" class="times">每天还有<text class="num">{{ item.times }}</text>次机会</text>
+            <text wx:if="{{ item.total && item.total != 0}}" class="times">每天还有<text class="num">{{ item.total }}</text>次机会</text>
             <button class="status {{ item.status ? 'finish' : '' }}" bindtap="nav" data-index="{{ index }}" data-title="{{item.title}}" disabled="{{ item.status }}" wx:if="{{!item.authorization && item.title != '每日签到' }}">{{item.status ? "已完成" : "去完成" }}</button>
             <button class="status {{ item.status ? 'finish' : '' }}" bindtap="nav" data-index="{{ index }}" data-title="{{item.title}}" disabled="{{ item.status }}" wx:if="{{ item.title == '每日签到' && !item.status}}">签到</button>
             <view class="signstatus" wx:if="{{ item.title == '每日签到' && item.status}}" catchtap="showSingbox">已签到{{$state.signdays}}天</view>

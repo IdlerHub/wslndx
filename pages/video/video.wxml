@@ -141,3 +141,12 @@
 </view>
 <!-- 积分动画 -->
 <integralAnimation integral="{{integral}}" integralContent="{{integralContent}}" wx:if="{{showintegral}}"></integralAnimation>
+<!-- 新年红包活动 -->
+<!-- <view class="redPaket">
+  <view class="redbox">
+    <view class="wechat">wslndx001</view>
+    <view class="copybtn">
+      点击复制微信号
+    </view>
+  </view>
+</view> -->
