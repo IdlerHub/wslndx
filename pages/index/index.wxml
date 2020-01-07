@@ -168,6 +168,7 @@
                 src="{{ item.show_big ? item.big_image + '?x-image-process=image/resize,m_fixed,w_690,h_360/quality,Q_80' : item.image + '?x-image-process=image/resize,m_fixed,w_260,h_160/quality,Q_80'  }}"
                 lazy-load="true"></image>
               <image class="icon" mode="aspectFill" src="{{ $state.imgHost }}/play.png"></image>
+              <image src="/images/coursestautes.png" class="status" wx:if="{{item.is_finish}}"></image>
             </view>
             <view class="right">
               <text class="line name">{{ item.title }}</text>
@@ -202,7 +203,7 @@
                 src="{{ item.image }}?x-image-process=image/resize,m_fixed,w_260,h_160/quality,Q_80" lazy-load="true">
               </image>
               <image class="icon" mode="aspectFill" src="{{ $state.imgHost }}/play.png"></image>
-              <image src="/images/coursestautes.png" class="status"></image>
+              <image src="/images/coursestautes.png" class="status" wx:if="{{item.is_finish}}"></image>
             </view>
             <view class="right">
               <text class="line name">{{ item.title }}</text>
