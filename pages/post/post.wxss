@@ -203,7 +203,7 @@ page {
       .wrap > .item .top .fs {
         width:40rpx;
         height:47rpx;
-        margin-bottom: -12rpx;
+        margin-bottom: -10rpx;
         margin-left: 12rpx;
       }
     .wrap > .item .name {

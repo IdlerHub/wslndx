@@ -25,7 +25,10 @@
         <view class="left">
           <image mode="aspectFill" class="avatarUrl" src="{{ detail.avatar }}" data-uid="{{ detail.uid }}" catchtap="toUser"></image>
           <view class="text">
-            <text class="nickName line">{{ detail.nickname }}</text>
+            <view class="nickName line">
+              {{ detail.nickname }}
+              <image class="fs" src="/images/approve.png" wx:if="{{detail.is_cert}}"></image>
+            </view>
             <text wx:if="{{ detail.university_name }}" class="school line">{{ detail.university_name }}</text>
           </view>
         </view>

@@ -32,7 +32,10 @@
         <view class="left">
           <image mode="aspectFill" class="avatarUrl" src="{{ item.avatar }}" data-uid="{{ item.uid }}" catchtap="toUser" lazy-load></image>
           <view class="text">
-            <text class="nickName line">{{ item.nickname }}</text>
+            <view class="nickName line">
+              {{ item.nickname }}
+              <image class="fs" src="/images/approve.png" wx:if="{{item.is_cert}}"></image>
+            </view>
             <text class="date">{{ item.createtimes }}</text>
             <text wx:if="{{ item.university_name }}" class="school">{{ item.university_name }}</text>
           </view>

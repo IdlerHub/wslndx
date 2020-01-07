@@ -62,7 +62,7 @@
               <view class="text">
                 <view class="nickName line">
                   {{ item.nickname }}
-                  <image class="fs" src="/images/approve.png"></image>
+                  <image class="fs" src="/images/approve.png"  wx:if="{{item.is_cert}}"></image>
                 </view>
                 <text class="date">{{ item.createtimes }}</text>
                 <text wx:if="{{ item.university_name }}" class="school">{{ item.university_name }}</text>
@@ -157,7 +157,7 @@
               <view class="text">
                 <view class="nickName line">
                   {{ item.nickname }}
-                  <image class="fs" src="/images/approve.png"></image>
+                  <image class="fs" src="/images/approve.png" wx:if="{{item.is_cert}}"></image>
                 </view>
                 <text class="date">{{ item.createtimes }}</text>
                 <text wx:if="{{ item.university_name }}" class="school">{{ item.university_name }}</text>
