@@ -240,11 +240,16 @@ Page({
   },
   praise(e,index) {
     let i = e.currentTarget.dataset.index
-    let list = this.data.list , flowList = this.data.flowList
+    let list = this.data.list , flowList = this.data.flowList , status = 0
     let param = {
       blog_id: e.currentTarget.dataset.id
     }
-    if (list[i].likestatus == 1) {
+    if(e.currentTarget.dataset.type) {
+      status = list[i].likestatus
+    } else {
+      status = flowList[i].likestatus
+    }
+    if (status == 1) {
       // 取消点赞
       app.circle.delPraise(param).then(msg => {
         if (msg.code == 1) {
@@ -267,9 +272,10 @@ Page({
               }
             })
           }
+          console.log(flowList)
           this.setData({
             list: list,
-            flowList
+            flowList: flowList
           })
         } else if (msg.code == -2) {
           wx.showToast({
@@ -288,7 +294,7 @@ Page({
             list[i].likes++
             list[i].praising = true
             flowList.forEach(item => {
-              if(item.id = e.currentTarget.dataset.id) {
+              if(item.id == e.currentTarget.dataset.id) {
                 item.likestatus = 1
                 item.likes ++ 
               }
@@ -298,13 +304,13 @@ Page({
             flowList[i].likes++
             flowList[i].praising = true
             list.forEach(item => {
-              if(item.id = e.currentTarget.dataset.id) {
+              console.log(e.currentTarget.dataset.id)
+              if(item.id == e.currentTarget.dataset.id) {
                 item.likestatus = 1
                 item.likes ++ 
               }
             })
           }
-          // app.socket.send(list[i].uid)
           if (msg.data.is_first == 'first') {
             this.setData({
               integral: '+50 积分',
@@ -323,7 +329,7 @@ Page({
           })
           this.setData({
             list: list,
-            flowList
+            flowList: flowList
           })
           app.aldstat.sendEvent("秀风采按钮点击",{
             name:'点赞按钮'
@@ -339,12 +345,18 @@ Page({
     }
   },
   aniend(e) {
-    var i = e.currentTarget.dataset.index
-    var list = this.data.list
-    list[i].praising = false
-    this.setData({
-      list: list
+    var i = e.currentTarget.dataset.index, id = e.currentTarget.dataset.id
+    var list = this.data.list , flowList = this.data.flowList
+    list.forEach(item=> {
+      item.id == id ? item.praising = false : ''
     })
+    flowList.forEach(item => {
+      item.id == id ? item.praising = false : ''
+    })
+    this.setData({
+      list,
+      flowList
+    })  
   },
   // 写帖成功动效
   rlSuc() {
@@ -610,10 +622,6 @@ Page({
         })
       })
   },
-  /*长按复制内容 */
-  copythat(e) {
-    app.copythat(e.target.dataset.content)
-  },
   setfollow(id, follow) {
     if(follow) {
       this.data.list.forEach(item => {
@@ -642,5 +650,17 @@ Page({
         flowList: this.data.list
       })
     }
+  },
+  //点赞联动
+  pagesPraise(id, type) {
+    let list = this.data.list , flowList = this.data.flowList
+    if(type) {
+      list.forEach(item => {
+        if(item.id == id) {
+          item.likes
+        }
+      })
+    }
+    
   }
 })

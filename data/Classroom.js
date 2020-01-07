@@ -2,7 +2,7 @@ var httpService = require("../utils/service.js")
 
 //POST Classroom/recommend 微课堂推荐列表
 function recommend(param) {
-  return httpService.post("Classroom/recommend", param, true)
+  return httpService.post("Classroom/recommend", param)
 }
 
 //POST Classroom/detail 微课堂视频详情
@@ -17,7 +17,7 @@ function category() {
 
 //POST Classroom/lessons 筛选课程
 function lessons(param) {
-  return httpService.post("Classroom/lessons", param, true)
+  return httpService.post("Classroom/lessons", param)
 }
 
 //POST Classroom/recordAdd 添加播放记录课程
