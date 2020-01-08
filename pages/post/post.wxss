@@ -39,7 +39,8 @@ page {
       color:rgba(153,153,153,1);
     }
     .swiper {
-      height: calc(100vh - 280rpx);
+      height: calc(100vh - 65px);
+      box-sizing: border-box;
     }
     .containerWrap {
       height: 100%;
@@ -441,7 +442,7 @@ page {
 }
 .upbottom {
   width: 100%;
-  padding:20rpx 0  50rpx 0;
+  padding:20rpx 0  30rpx 0;
   text-align: center;
   font-size: 28rpx;
 }

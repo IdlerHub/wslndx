@@ -42,7 +42,7 @@
 	</view>
 </view>
 <view class="nojoin" wx:if="{{noJoinList[0].bimage}}">
-	<view class="nojoin-title">其他圈子</view>
+	<view class="nojoin-title" style="margin-top:{{list[0] ? '' : 0}}">其他圈子</view>
 	<view class="infoitem  infoitemtwo" wx:if="{{delaction}}">
 		<image src="{{delItem.bimage}}"></image>
 		<view class="nojoin-btn" catchtap="fnJoin" data-item="{{item}}" data-index="{{index}}">

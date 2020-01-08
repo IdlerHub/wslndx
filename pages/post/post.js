@@ -48,7 +48,7 @@ Page({
           topT: res[0][0].height
         }) : this.setData({
           top: 48,
-          topT: res[0][0].height + 28
+          topT: res[0][0].height + 23
         }) 
       })
     app.aldstat.sendEvent("菜单", { name: "风采展示" })
@@ -83,8 +83,10 @@ Page({
         if(app.globalData.detail.likestatus > 0) {
           item.likes = app.globalData.detail.likes
           item.likestatus = app.globalData.detail.likestatus
+          item.comments = app.globalData.detail.comments
         } else {
           item.likes = app.globalData.detail.likes
+          item.comments = app.globalData.detail.comments
           item.likestatus = app.globalData.detail.likestatus
         }
       }
@@ -93,9 +95,11 @@ Page({
       if(item.id == app.globalData.detail.id) {
         if(app.globalData.detail.likestatus > 0) {
           item.likes = app.globalData.detail.likes
+          item.comments = app.globalData.detail.comments
           item.likestatus = app.globalData.detail.likestatus
         } else {
           item.likes = app.globalData.detail.likes
+          item.comments = app.globalData.detail.comments
           item.likestatus = app.globalData.detail.likestatus
         }
       }
@@ -506,10 +510,7 @@ Page({
   },
   //收藏风采
   collect(e){
-    let blog_id = e.currentTarget.dataset.id
-    let status = e.currentTarget.dataset.status
-    // console.log(status)
-    let blog_index = e.currentTarget.dataset.index
+    let blog_id = e.currentTarget.dataset.id, status = e.currentTarget.dataset.status ,blog_index = e.currentTarget.dataset.index
     this.setData({
       blog_id,
       blog_index
@@ -526,11 +527,7 @@ Page({
     let param = { blog_id: this.data.blog_id }
     app.circle.collectCancel(param).then(res => {
       if (res.code == 1) {
-        let list = this.data.list
-        list[this.data.blog_index].collectstatus = 0
-        this.setData({
-          list
-        })
+        this.pagesCollect(this.data.blog_id, 0)
         wx.showToast({
           title: res.msg,
           icon: 'success',
@@ -554,11 +551,7 @@ Page({
     }
     app.circle.collect(param).then(res => {
       if(res.code == 1) {
-        let list = this.data.list
-        list[this.data.blog_index].collectstatus = 1
-        this.setData({
-          list
-        })
+        this.pagesCollect(this.data.blog_id, 1)
         this.closeSheet()
         wx.showToast({
           title: res.msg,
@@ -662,5 +655,33 @@ Page({
       })
     }
     
+  },
+  //收藏联动
+  pagesCollect(id,type) {
+    if(type) {
+      let list = this.data.list, flowList = this.data.flowList
+        list.forEach(item => {
+          item.id == id ? item.collectstatus = 1 : ''
+        })
+        flowList.forEach(item => {
+          item.id == id ? item.collectstatus = 1 : ''
+        })
+        this.setData({
+          list,
+          flowList
+        })
+    } else {
+      let list = this.data.list, flowList = this.data.flowList
+        list.forEach(item => {
+          item.id == id ? item.collectstatus = 0 : ''
+        })
+        flowList.forEach(item => {
+          item.id == id ? item.collectstatus = 0 : ''
+        })
+        this.setData({
+          list,
+          flowList
+        })
+    }
   }
 })

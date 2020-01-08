@@ -21,19 +21,27 @@ Page({
     })
     this.param = { page: 1, pageSize: 10, }
     this.getList([])
-    app.aldstat.sendEvent("菜单", { name: "个人风采" })
+    app.aldstat.sendEvent("个人风采", { name: "个人风采" })
     this.pages = getCurrentPages()[0]
   },
-  onReady: function () {
-
-  },
   onShow: function () {
-  },
-  onHide: function () {
-
-  },
-  onUnload: function () {
-
+    let list = this.data.list, flowList = this.data.flowList
+    list.forEach(item => {
+      if(item.id == app.globalData.detail.id) {
+        if(app.globalData.detail.likestatus > 0) {
+          item.likes = app.globalData.detail.likes
+          item.likestatus = app.globalData.detail.likestatus
+          item.comments = app.globalData.detail.comments
+        } else {
+          item.likes = app.globalData.detail.likes
+          item.comments = app.globalData.detail.comments
+          item.likestatus = app.globalData.detail.likestatus
+        }
+      }
+    })
+    this.setData({
+      list
+    })
   },
   onPullDownRefresh() {
     this.param.page = 1
@@ -258,6 +266,7 @@ Page({
       if (res.code == 1) {
         let list = this.data.list
         list[this.data.blog_index].collectstatus = 0
+        this.pages.pagesCollect(this.data.blog_id, 0)
         this.setData({
           list
         })
@@ -286,6 +295,7 @@ Page({
       if (res.code == 1) {
         let list = this.data.list
         list[this.data.blog_index].collectstatus = 1
+        this.pages.pagesCollect(this.data.blog_id, 1)
         this.setData({
           list
         })
