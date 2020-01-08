@@ -56,7 +56,7 @@
           <image mode="aspectFill" src="{{ $state.imgHost }}/play-hl.png" class="play"></image>
         </view>
       </view>
-      <button wx:if="{{ detail.fs_title }}" class="label" hover-class="none">#{{ detail.fs_title }}</button>
+      <text wx:if="{{ detail.fs_title }}" class="label" hover-class="none">#{{ detail.fs_title }}精选</text>
     </view>
   </view>
   <scroll-view wx:if="{{ detail }}" scroll-x="true" class="nav" scroll-left="{{ navScrollLeft }}" scroll-with-animation="{{ true }}">
