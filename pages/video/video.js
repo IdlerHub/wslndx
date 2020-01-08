@@ -21,6 +21,7 @@ Page({
   },
   onLoad(options) {
     let systemInfo = wx.getSystemInfoSync()
+    this.wifi = false
     systemInfo.statusBarHeight < 30 ? this.setData({
       topT: 118
     }) : this.setData({
@@ -117,6 +118,7 @@ Page({
           wx.getConnectedWifi({
             success: res => {
               console.log(res)
+              this.wifi = true
               app.playVedio('wifi')
               that.videoContext.play()
               that.setData({
@@ -131,6 +133,7 @@ Page({
                 autoplay: false,
                 pause: true
               })
+              this.wifi = false
               wx.showModal({
                 content: '您当前不在Wi-Fi环境，继续播放将会产生流量，是否选择继续播放?',
                 confirmText: '是',
@@ -473,9 +476,23 @@ Page({
   },
   switchTab(event) {
     let cur = event.detail.current
-    cur == 0 ? this.judgeWifi() : ''
     this.setData({
       currentTab: cur
     })
+    cur == 0 ? this.judgeWifi() : this.videoContext.stop()
   },
+  showred() {
+    this.videoContext.stop()
+    wx.showModal({
+      content: '观看完整短视频即可有机会领取现金红包哦！',
+      confirmText: '确定',
+      confirmColor: "#df2020",
+      success: res => {
+        this.data.$state.flow || this.wifi ? this.videoContext.play() : ''
+      },
+      fail:res => {
+        this.data.$state.flow || this.wifi ? this.videoContext.play() : ''
+      }
+    })
+  }
 })

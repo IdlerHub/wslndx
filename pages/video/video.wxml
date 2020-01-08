@@ -58,6 +58,7 @@
                 <view wx:if="{{ cur.fw }}" class="text">{{ cur.fw }}</view>
                 <view wx:else class="text">{{ cur.forward }}</view>
               </button>
+              <view class="redPacket" catchtap="showred"></view>
             </view>
             <!-- 返回首页 -->
             <view wx:if="{{ vistor }}" class="vistor-home" catchtap="tohome">

@@ -13,7 +13,10 @@
       <view class="left">
         <image mode="aspectFill" class="avatarUrl" src="{{ item.avatar }}"></image>
         <view class="text">
-          <text class="nickName line">{{ item.nickname }}</text>
+          <view class="nickName line">
+            {{ item.nickname }}
+            <image class="fs" src="/images/approve.png" wx:if="{{item.is_cert}}"></image>
+          </view>
         </view>
       </view>
       <text class="date">{{ item.createtimes }}</text>

@@ -138,7 +138,13 @@ page .right {
         white-space: nowrap; }
       .wrap > .item .top .nickName {
         font-size: 40rpx;
-        color: #343434; }
+        color: #343434;
+        display: flex; }
+        .wrap > .item .top .fs {
+          width:40rpx;
+          height:47rpx;
+          margin-bottom: -10rpx;
+          margin-left: 12rpx; }
       .wrap > .item .top .school {
         margin-top: 5rpx;
         margin-left: 21rpx;

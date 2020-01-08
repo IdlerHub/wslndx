@@ -103,6 +103,16 @@
   position: relative;
   top: calc(100% - 480rpx);
 }
+.vedioAll .redPacket {
+  position: absolute;
+  width: 110px;
+  height: 107px;
+  top: -256rpx;
+  right: 2rpx;
+  background: url('https://hwcdn.jinlingkeji.cn/images/pro/redPacketanimiton.png');
+  background-size: cover;
+  animation: ani 2s steps(23, end) infinite;
+}
 .vedioAll .vedioAllTop {
   display: flex;
   flex-direction: row;
