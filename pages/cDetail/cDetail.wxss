@@ -52,7 +52,19 @@ page {
       width: 2rpx;
       height: 40rpx;
       background: #dbdbdb; }
-
+    .label {
+      margin: 20rpx 0 0 0;
+      padding: 0 20rpx;
+      display: inline-block;
+      height: 44rpx;
+      line-height: 44rpx;
+      border-radius: 6rpx;
+      color: #fff;
+      font-size: 32rpx;
+      text-align: left;
+      background:rgba(82,217,195,1);
+      text-align: center;
+    }
 .btn > .item {
   flex: 1;
   display: flex;
@@ -149,8 +161,15 @@ page {
 
 .top .nickName {
   font-size: 40rpx;
-  color: #343434; }
-
+  color: #343434;
+  display: flex;
+  align-items: center; }
+.top .nickName .fs {
+  width:40rpx;
+  height:47rpx;
+  margin-bottom: -10rpx;
+  margin-left: 16rpx;
+}
 .top .school {
   margin-top: 5rpx;
   font-size: 28rpx;

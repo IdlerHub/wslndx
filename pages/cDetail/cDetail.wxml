@@ -27,7 +27,10 @@
         <view class="left">
           <image mode="aspectFill" class="avatarUrl" src="{{ item.avatar }}" data-uid="{{ item.uid }}" catchtap="toUser"></image>
           <view class="text">
-            <text class="nickName line">{{ item.nickname }}</text>
+            <view class="nickName line">
+              {{ item.nickname }}
+              <image class="fs" src="/images/approve.png" wx:if="{{item.is_cert}}"></image>
+            </view>
             <text wx:if="{{ item.university_name }}" class="school line">{{ item.university_name }}</text>
           </view>
         </view>
@@ -49,6 +52,7 @@
             <image mode="aspectFill" src="{{ $state.imgHost }}/play-hl.png" class="play"></image>
           </view>
         </view>
+        <view wx:if="{{ item.fs_title }}" class="label">#{{ item.fs_title }}精选</view>
       </view>
       <view class="btn">
         <button class="share item" open-type="share" data-index="{{ index }}" hover-class="btn-hover">

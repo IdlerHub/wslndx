@@ -16,7 +16,10 @@ Page({
     autoplay: false,
     guideTxt: '下一步',
     vistor: false,
-    showintegral:false
+    showintegral:false,
+    isshowRed: false,
+    isshowRedbig:false,
+    loop:false,
     /*  rect: wx.getMenuButtonBoundingClientRect() */
   },
   onLoad(options) {
@@ -63,6 +66,7 @@ Page({
           cur: this.data.list[0],
           index: 0
         })
+        this.shortvideoAward()
         app.addVisitedNum(`v${this.data.cur.id}`)
         app.aldstat.sendEvent("短视频播放", { name: this.data.cur.title })
       })
@@ -74,9 +78,6 @@ Page({
           autoplay: false,
         })
       }
-      // this.setData({
-      //   autoplay: true
-      // })
     let ap = {
       categoryId: 10,
       page: 1,
@@ -91,9 +92,6 @@ Page({
           this.judgeWifi() : this.setData({
             showGuide: true
           })
-        // this.setData({
-        //   autoplay: true
-        // })
       } else {
         app.getGuide().then(res => {
           if (this.data.$state.newGuide.shortvideo != 0) {
@@ -107,6 +105,48 @@ Page({
       }
     }
   },
+  //获取是否红包奖励
+  shortvideoAward() {
+    return app.video.shortvideoAward().then(res => {
+      console.log(res)
+      if(res.code == 1) {
+        this.setData({
+          isshowRed: res.data.today_first
+        })
+      }
+    })
+  },
+  //获取红包奖励内容
+  recordFinish() {
+    let param = { shortvideo_id: this.data.cur.id}
+    app.video.recordFinish(param).then(res => {
+      if(res.code == 1) {
+        this.setData({
+          loop:true,
+          isshowRedbig: res.data.today_award,
+          wechatnum: res.data.wechat_num
+        })
+        this.videoContext.play()
+      }
+    })
+  },
+  closeRed() {
+    this.setData({
+      isshowRedbig: false,
+      isshowRed: false
+    })
+  },
+  vedioRecordAdd() {
+    let param = { shortvideo_id : this.data.cur.id }
+    app.video.recordAdd(param).then( res => {
+      if(res.code == 1 ) {
+        console.log('发送成功')
+      }
+    })
+  },
+  copywechat() {
+    app.copythat(this.data.wechatnum)
+  },
   judgeWifi() {
     if (!this.data.$state.flow  && this.data.currentTab == 0) {
       this.setData({
@@ -118,13 +158,16 @@ Page({
           wx.getConnectedWifi({
             success: res => {
               console.log(res)
-              this.wifi = true
+              that.wifi = true
               app.playVedio('wifi')
               that.videoContext.play()
               that.setData({
                 autoplay: true,
                 pause: false
               })
+              setTimeout(() => {
+                that.vedioRecordAdd()
+              }, 200);
             },
             fail: res => {
               console.log(res)
@@ -133,7 +176,7 @@ Page({
                 autoplay: false,
                 pause: true
               })
-              this.wifi = false
+              that.wifi = false
               wx.showModal({
                 content: '您当前不在Wi-Fi环境，继续播放将会产生流量，是否选择继续播放?',
                 confirmText: '是',
@@ -147,6 +190,9 @@ Page({
                       pause: false
                     })
                     that.videoContext.play()
+                    setTimeout(() => {
+                      that.vedioRecordAdd()
+                    }, 200);
                   } else if (res.cancel) {
                     app.playVedio('wifi')
                     that.videoContext.pause()
@@ -173,6 +219,9 @@ Page({
         autoplay: true
       })
       this.videoContext.play()
+      setTimeout(() => {
+        this.vedioRecordAdd()
+      }, 200);
     }
   },
   getList(list) {
@@ -277,7 +326,7 @@ Page({
         this.getList()
       }
     }
-    this.vedioRecordAdd()
+    this.vediorecordAdd()
     app.addVisitedNum(`v${this.data.cur.id}`)
     app.aldstat.sendEvent("短视频播放", { name: this.data.cur.title })
   },
@@ -447,14 +496,6 @@ Page({
         }
       })
     }
-  },
-  vedioRecordAdd() {
-    let param = { shortvideo_id : this.data.cur.id }
-    app.video.recordAdd(param).then( res => {
-      if(res.code == 1 ) {
-        console.log('发送成功')
-      }
-    })
   },
   // 获取用户的微信昵称头像
   onGotUserInfo: function(e) {

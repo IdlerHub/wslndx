@@ -187,6 +187,11 @@ function userFollowing(param) {
   return httpService.post("User/userFollowing", param)
 }
 
+//POST Message/unreadNum 未读消息数目
+function unreadNum(param) {
+  return httpService.post("Message/unreadNum", param)
+}
+
 module.exports = {
   wxLoginCode,
   getAuthCode,
@@ -218,5 +223,6 @@ module.exports = {
   following,
   cancelFollowing,
   userFollowing,
-  lessonFinishStatus
+  lessonFinishStatus,
+  unreadNum
 }

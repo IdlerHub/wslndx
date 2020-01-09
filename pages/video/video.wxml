@@ -19,7 +19,7 @@
   </view>
   <swiper class="swiper" current="{{ currentTab }}" duration="300" bindchange="switchTab">
     <swiper-item bindtouchstart="scrollTouchStart" bindtouchend="scrollTouchEnd">
-      <video class="myVideo" id="{{ vid }}" src="{{ cur.url }}" controls="{{ false }}" show-center-play-btn="{{ false }}" object-fit="fill" autoplay="{{ autoplay }}" loop bindplay="{{vedioRecordAdd}}">
+      <video class="myVideo" id="{{ vid }}" src="{{ cur.url }}" controls="{{ false }}" show-center-play-btn="{{ false }}" object-fit="fill" autoplay="{{ autoplay }}" loop="{{loop}}" bindplay="{{vedioRecordAdd}}" bindended="recordFinish">
         <!-- 功能  滑动及视频播/停监听-->
         <view wx:if="{{ cur && !$state.baseInfo }}" class="dropback">
           <view hover-class="none" catchtap="tap" wx:if="{{ !$state.baseInfo }}" class="tapbg">
@@ -58,7 +58,7 @@
                 <view wx:if="{{ cur.fw }}" class="text">{{ cur.fw }}</view>
                 <view wx:else class="text">{{ cur.forward }}</view>
               </button>
-              <view class="redPacket" catchtap="showred"></view>
+              <view class="redPacket" catchtap="showred" wx:if="{{isshowRed}}"></view>
             </view>
             <!-- 返回首页 -->
             <view wx:if="{{ vistor }}" class="vistor-home" catchtap="tohome">
@@ -143,11 +143,11 @@
 <!-- 积分动画 -->
 <integralAnimation integral="{{integral}}" integralContent="{{integralContent}}" wx:if="{{showintegral}}"></integralAnimation>
 <!-- 新年红包活动 -->
-<!-- <view class="redPaket">
+<view class="redPaket" wx:if="{{isshowRedbig}}" bindtap="closeRed">
   <view class="redbox">
-    <view class="wechat">wslndx001</view>
-    <view class="copybtn">
+    <view class="wechat">{{wechatnum}}</view>
+    <view class="copybtn" catchtap="copywechat">
       点击复制微信号
     </view>
   </view>
-</view> -->
+</view>

@@ -31,7 +31,7 @@ Page({
         })
       }
     })
-    
+    this.unreadNum()
   },
   onPullDownRefresh: function() {
     this.setData({
@@ -84,6 +84,15 @@ Page({
   drawPage() {
     app.aldstat.sendEvent("个人中心按钮点击",{
       name:'积分抽奖'
+    })
+  },
+  unreadNum() {
+    app.user.unreadNum().then(res => {
+      if(res.code == 1) {
+        this.setData({
+          showMes: res.data.unread_count
+        })
+      }
     })
   }
 })
