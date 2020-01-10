@@ -169,6 +169,13 @@
 					"pathName": "pages/circle/circle",
 					"query": "id=12661&type=share",
 					"scene": null
+				},
+				{
+					"id": 11,
+					"name": "抽奖活动分享",
+					"pathName": "pages/education/education",
+					"query": "url=https://mp.weixin.qq.com/s/S9lTgAVK20snuWBtapc6PQ",
+					"scene": null
 				}
 			]
 		}

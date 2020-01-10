@@ -1023,5 +1023,18 @@ Page({
          }) 
       }, 2500);
     }
+  },
+  tocdetai() {
+    let pages = getCurrentPages() , jump = false
+    pages.forEach(item => {
+      item.route == 'pages/cDetail/cDetail' ? jump = true : ''
+    })
+    if(jump) {
+      wx.navigateBack()
+    } else {
+      wx.navigateTo({
+        url: '../cDetail/cDetail?id=' + this.data.detail.fs_id
+      })
+    }
   }
 })

@@ -56,7 +56,7 @@
           <image mode="aspectFill" src="{{ $state.imgHost }}/play-hl.png" class="play"></image>
         </view>
       </view>
-      <navigator wx:if="{{ detail.fs_title }}" url="../cDetail/cDetail?id={{ detail.fs_id }}" hover-class="none" open-type="navigate" class="label">#{{ detail.fs_title }}精选</navigator>
+      <view wx:if="{{ detail.fs_title }}" class="label" bindtap="tocdetai">#{{ detail.fs_title }}精选</view>
     </view>
   </view>
   <scroll-view wx:if="{{ detail }}" scroll-x="true" class="nav" scroll-left="{{ navScrollLeft }}" scroll-with-animation="{{ true }}">
