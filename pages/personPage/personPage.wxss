@@ -38,10 +38,13 @@ page .Pagetop {
             text-align: left;
             line-height: 62rpx; }
           page .container > .top .box .left .info .name {
-            width: 440rpx;
+            width: 350rpx;
             font-family: PingFangSC-Medium;
             font-size: 44rpx;
             line-height: 62rpx;
+            overflow: hidden;    
+            text-overflow:ellipsis;    
+            white-space: nowrap;
             color: #ffffff; }
           page .container > .top .box .left .info .city {
             display: inline-block;

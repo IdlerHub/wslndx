@@ -299,7 +299,7 @@ Component({
 			this.init();
 		},
 		initDom() {
-			// wx.pageScrollTo({scrollTop: 0, duration: 0});
+			wx.pageScrollTo({scrollTop: 0, duration: 0});
 			let {windowWidth, windowHeight, platform} = wx.getSystemInfoSync();
 			let remScale = (windowWidth || 375) / 375,
 				realTopSize = this.data.topSize * remScale / 2,
@@ -371,6 +371,8 @@ Component({
 		},
 		//加入加圈
 		fnJoin(e) {
+			if(this.addaction) return
+			this.addaction = true
 			let curItem = e.currentTarget.dataset.item, index = e.currentTarget.dataset.index, num1 = '', num2 = '',arr = JSON.parse(JSON.stringify(this.data.list)) ,  brr = []
 			this.setData({
 				addItem: curItem,
@@ -398,11 +400,15 @@ Component({
 								addaction: false,
 								addItem:{}
 							})
+							this.addaction = false
+							this.init()
 					})
 				}, 150);
 		},
 		//取消加圈
 		fnCancelJoin(e) {
+			if(this.delaction) return
+			this.delaction = true
 			let curItem = e.currentTarget.dataset.item, index = e.currentTarget.dataset.index, arr = JSON.parse(JSON.stringify(this.data.list)), brr = [], num = ''
 			this.setData({
 				delItem: curItem,
@@ -436,6 +442,7 @@ Component({
 						icon: "none",
 						duration: 1500
 					})
+					this.delaction = false
 				})
 				this.setData({
 					delItem:{},

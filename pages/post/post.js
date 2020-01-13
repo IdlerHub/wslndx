@@ -167,15 +167,14 @@ Page({
     this.setData({
       showLoading: true
     })
-    let temp =  []
-    this.data.currentTab == 0 ? temp = list || this.data.list : temp = list || this.data.flowList
-    return app.circle.news(this.param[this.data.currentTab]).then(msg => {
+    let temp =  [], currentTab = this.data.currentTab 
+    currentTab == 0 ? temp = list || this.data.list : temp = list || this.data.flowList
+    return app.circle.news(this.param[currentTab]).then(msg => {
       if (msg.code == 1) {
         if (msg.data) {
           msg.data[0] ? '' : this.setData({
             showBottom: true
           })
-          console.log(msg.data[0] && this.param[1].page == 1)
           let arr = [];
           for (let i in msg.data) {
             arr.push(msg.data[i])
@@ -193,16 +192,19 @@ Page({
             item.auditing = item.check_status
           })
           temp.push(...arr)
-          this.data.currentTab == 0 ? this.setData({
-            list: temp
-          }) : this.setData({
-            flowList: temp
-          })
+          setTimeout(() => {
+            this.setData({
+              showLoading: false
+            })
+            if(this.data.currentTab != currentTab) return
+            this.data.currentTab == 0 ? this.setData({
+              list: temp
+            }) : this.setData({
+              flowList: temp
+            })
+          }, 800);
           this.setHeight()
         }
-        this.setData({
-          showLoading: false
-        })
       }
     })
   },
