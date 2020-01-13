@@ -25,7 +25,7 @@
             </view>
         </view>
     </view>
-    <view class="cBox" wx:else>
+    <view class="cBox" wx:if="{{circleTitle}}">
         <view class="hd">
             <text>同步到{{circleTitle}} </text>
             <switch checked bindchange="switchChange" checked="{{showFlag}}" />
