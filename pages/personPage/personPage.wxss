@@ -133,8 +133,8 @@ page .Pagetop {
         display: flex;
         align-items: center; }
         .wrap > .item .top .fs {
-          width:40rpx;
-          height:47rpx;
+          width:35rpx;
+          height:38rpx;
           margin-bottom: -10rpx;
           margin-left: 16rpx; }
       .wrap > .item .top .school {

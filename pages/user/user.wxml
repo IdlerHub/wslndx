@@ -59,7 +59,7 @@
       <image src="{{ $state.imgHost }}/experience.png"  class="iconfont"></image>
       <text>体验官申请</text>
     </navigator>
-    <navigator hover-class="none" class="nav" url="../circlethree/circlethree?type=1" open-type="navigate">
+    <navigator hover-class="none" class="nav" url="../circle/circle?type=1" open-type="navigate">
       <image src="{{ $state.imgHost }}/useraddquan.png" class="iconfont"></image>
       <text>加入圈子</text>
     </navigator>

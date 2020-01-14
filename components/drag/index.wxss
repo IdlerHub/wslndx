@@ -85,7 +85,7 @@
 .infoitem  .nojoin-btn image {
   width:30rpx;
   height:30rpx;
-  margin-right: 10rpx;
+  margin-right: 12rpx;
 }
 .infoitem  .nojoin-btn text {
   font-size:32rpx;
@@ -94,8 +94,8 @@
   color:rgba(223,32,32,1);
 }
 .infoitem .joininfo image {
-  width: 26rpx;
-  height: 26rpx;
+  width: 24rpx;
+  height: 24rpx;
 }
 .infoitem .joininfo text {
   color:rgba(102,102,102,1);

@@ -13,8 +13,6 @@ page {
 .contrain .newitem .news-time{
   text-align: center;
   font-size:28rpx;
-  font-family:PingFang-SC-Medium,PingFang-SC;
-  font-weight:500;
   color:rgba(153,153,153,1);
   margin-bottom: 12rpx;
 }

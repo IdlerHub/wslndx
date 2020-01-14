@@ -38,8 +38,8 @@ page {
   margin-right: 8rpx;
 }
 .item .title-name .label {
-  width:40rpx;
-  height:47rpx;
+  width:35rpx;
+  height:38rpx;
   margin-bottom: -12rpx;
 
 }
