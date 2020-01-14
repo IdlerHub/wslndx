@@ -497,7 +497,14 @@ Page({
       app.aldstat.sendEvent("首页轮播-跳小程序点击",{
         title:item.title
       })
-    }else {
+    } else if(item.jump_type == 5) {
+      wx.navigateTo({
+        url: `../education/education?type=lottery&url=${item.clickurl}&login=1`
+      })
+      app.aldstat.sendEvent("首页轮播-公众号点击",{
+        title:item.title
+      })
+    } else {
       /* 文章 */
       wx.navigateTo({
         url: "../pDetail/pDetail?id=" + item.article_id

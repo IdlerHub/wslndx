@@ -17,13 +17,12 @@ Page({
         name:'老年电台'
       })
     } else {
-      console.log(options)
       if (options.login) {
         if (options.login == 0) {
           this.junmpOut(options.url)
         } else {
           this.setData({
-            url: options.url + "?mobile=" + encodeURIComponent(this.data.$state.userInfo.mobile) + "&authKey=" + encodeURIComponent(this.data.$state.authKey)
+            url: options.url + "?uid=" + encodeURIComponent(this.data.$state.userInfo.id)
           })
         }
       }else {
