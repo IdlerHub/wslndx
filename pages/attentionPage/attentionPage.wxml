@@ -7,7 +7,7 @@
         <text class="name">{{item.nickname}}</text>
         <image class="label" wx:if="{{item.fs != null}}" src="/images/approve.png"></image>
       </view>
-      <view class="univers">{{item.university}}</view>
+      <view class="univers">{{item.university == mull ? '暂无'  : item.university}}</view>
     </view>
     <view class="{{item.status == '关注'? 'joinbtn' : 'btn'}}" catchtap="closeattention" data-index="{{index}}" data-status="{{item.status}}">{{item.status}}</view>
   </view>
