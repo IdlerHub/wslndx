@@ -52,6 +52,7 @@ App({
   fundebug,
   onLaunch: async function(opts) {
     let optsStr = decodeURIComponent(opts.query.scene).split("&");
+    console.log(opts, 289479823748932789482397)
     let opstObj = {};
     optsStr.forEach((item, index) => {
       opstObj[item.split("=")[0]] = item.split("=")[1];
@@ -61,10 +62,14 @@ App({
     if (this.globalData.scenes.indexOf(opts.scene) >= 0) {
       this.globalData.path = "/" + opts.path; /* 卡片页面路径 */
       this.globalData.query = opts.query; /* 卡片页面参数 */
+      this.globalData.lottery = opstObj.type
+      this.globalData.lotteryId = opstObj.id
       if (
         opts.query.type == "invite" ||
         opts.query.type == "share" ||
-        opstObj.type == "invite"
+        opstObj.type == "invite" ||
+        opstObj.type == "lottery" || 
+        opts.query.type == "lottery"
       ) {
         if (opts.query.uid) {
           wx.setStorageSync("invite", opts.query.uid); /* 邀请码记录 */
@@ -94,17 +99,16 @@ App({
     let systemInfo = wx.getSystemInfoSync()
     let wxtype = systemInfo.version.replace(".", '').replace(".", '')
     let platform = systemInfo.platform
-    console.log(platform)
     if (platform == 'windows' || platform == 'mac' || platform == 'macOS' || platform == 'devtools') {
       this.playVedio('flow')
     }
-    // console.log(platform)
     if (wxtype < 606) {
       wx.reLaunch({ url: "/pages/upwxpage/upwxpage" });
     } else if (!this.store.$state.userInfo.mobile) {
       wx.reLaunch({ url: "/pages/sign/sign" });
-    } else if (opts.query.type !== "share") {
-      // wx.switchTab({ url: "/pages/index/index" });
+    } else if (opts.type == "lottery" || opstObj.type == "lottery") {
+      console.log(3242423432)
+      // wx.reLaunch({ url: "/pages/education/education?type=lottery&login=1"});
     }
   },
   onShow: function(opts) {
@@ -115,17 +119,20 @@ App({
       this.socket.backstage();
       if (
         this.globalData.scenes.indexOf(opts.scene) >= 0 &&
-        lists.indexOf(opts.query.type) >= 0
+        lists.indexOf(opts.query.type) >= 0 
       ) {
         this.globalData.path = "/" + opts.path; /* 卡片页面路径 */
         this.globalData.query = opts.query; /* 卡片页面参数 */
-        if (opts.query.type == "invite" || opts.query.type == "share") {
+        if (opts.query.type == "invite" || opts.query.type == "share" || opts.type == "lottery") {
           wx.setStorageSync("invite", opts.query.uid); /* 邀请码存储 */
         }
       }
 
       if (!this.store.$state.userInfo.mobile) {
         wx.reLaunch({ url: "/pages/sign/sign" });
+      } else if (opts.type == "lottery") {
+        console.log(43124234234234)
+        wx.reLaunch({ url: "/pages/education/education?type=lottery&login=1"});
       } else if (opts.path == "pages/loading/loading") {
         wx.reLaunch({ url: "/pages/index/index" });
       }
@@ -165,7 +172,7 @@ App({
             url: "/pages/index/index"
           });
         }
-      }
+      } 
     });
   },
   /* 初始化store */
@@ -180,7 +187,6 @@ App({
       authKey: wx.getStorageSync("authKey") || "",
       signStatus: sign
     });
-
     this.getSets();
   },
   /* 更新store中的userInfo */
@@ -407,6 +413,7 @@ App({
       id: 0,
       likestatus: 0
     },
-    phoneList: []
+    phoneList: [],
+    lottery:''
   }
 });

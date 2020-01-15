@@ -167,8 +167,9 @@ Page({
         wx.setStorageSync("authKey", res.data.authKey)
         app.setUser(res.data.userInfo)
         app.setAuthKey(res.data.authKey)
+        console.log(app.globalData.query.type, 123213213123123)
         if (res.data.userInfo.mobile) {
-          if (app.globalData.query.type == "share") {
+          if (app.globalData.query.type == "share" ||  app.globalData.lottery == 'lottery') {
             let params = []
             for (let attr in app.globalData.query) {
               params.push(attr + "=" + app.globalData.query[attr])
@@ -177,7 +178,7 @@ Page({
               showintegral: true
             })
             setTimeout(() => {
-              wx.reLaunch({ url: app.globalData.path + "?" + params.join("&") })
+              app.globalData.lottery == 'lottery' ? wx.reLaunch({ url: "/pages/education/education?type=lottery&login=1&id=" + app.globalData.lotteryId}) : wx.reLaunch({ url: app.globalData.path + "?" + params.join("&") })
             }, 2000)
           } else {
             /*跳转首页*/

@@ -7,7 +7,10 @@ Page({
     tip: true,
     vid: "short-video" + Date.now(),
     autoplay: false,
-    showintegral:false
+    showintegral:false,
+    isshowRed: false,
+    loop:false,
+    isshowRedbig:false
     /*  rect: wx.getMenuButtonBoundingClientRect() */
   },
   onLoad(options) {
@@ -15,6 +18,7 @@ Page({
     wx.setNavigationBarTitle({
       title: options.title
     })
+    this.wifi = false
     this.judgeWifi()
     let pages = getCurrentPages()
     let prePage = pages[pages.length - 2]
@@ -55,6 +59,56 @@ Page({
     }
     app.aldstat.sendEvent("菜单", { name: "短视频" })
   },
+  onShow() {
+    this.shortvideoAward()
+  },
+  shortvideoAward() {
+    return app.video.shortvideoAward().then(res => {
+      console.log(res)
+      if(res.code == 1) {
+        this.setData({
+          isshowRed: res.data.today_first
+        })
+        res.data.today_first ? '' : this.setData({
+          loop: true
+        })
+      }
+    })
+  },
+    //获取红包奖励内容
+    recordFinish() {
+      let param = { shortvideo_id: this.data.cur.id}
+      app.video.recordFinish(param).then(res => {
+        if(res.code == 1) {
+          this.setData({
+            loop:true,
+            isshowRedbig: res.data.today_award,
+            wechatnum: res.data.wechat_num
+          })
+          this.videoContext.play()
+        }
+      })
+    },
+    closeRed() {
+      this.setData({
+        isshowRedbig: false,
+        isshowRed: false
+      })
+    },
+    showred() {
+      this.videoContext.stop()
+      wx.showModal({
+        content: '观看完整短视频即可有机会领取现金红包哦！',
+        confirmText: '确定',
+        confirmColor: "#df2020",
+        success: res => {
+          this.data.$state.flow || this.wifi ? this.videoContext.play() : ''
+        },
+        fail:res => {
+          this.data.$state.flow || this.wifi ? this.videoContext.play() : ''
+        }
+      })
+    },
   judgeWifi() {
     if (!this.data.$state.flow) {
       this.setData({
@@ -68,10 +122,14 @@ Page({
               console.log(res)
               app.playVedio('wifi')
               that.videoContext.play()
+              that.wifi = true
               that.setData({
                 autoplay: true,
                 pause: false
               })
+              setTimeout(() => {
+                that.vedioRecordAdd()
+              }, 200);
             },
             fail: res => {
               console.log(res)
@@ -93,6 +151,9 @@ Page({
                       pause: false
                     })
                     that.videoContext.play()
+                    setTimeout(() => {
+                      that.vedioRecordAdd()
+                    }, 200);
                   } else if (res.cancel) {
                     that.videoContext.pause()
                     that.setData({
@@ -118,6 +179,9 @@ Page({
         autoplay: true
       })
       this.videoContext.play()
+      setTimeout(() => {
+        this.vedioRecordAdd()
+      }, 200);
     }
   },
   getList(list) {
@@ -214,7 +278,9 @@ Page({
         this.getList()
       }
     }
-    this.vedioRecordAdd()
+    setTimeout(() => {
+      this.vedioRecordAdd()
+    }, 200);
     app.addVisitedNum(`v${this.data.cur.id}`)
     app.aldstat.sendEvent("短视频播放", { name: this.data.cur.title })
   },
@@ -329,9 +395,10 @@ Page({
     })
   },
   vedioRecordAdd() {
-    let param = { shortvideo_id: this.data.cur.id }
-    app.video.recordAdd(param).then(res => {
-      if (res.code == 1) {
+    console.log(this.data.cur)
+    let param = { shortvideo_id : this.data.cur.id }
+    app.video.recordAdd(param).then( res => {
+      if(res.code == 1 ) {
         console.log('发送成功')
       }
     })

@@ -35,7 +35,7 @@
           <icon class="iconfont icon-arrow-right"></icon>
         </view>
       </view>
-      <view class="circle" style="padding-top:{{$state.unRead ? '11' : ''}}px;">
+      <view class="circle" style="padding-top:{{$state.unRead ? '11' : ''}}px;" wx:if="{{joinedList[0]}}">
         <scroll-view scroll-x="true" class="circle-scroll" style="display: flex;">
           <navigator class="scroll-view" wx:for="{{joinedList}}" wx:key="index" url="/pages/cDetail/cDetail?id={{item.id}}" open-type="navigate" hover-class="none">
             <view class="label" wx:if="{{item.is_top}}">推荐</view>

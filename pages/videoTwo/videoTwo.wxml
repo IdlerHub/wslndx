@@ -1,5 +1,5 @@
 <view class="container">
-  <video class="myVideo" id="{{ vid }}" src="{{ cur.url }}" controls="{{ false }}" show-center-play-btn="{{ false }}" object-fit="fill" autoplay="{{autoplay}}" loop>
+  <video class="myVideo" id="{{ vid }}" src="{{ cur.url }}" controls="{{ false }}" show-center-play-btn="{{ false }}" object-fit="fill" autoplay="{{autoplay}}" loop="{{loop}}" bindended="recordFinish">
     <!-- 功能  滑动及视频播/停监听-->
     <view wx:if="{{ cur && !$state.baseInfo }}" class="dropback">
       <view hover-class="none" bindtap="tap" bindtouchstart="scrollTouchStart" bindtouchend="scrollTouchEnd" wx:if="{{ !$state.baseInfo }}" class="tapbg">
@@ -38,6 +38,7 @@
           </view>
           <image class="icon" src="/images/mask.png"></image>
           <view class="synopsis" wx:if="{{nextRtight != 3}}">{{ cur.intro_content }}</view>
+          <view class="redPacket" catchtap="showred" wx:if="{{isshowRed}}"></view>
         </view>
         <!-- 返回首页 -->
         <!-- <view wx:if="{{ vistor || home }}" class="vistor-home" catchtap="tohome">
@@ -71,3 +72,12 @@
 </view>
 <!-- 积分动画 -->
 <integralAnimation integral="{{integral}}" integralContent="{{integralContent}}" wx:if="{{showintegral}}"></integralAnimation>
+<!-- 新年红包活动 -->
+<view class="redPaket" wx:if="{{isshowRedbig}}" bindtap="closeRed">
+  <view class="redbox">
+    <view class="wechat">{{wechatnum}}</view>
+    <view class="copybtn" catchtap="copywechat">
+      点击复制微信号
+    </view>
+  </view>
+</view>

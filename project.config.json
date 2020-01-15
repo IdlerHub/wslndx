@@ -130,18 +130,8 @@
 					"id": 5,
 					"name": "秀风采分享卡片",
 					"pathName": "pages/pDetail/pDetail",
-					"query": "id=12661&type=share",
+					"query": "id= 1535&type=share",
 					"scene": 1007
-				},
-				{
-					"id": 7,
-					"name": "公众号",
-					"pathName": "pages/loading/loading",
-					"query": "",
-					"scene": 1035,
-					"referrerInfo": {
-						"appId": "wx756d04f5d669cef0"
-					}
 				},
 				{
 					"id": -1,
@@ -158,25 +148,18 @@
 					"scene": null
 				},
 				{
-					"id": -1,
-					"name": "pages/index/index",
-					"pathName": "pages/index/index",
-					"query": "scene=uid%3D599%26type%3Dinvite",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "pages/circle/circle",
-					"pathName": "pages/circle/circle",
-					"query": "id=12661&type=share",
-					"scene": null
-				},
-				{
-					"id": 11,
-					"name": "抽奖活动分享",
+					"id": 10,
+					"name": "分享卡片打开抽奖",
 					"pathName": "pages/education/education",
-					"query": "url=https://mp.weixin.qq.com/s/S9lTgAVK20snuWBtapc6PQ",
-					"scene": null
+					"query": "uid=12661&type=lottery&login=1",
+					"scene": 1008
+				},
+				{
+					"id": 9,
+					"name": "二维码打开抽奖",
+					"pathName": "pages/education/education",
+					"query": "scene=type%3Dlottery%26id%3D1234%26uid%3D999999",
+					"scene": 1048
 				}
 			]
 		}

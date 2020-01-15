@@ -113,6 +113,9 @@ Page({
         this.setData({
           isshowRed: res.data.today_first
         })
+        res.data.today_first ? '' : this.setData({
+          loop: true
+        })
       }
     })
   },
@@ -280,7 +283,6 @@ Page({
     this.ey = e.changedTouches[0].pageY
     if (this.ey - this.sy > 30) {
       // 下拉
-
       if (this.param.type == "category" && index == 0) {
         this.param.id = list[0].id
         this.param.position = "end"
@@ -307,6 +309,7 @@ Page({
       }
     } else if (this.ey - this.sy < -30) {
       // 上拉
+      console.log(this)
       let temp = index >= list.length - 1 ? (this.param.type == "recommend" ? 0 : index) : index + 1
       this.setData({
         cur: list[temp],
@@ -326,7 +329,9 @@ Page({
         this.getList()
       }
     }
-    this.vediorecordAdd()
+    setTimeout(() => {
+      this.vedioRecordAdd()
+    }, 200);
     app.addVisitedNum(`v${this.data.cur.id}`)
     app.aldstat.sendEvent("短视频播放", { name: this.data.cur.title })
   },

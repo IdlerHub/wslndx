@@ -399,6 +399,7 @@ Page({
   },
   //下拉刷新
   itemtouch(e) {
+    if(this.data.isRefreshing) return
     if(this.data.scrolltop == 0) {
       var moveY= e.touches[0].clientY;
       var diffY = this.startY - moveY;
@@ -425,6 +426,7 @@ Page({
   //上拉加载
   scrolltolower() {
     if(this.data.currentTab == 1 && this.data.showBottom) return 
+    if(this.data.showLoading) return
     this.param[this.data.currentTab].page++
     this.getList()
   },
