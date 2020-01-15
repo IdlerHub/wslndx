@@ -364,7 +364,6 @@ App({
   // 获取任务状态
   getTaskStatus() {
     this.user.getNewTaskStatus().then(res => {
-      // console.log(res)
       if (res.code == 1) {
         this.store.setState({
           taskStatus: res.data
