@@ -41,6 +41,7 @@ App({
   //工具库
   util: require("utils/util.js"),
   md5: require("utils/md5.js"),
+  htmlparser: require("utils/htmlparser.js"),
   //http请求接口
   classroom: require("data/Classroom.js"),
   user: require("data/User.js"),
