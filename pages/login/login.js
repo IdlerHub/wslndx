@@ -167,9 +167,15 @@ Page({
         wx.setStorageSync("authKey", res.data.authKey)
         app.setUser(res.data.userInfo)
         app.setAuthKey(res.data.authKey)
-        console.log(app.globalData.query.type, 123213213123123)
+        if(wx.getStorageSync("goosId")) {
+          let params = {
+            invite_uid: wx.getStorageSync("invite"),
+            goods_id: wx.getStorageSync("goosId")
+          }
+          app.user.addLotteryInvite(params).then()
+        }
         if (res.data.userInfo.mobile) {
-          if (app.globalData.query.type == "share" ||  app.globalData.lottery == 'lottery') {
+          if (app.globalData.query.type == "share" ||  wx.getStorageSync("goosId")) {
             let params = []
             for (let attr in app.globalData.query) {
               params.push(attr + "=" + app.globalData.query[attr])
@@ -178,7 +184,7 @@ Page({
               showintegral: true
             })
             setTimeout(() => {
-              app.globalData.lottery == 'lottery' ? wx.reLaunch({ url: "/pages/education/education?type=lottery&login=1&id=" + app.globalData.lotteryId}) : wx.reLaunch({ url: app.globalData.path + "?" + params.join("&") })
+              wx.getStorageSync("goosId") ? wx.reLaunch({ url: "/pages/education/education?type=lottery&login=1&id=" + app.globalData.lotteryId}) : wx.reLaunch({ url: app.globalData.path + "?" + params.join("&") })
             }, 2000)
           } else {
             /*跳转首页*/

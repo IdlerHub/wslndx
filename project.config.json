@@ -148,10 +148,10 @@
 					"scene": null
 				},
 				{
-					"id": 10,
-					"name": "分享卡片打开抽奖",
+					"id": 8,
+					"name": "消息卡片打开小程序",
 					"pathName": "pages/education/education",
-					"query": "uid=12661&type=lottery&login=1",
+					"query": "uid=12661&type=lottery&id=856",
 					"scene": 1008
 				},
 				{

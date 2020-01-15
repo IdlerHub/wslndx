@@ -133,7 +133,6 @@ App({
       if (!this.store.$state.userInfo.mobile) {
         wx.reLaunch({ url: "/pages/sign/sign" });
       } else if (opts.type == "lottery") {
-        console.log(43124234234234)
         wx.reLaunch({ url: "/pages/education/education?type=lottery&login=1"});
       } else if (opts.path == "pages/loading/loading") {
         wx.reLaunch({ url: "/pages/index/index" });
@@ -170,6 +169,7 @@ App({
           wx.setStorageSync("authKey", msg.data.authKey);
           this.setUser(msg.data.userInfo);
           // console.log(msg.data.userInfo)
+          if(this.globalData.lottery == 'lottery') return
           wx.reLaunch({
             url: "/pages/index/index"
           });

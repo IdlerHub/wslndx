@@ -6,7 +6,7 @@
       <view class="news-title" style="color:{{ item.is_read ? 'rgba(153,153,153,1) ' : ''}}">
         {{item.title}}
       </view>
-      <rich-text nodes="{{item.content}}" class="tichtext" style="display: -webkit-box;-webkit-box-orient: vertical;-webkit-line-clamp: 4;overflow: hidden; color:{{ item.is_read ? 'rgba(204,204,204,1)' : 'rgba(58,58,58,1)'}} !important;font-size:18px !important;line-height:54rpx !important;"></rich-text>
+      <rich-text nodes="{{item.intro}}" class="tichtext" style="display: -webkit-box;-webkit-box-orient: vertical;-webkit-line-clamp: 4;overflow: hidden; color:{{ item.is_read ? 'rgba(204,204,204,1)' : 'rgba(58,58,58,1)'}} !important;font-size:18px !important;line-height:54rpx !important;"></rich-text>
       <view class="tonews">
         <text style="color:{{ item.is_read ? 'rgba(153,153,153,1) ' : ''}}">查看详情</text>
         <image src="/images/stickright.png"></image>
