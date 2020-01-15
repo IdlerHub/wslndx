@@ -514,17 +514,16 @@ Page({
   },
   //收藏风采
   collect(e){
-    let blog_id = e.currentTarget.dataset.id, status = e.currentTarget.dataset.status ,blog_index = e.currentTarget.dataset.index
+    console.log(e)
+    let blog_id = e.currentTarget.dataset.id, status = e.currentTarget.dataset.status ,blog_index = e.currentTarget.dataset.index,flowId=e.currentTarget.dataset.userid,is_follow = e.currentTarget.dataset.follow ,follownickname = e.currentTarget.dataset.name
     this.setData({
       blog_id,
-      blog_index
-    })
-    status == 0 ? this.setData({
+      blog_index,
+      flowId,
+      is_follow,
+      follownickname,
       showSheet: true,
-      showSheetBox: true
-    }) : this.setData({
-      showSheet: true,
-      showSheetBox: false
+      collectstatus: status
     })
   },
   cancelCollection() {
@@ -644,7 +643,7 @@ Page({
       }
       this.setData({
         list: this.data.list,
-        flowList: this.data.list
+        flowList: this.data.flowList
       })
     }
   },
@@ -687,5 +686,33 @@ Page({
           flowList
         })
     }
+  },
+  attention() {
+    let param = { follower_uid: this.data.flowId }
+    app.user.following(param).then(res => {
+      if(res.code == 1) {
+        wx.showToast({
+          title: '您已成功关注' + this.data.follownickname,
+          icon: 'none',
+          duration: 1500
+        })
+        this.setfollow(this.data.flowId, true)
+        this.closeSheet()
+      }
+    })
+  },
+  clsocancelFollowing() {
+    let param = { follower_uid: this.data.flowId }
+    app.user.cancelFollowing(param).then(res => {
+      if(res.code == 1) {
+        wx.showToast({
+          title: '取消关注成功',
+          icon: 'none',
+          duration: 1500
+        })
+        this.setfollow(this.data.flowId)
+        this.closeSheet()
+      }
+    })
   }
 })

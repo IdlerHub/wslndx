@@ -27,7 +27,7 @@ Page({
         }
         pages[0].route == 'pages/sign/sign' ?  '' :  wx.redirectTo({ url: "/pages/sign/sign" })
       }
-    }, 5000)
+    }, 3800)
     let reg = /ios/i
     let pt = 20 //导航状态栏上内边距
     let h = 44 //导航状态栏高度
@@ -499,7 +499,7 @@ Page({
       })
     } else if(item.jump_type == 5) {
       wx.navigateTo({
-        url: `../education/education?type=lottery&url=${item.clickurl}&login=1`
+        url: `../education/education?type=lottery&url=${item.clickurl}&login=1&id=0`
       })
       app.aldstat.sendEvent("首页轮播-公众号点击",{
         title:item.title

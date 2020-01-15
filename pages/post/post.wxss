@@ -17,9 +17,19 @@ page {
     .tabnav .tabnav-item {
       font-size:22px;
       font-family:PingFangSC-Medium,PingFang SC;
-      font-weight:600;
+      font-weight:500;
       color:rgba(51,51,51,1);
       position: relative;
+    }
+    .tabnav-item .heng {
+      width: 40rpx;
+      height: 6rpx;
+      background: rgba(223,32,32,1);
+      border-radius: 4rpx;
+      position: absolute;
+      left: 50%;
+      margin-left: -20rpx;
+      bottom: -22rpx;
     }
     .tabnav .tabnav-item .smallred {
       width:16rpx;
@@ -31,11 +41,11 @@ page {
       right: -20rpx;
     }
     .tabnav .tabnav-item:nth-child(1) {
-      margin-right: 96rpx;
+      margin-right: 60rpx;
     }
     .tabnav .lose {
-      font-size:20px;
-      font-weight:500;
+      font-size:18px;
+      font-weight:400;
       color:rgba(153,153,153,1);
     }
     .swiper {

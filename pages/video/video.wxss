@@ -23,7 +23,7 @@
     justify-content: center;
   }
   .tabnav .tabnav-item:nth-child(1) {
-    margin-right: 20px;
+    margin-right: 30px;
   }
   .tabnav .tabnav-item .bottom {
     width:20px;
@@ -613,7 +613,7 @@
   .redPaket .redbox {
     width: 750rpx;
     height: 950rpx;
-    background: url('https://hwcdn.jinlingkeji.cn/images/dev/videoredbg.png') no-repeat center;
+    background: url('https://hwcdn.jinlingkeji.cn/images/dev/videoredbg2.png') no-repeat center;
     background-size:100% 100%;
     position: relative;
   }

@@ -414,5 +414,8 @@ Page({
     }
   },
   onUnload() {
-  }
+  },
+  copywechat() {
+    app.copythat(this.data.wechatnum)
+  },
 })
