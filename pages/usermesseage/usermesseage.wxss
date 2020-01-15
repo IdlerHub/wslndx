@@ -69,3 +69,28 @@ page img{
 .readed {
   color:rgba(153,153,153,1) !important;
 }
+.qstBox {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.qstBox image {
+  width: 598rpx;
+}
+.qstBox .txt {
+  font-size: 32rpx;
+  color: #949494;
+  width: 100%;
+  text-align: center;
+  position: absolute;
+}
+.qstBox .txt:nth-child(2) {
+  top: 56%;
+}
+.qstBox .txt:nth-child(3) {
+  top: 59%;
+  left: 50%;
+  margin-left: -358rpx;
+}

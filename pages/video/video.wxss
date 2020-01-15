@@ -613,7 +613,7 @@
   .redPaket .redbox {
     width: 750rpx;
     height: 950rpx;
-    background: url('https://hwcdn.jinlingkeji.cn/images/dev/videoredbg2.png') no-repeat center;
+    background: url('https://hwcdn.jinlingkeji.cn/images/dev/videoredbg3.png') no-repeat center;
     background-size:100% 100%;
     position: relative;
   }

@@ -5,7 +5,7 @@
  */
 import Store from "wxministore"
 const app = getApp()
-let env = "develop"
+let env = "to"
 let imgHost
 let activityUrl
 let API_URL
@@ -22,14 +22,14 @@ if (env == "develop"){
   /* 发布环境 */
   imgHost = "https://hwcdn.jinlingkeji.cn/images/pro"
   activityUrl = "https://gqjy.jinlingkeji.cn/?"
-  mpVersion = "v18"
-  API_URL = "https://apielb.jinlingkeji.cn/api/v18/"
+  mpVersion = "v19"
+  API_URL = "https://apielb.jinlingkeji.cn/api/v19/"
   socket_host = "api.jinlingkeji.cn:8182"
 } else {
   imgHost = "https://hwcdn.jinlingkeji.cn/images/pro"
   activityUrl = "https://gqjy.jinlingkeji.cn/?"
-  mpVersion = "v18"
-  API_URL = "https://lndxmid.jinlingkeji.cn/api/v18/"
+  mpVersion = "v19"
+  API_URL = "https://lndxmid.jinlingkeji.cn/api/v19/"
   socket_host = "api.jinlingkeji.cn:8182"
 }
 
