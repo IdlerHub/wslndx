@@ -192,6 +192,12 @@ function unreadNum(param) {
   return httpService.post("Message/unreadNum", param)
 }
 
+//POST /User/addLotteryInvite 抽奖活动邀请记录
+function addLotteryInvite(param) {
+  return httpService.post("User/addLotteryInvite", param)
+}
+
+
 module.exports = {
   wxLoginCode,
   getAuthCode,
@@ -224,5 +230,6 @@ module.exports = {
   cancelFollowing,
   userFollowing,
   lessonFinishStatus,
-  unreadNum
+  unreadNum,
+  addLotteryInvite
 }

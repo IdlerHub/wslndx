@@ -73,8 +73,10 @@ App({
       ) {
         if (opts.query.uid) {
           wx.setStorageSync("invite", opts.query.uid); /* 邀请码记录 */
+          wx.setStorageSync("goosId", opts.query.id);
         } else {
           wx.setStorageSync("invite", opstObj.uid); /* 邀请码记录 */
+          wx.setStorageSync("goosId", opstObj.id);
         }
       }
     }
@@ -403,7 +405,7 @@ App({
     /* 卡片参数 */
     query: {},
     /* 卡片进入的场景值 */
-    scenes: [1007, 1008, 1047, 1048, 1049],
+    scenes: [1001,1007, 1008, 1047, 1048, 1049],
     /* 后台模式*/
     backstage: false,
     rlSuc: false,

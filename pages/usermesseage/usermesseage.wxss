@@ -2,6 +2,9 @@
 page {
   background:rgba(242,242,242,1);
 }
+page img{
+  display: none;
+}
 .contrain {
   width: 100%;
   padding: 30rpx 30rpx 80rpx 30rpx;
@@ -41,6 +44,8 @@ page {
   font-weight:400;
   color:rgba(58,58,58,1);
   line-height:54rpx;
+  white-space: pre-line;
+  text-indent: 0;
 }
 .newsBox .tonews{
   width: 100%;
