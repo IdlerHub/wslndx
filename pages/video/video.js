@@ -87,6 +87,7 @@ Page({
   onShow(opts){
     console.log(opts)
     if (this.data.$state.userInfo.mobile) {
+      this.shortvideoAward()
       if (this.data.$state.newGuide) {
         this.data.$state.newGuide.shortvideo != 0 ?
           this.judgeWifi() : this.setData({
@@ -531,7 +532,7 @@ Page({
     this.videoContext.stop()
     wx.showModal({
       content: '观看完整短视频即可有机会领取现金红包哦！',
-      confirmText: '确定',
+      confirmText: '继续观看',
       confirmColor: "#df2020",
       success: res => {
         this.data.$state.flow || this.wifi ? this.videoContext.play() : ''

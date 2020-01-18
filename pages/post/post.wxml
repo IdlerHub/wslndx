@@ -146,7 +146,7 @@
         <view class="weui-loading"></view>
       </view>
       <view class="wrap">
-        <view class="qstBox" wx:if="{{!flowList[0].avatar}}">
+        <view class="qstBox" wx:if="{{!flowList[0]}}">
           <image src="/images/delBlog.png"></image>
           <view class="txt">啥都没有呢</view>
           <view class="txt">赶快去关注有趣的人吧！</view>

@@ -2,7 +2,7 @@
 Page({
   toLogin() {
     wx.redirectTo({
-      url: '/pages/login/login',
+      url: '/pages/login/login?check=1',
     })
   }
 })

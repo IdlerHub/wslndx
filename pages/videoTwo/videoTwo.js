@@ -99,7 +99,7 @@ Page({
       this.videoContext.stop()
       wx.showModal({
         content: '观看完整短视频即可有机会领取现金红包哦！',
-        confirmText: '确定',
+        confirmText: '继续观看',
         confirmColor: "#df2020",
         success: res => {
           this.data.$state.flow || this.wifi ? this.videoContext.play() : ''

@@ -9,7 +9,7 @@ Page({
     canIUse: wx.canIUse("button.open-type.getPhoneNumber"),
     mode: 1,
     authenable: false,
-    check:true,
+    check:false,
     btnName: "获取验证码",
     showintegral: false
   },
@@ -18,6 +18,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (option) {
+    console.log(option)
     if(option.phone) {
       console.log(app.globalData)
       this.setData({
@@ -27,6 +28,9 @@ Page({
       this.params.tel = option.phone
       this.onShow(option.mode)
     }
+    option.check ? this.setData({
+      check: true
+    }) : ''
   },
   /**
    * 生命周期函数--监听页面初次渲染完成

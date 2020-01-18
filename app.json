@@ -38,10 +38,8 @@
     "pages/drag/drag",
     "components/integralAni/integralAni",
     "pages/usermesseage/usermesseage",
-    "pages/circletwo/circletwo",
     "pages/messagePage/messagePage",
-    "pages/attentionPage/attentionPage",
-    "pages/circlethree/circlethree"
+    "pages/attentionPage/attentionPage"
   ],
   "permission": {
     "scope.userLocation": {
