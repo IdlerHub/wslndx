@@ -160,6 +160,12 @@
 					"pathName": "pages/education/education",
 					"query": "scene=type%3Dlottery%26id%3D1234%26uid%3D999999",
 					"scene": 1048
+				},
+				{
+					"id": -1,
+					"name": "秀风采首页测试",
+					"pathName": "pages/post/post",
+					"scene": null
 				}
 			]
 		}

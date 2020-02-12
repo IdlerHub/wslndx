@@ -687,7 +687,14 @@ Page({
         })
     }
   },
-  attention() {
+  attention(e) {
+    if(e.currentTarget.dataset.name) {
+      this.setData({
+        blog_index: e.currentTarget.dataset.index,
+        flowId: e.currentTarget.dataset.userid,
+        follownickname:e.currentTarget.dataset.name,
+      })
+    }
     let param = { follower_uid: this.data.flowId }
     app.user.following(param).then(res => {
       if(res.code == 1) {
