@@ -28,7 +28,8 @@ Page({
     voivetext: '',
     voiceplayimg: 'https://hwcdn.jinlingkeji.cn/images/pro/triangle.png',
     replyshow: false,
-    showintegral:false
+    showintegral:false,
+    showSheet: false,
     /* rect: wx.getMenuButtonBoundingClientRect() */
   },
   onLoad(options) {
@@ -65,6 +66,9 @@ Page({
         contenLength: this.data.$state.blogcomment[options.id.trim()].replycontent != '' ? this.data.$state.blogcomment[options.id.trim()].replycontent.length : 0
       })
     }
+    getCurrentPages().forEach(item => {
+      item.route == 'pages/post/post' ? this.postPages = item : ''
+    })
   },
   onShow() {
     this.initRecord()
@@ -825,7 +829,6 @@ Page({
         voiceActon: false
       })
     }
-
     // 识别结束事件
     manager.onStop = (res) => {
       clearInterval(this.timer)
@@ -875,7 +878,6 @@ Page({
         voiceActon: false
       })
     }
-
     // 识别错误事件
     manager.onError = (res) => {
       clearInterval(this.timer)
@@ -1036,5 +1038,97 @@ Page({
         url: '../cDetail/cDetail?id=' + this.data.detail.fs_id
       })
     }
-  }
+  },
+  collect(){
+    this.data.showSheet ? this.setData({
+      showSheet: false
+    }) :
+    this.setData({
+      showSheet: true
+    })
+  },
+  attention() {
+    let param = { follower_uid: this.data.detail.uid }
+    app.user.following(param).then(res => {
+      if(res.code == 1) {
+        this.setData({
+          showSheet: false,
+          ['detail.is_follow']: 1
+        })
+        wx.showToast({
+          title: '您已成功关注' + this.data.detail.nickname,
+          icon: 'none',
+          duration: 1500
+        })
+        this.postPages.setfollow(this.data.detail.uid, true)
+      }
+    })
+  },
+  clsocancelFollowing() {
+    let param = { follower_uid: this.data.detail.uid }
+    app.user.cancelFollowing(param).then(res => {
+      if(res.code == 1) {
+        this.setData({
+          showSheet: false,
+          ['detail.is_follow']: 0
+        })
+        wx.showToast({
+          title: '取消关注成功',
+          icon: 'none',
+          duration: 1500
+        })
+        this.postPages.setfollow(this.data.detail.uid)
+      }
+    })
+  },
+  cancelCollection() {
+    let param = {  blog_id: this.data.detail.id }
+    app.circle.collectCancel(param).then(res => {
+      if (res.code == 1) {
+        this.setData({
+          showSheet: false,
+          ['detail.collectstatus']: 0
+        })
+        this.postPages.pagesCollect(this.data.detail.id, 0)
+        wx.showToast({
+          title: res.msg,
+          icon: 'success',
+          duration: 800
+        })
+      } else {
+        this.collect()
+        wx.showToast({
+          title: res.msg,
+          image: '/images/warn.png',
+          duration: 800
+        })
+      }
+    })
+  },
+  setCollect() {
+    let param = {
+      blog_id: this.data.detail.id
+    }
+    app.circle.collect(param).then(res => {
+      if(res.code == 1) {
+        this.setData({
+          showSheet: false,
+          ['detail.collectstatus']: 1
+        })
+        this.postPages.pagesCollect(this.data.detail.id, 1)
+        wx.showToast({
+          title: res.msg,
+          icon: 'success',
+          duration: 1500
+        })
+      } else {
+        this.collect()
+        wx.showToast({
+          title: res.msg,
+          image:'/images/warn.png',
+          duration: 1500
+        })
+      }
+    })
+  },
 })
