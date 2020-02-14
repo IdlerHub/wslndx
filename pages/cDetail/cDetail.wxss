@@ -59,10 +59,10 @@ page {
       height: 44rpx;
       line-height: 44rpx;
       border-radius: 6rpx;
-      color: #fff;
+      color: #DB9200;
       font-size: 32rpx;
       text-align: left;
-      background:rgba(82,217,195,1);
+      background: #FFF6E6;
       text-align: center;
     }
 .btn > .item {
@@ -145,13 +145,26 @@ page {
 .top .left {
   display: flex;
   align-items: center; }
-
-.top .avatarUrl {
-  width: 90rpx;
-  height: 90rpx;
-  border-radius: 50%;
-  border: 1rpx solid #d8d8d8; }
-
+ .top .avatarUrl {
+    width: 90rpx;
+    height: 90rpx;
+    border-radius: 50%;
+    border: 1rpx solid #d8d8d8;
+    background:#e9e9e9;
+    position: relative;
+  }
+  .top .avatarUrl image {
+    width: 90rpx;
+    height: 90rpx;
+    border-radius: 50%;
+  }
+  .top .avatarUrl .fs {
+    width:22rpx;
+    height:24rpx;
+    position: absolute;
+    bottom: 0rpx;
+    right: -6rpx;
+  }
 .top .text {
   margin-left: 20rpx;
   width: 400rpx;
@@ -164,17 +177,32 @@ page {
   color: #343434;
   display: flex;
   align-items: center; }
-.top .nickName .fs {
-  width:35rpx;
-  height:38rpx;
-  margin-bottom: -10rpx;
-  margin-left: 16rpx;
-}
 .top .school {
   margin-top: 5rpx;
   font-size: 28rpx;
+  margin-left: 21rpx;
   color: #bdbdbd; }
-
+ .top .right {
+    display: flex;
+    align-items: center;
+  }
+.top .right .attension {
+    width:100rpx;
+    height:48rpx;
+    border-radius:28rpx;
+    border:1px solid rgba(223,32,32,1);
+    font-size:28rpx;
+    font-weight:400;
+    color:rgba(223,32,32,1);
+    text-align: center;
+    line-height: 48rpx;
+    margin-right: 25rpx;
+  }
+.top .right .collect {
+    padding-bottom: 39rpx;
+    color: #B3B3B3;
+    font-size: 54rpx;
+  }
 .footer {
   position: fixed;
   bottom: 0;

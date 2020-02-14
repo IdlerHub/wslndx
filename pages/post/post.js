@@ -441,7 +441,6 @@ Page({
     })
   },
   toUser(e) {
-    // console.log(e)
     if (this.data.$state.userInfo.id == e.currentTarget.dataset.item.uid) {
       wx.switchTab({
         url: "/pages/user/user"

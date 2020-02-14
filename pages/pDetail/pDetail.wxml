@@ -23,8 +23,8 @@
 		<view wx:if="{{ detail }}" class="detail">
 			<view class="top">
 				<view class="left">
-					<view class="avatarUrl" style="border:{{detail.is_cert ? '2rpx solid rgba(253,169,0,1);' :''}}">
-						<image mode="aspectFill" src="{{ detail.avatar }}" data-item="{{ item }}" catchtap="toUser" lazy-load></image>
+					<view class="avatarUrl" style="border:{{detail.is_cert ? '2rpx solid rgba(253,169,0,1);' :''}}" catchtap="toUser" data-item="{{detail}}">
+						<image mode="aspectFill" src="{{ detail.avatar }}" data-item="{{ item }}"  lazy-load></image>
 						<image class="fs" src="/images/approve.png" wx:if="{{detail.is_cert}}"></image>
 					</view>
 					<view class="text">
@@ -79,7 +79,7 @@
 				<view wx:for="{{ comment }}" wx:key="index" class="item">
 					<view class="content">
 						<view class="left">
-							<image class="img" mode="aspectFill" src="{{ item.avatar }}"></image>
+							<image class="img" mode="aspectFill" src="{{ item.avatar }}" catchtap="toUser" data-item="{{item}}"></image>
 						</view>
 						<view class="right">
 							<view class="top">
@@ -125,7 +125,7 @@
 				<view wx:for="{{ praise }}" wx:key="index" class="item">
 					<view class="content">
 						<view class="left">
-							<image class="img" mode="aspectFill" src="{{ item.avatar }}"></image>
+							<image class="img" mode="aspectFill" src="{{ item.avatar }}" catchtap="toUser" data-item="{{item}}"></image>
 							<text class="name">{{ item.nickname }}</text>
 						</view>
 						<text class="time">{{ item.createtimes }}</text>

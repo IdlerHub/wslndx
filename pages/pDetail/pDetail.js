@@ -1039,6 +1039,17 @@ Page({
       })
     }
   },
+  toUser(e) {
+    if (this.data.$state.userInfo.id == e.currentTarget.dataset.item.uid) {
+      wx.switchTab({
+        url: "/pages/user/user"
+      })
+    } else {
+      wx.navigateTo({
+        url: `/pages/personPage/personPage?uid=${e.currentTarget.dataset.item.uid}&nickname=${e.currentTarget.dataset.item.nickname}&avatar=${e.currentTarget.dataset.item.avatar}`
+      })
+    }
+  },
   collect(){
     this.data.showSheet ? this.setData({
       showSheet: false

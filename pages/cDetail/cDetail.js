@@ -6,7 +6,8 @@ Page({
     list: [],
     circle: null,
     isRefreshing: false,
-    showT: false
+    showT: false,
+    showSheet: false
   },
   onLoad(options) {
     this.id = options.id
@@ -19,6 +20,10 @@ Page({
       app.aldstat.sendEvent("学友圈点击",{
         name: this.data.circle.title
       })
+    })
+    getCurrentPages().forEach(item => {
+      item.route == 'pages/post/post' ? this.postPages = item : ''
+      item.route == 'pages/personPage/personPage' ? this.personPage = item : ''
     })
   },
   onUnload() {},
@@ -246,5 +251,144 @@ Page({
   //用于数据统计
   onHide() {
     app.aldstat.sendEvent("退出", { name: "学友圈详情页" })
+  },
+  //收藏风采
+  collect(e){
+    console.log(e)
+    let blog_id = e.currentTarget.dataset.id, status = e.currentTarget.dataset.status ,blog_index = e.currentTarget.dataset.index,flowId=e.currentTarget.dataset.userid,is_follow = e.currentTarget.dataset.follow ,follownickname = e.currentTarget.dataset.name
+    this.setData({
+      blog_id,
+      blog_index,
+      flowId,
+      is_follow,
+      follownickname,
+      showSheet: true,
+      collectstatus: status
+    })
+  },
+  cancelCollection() {
+    let param = { blog_id: this.data.blog_id }
+    app.circle.collectCancel(param).then(res => {
+      if (res.code == 1) {
+        thispagesCollect(this.data.blog_id, 0)
+        this.postPages.pagesCollect(this.data.blog_id, 0)
+        wx.showToast({
+          title: res.msg,
+          icon: 'success',
+          duration: 800
+        })
+      } else {
+        wx.showToast({
+          title: res.msg,
+          image: '/images/warn.png',
+          duration: 800
+        })
+      }
+    })
+    this.setData({
+      showSheet: false
+    })
+  },
+  setCollect() {
+    let param = {
+      blog_id: this.data.blog_id
+    }
+    app.circle.collect(param).then(res => {
+      if(res.code == 1) {
+        thispagesCollect(this.data.blog_id, 1)
+        this.postPages.pagesCollect(this.data.blog_id, 1)
+        this.closeSheet()
+        wx.showToast({
+          title: res.msg,
+          icon: 'success',
+          duration: 1500
+        })
+      } else {
+        this.closeSheet()
+        wx.showToast({
+          title: res.msg,
+          image:'/images/warn.png',
+          duration: 1500
+        })
+      }
+    })
+  },
+  closeSheet() {
+    this.setData({
+      showSheet: false
+    })
+  },
+  attention(e) {
+    if(e.currentTarget.dataset.name) {
+      this.setData({
+        blog_index: e.currentTarget.dataset.index,
+        flowId: e.currentTarget.dataset.userid,
+        follownickname:e.currentTarget.dataset.name,
+      })
+    }
+    let param = { follower_uid: this.data.flowId }
+    app.user.following(param).then(res => {
+      if(res.code == 1) {
+        wx.showToast({
+          title: '您已成功关注' + this.data.follownickname,
+          icon: 'none',
+          duration: 1500
+        })
+        this.setfollow(this.data.flowId, true)
+        this.postPages.setfollow(this.data.flowId, true)
+        this.closeSheet()
+      }
+    })
+  },
+  clsocancelFollowing() {
+    let param = { follower_uid: this.data.flowId }
+    app.user.cancelFollowing(param).then(res => {
+      if(res.code == 1) {
+        wx.showToast({
+          title: '取消关注成功',
+          icon: 'none',
+          duration: 1500
+        })
+        this.setfollow(this.data.flowId)
+        this.postPages.setfollow(this.data.flowId)
+        this.closeSheet()
+      }
+    })
+  },
+  pagesCollect(id,type) {
+    if(type) {
+      let list = this.data.list, flowList = this.data.flowList
+        list.forEach(item => {
+          item.id == id ? item.collectstatus = 1 : ''
+        })
+        this.setData({
+          list
+        })
+    } else {
+      let list = this.data.list, flowList = this.data.flowList
+        list.forEach(item => {
+          item.id == id ? item.collectstatus = 0 : ''
+        })
+        this.setData({
+          list
+        })
+    }
+  },
+  setfollow(id, follow) {
+    if(follow) {
+      this.data.list.forEach(item => {
+        item.uid == id ? item.is_follow = 1 : ''
+      })
+      this.setData({
+        list: this.data.list
+      })
+    } else {
+      this.data.list.forEach(item => {
+        item.uid == id ? item.is_follow = 0 : ''
+      })
+      this.setData({
+        list: this.data.list
+      })
+    }
   },
 })

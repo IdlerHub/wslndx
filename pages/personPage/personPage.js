@@ -6,15 +6,10 @@ Page({
     showintegral: false
   },
   onLoad(options) {
-    options.university_name == "null" ? options.university_name = null :''
-    options.addressCity == "null" ? options.addressCity = null : ''
     this.setData({
       us_id: options.uid,
       nickname: options.nickname,
-      university_name: options.university_name,
       avatar: options.avatar,
-      addressCity: options.addressCity,
-      isFollow:  options.follow
     })
     wx.setNavigationBarTitle({
       title: options.nickname
@@ -111,8 +106,13 @@ Page({
             item.auditing = item.check_status
           })
           temp.push(...arr)
+          temp[0].university_name == "null" ? temp[0].university_name = null :''
+          temp[0].province == "null" ? temp[0].province = null :''
           this.setData({
-            list: temp
+            list: temp,
+            university_name: temp[0].university_name,
+            addressCity: temp[0].province,
+            isFollow:  temp[0].is_follow
           })
         }
         this.setData({
