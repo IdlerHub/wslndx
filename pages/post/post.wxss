@@ -302,13 +302,13 @@ page {
       right: 0;
       margin: auto; }
     .wrap > .item .label {
-      background: #52d9c3;
+      background: #FFF6E6;
       margin: 20rpx 0;
       display: block;
       width: 230rpx;
       line-height: 44rpx;
       border-radius: 6rpx;
-      color: #fff;
+      color: #DB9200;
       font-size: 28rpx;
       text-align: center; }
   .wrap .btn {

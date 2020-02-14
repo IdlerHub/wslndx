@@ -1,110 +1,112 @@
 <!--pages/personPage/personPage.wxml-->
 <wxs module="fn">
-  module.exports = {
-      search: function(str){
-        return str.search('gif');
-      }
-  }
+	module.exports = {
+		search: function(str) {
+			return str.search('gif');
+		}
+	}
 </wxs>
 <view wx:if="{{ isRefreshing }}" class="weui-loadmore indexdrop">
-  <view class="weui-loading"></view>
+	<view class="weui-loading"></view>
 </view>
 <view class="container">
-  <view class="Pagetop top">
-    <image class="bg" mode="widthFix" src="{{ avatar }}"></image>
-    <view class="box">
-      <view class="left">
-        <image class="img" mode="widthFix" src="{{ avatar }}"></image>
-        <view class="info">
-          <text class="line name">{{ nickname }}</text>
-          <view class="line">
-            <text class="city">{{ addressCity || "暂无" }}</text>
-            <text class="school">{{ university_name || "暂无" }}</text>
-          </view>
-        </view>
-      </view>
-      <view class="attention {{isFollow == 1 ? 'attentionold' : ''}}" bindtap="{{isFollow == 1  ? 'clsocancelFollowing' : 'attention'}}">{{isFollow == 1  ? '已关注' : '关注'}}</view>
-    </view>
-  </view>
-  <view class="wrap">
-    <view wx:for="{{ list }}" wx:key="index" class="item">
-      <view class="top" catchtap="navigate" data-id="{{ item.id }}">
-        <view class="left">
-          <image mode="aspectFill" class="avatarUrl" src="{{ item.avatar }}" data-uid="{{ item.uid }}" catchtap="toUser" lazy-load></image>
-          <view class="text">
-            <view class="nickName line">
-              {{ item.nickname }}
-              <image class="fs" src="/images/approve.png" wx:if="{{item.is_cert}}"></image>
-            </view>
-            <text class="date">{{ item.createtimes }}</text>
-            <text wx:if="{{ item.university_name }}" class="school">{{ item.university_name }}</text>
-          </view>
-        </view>
-        <view class="collect" catchtap="collect" data-id="{{item.id}}" data-status="{{item.collectstatus}}" data-index="{{index}}">...</view>
-      </view>
-      <view catchtap="navigate" data-id="{{ item.id }}">
-        <rich-text wx:if="{{ item.content }}" class="name" nodes="{{ item.content }}" ></rich-text>
-        <view class="content" wx:if="{{ item.images.length > 0 }}">
-          <view class="img one" wx:if="{{ item.images.length == 1 }}">
-            <image mode="widthFix" wx:for="{{ item.images }}" wx:for-item="items" wx:key="index" src="{{ fn.search(item.images[0]) > 0 ?  item.images : item.image_compress + '/resize,p_50'  }}" data-urls="{{ item.images }}" data-current="{{ items }}" data-index="{{ index }}" catchtap="previewImage" lazy-load></image>
-          </view>
-          <view class="img three" wx:if="{{ item.images.length > 1 }}">
-            <image mode="aspectFill" wx:for="{{ item.images }}" wx:for-item="items" wx:key="index" src="{{ fn.search(item.images[index]) > 0 ? item.images[index] : item.image_compress[index] + '/resize,m_fixed,w_216,h_216' }}" data-urls="{{ item.images }}" data-current="{{ items }}" data-index="{{ index }}" catchtap="previewImage" lazy-load></image>
-          </view>
-        </view>
-        <!-- wx:if="{{ item.url }}" -->
-        <view class="content" wx:if="{{ item.check_status == 1 || item.check_status == 2 || item.check_status == 0 }}">
-          <view class="bg">
-            <image mode="aspectFill" src="{{ item.check_status == 0 ?  $state.imgHost + '/tip.jpg' : item.check_status == 2 ? $state.imgHost + '/sensitivity.png' : item.image }}" class="poster" lazy-load></image>
-            <image mode="aspectFill" src="{{ $state.imgHost }}/play-hl.png" class="play" lazy-load></image>
-          </view>
-        </view>
-      </view>
-      <navigator wx:if="{{ item.fs_title }}" url="../cDetail/cDetail?id={{ item.fs_id }}" hover-class="none" open-type="navigate" class="label"> #{{ item.fs_title }}精选</navigator>
-      <view class="btn">
-        <button class="share item" open-type="share" data-index="{{ index }}" hover-class="btn-hover" wx:if="{{ item.check_status != 0 && item.check_status != 2}}">
-          <icon class="iconfont icon-fenxiang"></icon>
-          <text class="text">{{ item.fw || item.forward }}</text>
-        </button>
-        <button class="share item" bindtap="unShare" wx:if="{{ item.check_status == 0 || item.check_status == 2}}">
-          <icon class="iconfont icon-fenxiang"></icon>
-          <text class="text">{{ item.fw || item.forward }}</text>
-        </button>
-        <text class="division"></text>
-        <!-- 评论 -->
-        <view hover-class="none" class="item" bindtap="handleRelse" data-status="{{ $state.userInfo.status }}" data-id="{{ item.id }}" data-type="reply">
-          <formCode>
-            <view class="container-sub">
-              <icon class="iconfont icon-comment"></icon>
-              <text class="text">{{ item.cw || item.comments }}</text>
-            </view>
-          </formCode>
-        </view>
-        <text class="division"></text>
-        <!-- 点赞 -->
-        <formCode bind:handler="praise" class="item" data-index="{{ index }}" data-id="{{item.id}}">
-          <view class="container-sub">
-            <view class="praise  {{ item.likestatus ? 'end' : '' }} {{ item.praising ? 'ani' : '' }}" data-index="{{ index }}" bindanimationend="aniend"></view>
-            <text class="text">{{ item.lw || item.likes }} </text>
-          </view>
-        </formCode>
-      </view>
-    </view>
-    <mp-loading type="circle" wx:if="{{ showLoading }}"></mp-loading>
-  </view>
+	<view class="Pagetop top">
+		<image class="bg" mode="widthFix" src="{{ avatar }}"></image>
+		<view class="box">
+			<view class="left">
+				<image class="img" mode="widthFix" src="{{ avatar }}"></image>
+				<view class="info">
+					<text class="line name">{{ nickname }}</text>
+					<view class="line">
+						<text class="city">{{ addressCity || "暂无" }}</text>
+						<text class="school">{{ university_name || "暂无" }}</text>
+					</view>
+				</view>
+			</view>
+			<view class="attention {{isFollow == 1 ? 'attentionold' : ''}}" bindtap="{{isFollow == 1  ? 'clsocancelFollowing' : 'attention'}}">{{isFollow == 1  ? '已关注' : '关注'}}</view>
+		</view>
+	</view>
+	<view class="wrap">
+		<view wx:for="{{ list }}" wx:key="index" class="item">
+			<view class="top" catchtap="navigate" data-id="{{ item.id }}">
+				<view class="left">
+					<view class="avatarUrl" style="border:{{item.is_cert ? '2rpx solid rgba(253,169,0,1);' :''}}">
+						<image mode="aspectFill" src="{{ item.avatar }}" data-item="{{ item }}" catchtap="toUser" lazy-load></image>
+						<image class="fs" src="/images/approve.png" wx:if="{{item.is_cert}}"></image>
+					</view>
+					<view class="text">
+						<view class="nickName line">
+							{{ item.nickname }}
+						</view>
+						<text class="date">{{ item.createtimes }}</text>
+						<text wx:if="{{ item.university_name }}" class="school">{{ item.university_name }}</text>
+					</view>
+				</view>
+				<view class="collect" catchtap="collect" data-id="{{item.id}}" data-status="{{item.collectstatus}}" data-index="{{index}}">...</view>
+			</view>
+			<view catchtap="navigate" data-id="{{ item.id }}">
+				<rich-text wx:if="{{ item.content }}" class="name" nodes="{{ item.content }}"></rich-text>
+				<view class="content" wx:if="{{ item.images.length > 0 }}">
+					<view class="img one" wx:if="{{ item.images.length == 1 }}">
+						<image mode="widthFix" wx:for="{{ item.images }}" wx:for-item="items" wx:key="index" src="{{ fn.search(item.images[0]) > 0 ?  item.images : item.image_compress + '/resize,p_50'  }}" data-urls="{{ item.images }}" data-current="{{ items }}" data-index="{{ index }}" catchtap="previewImage" lazy-load></image>
+					</view>
+					<view class="img three" wx:if="{{ item.images.length > 1 }}">
+						<image mode="aspectFill" wx:for="{{ item.images }}" wx:for-item="items" wx:key="index" src="{{ fn.search(item.images[index]) > 0 ? item.images[index] : item.image_compress[index] + '/resize,m_fixed,w_216,h_216' }}" data-urls="{{ item.images }}" data-current="{{ items }}" data-index="{{ index }}" catchtap="previewImage" lazy-load></image>
+					</view>
+				</view>
+				<!-- wx:if="{{ item.url }}" -->
+				<view class="content" wx:if="{{ item.check_status == 1 || item.check_status == 2 || item.check_status == 0 }}">
+					<view class="bg">
+						<image mode="aspectFill" src="{{ item.check_status == 0 ?  $state.imgHost + '/tip.jpg' : item.check_status == 2 ? $state.imgHost + '/sensitivity.png' : item.image }}" class="poster" lazy-load></image>
+						<image mode="aspectFill" src="{{ $state.imgHost }}/play-hl.png" class="play" lazy-load></image>
+					</view>
+				</view>
+			</view>
+			<navigator wx:if="{{ item.fs_title }}" url="../cDetail/cDetail?id={{ item.fs_id }}" hover-class="none" open-type="navigate" class="label"> #{{ item.fs_title }}精选</navigator>
+			<view class="btn">
+				<button class="share item" open-type="share" data-index="{{ index }}" hover-class="btn-hover" wx:if="{{ item.check_status != 0 && item.check_status != 2}}">
+					<icon class="iconfont icon-fenxiang"></icon>
+					<text class="text">{{ item.fw || item.forward }}</text>
+				</button>
+				<button class="share item" bindtap="unShare" wx:if="{{ item.check_status == 0 || item.check_status == 2}}">
+					<icon class="iconfont icon-fenxiang"></icon>
+					<text class="text">{{ item.fw || item.forward }}</text>
+				</button>
+				<text class="division"></text>
+				<!-- 评论 -->
+				<view hover-class="none" class="item" bindtap="handleRelse" data-status="{{ $state.userInfo.status }}" data-id="{{ item.id }}" data-type="reply">
+					<formCode>
+						<view class="container-sub">
+							<icon class="iconfont icon-comment"></icon>
+							<text class="text">{{ item.cw || item.comments }}</text>
+						</view>
+					</formCode>
+				</view>
+				<text class="division"></text>
+				<!-- 点赞 -->
+				<formCode bind:handler="praise" class="item" data-index="{{ index }}" data-id="{{item.id}}">
+					<view class="container-sub">
+						<view class="praise  {{ item.likestatus ? 'end' : '' }} {{ item.praising ? 'ani' : '' }}" data-index="{{ index }}" bindanimationend="aniend"></view>
+						<text class="text">{{ item.lw || item.likes }} </text>
+					</view>
+				</formCode>
+			</view>
+		</view>
+		<mp-loading type="circle" wx:if="{{ showLoading }}"></mp-loading>
+	</view>
 </view>
 <view class="ActionSheet" bindtap="closeSheet" wx:if="{{showSheet}}">
-  <view class="ActionSheet-box" wx:if="{{showSheetBox}}">
-    <view class="ActionSheet-item" catchtap="setCollect">
-      收藏
-    </view>
-    <view class="ActionSheet-item">
-      取消
-    </view>
-  </view>
-  <view class="ActionSheet-cancelBox" catchtap="cancelCollection" wx:else>
-    取消收藏
-  </view>
+	<view class="ActionSheet-box" wx:if="{{showSheetBox}}">
+		<view class="ActionSheet-item" catchtap="setCollect">
+			收藏
+		</view>
+		<view class="ActionSheet-item">
+			取消
+		</view>
+	</view>
+	<view class="ActionSheet-cancelBox" catchtap="cancelCollection" wx:else>
+		取消收藏
+	</view>
 </view>
 <!-- 积分动画 -->
 <integralAnimation integral="{{integral}}" integralContent="{{integralContent}}" wx:if="{{showintegral}}"></integralAnimation>

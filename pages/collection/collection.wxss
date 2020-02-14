@@ -124,12 +124,26 @@ page .right {
       .wrap > .item .top .left {
         display: flex;
         align-items: center; }
-      .wrap > .item .top .avatarUrl {
-        width: 90rpx;
-        height: 90rpx;
-        border-radius: 50%;
-        border: 1rpx solid #d8d8d8;
-        background:#e9e9e9;  }
+        .wrap > .item .top .avatarUrl {
+          width: 90rpx;
+          height: 90rpx;
+          border-radius: 50%;
+          border: 1rpx solid #d8d8d8;
+          background:#e9e9e9;
+          position: relative;
+        }
+        .wrap > .item .top .avatarUrl image {
+          width: 90rpx;
+          height: 90rpx;
+          border-radius: 50%;
+        }
+        .wrap > .item .top .avatarUrl .fs {
+          width:22rpx;
+          height:24rpx;
+          position: absolute;
+          bottom: 0rpx;
+          right: -6rpx;
+        }
       .wrap > .item .top .text {
         margin-left: 20rpx;
         width: 400rpx;
@@ -140,11 +154,6 @@ page .right {
         font-size: 40rpx;
         color: #343434;
         display: flex; }
-        .wrap > .item .top .fs {
-          width:40rpx;
-          height:47rpx;
-          margin-bottom: -10rpx;
-          margin-left: 12rpx; }
       .wrap > .item .top .school {
         margin-top: 5rpx;
         margin-left: 21rpx;
@@ -214,13 +223,13 @@ page .right {
       right: 0;
       margin: auto; }
     .wrap > .item .label {
-      background: #52d9c3;
+      background: #FFF6E6;
       margin: 20rpx 0;
       display: block;
       width: 230rpx;
       line-height: 44rpx;
       border-radius: 6rpx;
-      color: #fff;
+      color: #DB9200;
       font-size: 28rpx;
       text-align: center; }
   .wrap .btn {
