@@ -15,7 +15,7 @@ let header = {
 
 //验证code
 function handle(req,res) {
-  if (res.statusCode != 200){
+  if (res.statusCode != 200 || (res.data&&res.data.code !=1) ){
     getApp().fundebug.notifyHttpError(req,res)
   }
   switch (res.statusCode) {

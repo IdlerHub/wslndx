@@ -19,6 +19,7 @@ fundebug.init({
   monitorMethodArguments: true /* 监控小程序中的函数调用的参数 */,
   monitorHttpData: true /* 收集 HTTP 请求错误的 body  */,
   setSystemInfo: true,
+  silentInject: true,
   filters: [
     {
       req: {
@@ -152,6 +153,9 @@ App({
     if (this.store.$state.userInfo.id) {
       socket.close();
     }
+  },
+  onError: function (err) {
+    fundebug.notifyError(err);
   },
   wxLogin: async function() {
     await wxp.login({}).then(res => {
