@@ -159,13 +159,18 @@ App({
   },
   wxLogin: async function() {
     await wxp.login({}).then(res => {
+      if(res.code){
       this.globalData.code = res.code;
-      console.log(res.code)
+      console.log('wxCode',res.code)
+      }else{
+        console.log('wx.login登录失败！' + res.errMsg)
+      }
     });
     await this.user.wxLoginCode({ code: this.globalData.code }).then(msg => {
       if (msg.code === 1) {
         if (msg.data.tempCode) {
           /* 新用户未注册 */
+          console.log('tempCode', msg.data.tempCode)
           this.globalData.tempCode = msg.data.tempCode;
         } else {
           /* 旧用户 */
