@@ -86,12 +86,14 @@ function post(path, param = {}, noToken, type) {
         return res.data;
       },
       function(res) {
+        /* fail部分 */
         handle(req, res);
         wx.hideNavigationBarLoading();
         return res.data;
       }
-    )
-    .catch(err => {
+    ).catch(err=>{
+      /* 断网等特殊情况 */
+      handle(req, err);
       wx.hideNavigationBarLoading();
     })
 }
