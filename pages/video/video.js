@@ -463,6 +463,7 @@ Page({
   },
   // 用于数据统计
   onHide() {
+    this.videoContext.stop()
     app.aldstat.sendEvent("退出", { name: "短视频页" })
   },
   //指引

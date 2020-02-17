@@ -716,13 +716,6 @@ Page({
   tohome: function() {
     wx.reLaunch({ url: "/pages/index/index" })
   },
-  toUser(e) {
-    if (this.data.$state.userInfo.id == e.currentTarget.dataset.uid) {
-      wx.switchTab({
-        url: "/pages/user/user"
-      })
-    }
-  },
   toCommentDetail(e) {
     let vm = this
     wx.navigateTo({

@@ -83,7 +83,7 @@
             <view wx:for="{{ comment }}" wx:key="index" class="item">
               <view class="content">
                 <view class="left">
-                  <image class="img" mode="aspectFill" src="{{ item.avatar }}"></image>
+                  <image class="img" mode="aspectFill" src="{{ item.avatar }}" catchtap="toUser" data-item="{{item}}"></image>
                 </view>
                 <view class="right">
                   <view class="top">
@@ -103,7 +103,7 @@
               <view class="children" wx:for="{{ item.reply_array }}" wx:key="index" wx:for-item="child" wx:for-index="number">
                 <view class="from_user">
                   <view class="user_info">
-                    <image class="img" mode="aspectFill" src="{{ child.from_user_avatar }}"></image>
+                    <image class="img" mode="aspectFill" src="{{ child.from_user_avatar }}" catchtap="toUser" data-item="{{child}}" data-type="true"></image>
                     <text class="line name">{{ child.from_user }}</text>
                   </view>
                   <view class="time-del">

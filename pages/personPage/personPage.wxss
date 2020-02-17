@@ -3,9 +3,10 @@
 page {
   background: #eee; }
 page .Pagetop {
-    position: relative;
     height: 240rpx;
-    overflow: hidden; }
+    overflow: hidden;
+    position: relative;
+    z-index: 5; }
     page .container > .top .bg {
       position: absolute;
       left: -25rpx;
@@ -29,7 +30,7 @@ page .Pagetop {
         margin-top: -70rpx;}
         page .container > .top .box .left .img {
           width: 154rpx;
-          height: 154rpx;
+          height: 154rpx !important;
           border-radius: 50%;
           border: 2rpx solid #b1adac; }
         page .container > .top .box .left .info {
@@ -291,3 +292,26 @@ page .Pagetop {
     color: #3a3a3a;
     letter-spacing: 0;
     line-height: 40rpx; }
+.ncir {
+  margin-top: 200rpx;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center; }
+  .ncir text {
+    margin-top: -100rpx;
+    font-size: 32rpx;
+    color: #949494;
+    width: 100%;
+    text-align: center; }
+  .ncir navigator {
+    width: 250rpx;
+    line-height: 80rpx;
+    text-align: center;
+    background: #df2020;
+    color: #fff;
+    font-size: 36rpx;
+    border-radius: 4rpx;
+    margin: 40rpx auto 0; }

@@ -9,7 +9,7 @@
 <view wx:if="{{ isRefreshing }}" class="weui-loadmore indexdrop">
 	<view class="weui-loading"></view>
 </view>
-<view class="container">
+<view class="container" wx:if="{{list.length > 0}}">
 	<view class="Pagetop top">
 		<image class="bg" mode="widthFix" src="{{ avatar }}"></image>
 		<view class="box">
@@ -94,6 +94,10 @@
 		</view>
 		<mp-loading type="circle" wx:if="{{ showLoading }}"></mp-loading>
 	</view>
+</view>
+<view class="ncir" wx:if="{{ list.length == 0 }}">
+		<image mode="widthFix" src="{{ $state.imgHost }}/ncir.png"></image>
+		<text class="line">对方很懒，什么都没写呢～</text>
 </view>
 <view class="ActionSheet" bindtap="closeSheet" wx:if="{{showSheet}}">
 	<view class="ActionSheet-box" wx:if="{{showSheetBox}}">

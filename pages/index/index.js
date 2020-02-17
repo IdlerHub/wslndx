@@ -19,15 +19,6 @@ Page({
   navHeightList: [],
   onLoad: async function(e) {
     e.type != undefined ?  this.pageType = e.type : ''
-    setTimeout( res => {
-      if (!this.data.$state.userInfo.mobile) {
-        let pages = getCurrentPages()
-        if (pages[0].route == 'pages/login/login') {
-          return
-        }
-        pages[0].route == 'pages/sign/sign' ?  '' :  wx.redirectTo({ url: "/pages/sign/sign" })
-      }
-    }, 3800)
     let reg = /ios/i
     let pt = 20 //导航状态栏上内边距
     let h = 44 //导航状态栏高度

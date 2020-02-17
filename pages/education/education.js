@@ -53,11 +53,7 @@ Page({
   onReady: function() {},
   onShow: function() {},
   onHide: function() {},
-  onUnload: function() {
-    wx.switchTab({
-      url: '/pages/index/index',
-    })
-  },
+  onUnload: function() {},
   onPullDownRefresh: function() {},
   onReachBottom: function() {},
   onPageScroll: function() {},
