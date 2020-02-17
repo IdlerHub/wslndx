@@ -86,6 +86,7 @@ function post(path, param = {}, noToken, type) {
         return res.data;
       },
       function(res) {
+        handle(req, res);
         wx.hideNavigationBarLoading();
         return res.data;
       }
@@ -128,6 +129,7 @@ function del(path, param, noToken, type) {
         return res.data;
       },
       function(res) {
+        handle(req, res);
         wx.hideNavigationBarLoading();
         return res.data;
       }
@@ -161,6 +163,7 @@ function upload(path, file, noLoading) {
         return res.data;
       },
       function(res) {
+        handle(req, res);
         if (!noLoading) wx.hideLoading();
         wx.hideNavigationBarLoading();
         return res;
