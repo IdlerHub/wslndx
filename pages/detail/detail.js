@@ -1037,11 +1037,6 @@ Page({
     app.user.guideRecordAdd(param).then(res => {
       if (res.code == 1) {
         app.getGuide()
-        let taskStatus = this.data.$state.taskStatus
-        taskStatus['lesson_guide_status'] = 1
-        app.store.setState({
-          taskStatus
-        })
         this.setIntegral("+45 积分", "完成[云课堂]新手指引")
       }
     })
@@ -1300,5 +1295,24 @@ Page({
          }) 
       }, 2500);
     }
-  }
+  },
+  toUser(e) {
+    console.log(e)
+    if (this.data.$state.userInfo.id == e.currentTarget.dataset.item.uid) {
+      wx.switchTab({
+        url: "/pages/user/user"
+      })
+    } else {
+      if (!e.currentTarget.dataset.type) {
+        wx.navigateTo({
+          url: `/pages/personPage/personPage?uid=${e.currentTarget.dataset.item.uid}&nickname=${e.currentTarget.dataset.item.nickname}&avatar=${e.currentTarget.dataset.item.avatar}`
+        })
+      } else {
+        wx.navigateTo({
+          url: `/pages/personPage/personPage?uid=${e.currentTarget.dataset.item.reply_user_id}&nickname=${e.currentTarget.dataset.item.from_user}&avatar=${e.currentTarget.dataset.item.from_user_avatar}`
+        })
+      }
+      
+    }
+  },
 })

@@ -6,6 +6,7 @@ Page({
     showintegral: false
   },
   onLoad(options) {
+    console.log(options)
     this.setData({
       us_id: options.uid,
       nickname: options.nickname,
