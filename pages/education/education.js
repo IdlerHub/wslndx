@@ -5,7 +5,6 @@ Page({
     url: ""
   },
   onLoad: function(options) {
-    console.log('0000000000000',options)
     if(!options.type) {
       let optsStr = decodeURIComponent(options.scene).split("&"), opstObj = {};
       optsStr.forEach((item, index) => {

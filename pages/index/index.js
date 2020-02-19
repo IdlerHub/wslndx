@@ -161,6 +161,7 @@ Page({
       app.aldstat.sendEvent("栏目按钮点击", {
         name: this.data.nav[cur].name
       })
+      wx.uma.trackEvent('classify_btnClick', { 'name':this.data.nav[cur].name});
     }
     setTimeout(() => {
       this.setHeight()
@@ -331,6 +332,8 @@ Page({
       app.aldstat.sendEvent( "栏目-"+this.data.nav[this.data.currentTab].name+"-课程点击", {
         name: e.currentTarget.dataset.item.title
       })
+      let name = "栏目-"+this.data.nav[this.data.currentTab].name+"-课程点击"
+      wx.uma.trackEvent('classify_lessonsClick', { [this.data.nav[this.data.currentTab].name]: e.currentTarget.dataset.item.title});
     } else {
       app.aldstat.sendEvent("首页推荐栏目课程点击", {
         name: e.currentTarget.dataset.item.title
@@ -358,10 +361,11 @@ Page({
            wx.navigateTo({
               url: `../education/education?url=${item.clickurl}&login=${item.is_login}&id=0&type=1`
             })
+            app.aldstat.sendEvent("首页轮播-公众号点击",{
+              title:item.title
+            })
+            wx.uma.trackEvent('index_bannerTencent', { 'title':item.title});
         }, 500);
-        app.aldstat.sendEvent("首页轮播-公众号点击",{
-          title:item.title
-        })
       }
     }
   },
@@ -486,6 +490,7 @@ Page({
       app.aldstat.sendEvent("首页轮播-公众号点击",{
         title:item.title
       })
+      wx.uma.trackEvent('首页轮播-公众号点击', { 'title':item.title});
     } else if (item.jump_type == 2) {
       /* 视频 */
       wx.navigateTo({
