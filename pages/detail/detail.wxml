@@ -138,7 +138,14 @@
     <text>首页</text>
   </view>
   <button class="authorize" wx:if="{{ $state.baseInfo }}" open-type="getUserInfo" bindgetuserinfo="onGotUserInfo"></button>
-  <view class="issueBox" wx:if="{{write&&currentTab == 1}}" bindtap="showWrite" data-type="reply">
+  <button class="issueBox" wx:if="{{write&&currentTab == 1&& !$state.authUserInfo}}" hover-class="none" open-type="getUserInfo" bindgetuserinfo="onGotUserInfo" style="text-align: left;line-height:0;">
+    <image src="{{$state.imgHost}}/voicebig.png" class="bigvoice" catchtap="showvoice" data-type="content"></image>
+    <view class="issueBox-txt" style="color:{{content != '' ? 'rgba(46,46,46,1)': ''}}">
+      {{ content != '' ? content : replycomment }}
+    </view>
+    <view class="submit" catchtap="{{content != '' ? 'release' : ''}}" data-type="reply" style="color:{{content != '' ? '' : 'rgba(51,51,51,1);'}}">发布</view>
+  </button>
+  <view class="issueBox" wx:if="{{write&&currentTab == 1&&$state.authUserInfo}}" bindtap="showWrite" data-type="reply">
     <image src="{{$state.imgHost}}/voicebig.png" class="bigvoice" catchtap="showvoice" data-type="content"></image>
     <view class="issueBox-txt" style="color:{{content != '' ? 'rgba(46,46,46,1)': ''}}">
       {{ content != '' ? content : replycomment }}

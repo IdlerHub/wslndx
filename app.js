@@ -54,7 +54,6 @@ App({
   fundebug,
   onLaunch: async function(opts) {
     let optsStr = decodeURIComponent(opts.query.scene).split("&");
-    console.log(opts, 289479823748932789482397)
     let opstObj = {};
     optsStr.forEach((item, index) => {
       opstObj[item.split("=")[0]] = item.split("=")[1];
@@ -64,6 +63,7 @@ App({
     if (this.globalData.scenes.indexOf(opts.scene) >= 0) {
       this.globalData.path = "/" + opts.path; /* 卡片页面路径 */
       this.globalData.query = opts.query; /* 卡片页面参数 */
+      this.globalData.outObj = opstObj
       this.globalData.lottery = opstObj.type
       this.globalData.lotteryId = opstObj.id
       if (
@@ -111,8 +111,6 @@ App({
     } else if (!this.store.$state.userInfo.mobile) {
       wx.reLaunch({ url: "/pages/sign/sign" });
     } else if (opts.type == "lottery" || opstObj.type == "lottery") {
-      console.log(3242423432)
-      // wx.reLaunch({ url: "/pages/education/education?type=lottery&login=1"});
     }
   },
   onShow: function(opts) {
