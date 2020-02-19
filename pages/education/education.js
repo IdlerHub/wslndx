@@ -5,15 +5,12 @@ Page({
     url: ""
   },
   onLoad: function(options) {
+    console.log('0000000000000',options)
     if(!options.type) {
       let optsStr = decodeURIComponent(options.scene).split("&"), opstObj = {};
       optsStr.forEach((item, index) => {
         opstObj[item.split("=")[0]] = item.split("=")[1];
       });
-      console.log(opstObj)
-      this.setData({
-        url: 'https://gqjydev.jinlingkeji.cn/' + "?uid=" + encodeURIComponent(this.data.$state.userInfo.id) + "&id=" + encodeURIComponent(opstObj.id)
-      })
     } else {
       if (options.type === 'farm') {
         this.junmpOut('https://h5xyx.jinlingkeji.cn')
@@ -25,18 +22,13 @@ Page({
         app.aldstat.sendEvent("首页按钮点击",{
           name:'老年电台'
         })
-      } else if(options.type === 'lottery') {
-        console.log(options, 432423432)
-        this.setData({
-          url: 'https://gqjydev.jinlingkeji.cn/' + "?uid=" + encodeURIComponent(this.data.$state.userInfo.id) + "&id=" + encodeURIComponent(options.id)
-        })
-      } else  {
+      }else  {
         if (options.login) {
           if (options.login == 0) {
             this.junmpOut(options.url)
           } else {
             this.setData({
-              url: 'https://gqjydev.jinlingkeji.cn/' + "?uid=" + encodeURIComponent(this.data.$state.userInfo.id)
+              url: options.url + "?uid=" + encodeURIComponent(this.data.$state.userInfo.id) + "&id=" + encodeURIComponent(options.id)
             })
           }
         }else {
@@ -45,18 +37,7 @@ Page({
         
       }
     }
-  
-    
-    // console.log(options.url)
-    this.junmpOut()
   },
-  onReady: function() {},
-  onShow: function() {},
-  onHide: function() {},
-  onUnload: function() {},
-  onPullDownRefresh: function() {},
-  onReachBottom: function() {},
-  onPageScroll: function() {},
   junmpOut(url) {
     this.setData({
       // url: this.data.$state.activityUrl + "mobile=" + encodeURIComponent(this.data.$state.userInfo.mobile) + "&authKey=" + encodeURIComponent(this.data.$state.authKey)

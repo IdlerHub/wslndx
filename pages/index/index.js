@@ -352,6 +352,17 @@ Page({
       } else {
         this.toEducation()
       }
+      if(e.currentTarget.dataset.type == "banner") {
+        let item = e.currentTarget.dataset.item;
+        setTimeout(() => {
+           wx.navigateTo({
+              url: `../education/education?url=${item.clickurl}&login=${item.is_login}&id=0&type=1`
+            })
+        }, 500);
+        app.aldstat.sendEvent("首页轮播-公众号点击",{
+          title:item.title
+        })
+      }
     }
   },
   integrationTime(){
@@ -490,7 +501,7 @@ Page({
       })
     } else if(item.jump_type == 5) {
       wx.navigateTo({
-        url: `../education/education?type=lottery&url=${item.clickurl}&login=1&id=0`
+        url: `../education/education?url=${item.clickurl}&login=${item.is_login}&id=0&type=1`
       })
       app.aldstat.sendEvent("首页轮播-公众号点击",{
         title:item.title

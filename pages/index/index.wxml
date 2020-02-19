@@ -123,7 +123,10 @@
           <block wx:for="{{imgUrls}}" wx:key="index">
             <swiper-item>
               <image src="{{item.image}}" class="slide-image" width="355" height="150" catchtap="bannerGo"
-                data-item="{{ item }}" />
+                data-item="{{ item }}" wx:if="{{!item.is_login}}"/>
+              <image src="{{item.image}}" class="slide-image" width="355" height="150" catchtap="bannerGo"
+              data-item="{{ item }}" wx:if="{{item.is_login && $state.authUserInfo}}"/>
+              <button class="slide-image" style="background:url({{item.image}});background-size: 100% 100%;" open-type="getUserInfo" bindgetuserinfo="onGotUserInfo" data-type="banner" data-item="{{item}}" wx:else></button>
             </swiper-item>
           </block>
         </swiper>
