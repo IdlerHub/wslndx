@@ -66,12 +66,7 @@ App({
     debug: true //是否打开调试模式
   },
   /*埋点统计*/
-<<<<<<< HEAD
   onLaunch: async function (opts) {
-=======
-  onLaunch: async function(opts) {
-    console.log(this.store.process)
->>>>>>> dev
     let optsStr = decodeURIComponent(opts.query.scene).split("&");
     let opstObj = {};
     optsStr.forEach((item, index) => {
