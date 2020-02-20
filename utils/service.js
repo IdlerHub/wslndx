@@ -7,6 +7,8 @@ import { promisifyAll } from "miniprogram-api-promise";
 const wxp = {};
 promisifyAll(wx, wxp);
 
+import md5 from "./md5.js"
+
 //配置
 const content_type = ["application/json", "application/x-www-form-urlencoded"];
 let header = {
@@ -61,7 +63,7 @@ function post(path, param = {}, noToken, type) {
     if (!token) return;
     param.uid = wx.getStorageSync("uid");
     param.timestamp = parseInt(new Date().getTime() / 1000 + "");
-    param.sign = getApp().md5(
+    param.sign = md5(
       "uid=" + param.uid + "&token=" + token + "&timestamp=" + param.timestamp
     );
   }
@@ -107,7 +109,7 @@ function del(path, param, noToken, type) {
     if (!token) return;
     param.uid = wx.getStorageSync("uid");
     param.timestamp = parseInt(new Date().getTime() / 1000 + "");
-    param.sign = getApp().md5(
+    param.sign = md5(
       "uid=" + param.uid + "&token=" + token + "&timestamp=" + param.timestamp
     );
   }
