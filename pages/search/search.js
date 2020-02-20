@@ -66,7 +66,7 @@ Page({
     // app.aldstat.sendEvent("搜索课程点击", {
     //   name: e.currentTarget.dataset.item.title
     // })
-    wx.uma.trackEvent('searchLessons,', { 'lessonsName': e.currentTarget.dataset.item.title })
+    wx.uma.trackEvent('searchLessons,', { 'lessonsName': e.currentTarget.dataset.item.name })
   },
   // 权限询问
   authrecord() {
@@ -259,6 +259,7 @@ Page({
         let lessList = res.data.data
         this.param['scroll_id'] = res.data.scroll_id,
           lessList.forEach(item => {
+            item.name = item.title.replace(/<highlight>/g,'').replace(/<\/highlight>/g, '')
             item.title = `<p style="width:410rpx;display: block;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">${item.title.replace(/<highlight>/g, '<span style="color:#DF2020">').replace(/<\/highlight>/g, '</span>')}</p>`
             item.subtitle = `<p style="width:410rpx;display: block;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">${item.subtitle.replace(/<highlight>/g, '<span style="color:#DF2020">').replace(/<\/highlight>/g, '</span>')}</p>`
             item.bw = app.util.tow(item.browse)

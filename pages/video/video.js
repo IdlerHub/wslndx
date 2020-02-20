@@ -458,7 +458,7 @@ Page({
     // app.aldstat.sendEvent("短视频首页推荐/分类点击", {
     //   name: e.currentTarget.dataset.name
     // })
-    wx.uma.trackEvent('sortVideo_index', { 'name': currentTarget.dataset.name });
+    wx.uma.trackEvent('sortVideo_index', { 'name': e.currentTarget.dataset.name });
   },
   // 完整视频
   complete() {

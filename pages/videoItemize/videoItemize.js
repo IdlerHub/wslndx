@@ -68,7 +68,7 @@ Page({
     // app.aldstat.sendEvent("短视频类别-" + this.data.category.category_name, {
     //   'videoName': e.currentTarget.dataset.name
     // })
-    wx.uma.trackEvent('sortVideo_classify', { ['categoryId_' + this.data.category.id]: e.currentTarget.dataset.name });
+    wx.uma.trackEvent('sortVideo_classify', { ['categoryId_' + this.data.category.category_id]: e.currentTarget.dataset.name });
   },
   tohome: function () {
     wx.reLaunch({ url: "/pages/index/index" })
