@@ -7,10 +7,10 @@ Page({
     tip: true,
     vid: "short-video" + Date.now(),
     autoplay: false,
-    showintegral:false,
+    showintegral: false,
     isshowRed: false,
-    loop:false,
-    isshowRedbig:false
+    loop: false,
+    isshowRedbig: false
     /*  rect: wx.getMenuButtonBoundingClientRect() */
   },
   onLoad(options) {
@@ -54,10 +54,10 @@ Page({
           index: 0
         })
         app.addVisitedNum(`v${this.data.cur.id}`)
-        app.aldstat.sendEvent("短视频播放", { name: this.data.cur.title })
+        // app.aldstat.sendEvent("短视频播放", { name: this.data.cur.title })
+        wx.uma.trackEvent('sortVideo_play', { 'videoName': this.data.cur.title });
       })
     }
-    app.aldstat.sendEvent("菜单", { name: "短视频" })
   },
   onShow() {
     this.shortvideoAward()
@@ -65,7 +65,7 @@ Page({
   shortvideoAward() {
     return app.video.shortvideoAward().then(res => {
       console.log(res)
-      if(res.code == 1) {
+      if (res.code == 1) {
         this.setData({
           isshowRed: res.data.today_first
         })
@@ -75,40 +75,40 @@ Page({
       }
     })
   },
-    //获取红包奖励内容
-    recordFinish() {
-      let param = { shortvideo_id: this.data.cur.id}
-      app.video.recordFinish(param).then(res => {
-        if(res.code == 1) {
-          this.setData({
-            loop:true,
-            isshowRedbig: res.data.today_award,
-            wechatnum: res.data.wechat_num
-          })
-          this.videoContext.play()
-        }
-      })
-    },
-    closeRed() {
-      this.setData({
-        isshowRedbig: false,
-        isshowRed: false
-      })
-    },
-    showred() {
-      this.videoContext.stop()
-      wx.showModal({
-        content: '观看完整短视频即可有机会领取现金红包哦！',
-        confirmText: '继续观看',
-        confirmColor: "#df2020",
-        success: res => {
-          this.data.$state.flow || this.wifi ? this.videoContext.play() : ''
-        },
-        fail:res => {
-          this.data.$state.flow || this.wifi ? this.videoContext.play() : ''
-        }
-      })
-    },
+  //获取红包奖励内容
+  recordFinish() {
+    let param = { shortvideo_id: this.data.cur.id }
+    app.video.recordFinish(param).then(res => {
+      if (res.code == 1) {
+        this.setData({
+          loop: true,
+          isshowRedbig: res.data.today_award,
+          wechatnum: res.data.wechat_num
+        })
+        this.videoContext.play()
+      }
+    })
+  },
+  closeRed() {
+    this.setData({
+      isshowRedbig: false,
+      isshowRed: false
+    })
+  },
+  showred() {
+    this.videoContext.stop()
+    wx.showModal({
+      content: '观看完整短视频即可有机会领取现金红包哦！',
+      confirmText: '继续观看',
+      confirmColor: "#df2020",
+      success: res => {
+        this.data.$state.flow || this.wifi ? this.videoContext.play() : ''
+      },
+      fail: res => {
+        this.data.$state.flow || this.wifi ? this.videoContext.play() : ''
+      }
+    })
+  },
   judgeWifi() {
     if (!this.data.$state.flow) {
       this.setData({
@@ -171,7 +171,7 @@ Page({
               console.log('wifi模块关闭成功')
             }
           })
-        } 
+        }
       })
     } else {
       this.setData({
@@ -282,7 +282,8 @@ Page({
       this.vedioRecordAdd()
     }, 200);
     app.addVisitedNum(`v${this.data.cur.id}`)
-    app.aldstat.sendEvent("短视频播放", { name: this.data.cur.title })
+    // app.aldstat.sendEvent("短视频播放", { name: this.data.cur.title })
+    wx.uma.trackEvent('sortVideo_play', { 'videoName': this.data.cur.title });
   },
   praise() {
     let list = this.data.list
@@ -338,7 +339,8 @@ Page({
           })
         }
       })
-      app.aldstat.sendEvent("短视频点赞", { name: this.data.cur.title })
+      // app.aldstat.sendEvent("短视频点赞", { name: this.data.cur.title })
+      wx.uma.trackEvent('sortVideo_play', { 'videoName': this.data.cur.title });
     }
   },
   aniend(e) {
@@ -369,7 +371,8 @@ Page({
             list: list,
             cur: list[index]
           })
-          app.aldstat.sendEvent("短视频转发", { name: this.data.cur.title })
+          // app.aldstat.sendEvent("短视频转发", { name: this.data.cur.title })
+          wx.uma.trackEvent('sortVideo_play', { 'videoName': this.data.cur.title });
         }
       })
       return {
@@ -396,16 +399,17 @@ Page({
   },
   vedioRecordAdd() {
     console.log(this.data.cur)
-    let param = { shortvideo_id : this.data.cur.id }
-    app.video.recordAdd(param).then( res => {
-      if(res.code == 1 ) {
+    let param = { shortvideo_id: this.data.cur.id }
+    app.video.recordAdd(param).then(res => {
+      if (res.code == 1) {
         console.log('发送成功')
       }
     })
   },
   // 用于数据统计
   onHide() {
-    app.aldstat.sendEvent("退出", { name: "短视频页" })
+    // app.aldstat.sendEvent("退出", { name: "短视频页" })
+    wx.uma.trackEvent('move', { 'pageName': '短视频页' });
   },
   // 获取用户的微信昵称头像
   onGotUserInfo: function (e) {

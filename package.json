@@ -15,6 +15,7 @@
   "dependencies": {
     "fundebug-wxjs": "^1.3.1",
     "miniprogram-api-promise": "^1.0.4",
+    "umtrack-wx": "^2.1.0",
     "wxministore": "^1.2.4"
   },
   "devDependencies": {

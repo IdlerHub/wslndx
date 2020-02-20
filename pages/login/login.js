@@ -18,9 +18,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (option) {
-    console.log(option)
     if(option.phone) {
-      console.log(app.globalData)
       this.setData({
         phone: option.phone
       })
@@ -57,6 +55,7 @@ Page({
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
+    console.log(app.globalData.query)
     if (!this.data.$state.userInfo.mobile){
       this.params.mode = this.data.mode
       console.log(this.params)

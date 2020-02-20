@@ -9,12 +9,12 @@ Page({
   data: {
     rlSucFlag: false,
     isRefreshing: false,
-    showLoading:false,
+    showLoading: false,
     showSheet: false,
-    showGuide:true,
+    showGuide: true,
     showSheetBox: true,
-    guideNum:1,
-    guideTxt:'下一步',
+    guideNum: 1,
+    guideTxt: '下一步',
     releaseParam: {
       image: [],
       content: null,
@@ -24,44 +24,45 @@ Page({
       num: 0
     },
     showRelease: false,
-    media_type:null,
+    media_type: null,
     showintegral: false,
     top: 26,
-    currentTab:0,
+    currentTab: 0,
     scrolltop: 0,
     showBottom: false
   },
   onLoad(options) {
-    this.param = [ { page : 1 ,pageSize: 10,is_follow: 0 } , {page: 1,pageSize: 10,is_follow: 1}]
+    this.param = [{ page: 1, pageSize: 10, is_follow: 0 }, { page: 1, pageSize: 10, is_follow: 1 }]
     this.setData({
       list: [],
-      flowList:[]
+      flowList: []
     })
     this.getList([])
     this.gettop()
     let query = wx.createSelectorQuery().in(this)
     let systemInfo = wx.getSystemInfoSync()
     query.selectAll(".tabnav").boundingClientRect()
-      query.exec(res => {
-        console.log(res[0][0])
-        systemInfo.statusBarHeight < 30 ? this.setData({
-          topT: res[0][0].height
-        }) : this.setData({
-          top: 48,
-          topT: res[0][0].height + 23
-        }) 
+    query.exec(res => {
+      console.log(res[0][0])
+      systemInfo.statusBarHeight < 30 ? this.setData({
+        topT: res[0][0].height
+      }) : this.setData({
+        top: 48,
+        topT: res[0][0].height + 23
       })
-    app.aldstat.sendEvent("菜单", { name: "风采展示" })
+    })
+    // app.aldstat.sendEvent("菜单", { name: "风采展示" })
+    wx.uma.trackEvent('menu, ', { 'pageName': '风采展示' });
   },
-  onShow: function() {
+  onShow: function () {
     if (app.globalData.postShow) {
       this.setData({
-        list:[],
-        flowList:[],
-        currentTab:0,
+        list: [],
+        flowList: [],
+        currentTab: 0,
         showBottom: false
       })
-      this.param = [ { page : 1 ,pageSize: 10,is_follow: 0 } , {page: 1,pageSize: 10,is_follow: 1}]
+      this.param = [{ page: 1, pageSize: 10, is_follow: 0 }, { page: 1, pageSize: 10, is_follow: 1 }]
       this.getList([]).then(() => {
       })
       this.gettop()
@@ -69,7 +70,7 @@ Page({
     }
     /* 从cdetail-->发帖 */
     if (app.globalData.rlSuc) {
-      this.setData({ rlSucFlag: true})
+      this.setData({ rlSucFlag: true })
     }
     if (this.data.rlSucFlag) {
       this.rlSuc()
@@ -79,8 +80,8 @@ Page({
     }
     let list = this.data.list, flowList = this.data.flowList
     list.forEach(item => {
-      if(item.id == app.globalData.detail.id) {
-        if(app.globalData.detail.likestatus > 0) {
+      if (item.id == app.globalData.detail.id) {
+        if (app.globalData.detail.likestatus > 0) {
           item.likes = app.globalData.detail.likes
           item.likestatus = app.globalData.detail.likestatus
           item.comments = app.globalData.detail.comments
@@ -92,8 +93,8 @@ Page({
       }
     })
     flowList.forEach(item => {
-      if(item.id == app.globalData.detail.id) {
-        if(app.globalData.detail.likestatus > 0) {
+      if (item.id == app.globalData.detail.id) {
+        if (app.globalData.detail.likestatus > 0) {
           item.likes = app.globalData.detail.likes
           item.comments = app.globalData.detail.comments
           item.likestatus = app.globalData.detail.likestatus
@@ -113,7 +114,7 @@ Page({
       wx.showModal({
         content: '保留本次编辑',
         confirmColor: '#df2020',
-        cancelText:"不保留",
+        cancelText: "不保留",
         confirmText: '保留',
         success(res) {
           if (res.confirm) {
@@ -138,7 +139,7 @@ Page({
       })
     }
   },
-  onShareAppMessage: function(ops, b) {
+  onShareAppMessage: function (ops, b) {
     if (ops.from === "menu") {
       return this.menuAppShare()
     }
@@ -156,18 +157,18 @@ Page({
           })
         }
       })
-        return {
-          title: article.content,
-          imageUrl: article.image || article.images[0] || "../../images/sharemessage.jpg",
-          path: "/pages/pDetail/pDetail?id=" + bkid + "&type=share&uid=" + this.data.$state.userInfo.id
-        }
+      return {
+        title: article.content,
+        imageUrl: article.image || article.images[0] || "../../images/sharemessage.jpg",
+        path: "/pages/pDetail/pDetail?id=" + bkid + "&type=share&uid=" + this.data.$state.userInfo.id
+      }
     }
   },
   getList(list) {
     this.setData({
       showLoading: true
     })
-    let temp =  [], currentTab = this.data.currentTab 
+    let temp = [], currentTab = this.data.currentTab
     currentTab == 0 ? temp = list || this.data.list : temp = list || this.data.flowList
     return app.circle.news(this.param[currentTab]).then(msg => {
       if (msg.code == 1) {
@@ -179,7 +180,7 @@ Page({
           for (let i in msg.data) {
             arr.push(msg.data[i])
           }
-          arr.forEach(function(item) {
+          arr.forEach(function (item) {
             item.fw = app.util.tow(item.forward)
             item.cw = app.util.tow(item.comments)
             item.lw = app.util.tow(item.likes)
@@ -196,7 +197,7 @@ Page({
             this.setData({
               showLoading: false
             })
-            if(this.data.currentTab != currentTab) return
+            if (this.data.currentTab != currentTab) return
             this.data.currentTab == 0 ? this.setData({
               list: temp
             }) : this.setData({
@@ -210,7 +211,7 @@ Page({
   },
   gettop() {
     app.circle.bokeblogTop().then(res => {
-      if(res.code == 1 ) {
+      if (res.code == 1) {
         this.setData({
           bokeTop: res.data
         })
@@ -218,7 +219,7 @@ Page({
     })
     app.circle.defaultCircle().then(res => {
       console.log(res)
-      if(res.code == 1) {
+      if (res.code == 1) {
         this.setData({
           joinedList: res.data
         })
@@ -226,7 +227,7 @@ Page({
     })
   },
   pagePraise(id) {
-    let list = this.data.list , i = 0
+    let list = this.data.list, i = 0
     list.forEach((item, index) => {
       item.id == id ? i = index : ''
     })
@@ -244,13 +245,13 @@ Page({
       })
     }
   },
-  praise(e,index) {
+  praise(e, index) {
     let i = e.currentTarget.dataset.index
-    let list = this.data.list , flowList = this.data.flowList , status = 0
+    let list = this.data.list, flowList = this.data.flowList, status = 0
     let param = {
       blog_id: e.currentTarget.dataset.id
     }
-    if(e.currentTarget.dataset.type) {
+    if (e.currentTarget.dataset.type) {
       status = list[i].likestatus
     } else {
       status = flowList[i].likestatus
@@ -259,11 +260,11 @@ Page({
       // 取消点赞
       app.circle.delPraise(param).then(msg => {
         if (msg.code == 1) {
-          if(e.currentTarget.dataset.type) {
+          if (e.currentTarget.dataset.type) {
             list[i].likestatus = 0
             list[i].likes--
-            flowList.forEach( item => {
-              if(item.id == e.currentTarget.dataset.id) {
+            flowList.forEach(item => {
+              if (item.id == e.currentTarget.dataset.id) {
                 item.likestatus = 0
                 item.likes--
               }
@@ -271,8 +272,8 @@ Page({
           } else {
             flowList[i].likestatus = 0
             flowList[i].likes--
-            list.forEach( item => {
-              if(item.id == e.currentTarget.dataset.id) {
+            list.forEach(item => {
+              if (item.id == e.currentTarget.dataset.id) {
                 item.likestatus = 0
                 item.likes--
               }
@@ -295,14 +296,14 @@ Page({
       // 点赞
       app.circle.praise(param).then(msg => {
         if (msg.code == 1) {
-          if(e.currentTarget.dataset.type) {
+          if (e.currentTarget.dataset.type) {
             list[i].likestatus = 1
             list[i].likes++
             list[i].praising = true
             flowList.forEach(item => {
-              if(item.id == e.currentTarget.dataset.id) {
+              if (item.id == e.currentTarget.dataset.id) {
                 item.likestatus = 1
-                item.likes ++ 
+                item.likes++
               }
             })
           } else {
@@ -311,9 +312,9 @@ Page({
             flowList[i].praising = true
             list.forEach(item => {
               console.log(e.currentTarget.dataset.id)
-              if(item.id == e.currentTarget.dataset.id) {
+              if (item.id == e.currentTarget.dataset.id) {
                 item.likestatus = 1
-                item.likes ++ 
+                item.likes++
               }
             })
           }
@@ -331,15 +332,16 @@ Page({
           }
           app.socket.send({
             type: 'Bokemessage',
-            data: {uid:e.currentTarget.dataset.uid}
+            data: { uid: e.currentTarget.dataset.uid }
           })
           this.setData({
             list: list,
             flowList: flowList
           })
-          app.aldstat.sendEvent("秀风采按钮点击",{
-            name:'点赞按钮'
-          })
+          // app.aldstat.sendEvent("秀风采按钮点击", {
+          //   name: '点赞按钮'
+          // })
+          wx.uma.trackEvent('post_btnClick', { 'btnName': '点赞按钮' });
         } else if (msg.code == -2) {
           wx.showToast({
             title: "帖子已删除",
@@ -352,8 +354,8 @@ Page({
   },
   aniend(e) {
     var i = e.currentTarget.dataset.index, id = e.currentTarget.dataset.id
-    var list = this.data.list , flowList = this.data.flowList
-    list.forEach(item=> {
+    var list = this.data.list, flowList = this.data.flowList
+    list.forEach(item => {
       item.id == id ? item.praising = false : ''
     })
     flowList.forEach(item => {
@@ -362,7 +364,7 @@ Page({
     this.setData({
       list,
       flowList
-    })  
+    })
   },
   // 写帖成功动效
   rlSuc() {
@@ -372,7 +374,7 @@ Page({
     this.getList([])
     this.setData({
       rlAni: true,
-      currentTab:0,
+      currentTab: 0,
       scrollTop: 0
     })
     let timer = setTimeout(() => {
@@ -399,40 +401,40 @@ Page({
   },
   //下拉刷新
   itemtouch(e) {
-    if(this.data.isRefreshing) return
-    if(this.data.scrolltop == 0) {
-      var moveY= e.touches[0].clientY;
+    if (this.data.isRefreshing) return
+    if (this.data.scrolltop == 0) {
+      var moveY = e.touches[0].clientY;
       var diffY = this.startY - moveY;
-      if(diffY> -10 ) {
+      if (diffY > -10) {
         return
       } else {
         this.param[this.data.currentTab].page = 1
-      this.setData({
-        isRefreshing: true
-      })
-      this.getList([]).then(() => {
-        wx.stopPullDownRefresh()
-        let timer = setTimeout(() => {
-          this.setData({
-            isRefreshing: false
-          })
-          clearTimeout(timer)
-        }, 1000)
-      })
-      this.gettop()
+        this.setData({
+          isRefreshing: true
+        })
+        this.getList([]).then(() => {
+          wx.stopPullDownRefresh()
+          let timer = setTimeout(() => {
+            this.setData({
+              isRefreshing: false
+            })
+            clearTimeout(timer)
+          }, 1000)
+        })
+        this.gettop()
       }
     }
   },
   //上拉加载
   scrolltolower() {
-    if(this.data.currentTab == 1 && this.data.showBottom) return 
-    if(this.data.showLoading) return
+    if (this.data.currentTab == 1 && this.data.showBottom) return
+    if (this.data.showLoading) return
     this.param[this.data.currentTab].page++
     this.getList()
   },
   touchStart(e) {
     if (e.touches.length == 1) {
-        this.startY=e.touches[0].clientY
+      this.startY = e.touches[0].clientY
     }
   },
   scrollinfo(e) {
@@ -476,7 +478,8 @@ Page({
   },
   //用于数据统计
   onHide() {
-    app.aldstat.sendEvent("退出", { name: "秀风采页" })
+    wx.uma.trackEvent('move', { 'pageName': '秀风采页' });
+    // app.aldstat.sendEvent("退出", { name: "秀风采页" })
   },
   onUnload() {
   },
@@ -494,27 +497,29 @@ Page({
         content: '由于您近期不合规操作，您的账户已被管理员禁止发帖留言，如有疑问请在个人中心联系客服处理'
       })
     } else {
-      if(status.currentTarget.dataset.type == 'reply' ) {
+      if (status.currentTarget.dataset.type == 'reply') {
         wx.navigateTo({
           url: `/pages/pDetail/pDetail?id= ${status.currentTarget.dataset.id}&comment`,
         })
-        app.aldstat.sendEvent("秀风采按钮点击",{
-          name:'评论按钮'
-        })
+        // app.aldstat.sendEvent("秀风采按钮点击", {
+        //   name: '评论按钮'
+        // })
+        wx.uma.trackEvent('post_btnClick', { 'btnName': '评论按钮' });
       } else {
         wx.navigateTo({
           url: '/pages/release/release',
         })
-        app.aldstat.sendEvent("秀风采按钮点击",{
-          name:'发帖按钮'
-        })
+        // app.aldstat.sendEvent("秀风采按钮点击", {
+        //   name: '发帖按钮'
+        // })
+        wx.uma.trackEvent('post_btnClick', { 'btnName': '发帖按钮' });
       }
     }
   },
   //收藏风采
-  collect(e){
+  collect(e) {
     console.log(e)
-    let blog_id = e.currentTarget.dataset.id, status = e.currentTarget.dataset.status ,blog_index = e.currentTarget.dataset.index,flowId=e.currentTarget.dataset.userid,is_follow = e.currentTarget.dataset.follow ,follownickname = e.currentTarget.dataset.name
+    let blog_id = e.currentTarget.dataset.id, status = e.currentTarget.dataset.status, blog_index = e.currentTarget.dataset.index, flowId = e.currentTarget.dataset.userid, is_follow = e.currentTarget.dataset.follow, follownickname = e.currentTarget.dataset.name
     this.setData({
       blog_id,
       blog_index,
@@ -552,7 +557,7 @@ Page({
       blog_id: this.data.blog_id
     }
     app.circle.collect(param).then(res => {
-      if(res.code == 1) {
+      if (res.code == 1) {
         this.pagesCollect(this.data.blog_id, 1)
         this.closeSheet()
         wx.showToast({
@@ -564,7 +569,7 @@ Page({
         this.closeSheet()
         wx.showToast({
           title: res.msg,
-          image:'/images/warn.png',
+          image: '/images/warn.png',
           duration: 1500
         })
       }
@@ -577,10 +582,10 @@ Page({
   },
   // 指引联动
   nextGuide() {
-    if(this.data.guideNum == 1 ) {
+    if (this.data.guideNum == 1) {
       this.setData({
         guideNum: 2,
-        guideTxt:'我知道了'
+        guideTxt: '我知道了'
       })
     } else {
       let param = {
@@ -593,7 +598,7 @@ Page({
             integralContent: '完成[秀风采]新手指引',
             showintegral: true
           })
-          setTimeout(()=> {
+          setTimeout(() => {
             this.setData({
               showintegral: false
             })
@@ -607,22 +612,22 @@ Page({
     let that = this
     let query = wx.createSelectorQuery().in(this)
     query.selectAll(".name").boundingClientRect()
-      query.exec(res => {
-        let arr = []
-        res[0].forEach((item, index) => {
-          // console.log(item)
-          if (item.height >= 120) {
-            arr.push(index)
-          }
-        })
+    query.exec(res => {
+      let arr = []
+      res[0].forEach((item, index) => {
+        // console.log(item)
+        if (item.height >= 120) {
+          arr.push(index)
+        }
       })
+    })
   },
   setfollow(id, follow) {
-    if(follow) {
+    if (follow) {
       this.data.list.forEach(item => {
         item.uid == id ? item.is_follow = 1 : ''
       })
-      if(this.data.flowList[0]) {
+      if (this.data.flowList[0]) {
         this.data.flowList.forEach(item => {
           item.uid == id ? item.is_follow = 1 : ''
         })
@@ -635,7 +640,7 @@ Page({
       this.data.list.forEach(item => {
         item.uid == id ? item.is_follow = 0 : ''
       })
-      if(this.data.flowList[0]) {
+      if (this.data.flowList[0]) {
         this.data.flowList.forEach(item => {
           item.uid == id ? item.is_follow = 0 : ''
         })
@@ -648,55 +653,55 @@ Page({
   },
   //点赞联动
   pagesPraise(id, type) {
-    let list = this.data.list , flowList = this.data.flowList
-    if(type) {
+    let list = this.data.list, flowList = this.data.flowList
+    if (type) {
       list.forEach(item => {
-        if(item.id == id) {
+        if (item.id == id) {
           item.likes
         }
       })
     }
-    
+
   },
   //收藏联动
-  pagesCollect(id,type) {
-    if(type) {
+  pagesCollect(id, type) {
+    if (type) {
       let list = this.data.list, flowList = this.data.flowList
-        list.forEach(item => {
-          item.id == id ? item.collectstatus = 1 : ''
-        })
-        flowList.forEach(item => {
-          item.id == id ? item.collectstatus = 1 : ''
-        })
-        this.setData({
-          list,
-          flowList
-        })
+      list.forEach(item => {
+        item.id == id ? item.collectstatus = 1 : ''
+      })
+      flowList.forEach(item => {
+        item.id == id ? item.collectstatus = 1 : ''
+      })
+      this.setData({
+        list,
+        flowList
+      })
     } else {
       let list = this.data.list, flowList = this.data.flowList
-        list.forEach(item => {
-          item.id == id ? item.collectstatus = 0 : ''
-        })
-        flowList.forEach(item => {
-          item.id == id ? item.collectstatus = 0 : ''
-        })
-        this.setData({
-          list,
-          flowList
-        })
+      list.forEach(item => {
+        item.id == id ? item.collectstatus = 0 : ''
+      })
+      flowList.forEach(item => {
+        item.id == id ? item.collectstatus = 0 : ''
+      })
+      this.setData({
+        list,
+        flowList
+      })
     }
   },
   attention(e) {
-    if(e.currentTarget.dataset.name) {
+    if (e.currentTarget.dataset.name) {
       this.setData({
         blog_index: e.currentTarget.dataset.index,
         flowId: e.currentTarget.dataset.userid,
-        follownickname:e.currentTarget.dataset.name,
+        follownickname: e.currentTarget.dataset.name,
       })
     }
     let param = { follower_uid: this.data.flowId }
     app.user.following(param).then(res => {
-      if(res.code == 1) {
+      if (res.code == 1) {
         wx.showToast({
           title: '您已成功关注' + this.data.follownickname,
           icon: 'none',
@@ -710,7 +715,7 @@ Page({
   clsocancelFollowing() {
     let param = { follower_uid: this.data.flowId }
     app.user.cancelFollowing(param).then(res => {
-      if(res.code == 1) {
+      if (res.code == 1) {
         wx.showToast({
           title: '取消关注成功',
           icon: 'none',

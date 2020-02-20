@@ -162,13 +162,13 @@ Page({
   },
   submit() {
     let param = {}
-    this.data.param.address.length > 0 ?  param = {
+    this.data.param.address.length > 0 ? param = {
       address: '',
       gender: +this.data.param.gender,
       university: this.data.param.school,
       age: this.data.param.age
-    } :  param = {
-      address: this.data.param.address.join(",") ,
+    } : param = {
+      address: this.data.param.address.join(","),
       gender: +this.data.param.gender,
       university: this.data.param.school,
       age: this.data.param.age
@@ -191,6 +191,7 @@ Page({
   },
   //用于数据统计
   onHide() {
-    app.aldstat.sendEvent("退出", { name: "完善资料页" })
+    // app.aldstat.sendEvent("退出", { name: "完善资料页" })
+    wx.uma.trackEvent('move', { 'pageName': '完善资料页' });
   }
 })

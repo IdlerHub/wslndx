@@ -19,12 +19,12 @@ Page({
     }
   },
   //options(Object)
-  onLoad: function(options) {
+  onLoad: function (options) {
     this.circleParam = { page: 1, pageSize: 10, }
     this.getCircle([])
   },
-  onReady: function() {},
-  onShow: function() {
+  onReady: function () { },
+  onShow: function () {
     console.log(this.data.releaseParam)
     if (((this.data.releaseParam.content != null && this.data.releaseParam.content != "") || this.data.releaseParam.image[0] || this.data.releaseParam.video != null) && this.data.showRelease) {
       let that = this
@@ -56,11 +56,12 @@ Page({
       })
     }
   },
-  onHide: function() {},
-  onUnload: function() {
-    app.aldstat.sendEvent("退出", { name: "风采展示" })
+  onHide: function () { },
+  onUnload: function () {
+    // app.aldstat.sendEvent("退出", { name: "风采展示" })
+    wx.uma.trackEvent('move', { 'pageName': '风采展示' });
   },
-  onPullDownRefresh: function() {
+  onPullDownRefresh: function () {
     this.setData({
       isRefreshing: true
     })
@@ -72,7 +73,7 @@ Page({
       })
     })
   },
-  onReachBottom: function() {
+  onReachBottom: function () {
     this.circleParam.page++
     this.getCircle()
   },
@@ -82,7 +83,7 @@ Page({
     return app.circle.news(this.circleParam).then(msg => {
       if (msg.code == 1) {
         if (msg.data) {
-          msg.data.forEach(function(item) {
+          msg.data.forEach(function (item) {
             item.fw = app.util.tow(item.forward)
             item.cw = app.util.tow(item.comments)
             item.lw = app.util.tow(item.likes)
@@ -95,7 +96,7 @@ Page({
             item.auditing = new Date().getTime() - new Date(item.createtime * 1000) < 7000
             circle.push(item)
           })
-        } 
+        }
         this.setData({
           circle: circle
         })
@@ -161,7 +162,7 @@ Page({
     this.circleParam.page = 1
     this.getCircle([])
   },
-  onShareAppMessage: function(ops, b) {
+  onShareAppMessage: function (ops, b) {
     if (ops.from === "menu") {
       return this.menuAppShare()
     }

@@ -95,7 +95,7 @@
 					"id": 0,
 					"name": "微课堂分享卡片",
 					"pathName": "pages/detail/detail",
-					"query": "id=88&curid=263&type=share",
+					"query": "id=88&curid=293&type=share",
 					"scene": 1007
 				},
 				{
@@ -165,6 +165,7 @@
 					"id": -1,
 					"name": "秀风采首页测试",
 					"pathName": "pages/post/post",
+					"query": "",
 					"scene": null
 				}
 			]

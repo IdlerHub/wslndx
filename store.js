@@ -29,7 +29,7 @@ if (env == "develop"){
   imgHost = "https://hwcdn.jinlingkeji.cn/images/pro"
   activityUrl = "https://gqjy.jinlingkeji.cn/?"
   mpVersion = "v19"
-  API_URL = "https://lndxmid.jinlingkeji.cn/api/v19/"
+  API_URL = "https://lndxpre.jinlingkeji.cn/api/v19/"
   socket_host = "api.jinlingkeji.cn:8182"
 }
 

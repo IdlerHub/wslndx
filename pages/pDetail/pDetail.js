@@ -20,15 +20,15 @@ Page({
     replycontenLength: 0,
     showvoice: false,
     placeholder: '添加你的评论',
-    content:'',
-    replycontent:'',
+    content: '',
+    replycontent: '',
     voicetime: 0,
     showvoiceauto: false,
     voicetextstatus: '',
     voivetext: '',
     voiceplayimg: 'https://hwcdn.jinlingkeji.cn/images/pro/triangle.png',
     replyshow: false,
-    showintegral:false,
+    showintegral: false,
     showSheet: false,
     /* rect: wx.getMenuButtonBoundingClientRect() */
   },
@@ -114,8 +114,8 @@ Page({
     return app.circle.detail(param).then(msg => {
       if (msg.code == 1) {
         let detail = msg.data[0]
-        let arr = [] , brr = []
-        detail.images.forEach(function(i) {
+        let arr = [], brr = []
+        detail.images.forEach(function (i) {
           arr.push(i.image)
         })
         detail.images.forEach(function (i) {
@@ -123,7 +123,7 @@ Page({
         })
         this.detailContent = detail.content
         detail.images = arr
-        detail.image_compress= brr
+        detail.image_compress = brr
         detail.auditing = new Date().getTime() - new Date(detail.createtime * 1000) < 7000
         detail.pause = true
         this.setData({
@@ -168,7 +168,7 @@ Page({
           detail.praising = true
           app.socket.send({
             type: 'Bokemessage',
-            data: {uid: this.data.detail.uid}
+            data: { uid: this.data.detail.uid }
           })
           if (msg.data.is_first == 'first') {
             this.setData({
@@ -183,9 +183,10 @@ Page({
             }, 2000)
           }
           this.setData({ detail: detail })
-          app.aldstat.sendEvent("秀风采按钮点击",{
-            name:'点赞按钮'
-          })
+          // app.aldstat.sendEvent("秀风采按钮点击", {
+          //   name: '点赞按钮'
+          // })
+          wx.uma.trackEvent('post_btnClick', { 'btnName': '点赞按钮' });
         } else if (msg.code == -2) {
           /* 帖子已经删除 */
           this.setData({
@@ -230,24 +231,24 @@ Page({
         this.replyParent = e.target.dataset.parent
         this.replyInfo = e.target.dataset.reply
         this.setData({
-          replyplaceholder: e.currentTarget.dataset.reply.nickname != undefined ? '回复 ' + e.currentTarget.dataset.reply.nickname : '回复 ' + e.currentTarget.dataset.reply.from_user ,
-          replyshow:true
+          replyplaceholder: e.currentTarget.dataset.reply.nickname != undefined ? '回复 ' + e.currentTarget.dataset.reply.nickname : '回复 ' + e.currentTarget.dataset.reply.from_user,
+          replyshow: true
         })
         if (this.data.$state.blogcomment[this.data.detail.id]) {
           if (this.replyParent && this.data.$state.blogcomment[this.data.detail.id]['replyParent']) {
             this.data.$state.blogcomment[this.data.detail.id]['replyParent'][this.replyParent] ?
-            this.setData({
+              this.setData({
                 replycontent: this.data.$state.blogcomment[this.data.detail.id]['replyParent'][this.replyParent] || '',
                 replycontenLength: this.data.$state.blogcomment[this.data.detail.id]['replyParent'][this.replyParent].length || 0,
                 replyshow: true
-            }) : ''
-          } else if (this.data.$state.blogcomment[this.data.detail.id]['replyInfo']){
+              }) : ''
+          } else if (this.data.$state.blogcomment[this.data.detail.id]['replyInfo']) {
             console.log(this.data.$state.blogcomment[this.data.detail.id]['replyInfo'][this.replyInfo.id])
             this.setData({
-              replycontent: this.data.$state.blogcomment[this.data.detail.id]['replyInfo'][this.replyInfo.id] != undefined? this.data.$state.blogcomment[this.data.detail.id]['replyInfo'][this.replyInfo.id] : '',
+              replycontent: this.data.$state.blogcomment[this.data.detail.id]['replyInfo'][this.replyInfo.id] != undefined ? this.data.$state.blogcomment[this.data.detail.id]['replyInfo'][this.replyInfo.id] : '',
               replycontenLength: this.data.$state.blogcomment[this.data.detail.id]['replyInfo'][this.replyInfo.id] != undefined ? this.data.$state.blogcomment[this.data.detail.id]['replyInfo'][this.replyInfo.id].length : 0,
               replyshow: true
-            }) 
+            })
           }
         }
       } else {
@@ -256,11 +257,12 @@ Page({
         this.replyParent = null
         this.setData({
           replyplaceholder: '',
-          replyshow:false
+          replyshow: false
         })
-        app.aldstat.sendEvent("秀风采按钮点击",{
-          name:'评论按钮'
-        })
+        // app.aldstat.sendEvent("秀风采按钮点击", {
+        //   name: '评论按钮'
+        // })
+        wx.uma.trackEvent('post_btnClick', { 'btnName': '评论按钮' });
       }
       // wx.pageScrollTo({
       //   scrollTop: 1000
@@ -277,11 +279,11 @@ Page({
     })
   },
   touchStart() {
-    setTimeout(()=> {
+    setTimeout(() => {
       this.setData({
         write: false
       })
-    },200)
+    }, 200)
   },
   hide() {
     this.setData({
@@ -354,7 +356,7 @@ Page({
     this.setData({
       write: false,
       showvoice: false,
-      voicetime:0,
+      voicetime: 0,
       showvoiceauto: false
     })
     wx.showLoading({
@@ -363,7 +365,7 @@ Page({
     app.circle.comment(param).then(msg => {
       wx.hideLoading()
       if (msg.code == 1) {
-        let blogcomment = this.data.$state.blogcomment 
+        let blogcomment = this.data.$state.blogcomment
         blogcomment[this.data.detail.id]['replycontent'] = ''
         app.store.setState({
           blogcomment
@@ -406,7 +408,7 @@ Page({
         // app.socket.send(this.data.detail.uid)
         app.socket.send({
           type: 'Bokemessage',
-          data: {uid: this.data.detail.uid }
+          data: { uid: this.data.detail.uid }
         })
         this.getComment([])
       } else if (msg.code == -2) {
@@ -428,17 +430,17 @@ Page({
     let comment = list || this.data.comment
     return app.circle.getComment(this.comParam).then(msg => {
       if (msg.code == 1) {
-        msg.data.forEach(function(item) {
+        msg.data.forEach(function (item) {
           item.reply_array.forEach(v => {
             v.rtext = `回复<span  class="respond">${v.to_user}</span>:&nbsp;&nbsp;`
           })
           comment.push(item)
         })
-          this.comment = JSON.parse(JSON.stringify(comment))
-          this.setData({
-            comment: comment
-          })
-          this.setHeight()
+        this.comment = JSON.parse(JSON.stringify(comment))
+        this.setData({
+          comment: comment
+        })
+        this.setHeight()
         if (options) {
           this.data.comment.length > 0 ? this.setData({
             write: false
@@ -527,7 +529,7 @@ Page({
       }
     })
   },
-  onShareAppMessage: function(ops) {
+  onShareAppMessage: function (ops) {
     if (ops.from === "menu") {
       return this.menuAppShare()
     }
@@ -546,7 +548,7 @@ Page({
     }
   },
   //删除评论
-  delComment: function(e) {
+  delComment: function (e) {
     wx.showModal({
       content: "确定删除该评论?",
       confirmColor: '#df2020',
@@ -665,7 +667,7 @@ Page({
           })
         }
         let blogcomment = this.data.$state.blogcomment
-        if(this.replyParent) {
+        if (this.replyParent) {
           blogcomment[this.data.detail.id]['replyParent'][this.replyParent] = ''
           this.setData({
             replycontent: ""
@@ -686,7 +688,7 @@ Page({
         // app.socket.send(params.to_user)
         app.socket.send({
           type: 'Bokemessage',
-          data: {uid: params.to_user }
+          data: { uid: params.to_user }
         })
       } else if (msg.code == -2) {
         /* 帖子已经删除 */
@@ -713,15 +715,8 @@ Page({
       }
     })
   },
-  tohome: function() {
+  tohome: function () {
     wx.reLaunch({ url: "/pages/index/index" })
-  },
-  toUser(e) {
-    if (this.data.$state.userInfo.id == e.currentTarget.dataset.uid) {
-      wx.switchTab({
-        url: "/pages/user/user"
-      })
-    }
   },
   toCommentDetail(e) {
     let vm = this
@@ -746,26 +741,26 @@ Page({
     this.setData({
       showvoice: true,
       write: false,
-    }) 
+    })
   },
   showWrite(e) {
+    this.setData({
+      write: true,
+      showvoice: false,
+      writeTow: true,
+      focus: true,
+      showvoiceauto: false,
+      voicetime: 0
+    })
+    if (this.replyshow) {
       this.setData({
-        write: true,
-        showvoice: false,
-        writeTow: true,
-        focus: true,
-        showvoiceauto: false,
-        voicetime: 0
+        replycontenLength: this.data.replycontent.length || 0
       })
-      if(this.replyshow) {
-        this.setData({
-          replycontenLength: this.data.replycontent.length || 0
-        })
-      } else {
-        this.setData({
-          contenLength: this.data.content.length || 0
-        })
-      }
+    } else {
+      this.setData({
+        contenLength: this.data.content.length || 0
+      })
+    }
   },
   // 语音
   // 权限询问
@@ -971,7 +966,7 @@ Page({
     this.setData({
       showvoice: false,
       write: false,
-      showvoiceauto:false,
+      showvoiceauto: false,
       voicetime: 0
     })
   },
@@ -993,45 +988,45 @@ Page({
   /*长按复制内容 */
   copythat(e) {
     app.copythat(e.target.dataset.content)
-    if(e.target.dataset.type == 'content') {
+    if (e.target.dataset.type == 'content') {
       this.setData({
-        'detail.content': "<span style='background:#f6eeee'>"+ this.data.detail.content +'</span>'
+        'detail.content': "<span style='background:#f6eeee'>" + this.data.detail.content + '</span>'
       })
       setTimeout(() => {
-         this.setData({
+        this.setData({
           'detail.content': this.detailContent
-         }) 
+        })
       }, 2500);
-    } else if(e.target.dataset.type == 'reply'){
-      this.data.comment[e.target.dataset.index].content = "<span style='background:#f6eeee'>"+ this.data.comment[e.target.dataset.index].content +'</span>'
+    } else if (e.target.dataset.type == 'reply') {
+      this.data.comment[e.target.dataset.index].content = "<span style='background:#f6eeee'>" + this.data.comment[e.target.dataset.index].content + '</span>'
       this.setData({
         comment: this.data.comment
       })
       setTimeout(() => {
         this.data.comment[e.target.dataset.index].content = this.comment[e.target.dataset.index].content
-         this.setData({
+        this.setData({
           comment: this.data.comment
-         }) 
+        })
       }, 2500);
     } else {
-      this.data.comment[e.target.dataset.index].reply_array[e.target.dataset.chiindex].reply_content = "<span style='background:#f6eeee'>"+ this.data.comment[e.target.dataset.index].reply_array[e.target.dataset.chiindex].reply_content +'</span>'
+      this.data.comment[e.target.dataset.index].reply_array[e.target.dataset.chiindex].reply_content = "<span style='background:#f6eeee'>" + this.data.comment[e.target.dataset.index].reply_array[e.target.dataset.chiindex].reply_content + '</span>'
       this.setData({
         comment: this.data.comment
       })
       setTimeout(() => {
         this.data.comment[e.target.dataset.index].reply_array[e.target.dataset.chiindex].reply_content = this.comment[e.target.dataset.index].reply_array[e.target.dataset.chiindex].reply_content
-         this.setData({
+        this.setData({
           comment: this.data.comment
-         }) 
+        })
       }, 2500);
     }
   },
   tocdetai() {
-    let pages = getCurrentPages() , jump = false
+    let pages = getCurrentPages(), jump = false
     pages.forEach(item => {
       item.route == 'pages/cDetail/cDetail' ? jump = true : ''
     })
-    if(jump) {
+    if (jump) {
       wx.navigateBack()
     } else {
       wx.navigateTo({
@@ -1050,18 +1045,18 @@ Page({
       })
     }
   },
-  collect(){
+  collect() {
     this.data.showSheet ? this.setData({
       showSheet: false
     }) :
-    this.setData({
-      showSheet: true
-    })
+      this.setData({
+        showSheet: true
+      })
   },
   attention() {
     let param = { follower_uid: this.data.detail.uid }
     app.user.following(param).then(res => {
-      if(res.code == 1) {
+      if (res.code == 1) {
         this.setData({
           showSheet: false,
           ['detail.is_follow']: 1
@@ -1078,7 +1073,7 @@ Page({
   clsocancelFollowing() {
     let param = { follower_uid: this.data.detail.uid }
     app.user.cancelFollowing(param).then(res => {
-      if(res.code == 1) {
+      if (res.code == 1) {
         this.setData({
           showSheet: false,
           ['detail.is_follow']: 0
@@ -1093,7 +1088,7 @@ Page({
     })
   },
   cancelCollection() {
-    let param = {  blog_id: this.data.detail.id }
+    let param = { blog_id: this.data.detail.id }
     app.circle.collectCancel(param).then(res => {
       if (res.code == 1) {
         this.setData({
@@ -1121,7 +1116,7 @@ Page({
       blog_id: this.data.detail.id
     }
     app.circle.collect(param).then(res => {
-      if(res.code == 1) {
+      if (res.code == 1) {
         this.setData({
           showSheet: false,
           ['detail.collectstatus']: 1
@@ -1136,7 +1131,7 @@ Page({
         this.collect()
         wx.showToast({
           title: res.msg,
-          image:'/images/warn.png',
+          image: '/images/warn.png',
           duration: 1500
         })
       }
