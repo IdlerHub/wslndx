@@ -73,8 +73,11 @@ let store = new Store({
           }
         }
       }
+      
+    },
+    onHide() {
+      wx.uma.trackEvent('move', { 'pageName': this.pageName });
     }
-    /*  onUnload() {} */
   },
   methods: {
     menuAppShare() {

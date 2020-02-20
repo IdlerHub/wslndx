@@ -5,6 +5,7 @@ Page({
     history: [],
     isRefreshing: false
   },
+  pageName: '学习历史',
   //options(Object)
   onLoad: function (options) {
     this.historyParam = { page: 1, pageSize: 10 }
@@ -15,7 +16,6 @@ Page({
   onHide: function () { },
   onUnload: function () {
     // app.aldstat.sendEvent("退出", { name: "学习历史" })
-    wx.uma.trackEvent('move', { 'pageName': '学习历史' });
   },
   onPullDownRefresh: function () {
     this.setData({

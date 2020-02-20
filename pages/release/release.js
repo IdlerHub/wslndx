@@ -14,6 +14,7 @@ Page({
     showFlag: false,
     showintegral: false
   },
+  pageName: '发帖页',
   onLoad(ops) {
     if (ops.title) {
       this.getCircleList().then(() => {
@@ -376,7 +377,6 @@ Page({
   },
   //用于数据统计
   onHide() {
-    wx.uma.trackEvent('move', { 'pageName': '发帖页' });
     // app.aldstat.sendEvent("退出", { name: "发帖页" })
   }
 })

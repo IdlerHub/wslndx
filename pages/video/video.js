@@ -22,6 +22,7 @@ Page({
     loop: false,
     /*  rect: wx.getMenuButtonBoundingClientRect() */
   },
+  pageName: '短视频页',
   onLoad(options) {
     let systemInfo = wx.getSystemInfoSync()
     this.wifi = false
@@ -471,7 +472,6 @@ Page({
   onHide() {
     this.videoContext.stop()
     // app.aldstat.sendEvent("退出", { name: "短视频页" })
-    wx.uma.trackEvent('move', { 'pageName': '短视频页' });
   },
   //指引
   nextGuide(e) {

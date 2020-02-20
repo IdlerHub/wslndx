@@ -31,6 +31,7 @@ Page({
     scrolltop: 0,
     showBottom: false
   },
+  pageName: '秀风采页',
   onLoad(options) {
     this.param = [{ page: 1, pageSize: 10, is_follow: 0 }, { page: 1, pageSize: 10, is_follow: 1 }]
     this.setData({
@@ -478,7 +479,6 @@ Page({
   },
   //用于数据统计
   onHide() {
-    wx.uma.trackEvent('move', { 'pageName': '秀风采页' });
     // app.aldstat.sendEvent("退出", { name: "秀风采页" })
   },
   onUnload() {

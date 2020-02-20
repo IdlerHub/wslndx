@@ -41,6 +41,7 @@ Page({
     showintegral: false
     /* rect: wx.getMenuButtonBoundingClientRect() */
   },
+  pageName: '课程详情页',
   onLoad(options) {
     /*todo:考虑去掉that*/
     console.log(options)
@@ -1030,7 +1031,6 @@ Page({
     // app.aldstat.sendEvent("退出", {
     //   name: "课程详情页"
     // })
-    wx.uma.trackEvent('move', { 'pageName': '课程详情页' });
   },
   closeGuide() {
     let param = {

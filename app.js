@@ -64,7 +64,6 @@ App({
   },
   /*埋点统计*/
   onLaunch: async function (opts) {
-    console.log(this.store.process)
     let optsStr = decodeURIComponent(opts.query.scene).split("&");
     let opstObj = {};
     optsStr.forEach((item, index) => {
@@ -76,7 +75,7 @@ App({
       this.globalData.path = "/" + opts.path; /* 卡片页面路径 */
       this.globalData.query = opts.query; /* 卡片页面参数 */
       this.globalData.outObj = opstObj
-      this.globalData.lottery = opstObj.type
+      this.globalData.shareObj = opstObj
       this.globalData.lotteryId = opstObj.id
       if (
         opts.query.type == "invite" ||
@@ -104,14 +103,14 @@ App({
     this.initStore();
 
     /* 建立socket链接 */
-    if (this.store.$state.userInfo.id) {
-      setTimeout(() => {
-        socket.init(this.store.$state.userInfo.id);
-        socket.listen(this.prizemessage, "Prizemessage");
-        socket.listen(this.bokemessage, "Bokemessage");
-        this.getTaskStatus()
-      }, 2000);
-    }
+    // if (this.store.$state.userInfo.id) {
+    //   setTimeout(() => {
+    //     socket.init(this.store.$state.userInfo.id);
+    //     socket.listen(this.prizemessage, "Prizemessage");
+    //     socket.listen(this.bokemessage, "Bokemessage");
+    //     this.getTaskStatus()
+    //   }, 2000);
+    // }
     let systemInfo = wx.getSystemInfoSync()
     let wxtype = systemInfo.version.replace(".", '').replace(".", '')
     let platform = systemInfo.platform
@@ -200,7 +199,7 @@ App({
           wx.setStorageSync("authKey", msg.data.authKey);
           this.setUser(msg.data.userInfo);
           // console.log(msg.data.userInfo)
-          if (this.globalData.lottery == 'lottery') return
+          if (this.globalData.shareObj.type == 'lottery') return
           wx.reLaunch({
             url: "/pages/index/index"
           });

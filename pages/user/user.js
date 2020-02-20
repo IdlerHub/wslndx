@@ -12,6 +12,7 @@ Page({
     my_score: 0,
     showGuide: true
   },
+  pageName: '积分抽奖',
   onLoad() { },
   onShow() {
     // wx.hideHomeButton({
@@ -72,7 +73,6 @@ Page({
   },
   //用于数据统计
   onUnload() {
-    wx.uma.trackEvent('move', { 'pageName': '积分抽奖' });
     // app.aldstat.sendEvent("退出", { name: "积分抽奖" })
   },
   closeGuide() {

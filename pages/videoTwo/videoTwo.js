@@ -13,6 +13,7 @@ Page({
     isshowRedbig: false
     /*  rect: wx.getMenuButtonBoundingClientRect() */
   },
+  pageName: '短视频页',
   onLoad(options) {
     this.videoContext = wx.createVideoContext(this.data.vid)
     wx.setNavigationBarTitle({
@@ -409,7 +410,6 @@ Page({
   // 用于数据统计
   onHide() {
     // app.aldstat.sendEvent("退出", { name: "短视频页" })
-    wx.uma.trackEvent('move', { 'pageName': '短视频页' });
   },
   // 获取用户的微信昵称头像
   onGotUserInfo: function (e) {

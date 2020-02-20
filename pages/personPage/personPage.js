@@ -5,6 +5,7 @@ Page({
     list: [],
     showintegral: false
   },
+  pageName: '个人风采',
   onLoad(options) {
     console.log(options)
     this.setData({
@@ -220,7 +221,6 @@ Page({
   //用于数据统计
   onHide() {
     // app.aldstat.sendEvent("退出", { name: "个人风采" })
-    wx.uma.trackEvent('move', { 'pageName': '风采展示' });
   },
   unShare() {
     wx.showToast({

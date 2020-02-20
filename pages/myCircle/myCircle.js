@@ -18,6 +18,7 @@ Page({
       num: 0
     }
   },
+  pageName: '风采展示',
   //options(Object)
   onLoad: function (options) {
     this.circleParam = { page: 1, pageSize: 10, }
@@ -59,7 +60,6 @@ Page({
   onHide: function () { },
   onUnload: function () {
     // app.aldstat.sendEvent("退出", { name: "风采展示" })
-    wx.uma.trackEvent('move', { 'pageName': '风采展示' });
   },
   onPullDownRefresh: function () {
     this.setData({
