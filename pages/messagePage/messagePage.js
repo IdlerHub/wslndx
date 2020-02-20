@@ -1,5 +1,7 @@
 // pages/messagePage/messagePage.js
 const app = getApp()
+var htmlparser = require("../../utils/htmlparser.js");
+
 Page({
   data: {
 
@@ -14,7 +16,7 @@ Page({
       wx.setNavigationBarTitle({
         title: msg.data.title,
       })
-      let content = app.htmlparser.default(msg.data.content)
+      let content = htmlparser.default(msg.data.content)
       this.setData({
         content
       })
