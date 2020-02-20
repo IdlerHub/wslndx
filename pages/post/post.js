@@ -248,7 +248,7 @@ Page({
   },
   praise(e, index) {
     let i = e.currentTarget.dataset.index
-    let list = this.data.list, flowList = this.data.flowList, status = 0
+    let list = this.data.list, flowList = this.data.flowList, status = 0,fi = -1
     let param = {
       blog_id: e.currentTarget.dataset.id
     }
@@ -262,29 +262,37 @@ Page({
       app.circle.delPraise(param).then(msg => {
         if (msg.code == 1) {
           if (e.currentTarget.dataset.type) {
-            list[i].likestatus = 0
             list[i].likes--
-            flowList.forEach(item => {
+            flowList.forEach((item,index) => {
               if (item.id == e.currentTarget.dataset.id) {
-                item.likestatus = 0
+                fi = index
                 item.likes--
               }
+            })
+            fi > -1  ? this.setData({
+              [`list[${i}].likestatus`]:0,
+              [`list[${i}].likes`]:list[i].likes,
+              [`flowList[${fi}].likestatus`]:0,
+              [`flowList[${fi}].likes`]:flowList[fi].likes,
+            }) : this.setData({
+              [`list[${i}].likestatus`]:0,
+              [`list[${i}].likes`]:list[i].likes
             })
           } else {
-            flowList[i].likestatus = 0
             flowList[i].likes--
-            list.forEach(item => {
+            list.forEach((item,index) => {
               if (item.id == e.currentTarget.dataset.id) {
-                item.likestatus = 0
+                fi = index
                 item.likes--
               }
             })
+            this.setData({
+              [`flowList[${i}].likestatus`]:0,
+              [`flowList[${i}].likes`]:flowList[fi].likes,
+              [`list[${fi}].likestatus`]:0,
+              [`list[${fi}].likes`]:list[i].likes,
+            })
           }
-          console.log(flowList)
-          this.setData({
-            list: list,
-            flowList: flowList
-          })
         } else if (msg.code == -2) {
           wx.showToast({
             title: "帖子已删除",
@@ -298,25 +306,38 @@ Page({
       app.circle.praise(param).then(msg => {
         if (msg.code == 1) {
           if (e.currentTarget.dataset.type) {
-            list[i].likestatus = 1
             list[i].likes++
-            list[i].praising = true
-            flowList.forEach(item => {
+            flowList.forEach((item, index) => {
               if (item.id == e.currentTarget.dataset.id) {
-                item.likestatus = 1
+                fi = index
                 item.likes++
               }
             })
+            fi > -1 ? this.setData({
+              [`flowList[${fi}].likestatus`]:1,
+              [`flowList[${fi}].likes`]:flowList[fi].likes,
+              [`list[${i}].likestatus`]:1,
+              [`list[${i}].likes`]:list[i].likes,
+              [`list[${i}].praising`]:true
+            }) : this.setData({
+              [`list[${i}].likestatus`]:1,
+              [`list[${i}].likes`]:list[i].likes,
+              [`list[${i}].praising`]:true
+            })
           } else {
-            flowList[i].likestatus = 1
             flowList[i].likes++
-            flowList[i].praising = true
-            list.forEach(item => {
-              console.log(e.currentTarget.dataset.id)
+            list.forEach((item, index) => {
               if (item.id == e.currentTarget.dataset.id) {
-                item.likestatus = 1
+                fi = index
                 item.likes++
               }
+            })
+            this.setData({
+              [`flowList[${i}].likestatus`]:1,
+              [`flowList[${i}].likes`]:flowList[i].likes,
+              [`flowList[${i}].praising`]:true,
+              [`list[${fi}].likestatus`]:1,
+              [`list[${fi}].likes`]:list[fi].likes,
             })
           }
           if (msg.data.is_first == 'first') {
@@ -334,10 +355,6 @@ Page({
           app.socket.send({
             type: 'Bokemessage',
             data: { uid: e.currentTarget.dataset.uid }
-          })
-          this.setData({
-            list: list,
-            flowList: flowList
           })
           // app.aldstat.sendEvent("秀风采按钮点击", {
           //   name: '点赞按钮'
