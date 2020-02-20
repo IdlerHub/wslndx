@@ -17,13 +17,13 @@ Page({
     showHome: false,
     showSignbox: false,
     sign_days: 0,
-    paddingAdd:false
+    paddingAdd: false
   },
   common: {
     scrollTop: 175
   },
   //options(Object)
-  onLoad: function(options) {
+  onLoad: function (options) {
     console.log(options)
     options.type !== 'index' ? this.setData({
       showHome: true
@@ -32,184 +32,184 @@ Page({
     })
 
   },
-  onShow: function() {
+  onShow: function () {
     let sources = [{
-          title: "邀请好友注册",
-          score: 25,
-          status: false,
-          page: "/pages/invitation/invitation",
-          authorization: false,
-          showStatus: {
-            name: '',
-            status: false
-          }
-        },
-        {
-          title: "学完一门新课程",
-          score: 20,
-          status: false,
-          page: "/pages/index/index?tabs=1",
-          authorization: false,
-          total:3,
-          showStatus: {
-            name: '',
-            status: false
-          }
-        },
-        {
-          title: "每日短视频首次点赞",
-          score: 20,
-          status: false,
-          page: "/pages/video/video",
-          authorization: false,
-          showStatus: {
-            name: 'day_shortvideo_praise_status',
-            status: false
-          }
-        },
-        {
-          title: "每日秀风采首次发帖",
-          score: 20,
-          status: false,
-          page: "/pages/post/post",
-          authorization: true,
-          showStatus: {
-            name: 'day_add_boke_status',
-            status: false
-          }
-        },
-        {
-          title: "每日秀风采首次评论",
-          score: 20,
-          status: false,
-          page: "/pages/post/post",
-          authorization: true,
-          showStatus: {
-            name: 'day_boke_comment_status',
-            status: false
-          }
-        },
-        {
-          title: "每日课程首次讨论",
-          score: 10,
-          status: false,
-          page: "/pages/index/index",
-          authorization: true,
-          showStatus: {
-            name: 'day_lesson_comment_status',
-            status: false
-          }
-        },
-        {
-          title: "每日签到",
-          score: 20,
-          status: false,
-          authorization: false,
-          showStatus: {
-            name: 'shortvideo_guide_status',
-            status: false
-          }
-        }
-      ],
+      title: "邀请好友注册",
+      score: 25,
+      status: false,
+      page: "/pages/invitation/invitation",
+      authorization: false,
+      showStatus: {
+        name: '',
+        status: false
+      }
+    },
+    {
+      title: "学完一门新课程",
+      score: 20,
+      status: false,
+      page: "/pages/index/index?tabs=1",
+      authorization: false,
+      total: 3,
+      showStatus: {
+        name: '',
+        status: false
+      }
+    },
+    {
+      title: "每日短视频首次点赞",
+      score: 20,
+      status: false,
+      page: "/pages/video/video",
+      authorization: false,
+      showStatus: {
+        name: 'day_shortvideo_praise_status',
+        status: false
+      }
+    },
+    {
+      title: "每日秀风采首次发帖",
+      score: 20,
+      status: false,
+      page: "/pages/post/post",
+      authorization: true,
+      showStatus: {
+        name: 'day_add_boke_status',
+        status: false
+      }
+    },
+    {
+      title: "每日秀风采首次评论",
+      score: 20,
+      status: false,
+      page: "/pages/post/post",
+      authorization: true,
+      showStatus: {
+        name: 'day_boke_comment_status',
+        status: false
+      }
+    },
+    {
+      title: "每日课程首次讨论",
+      score: 10,
+      status: false,
+      page: "/pages/index/index",
+      authorization: true,
+      showStatus: {
+        name: 'day_lesson_comment_status',
+        status: false
+      }
+    },
+    {
+      title: "每日签到",
+      score: 20,
+      status: false,
+      authorization: false,
+      showStatus: {
+        name: 'shortvideo_guide_status',
+        status: false
+      }
+    }
+    ],
       newbie = [{
-          title: "完善资料",
-          score: 65,
-          status: false,
-          page: "/pages/info/info",
-          authorization: false,
-          showStatus:{
-            name: 'finish_user_info_status',
-            status: false
-          }  
-        },
-        {
-          title: "完成[云课堂]新手指引",
-          score: 45,
-          status: false,
-          page: "/pages/index/index?tabs=0",
-          authorization: false,
-          showStatus: {
-            name: 'lesson_guide_status',
-            status: false
-          }
-        },
-        {
-          title: "首次学习课程",
-          score: 70,
-          status: false,
-          page: "/pages/index/index?tabs=0",
-          authorization: false,
-          showStatus: {
-            name: 'first_learn_status',
-            status:false
-          }
-        },
-        {
-          title: "完成[短视频]新手指引",
-          score: 45,
-          status: false,
-          page: "/pages/video/video",
-          authorization: false,
-          showStatus: {
-            name: 'shortvideo_guide_status',
-            status: false
-          }
-        },
-        {
-          title: "短视频首次点赞",
-          score: 50,
-          status: false,
-          page: "/pages/video/video",
-          authorization: false,
-          showStatus: {
-            name:'first_shortvideo_parise_status',
-            status:false
-          }
-        },
-        {
-          title: "完成[秀风采]新手指引",
-          score: 45,
-          status: false,
-          page: "/pages/post/post",
-          authorization: true,
-          showStatus: {
-            name: 'boke_guide_status',
-            status: false
-          }
-        },
-        {
-          title: "首次发帖",
-          score: 50,
-          status: false,
-          page: "/pages/post/post",
-          authorization: true,
-          showStatus: {
-            name: 'first_add_boke_status',
-            status: false
-          }
-        },
-        {
-          title: "秀风采首次点赞",
-          score: 50,
-          status: false,
-          page: "/pages/post/post",
-          authorization: true,
-          showStatus: {
-            name:'first_boke_prise_status',
-            status: false
-          }
-        },
-        {
-          title: "秀风采首次评论",
-          score: 50,
-          status: false,
-          page: "/pages/post/post",
-          authorization: true,
-          showStatus: {
-            name: 'first_boke_comment_status',
-            status: false
-          }
+        title: "完善资料",
+        score: 65,
+        status: false,
+        page: "/pages/info/info",
+        authorization: false,
+        showStatus: {
+          name: 'finish_user_info_status',
+          status: false
         }
+      },
+      {
+        title: "完成[云课堂]新手指引",
+        score: 45,
+        status: false,
+        page: "/pages/index/index?tabs=0",
+        authorization: false,
+        showStatus: {
+          name: 'lesson_guide_status',
+          status: false
+        }
+      },
+      {
+        title: "首次学习课程",
+        score: 70,
+        status: false,
+        page: "/pages/index/index?tabs=0",
+        authorization: false,
+        showStatus: {
+          name: 'first_learn_status',
+          status: false
+        }
+      },
+      {
+        title: "完成[短视频]新手指引",
+        score: 45,
+        status: false,
+        page: "/pages/video/video",
+        authorization: false,
+        showStatus: {
+          name: 'shortvideo_guide_status',
+          status: false
+        }
+      },
+      {
+        title: "短视频首次点赞",
+        score: 50,
+        status: false,
+        page: "/pages/video/video",
+        authorization: false,
+        showStatus: {
+          name: 'first_shortvideo_parise_status',
+          status: false
+        }
+      },
+      {
+        title: "完成[秀风采]新手指引",
+        score: 45,
+        status: false,
+        page: "/pages/post/post",
+        authorization: true,
+        showStatus: {
+          name: 'boke_guide_status',
+          status: false
+        }
+      },
+      {
+        title: "首次发帖",
+        score: 50,
+        status: false,
+        page: "/pages/post/post",
+        authorization: true,
+        showStatus: {
+          name: 'first_add_boke_status',
+          status: false
+        }
+      },
+      {
+        title: "秀风采首次点赞",
+        score: 50,
+        status: false,
+        page: "/pages/post/post",
+        authorization: true,
+        showStatus: {
+          name: 'first_boke_prise_status',
+          status: false
+        }
+      },
+      {
+        title: "秀风采首次评论",
+        score: 50,
+        status: false,
+        page: "/pages/post/post",
+        authorization: true,
+        showStatus: {
+          name: 'first_boke_comment_status',
+          status: false
+        }
+      }
       ]
     this.setData({
       sources,
@@ -221,8 +221,8 @@ Page({
     }
     // this.init()
     app.getTaskStatus()
-    Promise.all([this.init(), this.getGift(),this.getlessonFinishStatus()]).then(value => {
-      let arr = [],brr=[],crr=[],drr=[]
+    Promise.all([this.init(), this.getGift(), this.getlessonFinishStatus()]).then(value => {
+      let arr = [], brr = [], crr = [], drr = []
       if (this.data.$state.authUserInfo) {
         this.data.sources.forEach((item, index) => {
           if (this.data.$state.dayStatus[item.showStatus.name]) {
@@ -235,7 +235,7 @@ Page({
       } else {
         this.data.sources.forEach((item, index) => {
           if (this.data.$state.dayStatus[item.showStatus.name]) {
-             item.status = true
+            item.status = true
           }
           item.status ? arr.push(this.data.sources[index]) : ''
           !item.status ? crr.push(this.data.sources[index]) : ''
@@ -243,7 +243,7 @@ Page({
       }
       this.data.newbie.forEach((item, index) => {
         // console.log(this.data.$state.taskStatus[item.showStatus.name])
-        if(this.data.$state.taskStatus[item.showStatus.name] == 0) {
+        if (this.data.$state.taskStatus[item.showStatus.name] == 0) {
           brr.push(this.data.newbie[index])
         }
       })
@@ -290,24 +290,24 @@ Page({
   },
   getlessonFinishStatus() {
     return app.user.lessonFinishStatus().then(res => {
-      if(res.code == 1) {
-        if(res.data.finish_status) {
+      if (res.code == 1) {
+        if (res.data.finish_status) {
           this.data.sources.forEach(item => {
-            if(item.title == '学完一门新课程') {
-              item.status = true 
+            if (item.title == '学完一门新课程') {
+              item.status = true
               item.total = res.data.today_remain_count
             }
           })
         } else {
           this.data.sources.forEach(item => {
-            if(item.title == '学完一门新课程') {
+            if (item.title == '学完一门新课程') {
               item.total = res.data.today_remain_count
             }
           })
-        } 
+        }
         this.setData({
-            sources: this.data.sources,
-            lessonFinishStatus: res.data
+          sources: this.data.sources,
+          lessonFinishStatus: res.data
         })
       }
     })
@@ -330,8 +330,8 @@ Page({
       }
     })
   },
-  onHide: function() {},
-  onPullDownRefresh: function() {
+  onHide: function () { },
+  onPullDownRefresh: function () {
     this.setData({
       isRefreshing: true
     })
@@ -346,13 +346,13 @@ Page({
       })
     })
   },
-  onReachBottom: function() {
+  onReachBottom: function () {
     this.setData({
       scrollStatus: true,
       paddingAdd: true
     })
   },
-  onPageScroll: function(e) {
+  onPageScroll: function (e) {
     if (e.scrollTop < this.common.scrollTop) {
       this.data.scrollStatus && this.setData({
         scrollStatus: false,
@@ -379,10 +379,10 @@ Page({
         currentTab: id
       })
     }
-    id == 2 ? app.aldstat.sendEvent("积分页按钮点击" , {
-      name: '积分兑换'
-    }) : ''
-
+    id == 2 ? wx.uma.trackEvent('integral_btnClick', { 'btnName': '积分兑换' }) : ''
+    // app.aldstat.sendEvent("积分页按钮点击" , {
+    //   name: '积分兑换'
+    // })
   },
   gift(e) {
     if (!e.currentTarget.dataset.stock) {
@@ -465,7 +465,7 @@ Page({
       this.setData({
         showSignbox: true,
         singnow: true,
-        singafter:false
+        singafter: false
       })
       this.params = {
         page: 1,
@@ -475,7 +475,7 @@ Page({
       // this.getGift()
       app.user.sign().then(res => {
         this.init()
-        if(res.code == 1) {
+        if (res.code == 1) {
           app.store.setState({
             signdays: res.data.sign_days
           })
@@ -516,9 +516,10 @@ Page({
     wx: wx.navigateTo({
       url: '/pages/drawPage/drawPage',
     })
-    app.aldstat.sendEvent("积分页按钮点击", {
-      name:'积分抽奖'
-    })
+    // app.aldstat.sendEvent("积分页按钮点击", {
+    //   name: '积分抽奖'
+    // })
+    wx.uma.trackEvent('integral_btnClick', { 'btnName': '积分抽奖' })
   },
   onGotUserInfo(e) {
     if (e.detail.errMsg === "getUserInfo:ok") {

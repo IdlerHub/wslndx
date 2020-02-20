@@ -10,9 +10,9 @@ Page({
   data: {
     isRefreshing: false,
     my_score: 0,
-    showGuide:true
+    showGuide: true
   },
-  onLoad() {},
+  onLoad() { },
   onShow() {
     // wx.hideHomeButton({
     //   successL: function () {
@@ -33,7 +33,7 @@ Page({
     })
     this.unreadNum()
   },
-  onPullDownRefresh: function() {
+  onPullDownRefresh: function () {
     this.setData({
       isRefreshing: true
     })
@@ -47,29 +47,33 @@ Page({
     }, 1000)
   },
   handleContact(e) {
-    app.aldstat.sendEvent("个人中心按钮点击",{
-      name:'联系客服'
-    })
+    // app.aldstat.sendEvent("个人中心按钮点击",{
+    //   name:'联系客服'
+    // })
+    wx.uma.trackEvent('personal_btnClick', { 'btnName': '联系客服' })
   },
   toScore() {
     wx.navigateTo({
       url: "/pages/score/score?type=index"
     })
-    app.aldstat.sendEvent("个人中心按钮点击",{
-      name:'积分兑换'
-    })
+    // app.aldstat.sendEvent("个人中心按钮点击",{
+    //   name:'积分兑换'
+    // })
+    wx.uma.trackEvent('personal_btnClick', { 'btnName': '积分兑换' })
   },
   toInvite() {
     wx.navigateTo({
       url: "/pages/invitation/invitation"
     })
-    app.aldstat.sendEvent("个人中心按钮点击",{
-      name:'邀请好友'
-    })
+    // app.aldstat.sendEvent("个人中心按钮点击",{
+    //   name:'邀请好友'
+    // })
+    wx.uma.trackEvent('personal_btnClick', { 'btnName': '邀请好友' })
   },
   //用于数据统计
   onUnload() {
-    app.aldstat.sendEvent("退出", { name: "个人中心页" })
+    wx.uma.trackEvent('move', { 'pageName': '积分抽奖' });
+    // app.aldstat.sendEvent("退出", { name: "积分抽奖" })
   },
   closeGuide() {
     let param = {
@@ -82,13 +86,14 @@ Page({
     })
   },
   drawPage() {
-    app.aldstat.sendEvent("个人中心按钮点击",{
-      name:'积分抽奖'
-    })
+    // app.aldstat.sendEvent("个人中心按钮点击",{
+    //   name:'积分抽奖'
+    // })
+    wx.uma.trackEvent('personal_btnClick', { 'btnName': '积分抽奖' })
   },
   unreadNum() {
     app.user.unreadNum().then(res => {
-      if(res.code == 1) {
+      if (res.code == 1) {
         this.setData({
           showMes: res.data.unread_count
         })

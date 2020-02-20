@@ -8,14 +8,14 @@ Page({
       video: null,
       cover: null,
       fs_id: "",
-      num:0
+      num: 0
     },
     media_type: null,
     showFlag: false,
     showintegral: false
   },
   onLoad(ops) {
-    if(ops.title) {
+    if (ops.title) {
       this.getCircleList().then(() => {
         this.data.allCircle.forEach(item => {
           item.title == ops.title ? this.setData({
@@ -43,7 +43,7 @@ Page({
     pages.forEach(item => {
       if (item.route == 'pages/myCircle/myCircle') {
         prePage = item
-      } else if ( item.route == 'pages/post/post') {
+      } else if (item.route == 'pages/post/post') {
         prePage = item
       }
     })
@@ -66,7 +66,7 @@ Page({
         video: null,
         cover: null,
         fs_id: "",
-        num:0
+        num: 0
       },
       media_type: null
     })
@@ -131,7 +131,7 @@ Page({
             "param.image": image,
             media_type: type
           })
-          this.judge() 
+          this.judge()
         } else {
           wx.showToast({
             title: ms.msg,
@@ -147,16 +147,16 @@ Page({
       })
       .catch(err => {
         let image = this.data.param.image
-        if(!up) {
+        if (!up) {
           image.push("../../images/sensitivity.png")
           this.setData({
             "param.image": image
           })
         } else {
           image[i] = "../../images/sensitivity.png"
-           this.setData({
+          this.setData({
             "param.image": image
-          }) 
+          })
         }
         val.splice(0, 1)
         if (val.length > 0) {
@@ -248,7 +248,7 @@ Page({
     })
   },
   //是否同步到圈子
-  switchChange: function(e) {
+  switchChange: function (e) {
     this.setData({
       showFlag: e.detail.value
     })
@@ -257,9 +257,9 @@ Page({
   getCircleList() {
     return app.circle.joinedCircles().then(msg => {
       if (msg.code == 1) {
-          this.setData({
-            allCircle: msg.data
-          })
+        this.setData({
+          allCircle: msg.data
+        })
       }
     })
   },
@@ -304,7 +304,7 @@ Page({
               video: null,
               cover: null,
               fs_id: "",
-              num:0
+              num: 0
             }, integral = ''
             this.setData({
               param: paramInit
@@ -332,9 +332,9 @@ Page({
             if (integral == 'first' || integral == 'day') {
               setTimeout(() => {
                 wx.switchTab({ url: "/pages/post/post" })
-              },2000)
+              }, 2000)
             } else {
-                wx.switchTab({ url: "/pages/post/post" })
+              wx.switchTab({ url: "/pages/post/post" })
             }
             // let pages = getCurrentPages()
             // let prePage = pages[pages.length - 2]
@@ -372,10 +372,11 @@ Page({
         duration: 1500
       })
     }
-    
+
   },
   //用于数据统计
   onHide() {
-    app.aldstat.sendEvent("退出", { name: "发帖页" })
+    wx.uma.trackEvent('move', { 'pageName': '发帖页' });
+    // app.aldstat.sendEvent("退出", { name: "发帖页" })
   }
 })

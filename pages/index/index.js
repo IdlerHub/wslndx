@@ -3,12 +3,12 @@
 const app = getApp()
 Page({
   data: {
-    nav: [{ id:1,name: "推荐", class: "#recommend1", unMove: true }],
+    nav: [{ id: 1, name: "推荐", class: "#recommend1", unMove: true }],
     height: 0,
     isRefreshing: false,
     activity: "",
-    currentTab: 0, 
-    showReco:false,
+    currentTab: 0,
+    showReco: false,
     guideNum: 0,
     guidetxt: '下一步',
     guideNum: 1,
@@ -17,8 +17,8 @@ Page({
     showdialog: true
   },
   navHeightList: [],
-  onLoad: async function(e) {
-    e.type != undefined ?  this.pageType = e.type : ''
+  onLoad: async function (e) {
+    e.type != undefined ? this.pageType = e.type : ''
     let reg = /ios/i
     let pt = 20 //导航状态栏上内边距
     let h = 44 //导航状态栏高度
@@ -45,7 +45,7 @@ Page({
       category: [],
       history: {},
       navScrollLeft: 0,
-      catrecommend:[]
+      catrecommend: []
     })
     if (this.data.$state.userInfo.mobile) {
       await app.user.signed().then(res => {
@@ -62,7 +62,7 @@ Page({
       this.integrationTime()
     }
   },
-  onReady: function() {
+  onReady: function () {
   },
   onShow() {
     app.globalData.currentTab == 1 ? this.setData({
@@ -140,7 +140,8 @@ Page({
     if (this.data.currentTab == 0) {
       this.setData({
         navScrollLeft: 0
-      })}
+      })
+    }
   },
   getFeatureCode(e) {
     console.log(e)
@@ -151,17 +152,17 @@ Page({
     this.timer ? clearTimeout(this.timer) : ''
     this.timer = setTimeout(() => {
       this.data.currentTab != cur ? cur == that.setData({
-        currentTab: cur 
+        currentTab: cur
       }) : ''
     }, 300)
-    
-    if(cur != 0) {
+
+    if (cur != 0) {
       let id = this.data.nav[cur].id
       this.geteCatrcommend(id, cur)
-      app.aldstat.sendEvent("栏目按钮点击", {
-        name: this.data.nav[cur].name
-      })
-      wx.uma.trackEvent('classify_btnClick', { 'name':this.data.nav[cur].name});
+      // app.aldstat.sendEvent("栏目按钮点击", {
+      //   name: this.data.nav[cur].name
+      // })
+      wx.uma.trackEvent('classify_btnClick', { 'name': this.data.nav[cur].name });
     }
     setTimeout(() => {
       this.setHeight()
@@ -169,7 +170,7 @@ Page({
   },
   lastswitchTab(event) {
     let arr = this.data.nav, num = 0
-    arr.forEach((i,index) => {
+    arr.forEach((i, index) => {
       i.id == event ? num = index : ''
     })
     this.setData({
@@ -188,7 +189,7 @@ Page({
     let param = { page: 1, pageSize: 10, province: this.data.$state.userInfo.university.split(',')[0] }
     return app.classroom.recommend(param).then(msg => {
       if (msg.code == 1) {
-        msg.data.forEach(function(item) {
+        msg.data.forEach(function (item) {
           item.bw = app.util.tow(item.browse)
         })
         this.setData({
@@ -199,7 +200,7 @@ Page({
     })
   },
   geteCatrcommend(id, currtab) {
-    if (this.data.catrecommend[id]){
+    if (this.data.catrecommend[id]) {
       if (this.data.catrecommend[id][0]) return
     }
     let temp = []
@@ -211,7 +212,7 @@ Page({
         let catrecommend = this.data.catrecommend
         catrecommend[id] = temp.concat(msg.data)
         this.setData({
-          catrecommend 
+          catrecommend
         })
         setTimeout(() => {
           currtab != this.data.currentTab ? '' : this.setHeight()
@@ -224,11 +225,11 @@ Page({
     app.user.getLessonCategory().then(msg => {
       if (msg.code == 1) {
         let arr = this.data.nav.slice(0, 1)
-        msg.data.user_lesson_category.forEach((i,index) => {
+        msg.data.user_lesson_category.forEach((i, index) => {
           this.categoryParams[i.id] = {
             category_id: i.id,
             page: 1,
-            pageSize: 10 
+            pageSize: 10
           }
           i['class'] = '#recommend' + i.id
           arr.push(i)
@@ -244,7 +245,7 @@ Page({
   },
   getBanner() {
     this.setData({
-      bannercurrentTab:0
+      bannercurrentTab: 0
     })
     return app.classroom.banner({}).then(res => {
       this.setData({
@@ -258,7 +259,7 @@ Page({
       if (msg.code == 1) {
         this.setData({
           "history.last_lesson": msg.data.last_lesson || ""
-        }) 
+        })
       }
     })
   },
@@ -276,9 +277,10 @@ Page({
     wx.navigateTo({
       url: "/pages/score/score?type=index"
     })
-    app.aldstat.sendEvent("首页按钮点击",{
-      name:'积分兑换'
-    })
+    // app.aldstat.sendEvent("首页按钮点击",{
+    //   name:'积分兑换'
+    // })
+    wx.uma.trackEvent('index_btnClick', { 'btnName': '积分兑换' });
   },
   touchstart() {
     this.shownow = true
@@ -303,19 +305,20 @@ Page({
     this.setData({
       scrollTop: e.scrollTop
     })
-    e.scrollTop - scrollTop > 0  ? this.setData({
+    e.scrollTop - scrollTop > 0 ? this.setData({
       shownow: false
     }) : this.shownow && this.setData({
-        shownow: true
+      shownow: true
     })
   },
   //继续播放
-  historyTap: function(e) {
+  historyTap: function (e) {
     wx.navigateTo({
       url: `../detail/detail?id=${e.currentTarget.dataset.id}&name=${e.currentTarget.dataset.title}&play=true`
     })
     //用于数据统计
-    app.aldstat.sendEvent("继续播放", { name: e.currentTarget.dataset.title })
+    // app.aldstat.sendEvent("继续播放", { name: e.currentTarget.dataset.title })
+    wx.uma.trackEvent('video_historyPlay', { 'lessonsName': e.currentTarget.dataset.title });
   },
   closenow() {
     this.setData({
@@ -323,26 +326,27 @@ Page({
     })
   },
   //点击推荐课堂
-  detailTap: function(e) {
+  detailTap: function (e) {
     wx.navigateTo({
       url: `../detail/detail?id=${e.currentTarget.dataset.item.id}&name=${e.currentTarget.dataset.item.title}`
     })
     //用于数据统计
-    if(e.currentTarget.dataset.type) {
-      app.aldstat.sendEvent( "栏目-"+this.data.nav[this.data.currentTab].name+"-课程点击", {
+    if (e.currentTarget.dataset.type) {
+      app.aldstat.sendEvent("栏目-" + this.data.nav[this.data.currentTab].name + "-课程点击", {
         name: e.currentTarget.dataset.item.title
       })
-      let name = "栏目-"+this.data.nav[this.data.currentTab].name+"-课程点击"
-      wx.uma.trackEvent('classify_lessonsClick', { [this.data.nav[this.data.currentTab].name]: e.currentTarget.dataset.item.title});
+      // wx.uma.trackEvent('classify_lessonsClick', { [this.data.nav[this.data.currentTab].name]: e.currentTarget.dataset.item.title });
     } else {
-      app.aldstat.sendEvent("首页推荐栏目课程点击", {
-        name: e.currentTarget.dataset.item.title
-      })
+      // app.aldstat.sendEvent("首页推荐栏目课程点击", {
+      //   name: e.currentTarget.dataset.item.title
+      // })
+      wx.uma.trackEvent('index_recommendLessons', { 'lessonsName': e.currentTarget.dataset.item.title });
     }
   },
   //用于数据统计
   onHide() {
-    app.aldstat.sendEvent("退出", { name: "首页" })
+    // app.aldstat.sendEvent("退出", { name: "首页" })
+    wx.uma.trackEvent('move', { 'pageName': '首页' });
   },
   // 用户昵称等信息授权
   onGotUserInfo(e) {
@@ -355,21 +359,21 @@ Page({
       } else {
         this.toEducation()
       }
-      if(e.currentTarget.dataset.type == "banner") {
+      if (e.currentTarget.dataset.type == "banner") {
         let item = e.currentTarget.dataset.item;
         setTimeout(() => {
-           wx.navigateTo({
-              url: `../education/education?url=${item.clickurl}&login=${item.is_login}&id=0&type=1`
-            })
-            app.aldstat.sendEvent("首页轮播-公众号点击",{
-              title:item.title
-            })
-            wx.uma.trackEvent('index_bannerTencent', { 'title':item.title});
+          wx.navigateTo({
+            url: `../education/education?url=${item.clickurl}&login=${item.is_login}&id=0&type=1`
+          })
+          // app.aldstat.sendEvent("首页轮播-公众号点击", {
+          //   title: item.title
+          // })
+          wx.uma.trackEvent('index_bannerClick', { 'bannerTencent': item.title });
         }, 500);
       }
     }
   },
-  integrationTime(){
+  integrationTime() {
     let data = new Date();
     let time = data.getDate();
     let tomorowTime = wx.getStorageSync("closeInTime")
@@ -439,7 +443,7 @@ Page({
     })
   },
   onReachBottom() {
-    if(this.data.currentTab != 0) {
+    if (this.data.currentTab != 0) {
       let id = this.data.nav[this.data.currentTab].id
       let temp = this.data.catrecommend[id]
       this.categoryParams[id].page++
@@ -448,11 +452,11 @@ Page({
           let next = true
           msg.data.forEach(function (item) {
             item.thousand = app.util.tow(item.browse)
-            temp.forEach( i => {
+            temp.forEach(i => {
               i.id == item.id ? next = false : ''
             })
           })
-          if(!next) return
+          if (!next) return
           this.data.catrecommend[id] = temp.concat(msg.data)
           this.setData({
             catrecommend: this.data.catrecommend
@@ -473,13 +477,13 @@ Page({
     this.setData({
       onReachBottom: true
     })
-    setTimeout(()=>{
+    setTimeout(() => {
       this.setData({
         onReachBottom: false
       })
     }, 1000)
   },
-  /* 广告位值跳转 */ 
+  /* 广告位值跳转 */
   bannerGo(e) {
     let item = e.currentTarget.dataset.item;
     if (item.jump_type == 1) {
@@ -487,38 +491,39 @@ Page({
       wx.navigateTo({
         url: `../education/education?type=0&url=${item.clickurl}&login=${item.is_login}`
       })
-      app.aldstat.sendEvent("首页轮播-公众号点击",{
-        title:item.title
-      })
-      wx.uma.trackEvent('首页轮播-公众号点击', { 'title':item.title});
+      // app.aldstat.sendEvent("首页轮播-公众号点击", {
+      //   title: item.title
+      // })
+      wx.uma.trackEvent('index_bannerClick', { 'bannerTencent': item.title });
     } else if (item.jump_type == 2) {
       /* 视频 */
       wx.navigateTo({
         url: `../detail/detail?id=${item.video_id}&name=${item.title}`
       })
-      app.aldstat.sendEvent("首页轮播-视频点击",{
-        title:item.title
-      })
+      // app.aldstat.sendEvent("首页轮播-视频点击", {
+      //   title: item.title
+      // })
+      wx.uma.trackEvent('index_bannerClick', { 'bannerVideo': item.title });
     } else if (item.jump_type == 4) {
       this.minigo(item.clickurl)
-      app.aldstat.sendEvent("首页轮播-跳小程序点击",{
-        title:item.title
-      })
-    } else if(item.jump_type == 5) {
+      // app.aldstat.sendEvent("首页轮播-跳小程序点击", {
+      //   title: item.title
+      // })
+      wx.uma.trackEvent('index_bannerClick', { 'bannerMini': item.title });
+    } else if (item.jump_type == 5) {
       wx.navigateTo({
         url: `../education/education?url=${item.clickurl}&login=${item.is_login}&id=0&type=1`
       })
-      app.aldstat.sendEvent("首页轮播-公众号点击",{
-        title:item.title
-      })
+      wx.uma.trackEvent('index_bannerClick', { 'bannerActivity': item.title });
     } else {
       /* 文章 */
       wx.navigateTo({
         url: "../pDetail/pDetail?id=" + item.article_id
       })
-      app.aldstat.sendEvent("首页轮播-博客点击",{
-        title:item.title
-      })
+      // app.aldstat.sendEvent("首页轮播-博客点击", {
+      //   title: item.title
+      // })
+      wx.uma.trackEvent('index_bannerClick', { 'bannerBlog': item.title });
     }
   },
   // 跳友方小程序
@@ -545,21 +550,22 @@ Page({
   },
   /*获取首页活动弹框 */
   getDialog() {
-    if(this.pageType) return
+    if (this.pageType) return
     app.user.dialog().then(res => {
-      if(res.code == 1) {
+      if (res.code == 1) {
         res.data[0] ?
-        this.setData({
-          dialog: res.data,
-          showdialog: true
-        }) : 0
+          this.setData({
+            dialog: res.data,
+            showdialog: true
+          }) : 0
       }
     })
   },
   jumpPeper(e) {
     if (e.currentTarget.dataset.type == 'dialog') {
       this.closeSignIn()
-      app.aldstat.sendEvent("活动弹框点击")
+      // app.aldstat.sendEvent("活动弹框点击")
+      wx.uma.trackEvent('index_activityClick');
     }
     wx.navigateTo({
       url: `../education/education?url=${e.currentTarget.dataset.peper}&type=0}`
@@ -571,7 +577,7 @@ Page({
       this.setData({
         guideNum: 2
       })
-    } else if (this.data.guideNum == 2){
+    } else if (this.data.guideNum == 2) {
       this.setData({
         guideNum: 3,
         guidetxt: '我知道了'
@@ -581,7 +587,7 @@ Page({
         guide_name: 'index'
       }
       app.user.guideRecordAdd(param).then(res => {
-        if(res.code == 1) {
+        if (res.code == 1) {
           app.getGuide()
           this.setData({
             guideNum: 5

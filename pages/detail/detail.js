@@ -1,4 +1,4 @@
- //index.js
+//index.js
 //获取应用实例
 const app = getApp()
 const plugin = requirePlugin("WechatSI")
@@ -30,14 +30,14 @@ Page({
     placeholder: '添加你的评论',
     showvoice: false,
     replycomment: '欢迎发表观点',
-    replyplaceholder:'',
+    replyplaceholder: '',
     voicetime: 0,
     showvoiceauto: false,
     voicetextstatus: '',
     content: '',
-    voivetext:'',
+    voivetext: '',
     voiceplayimg: 'https://hwcdn.jinlingkeji.cn/images/pro/triangle.png',
-    replyshow:false,
+    replyshow: false,
     showintegral: false
     /* rect: wx.getMenuButtonBoundingClientRect() */
   },
@@ -96,7 +96,7 @@ Page({
         that.setData({
           hideRecode: true
         })
-        that.getDetail(function() {
+        that.getDetail(function () {
           wx.nextTick(() => {
             that.recordAdd()
           })
@@ -104,11 +104,11 @@ Page({
       } else if (options.play && options.lessonid) {
         that.getDetail().then(function () {
           wx.nextTick(() => {
-            let index = 0 
-            that.data.sublessons.forEach((item,i) => {
+            let index = 0
+            that.data.sublessons.forEach((item, i) => {
               item.id == options.lessonid ? index = i : ''
             })
-            that.select(index,true) 
+            that.select(index, true)
             setTimeout(() => {
               that.tolesson()
             }, 800)
@@ -158,7 +158,7 @@ Page({
   },
   onHide() {
   },
-  onGotUserInfo: function(e) {
+  onGotUserInfo: function (e) {
     app.updateBase(e)
   },
   switchNav(event) {
@@ -188,7 +188,7 @@ Page({
     }
     return app.classroom.detail(this.param).then(msg => {
       if (msg.code === 1) {
-        msg.data.sublesson.forEach(function(item) {
+        msg.data.sublesson.forEach(function (item) {
           item.minute = (item.film_length / 60).toFixed(0)
         })
         wx.setNavigationBarTitle({
@@ -206,7 +206,7 @@ Page({
       }
     })
   },
-  setIntegral(integral,integralContent) {
+  setIntegral(integral, integralContent) {
     this.setData({
       integral,
       integralContent,
@@ -216,7 +216,7 @@ Page({
       this.setData({
         showintegral: false
       })
-    },2000)
+    }, 2000)
   },
   ended() {
     this.data.sublessons.forEach(item => {
@@ -243,7 +243,7 @@ Page({
           this.setData({
             "detail.progress": msg.data.progress
           })
-          if(msg.data.progress == 100) {
+          if (msg.data.progress == 100) {
             this.pages.forEach(item => {
               item.route == 'pages/index/index' ? item.doneless(this.data.detail.id) : ''
               item.route == 'pages/search/search' ? item.doneless(this.data.detail.id) : ''
@@ -294,7 +294,7 @@ Page({
       param.pageSize = res[0].length
       app.classroom.detail(param).then(msg => {
         if (msg.code === 1) {
-          msg.data.sublesson.forEach(function(item) {
+          msg.data.sublesson.forEach(function (item) {
             item.minute = (item.film_length / 60).toFixed(0)
           })
           wx.setNavigationBarTitle({
@@ -308,7 +308,7 @@ Page({
         setTimeout(() => {
           this.tolesson()
         }, 800)
-        
+
       })
     })
     // this.getDetail()
@@ -324,7 +324,7 @@ Page({
       wx.showModal({
         title: "",
         content: "是否取消收藏",
-        success: function(res) {
+        success: function (res) {
           if (res.confirm) {
             app.classroom.collectCancel(param).then(msg => {
               if (msg.code == 1) {
@@ -347,19 +347,20 @@ Page({
         }
       })
       //用于数据统计
-      app.aldstat.sendEvent("课程收藏", {
-        name: this.data.title
-      })
+      // app.aldstat.sendEvent("课程收藏", {
+      //   name: this.data.title
+      // })
+      wx.uma.trackEvent('collectionLessons', { 'lessonsName': this.data.title });
     }
   },
   // 选择剧集
-  select(e,type) {
+  select(e, type) {
     let i = 0, list = this.data.sublessons
     if (type != undefined) {
       i = e
     } else {
       i = e.currentTarget.dataset.index
-      if (this.data.cur.id == list[i].id) return   
+      if (this.data.cur.id == list[i].id) return
     }
     this.setData({
       cur: list[i]
@@ -416,13 +417,13 @@ Page({
     app.classroom.recordAdd(param).then(msg => {
       if (msg.code == 1) {
         // this.getDetail().then(() => {
-          this.getProgress()
-          this.videoContext.play()
-          this.setData({
-            playing: true,
-            hideRecode: true
-          })
-          app.addVisitedNum(`k${this.data.cur.id}`)
+        this.getProgress()
+        this.videoContext.play()
+        this.setData({
+          playing: true,
+          hideRecode: true
+        })
+        app.addVisitedNum(`k${this.data.cur.id}`)
         // })
       }
     })
@@ -432,7 +433,7 @@ Page({
     let comment = list || this.data.comment
     return app.classroom.commentDetail(this.comParam).then(msg => {
       if (msg.code == 1) {
-        msg.data.forEach(function(item) {
+        msg.data.forEach(function (item) {
           item.reply_array.forEach(v => {
             v.rtext = `回复<span  class="respond">${v.to_user}</span>:&nbsp;&nbsp;`
           })
@@ -454,8 +455,8 @@ Page({
   },
   onReachBottom() {
     if (this.data.currentTab == 1) {
-        this.comParam.page++
-        this.getComment()
+      this.comParam.page++
+      this.getComment()
     }
   },
   setHeight() {
@@ -467,8 +468,8 @@ Page({
         let height = res[0].height - (-110)
         console.log(height)
         height < 100 ? that.setData({
-            height: 700
-          }) :
+          height: 700
+        }) :
           that.setData({
             height: height
           })
@@ -478,7 +479,7 @@ Page({
           })
         }
       })
-    }  else {
+    } else {
       this.setData({
         height: 306
       })
@@ -490,12 +491,12 @@ Page({
       let query = wx.createSelectorQuery().in(this)
       query.select(id).boundingClientRect()
       query.exec(res => {
-        console.log(res[0]) 
+        console.log(res[0])
         res[0] ? this.setData({
           scrollviewtop: res[0].top - 520
         }) : ''
       })
-    } 
+    }
   },
   getProgress() {
     var lesson = wx.getStorageSync("lessonProgress")
@@ -555,7 +556,7 @@ Page({
     })
   },
   // 删除讨论
-  delComment: function(e) {
+  delComment: function (e) {
     wx.showModal({
       content: "确定删除该评论?",
       confirmColor: '#df2020',
@@ -600,7 +601,7 @@ Page({
       url: "../certificate/certificate?name=" + this.data.detail.title
     })
   },
-  onShareAppMessage: function(ops) {
+  onShareAppMessage: function (ops) {
     if (ops.from === "menu") {
       return this.menuAppShare()
     }
@@ -616,7 +617,7 @@ Page({
       }
     }
   },
-  tohome: function() {
+  tohome: function () {
     wx.reLaunch({
       url: "/pages/index/index"
     })
@@ -624,7 +625,7 @@ Page({
   // 发布评论
   release(e) {
     if (!!this.data.content.trim() || !!this.data.replycontent.trim()) {
-      if(e.currentTarget.dataset.type) {
+      if (e.currentTarget.dataset.type) {
         let param = {
           lesson_id: this.data.detail.id,
           content: this.data.content
@@ -676,10 +677,10 @@ Page({
           keyheight: 0,
           contenLength: 0,
           showvoice: false,
-          voicetime:0,
+          voicetime: 0,
           showvoiceauto: false
         })
-        if(res.data.is_first == 'day') {
+        if (res.data.is_first == 'day') {
           this.setIntegral("+10 积分", "完成[云课堂]每日课程首次讨论")
         } else {
           wx.showToast({
@@ -725,7 +726,7 @@ Page({
           voicetime: 0,
           showvoiceauto: false
         })
-        if(msg.data.is_first == 'day') {
+        if (msg.data.is_first == 'day') {
           this.setIntegral("+10 积分", "完成[云课堂]每日课程首次讨论")
         } else {
           wx.showToast({
@@ -873,9 +874,9 @@ Page({
           if (this.data.$state.lessDiscussion[this.data.detail.id]) {
             if (this.data.$state.lessDiscussion[this.data.detail.id].replyInfo) {
               this.data.$state.lessDiscussion[this.data.detail.id].replyInfo[this.replyInfo.id] ?
-              this.setData({
-                replycontent: this.data.$state.lessDiscussion[this.data.detail.id].replyInfo[this.replyInfo.id],
-                replyplaceholder: '回复 ' + e.currentTarget.dataset.reply.nickname,
+                this.setData({
+                  replycontent: this.data.$state.lessDiscussion[this.data.detail.id].replyInfo[this.replyInfo.id],
+                  replyplaceholder: '回复 ' + e.currentTarget.dataset.reply.nickname,
                   replycontenLength: this.data.$state.lessDiscussion[this.data.detail.id].replyInfo[this.replyInfo.id].length
                 }) : this.setData({
                   replycontent: '',
@@ -893,16 +894,16 @@ Page({
             this.setData({
               replycontent: '',
               replyplaceholder: '回复 ' + e.currentTarget.dataset.reply.nickname,
-              replycontenLength:0
+              replycontenLength: 0
             })
           }
         } else if (this.data.$state.lessDiscussion[this.data.detail.id]) {
           if (this.data.$state.lessDiscussion[this.data.detail.id].replyParent) {
             this.data.$state.lessDiscussion[this.data.detail.id].replyParent[this.replyParent] ?
-            this.setData({
-              replycontent: this.data.$state.lessDiscussion[this.data.detail.id].replyParent[this.replyParent],
+              this.setData({
+                replycontent: this.data.$state.lessDiscussion[this.data.detail.id].replyParent[this.replyParent],
                 replyplaceholder: '回复 ' + e.currentTarget.dataset.reply.from_user,
-              replycontenLength: this.data.$state.lessDiscussion[this.data.detail.id].replyParent[this.replyParent].length
+                replycontenLength: this.data.$state.lessDiscussion[this.data.detail.id].replyParent[this.replyParent].length
               }) : this.setData({
                 replycontent: '',
                 replyplaceholder: '回复 ' + e.currentTarget.dataset.reply.from_user,
@@ -912,7 +913,7 @@ Page({
             this.setData({
               replycontent: '',
               replyplaceholder: '回复 ' + e.currentTarget.dataset.reply.from_user,
-              replycontenLength:0
+              replycontenLength: 0
             })
           }
         } else {
@@ -921,7 +922,7 @@ Page({
             replyplaceholder: '回复 ' + e.currentTarget.dataset.reply.from_user,
           })
         }
-          
+
       } else {
         /* 评论 */
         this.replyInfo = null
@@ -940,9 +941,9 @@ Page({
     query.select(".container").boundingClientRect()
     query.exec(res => {
       if (res[0].top > -100) {
-          wx.pageScrollTo({
-            scrollTop: 250
-          })
+        wx.pageScrollTo({
+          scrollTop: 250
+        })
       }
     })
   },
@@ -964,7 +965,7 @@ Page({
         this.setData({
           showvoice: true,
           write: false,
-          writeTow:false,
+          writeTow: false,
           replyshow: false
         })
         this.replyInfo = null
@@ -1026,9 +1027,10 @@ Page({
   },
   //用于数据统计
   onHide() {
-    app.aldstat.sendEvent("退出", {
-      name: "课程详情页"
-    })
+    // app.aldstat.sendEvent("退出", {
+    //   name: "课程详情页"
+    // })
+    wx.uma.trackEvent('move', { 'pageName': '课程详情页' });
   },
   closeGuide() {
     let param = {
@@ -1094,7 +1096,7 @@ Page({
   /**
    * 初始化语音识别回调
    */
-  initRecord: function() {
+  initRecord: function () {
     //有新的识别内容返回，则会调用此事件
     manager.onRecognize = (res) => {
       clearInterval(this.timer)
@@ -1108,9 +1110,9 @@ Page({
     manager.onStop = (res) => {
       // 取出录音文件识别出来的文字信息
       clearInterval(this.timer)
-      if(!this.data.showvoiceauto) return
+      if (!this.data.showvoiceauto) return
       let text = res.result
-      this.data.replyshow ? text =  this.data.replycontent + text : text =  this.data.content + text
+      this.data.replyshow ? text = this.data.replycontent + text : text = this.data.content + text
       // 获取音频文件临时地址
       let filePath = res.tempFilePath
       console.log(filePath)
@@ -1182,7 +1184,7 @@ Page({
       wx.showToast({
         title: '说话时间过短',
         icon: 'none',
-        duration:2000
+        duration: 2000
       })
     } else {
       this.setData({
@@ -1211,7 +1213,7 @@ Page({
   },
   relacevoice() {
     let text = '', voicetext = this.data.voicetext, lessDiscussion = this.data.$state.lessDiscussion
-    if(this.data.replyshow) {
+    if (this.data.replyshow) {
       text = this.data.replycontent.replace(voicetext, '')
       this.setData({
         showvoiceauto: false,
@@ -1219,7 +1221,7 @@ Page({
         voicetime: 0,
         filePath: ''
       })
-      if(this.replyParent) {
+      if (this.replyParent) {
         lessDiscussion[this.data.detail.id].replyParent[this.replyParent] = text
         app.store.setData({
           lessDiscussion
@@ -1243,14 +1245,14 @@ Page({
         lessDiscussion
       })
     }
-    
+
   },
   closevoiceBox() {
     this.setData({
       showvoice: false,
       write: true,
-      showvoiceauto:false,
-      voicetime:0
+      showvoiceauto: false,
+      voicetime: 0
     })
   },
   // 计时器
@@ -1262,37 +1264,37 @@ Page({
       if (!this.data.voiceActon) {
         clearInterval(this.timer)
         return
-      } 
+      }
       this.setData({
         voicetime: time
       })
     }, 1000)
   },
-   /*长按复制内容 */
-   copythat(e) {
+  /*长按复制内容 */
+  copythat(e) {
     app.copythat(e.target.dataset.content)
-    if(e.target.dataset.type == 'comment') {
-      this.data.comment[e.target.dataset.index].content = "<span style='background:#f6eeee'>"+ this.data.comment[e.target.dataset.index].content +'</span>'
+    if (e.target.dataset.type == 'comment') {
+      this.data.comment[e.target.dataset.index].content = "<span style='background:#f6eeee'>" + this.data.comment[e.target.dataset.index].content + '</span>'
       this.setData({
         comment: this.data.comment
       })
       setTimeout(() => {
         this.data.comment[e.target.dataset.index].content = this.comment[e.target.dataset.index].content
-         this.setData({
+        this.setData({
           comment: this.data.comment
-         }) 
+        })
       }, 2500);
     } else {
       console.log(e)
-      this.data.comment[e.target.dataset.index].reply_array[e.target.dataset.chilindex].reply_content = "<span style='background:#f6eeee'>"+ this.data.comment[e.target.dataset.index].reply_array[e.target.dataset.chilindex].reply_content +'</span>'
+      this.data.comment[e.target.dataset.index].reply_array[e.target.dataset.chilindex].reply_content = "<span style='background:#f6eeee'>" + this.data.comment[e.target.dataset.index].reply_array[e.target.dataset.chilindex].reply_content + '</span>'
       this.setData({
         comment: this.data.comment
       })
       setTimeout(() => {
         this.data.comment[e.target.dataset.index].reply_array[e.target.dataset.chilindex].reply_content = this.comment[e.target.dataset.index].reply_array[e.target.dataset.chilindex].reply_content
-         this.setData({
+        this.setData({
           comment: this.data.comment
-         }) 
+        })
       }, 2500);
     }
   },
@@ -1312,7 +1314,7 @@ Page({
           url: `/pages/personPage/personPage?uid=${e.currentTarget.dataset.item.reply_user_id}&nickname=${e.currentTarget.dataset.item.from_user}&avatar=${e.currentTarget.dataset.item.from_user_avatar}`
         })
       }
-      
+
     }
   },
 })

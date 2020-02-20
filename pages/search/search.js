@@ -16,7 +16,7 @@ Page({
     showqst: false,
     showvioce: true
   },
-  onLoad: function(options) {
+  onLoad: function (options) {
     this.param = {
       page_size: 10
     }
@@ -25,7 +25,7 @@ Page({
       console.log(res.height)
       let systems = wx.getSystemInfoSync()
       this.voiceheight == 0 ? this.voiceheight = res.height : ''
-      this.voiceheight != 0 ? res.height == 0 ? '' :this.setData({
+      this.voiceheight != 0 ? res.height == 0 ? '' : this.setData({
         voiceheight: this.voiceheight + (systems.screenHeight * 0.05),
         showvioce: true,
         showqst: false
@@ -40,21 +40,21 @@ Page({
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
-  onPullDownRefresh: function() {
+  onPullDownRefresh: function () {
 
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
-  onReachBottom: function() {
+  onReachBottom: function () {
     this.lesssearch(true)
   },
 
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function() {
+  onShareAppMessage: function () {
 
   },
   detailTap: function (e) {
@@ -63,9 +63,10 @@ Page({
       url: `../detail/detail?id=${e.currentTarget.dataset.item.id}&name=${title}`
     })
     //用于数据统计
-    app.aldstat.sendEvent("搜索课程点击", {
-      name: e.currentTarget.dataset.item.title
-    })
+    // app.aldstat.sendEvent("搜索课程点击", {
+    //   name: e.currentTarget.dataset.item.title
+    // })
+    wx.uma.trackEvent('searchLessons,', { 'lessonsName': e.currentTarget.dataset.item.title })
   },
   // 权限询问
   authrecord() {
@@ -103,7 +104,7 @@ Page({
       })
     }
   },
-  getRecordAuth: function() {
+  getRecordAuth: function () {
     wx.getSetting({
       success(res) {
         let record = res.authSetting['scope.record']
@@ -119,7 +120,7 @@ Page({
   /**
    * 初始化语音识别回调
    */
-  initRecord: function() {
+  initRecord: function () {
     //有新的识别内容返回，则会调用此事件
     manager.onRecognize = (res) => {
       this.setData({
@@ -151,7 +152,7 @@ Page({
         text
       })
       this.param = {
-        page_size:10
+        page_size: 10
       }
       this.lesssearch()
     }
@@ -166,7 +167,7 @@ Page({
   /**
    * 识别内容为空时的反馈
    */
-  showRecordEmptyTip: function() {
+  showRecordEmptyTip: function () {
     this.setData({
       recording: false,
       // bottomButtonDisabled: false,
@@ -176,10 +177,10 @@ Page({
       icon: 'none',
       image: '../../images/no_voice.png',
       duration: 1500,
-      success: function(res) {
+      success: function (res) {
 
       },
-      fail: function(res) {
+      fail: function (res) {
         console.log(res);
       }
     });
@@ -217,7 +218,7 @@ Page({
       text: e.detail.value
     })
     this.param = {
-      page_size:10
+      page_size: 10
     }
     e.detail.value.length < 1 ? this.setData({
       lessList: [],
@@ -229,21 +230,21 @@ Page({
     this.setData({
       text: '',
       focus: false,
-      lessList:[]
+      lessList: []
     })
     this.setData({
       focus: true
     })
   },
-  earchlesss(){
+  earchlesss() {
     this.param = {
-      page_size:10
+      page_size: 10
     }
     this.lesssearch()
   },
   lesssearch(list) {
     this.param['keyword'] = this.data.text
-    let lesslist =  []
+    let lesslist = []
     list ? lesslist = this.data.lessList : ''
     app.classroom.lessSearch(this.param).then(res => {
       if (res.code == 1) {
@@ -257,11 +258,11 @@ Page({
         }
         let lessList = res.data.data
         this.param['scroll_id'] = res.data.scroll_id,
-        lessList.forEach(item => {
-          item.title = `<p style="width:410rpx;display: block;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">${item.title.replace(/<highlight>/g, '<span style="color:#DF2020">').replace(/<\/highlight>/g, '</span>')}</p>`
-          item.subtitle = `<p style="width:410rpx;display: block;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">${item.subtitle.replace(/<highlight>/g, '<span style="color:#DF2020">').replace(/<\/highlight>/g, '</span>')}</p>`
-          item.bw = app.util.tow(item.browse)
-        })
+          lessList.forEach(item => {
+            item.title = `<p style="width:410rpx;display: block;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">${item.title.replace(/<highlight>/g, '<span style="color:#DF2020">').replace(/<\/highlight>/g, '</span>')}</p>`
+            item.subtitle = `<p style="width:410rpx;display: block;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">${item.subtitle.replace(/<highlight>/g, '<span style="color:#DF2020">').replace(/<\/highlight>/g, '</span>')}</p>`
+            item.bw = app.util.tow(item.browse)
+          })
         lesslist.push(...lessList)
         this.setData({
           showvioce: false,

@@ -5,18 +5,18 @@ Page({
     collect: [],
     isRefreshing: false,
     showSheet: false,
-    currentTab:0,
+    currentTab: 0,
     circleList: []
   },
   //options(Object)
-  onLoad: function(options) {
+  onLoad: function (options) {
     this.collectParam = { page: 1, pageSize: 10 }
     this.circleparam = { page: 1, pageSize: 10 }
     this.getCollect([])
     this.getCircle([])
   },
-  onReady: function() {},
-  onShow: function() {
+  onReady: function () { },
+  onShow: function () {
     let list = this.data.circleList
     list.forEach(item => {
       if (item.id == app.globalData.detail.id) {
@@ -33,11 +33,12 @@ Page({
       })
     })
   },
-  onHide: function() {},
-  onUnload: function() {
-    app.aldstat.sendEvent("退出", { name: "收藏课程" })
+  onHide: function () { },
+  onUnload: function () {
+    // app.aldstat.sendEvent("退出", { name: "收藏课程" })
+    wx.uma.trackEvent('move', { 'pageName': '我的收藏' });
   },
-  onPullDownRefresh: function() {
+  onPullDownRefresh: function () {
     this.setData({
       isRefreshing: true
     })
@@ -49,14 +50,14 @@ Page({
       wx.stopPullDownRefresh()
     })
   },
-  onReachBottom: function() {
-    if(this.currentTab == 0) {
+  onReachBottom: function () {
+    if (this.currentTab == 0) {
       this.collectParam.page++
       this.getCollect()
     } else {
       this.circleparam.page++
       this.getCircle()
-    }  
+    }
   },
   scrollEnd() {
     if (this.data.currentTab == 0) {
@@ -65,7 +66,7 @@ Page({
     } else {
       this.circleparam.page++
       this.getCircle()
-    }  
+    }
   },
   getCollect(list) {
     let collect = list || this.data.collect
@@ -82,7 +83,7 @@ Page({
     return app.user.collectBlog(this.circleparam).then(msg => {
       if (msg.code == 1) {
         msg.data.length == 0 ? this.setData({
-          showNomore : true
+          showNomore: true
         }) : this.setData({
           showNomore: false
         })
@@ -144,7 +145,7 @@ Page({
           // app.socket.send(list[i].uid)
           app.socket.send({
             type: 'Bokemessage',
-            data: {uid: list[i].uid}
+            data: { uid: list[i].uid }
           })
           this.setData({
             circleList: list
@@ -244,16 +245,16 @@ Page({
   cancelCollection() {
     let param = { blog_id: this.data.blog_id }
     app.circle.collectCancel(param).then(res => {
-      if(res.code == 1) {
+      if (res.code == 1) {
         let list = this.data.circleList
-        list.splice(this.data.blog_index,1)
+        list.splice(this.data.blog_index, 1)
         this.setData({
           circleList: list
         })
         wx.showToast({
           title: res.msg,
-          icon:'success',
-          duration:800
+          icon: 'success',
+          duration: 800
         })
       } else {
         wx.showToast({

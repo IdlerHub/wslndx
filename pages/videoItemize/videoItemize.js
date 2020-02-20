@@ -16,14 +16,14 @@ Page({
     pageSize: 14
   },
   //options(Object)
-  onLoad: function(ops) {
+  onLoad: function (ops) {
     this.setData({
       vistor: ops.share == "true"
     })
     this.params.categoryId = ops.categoryId
     this.getSearch()
   },
-  getSearch: function() {
+  getSearch: function () {
     return app.video.search(this.params).then(res => {
       if (res.code == 1 && res.data.lists) {
         res.data.lists.forEach(item => {
@@ -48,14 +48,14 @@ Page({
       }
     })
   },
-  onShow: function() {},
-  onPullDownRefresh: function() {
+  onShow: function () { },
+  onPullDownRefresh: function () {
     this.params.page = 1
     this.getSearch().then(() => {
       wx.stopPullDownRefresh()
     })
   },
-  onReachBottom: function() {
+  onReachBottom: function () {
     this.params.page += 1
     this.getSearch()
   },
@@ -65,11 +65,12 @@ Page({
     wx.navigateTo({
       url: "/pages/videoTwo/videoTwo?id=" + id + "&categoryId=" + this.params.categoryId + end + "&title=" + this.data.category.category_name
     })
-    app.aldstat.sendEvent("短视频类别-"+this.data.category.category_name,{
-      'videoName': e.currentTarget.dataset.name
-    })
+    // app.aldstat.sendEvent("短视频类别-" + this.data.category.category_name, {
+    //   'videoName': e.currentTarget.dataset.name
+    // })
+    wx.uma.trackEvent('sortVideo_classify', { ['categoryId_' + this.data.category.id]: e.currentTarget.dataset.name });
   },
-  tohome: function() {
+  tohome: function () {
     wx.reLaunch({ url: "/pages/index/index" })
   }
 })

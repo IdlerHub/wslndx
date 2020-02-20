@@ -7,19 +7,19 @@ Page({
     tip: true,
     vid: "short-video" + Date.now(),
     top: 20,
-    topT:0,
-    pause:true,
+    topT: 0,
+    pause: true,
     showGuide: false,
-    nextRtight:1,
-    currentTab:0,
-    classify:[],
+    nextRtight: 1,
+    currentTab: 0,
+    classify: [],
     autoplay: false,
     guideTxt: '下一步',
     vistor: false,
-    showintegral:false,
+    showintegral: false,
     isshowRed: false,
-    isshowRedbig:false,
-    loop:false,
+    isshowRedbig: false,
+    loop: false,
     /*  rect: wx.getMenuButtonBoundingClientRect() */
   },
   onLoad(options) {
@@ -68,23 +68,25 @@ Page({
         })
         this.shortvideoAward()
         app.addVisitedNum(`v${this.data.cur.id}`)
-        app.aldstat.sendEvent("短视频播放", { name: this.data.cur.title })
+        // app.aldstat.sendEvent("短视频播放", { name: this.data.cur.title })
+        wx.uma.trackEvent('sortVideo_play', { 'videoName': this.data.cur.title });
       })
     }
-    app.aldstat.sendEvent("菜单", { name: "短视频" })
-    let share = options.type == "share" 
-      if (!share) {
-        this.setData({
-          autoplay: false,
-        })
-      }
+    wx.uma.trackEvent('menu, ', { 'pageName': '短视频' });
+    // app.aldstat.sendEvent("菜单", { name: "短视频" })
+    let share = options.type == "share"
+    if (!share) {
+      this.setData({
+        autoplay: false,
+      })
+    }
     let ap = {
       categoryId: 10,
       page: 1,
       pageSize: 10
     }
   },
-  onShow(opts){
+  onShow(opts) {
     console.log(opts)
     if (this.data.$state.userInfo.mobile) {
       this.shortvideoAward()
@@ -96,7 +98,7 @@ Page({
       } else {
         app.getGuide().then(res => {
           if (this.data.$state.newGuide.shortvideo != 0) {
-            this.judgeWifi()            
+            this.judgeWifi()
           } else {
             this.setData({
               showGuide: true
@@ -110,7 +112,7 @@ Page({
   shortvideoAward() {
     return app.video.shortvideoAward().then(res => {
       console.log(res)
-      if(res.code == 1) {
+      if (res.code == 1) {
         this.setData({
           isshowRed: res.data.today_first
         })
@@ -122,11 +124,11 @@ Page({
   },
   //获取红包奖励内容
   recordFinish() {
-    let param = { shortvideo_id: this.data.cur.id}
+    let param = { shortvideo_id: this.data.cur.id }
     app.video.recordFinish(param).then(res => {
-      if(res.code == 1) {
+      if (res.code == 1) {
         this.setData({
-          loop:true,
+          loop: true,
           isshowRedbig: res.data.today_award,
           wechatnum: res.data.wechat_num
         })
@@ -141,9 +143,9 @@ Page({
     })
   },
   vedioRecordAdd() {
-    let param = { shortvideo_id : this.data.cur.id }
-    app.video.recordAdd(param).then( res => {
-      if(res.code == 1 ) {
+    let param = { shortvideo_id: this.data.cur.id }
+    app.video.recordAdd(param).then(res => {
+      if (res.code == 1) {
         console.log('发送成功')
       }
     })
@@ -152,7 +154,7 @@ Page({
     app.copythat(this.data.wechatnum)
   },
   judgeWifi() {
-    if (!this.data.$state.flow  && this.data.currentTab == 0) {
+    if (!this.data.$state.flow && this.data.currentTab == 0) {
       this.setData({
         autoplay: false
       })
@@ -242,7 +244,7 @@ Page({
     }
   },
   getCategory() {
-    app.video.categoryMore().then(res =>{
+    app.video.categoryMore().then(res => {
       this.setData({
         classify: res.data
       })
@@ -250,7 +252,7 @@ Page({
   },
   callback(msg, temp) {
     if (msg.code === 1 && msg.data && msg.data.lists) {
-      msg.data.lists.forEach(function(item) {
+      msg.data.lists.forEach(function (item) {
         item.pw = app.util.tow(item.praise)
         item.fw = app.util.tow(item.forward)
       })
@@ -334,7 +336,8 @@ Page({
       this.vedioRecordAdd()
     }, 200);
     app.addVisitedNum(`v${this.data.cur.id}`)
-    app.aldstat.sendEvent("短视频播放", { name: this.data.cur.title })
+    wx.uma.trackEvent('sortVideo_play', { 'videoName': this.data.cur.title });
+    // app.aldstat.sendEvent("短视频播放", { name: this.data.cur.title })
   },
   praise() {
     let list = this.data.list
@@ -390,7 +393,8 @@ Page({
           })
         }
       })
-      app.aldstat.sendEvent("短视频点赞", { name: this.data.cur.title })
+      // app.aldstat.sendEvent("短视频点赞", { name: this.data.cur.title })
+      wx.uma.trackEvent('sortVideo_play', { 'videoName': this.data.cur.title });
     }
   },
   aniend(e) {
@@ -406,7 +410,7 @@ Page({
   share() {
     console.log(share)
   },
-  onShareAppMessage: function(ops) {
+  onShareAppMessage: function (ops) {
     if (ops.from === "menu") {
       return this.menuAppShare()
     }
@@ -424,7 +428,8 @@ Page({
             list: list,
             cur: list[index]
           })
-          app.aldstat.sendEvent("短视频转发", { name: this.data.cur.title })
+          // app.aldstat.sendEvent("短视频转发", { name: this.data.cur.title })
+          wx.uma.trackEvent('sortVideo_share', { 'videoName': this.data.cur.title });
         }
       })
       return {
@@ -448,11 +453,12 @@ Page({
   navgateto(e) {
     let id = e.currentTarget.dataset.id
     wx.navigateTo({
-      url: "/pages/videoItemize/videoItemize?categoryId=" + id + "&share=" + this.data.vistor 
+      url: "/pages/videoItemize/videoItemize?categoryId=" + id + "&share=" + this.data.vistor
     })
-    app.aldstat.sendEvent("短视频首页推荐/分类点击",{
-      name: e.currentTarget.dataset.name
-    })
+    // app.aldstat.sendEvent("短视频首页推荐/分类点击", {
+    //   name: e.currentTarget.dataset.name
+    // })
+    wx.uma.trackEvent('sortVideo_index', { 'name': currentTarget.dataset.name });
   },
   // 完整视频
   complete() {
@@ -464,10 +470,11 @@ Page({
   // 用于数据统计
   onHide() {
     this.videoContext.stop()
-    app.aldstat.sendEvent("退出", { name: "短视频页" })
+    // app.aldstat.sendEvent("退出", { name: "短视频页" })
+    wx.uma.trackEvent('move', { 'pageName': '短视频页' });
   },
   //指引
-  nextGuide(e){
+  nextGuide(e) {
     if (this.data.nextRtight == 1) {
       this.setData({
         nextRtight: 2
@@ -490,7 +497,7 @@ Page({
           app.getGuide()
           this.setData({
             nextRtight: 5,
-            integral:'+45 积分',
+            integral: '+45 积分',
             integralContent: '完成[短视频]新手指引',
             showintegral: true
           })
@@ -505,7 +512,7 @@ Page({
     }
   },
   // 获取用户的微信昵称头像
-  onGotUserInfo: function(e) {
+  onGotUserInfo: function (e) {
     if (e.detail.errMsg == "getUserInfo:ok") {
       app.updateBase(e)
     }
@@ -538,7 +545,7 @@ Page({
       success: res => {
         this.data.$state.flow || this.wifi ? this.videoContext.play() : ''
       },
-      fail:res => {
+      fail: res => {
         this.data.$state.flow || this.wifi ? this.videoContext.play() : ''
       }
     })

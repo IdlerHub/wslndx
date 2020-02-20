@@ -2,7 +2,7 @@
 const app = getApp()
 Page({
   data: {
-    list:[],
+    list: [],
     showintegral: false
   },
   onLoad(options) {
@@ -17,14 +17,15 @@ Page({
     })
     this.param = { page: 1, pageSize: 10, }
     this.getList([])
-    app.aldstat.sendEvent("个人风采", { name: "个人风采" })
+    // app.aldstat.sendEvent("个人风采", { name: "个人风采" })
+    wx.uma.trackEvent('post_persons', { 'pageName': '个人风采' });
     this.pages = getCurrentPages()[0]
   },
   onShow: function () {
     let list = this.data.list, flowList = this.data.flowList
     list.forEach(item => {
-      if(item.id == app.globalData.detail.id) {
-        if(app.globalData.detail.likestatus > 0) {
+      if (item.id == app.globalData.detail.id) {
+        if (app.globalData.detail.likestatus > 0) {
           item.likes = app.globalData.detail.likes
           item.likestatus = app.globalData.detail.likestatus
           item.comments = app.globalData.detail.comments
@@ -107,13 +108,13 @@ Page({
             item.auditing = item.check_status
           })
           temp.push(...arr)
-          temp[0].university_name == "null" ? temp[0].university_name = null :''
-          temp[0].province == "null" ? temp[0].province = null :''
+          temp[0].university_name == "null" ? temp[0].university_name = null : ''
+          temp[0].province == "null" ? temp[0].province = null : ''
           this.setData({
             list: temp,
             university_name: temp[0].university_name,
             addressCity: temp[0].province,
-            isFollow:  temp[0].is_follow
+            isFollow: temp[0].is_follow
           })
         }
         this.setData({
@@ -157,7 +158,7 @@ Page({
           // app.socket.send(list[i].uid)
           app.socket.send({
             type: 'Bokemessage',
-            data: {uid: list[i].uid }
+            data: { uid: list[i].uid }
           })
           if (msg.data.is_first == 'first') {
             this.setData({
@@ -174,9 +175,10 @@ Page({
           this.setData({
             list: list
           })
-          app.aldstat.sendEvent("秀风采按钮点击",{
-            name:'点赞按钮'
-          })
+          // app.aldstat.sendEvent("秀风采按钮点击", {
+          //   name: '点赞按钮'
+          // })
+          wx.uma.trackEvent('post_btnClick', { 'btnName': '点赞按钮' });
           this.pages.pagePraise(e.currentTarget.dataset.id)
         } else if (msg.code == -2) {
           wx.showToast({
@@ -217,7 +219,8 @@ Page({
   },
   //用于数据统计
   onHide() {
-    app.aldstat.sendEvent("退出", { name: "个人风采" })
+    // app.aldstat.sendEvent("退出", { name: "个人风采" })
+    wx.uma.trackEvent('move', { 'pageName': '风采展示' });
   },
   unShare() {
     wx.showToast({
@@ -238,9 +241,10 @@ Page({
       }) : wx.navigateTo({
         url: '/pages/release/release',
       })
-      app.aldstat.sendEvent("秀风采按钮点击",{
-        name:'评论按钮'
-      })
+      // app.aldstat.sendEvent("秀风采按钮点击", {
+      //   name: '评论按钮'
+      // })
+      wx.uma.trackEvent('post_btnClick', { 'btnName': '评论按钮' });
     }
   },
   //收藏风采
@@ -324,7 +328,7 @@ Page({
   attention() {
     let param = { follower_uid: this.data.us_id }
     app.user.following(param).then(res => {
-      if(res.code == 1) {
+      if (res.code == 1) {
         wx.showToast({
           title: '您已成功关注' + this.data.nickname,
           icon: 'none',
@@ -341,14 +345,14 @@ Page({
     let param = { follower_uid: this.data.us_id }, that = this
     wx.showModal({
       content: '是否取消关注？',
-      confirmColor:'#DF2020',
-      cancelColor:'#999999',
-      confirmText:'是',
-      cancelText:'否',
-      success (res) {
+      confirmColor: '#DF2020',
+      cancelColor: '#999999',
+      confirmText: '是',
+      cancelText: '否',
+      success(res) {
         if (res.confirm) {
           app.user.cancelFollowing(param).then(res => {
-            if(res.code == 1) {
+            if (res.code == 1) {
               wx.showToast({
                 title: '取消关注成功',
                 icon: 'none',
@@ -360,7 +364,7 @@ Page({
               that.pages.setfollow(that.data.us_id)
             }
           })
-        } 
+        }
       }
     })
   }
