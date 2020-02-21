@@ -288,9 +288,9 @@ Page({
             })
             this.setData({
               [`flowList[${i}].likestatus`]:0,
-              [`flowList[${i}].likes`]:flowList[fi].likes,
+              [`flowList[${i}].likes`]:flowList[i].likes,
               [`list[${fi}].likestatus`]:0,
-              [`list[${fi}].likes`]:list[i].likes,
+              [`list[${fi}].likes`]:list[fi].likes,f
             })
           }
         } else if (msg.code == -2) {
