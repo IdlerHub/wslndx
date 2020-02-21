@@ -351,7 +351,7 @@ Page({
       // app.aldstat.sendEvent("课程收藏", {
       //   name: this.data.title
       // })
-      wx.uma.trackEvent('collectionLessons', { 'lessonsName': this.data.title });
+      wx.uma.trackEvent('collectionLessons', { 'lessonsName': this.data.detail.title });
     }
   },
   // 选择剧集

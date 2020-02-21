@@ -566,6 +566,8 @@ Page({
       this.closeSignIn()
       // app.aldstat.sendEvent("活动弹框点击")
       wx.uma.trackEvent('index_activityClick');
+    } else {
+      wx.uma.trackEvent('index_bannerClick', { 'bannerTencent': '老年早报' });
     }
     wx.navigateTo({
       url: `../education/education?url=${e.currentTarget.dataset.peper}&type=0}`
