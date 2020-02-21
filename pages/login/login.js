@@ -142,13 +142,18 @@ Page({
   },
   /* 手机号登录 */
   send() {
-    if (!this.params.telFormat) {
-      wx.showToast({
+    if (!this.params.telFormat || !this.params.codeFormat) {
+      !this.params.telFormat ? wx.showToast({
         title: "电话号码格式不对",
         icon: "none",
         duration: 1500,
         mask: false
-      })
+      }) : wx.showToast({
+        title: "验证码格式不对",
+        icon: "none",
+        duration: 1500,
+        mask: false
+      }) 
     } else {
       let params = {
         tempCode: app.globalData.tempCode,
@@ -178,7 +183,7 @@ Page({
           app.user.addLotteryInvite(params).then()
         }
         if (res.data.userInfo.mobile) {
-          if (app.globalData.query.type == "share" ||  wx.getStorageSync("goosId")) {
+          if (app.globalData.query.type == "share" ||  app.globalData.shareObj.type == 'lottery') {
             let params = []
             for (let attr in app.globalData.query) {
               params.push(attr + "=" + app.globalData.query[attr])
@@ -187,7 +192,7 @@ Page({
               showintegral: true
             })
             setTimeout(() => {
-              wx.getStorageSync("goosId") ? wx.reLaunch({ url: "/pages/education/education?type=lottery&login=1&id=" + app.globalData.lotteryId}) : wx.reLaunch({ url: app.globalData.path + "?" + params.join("&") })
+              app.globalData.shareObj.type == 'lottery' ? wx.reLaunch({ url: "/pages/education/education?type=lottery&login=1&id=" + app.globalData.lotteryId}) : wx.reLaunch({ url: app.globalData.path + "?" + params.join("&") })
             }, 2000)
           } else {
             /*跳转首页*/

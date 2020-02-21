@@ -17,6 +17,7 @@ Page({
     showdialog: true
   },
   navHeightList: [],
+  pageName: '首页',
   onLoad: async function (e) {
     e.type != undefined ? this.pageType = e.type : ''
     let reg = /ios/i
@@ -346,7 +347,6 @@ Page({
   //用于数据统计
   onHide() {
     // app.aldstat.sendEvent("退出", { name: "首页" })
-    wx.uma.trackEvent('move', { 'pageName': '首页' });
   },
   // 用户昵称等信息授权
   onGotUserInfo(e) {
@@ -566,6 +566,8 @@ Page({
       this.closeSignIn()
       // app.aldstat.sendEvent("活动弹框点击")
       wx.uma.trackEvent('index_activityClick');
+    } else {
+      wx.uma.trackEvent('index_bannerClick', { 'bannerTencent': '老年早报' });
     }
     wx.navigateTo({
       url: `../education/education?url=${e.currentTarget.dataset.peper}&type=0}`

@@ -9,6 +9,7 @@ Page({
     showT: false,
     showSheet: false
   },
+  pageName: '学友圈详情页',
   onLoad(options) {
     this.id = options.id
     this.param = { fs_id: this.id, page: 1, pageSize: 10 }
@@ -256,7 +257,6 @@ Page({
   //用于数据统计
   onHide() {
     // app.aldstat.sendEvent("退出", { name: "学友圈详情页" })
-    wx.uma.trackEvent('move', { 'pageName': '学友圈详情页' });
   },
   //收藏风采
   collect(e) {

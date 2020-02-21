@@ -13,6 +13,7 @@ Page({
     padding: false,
     showintegral: false
   },
+  pageName: '完善资料页',
   onLoad() {
     let userInfo = JSON.parse(JSON.stringify(this.data.$state.userInfo))
     this.setData({
@@ -192,6 +193,5 @@ Page({
   //用于数据统计
   onHide() {
     // app.aldstat.sendEvent("退出", { name: "完善资料页" })
-    wx.uma.trackEvent('move', { 'pageName': '完善资料页' });
   }
 })

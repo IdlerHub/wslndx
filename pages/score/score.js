@@ -19,6 +19,7 @@ Page({
     sign_days: 0,
     paddingAdd: false
   },
+  pageName: '积分兑换页',
   common: {
     scrollTop: 175
   },
@@ -30,7 +31,6 @@ Page({
     }) : this.setData({
       showHome: false
     })
-
   },
   onShow: function () {
     let sources = [{

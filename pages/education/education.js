@@ -5,6 +5,7 @@ Page({
     url: ""
   },
   onLoad: function (options) {
+    console.log(options)
     if (!options.type) {
       let optsStr = decodeURIComponent(options.scene).split("&"), opstObj = {};
       optsStr.forEach((item, index) => {
@@ -29,7 +30,7 @@ Page({
             this.junmpOut(options.url)
           } else {
             this.setData({
-              url: options.url + "?uid=" + encodeURIComponent(this.data.$state.userInfo.id) + "&id=" + encodeURIComponent(options.id)
+              url: 'https://gqjydev.jinlingkeji.cn/' + "?uid=" + encodeURIComponent(this.data.$state.userInfo.id) + "&id=" + encodeURIComponent(options.id)
             })
           }
         } else {
