@@ -403,11 +403,13 @@ Page({
                   }
                 }
               })
-            }
-          })
-          wx.stopWifi({
-            success: res => {
-              console.log('wifi模块关闭成功')
+            },
+            complete: () => {
+              wx.stopWifi({
+                success: res => {
+                  console.log('wifi模块关闭成功')
+                }
+              })
             }
           })
         },

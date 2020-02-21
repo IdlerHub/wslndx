@@ -333,10 +333,10 @@ Page({
     })
     //用于数据统计
     if (e.currentTarget.dataset.type) {
-      app.aldstat.sendEvent("栏目-" + this.data.nav[this.data.currentTab].name + "-课程点击", {
-        name: e.currentTarget.dataset.item.title
-      })
-      // wx.uma.trackEvent('classify_lessonsClick', { [this.data.nav[this.data.currentTab].name]: e.currentTarget.dataset.item.title });
+      // app.aldstat.sendEvent("栏目-" + this.data.nav[this.data.currentTab].name + "-课程点击", {
+      //   name: e.currentTarget.dataset.item.title
+      // })
+      wx.uma.trackEvent('classify_lessonsClick', { ['classifyID_'+ this.data.nav[this.data.currentTab].id]: e.currentTarget.dataset.item.title });
     } else {
       // app.aldstat.sendEvent("首页推荐栏目课程点击", {
       //   name: e.currentTarget.dataset.item.title
@@ -566,6 +566,8 @@ Page({
       this.closeSignIn()
       // app.aldstat.sendEvent("活动弹框点击")
       wx.uma.trackEvent('index_activityClick');
+    } else {
+      wx.uma.trackEvent('index_bannerClick', { 'bannerTencent': this.data.paperMsg.title });
     }
     wx.navigateTo({
       url: `../education/education?url=${e.currentTarget.dataset.peper}&type=0}`

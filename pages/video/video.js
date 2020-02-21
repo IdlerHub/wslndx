@@ -73,7 +73,7 @@ Page({
         wx.uma.trackEvent('sortVideo_play', { 'videoName': this.data.cur.title });
       })
     }
-    wx.uma.trackEvent('menu, ', { 'pageName': '短视频' });
+    wx.uma.trackEvent('menu', { 'pageName': '短视频' });
     // app.aldstat.sendEvent("菜单", { name: "短视频" })
     let share = options.type == "share"
     if (!share) {
@@ -211,11 +211,13 @@ Page({
                   }
                 }
               })
-            }
-          })
-          wx.stopWifi({
-            success: res => {
-              console.log('wifi模块关闭成功')
+            },
+            complete: () => {
+              wx.stopWifi({
+                success: res => {
+                  console.log('wifi模块关闭成功')
+                }
+              })
             }
           })
         }
@@ -395,7 +397,7 @@ Page({
         }
       })
       // app.aldstat.sendEvent("短视频点赞", { name: this.data.cur.title })
-      wx.uma.trackEvent('sortVideo_play', { 'videoName': this.data.cur.title });
+      wx.uma.trackEvent('sortVideo_praise', { 'videoName': this.data.cur.title });
     }
   },
   aniend(e) {

@@ -21,7 +21,7 @@ Page({
       // app.aldstat.sendEvent("学友圈点击",{
       //   name: this.data.circle.title
       // })
-      wx.uma.trackEvent('circleClick,', { 'circleName': this.data.circle.title });
+      wx.uma.trackEvent('circleClick', { 'circleName': this.data.circle.title });
     })
     getCurrentPages().forEach(item => {
       item.route == 'pages/post/post' ? this.postPages = item : ''

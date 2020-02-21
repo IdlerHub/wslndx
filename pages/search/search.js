@@ -66,7 +66,7 @@ Page({
     // app.aldstat.sendEvent("搜索课程点击", {
     //   name: e.currentTarget.dataset.item.title
     // })
-    wx.uma.trackEvent('searchLessons,', { 'lessonsName': e.currentTarget.dataset.item.name })
+    wx.uma.trackEvent('searchLessons', { 'lessonsName': e.currentTarget.dataset.item.name })
   },
   // 权限询问
   authrecord() {
