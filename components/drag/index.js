@@ -113,7 +113,6 @@ Component({
 				tranX: startTranX,
 				tranY: startTranY
 			});
-			console.log(this.data)
 			// wx.vibrateShort();
 		},
 		touchMove(e) {
@@ -173,7 +172,6 @@ Component({
 			// 获取 originKey 和 endKey
 			let originKey = parseInt(e.currentTarget.dataset.key),
 				endKey = this.calculateMoving(tranX, tranY);
-				console.log(originKey,endKey)
 			// 如果是固定 item 则 return
 			if (this.isFixed(endKey)) return;
 			// 防止拖拽过程中发生乱序问题

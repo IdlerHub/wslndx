@@ -1,7 +1,6 @@
 Component({
   methods: {
     saveFormId(v) {
-      console.log(v)
       let formId = v.detail.formId
       console.log(formId)
       if (formId != "the formId is a mock one") {

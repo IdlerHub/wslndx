@@ -202,7 +202,7 @@ Page({
   },
   /* 打开输入框 */
   show(e) {
-    console.log(e)
+
     this.replyInfo = e.target.dataset.reply
     if (this.data.$state.userInfo.status !== 'normal') {
       wx.showModal({
@@ -332,7 +332,7 @@ Page({
       title: "发布中"
     })
     if (this.data.detail.lesson_id) {
-      console.log(this.replyInfo)
+
       app.classroom.addReply(params).then(msg => {
         if (msg.code == 1) {
           this.toast("回复成功")
@@ -519,7 +519,6 @@ Page({
       text = this.data.content + text
       // 获取音频文件临时地址
       let filePath = res.tempFilePath
-      console.log(filePath)
       let duration = res.duration
       if (text == '') {
         this.setData({
@@ -624,7 +623,8 @@ Page({
     })
   },
   relacevoice() {
-    let text = '',voicetext = this.data.voicetext
+    let text = '',
+      voicetext = this.data.voicetext
     if (this.replyInfo) {
       this.data.content == '' ? '' : text = this.data.content.replace(voicetext, '')
       this.setData({

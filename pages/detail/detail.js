@@ -43,12 +43,10 @@ Page({
   },
   onLoad(options) {
     /*todo:考虑去掉that*/
-    console.log(options)
     let that = this
     this.videoContext = wx.createVideoContext("myVideo")
     this.pages = getCurrentPages()
     let windowHeight = wx.getSystemInfoSync().windowHeight
-    console.log(windowHeight)
     let system = wx.getSystemInfoSync().model.indexOf('iPhone')
     system == -1 ? this.setData({
       paddingTop: true
@@ -96,13 +94,13 @@ Page({
         that.setData({
           hideRecode: true
         })
-        that.getDetail(function () {
+        that.getDetail(function() {
           wx.nextTick(() => {
             that.recordAdd()
           })
         })
       } else if (options.play && options.lessonid) {
-        that.getDetail().then(function () {
+        that.getDetail().then(function() {
           wx.nextTick(() => {
             let index = 0
             that.data.sublessons.forEach((item, i) => {
@@ -154,11 +152,12 @@ Page({
     this.getRecordAuth()
   },
   onUnload() {
-    this.data.$state.newGuide.lesson == 0 ? this.closeGuide() : ''
+    if (this.data.$state.newGuide) {
+      this.data.$state.newGuide.lesson == 0 ? this.closeGuide() : ''
+    }
   },
-  onHide() {
-  },
-  onGotUserInfo: function (e) {
+  onHide() {},
+  onGotUserInfo: function(e) {
     app.updateBase(e)
   },
   switchNav(event) {
@@ -188,7 +187,7 @@ Page({
     }
     return app.classroom.detail(this.param).then(msg => {
       if (msg.code === 1) {
-        msg.data.sublesson.forEach(function (item) {
+        msg.data.sublesson.forEach(function(item) {
           item.minute = (item.film_length / 60).toFixed(0)
         })
         wx.setNavigationBarTitle({
@@ -294,7 +293,7 @@ Page({
       param.pageSize = res[0].length
       app.classroom.detail(param).then(msg => {
         if (msg.code === 1) {
-          msg.data.sublesson.forEach(function (item) {
+          msg.data.sublesson.forEach(function(item) {
             item.minute = (item.film_length / 60).toFixed(0)
           })
           wx.setNavigationBarTitle({
@@ -324,7 +323,7 @@ Page({
       wx.showModal({
         title: "",
         content: "是否取消收藏",
-        success: function (res) {
+        success: function(res) {
           if (res.confirm) {
             app.classroom.collectCancel(param).then(msg => {
               if (msg.code == 1) {
@@ -350,12 +349,15 @@ Page({
       // app.aldstat.sendEvent("课程收藏", {
       //   name: this.data.title
       // })
-      wx.uma.trackEvent('collectionLessons', { 'lessonsName': this.data.title });
+      wx.uma.trackEvent('collectionLessons', {
+        'lessonsName': this.data.title
+      });
     }
   },
   // 选择剧集
   select(e, type) {
-    let i = 0, list = this.data.sublessons
+    let i = 0,
+      list = this.data.sublessons
     if (type != undefined) {
       i = e
     } else {
@@ -382,7 +384,6 @@ Page({
         success: res => {
           wx.getConnectedWifi({
             success: res => {
-              console.log(res)
               app.playVedio('wifi')
               that.recordAddVedio(param)
             },
@@ -433,7 +434,7 @@ Page({
     let comment = list || this.data.comment
     return app.classroom.commentDetail(this.comParam).then(msg => {
       if (msg.code == 1) {
-        msg.data.forEach(function (item) {
+        msg.data.forEach(function(item) {
           item.reply_array.forEach(v => {
             v.rtext = `回复<span  class="respond">${v.to_user}</span>:&nbsp;&nbsp;`
           })
@@ -456,7 +457,7 @@ Page({
   onReachBottom() {
     if (this.data.currentTab == 1) {
       this.comParam.page++
-      this.getComment()
+        this.getComment()
     }
   },
   setHeight() {
@@ -466,10 +467,9 @@ Page({
       query.select(".comment").boundingClientRect()
       query.exec(res => {
         let height = res[0].height - (-110)
-        console.log(height)
         height < 100 ? that.setData({
-          height: 700
-        }) :
+            height: 700
+          }) :
           that.setData({
             height: height
           })
@@ -486,12 +486,12 @@ Page({
     }
   },
   tolesson() {
-    let that = this, id = ".sublessonsd" + this.data.detail.current_sublesson_id
+    let that = this,
+      id = ".sublessonsd" + this.data.detail.current_sublesson_id
     if (this.data.currentTab == 0) {
       let query = wx.createSelectorQuery().in(this)
       query.select(id).boundingClientRect()
       query.exec(res => {
-        console.log(res[0])
         res[0] ? this.setData({
           scrollviewtop: res[0].top - 520
         }) : ''
@@ -556,7 +556,7 @@ Page({
     })
   },
   // 删除讨论
-  delComment: function (e) {
+  delComment: function(e) {
     wx.showModal({
       content: "确定删除该评论?",
       confirmColor: '#df2020',
@@ -601,7 +601,7 @@ Page({
       url: "../certificate/certificate?name=" + this.data.detail.title
     })
   },
-  onShareAppMessage: function (ops) {
+  onShareAppMessage: function(ops) {
     if (ops.from === "menu") {
       return this.menuAppShare()
     }
@@ -617,7 +617,7 @@ Page({
       }
     }
   },
-  tohome: function () {
+  tohome: function() {
     wx.reLaunch({
       url: "/pages/index/index"
     })
@@ -644,7 +644,6 @@ Page({
         this.reply(params)
       } else if (this.replyInfo) {
         /* 回复评论 */
-        console.log(this.replyInfo)
         let params = {
           lesson_id: +this.replyInfo.lesson_id,
           comment_id: this.replyInfo.id,
@@ -859,7 +858,6 @@ Page({
     })
   },
   show(e) {
-    console.log(e)
     if (this.data.$state.userInfo.status !== 'normal') {
       wx.showModal({
         content: '由于您近期不合规操作，您的账户已被管理员禁止发帖留言，如有疑问请在个人中心联系客服处理'
@@ -974,7 +972,6 @@ Page({
     }
   },
   showWrite(e) {
-    console.log(e)
     if (this.data.$state.userInfo.status !== 'normal') {
       wx.showModal({
         content: '由于您近期不合规操作，您的账户已被管理员禁止发帖留言，如有疑问请在个人中心联系客服处理',
@@ -1015,8 +1012,7 @@ Page({
       }
     }
   },
-  keyheight(e) {
-  },
+  keyheight(e) {},
   bindblur() {
     this.setData({
       keyHeight: false,
@@ -1030,7 +1026,9 @@ Page({
     // app.aldstat.sendEvent("退出", {
     //   name: "课程详情页"
     // })
-    wx.uma.trackEvent('move', { 'pageName': '课程详情页' });
+    wx.uma.trackEvent('move', {
+      'pageName': '课程详情页'
+    });
   },
   closeGuide() {
     let param = {
@@ -1080,7 +1078,7 @@ Page({
       })
     }
   },
-  getRecordAuth: function () {
+  getRecordAuth: function() {
     wx.getSetting({
       success(res) {
         let record = res.authSetting['scope.record']
@@ -1096,7 +1094,7 @@ Page({
   /**
    * 初始化语音识别回调
    */
-  initRecord: function () {
+  initRecord: function() {
     //有新的识别内容返回，则会调用此事件
     manager.onRecognize = (res) => {
       clearInterval(this.timer)
@@ -1115,7 +1113,6 @@ Page({
       this.data.replyshow ? text = this.data.replycontent + text : text = this.data.content + text
       // 获取音频文件临时地址
       let filePath = res.tempFilePath
-      console.log(filePath)
       let duration = res.duration
       if (res.result == '') {
         this.setData({
@@ -1198,7 +1195,6 @@ Page({
   // 语音播放
   playvoice() {
     innerAudioContext.src = this.data.filePath;
-    console.log(this.data.filePath)
     innerAudioContext.play()
     innerAudioContext.onPlay(() => {
       this.setData({
@@ -1212,7 +1208,9 @@ Page({
     })
   },
   relacevoice() {
-    let text = '', voicetext = this.data.voicetext, lessDiscussion = this.data.$state.lessDiscussion
+    let text = '',
+      voicetext = this.data.voicetext,
+      lessDiscussion = this.data.$state.lessDiscussion
     if (this.data.replyshow) {
       text = this.data.replycontent.replace(voicetext, '')
       this.setData({
@@ -1285,7 +1283,6 @@ Page({
         })
       }, 2500);
     } else {
-      console.log(e)
       this.data.comment[e.target.dataset.index].reply_array[e.target.dataset.chilindex].reply_content = "<span style='background:#f6eeee'>" + this.data.comment[e.target.dataset.index].reply_array[e.target.dataset.chilindex].reply_content + '</span>'
       this.setData({
         comment: this.data.comment
@@ -1299,7 +1296,6 @@ Page({
     }
   },
   toUser(e) {
-    console.log(e)
     if (this.data.$state.userInfo.id == e.currentTarget.dataset.item.uid) {
       wx.switchTab({
         url: "/pages/user/user"

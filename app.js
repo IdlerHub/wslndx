@@ -4,6 +4,9 @@
  * @LastEditTime: 2019-12-02 15:30:51
  */
 import {
+  wxp
+} from "./utils/service";
+import {
   uma
 } from 'umtrack-wx';
 /*埋点统计*/
@@ -67,7 +70,6 @@ App({
   },
   /*埋点统计*/
   onLaunch: async function(opts) {
-    console.log(this.store.process)
     let optsStr = decodeURIComponent(opts.query.scene).split("&");
     let opstObj = {};
     optsStr.forEach((item, index) => {
@@ -202,7 +204,6 @@ App({
           wx.setStorageSync("uid", msg.data.uid);
           wx.setStorageSync("authKey", msg.data.authKey);
           this.setUser(msg.data.userInfo);
-          // console.log(msg.data.userInfo)
           if (this.globalData.lottery == 'lottery') return
           wx.reLaunch({
             url: "/pages/index/index"
@@ -348,7 +349,6 @@ App({
               title: "更新提示",
               content: "新版本已经准备好，是否重启应用？",
               success: function(res) {
-                console.log("success====", res);
                 if (res.confirm) {
                   // 新的版本已经下载好，调用 applyUpdate 应用新版本并重启
                   updateManager.applyUpdate();
