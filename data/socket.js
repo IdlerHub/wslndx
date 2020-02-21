@@ -20,11 +20,11 @@ socket.prototype = {
   init: function(id, mark) {
     this.id = id
     let token = wx.getStorageSync("token")
-    this.timestamp = parseInt(new Date().getTime() / 1000 + "")
-    this.sign = md5("uid=" + id + "&token=" + token + "&timestamp=" + this.timestamp)
+    let timestamp = parseInt(new Date().getTime() / 1000 + "")
+    let sign = md5("uid=" + id + "&token=" + token + "&timestamp=" + timestamp)
     //?c=Bokemessage
     this.SocketTask = wx.connectSocket({
-      url: "wss://" + store.socket_host + "?&uid=" + id + "&timestamp=" + this.timestamp + "&sign=" + this.sign,
+      url: "wss://" + store.socket_host + "?uid=" + id + "&timestamp=" + timestamp + "&sign=" + sign,
       header: {
         "content-type": "application/json"
       },
@@ -40,8 +40,8 @@ socket.prototype = {
     wx.onSocketOpen(res => {
       console.log("连接成功")
       this.connectState = true
-      this.heartBeat()
       this.reCount = 3
+      this.heartBeat()
       setTimeout(() => {
         this.send({
           type: 'Prizemessage',
@@ -124,6 +124,7 @@ socket.prototype = {
       this.SocketTask.close({
         success: () => {
           console.log('socket关闭成功')
+          this.beat && clearInterval(this.beat) && (this.beat = null)
           this.SocketTask = ''
         },
         fail: () => {

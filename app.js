@@ -1,11 +1,10 @@
 /*
  * @Date: 2019-05-28 09:50:08
  * @LastEditors: hxz
- * @LastEditTime: 2019-12-02 15:30:51
+ * @LastEditTime: 2020-02-21 18:20:55
  */
-import {
-  uma
-} from 'umtrack-wx';
+import { wxp } from "./utils/service";
+import { uma } from "umtrack-wx";
 /*埋点统计*/
 const ald = require("./utils/ald-stat.js");
 /* 全局状态管理 */
@@ -18,12 +17,13 @@ var fundebug = require("fundebug-wxjs");
 fundebug.init({
   apikey: "b3b256c65b30a1b0eb26f8d9c2cd7855803498f0c667df934be2c72048af93d9",
   releaseStage: store.process,
-  monitorMethodCall: true /* 自定义函数的监控 */ ,
-  monitorMethodArguments: true /* 监控小程序中的函数调用的参数 */ ,
-  monitorHttpData: true /* 收集 HTTP 请求错误的 body  */ ,
+  monitorMethodCall: true /* 自定义函数的监控 */,
+  monitorMethodArguments: true /* 监控小程序中的函数调用的参数 */,
+  monitorHttpData: true /* 收集 HTTP 请求错误的 body  */,
   setSystemInfo: true,
   silentInject: true,
-  filters: [{
+  filters: [
+    {
       req: {
         url: /log\.aldwx\.com/,
         method: /^GET$/
@@ -61,13 +61,16 @@ App({
   store,
   fundebug,
   umengConfig: {
-    appKey: store.process == 'develop' ? '5e4cad07eef38d3632042549' : '5e4cd613e1367a268d56bfa2', //由友盟分配的APP_KEY
+    appKey:
+      store.process == "develop"
+        ? "5e4cad07eef38d3632042549"
+        : "5e4cd613e1367a268d56bfa2", //由友盟分配的APP_KEY
     useOpenid: false, // 是否使用openid进行统计，此项为false时将使用友盟+随机ID进行用户统计。使用openid来统计微信小程序的用户，会使统计的指标更为准确，对系统准确性要求高的应用推荐使用OpenID。
     autoGetOpenid: false, // 是否需要通过友盟后台获取openid，如若需要，请到友盟后台设置appId及secret
     debug: true //是否打开调试模式
   },
   /*埋点统计*/
-  onLaunch: async function (opts) {
+  onLaunch: async function(opts) {
     let optsStr = decodeURIComponent(opts.query.scene).split("&");
     let opstObj = {};
     optsStr.forEach((item, index) => {
@@ -78,9 +81,9 @@ App({
     if (this.globalData.scenes.indexOf(opts.scene) >= 0) {
       this.globalData.path = "/" + opts.path; /* 卡片页面路径 */
       this.globalData.query = opts.query; /* 卡片页面参数 */
-      this.globalData.outObj = opstObj
-      this.globalData.shareObj = opstObj
-      this.globalData.lotteryId = opstObj.id
+      this.globalData.outObj = opstObj;
+      this.globalData.shareObj = opstObj;
+      this.globalData.lotteryId = opstObj.id;
       if (
         opts.query.type == "invite" ||
         opts.query.type == "share" ||
@@ -107,6 +110,7 @@ App({
     this.initStore();
 
     /* 建立socket链接 */
+<<<<<<< HEAD
     if (this.store.$state.userInfo.id) {
       setTimeout(() => {
         socket.init(this.store.$state.userInfo.id);
@@ -120,6 +124,26 @@ App({
     let platform = systemInfo.platform
     if (platform == 'windows' || platform == 'mac' || platform == 'macOS' || platform == 'devtools') {
       this.playVedio('flow')
+=======
+    // if (this.store.$state.userInfo.id) {
+    //   setTimeout(() => {
+    //     socket.init(this.store.$state.userInfo.id);
+    //     socket.listen(this.prizemessage, "Prizemessage");
+    //     socket.listen(this.bokemessage, "Bokemessage");
+    //     this.getTaskStatus()
+    //   }, 2000);
+    // }
+    let systemInfo = wx.getSystemInfoSync();
+    let wxtype = systemInfo.version.replace(".", "").replace(".", "");
+    let platform = systemInfo.platform;
+    if (
+      platform == "windows" ||
+      platform == "mac" ||
+      platform == "macOS" ||
+      platform == "devtools"
+    ) {
+      this.playVedio("flow");
+>>>>>>> dev
     }
     if (wxtype < 606) {
       wx.reLaunch({
@@ -129,7 +153,8 @@ App({
       wx.reLaunch({
         url: "/pages/sign/sign"
       });
-    } else if (opts.type == "lottery" || opstObj.type == "lottery") {}
+    } else if (opts.type == "lottery" || opstObj.type == "lottery") {
+    }
   },
   onShow: function(opts) {
     let lists = ["share", "invite"];
@@ -143,7 +168,11 @@ App({
       ) {
         this.globalData.path = "/" + opts.path; /* 卡片页面路径 */
         this.globalData.query = opts.query; /* 卡片页面参数 */
-        if (opts.query.type == "invite" || opts.query.type == "share" || opts.type == "lottery") {
+        if (
+          opts.query.type == "invite" ||
+          opts.query.type == "share" ||
+          opts.type == "lottery"
+        ) {
           wx.setStorageSync("invite", opts.query.uid); /* 邀请码存储 */
         }
       }
@@ -183,33 +212,35 @@ App({
     await wxp.login({}).then(res => {
       if (res.code) {
         this.globalData.code = res.code;
-        console.log('wxCode', res.code)
+        console.log("wxCode", res.code);
       } else {
-        console.log('wx.login登录失败！' + res.errMsg)
+        console.log("wx.login登录失败！" + res.errMsg);
       }
     });
-    await this.user.wxLoginCode({
-      code: this.globalData.code
-    }).then(msg => {
-      if (msg.code === 1) {
-        if (msg.data.tempCode) {
-          /* 新用户未注册 */
-          console.log('tempCode', msg.data.tempCode)
-          this.globalData.tempCode = msg.data.tempCode;
-        } else {
-          /* 旧用户 */
-          wx.setStorageSync("token", msg.data.token);
-          wx.setStorageSync("uid", msg.data.uid);
-          wx.setStorageSync("authKey", msg.data.authKey);
-          this.setUser(msg.data.userInfo);
-          // console.log(msg.data.userInfo)
-          if (this.globalData.shareObj.type == 'lottery') return
-          wx.reLaunch({
-            url: "/pages/index/index"
-          });
+    await this.user
+      .wxLoginCode({
+        code: this.globalData.code
+      })
+      .then(msg => {
+        if (msg.code === 1) {
+          if (msg.data.tempCode) {
+            /* 新用户未注册 */
+            console.log("tempCode", msg.data.tempCode);
+            this.globalData.tempCode = msg.data.tempCode;
+          } else {
+            /* 旧用户 */
+            wx.setStorageSync("token", msg.data.token);
+            wx.setStorageSync("uid", msg.data.uid);
+            wx.setStorageSync("authKey", msg.data.authKey);
+            this.setUser(msg.data.userInfo);
+            // console.log(msg.data.userInfo)
+            if (this.globalData.shareObj.type == "lottery") return;
+            wx.reLaunch({
+              url: "/pages/index/index"
+            });
+          }
         }
-      }
-    });
+      });
   },
   /* 初始化store */
   initStore: function() {
@@ -310,11 +341,11 @@ App({
     });
   },
   playVedio(type) {
-    type == "wifi" ?
-      "" :
-      this.store.setState({
-        flow: true
-      });
+    type == "wifi"
+      ? ""
+      : this.store.setState({
+          flow: true
+        });
   },
   /* 更新签到信息 */
   setSignIn(data, bl) {
@@ -348,7 +379,6 @@ App({
               title: "更新提示",
               content: "新版本已经准备好，是否重启应用？",
               success: function(res) {
-                console.log("success====", res);
                 if (res.confirm) {
                   // 新的版本已经下载好，调用 applyUpdate 应用新版本并重启
                   updateManager.applyUpdate();
@@ -368,9 +398,7 @@ App({
     }
   },
   bokemessage(res) {
-    let {
-      num = 0, avatar
-    } = JSON.parse(res.data).data;
+    let { num = 0, avatar } = JSON.parse(res.data).data;
     this.store.setState({
       unRead: num,
       surPass: num > 99,
@@ -424,14 +452,14 @@ App({
         wx.getClipboardData({
           success(res) {
             wx.showToast({
-              title: '内容复制成功',
-              icon: 'none',
+              title: "内容复制成功",
+              icon: "none",
               duration: 2500
-            })
+            });
           }
-        })
+        });
       }
-    })
+    });
   },
   globalData: {
     /*wx.login 返回值 code */
@@ -454,7 +482,7 @@ App({
       likestatus: 0
     },
     phoneList: [],
-    lottery: '',
+    lottery: "",
     uma
   }
 });

@@ -336,7 +336,7 @@ Page({
       // app.aldstat.sendEvent("栏目-" + this.data.nav[this.data.currentTab].name + "-课程点击", {
       //   name: e.currentTarget.dataset.item.title
       // })
-      wx.uma.trackEvent('classify_lessonsClick', { ['classifyID_'+ this.data.nav[this.data.currentTab].id]: e.currentTarget.dataset.item.title });
+      wx.uma.trackEvent('classify_lessonsClick', { ['classifyID_' + this.data.nav[this.data.currentTab].id]: e.currentTarget.dataset.item.title });
     } else {
       // app.aldstat.sendEvent("首页推荐栏目课程点击", {
       //   name: e.currentTarget.dataset.item.title
