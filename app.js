@@ -9,7 +9,6 @@ import { uma } from "umtrack-wx";
 const ald = require("./utils/ald-stat.js");
 /* 全局状态管理 */
 import store from "./store";
-import { wxp } from "./utils/service.js";
 /* sse */
 const socket = require("data/socket.js");
 /* 接入bug平台 */
@@ -110,21 +109,6 @@ App({
     this.initStore();
 
     /* 建立socket链接 */
-<<<<<<< HEAD
-    if (this.store.$state.userInfo.id) {
-      setTimeout(() => {
-        socket.init(this.store.$state.userInfo.id);
-        socket.listen(this.prizemessage, "Prizemessage");
-        socket.listen(this.bokemessage, "Bokemessage");
-        this.getTaskStatus()
-      }, 2000);
-    }
-    let systemInfo = wx.getSystemInfoSync()
-    let wxtype = systemInfo.version.replace(".", '').replace(".", '')
-    let platform = systemInfo.platform
-    if (platform == 'windows' || platform == 'mac' || platform == 'macOS' || platform == 'devtools') {
-      this.playVedio('flow')
-=======
     // if (this.store.$state.userInfo.id) {
     //   setTimeout(() => {
     //     socket.init(this.store.$state.userInfo.id);
@@ -143,7 +127,6 @@ App({
       platform == "devtools"
     ) {
       this.playVedio("flow");
->>>>>>> dev
     }
     if (wxtype < 606) {
       wx.reLaunch({
