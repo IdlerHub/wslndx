@@ -248,7 +248,7 @@ Page({
   },
   praise(e, index) {
     let i = e.currentTarget.dataset.index
-    let list = this.data.list, flowList = this.data.flowList, status = 0,fi = -1
+    let list = this.data.list, flowList = this.data.flowList, status = 0, fi = -1
     let param = {
       blog_id: e.currentTarget.dataset.id
     }
@@ -263,35 +263,40 @@ Page({
         if (msg.code == 1) {
           if (e.currentTarget.dataset.type) {
             list[i].likes--
-            flowList.forEach((item,index) => {
+            flowList.forEach((item, index) => {
               if (item.id == e.currentTarget.dataset.id) {
                 fi = index
                 item.likes--
               }
             })
-            fi > -1  ? this.setData({
-              [`list[${i}].likestatus`]:0,
-              [`list[${i}].likes`]:list[i].likes,
-              [`flowList[${fi}].likestatus`]:0,
-              [`flowList[${fi}].likes`]:flowList[fi].likes,
+            fi > -1 ? this.setData({
+              [`list[${i}].likestatus`]: 0,
+              [`list[${i}].likes`]: list[i].likes,
+              [`flowList[${fi}].likestatus`]: 0,
+              [`flowList[${fi}].likes`]: flowList[fi].likes,
             }) : this.setData({
-              [`list[${i}].likestatus`]:0,
-              [`list[${i}].likes`]:list[i].likes
+              [`list[${i}].likestatus`]: 0,
+              [`list[${i}].likes`]: list[i].likes
             })
           } else {
             flowList[i].likes--
-            list.forEach((item,index) => {
+            list.forEach((item, index) => {
               if (item.id == e.currentTarget.dataset.id) {
                 fi = index
                 item.likes--
               }
             })
-            this.setData({
-              [`flowList[${i}].likestatus`]:0,
-              [`flowList[${i}].likes`]:flowList[i].likes,
-              [`list[${fi}].likestatus`]:0,
-              [`list[${fi}].likes`]:list[fi].likes,f
-            })
+            fi > -1 ?
+              this.setData({
+                [`flowList[${i}].likestatus`]: 0,
+                [`flowList[${i}].likes`]: flowList[i].likes,
+                [`list[${fi}].likestatus`]: 0,
+                [`list[${fi}].likes`]: list[fi].likes,
+              }) :
+              this.setData({
+                [`flowList[${i}].likestatus`]: 0,
+                [`flowList[${i}].likes`]: flowList[i].likes
+              })
           }
         } else if (msg.code == -2) {
           wx.showToast({
@@ -314,15 +319,15 @@ Page({
               }
             })
             fi > -1 ? this.setData({
-              [`flowList[${fi}].likestatus`]:1,
-              [`flowList[${fi}].likes`]:flowList[fi].likes,
-              [`list[${i}].likestatus`]:1,
-              [`list[${i}].likes`]:list[i].likes,
-              [`list[${i}].praising`]:true
+              [`flowList[${fi}].likestatus`]: 1,
+              [`flowList[${fi}].likes`]: flowList[fi].likes,
+              [`list[${i}].likestatus`]: 1,
+              [`list[${i}].likes`]: list[i].likes,
+              [`list[${i}].praising`]: true
             }) : this.setData({
-              [`list[${i}].likestatus`]:1,
-              [`list[${i}].likes`]:list[i].likes,
-              [`list[${i}].praising`]:true
+              [`list[${i}].likestatus`]: 1,
+              [`list[${i}].likes`]: list[i].likes,
+              [`list[${i}].praising`]: true
             })
           } else {
             flowList[i].likes++
@@ -332,13 +337,18 @@ Page({
                 item.likes++
               }
             })
-            this.setData({
-              [`flowList[${i}].likestatus`]:1,
-              [`flowList[${i}].likes`]:flowList[i].likes,
-              [`flowList[${i}].praising`]:true,
-              [`list[${fi}].likestatus`]:1,
-              [`list[${fi}].likes`]:list[fi].likes,
-            })
+            fi > -1 ? this.setData({
+              [`flowList[${i}].likestatus`]: 1,
+              [`flowList[${i}].likes`]: flowList[i].likes,
+              [`flowList[${i}].praising`]: true,
+              [`list[${fi}].likestatus`]: 1,
+              [`list[${fi}].likes`]: list[fi].likes,
+            }) :
+              this.setData({
+                [`flowList[${i}].likestatus`]: 1,
+                [`flowList[${i}].likes`]: flowList[i].likes,
+                [`flowList[${i}].praising`]: true,
+              })
           }
           if (msg.data.is_first == 'first') {
             this.setData({

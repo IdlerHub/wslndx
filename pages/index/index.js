@@ -278,8 +278,8 @@ Page({
     wx.navigateTo({
       url: "/pages/score/score?type=index"
     })
-    // app.aldstat.sendEvent("首页按钮点击",{
-    //   name:'积分兑换'
+    // app.aldstat.sendEvent("首页按钮点击", {
+    //   name: '积分兑换'
     // })
     wx.uma.trackEvent('index_btnClick', { 'btnName': '积分兑换' });
   },
@@ -527,7 +527,15 @@ Page({
     }
   },
   // 跳友方小程序
+  jumpmini() {
+    this.minigo('{"appid":"wx92d650b253f8f2e3","url":"/pages/index/index?zbid=1826546606"}')
+    // app.aldstat.sendEvent("首页按钮点击", {
+    //   name: '老年电台'
+    // })
+    wx.uma.trackEvent('index_btnClick', { 'btnName': '课程直播' });
+  },
   minigo(url) {
+    console.log(url)
     let system = JSON.parse(url)
     wx.navigateToMiniProgram({
       appId: system.appid,
@@ -567,6 +575,9 @@ Page({
       // app.aldstat.sendEvent("活动弹框点击")
       wx.uma.trackEvent('index_activityClick');
     } else {
+      // app.aldstat.sendEvent("首页轮播-公众号点击", {
+      //   title: this.data.paperMsg.title
+      // })
       wx.uma.trackEvent('index_bannerClick', { 'bannerTencent': this.data.paperMsg.title });
     }
     wx.navigateTo({

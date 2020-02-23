@@ -5,13 +5,13 @@
  */
 import Store from "wxministore"
 const app = getApp()
-let env = "develop"
+let env = "production"
 let imgHost
 let activityUrl
 let API_URL
 let mpVersion
 let socket_host
-if (env == "develop"){
+if (env == "develop") {
   /* 测试环境 */
   imgHost = "https://hwcdn.jinlingkeji.cn/images/dev" /* 图片等静态资源服务器 */
   activityUrl = "https://gqjydev.jinlingkeji.cn/?" /* 国情教育链接 */
@@ -50,14 +50,14 @@ let store = new Store({
     activityUrl: activityUrl,
     signStatus: {} /* 签到状态及弹窗 */,
     imgHost: imgHost,
-    title:'',
-    path:'',
-    imageUrl:'',
+    title: '',
+    path: '',
+    imageUrl: '',
     shareImgurl: '',
-    shareTitle:'',
-    recommend:'',
+    shareTitle: '',
+    recommend: '',
     playVedio: false,
-    lessDiscussion:{},
+    lessDiscussion: {},
     blogcomment: {}
   },
   pageLisener: {
@@ -67,13 +67,13 @@ let store = new Store({
       }
       if (!this.onShareAppMessage) {
         wx.showShareMenu()
-        this.onShareAppMessage = function(ops) {
+        this.onShareAppMessage = function (ops) {
           if (ops.from === "menu") {
             return this.menuAppShare()
           }
         }
       }
-      
+
     },
     onHide() {
       wx.uma.trackEvent('move', { 'pageName': this.pageName });
@@ -81,11 +81,11 @@ let store = new Store({
   },
   methods: {
     menuAppShare() {
-        return {
-          title: this.data.$state.shareTitle || "福利！老年大学十万集免费课程在线学习",
-          path: "/pages/loading/loading?uid=" + this.data.$state.userInfo.id + "&type=invite",
-          imageUrl: this.data.$state.shareImgurl || "../../images/sharemessage.jpg"
-        }
+      return {
+        title: this.data.$state.shareTitle || "福利！老年大学十万集免费课程在线学习",
+        path: "/pages/loading/loading?uid=" + this.data.$state.userInfo.id + "&type=invite",
+        imageUrl: this.data.$state.shareImgurl || "../../images/sharemessage.jpg"
+      }
     },
 
   }

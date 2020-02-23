@@ -132,11 +132,10 @@
 
 .jumpout {
   background: #fff;
-  padding: 30rpx 30rpx 0 30rpx;
-  box-sizing: border-box;
+  height: 120rpx;
+  padding: 30rpx 30rpx 0 0;
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
 }
 .left .left-btn {
   position: absolute;
@@ -147,10 +146,10 @@
 .jumpout .jumpoutBox {
   position: relative;
   height: 120rpx;
+  margin-left: 30rpx;
 }
-
 .jumpout .img {
-  width: 330rpx;
+  width: 260rpx;
   height: 120rpx;
   background: #f5f6f8;
 }

@@ -466,6 +466,9 @@ App({
     },
     phoneList: [],
     lottery: "",
+    shareObj: {
+      type: 0
+    },
     uma
   }
 });
