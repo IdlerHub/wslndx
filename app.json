@@ -39,7 +39,9 @@
     "components/integralAni/integralAni",
     "pages/usermesseage/usermesseage",
     "pages/messagePage/messagePage",
-    "pages/attentionPage/attentionPage"
+    "pages/attentionPage/attentionPage",
+    "pages/makeMoney/makeMoney",
+    "pages/strategy/strategy"
   ],
   "permission": {
     "scope.userLocation": {
