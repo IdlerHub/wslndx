@@ -163,7 +163,7 @@ Page({
           })
           if (msg.data.is_first == 'first') {
             this.setData({
-              integral: '+50 积分',
+              integral: '+50 学分',
               integralContent: '完成[秀风采]首次点赞',
               showintegral: true
             })

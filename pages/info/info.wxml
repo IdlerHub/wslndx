@@ -9,12 +9,15 @@
     <!-- 姓名 -->
     <view class="nameInput">
       <view class="nameInput__title">真实姓名</view>
-      <input placeholder="{{ userInfo.name == '' ? '请填写(非必填)' : userInfo.name }}" class="nameInput__name" placeholder-style="color:#B6B5B5" value="{{userName}}" bindblur="upUsername" bindfocus="focus" style="padding-right:{{padding || param.school != '' ? '24' : '38'}}px"></input>
+      <input placeholder="{{ userInfo.name == '' ? '请填写(非必填)' : userInfo.name }}" class="nameInput__name"
+        placeholder-style="color:#B6B5B5" value="{{userName}}" bindblur="upUsername" bindfocus="focus"
+        style="padding-right:{{padding || param.school != '' ? '24' : '38'}}px"></input>
     </view>
     <!-- 地区 -->
     <view class="section" wx:if="areaList">
       <view class="section__title">地区</view>
-      <picker mode="multiSelector" bindchange="bindMultiPickerChange" bindcolumnchange="bindMultiPickerColumnChange" value="{{ multiIndex }}" range="{{ multiAddress }}">
+      <picker mode="multiSelector" bindchange="bindMultiPickerChange" bindcolumnchange="bindMultiPickerColumnChange"
+        value="{{ multiIndex }}" range="{{ multiAddress }}">
         <view class="placeholder">
           <text wx:if="{{ !param.address[1] }}">请选择</text>
           <view class="picker" wx:if="{{ param.address[1] }}"> {{ param.address[0] }}，{{ param.address[1] }} </view>
@@ -25,7 +28,8 @@
     <!-- 学校 -->
     <view class="section" wx:if="singleSchool" bindtap="tipOrder">
       <view class="section__title">大学</view>
-      <picker mode="selector" disabled="{{ !param.address[1] }}" bindchange="bindSchool" value="{{ singleIndex }}" range="{{ singleSchool }}">
+      <picker mode="selector" disabled="{{ !param.address[1] }}" bindchange="bindSchool" value="{{ singleIndex }}"
+        range="{{ singleSchool }}">
         <view class="placeholder">
           <text wx:if="{{ !param.school }}">请选择</text>
           <view class="picker" wx:if="{{ param.school }}"> {{ param.school }} </view>
@@ -61,5 +65,5 @@
     </view>
   </view>
 </view>
-<!-- 积分动画 -->
-<integralAnimation integral="+65 积分" integralContent="完成完善资料" wx:if="{{showintegral}}"></integralAnimation>
+<!-- 学分动画 -->
+<integralAnimation integral="+65 学分" integralContent="完成完善资料" wx:if="{{showintegral}}"></integralAnimation>

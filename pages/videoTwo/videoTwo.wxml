@@ -1,8 +1,10 @@
 <view class="container">
-  <video class="myVideo" id="{{ vid }}" src="{{ cur.url }}" controls="{{ false }}" show-center-play-btn="{{ false }}" object-fit="fill" autoplay="{{autoplay}}" loop="{{loop}}" bindended="recordFinish">
+  <video class="myVideo" id="{{ vid }}" src="{{ cur.url }}" controls="{{ false }}" show-center-play-btn="{{ false }}"
+    object-fit="fill" autoplay="{{autoplay}}" loop="{{loop}}" bindended="recordFinish">
     <!-- 功能  滑动及视频播/停监听-->
     <view wx:if="{{ cur && !$state.baseInfo }}" class="dropback">
-      <view hover-class="none" bindtap="tap" bindtouchstart="scrollTouchStart" bindtouchend="scrollTouchEnd" wx:if="{{ !$state.baseInfo }}" class="tapbg">
+      <view hover-class="none" bindtap="tap" bindtouchstart="scrollTouchStart" bindtouchend="scrollTouchEnd"
+        wx:if="{{ !$state.baseInfo }}" class="tapbg">
         <!-- 我的小程序 -->
         <view wx:if="{{ vistor && tip }}" class="vistor-head">
           <view>点击“</view>
@@ -32,7 +34,8 @@
         <view class="info">
           <view class="vedioAllTop">
             <!-- 加群 -->
-            <image wx:if="{{ cur.image }}" mode="aspectFill" src="{{ cur.image }}" catchtap="navigate" class="cimg" wx:show="{{nextRtight != 3}}" wx:if="{{nextRtight != 3}}" catchtap="navigate"></image>
+            <image wx:if="{{ cur.image }}" mode="aspectFill" src="{{ cur.image }}" catchtap="navigate" class="cimg"
+              wx:show="{{nextRtight != 3}}" wx:if="{{nextRtight != 3}}" catchtap="navigate"></image>
             <!-- 视频标题 -->
             <view class="vedioTitle-p">{{ cur.category_name }}</view>
           </view>
@@ -67,11 +70,13 @@
   <!-- 点赞动画 -->
   <view wx:if="{{ cur.praising }}" class="praising">
     <!-- prettier-ignore -->
-    <view class="ani" bindanimationend="aniend" data-index="{{ index }}" style="background-image: url({{$state.imgHost}}/heart-ani.png)"></view>
+    <view class="ani" bindanimationend="aniend" data-index="{{ index }}"
+      style="background-image: url({{$state.imgHost}}/heart-ani.png)"></view>
   </view>
 </view>
-<!-- 积分动画 -->
-<integralAnimation integral="{{integral}}" integralContent="{{integralContent}}" wx:if="{{showintegral}}"></integralAnimation>
+<!-- 学分动画 -->
+<integralAnimation integral="{{integral}}" integralContent="{{integralContent}}" wx:if="{{showintegral}}">
+</integralAnimation>
 <!-- 新年红包活动 -->
 <view class="redPaket" wx:if="{{isshowRedbig}}" bindtap="closeRed">
   <view class="redbox">

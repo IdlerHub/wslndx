@@ -12,7 +12,7 @@ Page({
     my_score: 0,
     showGuide: true
   },
-  pageName: '积分抽奖',
+  pageName: '学分抽奖',
   onLoad() { },
   onShow() {
     // wx.hideHomeButton({
@@ -58,9 +58,9 @@ Page({
       url: "/pages/score/score?type=index"
     })
     // app.aldstat.sendEvent("个人中心按钮点击",{
-    //   name:'积分兑换'
+    //   name:'学分兑换'
     // })
-    wx.uma.trackEvent('personal_btnClick', { 'btnName': '积分兑换' })
+    wx.uma.trackEvent('personal_btnClick', { 'btnName': '学分兑换' })
   },
   toInvite() {
     wx.navigateTo({
@@ -73,7 +73,7 @@ Page({
   },
   //用于数据统计
   onUnload() {
-    // app.aldstat.sendEvent("退出", { name: "积分抽奖" })
+    // app.aldstat.sendEvent("退出", { name: "学分抽奖" })
   },
   closeGuide() {
     let param = {
@@ -87,9 +87,9 @@ Page({
   },
   drawPage() {
     // app.aldstat.sendEvent("个人中心按钮点击",{
-    //   name:'积分抽奖'
+    //   name:'学分抽奖'
     // })
-    wx.uma.trackEvent('personal_btnClick', { 'btnName': '积分抽奖' })
+    wx.uma.trackEvent('personal_btnClick', { 'btnName': '学分抽奖' })
   },
   unreadNum() {
     app.user.unreadNum().then(res => {

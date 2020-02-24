@@ -1,5 +1,6 @@
 <!--pages/drawPage/drawPage.wxml-->
-<image class="bbbig" src="{{ screenHeight ?  $state.imgHost + '/drawbgbgbg.png' : $state.imgHost + '/drawBG.png'  }}"></image>
+<image class="bbbig" src="{{ screenHeight ?  $state.imgHost + '/drawbgbgbg.png' : $state.imgHost + '/drawBG.png'  }}">
+</image>
 <view class="container">
   <!-- <image src="{{ $state.imgHost }}/drawBg.png" class="drawbg"></image> -->
   <image src="{{ $state.imgHost }}/drawTle.png" class="drawTitle"></image>
@@ -34,9 +35,13 @@
           <view class="frame_item-name">{{lotteryCfgList[7].short_title}}</view>
         </view>
         <view class='frame_action' bindtap="{{clickLuck}}" bindtouchstart="touchstart" bindtouchend="touchend">
-          <image class="frame_action-img" src="https://hwcdn.jinlingkeji.cn/images/pro/drawAction.png" style="{{clickLuck != '' ? 'animation: action 0.5s infinite;' : ''  }}" wx:if="{{lottery_count == 0}}"></image>
-          <image class="frame_action-img" src="/images/drawAction3.png" wx:if="{{lottery_count == 0.5 || lottery_count == 1.5 }}"></image>
-          <image class="frame_action-img" src="/images/drawone.png" wx:if="{{lottery_count == 1 }}" style="{{clickLuck != '' ? 'animation: action 0.5s infinite;' : ''  }}"></image>
+          <image class="frame_action-img" src="https://hwcdn.jinlingkeji.cn/images/pro/drawAction.png"
+            style="{{clickLuck != '' ? 'animation: action 0.5s infinite;' : ''  }}" wx:if="{{lottery_count == 0}}">
+          </image>
+          <image class="frame_action-img" src="/images/drawAction3.png"
+            wx:if="{{lottery_count == 0.5 || lottery_count == 1.5 }}"></image>
+          <image class="frame_action-img" src="/images/drawone.png" wx:if="{{lottery_count == 1 }}"
+            style="{{clickLuck != '' ? 'animation: action 0.5s infinite;' : ''  }}"></image>
           <image class="frame_action-img" src="{{$state.imgHost}}/drawnone.png" wx:if="{{lottery_count >= 2}}"></image>
         </view>
         <view class='frame_item'>
@@ -67,9 +72,11 @@
   </view>
   <view class="draw-button">
     <view class="draw-buttonleft" bindtap="showrule">
-    <image src="/images/drawRule{{drawRuleNum}}.png" style="width: 100%;height:100%"></image>
+      <image src="/images/drawRule{{drawRuleNum}}.png" style="width: 100%;height:100%"></image>
     </view>
-    <view class="draw-buttonleft" style="background: url('https://hwcdn.jinlingkeji.cn/images/pro/drawRecord.png') no-repeat center;background-size: 100% 100%;" bindtap="toWinprize">
+    <view class="draw-buttonleft"
+      style="background: url('https://hwcdn.jinlingkeji.cn/images/pro/drawRecord.png') no-repeat center;background-size: 100% 100%;"
+      bindtap="toWinprize">
       <image src="/images/drawRecord{{recordRuleNum}}.png" style="width: 100%;height:100%"></image>
     </view>
   </view>
@@ -85,7 +92,7 @@
     </view>
     <view class="drawRuleBox-p">
       <view class="drawRuleBox-pnum">1</view>
-      <view class="drawRuleBox-pcon">消费25个积分抽奖一次</view>
+      <view class="drawRuleBox-pcon">消费25个学分抽奖一次</view>
     </view>
     <view class="drawRuleBox-p">
       <view class="drawRuleBox-pnum">2</view>
@@ -106,10 +113,12 @@
     <view class="prizrbox-title">恭喜获得</view>
     <image src="{{lotteryres.image}}"></image>
     <text class="prizrbox-gifttitle"> {{lotteryres.title}}</text>
-    <button class="prizrbox-button" open-type="contact" bindcontact="handleContact" show-message-card send-message-title="{{ lotteryres.title  +  '奖品序号' + lotteryres.record_id}}" send-message-img="{{lotteryres.image}}" wx:if="{{lotteryres.get_type == 1}}"
-      catchtap="closeToast">联系客服兑换
+    <button class="prizrbox-button" open-type="contact" bindcontact="handleContact" show-message-card
+      send-message-title="{{ lotteryres.title  +  '奖品序号' + lotteryres.record_id}}"
+      send-message-img="{{lotteryres.image}}" wx:if="{{lotteryres.get_type == 1}}" catchtap="closeToast">联系客服兑换
     </button>
-    <view class="prizrbox-button" style="width:200px;margin-left:-100px" catchtap="toWinprize" wx:if="{{lotteryres.get_type == 2}}">立即领取</view>
+    <view class="prizrbox-button" style="width:200px;margin-left:-100px" catchtap="toWinprize"
+      wx:if="{{lotteryres.get_type == 2}}">立即领取</view>
     <icon type="cancel" size="46" color="white" data-id="0" catchtap="closeprizr" class="drawRuleBox-cancel"></icon>
   </view>
 </view>

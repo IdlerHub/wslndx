@@ -279,9 +279,9 @@ Page({
       url: "/pages/score/score?type=index"
     })
     // app.aldstat.sendEvent("首页按钮点击", {
-    //   name: '积分兑换'
+    //   name: '学分兑换'
     // })
-    wx.uma.trackEvent('index_btnClick', { 'btnName': '积分兑换' });
+    wx.uma.trackEvent('index_btnClick', { 'btnName': '学分兑换' });
   },
   touchstart() {
     this.shownow = true
@@ -391,7 +391,7 @@ Page({
     if (sign) {
       app.user.sign().then(res => {
         if (res.code == 1) {
-          /* 前往积分页面 */
+          /* 前往学分页面 */
           wx.navigateTo({ url: "/pages/score/score?type=index" })
           app.store.setState({
             signdays: res.data.sign_days

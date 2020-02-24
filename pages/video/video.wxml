@@ -19,7 +19,9 @@
   </view>
   <swiper class="swiper" current="{{ currentTab }}" duration="300" bindchange="switchTab">
     <swiper-item bindtouchstart="scrollTouchStart" bindtouchend="scrollTouchEnd">
-      <video class="myVideo" id="{{ vid }}" src="{{ cur.url }}" controls="{{ false }}" show-center-play-btn="{{ false }}" object-fit="fill" autoplay="{{ autoplay }}" loop="{{loop}}" bindplay="{{vedioRecordAdd}}" bindended="recordFinish">
+      <video class="myVideo" id="{{ vid }}" src="{{ cur.url }}" controls="{{ false }}"
+        show-center-play-btn="{{ false }}" object-fit="fill" autoplay="{{ autoplay }}" loop="{{loop}}"
+        bindplay="{{vedioRecordAdd}}" bindended="recordFinish">
         <!-- 功能  滑动及视频播/停监听-->
         <view wx:if="{{ cur && !$state.baseInfo }}" class="dropback">
           <view hover-class="none" catchtap="tap" wx:if="{{ !$state.baseInfo }}" class="tapbg">
@@ -39,7 +41,8 @@
               <view class="info">
                 <view class="vedioAllTop">
                   <!-- 加群 -->
-                  <image wx:if="{{ cur.image }}" mode="aspectFill" src="{{ cur.image }}" catchtap="navigate" class="cimg" wx:show="{{nextRtight != 3}}"  wx:if="{{nextRtight != 3}}"></image>
+                  <image wx:if="{{ cur.image }}" mode="aspectFill" src="{{ cur.image }}" catchtap="navigate"
+                    class="cimg" wx:show="{{nextRtight != 3}}" wx:if="{{nextRtight != 3}}"></image>
                   <!-- 视频标题 -->
                   <view class="vedioTitle" wx:if="{{nextRtight != 3}}">
                     <view class="vedioTitle-p">{{ cur.category_name }}</view>
@@ -50,10 +53,11 @@
                   </view>
                 </view>
                 <image class="icon" src="/images/mask.png"></image>
-                <view class="synopsis"  wx:if="{{nextRtight != 3}}">{{ cur.intro_content }}</view>
+                <view class="synopsis" wx:if="{{nextRtight != 3}}">{{ cur.intro_content }}</view>
               </view>
               <!-- 分享 -->
-              <button wx:if="{{ cur && !$state.baseInfo && nextRtight != 4 }}" class="share" open-type="share" hover-class="btn-hover" catchtap="share">
+              <button wx:if="{{ cur && !$state.baseInfo && nextRtight != 4 }}" class="share" open-type="share"
+                hover-class="btn-hover" catchtap="share">
                 <image mode="aspectFill" src="/images/share.png" class="icon"></image>
                 <view wx:if="{{ cur.fw }}" class="text">{{ cur.fw }}</view>
                 <view wx:else class="text">{{ cur.forward }}</view>
@@ -78,11 +82,13 @@
           </cover-view>
         </cover-view>
       </video>
-      
+
     </swiper-item>
     <swiper-item style="background:#181818" class="classify">
       <view style="padding-top:{{ topT }}rpx">
-        <view class="classifyBox" wx:for="{{classify}}" wx:key="id" style="background:url('{{item.image}}');background-size:cover" catchtap="navgateto" data-id="{{item.id}}" data-name="{{item.title}}">
+        <view class="classifyBox" wx:for="{{classify}}" wx:key="id"
+          style="background:url('{{item.image}}');background-size:cover" catchtap="navgateto" data-id="{{item.id}}"
+          data-name="{{item.title}}">
           <view class="classifyBox-obscuration"></view>
           <view class="classifyBox-txt">{{item.title}} </view>
         </view>
@@ -93,11 +99,12 @@
   <!-- wx:if="{{ cur.praising }}" -->
   <view wx:if="{{ cur.praising }}" class="praising">
     <!-- prettier-ignore -->
-    <view class="ani" bindanimationend="aniend" data-index="{{ index }}" style="background-image: url({{$state.imgHost}}/heart-ani.png)"></view>
+    <view class="ani" bindanimationend="aniend" data-index="{{ index }}"
+      style="background-image: url({{$state.imgHost}}/heart-ani.png)"></view>
   </view>
   <!-- 视频指引 -->
   <!-- wx:if="{{ $state.newGuide.shortvideo == 0 && showGuide}}" -->
-  <cover-view class="vedioGuide"  data-type="all" wx:if="{{ $state.newGuide.shortvideo == 0 && showGuide}}">
+  <cover-view class="vedioGuide" data-type="all" wx:if="{{ $state.newGuide.shortvideo == 0 && showGuide}}">
     <cover-view class="animitionBox" wx:if="{{ nextRtight == 1 }}">
       <cover-image src="{{$state.imgHost}}/vertical.png" class="vedioGuide-img"></cover-image>
       <cover-image src="/images/handWhit.gif" class="vedioGuide-img"></cover-image>
@@ -113,13 +120,13 @@
     </cover-view>
     <cover-view class="vedioGuide-txt" wx:if="{{ nextRtight == 2 }}" catchtap="nextGuide">
       <cover-image class="videoMsgone" src="{{$state.imgHost}}/videoMsgtwo.png"></cover-image>
-       <cover-image src="{{$state.imgHost}}/nextGude.png" class="nextGude"></cover-image>
+      <cover-image src="{{$state.imgHost}}/nextGude.png" class="nextGude"></cover-image>
     </cover-view>
     <cover-view class="vedioGuideBox" wx:if="{{ nextRtight == 3 }}">
       <cover-view class="vedioGuideBox-content">
         <cover-view class="vedioGuideBox-contentmsg" catchtap="nextGuide">
-            <cover-image class="vedioGuideBox-contentmsgin" src="{{$state.imgHost}}/videoMsgthree.png"></cover-image>
-            <cover-image src="{{$state.imgHost}}/nextGude.png" class="nextGude"></cover-image>
+          <cover-image class="vedioGuideBox-contentmsgin" src="{{$state.imgHost}}/videoMsgthree.png"></cover-image>
+          <cover-image src="{{$state.imgHost}}/nextGude.png" class="nextGude"></cover-image>
         </cover-view>
       </cover-view>
       <cover-view class="vedioGuideBox-title">
@@ -135,8 +142,9 @@
   </cover-view>
   <navBar path="video" />
 </view>
-<!-- 积分动画 -->
-<integralAnimation integral="{{integral}}" integralContent="{{integralContent}}" wx:if="{{showintegral}}"></integralAnimation>
+<!-- 学分动画 -->
+<integralAnimation integral="{{integral}}" integralContent="{{integralContent}}" wx:if="{{showintegral}}">
+</integralAnimation>
 <!-- 新年红包活动 -->
 <view class="redPaket" wx:if="{{isshowRedbig}}" bindtap="closeRed">
   <view class="redbox">
