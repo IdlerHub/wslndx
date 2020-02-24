@@ -74,6 +74,13 @@ page {
     page .swiper .scroll_container {
       height: 100%;
       background: #f4f4f4; }
+      page .swiper .scroll_container .scoreSwiper {
+        width: calc(100% - 60rpx);
+        margin: 30rpx auto 0 auto;
+        height: 250rpx;
+        border-radius: 10rpx;
+        background: #ffffff;
+      }
       page .swiper .scroll_container .source_content {
         padding: 18rpx 30rpx 30rpx 30rpx; }
         page .swiper .scroll_container .source_content  .dayMission {
