@@ -113,7 +113,7 @@ Page({
           clickLuck: ''
         })
         wx.showModal({
-          content: '是否消耗25学分开启抽奖?',
+          content: '是否消耗25积分开启抽奖?',
           cancelColor: '#999',
           confirmColor: '#DF2020',
           success(res) {

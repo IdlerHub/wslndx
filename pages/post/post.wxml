@@ -308,6 +308,6 @@
 		</cover-view>
 	</cover-view>
 </cover-view>
-<!-- 学分动画 -->
+<!-- 积分动画 -->
 <integralAnimation integral="{{integral}}" integralContent="{{integralContent}}" wx:if="{{showintegral}}">
 </integralAnimation>

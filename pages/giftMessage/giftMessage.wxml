@@ -5,7 +5,7 @@
     <view class="gift-title">
       <text>{{gift.title}}</text>
       <view class="gitpoints">
-        <view class="need_points">{{gift.need_points}}</view>学分
+        <view class="need_points">{{gift.need_points}}</view>积分
       </view>
       <view class="stock">库存{{gift.stock}}件</view>
     </view>

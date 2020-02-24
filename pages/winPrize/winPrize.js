@@ -40,7 +40,7 @@ Page({
       }
     })
   },
-  // 领取学分 
+  // 领取积分 
   conversion(e) {
     console.log(e)
     if (e.currentTarget.dataset.finish == 1) return

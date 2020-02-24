@@ -1,5 +1,5 @@
 <!--pages/makeMoney/makeMoney.wxml-->
-<view class="container"> 
+<view class="container">
   <view class="top">
     <view class="topBox">
       <view class="title">我的收益</view>
@@ -10,7 +10,8 @@
       </navigator>
     </view>
     <view class="bottomBox">
-      <navigator class="bottomBox_person" hover-class="none" url="/pages/myApprentice/myApprentice" open-type="navigate">
+      <navigator class="bottomBox_person" hover-class="none" url="/pages/myApprentice/myApprentice"
+        open-type="navigate">
         <view class="dayadd">今日+0</view>
         <view class="bottomBox_center">
           <text>0</text>
@@ -33,7 +34,7 @@
           <text>0</text>
           <image src="{{$state.imgHost}}/makeMoneyRbtn.png"></image>
         </view>
-        <view class="bottomBox-txt">徒弟进贡(学分)</view>
+        <view class="bottomBox-txt">徒弟进贡(积分)</view>
       </view>
     </view>
   </view>

@@ -15,7 +15,7 @@
       </view>
     </view>
   </view>
-  <view class="broadcast"> 分享给微信好友，好友识别二维码进入小程序后系统会奖励 <text> +25学分 </text> 到个人账户 </view>
+  <view class="broadcast"> 分享给微信好友，好友识别二维码进入小程序后系统会奖励 <text> +25积分 </text> 到个人账户 </view>
 </scroll-view>
 
 <view class="buttons" hover-class="none">

@@ -352,7 +352,7 @@ Page({
           }
           if (msg.data.is_first == 'first') {
             this.setData({
-              integral: '+50 学分',
+              integral: '+50 积分',
               integralContent: '完成[秀风采]首次点赞',
               showintegral: true
             })
@@ -621,7 +621,7 @@ Page({
       app.user.guideRecordAdd(param).then(res => {
         if (res.code == 1) {
           this.setData({
-            integral: '+45 学分',
+            integral: '+45 积分',
             integralContent: '完成[秀风采]新手指引',
             showintegral: true
           })

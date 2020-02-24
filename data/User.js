@@ -57,7 +57,7 @@ function sign(param) {
 }
 
 /**
- * @description:用户学分总和 及 学分获取明细
+ * @description:用户积分总和 及 积分获取明细
  * @param {*}
  * @return: promise
  */
@@ -66,7 +66,7 @@ function pointsinfo(param) {
 }
 
 /**
- * @description:学分兑换列表
+ * @description:积分兑换列表
  * @param {*}
  * @return: promise
  */

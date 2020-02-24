@@ -82,7 +82,7 @@ Page({
 
       } else {
         wx.showToast({
-          title: "您的学分不够兑换!",
+          title: "您的积分不够兑换!",
           icon: "none",
           duration: 1500
         })
