@@ -1,4 +1,6 @@
 {
-  "usingComponents": {},
-  "navigationBarTitleText": "我的徒弟"
+  "navigationBarTitleText": "我的徒弟",
+  "usingComponents": {
+    "recruitShare": "/components/recruitShare/recruitShare"
+  }
 }

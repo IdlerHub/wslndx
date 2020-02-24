@@ -1,0 +1,25 @@
+<!--pages/myEarnings/myEarnings.wxml-->
+<view class="container">
+  <view class="topBox">
+    <view class="title">现金收益</view>
+    <view class="cash">7.10</view>
+    <navigator class="withdrawBtn" hover-class="none" url="/pages/myEarnings/myEarnings" open-type="navigate">
+    </navigator>
+  </view>
+  <view class="list" wx:if="{{list.length > 0}}">
+    <view class="item" wx:for="{{list}}" wx:key="index">
+      <view class="left">
+        <text>{{item.type_desc}}</text>
+        <text>{{item.time}}</text>
+      </view>
+      <view class="right">+{{item.amount}}</view>
+    </view>
+    <view class="item" style="height: 171rpx;">
+    </view>
+  </view>
+  <view class="qst" wx:else>
+    <image src="{{$state.imgHost}}/myApprenticeqst.png"></image>
+    <text>暂无记录，去邀请好友</text>
+  </view>
+</view>
+<recruitShare/>

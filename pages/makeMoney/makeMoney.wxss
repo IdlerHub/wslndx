@@ -105,7 +105,7 @@ page {
 }
 .container .rankin_list {
   width: 690rpx;
-  min-height: 776rpx;
+  min-height: 574rpx;
   margin: 0 auto;
   background:#fff;
   border-radius:10rpx;
@@ -160,7 +160,7 @@ page {
   padding-left:10rpx ;
 }
 .container .rankin_list .qst {
-  margin-top: 80rpx;
+  margin-top: 50rpx;
   display: flex;
   flex-direction: column;
   align-items: center;

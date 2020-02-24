@@ -18,13 +18,4 @@
   <image src="{{$state.imgHost}}/myApprenticeqst.png"></image>
   <text>暂无记录，去邀请好友</text>
 </view>
-<view class="shareBox"> 
-  <button class="shareBtn" open-type="share" data-id="{{ $state.userInfo.id }}" hover-class="btn-hover">
-    <image src="{{$state.imgHost}}/makeMoneywx.png"></image>
-    <text>邀请好友</text>
-  </button>
-  <navigator class="shareBtn" hover-class="none" url="/pages/invitation/invitation" open-type="navigate">
-    <image src="{{$state.imgHost}}/sharefriends.png"></image>
-    <text>朋友圈</text>
-  </navigator>
-</view>
+<recruitShare/>
