@@ -10,7 +10,7 @@
       </view>
     </view>
     <view class="bottomBox">
-      <view class="bottomBox_person">
+      <navigator class="bottomBox_person" hover-class="none" url="/pages/myApprentice/myApprentice" open-type="navigate">
         <view class="dayadd">今日+0</view>
         <view class="bottomBox_center">
           <text>0</text>
@@ -18,7 +18,7 @@
         </view>
         <view class="bottomBox-txt">已收徒(人)</view>
         <view class="border"></view>
-      </view>
+      </navigator>
       <view class="bottomBox_person bottomBox_money">
         <view class="dayadd">今日+0.0</view>
         <view class="bottomBox_center">

@@ -163,8 +163,8 @@
 				},
 				{
 					"id": 10,
-					"name": "收徒赚钱页面",
-					"pathName": "pages/strategy/strategy",
+					"name": "收徒赚钱",
+					"pathName": "pages/myApprentice/myApprentice",
 					"query": "",
 					"scene": null
 				}

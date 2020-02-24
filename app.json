@@ -41,7 +41,8 @@
     "pages/messagePage/messagePage",
     "pages/attentionPage/attentionPage",
     "pages/makeMoney/makeMoney",
-    "pages/strategy/strategy"
+    "pages/strategy/strategy",
+    "pages/myApprentice/myApprentice"
   ],
   "permission": {
     "scope.userLocation": {
