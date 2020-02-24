@@ -44,7 +44,7 @@
     </view>
     <view class="rankin_listTitle">
       <text>排名</text>
-      <text>头像昵称</text>
+      <text>师傅昵称</text>
       <text>收徒人数</text>
       <text>收益(元)</text>
     </view>
