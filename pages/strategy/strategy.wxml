@@ -1,2 +1,19 @@
 <!--pages/strategy/strategy.wxml-->
-<text>pages/strategy/strategy.wxml</text>
+<view class="container">
+  <view class="top">
+    <view class="titleBox" bindtap="check">
+      <text class="{{current == 1 ? 'texthover' : ''}}">如何收徒</text>
+      <view class="border" wx:if="{{current == 1}}"></view>
+    </view>
+    <view class="titleBox" bindtap="check" data-type="2">
+      <text class="{{current == 2 ? 'texthover' : ''}}">活动规则</text>
+      <view class="border" wx:if="{{current == 2}}"></view>
+    </view>
+  </view>
+  <view class="content" wx:if="{{current == 1}}">
+    <rich-text class="contrain" nodes="{{content}}" space="emsp" type = "text"></rich-text>
+  </view>
+  <view class="content" wx:else>
+    <rich-text class="contrain" nodes="{{rule}}" space="emsp" type = "text"></rich-text>
+  </view>
+</view>
