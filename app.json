@@ -44,7 +44,8 @@
     "pages/strategy/strategy",
     "pages/myApprentice/myApprentice",
     "pages/myEarnings/myEarnings",
-    "components/recruitShare/recruitShare"
+    "components/recruitShare/recruitShare",
+    "pages/withdraw/withdraw"
   ],
   "permission": {
     "scope.userLocation": {

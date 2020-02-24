@@ -3,7 +3,7 @@
   <view class="topBox">
     <view class="title">现金收益</view>
     <view class="cash">7.10</view>
-    <navigator class="withdrawBtn" hover-class="none" url="/pages/myEarnings/myEarnings" open-type="navigate">
+    <navigator class="withdrawBtn" hover-class="none" url="/pages/withdraw/withdraw" open-type="navigate">
     </navigator>
   </view>
   <view class="list" wx:if="{{list.length > 0}}">

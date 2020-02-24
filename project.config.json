@@ -164,7 +164,7 @@
 				{
 					"id": 10,
 					"name": "收徒赚钱",
-					"pathName": "pages/makeMoney/makeMoney",
+					"pathName": "pages/withdraw/withdraw",
 					"query": "",
 					"scene": null
 				}

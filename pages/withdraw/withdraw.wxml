@@ -1,0 +1,12 @@
+<!--pages/withdraw/withdraw.wxml-->
+<view class="container">
+  <view class="topBox">
+    <text class="txt">总金额</text>
+    <navgator class="withdrawRecord">
+      <text>提现记录</text>
+      <image src="/images/cashRight.png"></image>
+    </navgator>
+    <view class="money">7.9<text>元</text></view>
+  </view>
+</view>
+<recruitShare type="{{false}}"/>

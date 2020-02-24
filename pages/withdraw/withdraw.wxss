@@ -1,0 +1,56 @@
+/* pages/withdraw/withdraw.wxss */
+page {
+  background:rgba(244,244,244,1);
+}
+.container .topBox {
+  width: 730rpx;
+  height: 378rpx;
+  background:url('https://hwcdn.jinlingkeji.cn/images/pro/makeMoneytop.png') no-repeat center;
+  background-size: 100% 100%;
+  margin:0 auto;
+  position: relative;
+}
+.container .topBox .txt{
+  display: block;
+  font-size:38rpx;
+  font-family:PingFangSC-Medium,PingFang SC;
+  font-weight:500;
+  color:rgba(255,255,255,1);
+  float: left;
+  margin-top: 46rpx;
+  margin-left: 50rpx;
+}
+.container .topBox .withdrawRecord {
+  display: flex;
+  align-items: center;
+  float: right;
+  margin-right: 42rpx;
+  margin-top: 54rpx;
+}
+.container .topBox .withdrawRecord text {
+  font-size:32rpx;
+  font-family:PingFangSC-Regular,PingFang SC;
+  font-weight:400;
+  color:rgba(255,255,255,1);
+}
+.container .topBox .withdrawRecord image {
+  width: 50rpx;
+  height: 50rpx;
+  margin-bottom: -9rpx;
+}
+.container .topBox .money {
+  font-size:80rpx;
+  font-family:PingFangSC-Medium,PingFang SC;
+  font-weight:500;
+  color:rgba(244,244,244,1);
+  position: absolute;
+  top: 129rpx;
+  left: 299rpx;
+}
+.container .topBox .money text {
+  font-size:28rpx;
+  font-family:PingFangSC-Medium,PingFang SC;
+  font-weight:500;
+  color:rgba(244,244,244,1);
+  margin-left: 10rpx;
+}
