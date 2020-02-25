@@ -1,9 +1,8 @@
 {
   "pages": [
-    "pages/video/video",
-
     "pages/index/index",
     "pages/loading/loading",
+    "pages/video/video",
     "pages/release/release",
     "pages/post/post",
     "pages/circle/circle",
