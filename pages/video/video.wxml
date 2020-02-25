@@ -63,6 +63,8 @@
                 <view wx:else class="text">{{ cur.forward }}</view>
               </button>
               <view class="redPacket" catchtap="showred" wx:if="{{isshowRed}}"></view>
+              <navigator class="moneyPackt" hover-class="none" url="/pages/makeMoney/makeMoney" wx:if="{{$state.authUserInfo}}"></navigator>
+              <button open-type="getUserInfo" bindgetuserinfo="onGotUserInfo" class="moneyPackt" data-type="money" wx:else></button>
             </view>
           </view>
         </view>

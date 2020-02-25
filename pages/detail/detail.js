@@ -175,7 +175,12 @@ Page({
   },
   onHide() { },
   onGotUserInfo: function (e) {
-    app.updateBase(e);
+    if (e.detail.errMsg == "getUserInfo:ok") {
+      app.updateBase(e)
+      e.currentTarget.dataset.type ? wx.navigateTo({
+        url: '/pages/makeMoney/makeMoney',
+      }) : ''
+    }
   },
   switchNav(event) {
     let cur = event.currentTarget.dataset.current;
@@ -428,41 +433,6 @@ Page({
           }
         }
       })
-      // wx.startWifi({
-      //   success: res => {
-      //     wx.getConnectedWifi({
-      //       success: res => {
-      //         app.playVedio("wifi");
-      //         that.recordAddVedio(param);
-      //       },
-      //       fail: res => {
-      //         console.log(res);
-      //         wx.showModal({
-      //           content:
-      //             "您当前不在Wi-Fi环境，继续播放将会产生流量，是否选择继续播放?",
-      //           confirmText: "是",
-      //           cancelText: "否",
-      //           confirmColor: "#DF2020",
-      //           success(res) {
-      //             if (res.confirm) {
-      //               app.playVedio("flow");
-      //               that.recordAddVedio(param);
-      //             } else if (res.cancel) {
-      //               console.log("用户点击取消");
-      //             }
-      //           }
-      //         })
-      //       },
-      //       complete: () => {
-      //         wx.stopWifi({
-      //           success: res => {
-      //             console.log('wifi模块关闭成功')
-      //           }
-      //         })
-      //       }
-      //     });
-      //   }
-      // });
     }
   },
   recordAddVedio(param) {

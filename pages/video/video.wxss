@@ -113,6 +113,16 @@
   background-size: cover;
   animation: ani 2s steps(23, end) infinite;
 }
+.vedioAll .moneyPackt {
+  position: absolute;
+  width: 88rpx;
+  height: 88rpx;
+  top: -118rpx;
+  right: 17rpx;
+  background: url('https://hwcdn.jinlingkeji.cn/images/pro/moneyActive.png');
+  background-size: cover;
+  animation: ani 1s steps(23, end) infinite;
+}
 .vedioAll .vedioAllTop {
   display: flex;
   flex-direction: row;

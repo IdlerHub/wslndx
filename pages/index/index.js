@@ -516,7 +516,6 @@ Page({
       // })
       wx.uma.trackEvent('index_bannerClick', { 'bannerMini': item.title });
     } else if (item.jump_type == 5) {
-      console.log(34726462374)
       wx.navigateTo({
         url: item.clickurl,
       })

@@ -227,7 +227,7 @@
 .integral  .integralImg {
   width: 96rpx;
   height: 80rpx;
-  background: url('https://jinling-xcx-dev.obs.cn-north-1.myhuaweicloud.com/images/pro/integral.png') no-repeat;
+  background: url('https://jinling-xcx-dev.obs.cn-north-1.myhuaweicloud.com/images/pro/integral2.png') no-repeat;
   background-size: cover;
   animation: flicker steps(23, end) infinite 2.5s 1s;
 }

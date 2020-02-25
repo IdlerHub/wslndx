@@ -214,68 +214,6 @@ Page({
           }
         }
       })
-      // wx.startWifi({
-      //   success: res => {
-      //     wx.getConnectedWifi({
-      //       success: res => {
-      //         console.log(res)
-      //         that.wifi = true
-      //         app.playVedio('wifi')
-      //         that.videoContext.play()
-      //         that.setData({
-      //           autoplay: true,
-      //           pause: false
-      //         })
-      //         setTimeout(() => {
-      //           that.vedioRecordAdd()
-      //         }, 200);
-      //       },
-      //       fail: res => {
-      //         console.log(res)
-      //         that.videoContext.pause()
-      //         that.setData({
-      //           autoplay: false,
-      //           pause: true
-      //         })
-      //         that.wifi = false
-      //         wx.showModal({
-      //           content: '您当前不在Wi-Fi环境，继续播放将会产生流量，是否选择继续播放?',
-      //           confirmText: '是',
-      //           cancelText: '否',
-      //           confirmColor: '#DF2020',
-      //           success(res) {
-      //             if (res.confirm) {
-      //               app.playVedio('flow')
-      //               that.setData({
-      //                 autoplay: true,
-      //                 pause: false
-      //               })
-      //               that.videoContext.play()
-      //               setTimeout(() => {
-      //                 that.vedioRecordAdd()
-      //               }, 200);
-      //             } else if (res.cancel) {
-      //               app.playVedio('wifi')
-      //               that.videoContext.pause()
-      //               that.setData({
-      //                 pause: true,
-      //                 autoplay: false
-      //               })
-      //               console.log('用户点击取消')
-      //             }
-      //           }
-      //         })
-      //       },
-      //       complete: () => {
-      //         wx.stopWifi({
-      //           success: res => {
-      //             console.log('wifi模块关闭成功')
-      //           }
-      //         })
-      //       }
-      //     })
-      //   }
-      // })
     } else if (this.data.currentTab == 0) {
       this.setData({
         pause: false,
@@ -573,6 +511,9 @@ Page({
   onGotUserInfo: function (e) {
     if (e.detail.errMsg == "getUserInfo:ok") {
       app.updateBase(e)
+      e.currentTarget.dataset.type ? wx.navigateTo({
+        url: '/pages/makeMoney/makeMoney',
+      }) : ''
     }
   },
   onUnload() {
