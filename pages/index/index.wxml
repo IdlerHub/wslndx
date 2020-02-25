@@ -52,7 +52,6 @@
           <view class="left">
             <button open-type="getUserInfo" bindgetuserinfo="onGotUserInfo" data-role="user" class="img left-btn"
               catchtap="getSomthin">
-
             </button>
             <open-data class="img" type="userAvatarUrl" catchtap="toUser"></open-data>
             <view class="info">
@@ -79,9 +78,12 @@
       <image src="{{$state.imgHost}}/searchp.png"></image>
       <text>搜索课程名称</text>
     </navigator>
-    <view class="integral" bindtap="toScore">
+    <view class="integral" bindtap="toScore" wx:if="{{$state.authUserInfo}}">
       <view class="integralImg"></view>
     </view>
+    <button open-type="getUserInfo" bindgetuserinfo="onGotUserInfo" class="integral" data-type="score" wx:else>
+      <view class="integralImg"></view>
+    </button>
   </view>
   <navigationBar wx:if="{{ scroll }}" id="navigationBar" placeholderBg="#F8F8F8" color="#000000" title="网上老年大学"
     back="{{ false }}" background="#F8F8F8"></navigationBar>

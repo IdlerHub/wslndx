@@ -444,6 +444,13 @@ App({
       }
     });
   },
+  withdrawShare(ops) {
+      return {
+        title: this.store.$state.shareTitle || "福利！老年大学十万集免费课程在线学习",
+        path: "/pages/loading/loading?uid=" + this.store.$state.userInfo.id + "&type=invite",
+        imageUrl: this.store.$state.imgHost + '/withdrawShareImg.jpg'
+      }
+  },
   globalData: {
     /*wx.login 返回值 code */
     code: null,

@@ -356,8 +356,9 @@ Page({
         this.toUser()
       } else if (e.currentTarget.dataset.role == "post") {
         this.toPost()
-      }
-      if (e.currentTarget.dataset.type == "banner") {
+      } else if(e.currentTarget.dataset.type == "score") {
+        this.toScore()
+      } else if (e.currentTarget.dataset.type == "banner") {
         let item = e.currentTarget.dataset.item;
         console.log(item)
         if(item.jump_type == '5') {
