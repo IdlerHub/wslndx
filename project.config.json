@@ -174,6 +174,27 @@
 					"pathName": "pages/voteProduction/voteProduction",
 					"query": "",
 					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/vote/vote",
+					"pathName": "pages/vote/vote",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/voteDetail/voteDetail",
+					"pathName": "pages/voteDetail/voteDetail",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/vote/vote",
+					"pathName": "pages/vote/vote",
+					"query": "",
+					"scene": null
 				}
 			]
 		}

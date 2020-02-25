@@ -1,12 +1,12 @@
 <!--pages/myProduction/myProduction.wxml-->
 <view class="myProduction">
     <view class="state">
-        <block wx:for="{{state}}" wx:key="{{index}}">
+        <block wx:for="{{state}}" wx:key="index">
             <view class="{{stateIndex==index? 'active' : ''}}" bindtap="changeState" data-index="{{index}}">{{item}}{{stateNum[index]}}</view>
         </block>
     </view>
     <view class="production-list"   wx:if="{{productionList.length}}">
-        <block wx:for="{{productionList}}" wx:key="{{index}}">
+        <block wx:for="{{productionList}}" wx:key="index">
             <view class="production-item">
                 <view class="item-left">
                     <image wx:if="{{item.type==1}}" class="item-classify" src="../../images/vote-img.png" alt="" />
