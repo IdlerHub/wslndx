@@ -17,7 +17,13 @@ Page({
     showHome: false,
     showSignbox: false,
     sign_days: 0,
-    paddingAdd: false
+    paddingAdd: false,
+    bannerList:[
+      {
+        img:'https://hwcdn.jinlingkeji.cn/images/pro/withdrawBanner.png',
+        clickUrl:'/pages/makeMoney/makeMoney'
+      }
+    ]
   },
   pageName: '学分兑换页',
   common: {

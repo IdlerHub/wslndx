@@ -5,7 +5,8 @@ import { wxp } from "../../utils/service";
 Page({
   data: {
     locolurl: "",
-    qrcode: null
+    qrcode: null,
+    withdraw: false
   },
   param: {
     count: 0,
@@ -15,6 +16,10 @@ Page({
   },
   //options(Object)
   onLoad: function(options) {
+    console.log(options.type)
+    options.type ? this.setData({
+      withdraw: true
+    }) : ''
     let user = this.data.$state.userInfo;
     wxp.getImageInfo({ src: user.avatar }).then(res => {
       if (res.errMsg == "getImageInfo:ok") {
@@ -48,10 +53,11 @@ Page({
       .exec();
   },
   draw: function() {
-    let ctx = wx.createCanvasContext("canva_invite", this);
+    let img = this.data.withdraw ? '../../images/invitation2.png' : '../../images/invitation.png'
+    let ctx = wx.createCanvasContext("canva_invite", this)
     let ratio = 0.5;
     ctx.drawImage(
-      "../../images/invitation.png",
+      img,
       0,
       0,
       this.param.container.width,
