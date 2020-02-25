@@ -2,7 +2,7 @@
 <view class="container">
   <view class="topBox">
     <text class="txt">总金额</text>
-    <navgator class="withdrawRecord">
+    <navgator class="withdrawRecord" hover-class="none" url="/pages/withdrawalRecord/withdrawalRecord" open-type="navigate">
       <text>提现记录</text>
       <image src="/images/cashRight.png"></image>
     </navgator>

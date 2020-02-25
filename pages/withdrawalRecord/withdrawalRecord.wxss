@@ -1,1 +1,59 @@
 /* pages/withdrawalRecord/withdrawalRecord.wxss */
+.container {
+  padding: 0 30rpx;
+}
+.container .item {
+  padding:30rpx 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(237,237,237,1);
+}
+.container .item .left {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.container .item .left text:nth-child(1){
+  font-size:40rpx;
+  font-family:PingFangSC-Regular,PingFang SC;
+  font-weight:400;
+  color:rgba(58,58,58,1);
+  margin-bottom: 10rpx;
+}
+.container .item .left text:nth-child(2){
+  font-size:32rpx;
+  font-family:PingFangSC-Regular,PingFang SC;
+  font-weight:400;
+  color:rgba(126,126,126,1);
+}
+.container .item .right {
+  width:190rpx;
+  height:80rpx;
+  background:rgba(204,204,204,1);
+  border-radius:4rpx;
+  font-size:36rpx;
+  font-family:PingFangSC-Regular,PingFang SC;
+  font-weight:400;
+  color:rgba(255,255,255,1);
+  text-align: center;
+  line-height: 80rpx;
+}
+.qst {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 182rpx;
+}
+.qst image {
+  width: 200rpx;
+  height: 282rpx;
+  margin-bottom: 50rpx;
+}
+.qst text {
+  font-size:34rpx;
+  font-family:PingFangSC-Regular,PingFang SC;
+  font-weight:400;
+  color:rgba(126,126,126,1);
+}
