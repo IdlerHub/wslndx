@@ -1,8 +1,9 @@
 {
   "pages": [
+    "pages/video/video",
+
     "pages/index/index",
     "pages/loading/loading",
-    "pages/video/video",
     "pages/release/release",
     "pages/post/post",
     "pages/circle/circle",
@@ -40,11 +41,12 @@
     "pages/usermesseage/usermesseage",
     "pages/messagePage/messagePage",
     "pages/attentionPage/attentionPage",
+
     "pages/vote/vote",
+    "pages/myProduction/myProduction",
     "pages/voteProduction/voteProduction",
     "pages/voteRule/voteRule",
     "pages/voteDetail/voteDetail",
-    "pages/myProduction/myProduction",
     "pages/voteFail/voteFail"
   ],
   "permission": {
