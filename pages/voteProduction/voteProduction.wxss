@@ -123,6 +123,7 @@ page{
 }
 .production-upload .upload-img .btn-img,
 .production-upload .upload-img .show-img{
+    overflow: hidden;
     width: 214rpx;
     height: 160rpx;
     text-align: center;

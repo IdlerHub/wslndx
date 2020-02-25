@@ -74,9 +74,6 @@ socket.prototype = {
     if (this.reCount && this.SocketTask.readyState) {
       this.SocketTask.send({
         data: JSON.stringify(param),
-        success: res => {
-          console.log("success:", res)
-        },
         fail: res => {
           console.log("fail:", res)
         }
@@ -86,17 +83,16 @@ socket.prototype = {
         this.reCount = 3
         this.reconnection()
       }
-      this.SocketTask.onOpen(() => {
-        this.SocketTask.send({
-          data: JSON.stringify(param),
-          success: res => {
-            console.log("success:", res)
-          },
-          fail: res => {
-            console.log("fail:", res)
-          }
+      if (this.SocketTask) {
+        this.SocketTask.onOpen(() => {
+          this.SocketTask.send({
+            data: JSON.stringify(param),
+            fail: res => {
+              console.log("fail:", res)
+            }
+          })
         })
-      })
+      }
     }
   },
   heartBeat() {

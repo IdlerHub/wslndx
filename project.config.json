@@ -167,6 +167,13 @@
 					"pathName": "pages/post/post",
 					"query": "",
 					"scene": null
+				},
+				{
+					"id": 11,
+					"name": "pages/voteProduction/voteProduction",
+					"pathName": "pages/voteProduction/voteProduction",
+					"query": "",
+					"scene": null
 				}
 			]
 		}

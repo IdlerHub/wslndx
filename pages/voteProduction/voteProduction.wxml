@@ -20,7 +20,7 @@
         <view class="production-title">
             <view>选择表现形式</view>
             <view class="modality">
-                <block wx:for="{{modality}}" wx:key="{{index}}">
+                <block wx:for="{{modality}}" wx:key="index">
                     <view class="{{index==modalityIndex? 'active' : ''}}"  bindtap="changeModality" data-index="{{index}}">{{item}}</view>
                 </block>
             </view>
@@ -30,20 +30,20 @@
         <view class="upload-title">{{modalityIndex==0? '上传图片（9张以内）': '上传视频'}}</view>
         <view class="upload-tip">{{modalityIndex==0? '图片尺寸建议950*550支持jpg、png': '视频大小不超过200MB，支持MP4等格式'}}</view>
         <view class="upload-img" wx:if="{{modalityIndex==0}}">
-            <view class="btn-img" bindtap="uploadImg">添加图片</view>
-            <view class="show-img" wx:for="{{imgList}}" wx:key="{{index}}" >
-                <image src="" alt="" mode="widthFix" />
-                <icon class="clear"data-index="4"size="19" type="clear"role="img" catchtap="delImg"></icon>
+            <view class="btn-img" bindtap="uploadImg"  wx:if="{{imgList.length < 9 }}">添加图片</view>
+            <view class="show-img" wx:for="{{imgList}}" wx:key="index" >
+                <image src="{{item}}" alt="" mode="widthFix" data-index="{{index}}" catchtap="preview" />
+                <icon class="clear" data-index="{{index}}" size="19" type="clear"role="img" catchtap="delImg"></icon>
             </view>
         </view>
         <view class="upload-img" wx:else>
-            <view class="btn-img" hidden="{{videoFlag}}" bindtap="uploadVideo">添加视频</view>
-            <view class="show-img"  hidden="{{!videoFlag}}">
+            <view class="btn-img" hidden="{{poster}}" bindtap="uploadVideo">添加视频</view>
+            <view class="show-img"  hidden="{{!poster}}">
                 <image src="" alt="" mode="widthFix" />
                 <icon class="clear" data-index="4" size="19" type="clear" role="img" catchtap="delVideo"></icon>
             </view>
         </view>
-        <view wx:if="{{modalityIndex==0}}" class="upload-tip" style="font-size: 32rpx; color: #999;">共2张图片，点击图片预览，长按拖拽排序</view>
+        <view wx:if="{{modalityIndex==0}}" class="upload-tip" style="font-size: 32rpx; color: #999;">共{{imgList.length}}张图片，点击图片预览，长按拖拽排序</view>
     </view>
     <view class="production-footer" bindtap="submitProduction">立即参赛</view>
 </view>
