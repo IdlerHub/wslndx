@@ -1,0 +1,43 @@
+<!--pages/vote/vote.wxml-->
+<view class="vote">
+    <view class="vote-header">
+        <view class="header-left">
+            <image src="../../images/vote-talk.png" alt="" />
+            <view class="text">用户158****2804发布了#书法与绘sdasdasdsds画</view>
+        </view>
+        <view class="header-right">
+            <text>活动</text>
+            <text>规则</text>
+        </view>
+    </view>
+    <view class="vote-search">
+        <image src="../../images/vote-search.png" alt="" />
+        <input type="text" placeholder="请输入作品名称或作者名" placeholder-class="search-ipt" />
+        <view class="search-btn">搜索</view>
+    </view>
+    <view class="vote-body">
+        <scroll-view class="swiper-list"  enable-flex scroll-x="true">
+            <block wx:for="{{classifyList}}" wx:key="{{index}}">
+                <view class="swiper-item {{selectedIndex==index? 'active' : ''}}" bindtap="changeclassify" data-index="{{index}}">{{item}}</view>
+            </block>
+        </scroll-view>
+        <view class="vote-list">
+            <block wx:for="{{productionList}}" wx:key="{{index}}">
+                <view class="vote-item">
+                    <view class="item-up">
+                        <view class="item-img">
+
+                        </view>
+                    </view>
+                    <view class="item-down">
+                        <view class="item-name">{{item.name}}</view>
+                        <view class="item-footer">
+                            <view class="item-zan">{{item.prise_numbers}}赞</view>
+                            <view class="zan-btn">点赞加油</view>
+                        </view>
+                    </view>
+                </view>
+            </block>
+        </view>
+    </view>
+</view>

@@ -39,7 +39,13 @@
     "components/integralAni/integralAni",
     "pages/usermesseage/usermesseage",
     "pages/messagePage/messagePage",
-    "pages/attentionPage/attentionPage"
+    "pages/attentionPage/attentionPage",
+    "pages/vote/vote",
+    "pages/voteProduction/voteProduction",
+    "pages/voteRule/voteRule",
+    "pages/voteDetail/voteDetail",
+    "pages/myProduction/myProduction",
+    "pages/voteFail/voteFail"
   ],
   "permission": {
     "scope.userLocation": {
