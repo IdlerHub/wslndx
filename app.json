@@ -40,13 +40,13 @@
     "pages/usermesseage/usermesseage",
     "pages/messagePage/messagePage",
     "pages/attentionPage/attentionPage",
-
     "pages/vote/vote",
     "pages/myProduction/myProduction",
     "pages/voteProduction/voteProduction",
     "pages/voteRule/voteRule",
     "pages/voteDetail/voteDetail",
-    "pages/voteFail/voteFail"
+    "pages/voteFail/voteFail",
+    "pages/voteSearch/voteSearch"
   ],
   "permission": {
     "scope.userLocation": {
