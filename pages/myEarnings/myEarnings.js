@@ -7,17 +7,17 @@ Page({
   },
   onLoad: function (options) {
     let list = [
-      {'type_desc' : '收徒奖励' , 'amount': '0.1' , 'createtime': '1582507826'},
-      {'type_desc' : '收徒奖励' , 'amount': '0.1' , 'createtime': '1582507826'},
-      {'type_desc' : '收徒奖励' , 'amount': '0.1' , 'createtime': '1582507826'},
-      {'type_desc' : '收徒奖励' , 'amount': '0.1' , 'createtime': '1582507826'},
-      {'type_desc' : '收徒奖励' , 'amount': '0.1' , 'createtime': '1582507826'},
-      {'type_desc' : '收徒奖励' , 'amount': '0.1' , 'createtime': '1582507826'},
-      {'type_desc' : '收徒奖励' , 'amount': '0.1' , 'createtime': '1582507826'},
-      {'type_desc' : '收徒奖励' , 'amount': '0.1' , 'createtime': '1582507826'},
-      {'type_desc' : '收徒奖励' , 'amount': '0.1' , 'createtime': '1582507826'},
-      {'type_desc' : '收徒奖励' , 'amount': '0.1' , 'createtime': '1582507826'},
-      {'type_desc' : '收徒奖励' , 'amount': '0.1' , 'createtime': '1582507826'},
+      {'type_desc' : '邀请新学员奖励' , 'amount': '0.1' , 'createtime': '1582507826'},
+      {'type_desc' : '邀请新学员奖励' , 'amount': '0.1' , 'createtime': '1582507826'},
+      {'type_desc' : '邀请新学员奖励' , 'amount': '0.1' , 'createtime': '1582507826'},
+      {'type_desc' : '邀请新学员奖励' , 'amount': '0.1' , 'createtime': '1582507826'},
+      {'type_desc' : '邀请新学员奖励' , 'amount': '0.1' , 'createtime': '1582507826'},
+      {'type_desc' : '邀请新学员奖励' , 'amount': '0.1' , 'createtime': '1582507826'},
+      {'type_desc' : '邀请新学员奖励' , 'amount': '0.1' , 'createtime': '1582507826'},
+      {'type_desc' : '邀请新学员奖励' , 'amount': '0.1' , 'createtime': '1582507826'},
+      {'type_desc' : '邀请新学员奖励' , 'amount': '0.1' , 'createtime': '1582507826'},
+      {'type_desc' : '邀请新学员奖励' , 'amount': '0.1' , 'createtime': '1582507826'},
+      {'type_desc' : '邀请新学员奖励' , 'amount': '0.1' , 'createtime': '1582507826'},
     ]
     list.forEach(v => {
       v.time = app.util.formatTime(new Date(v.createtime * 1000))

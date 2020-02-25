@@ -31,6 +31,9 @@ Page({
     }) : this.setData({
       showHome: false
     })
+    options.curren ? this.setData({
+      currentTab: options.curren
+    }) : ''
   },
   onShow: function () {
     let sources = [{
