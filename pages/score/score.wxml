@@ -33,7 +33,7 @@
   <swiper-item item-id="1">
     <scroll-view class="scroll_container" scroll-y="{{ scrollStatus }}">
       <swiper class="scoreSwiper">
-        <swiper-item wx:for="{{bannerList}}">
+        <swiper-item wx:for="{{bannerList}}" wx:key="index">
           <navigator class="bannerItem" hover-class="none" url="{{item.clickUrl}}" style="background: url({{item.img}});background-size: 100% 100%;"></navigator>
         </swiper-item>
       </swiper>

@@ -39,6 +39,18 @@
   text-align: center;
   line-height: 80rpx;
 }
+.container .item .rightnow {
+  width:190rpx;
+  height:80rpx;
+  border-radius:4rpx;
+  font-size:36rpx;
+  border:1px solid rgba(223,32,32,1);
+  font-family:PingFangSC-Regular,PingFang SC;
+  font-weight:400;
+  color:rgba(223,32,32,1);
+  text-align: center;
+  line-height: 80rpx;
+}
 .qst {
   height: 100vh;
   display: flex;

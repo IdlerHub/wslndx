@@ -34,6 +34,11 @@ Page({
   onShow: function () {
 
   },
+  onHide() {
+    this.setData({
+      showToast: false
+    })
+  },
   onShareAppMessage: function (ops) {
     if (ops.from === "menu") {
       return this.menuAppShare()

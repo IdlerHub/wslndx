@@ -526,7 +526,9 @@ Page({
   },
   // 用于数据统计
   onHide() {
-    this.videoContext.stop()
+    setTimeout(() => {
+      this.videoContext.stop()
+    }, 500);
     // app.aldstat.sendEvent("退出", { name: "短视频页" })
   },
   //指引
