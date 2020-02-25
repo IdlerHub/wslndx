@@ -356,20 +356,25 @@ Page({
         this.toUser()
       } else if (e.currentTarget.dataset.role == "post") {
         this.toPost()
-      } else {
-        this.toEducation()
       }
       if (e.currentTarget.dataset.type == "banner") {
         let item = e.currentTarget.dataset.item;
-        setTimeout(() => {
+        console.log(item)
+        if(item.jump_type == '5') {
           wx.navigateTo({
-            url: `../education/education?url=${item.clickurl}&login=${item.is_login}&id=0&type=1`
+            url: item.clickurl,
           })
-          // app.aldstat.sendEvent("首页轮播-公众号点击", {
-          //   title: item.title
-          // })
-          wx.uma.trackEvent('index_bannerClick', { 'bannerTencent': item.title });
-        }, 500);
+        } else {
+          setTimeout(() => {
+            wx.navigateTo({
+              url: `../education/education?url=${item.clickurl}&login=${item.is_login}&id=0&type=1`
+            })
+          }, 500);
+        }
+        // app.aldstat.sendEvent("首页轮播-公众号点击", {
+            //   title: item.title
+            // })
+        wx.uma.trackEvent('index_bannerClick', { 'bannerTencent': item.title });
       }
     }
   },
@@ -511,9 +516,13 @@ Page({
       // })
       wx.uma.trackEvent('index_bannerClick', { 'bannerMini': item.title });
     } else if (item.jump_type == 5) {
+      console.log(34726462374)
       wx.navigateTo({
-        url: `../education/education?url=${item.clickurl}&login=${item.is_login}&id=0&type=1`
+        url: item.clickurl,
       })
+      // wx.navigateTo({
+      //   url: `../education/education?url=${item.clickurl}&login=${item.is_login}&id=0&type=1`
+      // })
       wx.uma.trackEvent('index_bannerClick', { 'bannerActivity': item.title });
     } else {
       /* 文章 */
