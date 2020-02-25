@@ -6,7 +6,7 @@
 <view class="bg">
   <text class="title">您的可用积分</text>
   <text class="scores">{{ totalPoints }}</text>
-  <image src="{{$state.imgHost}}/scoreTodrawtwo.png" catchtap="toDraw"></image>
+  <image src="{{$state.imgHost}}/scoreTodraw.png" catchtap="toDraw"></image>
 </view>
 <!-- tabs菜单列表 -->
 <view class="tabs" hover-stop-propagation="true" catchtouchmove="return">
