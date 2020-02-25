@@ -37,7 +37,7 @@
                         <view class="item-name" bindtap="toDetail">{{item.name}}</view>
                         <view class="item-footer">
                             <view class="item-zan">{{item.prise_numbers}}赞</view>
-                            <view class="zan-btn" bindtap="giveLike">点赞加油</view>
+                            <view class="zan-btn"   data-index='{{index}}'  catchtap="giveLike">点赞加油</view>
                         </view>
                     </view>
                 </view>
@@ -45,11 +45,11 @@
         </view>
     </view>
     <view class="vote-footer">
-        <view class="footer-left">
+        <view class="footer-left" catchtap="join">
             <image src="../../images/vote-join.png" alt="" />
             <text>我要参赛</text>
         </view>
-        <view class="footer-right">
+        <view class="footer-right" catchtap="works">
             <image src="../../images/vote-myproduction.png" alt="" />
             <text>我的作品</text>
         </view>
