@@ -92,7 +92,7 @@
     </view>
     <view class="drawRuleBox-p">
       <view class="drawRuleBox-pnum">1</view>
-      <view class="drawRuleBox-pcon">消费25个积分抽奖一次</view>
+      <view class="drawRuleBox-pcon">消费25个学分抽奖一次</view>
     </view>
     <view class="drawRuleBox-p">
       <view class="drawRuleBox-pnum">2</view>

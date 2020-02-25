@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText": "我的徒弟",
+  "navigationBarTitleText": "我的学员",
   "usingComponents": {
     "recruitShare": "/components/recruitShare/recruitShare"
   }

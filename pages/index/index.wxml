@@ -73,7 +73,7 @@
       </button>
     </view>
   </view>
-  <!-- 搜索/积分 -->
+  <!-- 搜索/学分 -->
   <view class="search-box">
     <navigator class="search-left" url="/pages/search/search">
       <image src="{{$state.imgHost}}/searchp.png"></image>
@@ -231,13 +231,13 @@
     <view class="line">{{ history.last_lesson.title + "第" + history.last_lesson.sub_id + "讲" }}</view>
     <image src="{{$state.imgHost}}/nowcancle.png" catchtap="closenow"></image>
   </view>
-  <!-- 签到拿积分 -->
+  <!-- 签到拿学分 -->
   <view class="integration" wx:if="{{ !$state.signStatus.count && recommend[0] && !dialog[0].image}}"
     catchtouchmove="return">
     <view class="dialog">
       <image class="bg" src="/images/integrationBg.png" mode="aspectFill"></image>
       <view class="ani" catchtap="signIn" data-id="1"></view>
-      <!-- <button catchtap="signIn" data-id="1">签到领积分</button> -->
+      <!-- <button catchtap="signIn" data-id="1">签到领学分</button> -->
       <icon type="cancel" size="37" color="white" data-id="0" catchtap="signIn"></icon>
     </view>
   </view>
@@ -248,7 +248,7 @@
         style="background: url('{{dialog[0].image}}') no-repeat center; background-size: 100% 100%;border-radius:10px"
         src="{{dialog[0].image}}" mode="aspectFill" catchtap="jumpPeper" data-peper="{{dialog[0].url}}"
         data-type="dialog"></view>
-      <!-- <button catchtap="signIn" data-id="1">签到领积分</button> -->
+      <!-- <button catchtap="signIn" data-id="1">签到领学分</button> -->
       <icon type="cancel" size="37" color="white" data-id="0" catchtap="closeSignIn"></icon>
     </view>
   </view>

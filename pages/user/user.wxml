@@ -27,8 +27,8 @@
   <view class="navgationto">
     <view class="navgationBox" bindtap="toScore">
       <image src="{{ $state.imgHost }}/integralbg.png"></image>
-      <text class="navTitle">积分兑礼品</text>
-      <text class="num">{{ my_score }}可用积分</text>
+      <text class="navTitle">学分兑礼品</text>
+      <text class="num">{{ my_score }}可用学分</text>
       <view class="toScore">
         <image src="{{ $state.imgHost }}/Return.png"></image>
       </view>
@@ -69,7 +69,7 @@
     </button>
     <navigator hover-class="none" class="nav" url="/pages/drawPage/drawPage" open-type="navigate" bindtap="drawPage">
       <image src="{{ $state.imgHost }}/draw.png" class="iconfont"></image>
-      <text>积分抽奖</text>
+      <text>学分抽奖</text>
     </navigator>
     <navigator hover-class="none" class="nav" url="/pages/usermesseage/usermesseage" open-type="navigate"
       bindtap="drawPage">

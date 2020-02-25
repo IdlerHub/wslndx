@@ -4,7 +4,7 @@
 </view>
 <!-- 头部大背景 -->
 <view class="bg">
-  <text class="title">您的可用积分</text>
+  <text class="title">您的可用学分</text>
   <text class="scores">{{ totalPoints }}</text>
   <image src="{{$state.imgHost}}/scoreTodraw.png" catchtap="toDraw"></image>
 </view>
@@ -12,19 +12,19 @@
 <view class="tabs" hover-stop-propagation="true" catchtouchmove="return">
   <view class="tab {{ currentTab == 1 ? 'active' : '' }}" data-index="1" catchtap="switchTap">
     <!-- <image class="icon" src="/images/score/score_source.png" mode="aspectFill"></image> -->
-    <text class="dsc">积分获取</text>
+    <text class="dsc">学分获取</text>
     <text class="underline"></text>
   </view>
   <!-- <view class="divi_line"></view> -->
   <view class="tab {{ currentTab == 2 ? 'active' : '' }}" data-index="2" catchtap="switchTap">
     <!-- <image class="icon" src="/images/score/score_pay.png" mode="aspectFill"></image> -->
-    <text class="dsc">积分兑换</text>
+    <text class="dsc">学分兑换</text>
     <text class="underline"></text>
   </view>
   <!-- <view class="divi_line"> </view> -->
   <view class="tab {{ currentTab == 3 ? 'active' : '' }}" data-index="3" catchtap="switchTap">
     <!-- <image class="icon" src="/images/score/score_datails.png" mode="aspectFill"></image> -->
-    <text class="dsc">积分明细</text>
+    <text class="dsc">学分明细</text>
     <text class="underline"></text>
   </view>
 </view>
@@ -39,8 +39,8 @@
           <view class="item" wx:for="{{ newbie }}" wx:key="index">
             <text class="title">{{ item.title }}</text>
             <!-- prettier-ignore -->
-            <text class="score"><text class="num">+{{ item.score }}</text> 积分
-              {{item.title == '每日签到' ?'(连签7天+120积分)' : '' }}</text>
+            <text class="score"><text class="num">+{{ item.score }}</text> 学分
+              {{item.title == '每日签到' ?'(连签7天+120学分)' : '' }}</text>
             <!-- prettier-ignore -->
             <text wx:if="{{ item.times }}" class="times">每天还有<text class="num">{{ item.times }}</text>次机会</text>
             <button class="status {{ item.status ? 'finish' : '' }}" bindtap="tabnav" data-index="{{ index }}"
@@ -56,8 +56,8 @@
           <view class="item" wx:for="{{ sources }}" wx:key="index">
             <text class="title">{{ item.title }}</text>
             <!-- prettier-ignore -->
-            <text class="score"><text class="num">+{{ item.score }}</text> 积分
-              {{item.title == '每日签到' ?'(连签7天+120积分)' : '' }}</text>
+            <text class="score"><text class="num">+{{ item.score }}</text> 学分
+              {{item.title == '每日签到' ?'(连签7天+120学分)' : '' }}</text>
             <!-- prettier-ignore -->
             <text wx:if="{{ item.total && item.total != 0}}" class="times">每天还有<text
                 class="num">{{ item.total }}</text>次机会</text>
@@ -85,7 +85,7 @@
           <image class="bg" src="{{ item.image }}" mode="aspectFill" lazy-load="true"> </image>
           <text class="title">{{ item.title }}</text>
           <text class="score">{{ item.largePoint || item.need_points }}</text>
-          <text class="unit">积分</text>
+          <text class="unit">学分</text>
           <button class="bt {{ item.stock ? '' : 'out' }}" size="mini" data-stock="{{ item.stock }}"
             data-score="{{ item.need_points }}" data-id="{{ item.id }}" data-title="{{item.title}}"
             data-image="{{item.image}}" catchtap="gift" data-type="{{item.is_new}}">兑换</button>
@@ -122,10 +122,10 @@
     <!-- <image class="signBox-title" src="/images/signBox-title.png"></image> -->
     <view class="signBox-title" wx:if="{{singnow}}">已签到</view>
     <view class="signBox-title" wx:if="{{singafter}}">已连签{{$state.signdays}}天</view>
-    <view class="signBox-signNum" wx:if="{{$state.signdays  != 7 && singnow}}">积分+20</view>
-    <view class="signBox-signNum" wx:if="{{$state.signdays  == 7 && singnow}}">积分+120</view>
-    <view class="signBox-signNum" wx:if="{{$state.signdays  != 7 && singafter}}">积分+{{ $state.signdays * 20}}</view>
-    <view class="signBox-signNum" wx:if="{{$state.signdays  == 7 && singafter}}">积分+120</view>
+    <view class="signBox-signNum" wx:if="{{$state.signdays  != 7 && singnow}}">学分+20</view>
+    <view class="signBox-signNum" wx:if="{{$state.signdays  == 7 && singnow}}">学分+120</view>
+    <view class="signBox-signNum" wx:if="{{$state.signdays  != 7 && singafter}}">学分+{{ $state.signdays * 20}}</view>
+    <view class="signBox-signNum" wx:if="{{$state.signdays  == 7 && singafter}}">学分+120</view>
     <view class="signBox-daybox">
       <view class="signBox-day" wx:for="{{ 7 }}" wx:key="{{index}}">
         <view class="signBox-daytxt">{{index == 6 ? '+120' : '+20'}}</view>

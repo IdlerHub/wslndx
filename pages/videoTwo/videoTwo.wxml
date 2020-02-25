@@ -74,7 +74,7 @@
       style="background-image: url({{$state.imgHost}}/heart-ani.png)"></view>
   </view>
 </view>
-<!-- 积分动画 -->
+<!-- 学分动画 -->
 <integralAnimation integral="{{integral}}" integralContent="{{integralContent}}" wx:if="{{showintegral}}">
 </integralAnimation>
 <!-- 新年红包活动 -->

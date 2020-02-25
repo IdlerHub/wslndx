@@ -17,7 +17,7 @@
           <text>0</text>
           <image src="{{$state.imgHost}}/makeMoneyRbtn.png"></image>
         </view>
-        <view class="bottomBox-txt">已收徒(人)</view>
+        <view class="bottomBox-txt">已收学员(人)</view>
         <view class="border"></view>
       </navigator>
       <view class="bottomBox_person bottomBox_money">
@@ -25,7 +25,7 @@
         <view class="bottomBox_center">
           <text>¥0.0</text>
         </view>
-        <view class="bottomBox-txt">收徒收益(元)</view>
+        <view class="bottomBox-txt">学员收益(元)</view>
         <view class="border"></view>
       </view>
       <view class="bottomBox_person bottomBox_tribute">
@@ -34,20 +34,20 @@
           <text>0</text>
           <image src="{{$state.imgHost}}/makeMoneyRbtn.png"></image>
         </view>
-        <view class="bottomBox-txt">徒弟进贡(积分)</view>
+        <view class="bottomBox-txt">学员进贡(学分)</view>
       </view>
     </view>
   </view>
   <view class="rankin_list">
     <view class="rankin_listTop">
-      <view class="title">收徒排行版</view>
-      <navigator class="strategy" hover-class="none" url="/pages/strategy/strategy">收徒攻略></navigator>
+      <view class="title">排行榜</view>
+      <navigator class="strategy" hover-class="none" url="/pages/strategy/strategy">收学员攻略></navigator>
     </view>
     <view class="rankin_listTitle">
       <text>排名</text>
-      <text>师傅昵称</text>
-      <text>收徒人数</text>
-      <text>收益(元)</text>
+      <text>导师昵称</text>
+      <text>学员人数</text>
+      <text>累计现金</text>
     </view>
     <view class="list" wx:if="{{list.length > 0}}">
       <view class="item" wx:for="{{list}}" wx:key="index">

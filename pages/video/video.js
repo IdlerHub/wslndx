@@ -366,7 +366,7 @@ Page({
         if (msg.code == 1) {
           if (msg.data.is_first == 'first') {
             this.setData({
-              integral: '+50 积分',
+              integral: '+50 学分',
               integralContent: '完成[短视频]首次点赞',
               showintegral: true
             })
@@ -377,7 +377,7 @@ Page({
             }, 2000)
           } else if (msg.data.is_first == 'day') {
             this.setData({
-              integral: '+20 积分',
+              integral: '+20 学分',
               integralContent: '完成每日[短视频]首赞',
               showintegral: true
             })
@@ -499,7 +499,7 @@ Page({
           app.getGuide()
           this.setData({
             nextRtight: 5,
-            integral: '+45 积分',
+            integral: '+45 学分',
             integralContent: '完成[短视频]新手指引',
             showintegral: true
           })

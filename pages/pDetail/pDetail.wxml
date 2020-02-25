@@ -270,6 +270,6 @@
 		</view>
 	</view>
 </view>
-<!-- 积分动画 -->
+<!-- 学分动画 -->
 <integralAnimation integral="{{integral}}" integralContent="{{integralContent}}" wx:if="{{showintegral}}">
 </integralAnimation>

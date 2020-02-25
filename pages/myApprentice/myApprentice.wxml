@@ -9,7 +9,7 @@
       </view>
       <view class="msgTop">
         <view class="createtimes">{{item.createtimes}} {{item.time}}</view>
-        <view class="txt">总进贡(积分)</view>
+        <view class="txt">总进贡(学分)</view>
       </view>
     </view>
   </view>
