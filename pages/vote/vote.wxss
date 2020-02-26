@@ -81,6 +81,7 @@ page{
 .vote-search input{
     width: 410rpx;
     margin-left: 22rpx;
+    color:rgba(255,255,255,0.4);
 }
 .search-ipt{
     font-size:36rpx;
@@ -113,22 +114,29 @@ page{
     white-space: nowrap;
     overflow-x: auto;
 }
-.swiper-list .classify-img{
+.vote-body{
+    position: relative;
+}
+.classify-img{
     width: 90rpx;
     height: 80rpx;
     position: absolute;
     right: 0;
-    top: 0;
+    top: -1rpx;
     bottom: 0;
     background: #1050FF;
-    box-shadow:0rpx 3rpx 9rpx 0rpx rgba(29,0,151,1);
+    box-shadow:0rpx 0rpx 9rpx 0rpx rgba(29,0,151,1);
     display: flex;
     justify-content: center;
     align-items: center;
+    z-index: 99;
 }
-.swiper-list .classify-img image{
+.classify-img image{
     width: 39rpx;
     height: 39rpx;
+}
+.scroll{
+    margin-right: 90rpx;
 }
 .swiper-list .swiper-item{
     min-height: 80rpx;
@@ -141,6 +149,7 @@ page{
     font-weight:400;
     color:#F7F7F7;
 }
+
 .active{
     background:rgba(25,117,255,1);
     border-radius:20rpx 20rpx 0rpx 0rpx;

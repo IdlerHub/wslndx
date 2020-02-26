@@ -17,14 +17,18 @@
         <view class="search-btn">搜索</view>
     </view>
     <view class="vote-body">
-        <scroll-view class="swiper-list"  enable-flex scroll-x="true">
+        <view class="scroll">
             <view class="classify-img" catchtap="toClassify">
                 <image src="/images/classify.png" alt="" />
             </view>
-            <block wx:for="{{classifyList}}" wx:key="index">
-                <view class="swiper-item {{selectedIndex==index? 'active' : ''}}" bindtap="changeclassify" data-index="{{index}}">{{item}}</view>
-            </block>
-        </scroll-view>
+            <scroll-view class="swiper-list" enable-flex scroll-x="true">
+                <block wx:for="{{classifyList}}" wx:key="index">
+                    <view class="swiper-item {{selectedIndex==index? 'active' : ''}}" bindtap="changeclassify" data-index="{{index}}">
+                        {{item.name}}
+                    </view>
+                </block>
+            </scroll-view>
+        </view>
         <view class="vote-list">
             <block wx:for="{{productionList}}" wx:key="index">
                 <view class="vote-item">
@@ -43,7 +47,7 @@
                         <view class="item-name" bindtap="toDetail">{{item.name}}</view>
                         <view class="item-footer">
                             <view class="item-zan">{{item.prise_numbers}}赞</view>
-                            <view class="zan-btn"   data-index='{{index}}'  catchtap="giveLike">点赞加油</view>
+                            <view class="zan-btn"  data-id="{{item.id}}" data-index='{{index}}'  catchtap="giveLike">点赞加油</view>
                         </view>
                     </view>
                 </view>

@@ -45,6 +45,7 @@ var user = require("data/User.js");
 var video = require("data/Video.js");
 var circle = require("data/Circle.js");
 var lottery = require("data/Lottery.js");
+var vote = require("data/Vote.js");
 //app.js
 App({
   API_URL: store.API_URL,
@@ -56,6 +57,7 @@ App({
   video,
   circle,
   lottery,
+  vote,
   socket,
   store,
   fundebug,

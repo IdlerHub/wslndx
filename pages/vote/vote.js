@@ -8,8 +8,8 @@ Page({
    * 页面的初始数据
    */
   data: {
-    classifyList: ['全部', '书法绘画', '摄影', '演讲', '舞蹈', '武术', '语文', '英语', '数学'],
-    selectedIndex: 1,
+    classifyList: [{id: '0',name: '全部'}],
+    selectedIndex: 0,
     productionList: [{
         "id": 13,
         "name": "测试作品9",
@@ -38,7 +38,7 @@ Page({
         "prise_numbers": 999
       },
     ],
-    page: 1
+    page: 1,
   },
   toRule() { //跳转到活动规则
     wx.navigateTo({
@@ -54,8 +54,13 @@ Page({
     console.log("我给你点赞")
     // step1 判断今天是否点赞过
     // step2  作品点赞数添加 （修改data中数据），不刷新页面
-    if ('点赞过') {
+    if ('') {
       //提示
+      wx.showToast({
+        title: "您今日已经点赞过了哦",
+        icon: "none",
+        duration: 2500
+      })
     } else {
       let index = e.currentTarget.dataset.index
       let work = this.data.productionList[index]
@@ -64,6 +69,11 @@ Page({
       this.setData({
         [key]: work
       })
+      let params = {
+        id: e.currentTarget.dataset.id,
+        type: this.data.selectedIndex
+      }
+      console.log('点赞',params)
     }
   },
   changeclassify(e) { //切换分类
@@ -72,7 +82,7 @@ Page({
       this.setData({
         selectedIndex: index
       })
-      this.getdata(0)
+      this.getdata(1)
     }
   },
   toClassify() {
@@ -90,12 +100,40 @@ Page({
       url: "/pages/myProduction/myProduction"
     })
   },
-  getdata(page){  // 请求数据
-     //xhr (selectedIndex , page)
-     //  setData ({  selectedIndex , page  })
+  getdata(page){  // 请求作品列表数据
+    var params = {
+      type: this.data.selectedIndex,
+      page: page
+    }
+    console.log(params)
+    let data = []
+    app.vote.getOpusList(params).then(res=>{
+      console.log(res)
+      if(page==1){
+        data = res.data.data;
+      }else{
+        var oldData = this.data.productionList;
+        data = oldData.concat(res.data.data)
+      }
+      this.setData({
+        productionList: data,
+        page: page
+      })
+    })
+    //xhr (selectedIndex , page)
+    //  setData ({  selectedIndex , page  })
+  },
+  getCategory(){  //获取分类数据
+    var data = this.data.classifyList;
+    app.vote.getCategory().then(res=>{
+      this.setData({
+        classifyList: data.concat(res.data)
+      })
+    })
   },
   onLoad(){
-      this.getdata(0)
+    this.getCategory()
+    this.getdata(1)
   },
   onReachBottom(){
     this.getdata(this.data.page + 1)
