@@ -32,12 +32,13 @@
 <swiper class="swiper" current="{{ currentTab - 1 }}" bindchange="swiperChange">
   <swiper-item item-id="1">
     <scroll-view class="scroll_container" scroll-y="{{ scrollStatus }}">
-      <swiper class="scoreSwiper">
-        <swiper-item wx:for="{{bannerList}}" wx:key="index">
-          <navigator class="bannerItem" hover-class="none" url="{{item.clickUrl}}" style="background: url({{item.img}});background-size: 100% 100%;"></navigator>
-        </swiper-item>
-      </swiper>
       <view class="source_content" style="padding-top:{{paddingAdd ? '25' : ''}}px">
+        <swiper class="scoreSwiper" wx:if="{{bannerList.length > 1}}">
+          <swiper-item wx:for="{{bannerList}}" wx:key="index">
+            <navigator class="bannerItem" hover-class="none" url="{{item.clickUrl}}" style="background: url({{item.img}});background-size: 100% 100%;"></navigator>
+          </swiper-item>
+        </swiper>
+        <navigator class="scoreSwiper bannerItem" hover-class="none" url="{{bannerList[0].clickUrl}}" style="background: url({{bannerList[0].img}});background-size: 100% 100%;" wx:else></navigator>
         <view class="dataMission" wx:if="{{newbie[0]}}">
           <view class="dayMission">- 新手任务 -</view>
           <view class="item" wx:for="{{ newbie }}" wx:key="index">

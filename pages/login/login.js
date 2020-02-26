@@ -18,6 +18,11 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (option) {
+    let name =  app.globalData.query.activity ? 'master_uid': 'invite_uid' , param = {
+      tempCode: app.globalData.tempCode,
+      [app.globalData.query.activity ? 'master_uid': 'invite_uid']: wx.getStorageSync("invite") /* 邀请码 */
+    }
+    console.log(name,param)
     if(option.phone) {
       this.setData({
         phone: option.phone
@@ -72,7 +77,8 @@ Page({
         mobileEncryptedData: e.detail.encryptedData,
         mobileiv: e.detail.iv,
         tempCode: app.globalData.tempCode,
-        invite_uid: wx.getStorageSync("invite") /* 邀请码 */
+        [app.globalData.query.activity ? 'master_uid': 'invite_uid']: wx.getStorageSync("invite")
+        // invite_uid: wx.getStorageSync("invite") /* 邀请码 */
       }
       this.login(param)
     } else {
@@ -142,6 +148,7 @@ Page({
   },
   /* 手机号登录 */
   send() {
+    // master_uid
     if (!this.params.telFormat || !this.params.codeFormat) {
       !this.params.telFormat ? wx.showToast({
         title: "电话号码格式不对",
@@ -159,7 +166,8 @@ Page({
         tempCode: app.globalData.tempCode,
         mobile: this.params.tel,
         captcha: this.params.authCode,
-        invite_uid: wx.getStorageSync("invite") /* 邀请码 */
+        [app.globalData.query.activity ? 'master_uid': 'invite_uid']: wx.getStorageSync("invite")
+        // invite_uid: wx.getStorageSync("invite") /* 邀请码 */
       }
       this.login(params)
     }

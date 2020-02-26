@@ -55,9 +55,16 @@ function getOpusInfo(params) {
 }
 
 // POST h5opus/getSearchWord 搜索历史记录
-
 function getSearchWord() {
     return httpService.post("h5opus/getSearchWord")
+}
+/**
+ *  @description: 获取桶上传的ak/sk等相关参数
+ * @param {*}
+ * @return:  promise
+ * **/ 
+function getSecureToken(params){
+  return httpService.post('h5opus/getSecureToken')
 }
 
 
@@ -68,5 +75,6 @@ module.exports = {
     searchOpus,
     getMyOpus,
     getOpusInfo,
-    getSearchWord
+    getSearchWord,
+    getSecureToken
 }

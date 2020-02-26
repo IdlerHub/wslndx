@@ -38,7 +38,6 @@ fundebug.init({
 });
 //工具库
 var util = require("utils/util.js");
-
 //http请求接口
 var classroom = require("data/Classroom.js");
 var user = require("data/User.js");
@@ -72,6 +71,8 @@ App({
   },
   /*埋点统计*/
   onLaunch: async function(opts) {
+    console.log(opts)
+    this.getSecureToken()
     let optsStr = decodeURIComponent(opts.query.scene).split("&");
     let opstObj = {};
     optsStr.forEach((item, index) => {
@@ -109,16 +110,6 @@ App({
       wx.setStorageSync("mpVersion", this.store.mpVersion);
     }
     this.initStore();
-
-    /* 建立socket链接 */
-    // if (this.store.$state.userInfo.id) {
-    //   setTimeout(() => {
-    //     socket.init(this.store.$state.userInfo.id);
-    //     socket.listen(this.prizemessage, "Prizemessage");
-    //     socket.listen(this.bokemessage, "Bokemessage");
-    //     this.getTaskStatus()
-    //   }, 2000);
-    // }
     let systemInfo = wx.getSystemInfoSync();
     let wxtype = systemInfo.version.replace(".", "").replace(".", "");
     let platform = systemInfo.platform;
@@ -160,6 +151,7 @@ App({
         ) {
           wx.setStorageSync("invite", opts.query.uid); /* 邀请码存储 */
         }
+        console.log(this.globalData.query)
       }
 
       if (!this.store.$state.userInfo.mobile) {
@@ -219,10 +211,17 @@ App({
             wx.setStorageSync("authKey", msg.data.authKey);
             this.setUser(msg.data.userInfo);
             // console.log(msg.data.userInfo)
-            if (this.globalData.shareObj.type == "lottery") return;
-            wx.reLaunch({
-              url: "/pages/index/index"
-            });
+            if (this.globalData.query.type == "share" ||  this.globalData.shareObj.type == 'lottery') {
+              let params = []
+              for (let attr in this.globalData.query) {
+                params.push(attr + "=" + this.globalData.query[attr])
+              }
+              this.globalData.shareObj.type == 'lottery' ? wx.reLaunch({ url: "/pages/education/education?type=lottery&login=1&id=" + this.globalData.lotteryId}) : wx.reLaunch({ url: this.globalData.path + "?" + params.join("&") })
+            } else {
+              wx.reLaunch({
+                url: "/pages/index/index"
+              });
+            }
           }
         }
       });
@@ -449,9 +448,19 @@ App({
   withdrawShare(ops) {
       return {
         title: this.store.$state.shareTitle || "福利！老年大学十万集免费课程在线学习",
-        path: "/pages/loading/loading?uid=" + this.store.$state.userInfo.id + "&type=invite",
+        path: "/pages/index/index?uid=" + this.store.$state.userInfo.id + "&type=invite&activity=1",
         imageUrl: this.store.$state.imgHost + '/withdrawShareImg.jpg'
       }
+  },
+  getSecureToken(){
+     setTimeout(()=>{
+       vote.getSecureToken().then(res => {
+         this.store.setState({
+           security: res.data.credential
+         })
+       })
+     })
+
   },
   globalData: {
     /*wx.login 返回值 code */
@@ -461,7 +470,8 @@ App({
     /* 卡片路径 */
     path: null,
     /* 卡片参数 */
-    query: {},
+    query: {
+    },
     /* 卡片进入的场景值 */
     scenes: [1001, 1007, 1008, 1047, 1048, 1049],
     /* 后台模式*/

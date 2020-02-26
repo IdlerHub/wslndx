@@ -155,13 +155,6 @@
 					"scene": 1008
 				},
 				{
-					"id": 9,
-					"name": "二维码打开抽奖",
-					"pathName": "pages/education/education",
-					"query": "scene=type%3Dlottery%26id%3D1234%26uid%3D999999",
-					"scene": 1048
-				},
-				{
 					"id": 10,
 					"name": "收徒赚钱",
 					"pathName": "pages/makeMoney/makeMoney",
@@ -194,6 +187,20 @@
 					"name": "pages/vote/vote",
 					"pathName": "pages/vote/vote",
 					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/voteProduction/voteProduction",
+					"pathName": "pages/voteProduction/voteProduction",
+					"query": "id=88&curid=293&type=share",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/voteProduction/voteProduction",
+					"pathName": "pages/voteProduction/voteProduction",
+					"query": "id=88&curid=293&type=share",
 					"scene": null
 				}
 			]
