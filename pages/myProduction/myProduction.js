@@ -1,7 +1,13 @@
 // pages/myProduction/myProduction.js
+const app = getApp()
 Page({
   data: {
-    state: ['已通过','待审核','未通过'],
+    state: [
+      { id: 2, title: '已通过' },
+      { id: 0, title: '待审核' },
+      { id: 1, title: '未通过' }
+    ],
+    type: 2,
     stateIndex: 0,
     stateNum: [1,2,3],
     productionList: [
@@ -25,8 +31,24 @@ Page({
   changeState(e){
     console.log(e)
     this.setData({
-      stateIndex: e.currentTarget.dataset.index
+      stateIndex: e.currentTarget.dataset.index,
+      type: e.currentTarget.dataset.type
+    })
+    let type = this.data.type
+    console.log("状态",this.data.type)
+    this.getMyOpus(type)
+  },
+  getMyOpus(type){
+    let params = { type: type }
+    app.vote.getMyOpus(params).then(res=>{
+      let stateNum = [res.data.success, res.data.waitting, res.data.failed]
+      this.setData({
+        productionList: res.data.info,
+        stateNum: stateNum
+      })
     })
   },
-  
+  onLoad(){
+    this.getMyOpus(2) //默认初始获取已通过
+  }
 })

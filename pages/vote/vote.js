@@ -10,6 +10,7 @@ Page({
   data: {
     classifyList: [{id: '0',name: '全部'}],
     selectedIndex: 0,
+    type: 0,  //分类的id
     productionList: [{
         "id": 13,
         "name": "测试作品9",
@@ -39,27 +40,38 @@ Page({
       },
     ],
     page: 1,
+    supportFlag: 1, //今日点赞权限 0=无, 1=有
   },
   toRule() { //跳转到活动规则
     wx.navigateTo({
       url: "/pages/voteRule/voteRule"
     })
   },
-  toDetail() { //作品详情页
+  toClassify() {  //分类页
+    wx.redirectTo({
+      url: "/pages/voteClassify/voteClassify"
+    })
+  },
+  toDetail(e) { //作品详情页
     wx.navigateTo({
-      url: "/pages/voteDetail/voteDetail"
+      url: "/pages/voteDetail/voteDetail?id=" + e.currentTarget.dataset.id
+    })
+  },
+  toSearch(){
+    wx.navigateTo({
+      url: "/pages/voteSearch/voteSearch"
     })
   },
   giveLike(e) { //点赞
-    console.log("我给你点赞")
+    console.log('我给你点赞',this.data.supportFlag)
     // step1 判断今天是否点赞过
     // step2  作品点赞数添加 （修改data中数据），不刷新页面
-    if ('') {
+    if (this.data.supportFlag==0) {
       //提示
       wx.showToast({
         title: "您今日已经点赞过了哦",
         icon: "none",
-        duration: 2500
+        duration: 1500
       })
     } else {
       let index = e.currentTarget.dataset.index
@@ -67,29 +79,29 @@ Page({
       work.prise_numbers += 1
       let key = 'productionList[' + index + ']'
       this.setData({
-        [key]: work
+        [key]: work,
+        supportFlag: 0
       })
       let params = {
         id: e.currentTarget.dataset.id,
         type: this.data.selectedIndex
       }
+      this.praiseOpus(params)
       console.log('点赞',params)
     }
   },
   changeclassify(e) { //切换分类
     let index = e.currentTarget.dataset.index
+    let type = e.currentTarget.dataset.type
     if (index != this.data.selectedIndex) {
       this.setData({
-        selectedIndex: index
+        selectedIndex: index,
+        type: type
       })
       this.getdata(1)
     }
   },
-  toClassify() {
-    wx.navigateTo({
-      url: "/pages/voteClassify/voteClassify"
-    })
-  },
+  
   join() {
     wx.navigateTo({
       url: "/pages/voteProduction/voteProduction"
@@ -102,13 +114,11 @@ Page({
   },
   getdata(page){  // 请求作品列表数据
     var params = {
-      type: this.data.selectedIndex,
+      type: this.data.type,
       page: page
     }
-    console.log(params)
     let data = []
     app.vote.getOpusList(params).then(res=>{
-      console.log(res)
       if(page==1){
         data = res.data.data;
       }else{
@@ -117,7 +127,8 @@ Page({
       }
       this.setData({
         productionList: data,
-        page: page
+        page: page,
+        supportFlag: res.data.have_praise
       })
     })
     //xhr (selectedIndex , page)
@@ -131,9 +142,27 @@ Page({
       })
     })
   },
-  onLoad(){
-    this.getCategory()
-    this.getdata(1)
+  praiseOpus(params){
+    app.vote.praiseOpus(params).then(res=>{
+      console.log(res)
+      wx.showToast({
+        title: "今日点赞成功,请明日再来",
+        icon: "none",
+        duration: 2500
+      })
+    }).catch(err=>{
+      console.log(err)
+    })
+  }, 
+  onLoad(options){
+    this.getCategory();
+    if(options.index){
+      this.setData({
+        selectedIndex: parseInt(options.index),
+        type: parseInt(options.type)
+      })
+    }
+    this.getdata(1);
   },
   onReachBottom(){
     this.getdata(this.data.page + 1)

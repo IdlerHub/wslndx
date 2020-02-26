@@ -140,8 +140,8 @@ page{
 }
 .swiper-list .swiper-item{
     min-height: 80rpx;
+    padding: 0 38rpx;
     line-height: 80rpx;
-    min-width: 210rpx;
     text-align: center;
 
     font-size:36rpx;
@@ -177,12 +177,17 @@ page{
     background: blue;
     position: relative;
 }
+.item-img,
+.item-up .item-img image{
+    width: 100%;
+    height: 100%;
+}
 .item-rank{
     position: absolute;
     top: 0rpx;
     left: 0rpx;
     text-align: center;
-    min-width: 100rpx;
+    min-width: 78rpx;
     padding: 11rpx;
     display: flex;
     align-items: center;
@@ -205,13 +210,14 @@ page{
     align-items: center;
     flex-flow: column;
     justify-content: center;
-    margin-right: 13rpx;
+    margin-right: 12rpx;
 }
 .item-rank .num{
     font-size:44rpx;
     font-family:PingFangSC-Regular,PingFang SC;
     font-weight:400;
     color:rgba(255,255,255,1);
+    margin-right: 12rpx;
 }
 .item-classify{
     width: 40rpx;

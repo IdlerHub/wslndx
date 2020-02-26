@@ -1,9 +1,9 @@
 <!--pages/voteDetail/voteDetail.wxml-->
 <view class="voteDetail">
     <block wx:if="{{item.type==1}}">
-        <view class="img-index">{{current}}/{{item.imgList.length}}</view>
+        <view class="img-index">{{current}}/{{item.url.length}}</view>
         <swiper class="img-list" current="{{current}}" circular  bindchange="changeIndex">
-            <block wx:for="{{item.imgList}}" wx:key="index">
+            <block wx:for="{{item.url}}" wx:key="index">
                 <swiper-item>
                     <view class="swiper-item" style="background: red;"></view>
                 </swiper-item>
@@ -11,33 +11,37 @@
         </swiper>
     </block>
     <block wx:else>
-        <video class="video" id="video" src="{{item.videoUrl}}" controls="{{false}}" autoplay="{{true}}" loop="{{false}}" bindplay="videoplay" bindended="videopause" />
+        <video class="video" id="video" src="{{item.url[0]}}" controls="{{false}}" autoplay="{{true}}" loop="{{false}}" bindplay="videoplay" bindended="videopause" />
         <image wx:if="{{ pause }}" mode="aspectFill" src="{{ $state.imgHost }}/play-hl.png" class="pause"></image>
     </block>
     
     <view class="footer-info">
         <view class="info-left">
             <view class="user-info">
-                <image src="" alt="" />
-                <view class="info-name">作者: {{item.author}}</view>
+                <image src="{{item.avatar}}" alt="" />
+                <view class="info-name">作者: {{item.nickname}}</view>
             </view>
-            <view class="info-title">{{item.title}}</view>
+            <view class="info-title">{{item.name}}</view>
             <view class="info-content">{{item.content}}</view>
         </view>
         <view class="info-right">
             <view class="zan">
                 <view class="circle">
                     <image src="/images/heart.png" alt="" />
+                    <!-- <image  mode="aspectFill" src="/images/heart-orange.png" /> -->
+                    <!-- <view class="praising">    动画
+                        <view class="ani" bindanimationend="aniend" data-index="{{ index }}" style="background-image: url({{$state.imgHost}}/heart-ani.png)"></view>
+                    </view> -->
                 </view>
-                <text>1111</text>
+                <text>{{item.prise_numbers}}</text>
             </view>
             <view class="share">
                 <view class="circle">
                     <image src="/images/share.png" alt="" />
                 </view>
-                <text>1</text>
+                <text>{{item.share_numbers}}</text>
             </view>
-            <view class="join">
+            <view class="join" catchtap="toJoin" >
                 <view class="circle">参赛</view>
             </view>
         </view>

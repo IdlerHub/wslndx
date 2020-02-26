@@ -2,7 +2,7 @@
 <view class="myProduction">
     <view class="state">
         <block wx:for="{{state}}" wx:key="index">
-            <view class="{{stateIndex==index? 'active' : ''}}" bindtap="changeState" data-index="{{index}}">{{item}}{{stateNum[index]}}</view>
+            <view class="{{stateIndex==index? 'active' : ''}}" bindtap="changeState" data-type="{{item.id}}" data-index="{{index}}">{{item.title}}{{stateNum[index]}}</view>
         </block>
     </view>
     <view class="production-list"   wx:if="{{productionList.length}}">

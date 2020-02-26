@@ -150,3 +150,10 @@
     color:rgba(249,249,249,1);
     text-shadow:0rpx 2rpx 6rpx rgba(0,0,0,0.35);
 }
+
+
+.ani {
+  width: 180rpx;
+  height: 180rpx;
+  background-size: cover;
+  animation: ani steps(20) 0.8s both; }
