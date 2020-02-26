@@ -245,7 +245,9 @@ page {
   font-family:PingFangSC-Regular,PingFang SC;
   font-weight:400;
   color:rgba(58,58,58,1);
-  margin-left: 43rpx;
+  margin-left: 25rpx;
+  text-align: center;
+  flex: 1;
 }
 .container .rankin_list .list .item .itemMsg text:nth-child(4) {
   display: block;
@@ -253,7 +255,10 @@ page {
   font-family:PingFangSC-Medium,PingFang SC;
   font-weight:500;
   color:rgba(254,155,2,1);
-  margin-left: 65rpx;
+  /* margin-left: 65rpx; */
+  flex: 1;
+  text-align: center;
+  padding-left: 28rpx;
 }
 .container .toinvitaton {
   position: fixed;

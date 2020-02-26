@@ -7,14 +7,14 @@ Page({
   },
   onLoad: function (options) {
     let list = [
-      {name:'毁灭者',number:'158000', money:'988',avatar:'https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTKKfMv43V8lvG8QepxjhicruE0QeerAq3VibgbdicR3fg57XZrocOUZ78QQJNZDr1wxg9jibn6Z46GNYg/132'},
-      {name:'开心一下奥斯陆冬季受到了发货',number:'9888', money:'868',avatar:'https://wx.qlogo.cn/mmopen/vi_32/1ZCyMq0Ez6Ey1ncIv0uQJ2xclb9LlFFHpztA2LEX9o0YLLWG4hVic0gyYNVibQcNBTWAu6PA2nuiaDp6ms7dCjzPw/132'},
+      {name:'毁灭者',number:'158000', money:'98899',avatar:'https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTKKfMv43V8lvG8QepxjhicruE0QeerAq3VibgbdicR3fg57XZrocOUZ78QQJNZDr1wxg9jibn6Z46GNYg/132'},
+      {name:'开心一下奥斯陆冬季受到了发货',number:'9888', money:'2',avatar:'https://wx.qlogo.cn/mmopen/vi_32/1ZCyMq0Ez6Ey1ncIv0uQJ2xclb9LlFFHpztA2LEX9o0YLLWG4hVic0gyYNVibQcNBTWAu6PA2nuiaDp6ms7dCjzPw/132'},
       {name:'卡我打',number:'7526', money:'868',avatar:''},
       {name:'卡我打',number:'7526', money:'868',avatar:''},
       {name:'毁灭者',number:'158000', money:'988',avatar:'https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTKKfMv43V8lvG8QepxjhicruE0QeerAq3VibgbdicR3fg57XZrocOUZ78QQJNZDr1wxg9jibn6Z46GNYg/132'},
-      {name:'开心一下奥斯陆冬季受到了发货',number:'9888', money:'868',avatar:'https://wx.qlogo.cn/mmopen/vi_32/1ZCyMq0Ez6Ey1ncIv0uQJ2xclb9LlFFHpztA2LEX9o0YLLWG4hVic0gyYNVibQcNBTWAu6PA2nuiaDp6ms7dCjzPw/132'},
+      {name:'开心一下奥斯陆冬季受到了发货',number:'9888', money:'1',avatar:'https://wx.qlogo.cn/mmopen/vi_32/1ZCyMq0Ez6Ey1ncIv0uQJ2xclb9LlFFHpztA2LEX9o0YLLWG4hVic0gyYNVibQcNBTWAu6PA2nuiaDp6ms7dCjzPw/132'},
       {name:'毁灭者',number:'158000', money:'988',avatar:'https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTKKfMv43V8lvG8QepxjhicruE0QeerAq3VibgbdicR3fg57XZrocOUZ78QQJNZDr1wxg9jibn6Z46GNYg/132'},
-      {name:'开心一下奥斯陆冬季受到了发货',number:'9888', money:'868',avatar:'https://wx.qlogo.cn/mmopen/vi_32/1ZCyMq0Ez6Ey1ncIv0uQJ2xclb9LlFFHpztA2LEX9o0YLLWG4hVic0gyYNVibQcNBTWAu6PA2nuiaDp6ms7dCjzPw/132'},
+      {name:'开心一下奥斯陆冬季受到了发货',number:'9888', money:'0.5',avatar:'https://wx.qlogo.cn/mmopen/vi_32/1ZCyMq0Ez6Ey1ncIv0uQJ2xclb9LlFFHpztA2LEX9o0YLLWG4hVic0gyYNVibQcNBTWAu6PA2nuiaDp6ms7dCjzPw/132'},
     ],
     topMsg = [{
       up:50,
@@ -29,10 +29,11 @@ Page({
       total:68200
     }]
     list.forEach( item => {
-      item.number2 = app.util.tow(item.number)
+      item.number2 = app.util.towTwice(item.number)
+      item.money2 = app.util.towTwice(item.money)
     })
     topMsg.forEach( item => {
-      item.number2 = app.util.tow(item.total)
+      item.number2 = app.util.towTwice(item.total)
     })
     this.setData({
       list,

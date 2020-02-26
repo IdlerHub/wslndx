@@ -45,10 +45,15 @@ function tow(num) {
   return num / 10000 > 1 ? (num / 10000).toFixed(1) + "W" : null
 }
 
+function towTwice(num) {
+  return num / 10000 > 1 ? (num / 10000).toFixed(2) + "W" : null
+}
+
 module.exports = {
   formatTime,
   isPoneAvailable,
   getQueryStringByName,
   tow,
+  towTwice,
   dateUnit
 }

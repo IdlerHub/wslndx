@@ -57,7 +57,7 @@
           <image src="{{item.avatar || '/images/apprenticeAva.png'}}"></image>
           <text>{{item.name}}</text>
           <text>{{item.number2 || item.number}}</text>
-          <text>+{{item.money}}</text>
+          <text>+{{item.money2 || item.money}}</text>
         </view>
       </view>
     </view>
