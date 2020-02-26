@@ -27,7 +27,14 @@ function praiseOpus(params) {
     return httpService.post("h5opus/praiseOpus", params)
 }
 
-
+/**
+ *  @description: 获取桶上传的ak/sk等相关参数
+ * @param {*}
+ * @return:  promise
+ * **/ 
+function getSecureToken(params){
+  return httpService.post('h5opus/getSecureToken')
+}
 
 
 module.exports = {

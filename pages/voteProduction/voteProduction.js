@@ -2,6 +2,7 @@
 import {
   wxp
 } from "../../utils/service";
+var http = require("../../data/Vote.js");
 
 Page({
   data: {
@@ -55,7 +56,7 @@ Page({
   },
   delVideo() { //删除视频
     this.setData({
-      poster:''
+      poster: ''
     })
   },
   uploadImg() { //上传图片
@@ -87,11 +88,11 @@ Page({
       imgList: pics
     })
   },
-  preview(e){
+  preview(e) {
     let images = this.data.imgList
     wx.previewImage({
-      current: images[e.currentTarget.dataset.index] , 
-      urls: images 
+      current: images[e.currentTarget.dataset.index],
+      urls: images
     })
   },
   submitProduction(e) { //提交作品
@@ -102,7 +103,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-
+    console.log(http)
   },
 
   /**
