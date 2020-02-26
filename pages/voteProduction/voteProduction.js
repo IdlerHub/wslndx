@@ -3,6 +3,7 @@ import {
   wxp
 } from "../../utils/service";
 var http = require("../../data/Vote.js");
+import OBS from '../../OBS/OBSUploadFile.js'
 
 Page({
   data: {
@@ -75,9 +76,18 @@ Page({
         poster: '视频封面'
       })
     } else { //图片
-      this.setData({
-        imgList: this.data.imgList.concat(medias)
+      let reqs=[]
+      medias.forEach(media=>{
+        reqs.push(OBS('ballot/img', media))
       })
+      Promise.all(reqs).then(res=>{
+        this.setData({
+          imgList: this.data.imgList.concat(res)
+        })
+        console.log(res)
+      })
+
+     
     }
   },
   delImg(e) { //删除图片
@@ -103,7 +113,6 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-    console.log(http)
   },
 
   /**

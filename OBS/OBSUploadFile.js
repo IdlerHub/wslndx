@@ -1,13 +1,13 @@
 /*
  * @Date: 2019-12-20 10:54:37
  * @LastEditors: hxz
- * @LastEditTime: 2020-02-25 15:27:44
+ * @LastEditTime: 2020-02-26 19:32:19
  */
 const getPolicyEncode = require("./getPolicy.js");
 const getSignature = require("./GetSignature.js");
 
 import store from "../store";
-import http from "../utils/index";
+import { wxp } from "../utils/service";
 
 function randomUUID() {
   var chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz".split(
@@ -57,7 +57,6 @@ function checkType(file) {
       return true;
     }
   });
-
   return attrs;
 }
 
@@ -78,7 +77,7 @@ const OBSupload = function(dir, filePath) {
     securitytoken,
     bucket,
     endpoint
-  } = store.state.Home.security;
+  } = store.getState().security;
   const fileName = cacheUrl(dir, checkRes.type); //指定上传到OBS桶中的对象名
   const OBSPolicy = {
     //设定policy内容
@@ -90,32 +89,38 @@ const OBSupload = function(dir, filePath) {
       { "Content-Type": checkRes.ct },
       { success_action_status: 200 },
       {
-        success_action_redirect:
-          http.config.baseUrl + "/uploadimage/putUploadParams"
+        success_action_redirect: getApp().API_URL + "h5opus/putUploadParams"
       }
     ]
   };
   const policyEncoded = getPolicyEncode(OBSPolicy); //计算policy编码值
   const signature = getSignature(policyEncoded, secret); //计算signature
 
-  return http
-    .upload(endpoint, {
-      filePath: filePath,
-      name: "file",
-      formData: {
-        AccessKeyID: access,
-        policy: policyEncoded,
-        signature: signature,
-        key: fileName,
-        "Content-Type": checkRes.ct,
-        success_action_status: 200,
-        success_action_redirect:
-          http.config.baseUrl + "/uploadimage/putUploadParams",
-        "x-obs-security-token": securitytoken
-      }
+  let req = {
+    url: endpoint,
+    filePath: filePath,
+    name: "file",
+    formData: {
+      AccessKeyID: access,
+      policy: policyEncoded,
+      signature: signature,
+      key: fileName,
+      "Content-Type": checkRes.ct,
+      success_action_status: 200,
+      success_action_redirect: getApp().API_URL + "h5opus/putUploadParams",
+      "x-obs-security-token": securitytoken
+    }
+  };
+
+  return wxp
+    .uploadFile(req)
+    .then(res => {
+      console.log(req);
+      console.log(res);
+      return "https://hwcdn.jinlingkeji.cn/" + fileName;
     })
-    .then(() => {
-      return endpoint + "/" + fileName;
+    .catch(err => {
+      console.log(err);
     });
 };
 

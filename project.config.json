@@ -195,6 +195,13 @@
 					"pathName": "pages/voteProduction/voteProduction",
 					"query": "id=88&curid=293&type=share",
 					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/voteProduction/voteProduction",
+					"pathName": "pages/voteProduction/voteProduction",
+					"query": "id=88&curid=293&type=share",
+					"scene": null
 				}
 			]
 		}

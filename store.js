@@ -58,7 +58,8 @@ let store = new Store({
     recommend: '',
     playVedio: false,
     lessDiscussion: {},
-    blogcomment: {}
+    blogcomment: {},
+    security:{}
   },
   pageLisener: {
     onLoad(opts) {

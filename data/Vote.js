@@ -40,5 +40,6 @@ function getSecureToken(params){
 module.exports = {
     getCategory,
     getOpusList,
-    praiseOpus
+    praiseOpus,
+    getSecureToken
 }
