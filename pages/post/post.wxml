@@ -163,7 +163,7 @@
 			</view>
 			<view class="wrap">
 				<view class="qstBox" wx:if="{{!flowList[0]}}">
-					<image src="/images/delBlog.png"></image>
+					<image src="{{$state.imgHost}}/delBlog.png"></image>
 					<view class="txt">啥都没有呢</view>
 					<view class="txt">赶快去关注有趣的人吧！</view>
 				</view>

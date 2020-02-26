@@ -185,7 +185,7 @@
 		</view>
 	</view>
 	<view class="del_blog" wx:if="{{ delState }}">
-		<image src="/images/delBlog.png" mode="aspectFill"> </image>
+		<image src="{{$state.imgHost}}/delBlog.png" mode="aspectFill"> </image>
 		<text>帖子已删除~ </text>
 	</view>
 	<view class="popup write" id="write" wx:if="{{ write }}">

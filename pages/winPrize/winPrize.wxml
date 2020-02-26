@@ -7,12 +7,16 @@
         <view class="giftBox-title">{{item.title}}</view>
         <view class="giftBox-data">{{item.createtime}}</view>
       </view>
-      <button open-type="contact" bindcontact="handleContact" class="giftBox-button" wx:if="{{item.get_type == 1}}" style="background:{{ item.is_finish == 1 ? '#ccc' : '' }}" show-message-card send-message-title="{{ item.title  +  '奖品序号' + item.id}}" send-message-img="{{item.image}}" catchtap="button">{{ item.is_finish  ? '已兑换' : item.show }}</button>
-      <view class="giftBox-button" style="background:{{ item.is_finish == 1 ? '#ccc' : '' }}" bindtap="conversion" data-id="{{item.id}}" data-finish="{{item.is_finish}}" wx:else>{{ item.is_finish  ? '已领取' : item.show }}</view>
+      <button open-type="contact" bindcontact="handleContact" class="giftBox-button" wx:if="{{item.get_type == 1}}"
+        style="background:{{ item.is_finish == 1 ? '#ccc' : '' }}" show-message-card
+        send-message-title="{{ item.title  +  '奖品序号' + item.id}}" send-message-img="{{item.image}}"
+        catchtap="button">{{ item.is_finish  ? '已兑换' : item.show }}</button>
+      <view class="giftBox-button" style="background:{{ item.is_finish == 1 ? '#ccc' : '' }}" bindtap="conversion"
+        data-id="{{item.id}}" data-finish="{{item.is_finish}}" wx:else>{{ item.is_finish  ? '已领取' : item.show }}</view>
     </view>
   </view>
   <view class="qstBox" wx:if="{{prizeList.length == 0}}">
-     <image src="/images/drawqs.png"></image>
-     <view class="qst-txt">暂无中奖记录</view>
+    <image src="{{$state.imgHost}}/drawqs.png"></image>
+    <view class="qst-txt">暂无中奖记录</view>
   </view>
 </view>

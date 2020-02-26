@@ -12,26 +12,26 @@
     <view class="bottomBox">
       <navigator class="bottomBox_person" hover-class="none" url="/pages/myApprentice/myApprentice"
         open-type="navigate">
-        <view class="dayadd">今日+0</view>
+        <view class="dayadd">今日+{{topMsg[0].up}}</view>
         <view class="bottomBox_center">
-          <text>0</text>
+          <text>{{topMsg[0].number2 ||topMsg[0].total}}</text>
           <image src="{{$state.imgHost}}/makeMoneyRbtn.png"></image>
         </view>
         <view class="bottomBox-txt">已收学员(人)</view>
         <view class="border"></view>
       </navigator>
       <view class="bottomBox_person bottomBox_money">
-        <view class="dayadd">今日+0.0</view>
+        <view class="dayadd">今日+{{topMsg[1].up}}</view>
         <view class="bottomBox_center">
-          <text>¥0.0</text>
+          <text>¥{{topMsg[1].number2 || topMsg[1].total}}</text>
         </view>
         <view class="bottomBox-txt">学员收益(元)</view>
         <view class="border"></view>
       </view>
       <navigator class="bottomBox_person bottomBox_tribute" hover-class="none" url="/pages/score/score?type=index&curren=3" open-type="navigate">
-        <view class="dayadd">今日+0.0</view>
+        <view class="dayadd">今日+{{topMsg[2].up}}</view>
         <view class="bottomBox_center">
-          <text>0</text>
+          <text>{{topMsg[2].number2 ||  topMsg[2].total}}</text>
           <image src="{{$state.imgHost}}/makeMoneyRbtn.png"></image>
         </view>
         <view class="bottomBox-txt">学员进贡(学分)</view>
