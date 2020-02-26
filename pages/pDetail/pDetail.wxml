@@ -88,7 +88,7 @@
 		<swiper-item class="tab-item">
 			<view class="wrap comment">
 				<view class="nodata" wx:if="{{ comment.length <= 0 }}">
-					<image src="../../images/no-com.png" mode="aspectFill"></image>
+					<image src="{{$state.imgHost}}/no-com.png" mode="aspectFill"></image>
 				</view>
 				<view wx:for="{{ comment }}" wx:key="index" class="item">
 					<view class="content">
@@ -146,7 +146,7 @@
 		<swiper-item class="tab-item">
 			<view class="wrap praise">
 				<view class="nodata" wx:if="{{ praise.length <= 0 }}">
-					<image src="../../images/no-com.png" mode="aspectFill"></image>
+					<image src="{{$state.imgHost}}/no-com.png" mode="aspectFill"></image>
 				</view>
 				<view wx:for="{{ praise }}" wx:key="index" class="item">
 					<view class="content">
