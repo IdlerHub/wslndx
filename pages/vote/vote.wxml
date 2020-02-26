@@ -18,6 +18,9 @@
     </view>
     <view class="vote-body">
         <scroll-view class="swiper-list"  enable-flex scroll-x="true">
+            <view class="classify-img" catchtap="toClassify">
+                <image src="/images/classify.png" alt="" />
+            </view>
             <block wx:for="{{classifyList}}" wx:key="index">
                 <view class="swiper-item {{selectedIndex==index? 'active' : ''}}" bindtap="changeclassify" data-index="{{index}}">{{item}}</view>
             </block>
@@ -26,7 +29,10 @@
             <block wx:for="{{productionList}}" wx:key="index">
                 <view class="vote-item">
                     <view class="item-up" bindtap="toDetail">
-                        <view class="item-rank">{{(index+1)*page}}</view>
+                        <view class="item-rank">
+                            <view class="rank-text"><text>当前</text><text>排名</text></view>
+                            <view class="num">{{index+1}}</view>
+                        </view>
                         <image wx:if="{{item.type==1}}" class="item-classify" src="../../images/vote-img.png" alt="" />
                         <image wx:if="{{item.type==2}}" class="item-classify" src="../../images/vote-video.png" alt="" />
                         <view class="item-img">
@@ -45,6 +51,7 @@
         </view>
     </view>
     <view class="vote-footer">
+        <image src="/images/vote-btn.png" alt="" />
         <view class="footer-left" catchtap="join">
             <image src="../../images/vote-join.png" alt="" />
             <text>我要参赛</text>

@@ -75,6 +75,11 @@ Page({
       this.getdata(0)
     }
   },
+  toClassify() {
+    wx.navigateTo({
+      url: "/pages/voteClassify/voteClassify"
+    })
+  },
   join() {
     wx.navigateTo({
       url: "/pages/voteProduction/voteProduction"
