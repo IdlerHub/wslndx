@@ -1,0 +1,57 @@
+<!--pages/vote/vote.wxml-->
+<view class="vote">
+    <view class="vote-header">
+        <image class="vote-img" src="../../images/vote-bg.png" alt=""/>
+        <view class="header-left">
+            <image src="../../images/vote-talk.png" alt="" />
+            <view class="text">用户158****2804发布了#书法与绘sdasdasdsds画</view>
+        </view>
+        <view class="header-right" bindtap="toRule">
+            <text>活动</text>
+            <text>规则</text>
+        </view>
+    </view>
+    <view class="vote-search">
+        <image src="../../images/vote-search.png" alt="" />
+        <input type="text" placeholder="请输入作品名称或作者名" placeholder-class="search-ipt" />
+        <view class="search-btn">搜索</view>
+    </view>
+    <view class="vote-body">
+        <scroll-view class="swiper-list"  enable-flex scroll-x="true">
+            <block wx:for="{{classifyList}}" wx:key="index">
+                <view class="swiper-item {{selectedIndex==index? 'active' : ''}}" bindtap="changeclassify" data-index="{{index}}">{{item}}</view>
+            </block>
+        </scroll-view>
+        <view class="vote-list">
+            <block wx:for="{{productionList}}" wx:key="index">
+                <view class="vote-item">
+                    <view class="item-up" bindtap="toDetail">
+                        <view class="item-rank">{{(index+1)*page}}</view>
+                        <image wx:if="{{item.type==1}}" class="item-classify" src="../../images/vote-img.png" alt="" />
+                        <image wx:if="{{item.type==2}}" class="item-classify" src="../../images/vote-video.png" alt="" />
+                        <view class="item-img">
+                            
+                        </view>
+                    </view>
+                    <view class="item-down">
+                        <view class="item-name" bindtap="toDetail">{{item.name}}</view>
+                        <view class="item-footer">
+                            <view class="item-zan">{{item.prise_numbers}}赞</view>
+                            <view class="zan-btn"   data-index='{{index}}'  catchtap="giveLike">点赞加油</view>
+                        </view>
+                    </view>
+                </view>
+            </block>
+        </view>
+    </view>
+    <view class="vote-footer">
+        <view class="footer-left" catchtap="join">
+            <image src="../../images/vote-join.png" alt="" />
+            <text>我要参赛</text>
+        </view>
+        <view class="footer-right" catchtap="works">
+            <image src="../../images/vote-myproduction.png" alt="" />
+            <text>我的作品</text>
+        </view>
+    </view>
+</view>

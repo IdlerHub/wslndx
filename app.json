@@ -46,7 +46,13 @@
     "pages/myEarnings/myEarnings",
     "components/recruitShare/recruitShare",
     "pages/withdraw/withdraw",
-    "pages/withdrawalRecord/withdrawalRecord"
+    "pages/withdrawalRecord/withdrawalRecord",
+    "pages/vote/vote",
+    "pages/myProduction/myProduction",
+    "pages/voteProduction/voteProduction",
+    "pages/voteRule/voteRule",
+    "pages/voteDetail/voteDetail",
+    "pages/voteFail/voteFail"
   ],
   "permission": {
     "scope.userLocation": {

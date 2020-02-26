@@ -1,0 +1,2 @@
+<!--pages/voteDetail/voteDetail.wxml-->
+<view class="voteDetail">票选作品详情页面</view>
