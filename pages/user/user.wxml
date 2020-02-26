@@ -27,8 +27,8 @@
   <view class="navgationto">
     <view class="navgationBox" bindtap="toScore">
       <image src="{{ $state.imgHost }}/integralbg.png"></image>
-      <text class="navTitle">积分兑换</text>
-      <text class="num">{{ my_score }}可用积分</text>
+      <text class="navTitle">学分兑礼品</text>
+      <text class="num">{{ my_score }}可用学分</text>
       <view class="toScore">
         <image src="{{ $state.imgHost }}/Return.png"></image>
       </view>
@@ -37,7 +37,7 @@
       <image src="{{ $state.imgHost }}/invitebg.png"></image>
       <text class="navTitle">邀请好友</text>
       <text class="num">邀请好友领福利</text>
-       <view class="toInvite">
+      <view class="toInvite">
         <image src="{{ $state.imgHost }}/Return.png"></image>
       </view>
     </view>
@@ -56,7 +56,7 @@
       <text>风采展示</text>
     </navigator>
     <navigator class="nav" url="/pages/experience/experience" open-type="navigate">
-      <image src="{{ $state.imgHost }}/experience.png"  class="iconfont"></image>
+      <image src="{{ $state.imgHost }}/experience.png" class="iconfont"></image>
       <text>体验官申请</text>
     </navigator>
     <navigator hover-class="none" class="nav" url="../circle/circle?type=1" open-type="navigate">
@@ -66,16 +66,19 @@
     <button class="nav" open-type="contact" bindcontact="handleContact">
       <image src="{{ $state.imgHost }}/userkefu.png" class="iconfont"></image>
       <text>联系客服</text>
-    </button> 
+    </button>
     <navigator hover-class="none" class="nav" url="/pages/drawPage/drawPage" open-type="navigate" bindtap="drawPage">
       <image src="{{ $state.imgHost }}/draw.png" class="iconfont"></image>
-      <text>积分抽奖</text>
+      <text>学分抽奖</text>
     </navigator>
-    <navigator hover-class="none" class="nav" url="/pages/usermesseage/usermesseage" open-type="navigate" bindtap="drawPage">
+    <navigator hover-class="none" class="nav" url="/pages/usermesseage/usermesseage" open-type="navigate"
+      bindtap="drawPage">
       <image src="{{ $state.imgHost }}/messeageicon.png" class="iconfont"></image>
-      <view class="news">我的消息 <view class="smallred" wx:if="{{showMes > 0}}"></view> </view>
+      <view class="news">我的消息 <view class="smallred" wx:if="{{showMes > 0}}"></view>
+      </view>
     </navigator>
-    <navigator hover-class="none" class="nav" url="/pages/attentionPage/attentionPage" open-type="navigate" bindtap="drawPage">
+    <navigator hover-class="none" class="nav" url="/pages/attentionPage/attentionPage" open-type="navigate"
+      bindtap="drawPage">
       <image src="{{ $state.imgHost }}/attentionicon.png" class="iconfont"></image>
       <text>我的关注</text>
     </navigator>
@@ -83,10 +86,10 @@
   <navBar path="user" />
   <!-- wx:if="{{$state.newGuide.user == 0}}" -->
   <cover-view class="userGuide" wx:if="{{$state.newGuide.user == 0}}">
-  <cover-view class="userGuide-msg" bindtap="closeGuide">
-    <cover-image class="userGuide-msgimg" src="{{$state.imgHost}}/userMsg.png"></cover-image>
-    <cover-image src="{{$state.imgHost}}/know.png" class="nextGude"></cover-image>
-  </cover-view>
+    <cover-view class="userGuide-msg" bindtap="closeGuide">
+      <cover-image class="userGuide-msgimg" src="{{$state.imgHost}}/userMsg.png"></cover-image>
+      <cover-image src="{{$state.imgHost}}/know.png" class="nextGude"></cover-image>
+    </cover-view>
     <cover-image class="userGuide-img" src="{{$state.imgHost}}/experienceApply.png"></cover-image>
   </cover-view>
 </view>

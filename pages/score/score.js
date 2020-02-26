@@ -17,9 +17,15 @@ Page({
     showHome: false,
     showSignbox: false,
     sign_days: 0,
-    paddingAdd: false
+    paddingAdd: false,
+    bannerList:[
+      {
+        img:'https://hwcdn.jinlingkeji.cn/images/pro/withdrawBanner.png',
+        clickUrl:'/pages/makeMoney/makeMoney'
+      }
+    ]
   },
-  pageName: '积分兑换页',
+  pageName: '学分兑换页',
   common: {
     scrollTop: 175
   },
@@ -31,6 +37,9 @@ Page({
     }) : this.setData({
       showHome: false
     })
+    options.curren ? this.setData({
+      currentTab: options.curren
+    }) : ''
   },
   onShow: function () {
     let sources = [{
@@ -263,7 +272,7 @@ Page({
           console.log(v.time)
         })
         if (this.params.page == 1) {
-          /* 每天分享课程最多3次获取积分 */
+          /* 每天分享课程最多3次获取学分 */
           // let shareCount = res.data.lists.filter(item => {
           //   return item.type == "SHARE_LESSON" && item.createtime * 1000 > new Date(new Date().toLocaleDateString()).getTime()
           // }).length
@@ -379,9 +388,9 @@ Page({
         currentTab: id
       })
     }
-    id == 2 ? wx.uma.trackEvent('integral_btnClick', { 'btnName': '积分兑换' }) : ''
-    // app.aldstat.sendEvent("积分页按钮点击" , {
-    //   name: '积分兑换'
+    id == 2 ? wx.uma.trackEvent('integral_btnClick', { 'btnName': '学分兑换' }) : ''
+    // app.aldstat.sendEvent("学分页按钮点击" , {
+    //   name: '学分兑换'
     // })
   },
   gift(e) {
@@ -440,7 +449,7 @@ Page({
         }
       } else {
         wx.showToast({
-          title: "您的积分不够兑换!",
+          title: "您的学分不够兑换!",
           icon: "none",
           duration: 1500
         })
@@ -516,10 +525,10 @@ Page({
     wx: wx.navigateTo({
       url: '/pages/drawPage/drawPage',
     })
-    // app.aldstat.sendEvent("积分页按钮点击", {
-    //   name: '积分抽奖'
+    // app.aldstat.sendEvent("学分页按钮点击", {
+    //   name: '学分抽奖'
     // })
-    wx.uma.trackEvent('integral_btnClick', { 'btnName': '积分抽奖' })
+    wx.uma.trackEvent('integral_btnClick', { 'btnName': '学分抽奖' })
   },
   onGotUserInfo(e) {
     if (e.detail.errMsg === "getUserInfo:ok") {

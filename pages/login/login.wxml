@@ -1,36 +1,39 @@
 <!--pages/login/login.wxml-->
 <view class="container">
-  <navigationBar  id="navigationBar" placeholderBg="#F8F8F8" color="#000000" title="网上老年大学"  background="#F8F8F8" class="navigationBar"></navigationBar>
+  <navigationBar id="navigationBar" placeholderBg="#F8F8F8" color="#000000" title="网上老年大学" background="#F8F8F8"
+    class="navigationBar"></navigationBar>
   <view class="buttons">
     <text data-type="1" catchtap="loginType" class="{{ mode == 1 ? 'active' : ''}}">
-    微信授权
-    <text class="redRow" wx:if="{{ mode == 1 }}"></text>
+      微信授权
+      <text class="redRow" wx:if="{{ mode == 1 }}"></text>
     </text>
     <text data-type="0" catchtap="loginType" class="{{ mode == 0 ? 'active' : ''}}">
-    短信验证
-    <text class="redRow" wx:if="{{ mode == 0}}"></text>
+      短信验证
+      <text class="redRow" wx:if="{{ mode == 0}}"></text>
     </text>
   </view>
   <view wx:if="{{ mode === 1 }}">
     <view class="remind">为了让您账户更安全，请设置常用的联系方式</view>
-    <button class="authorize-phone" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber" disabled="{{!check}}">微信授权</button>
+    <button class="authorize-phone" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber"
+      disabled="{{!check}}">微信授权</button>
     <checkbox-group bindchange="checkboxChange">
       <label class="checkbox">
-        <checkbox checked="{{ check }}" color="#e32323" class="boxcheck"/>
-        阅读并同意以下协议  <text class="agreement" catchtap="toAgree">《服务协议》</text>
+        <checkbox checked="{{ check }}" color="#e32323" class="boxcheck" />
+        阅读并同意以下协议 <text class="agreement" catchtap="toAgree">《服务协议》</text>
       </label>
     </checkbox-group>
   </view>
   <form wx:else class="mobile" bindsubmit="send">
     <view class="section1">
-      <input type="number" placeholder="请输入手机号"  bindinput="inputNum" value="{{ phone ? phone : '' }}"/>
+      <input type="number" placeholder="请输入手机号" bindinput="inputNum" value="{{ phone ? phone : '' }}" />
     </view>
     <view class="section2">
-      <input type="number" placeholder="请输入验证码" bindinput="inputCode"/>
-      <button class="code" disabled="{{ authenable }}" hover-class="button-hover" catchtap="getCode" >{{ btnName }}</button>
+      <input type="number" placeholder="请输入验证码" bindinput="inputCode" />
+      <button class="code" disabled="{{ authenable }}" hover-class="button-hover"
+        catchtap="getCode">{{ btnName }}</button>
     </view>
     <button class="submit" hover-class="button-hover" form-type="submit">登录</button>
   </form>
 </view>
-<!-- 积分动画 -->
-<integralAnimation integral="+100 积分" integralContent="完成注册" wx:if="{{showintegral}}"></integralAnimation>
+<!-- 学分动画 -->
+<integralAnimation integral="+100 学分" integralContent="完成注册" wx:if="{{showintegral}}"></integralAnimation>

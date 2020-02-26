@@ -6,9 +6,9 @@ Page({
    * 页面的初始数据
    */
   data: {
-    prizeList:[],
-    duijiang:'兑奖',
-    lingqu:'领取'
+    prizeList: [],
+    duijiang: '兑奖',
+    lingqu: '领取'
   },
 
   /**
@@ -33,14 +33,14 @@ Page({
   },
   getprizeList() {
     app.lottery.prizeList().then(res => {
-      if(res.code == 1) {
+      if (res.code == 1) {
         this.setData({
-          prizeList:res.data
+          prizeList: res.data
         })
       }
     })
   },
-  // 领取积分 
+  // 领取学分 
   conversion(e) {
     console.log(e)
     if (e.currentTarget.dataset.finish == 1) return
@@ -48,10 +48,10 @@ Page({
       id: e.currentTarget.dataset.id
     }
     app.lottery.finishGetPrize(param).then(res => {
-      if(res.code == 1) {
+      if (res.code == 1) {
         let prizeList = this.data.prizeList
         prizeList.forEach(item => {
-          item.id == e.currentTarget.dataset.id ? item.is_finish = 1 : '' 
+          item.id == e.currentTarget.dataset.id ? item.is_finish = 1 : ''
         })
         this.setData({
           prizeList

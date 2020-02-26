@@ -1,0 +1,58 @@
+/* components/recruitShare/recruitShare.wxss */
+.shareBox {
+  width: 100%;
+  padding: 30rpx;
+  box-sizing: border-box;
+  background:rgba(255,255,255,1);
+  border-top:1px solid rgba(216,216,216,1);
+  position: fixed;
+  bottom: 0;
+}
+.shareBox .txt {
+  font-size:24rpx;
+  font-family:PingFangSC-Regular,PingFang SC;
+  font-weight:400;
+  color:rgba(126,126,126,1);
+  text-align: center;
+  margin: 20rpx 0;
+}
+.shareBox .shareBox-content {
+  display: flex;
+}
+.shareBox  .shareBtn {
+  width:330rpx;
+  height:108rpx;
+  background:rgba(0,189,2,1);
+  border-radius:6rpx;
+  margin-right: 30rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+} 
+.shareBox  .shareBtn:nth-child(2) {
+  margin: 0;
+  border:1px solid rgba(0,189,2,1);
+  background: #fff;
+}
+.shareBox  .shareBtn image{
+  width: 70rpx;
+  height: 56rpx;
+  margin-right: 30rpx;
+} 
+.shareBox  .shareBtn text{
+  font-size:38rpx;
+  font-family:PingFangSC-Medium,PingFang SC;
+  font-weight:500;
+  color:rgba(255,255,255,1);
+} 
+.shareBox  .shareBtn:nth-child(2) image{
+  width: 56rpx;
+  height: 56rpx;
+  margin-right: 30rpx;
+} 
+.shareBox  .shareBtn:nth-child(2) text{
+  font-size:38rpx;
+  font-family:PingFangSC-Medium,PingFang SC;
+  font-weight:500;
+  color:rgba(0,189,2,1);
+}

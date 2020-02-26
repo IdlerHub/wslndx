@@ -1,0 +1,50 @@
+/* pages/strategy/strategy.wxss */
+page {
+  background:rgba(248,248,248,1);
+}
+.container .top {
+  height:116rpx;
+  background:rgba(255,255,255,1);
+  border-bottom:1px solid rgba(233,233,233,1);
+  display: flex;
+  align-items: center;
+}
+.container .top .titleBox {
+  flex: 1;
+  height: 100%;
+  line-height: 116rpx;
+  text-align: center;
+  position: relative;
+}
+.container .top .titleBox text {
+  font-size:38rpx;
+  font-family:PingFangSC-Regular,PingFang SC;
+  font-weight:400;
+  color:rgba(126,126,126,1);
+}
+.container .top .titleBox .texthover{
+  font-weight:500;
+  color:rgba(223,32,32,1);
+}
+.container .top .titleBox .border {
+  width:74rpx;
+  height:4rpx;
+  background:rgba(223,32,32,1);
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  margin-left: -37rpx;
+}
+.content {
+  margin-top: 30rpx;
+  width: 100%;
+  min-height: calc(100vh - 146rpx);
+  background: #fff;
+  padding: 30rpx;
+  font-size:36rpx;
+  font-family:PingFangSC-Regular,PingFang SC;
+  font-weight:400;
+  color:rgba(102,102,102,1);
+  line-height:60rpx;
+  box-sizing: border-box;
+}

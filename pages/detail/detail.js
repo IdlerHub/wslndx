@@ -164,6 +164,9 @@ Page({
     app.getGuide();
     this.initRecord();
     this.getRecordAuth();
+    wx.onNetworkStatusChange( res => {
+      res.networkType == 'wifi' ? app.playVedio("wifi") : ''
+    })
   },
   onUnload() {
     if (this.data.$state.newGuide) {
@@ -172,7 +175,12 @@ Page({
   },
   onHide() { },
   onGotUserInfo: function (e) {
-    app.updateBase(e);
+    if (e.detail.errMsg == "getUserInfo:ok") {
+      app.updateBase(e)
+      e.currentTarget.dataset.type ? wx.navigateTo({
+        url: '/pages/makeMoney/makeMoney',
+      }) : ''
+    }
   },
   switchNav(event) {
     let cur = event.currentTarget.dataset.current;
@@ -246,9 +254,9 @@ Page({
     app.classroom.sublessonfinish(param).then(res => {
       if (res.code == 1) {
         if (res.data.is_first == "first") {
-          this.setIntegral("+70 积分", "完成首次学习课程");
+          this.setIntegral("+70 学分", "完成首次学习课程");
         } else if (res.data.is_first == "finish") {
-          this.setIntegral("+20 积分", "完成学完一门新课程");
+          this.setIntegral("+20 学分", "完成学完一门新课程");
         }
       }
       app.classroom.detail(this.param).then(msg => {
@@ -400,41 +408,31 @@ Page({
     if (this.data.$state.flow) {
       that.recordAddVedio(param);
     } else {
-      wx.startWifi({
+      wx.getNetworkType({
         success: res => {
-          wx.getConnectedWifi({
-            success: res => {
-              app.playVedio("wifi");
-              that.recordAddVedio(param);
-            },
-            fail: res => {
-              console.log(res);
-              wx.showModal({
-                content:
-                  "您当前不在Wi-Fi环境，继续播放将会产生流量，是否选择继续播放?",
-                confirmText: "是",
-                cancelText: "否",
-                confirmColor: "#DF2020",
-                success(res) {
-                  if (res.confirm) {
-                    app.playVedio("flow");
-                    that.recordAddVedio(param);
-                  } else if (res.cancel) {
-                    console.log("用户点击取消");
-                  }
+          if(res.networkType == 'wifi') {
+            app.playVedio("wifi");
+            that.recordAddVedio(param);
+          } else {
+            wx.showModal({
+              content:
+                "您当前不在Wi-Fi环境，继续播放将会产生流量，是否选择继续播放?",
+              confirmText: "是",
+              cancelText: "否",
+              confirmColor: "#DF2020",
+              success(res) {
+                if (res.confirm) {
+                  app.playVedio("flow");
+                  that.recordAddVedio(param);
+                  wx.offNetworkStatusChange()
+                } else if (res.cancel) {
+                  console.log("用户点击取消");
                 }
-              })
-            },
-            complete: () => {
-              wx.stopWifi({
-                success: res => {
-                  console.log('wifi模块关闭成功')
-                }
-              })
-            }
-          });
+              }
+            })
+          }
         }
-      });
+      })
     }
   },
   recordAddVedio(param) {
@@ -710,7 +708,7 @@ Page({
           showvoiceauto: false
         });
         if (res.data.is_first == "day") {
-          this.setIntegral("+10 积分", "完成[云课堂]每日课程首次讨论");
+          this.setIntegral("+10 学分", "完成[云课堂]每日课程首次讨论");
         } else {
           wx.showToast({
             title: "评论成功",
@@ -756,7 +754,7 @@ Page({
           showvoiceauto: false
         });
         if (msg.data.is_first == "day") {
-          this.setIntegral("+10 积分", "完成[云课堂]每日课程首次讨论");
+          this.setIntegral("+10 学分", "完成[云课堂]每日课程首次讨论");
         } else {
           wx.showToast({
             title: "评论成功",
@@ -1109,7 +1107,7 @@ Page({
     app.user.guideRecordAdd(param).then(res => {
       if (res.code == 1) {
         app.getGuide();
-        this.setIntegral("+45 积分", "完成[云课堂]新手指引");
+        this.setIntegral("+45 学分", "完成[云课堂]新手指引");
       }
     });
   },

@@ -162,9 +162,9 @@
 					"scene": 1048
 				},
 				{
-					"id": -1,
-					"name": "秀风采首页测试",
-					"pathName": "pages/post/post",
+					"id": 10,
+					"name": "收徒赚钱",
+					"pathName": "pages/makeMoney/makeMoney",
 					"query": "",
 					"scene": null
 				},

@@ -1,0 +1,76 @@
+/* pages/myApprentice/myApprentice.wxss */
+.container {
+  width: 100%;
+  padding-bottom: 168rpx;
+}
+.container .item {
+  padding:40rpx 0 0 0;
+  display: flex;
+}
+.container .item image{
+  width: 100rpx;
+  height: 100rpx;
+  background:rgba(216,216,216,1);
+  border-radius:4rpx;
+  margin: 0 30rpx;
+}
+.container .item .itemMsg {
+  flex: 1;
+  border-bottom: 1px solid rgba(237,237,237,1);
+  padding:0 30rpx 40rpx 0;
+}
+.container .item .itemMsg .msgTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.container .item .itemMsg .msgTop:nth-child(2) {
+  margin-top: 10rpx;
+}
+.container .item .itemMsg .msgTop text:nth-child(1) {
+  width:280rpx;
+  font-size:40rpx;
+  font-family:PingFangSC-Regular,PingFang SC;
+  font-weight:400;
+  color:rgba(58,58,58,1);
+  overflow: hidden;
+  text-overflow:ellipsis;
+  white-space: nowrap;
+}
+.container .item .itemMsg .msgTop text:nth-child(2) {
+  font-size:40rpx;
+  font-family:PingFangSC-Medium,PingFang SC;
+  font-weight:500;
+  color:rgba(254,155,2,1);
+}
+.container .item .itemMsg .msgTop .createtimes {
+  font-size:32rpx;
+  font-family:PingFangSC-Regular,PingFang SC;
+  font-weight:400;
+  color:rgba(126,126,126,1);
+}
+.container .item .itemMsg .msgTop .txt {
+  font-size:32rpx;
+  font-family:PingFangSC-Regular,PingFang SC;
+  font-weight:400;
+  color:rgba(126,126,126,1);
+}
+.qst {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  overflow: hidden;
+}
+.qst image {
+  width: 200rpx;
+  height: 282rpx;
+  margin-top: 180rpx;
+  margin-bottom: 50rpx;
+}
+.qst text {
+  font-size:34rpx;
+  font-family:PingFangSC-Regular,PingFang SC;
+  font-weight:400;
+  color:rgba(126,126,126,1);
+}

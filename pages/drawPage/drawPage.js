@@ -6,8 +6,8 @@ Page({
    * 页面的初始数据
    */
   data: {
-    showrule:false,
-    activeRed:0,
+    showrule: false,
+    activeRed: 0,
     clickLuck: 'clickLuck',
     screenHeight: false,
     index: 0,  // 当前转动到哪个位置，起点位置
@@ -19,12 +19,12 @@ Page({
     prize: -1,   // 中奖位置
     click: true,
     showToast: false, //显示中奖弹窗  
-    lotteryCfgList:[],
-    lotteryres:{},
+    lotteryCfgList: [],
+    lotteryres: {},
     showmeng: true,
-    showmask:false,
-    drawRuleNum:'',
-    recordRuleNum:''    
+    showmask: false,
+    drawRuleNum: '',
+    recordRuleNum: ''
   },
 
   /**
@@ -45,10 +45,10 @@ Page({
     })
   },
   getLotteryCfglist() {
-    return app.lottery.lotteryCfgList().then(res =>{ 
+    return app.lottery.lotteryCfgList().then(res => {
       if (res.code == 1) {
         this.setData({
-          lotteryCfgList:res.data.list,
+          lotteryCfgList: res.data.list,
           lottery_count: res.data.today_lottery_count
         })
       }
@@ -113,7 +113,7 @@ Page({
           clickLuck: ''
         })
         wx.showModal({
-          content: '是否消耗25积分开启抽奖?',
+          content: '是否消耗25学分开启抽奖?',
           cancelColor: '#999',
           confirmColor: '#DF2020',
           success(res) {
@@ -132,7 +132,7 @@ Page({
               })
             }
           }
-        })  
+        })
       }
     }
   },
@@ -146,18 +146,18 @@ Page({
     if (this.data.times > this.data.cycle + 10 && this.data.prize === this.data.index) {
       clearTimeout(this.data.timer)  // 清除转动定时器，停止转动
       this.setData({
-        prize : -1,
-        times : 0,
-        speed : 200,
-        click : true,
-        timer:0,
-        clickLuck:'clickLuck'
+        prize: -1,
+        times: 0,
+        speed: 200,
+        click: true,
+        timer: 0,
+        clickLuck: 'clickLuck'
       })
       if (this.data.lotteryres.get_type == 1) {
-          app.socket.send({
-            type: 'Prizemessage',
-            data: ''
-          })
+        app.socket.send({
+          type: 'Prizemessage',
+          data: ''
+        })
       }
       this.data.lottery_count == 0.5 ? this.setData({
         lottery_count: 1
@@ -194,11 +194,11 @@ Page({
           prize: index
         })
         // this.prize = index; 中奖位置,可由后台返回 
-        if (this.data.prize > 7) { 
-            this.setData({
-              prize: 7
-            }) 
-          }
+        if (this.data.prize > 7) {
+          this.setData({
+            prize: 7
+          })
+        }
       } else if (this.data.times > this.data.cycle + 10 && ((this.data.prize === 0 && this.data.index === 7) || this.data.prize === this.data.index + 1)) {
         let speed = this.data.speed += 110
         this.setData({
@@ -210,11 +210,11 @@ Page({
           speed
         })
       }
-      if (this.data.speed < 40) { 
+      if (this.data.speed < 40) {
         this.setData({
-          speed: 40 
-        }) 
-        }
+          speed: 40
+        })
+      }
       let timer = setTimeout(this.startRoll, this.data.speed)
       this.setData({
         timer

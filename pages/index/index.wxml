@@ -52,7 +52,6 @@
           <view class="left">
             <button open-type="getUserInfo" bindgetuserinfo="onGotUserInfo" data-role="user" class="img left-btn"
               catchtap="getSomthin">
-
             </button>
             <open-data class="img" type="userAvatarUrl" catchtap="toUser"></open-data>
             <view class="info">
@@ -73,15 +72,18 @@
       </button>
     </view>
   </view>
-  <!-- 搜索/积分 -->
+  <!-- 搜索/学分 -->
   <view class="search-box">
     <navigator class="search-left" url="/pages/search/search">
       <image src="{{$state.imgHost}}/searchp.png"></image>
       <text>搜索课程名称</text>
     </navigator>
-    <view class="integral" bindtap="toScore">
+    <view class="integral" bindtap="toScore" wx:if="{{$state.authUserInfo}}">
       <view class="integralImg"></view>
     </view>
+    <button open-type="getUserInfo" bindgetuserinfo="onGotUserInfo" class="integral" data-type="score" wx:else>
+      <view class="integralImg"></view>
+    </button>
   </view>
   <navigationBar wx:if="{{ scroll }}" id="navigationBar" placeholderBg="#F8F8F8" color="#000000" title="网上老年大学"
     back="{{ false }}" background="#F8F8F8"></navigationBar>
@@ -123,23 +125,28 @@
           <block wx:for="{{imgUrls}}" wx:key="index">
             <swiper-item>
               <image src="{{item.image}}" class="slide-image" width="355" height="150" catchtap="bannerGo"
-                data-item="{{ item }}" wx:if="{{!item.is_login}}"/>
+                data-item="{{ item }}" wx:if="{{!item.is_login}}" />
               <image src="{{item.image}}" class="slide-image" width="355" height="150" catchtap="bannerGo"
-              data-item="{{ item }}" wx:if="{{item.is_login && $state.authUserInfo}}"/>
-              <button class="slide-image" style="background:url({{item.image}});background-size: 100% 100%;" open-type="getUserInfo" bindgetuserinfo="onGotUserInfo" data-type="banner" data-item="{{item}}" wx:else></button>
+                data-item="{{ item }}" wx:if="{{item.is_login && $state.authUserInfo}}" />
+              <button class="slide-image" style="background:url({{item.image}});background-size: 100% 100%;"
+                open-type="getUserInfo" bindgetuserinfo="onGotUserInfo" data-type="banner" data-item="{{item}}"
+                wx:else></button>
             </swiper-item>
           </block>
         </swiper>
         <!-- 农场和电台 -->
         <scroll-view class="jumpout" scroll-x enable-flex>
           <view class="jumpoutBox" catchtap="jumpmini">
-            <image class="img" mode="widthFix" src="{{  !recommend ? '' : $state.imgHost + '/jumpoutImg_1.png' }}"></image>
+            <image class="img" mode="widthFix" src="{{  !recommend ? '' : $state.imgHost + '/jumpoutImg_1.png' }}">
+            </image>
           </view>
           <navigator class="jumpoutBox" url="/pages/education/education?type=farm">
-            <image class="img" mode="widthFix" src="{{  !recommend ? '' : $state.imgHost + '/jumpoutImg_2.png' }}"></image>
+            <image class="img" mode="widthFix" src="{{  !recommend ? '' : $state.imgHost + '/jumpoutImg_2.png' }}">
+            </image>
           </navigator>
           <navigator class="jumpoutBox" url="/pages/education/education?type=station">
-            <image class="img" mode="widthFix" src="{{  !recommend ? '' : $state.imgHost + '/jumpoutImg_3.png'}}"></image>
+            <image class="img" mode="widthFix" src="{{  !recommend ? '' : $state.imgHost + '/jumpoutImg_3.png'}}">
+            </image>
           </navigator>
           <view style="width: 30rpx;height: 100%;display: block;color: white;">
             孙菲菲结果来看g
@@ -165,7 +172,8 @@
                 src="{{ item.show_big ? item.big_image + '?x-image-process=image/resize,m_fixed,w_690,h_360/quality,Q_80' : item.image + '?x-image-process=image/resize,m_fixed,w_260,h_160/quality,Q_80'  }}"
                 lazy-load="true"></image>
               <image class="icon" mode="aspectFill" src="{{ $state.imgHost }}/play.png"></image>
-              <image src="/images/coursestautes.png" class="status" wx:if="{{item.is_finish}}" style="{{item.show_big ? 'width:130rpx;height:72rpx' : ''}}"></image>
+              <image src="/images/coursestautes.png" class="status" wx:if="{{item.is_finish}}"
+                style="{{item.show_big ? 'width:130rpx;height:72rpx' : ''}}"></image>
             </view>
             <view class="right">
               <text class="line name">{{ item.title }}</text>
@@ -182,8 +190,7 @@
     </swiper-item>
     <swiper-item class="tab-item" wx:for="{{nav}}" wx:key="index" wx:if="{{!index == 0}}" item-id="{{item.name}}">
       <view class="wrap recommend" id="recommend{{item.id}}">
-        <view class="skeleton" wx:for="{{5}}" wx:for-item="iten"
-          wx:if="{{ !catrecommend[item.id][0] }}" wx:key="index">
+        <view class="skeleton" wx:for="{{5}}" wx:for-item="iten" wx:if="{{ !catrecommend[item.id][0] }}" wx:key="index">
           <view class="skeletonBox">
             <view class="skeletonImg"></view>
             <view class="skeletonTitle"></view>
@@ -226,13 +233,13 @@
     <view class="line">{{ history.last_lesson.title + "第" + history.last_lesson.sub_id + "讲" }}</view>
     <image src="{{$state.imgHost}}/nowcancle.png" catchtap="closenow"></image>
   </view>
-  <!-- 签到拿积分 -->
+  <!-- 签到拿学分 -->
   <view class="integration" wx:if="{{ !$state.signStatus.count && recommend[0] && !dialog[0].image}}"
     catchtouchmove="return">
     <view class="dialog">
       <image class="bg" src="/images/integrationBg.png" mode="aspectFill"></image>
       <view class="ani" catchtap="signIn" data-id="1"></view>
-      <!-- <button catchtap="signIn" data-id="1">签到领积分</button> -->
+      <!-- <button catchtap="signIn" data-id="1">签到领学分</button> -->
       <icon type="cancel" size="37" color="white" data-id="0" catchtap="signIn"></icon>
     </view>
   </view>
@@ -243,7 +250,7 @@
         style="background: url('{{dialog[0].image}}') no-repeat center; background-size: 100% 100%;border-radius:10px"
         src="{{dialog[0].image}}" mode="aspectFill" catchtap="jumpPeper" data-peper="{{dialog[0].url}}"
         data-type="dialog"></view>
-      <!-- <button catchtap="signIn" data-id="1">签到领积分</button> -->
+      <!-- <button catchtap="signIn" data-id="1">签到领学分</button> -->
       <icon type="cancel" size="37" color="white" data-id="0" catchtap="closeSignIn"></icon>
     </view>
   </view>

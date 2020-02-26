@@ -50,7 +50,7 @@ Page({
                 app.user.exchange(param).then(res => {
                   if (res.code == 1) {
                     wx.navigateTo({
-                      url: "/pages/gift/gift?name=" + this.data.gift.title + '&image=' +  this.data.gift.image
+                      url: "/pages/gift/gift?name=" + this.data.gift.title + '&image=' + this.data.gift.image
                     })
                   }
                 })
@@ -79,10 +79,10 @@ Page({
             }
           })
         }
-        
+
       } else {
         wx.showToast({
-          title: "您的积分不够兑换!",
+          title: "您的学分不够兑换!",
           icon: "none",
           duration: 1500
         })

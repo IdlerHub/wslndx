@@ -125,7 +125,7 @@ page .navgationto .navgationBox .navTitle {
   position: absolute;
   top: 55rpx;
   left: 56rpx;
-  letter-spacing: -1rpx;
+  letter-spacing: 2rpx;
 }
 
 page .navgationto .navgationBox .num {
@@ -144,8 +144,8 @@ page .navgationto .navgationBox .toScore {
   box-shadow: 0px 4px 8px 0px rgba(255, 0, 36, 1);
   border-radius: 50%;
   position: absolute;
-  top: 65rpx;
-  right: 92rpx;
+  top: 62rpx;
+  right: 38rpx;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -163,8 +163,8 @@ page .navgationto .navgationBox .toInvite {
   box-shadow: 0px 4px 8px 0px rgba(255, 101, 9, 1);
   border-radius: 50%;
   position: absolute;
-  top: 65rpx;
-  right: 92rpx;
+  top: 62rpx;
+  right: 80rpx;
   display: flex;
   align-items: center;
   justify-content: center;
