@@ -52,7 +52,9 @@
     "pages/voteProduction/voteProduction",
     "pages/voteRule/voteRule",
     "pages/voteDetail/voteDetail",
-    "pages/voteFail/voteFail"
+    "pages/voteFail/voteFail",
+    "pages/voteSearch/voteSearch",
+    "pages/voteClassify/voteClassify"
   ],
   "permission": {
     "scope.userLocation": {

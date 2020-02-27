@@ -1,0 +1,29 @@
+<!--pages/voteSearch/voteSearch.wxml-->
+<view class="voteSearch">
+    <view class="search">
+        <view class="search-left">
+            <icon type="search" size="56rpx" />
+            <input type="text" placeholder="请输入作品名称或作者名" value="{{inputcontent}}" bindinput="changeSearch" />
+            <icon hidden="{{clearhidden}}" type="clear" size="36rpx" bindtap="clearInput" />
+        </view>
+        <view class="search-right">取消</view>
+    </view>
+    <view class="production-list" wx:if="{{productionList.length}}">
+        <block wx:for="{{productionList}}" wx:key="index">
+            <view class="production-item">
+                <view class="item-left">
+                    <image wx:if="{{item.type==1}}" class="item-classify" src="../../images/vote-img.png" alt="" />
+                    <image wx:if="{{item.type==2}}" class="item-classify" src="../../images/vote-video.png" alt="" />
+                    <view class="item-img"></view>
+                </view>
+                <view class="item-right">
+                    <view>
+                        <view class="item-author">{{item.author}}</view>
+                        <view class="item-title">{{item.name}}</view>
+                    </view>
+                    <view class="perfect">{{item.prise_numbers}}赞</view>
+                </view>
+            </view>
+        </block>
+    </view>
+</view>

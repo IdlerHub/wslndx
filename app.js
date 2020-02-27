@@ -38,13 +38,13 @@ fundebug.init({
 });
 //工具库
 var util = require("utils/util.js");
-
 //http请求接口
 var classroom = require("data/Classroom.js");
 var user = require("data/User.js");
 var video = require("data/Video.js");
 var circle = require("data/Circle.js");
 var lottery = require("data/Lottery.js");
+var vote = require("data/Vote.js");
 //app.js
 App({
   API_URL: store.API_URL,
@@ -56,6 +56,7 @@ App({
   video,
   circle,
   lottery,
+  vote,
   socket,
   store,
   fundebug,
@@ -71,6 +72,7 @@ App({
   /*埋点统计*/
   onLaunch: async function(opts) {
     console.log(opts)
+    this.getSecureToken()
     let optsStr = decodeURIComponent(opts.query.scene).split("&");
     let opstObj = {};
     optsStr.forEach((item, index) => {
@@ -108,16 +110,6 @@ App({
       wx.setStorageSync("mpVersion", this.store.mpVersion);
     }
     this.initStore();
-
-    /* 建立socket链接 */
-    // if (this.store.$state.userInfo.id) {
-    //   setTimeout(() => {
-    //     socket.init(this.store.$state.userInfo.id);
-    //     socket.listen(this.prizemessage, "Prizemessage");
-    //     socket.listen(this.bokemessage, "Bokemessage");
-    //     this.getTaskStatus()
-    //   }, 2000);
-    // }
     let systemInfo = wx.getSystemInfoSync();
     let wxtype = systemInfo.version.replace(".", "").replace(".", "");
     let platform = systemInfo.platform;
@@ -459,6 +451,16 @@ App({
         path: "/pages/index/index?uid=" + this.store.$state.userInfo.id + "&type=invite&activity=1",
         imageUrl: this.store.$state.imgHost + '/withdrawShareImg.jpg'
       }
+  },
+  getSecureToken(){
+     setTimeout(()=>{
+       vote.getSecureToken().then(res => {
+         this.store.setState({
+           security: res.data.credential
+         })
+       })
+     })
+
   },
   globalData: {
     /*wx.login 返回值 code */

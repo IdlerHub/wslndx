@@ -1,2 +1,45 @@
 <!--pages/voteDetail/voteDetail.wxml-->
-<view class="voteDetail">票选作品详情页面</view>
+<view class="voteDetail">
+    <block wx:if="{{item.type==1}}">
+        <view class="img-index">{{current}}/{{item.imgList.length}}</view>
+        <swiper class="img-list" current="{{current}}" circular  bindchange="changeIndex">
+            <block wx:for="{{item.imgList}}" wx:key="index">
+                <swiper-item>
+                    <view class="swiper-item" style="background: red;"></view>
+                </swiper-item>
+            </block>
+        </swiper>
+    </block>
+    <block wx:else>
+        <video class="video" id="video" src="{{item.videoUrl}}" controls="{{false}}" autoplay="{{true}}" loop="{{false}}" bindplay="videoplay" bindended="videopause" />
+        <image wx:if="{{ pause }}" mode="aspectFill" src="{{ $state.imgHost }}/play-hl.png" class="pause"></image>
+    </block>
+    
+    <view class="footer-info">
+        <view class="info-left">
+            <view class="user-info">
+                <image src="" alt="" />
+                <view class="info-name">作者: {{item.author}}</view>
+            </view>
+            <view class="info-title">{{item.title}}</view>
+            <view class="info-content">{{item.content}}</view>
+        </view>
+        <view class="info-right">
+            <view class="zan">
+                <view class="circle">
+                    <image src="/images/heart.png" alt="" />
+                </view>
+                <text>1111</text>
+            </view>
+            <view class="share">
+                <view class="circle">
+                    <image src="/images/share.png" alt="" />
+                </view>
+                <text>1</text>
+            </view>
+            <view class="join">
+                <view class="circle">参赛</view>
+            </view>
+        </view>
+    </view>
+</view>
