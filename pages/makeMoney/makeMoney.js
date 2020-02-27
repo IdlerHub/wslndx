@@ -37,7 +37,8 @@ Page({
             total: res.data.user_total_points
           }
         ]
-        topMsg.forEach(item => {
+        topMsg.forEach((item,index) => {
+          index == 1 ? item.total = Number(item.total).toFixed(2) : ''
           item.number2 = app.util.towTwice(item.total)
         })
         this.setData({
@@ -49,6 +50,7 @@ Page({
       if (res.code == 1) {
         let list = res.data
         list.forEach(item => {
+          item.total_amount = Number(item.total_amount).toFixed(2)
           item.number2 = app.util.towTwice(item.prentice_count)
           item.money2 = app.util.towTwice(item.total_amount)
         })

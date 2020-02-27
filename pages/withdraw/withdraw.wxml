@@ -6,7 +6,7 @@
       <text>提现记录</text>
       <image src="/images/cashRight.png"></image>
     </navigator>
-    <view class="money">{{userMoney}}<text>元</text></view>
+    <view class="money">{{$state.userInfo.amount}}<text>元</text></view>
     <view class="banner">
       <image src="/images/messageImg.png"></image>
       <swiper class="swiper" autoplay interval="1500" circular vertical>
@@ -24,7 +24,7 @@
     <view class="windrawlist">
       <text>提现到微信零钱</text>
       <view class="listBox">
-        <button wx:for="{{windrawlist}}" wx:key="index" hover-class="none" bindtap="withdraw" data-index="{{index}}">{{item}}元</button>
+        <button wx:for="{{windrawlist}}" wx:key="index" hover-class="none" bindtap="withdraw" data-index="{{index}}">{{item.amount}}元</button>
       </view>
     </view>
   </view>

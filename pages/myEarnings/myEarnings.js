@@ -5,31 +5,10 @@ Page({
   data: {
     list:[]
   },
-  onLoad: function (options) {
-    let list = [
-      {'type_desc' : '邀请新学员奖励' , 'amount': '0.1' , 'createtime': '1582507826'},
-      {'type_desc' : '邀请新学员奖励' , 'amount': '0.1' , 'createtime': '1582507826'},
-      {'type_desc' : '邀请新学员奖励' , 'amount': '0.1' , 'createtime': '1582507826'},
-      {'type_desc' : '邀请新学员奖励' , 'amount': '0.1' , 'createtime': '1582507826'},
-      {'type_desc' : '邀请新学员奖励' , 'amount': '0.1' , 'createtime': '1582507826'},
-      {'type_desc' : '邀请新学员奖励' , 'amount': '0.1' , 'createtime': '1582507826'},
-      {'type_desc' : '邀请新学员奖励' , 'amount': '0.1' , 'createtime': '1582507826'},
-      {'type_desc' : '邀请新学员奖励' , 'amount': '0.1' , 'createtime': '1582507826'},
-      {'type_desc' : '邀请新学员奖励' , 'amount': '0.1' , 'createtime': '1582507826'},
-      {'type_desc' : '邀请新学员奖励' , 'amount': '0.1' , 'createtime': '1582507826'},
-      {'type_desc' : '邀请新学员奖励' , 'amount': '0.1' , 'createtime': '1582507826'},
-    ]
-    list.forEach(v => {
-      v.time = app.util.formatTime(new Date(v.createtime * 1000))
-    })
-    this.setData({
-      list
-    })
-    this.getList()
-  },
-  onReady: function () {
+  onLoad: function (options) { 
   },
   onShow: function () {
+    this.getList()
   },
   onShareAppMessage: function (ops) {
     if (ops.from === "menu") {
@@ -42,14 +21,18 @@ Page({
   },
   getList() {
     app.tutor.amountList().then(res => {
-      // let list = res.data
-      // list.forEach(item => {
-      //   item.number2 = app.util.towTwice(item.prentice_count)
-      //   item.money2 = app.util.towTwice(item.total_amount)
-      // })
-      // this.setData({
-      //   list
-      // })
+      if(res.code == 1) {
+        let list = res.data.amount_list
+        list.forEach(item => {
+          item.amount = Number(item.amount).toFixed(2)
+        })
+        this.setData({
+          list
+        })
+        app.store.setState({
+          ['userInfo.amount']:  [Number(res.data.total_amount).toFixed(2)]
+        })
+      }
     })
   }
 })

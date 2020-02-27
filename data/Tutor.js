@@ -34,6 +34,14 @@ function extractAmountConfig(param) {
   return httpService.post("Tutor/extractAmountConfig", param)
 }
 
+/**
+ * @description:现金提现
+ * @param: amount
+ * @return:promise
+ */
+function extractFinance(param) {
+  return httpService.post("Tutor/extractFinance", param)
+}
 
 
 module.exports = {
@@ -43,5 +51,6 @@ module.exports = {
   amountList,
   extractAmount,
   extractAmountConfig,
-  prenticePointsList
+  prenticePointsList,
+  extractFinance
 }

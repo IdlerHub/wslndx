@@ -2,7 +2,7 @@
 <view class="container">
   <view class="topBox">
     <view class="title">现金收益</view>
-    <view class="cash">7.10</view>
+    <view class="cash">{{$state.userInfo.amount || 0}}</view>
     <navigator class="withdrawBtn" hover-class="none" url="/pages/withdraw/withdraw" open-type="navigate">
     </navigator>
   </view>
@@ -10,11 +10,11 @@
     <view class="item" wx:for="{{list}}" wx:key="index">
       <view class="left">
         <text>{{item.type_desc}}</text>
-        <text>{{item.time}}</text>
+        <text>{{item.createtime}}</text>
       </view>
       <view class="right">+{{item.amount}}</view>
     </view>
-    <view class="item" style="height: 171rpx;">
+    <view class="item" style="height: 171rpx;border: 0;">
     </view>
   </view>
   <view class="qst" wx:else>
