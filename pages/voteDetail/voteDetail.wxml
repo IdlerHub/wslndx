@@ -1,18 +1,22 @@
 <!--pages/voteDetail/voteDetail.wxml-->
 <view class="voteDetail">
     <block wx:if="{{item.type==1}}">
-        <view class="img-index">{{current}}/{{item.url.length}}</view>
+        <view class="img-index">{{current+1}}/{{item.url.length}}</view>
         <swiper class="img-list" current="{{current}}" circular  bindchange="changeIndex">
             <block wx:for="{{item.url}}" wx:key="index">
                 <swiper-item>
-                    <view class="swiper-item" style="background: red;"></view>
+                    <view class="swiper-item">
+                        <image src="{{item}}" alt="" mode="aspectFit"/>
+                    </view>
                 </swiper-item>
             </block>
         </swiper>
     </block>
     <block wx:else>
-        <video class="video" id="video" src="{{item.url[0]}}" controls="{{false}}" autoplay="{{true}}" loop="{{false}}" bindplay="videoplay" bindended="videopause" />
-        <image wx:if="{{ pause }}" mode="aspectFill" src="{{ $state.imgHost }}/play-hl.png" class="pause"></image>
+        <video class="video" id="videoWorks" src="{{item.videoUrl}}" controls="{{false}}" autoplay="{{true}}" loop="{{false}}" bindplay="videoplay" bindtap="controlVideo" />
+        <view wx:if="{{ pause }}" class="pause-img" bindtap="controlVideo">
+            <image mode="aspectFill" src="/images/play-hl.png"/>
+        </view>
     </block>
     
     <view class="footer-info">
@@ -36,7 +40,8 @@
                 <text>{{item.prise_numbers}}</text>
             </view>
             <view class="share">
-                <view class="circle">
+                <!-- <button class="share-btn" open-type="share"></button> -->
+                <view class="circle" catchtap="shareMode">
                     <image src="/images/share.png" alt="" />
                 </view>
                 <text>{{item.share_numbers}}</text>
@@ -44,6 +49,21 @@
             <view class="join" catchtap="toJoin" >
                 <view class="circle">参赛</view>
             </view>
+        </view>
+    </view>
+    <view wx:if="{{shareFlag}}" class="share-container">
+        <view class="share-footer">
+            <view class="share-mode">
+                <button class="share-wx" open-type="share" catchtap="shareOff">
+                    <image src="/images/share-wx.png" alt="" />
+                    <text>发送给朋友</text>
+                </button>
+                <view class="share-img" catchtap="shareImg">
+                    <image src="/images/share-img.png" alt="" />
+                    <text>生成海报</text>
+                </view>
+            </view>
+            <view class="share-none" catchtap="shareOff">取消</view>
         </view>
     </view>
 </view>
