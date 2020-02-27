@@ -28,6 +28,7 @@
       </view>
     </view>
   </view>
+  <view class="kong">21</view>
 </view>
 <view class="toast" wx:if="{{showToast}}">
    <view class="toastBox">

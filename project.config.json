@@ -135,13 +135,6 @@
 				},
 				{
 					"id": -1,
-					"name": "测试编码",
-					"pathName": "pages/index/index",
-					"query": " ",
-					"scene": 1001
-				},
-				{
-					"id": -1,
 					"name": "从课程分享卡片进入小程序",
 					"pathName": "pages/detail/detail",
 					"query": "id=12661&type=share",
@@ -155,7 +148,7 @@
 					"scene": 1008
 				},
 				{
-					"id": 9,
+					"id": 8,
 					"name": "收徒赚钱",
 					"pathName": "pages/makeMoney/makeMoney",
 					"query": "",
