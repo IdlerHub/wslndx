@@ -5,8 +5,8 @@
 var httpService = require("../utils/service.js")
 
 //POST h5opus/getCategory 获取分类数据
-function getCategory(){
-    return httpService.post("h5opus/getCategory")
+function getCategory() {
+  return httpService.post("h5opus/getCategory")
 }
 
 /** POST h5opus/getOpusList
@@ -14,8 +14,8 @@ function getCategory(){
  * @param {type,page}
  * @return:  promise
  */
-function getOpusList(params){
-    return httpService.post("h5opus/getOpusList", params)
+function getOpusList(params) {
+  return httpService.post("h5opus/getOpusList", params)
 }
 
 /** POST h5opus/praiseOpus
@@ -24,22 +24,31 @@ function getOpusList(params){
  * @return:  promise
  */
 function praiseOpus(params) {
-    return httpService.post("h5opus/praiseOpus", params)
+  return httpService.post("h5opus/praiseOpus", params)
 }
 
 /**
  *  @description: 获取桶上传的ak/sk等相关参数
  * @param {*}
  * @return:  promise
- * **/ 
-function getSecureToken(params){
+ * **/
+function getSecureToken() {
   return httpService.post('h5opus/getSecureToken')
 }
 
+/**
+ *  @description: 上传作品
+ * @param {uid，name，content，type，hoc_id，url}
+ * @return:  promise
+ * **/
+function uploadOpus(params) {
+  return httpService.post('h5opus/uploadOpus', params)
+}
 
 module.exports = {
-    getCategory,
-    getOpusList,
-    praiseOpus,
-    getSecureToken
+  getCategory,
+  getOpusList,
+  praiseOpus,
+  getSecureToken,
+  uploadOpus
 }
