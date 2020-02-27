@@ -30,6 +30,6 @@
         <view class="none-content">
             <text>{{stateIndex==0? '您还没有上传作品': '暂无作品'}}</text>
         </view>
-        <view class="none-btn">去上传</view>
+        <view wx:if="{{stateIndex!==2}}" class="none-btn">去上传</view>
     </view>
 </view>
