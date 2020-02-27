@@ -21,7 +21,7 @@
 }
 .shareBox  .shareBtn {
   width:330rpx;
-  height:108rpx;
+  height:90rpx;
   background:rgba(0,189,2,1);
   border-radius:6rpx;
   margin-right: 30rpx;
@@ -35,8 +35,8 @@
   background: #fff;
 }
 .shareBox  .shareBtn image{
-  width: 70rpx;
-  height: 56rpx;
+  width: 50rpx;
+  height: 40rpx;
   margin-right: 30rpx;
 } 
 .shareBox  .shareBtn text{
@@ -46,8 +46,8 @@
   color:rgba(255,255,255,1);
 } 
 .shareBox  .shareBtn:nth-child(2) image{
-  width: 56rpx;
-  height: 56rpx;
+  width: 40rpx;
+  height: 40rpx;
   margin-right: 30rpx;
 } 
 .shareBox  .shareBtn:nth-child(2) text{

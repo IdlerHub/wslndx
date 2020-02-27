@@ -186,7 +186,7 @@ page {
 .toast .number {
   width: 100%;
   text-align: center;
-  margin-top: 117rpx;
+  margin-top: 138rpx;
   font-size:80rpx;
   font-family:PingFangSC-Medium,PingFang SC;
   font-weight:500;

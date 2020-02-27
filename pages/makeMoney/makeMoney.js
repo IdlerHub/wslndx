@@ -9,9 +9,6 @@ Page({
   onShow: function () {
     this.init()
   },
-  onHide: function () {
-
-  },
   onShareAppMessage: function (ops) {
     if (ops.from === "menu") {
       return this.menuAppShare()

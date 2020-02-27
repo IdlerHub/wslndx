@@ -65,12 +65,12 @@ Page({
     );
     ctx.save();
     ctx.beginPath();
-    ctx.arc(85 * ratio, 410 * ratio, 35 * ratio, 0, Math.PI * 2, false);
+    ctx.arc(85 * ratio, 430 * ratio, 35 * ratio, 0, Math.PI * 2, false);
     ctx.clip();
     ctx.drawImage(
       this.param.lcoalAvatar,
       50 * ratio,
-      375 * ratio,
+      395 * ratio,
       70 * ratio,
       70 * ratio
     );
@@ -80,11 +80,11 @@ Page({
     ctx.fillText(
       "我是" + this.data.$state.userInfo.nickname,
       140 * ratio,
-      424 * ratio
+      444 * ratio
     );
     ctx.setFontSize(40 * ratio);
-    ctx.fillText("十万个免费老年课程", 140 * ratio, 490 * ratio);
-    ctx.fillText("打造新时代“三有老人”", 140 * ratio, 544 * ratio);
+    ctx.fillText("十万个免费老年课程", 140 * ratio, 510 * ratio);
+    ctx.fillText("打造新时代“三有老人”", 140 * ratio, 564 * ratio);
     ctx.fillRect(
       0,
       this.param.container.height - 210 * ratio,

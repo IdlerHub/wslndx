@@ -24,7 +24,7 @@ page {
 .container .top .topBox .moneyBox {
   width: 300rpx;
   height: 60rpx;
-  background:rgba(255,255,255,0.6);
+  background:rgba(255,255,255,0.2);
   border-radius: 100rpx 0 0 100rpx;
   margin:46rpx 20rpx 0 0 ;
   float: right;

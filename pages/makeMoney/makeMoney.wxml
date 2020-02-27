@@ -52,7 +52,7 @@
     <view class="list" wx:if="{{list.length > 0}}">
       <view class="item" wx:for="{{list}}" wx:key="index">
         <image src="/images/apprentice{{index < 3 ? index : ''}}.png" class="ranking" wx:if="{{index < 3}}"></image>
-        <view class="ranking" wx:else>{{index+1}}</view>
+        <view class="ranking" style="padding-bottom:14rpx ;" wx:else>{{index+1}}</view>
         <view class="itemMsg" style="border:{{index == (list.length - 1) ? '0' : ''}};">
           <image src="{{item.avatar || '/images/apprenticeAva.png'}}"></image>
           <text>{{item.nickname}}</text>
