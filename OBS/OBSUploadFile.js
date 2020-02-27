@@ -142,7 +142,6 @@ const OBSupload = function(dir, filePath, type) {
   return wxp
     .uploadFile(req)
     .then(res => {
-      console.log(res);
       return "https://hwcdn.jinlingkeji.cn/" + fileName;
     })
     .catch(err => {

@@ -38,7 +38,7 @@
         <view class="upload-img" wx:else>
             <view class="btn-img" hidden="{{video}}" bindtap="uploadVideo">添加视频</view>
             <view class="show-img"  hidden="{{!video}}">
-                <image src="" alt="" mode="widthFix" />
+                <image src="/images/uploadVideo.png" alt="" mode="widthFix" />
                 <icon class="clear" data-index="4" size="19" type="clear" role="img" catchtap="delVideo"></icon>
             </view>
         </view>
