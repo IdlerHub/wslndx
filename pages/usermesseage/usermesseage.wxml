@@ -1,12 +1,15 @@
 <!--pages/usermesseage/usermesseage.wxml-->
 <view class="contrain">
-  <view class="newitem" wx:for="{{newsList}}" wx:key="index" bindtap="tomessage" data-id="{{item.id}}" wx:if="{{newsList[0]}}">
-    <view class="news-time" > {{item.createtime}}</view>
+  <view class="newitem" wx:for="{{newsList}}" wx:key="index" bindtap="tomessage" data-id="{{item.id}}"
+    wx:if="{{newsList[0]}}">
+    <view class="news-time"> {{item.createtime}}</view>
     <view class="newsBox">
       <view class="news-title" style="color:{{ item.is_read ? 'rgba(153,153,153,1) ' : ''}}">
         {{item.title}}
       </view>
-      <rich-text nodes="{{item.intro}}" class="tichtext" style="display: -webkit-box;-webkit-box-orient: vertical;-webkit-line-clamp: 4;overflow: hidden; color:{{ item.is_read ? 'rgba(204,204,204,1)' : 'rgba(58,58,58,1)'}} !important;font-size:18px !important;line-height:54rpx !important;"></rich-text>
+      <rich-text nodes="{{item.intro}}" class="tichtext"
+        style="display: -webkit-box;-webkit-box-orient: vertical;-webkit-line-clamp: 4;overflow: hidden; color:{{ item.is_read ? 'rgba(204,204,204,1)' : 'rgba(58,58,58,1)'}} !important;font-size:18px !important;line-height:54rpx !important;">
+      </rich-text>
       <view class="tonews">
         <text style="color:{{ item.is_read ? 'rgba(153,153,153,1) ' : ''}}">查看详情</text>
         <image src="/images/stickright.png"></image>
@@ -14,8 +17,7 @@
     </view>
   </view>
   <view class="qstBox" wx:if="{{!newsList[0]}}">
-    <image src="/images/delBlog.png"></image>
+    <image src="{{$state.imgHost}}/delBlog.png"></image>
     <view class="txt">暂无消息</view>
   </view>
 </view>
-

@@ -29,11 +29,8 @@ Page({
       userMoney
     })
   },
-  onReady: function () {
-
-  },
   onShow: function () {
-
+    this.getamount()
   },
   onHide() {
     this.setData({
@@ -48,6 +45,11 @@ Page({
       console.log("ShareAppMessage  button")
       return app.withdrawShare(ops)
     }
+  },
+  getamount() {
+    app.tutor.extractAmountConfig().then(res => {
+
+    })
   },
   withdraw(e) {
     let index = e.currentTarget.dataset.index

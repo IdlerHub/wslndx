@@ -30,8 +30,10 @@
           <image class="icon" mode="aspectFill" src="/images/fenxiang.png"></image>
         </button>
       </view>
-      <navigator class="moneyPackt" hover-class="none" url="/pages/makeMoney/makeMoney" wx:if="{{$state.authUserInfo}}"></navigator>
-      <button open-type="getUserInfo" bindgetuserinfo="onGotUserInfo" class="moneyPackt" data-type="money" wx:else></button> 
+      <navigator class="moneyPackt" hover-class="none" url="/pages/makeMoney/makeMoney" wx:if="{{$state.authUserInfo}}">
+      </navigator>
+      <button open-type="getUserInfo" bindgetuserinfo="onGotUserInfo" class="moneyPackt" data-type="money"
+        wx:else></button>
       <view class="right">
         <view class="progress" wx:if="{{ detail.progress < 100 }}">
           <view class="line">
@@ -148,7 +150,7 @@
             </view>
           </view>
           <view class="nodata" wx:if="{{ comment.length <= 0 }}">
-            <image src="../../images/no-com.png" mode="aspectFill"></image>
+            <image src="{{$state.imgHost}}/no-com.png" mode="aspectFill"></image>
           </view>
         </view>
       </swiper-item>

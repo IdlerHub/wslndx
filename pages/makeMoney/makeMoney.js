@@ -2,37 +2,14 @@
 const app = getApp()
 Page({
   data: {
-    list:[]
+    list: [],
+    topMsg: {}
   },
-  onLoad: function (options) {
-    let list = [
-      {name:'毁灭者',number:'158000', money:'988',avatar:'https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTKKfMv43V8lvG8QepxjhicruE0QeerAq3VibgbdicR3fg57XZrocOUZ78QQJNZDr1wxg9jibn6Z46GNYg/132'},
-      {name:'开心一下奥斯陆冬季受到了发货',number:'9888', money:'868',avatar:'https://wx.qlogo.cn/mmopen/vi_32/1ZCyMq0Ez6Ey1ncIv0uQJ2xclb9LlFFHpztA2LEX9o0YLLWG4hVic0gyYNVibQcNBTWAu6PA2nuiaDp6ms7dCjzPw/132'},
-      {name:'卡我打',number:'7526', money:'868',avatar:''},
-      {name:'卡我打',number:'7526', money:'868',avatar:''},
-      {name:'毁灭者',number:'158000', money:'988',avatar:'https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTKKfMv43V8lvG8QepxjhicruE0QeerAq3VibgbdicR3fg57XZrocOUZ78QQJNZDr1wxg9jibn6Z46GNYg/132'},
-      {name:'开心一下奥斯陆冬季受到了发货',number:'9888', money:'868',avatar:'https://wx.qlogo.cn/mmopen/vi_32/1ZCyMq0Ez6Ey1ncIv0uQJ2xclb9LlFFHpztA2LEX9o0YLLWG4hVic0gyYNVibQcNBTWAu6PA2nuiaDp6ms7dCjzPw/132'},
-      {name:'毁灭者',number:'158000', money:'988',avatar:'https://wx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTKKfMv43V8lvG8QepxjhicruE0QeerAq3VibgbdicR3fg57XZrocOUZ78QQJNZDr1wxg9jibn6Z46GNYg/132'},
-      {name:'开心一下奥斯陆冬季受到了发货',number:'9888', money:'868',avatar:'https://wx.qlogo.cn/mmopen/vi_32/1ZCyMq0Ez6Ey1ncIv0uQJ2xclb9LlFFHpztA2LEX9o0YLLWG4hVic0gyYNVibQcNBTWAu6PA2nuiaDp6ms7dCjzPw/132'},
-    ]
-    list.forEach( item => {
-      item.number2 = app.util.tow(item.number)
-    })
-    // this.setData({
-    //   list
-    // })
+  onLoad: function (options) {},
+  onShow: function () {
+    this.init()
   },
-  onShow: function () {},
   onHide: function () {
-
-  },
-  onUnload: function () {
-
-  },
-  onPullDownRefresh: function () {
-
-  },
-  onReachBottom: function () {
 
   },
   onShareAppMessage: function (ops) {
@@ -44,4 +21,41 @@ Page({
       return app.withdrawShare(ops)
     }
   },
+  init() {
+    app.tutor.myIndex().then(res => {
+      if (res.code == 1) {
+        let topMsg = [{
+            up: res.data.user_today_num,
+            total: res.data.user_total_num
+          },
+          {
+            up: res.data.user_today_amount,
+            total: res.data.user_total_amount
+          },
+          {
+            up: res.data.user_today_points,
+            total: res.data.user_total_points
+          }
+        ]
+        topMsg.forEach(item => {
+          item.number2 = app.util.towTwice(item.total)
+        })
+        this.setData({
+          topMsg
+        })
+      }
+    })
+    app.tutor.rankList().then(res => {
+      if (res.code == 1) {
+        let list = res.data
+        list.forEach(item => {
+          item.number2 = app.util.towTwice(item.prentice_count)
+          item.money2 = app.util.towTwice(item.total_amount)
+        })
+        this.setData({
+          list
+        })
+      }
+    })
+  }
 })

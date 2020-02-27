@@ -25,6 +25,7 @@ Page({
     this.setData({
       list
     })
+    this.getList()
   },
   onReady: function () {
   },
@@ -39,4 +40,16 @@ Page({
       return app.withdrawShare(ops)
     }
   },
+  getList() {
+    app.tutor.amountList().then(res => {
+      // let list = res.data
+      // list.forEach(item => {
+      //   item.number2 = app.util.towTwice(item.prentice_count)
+      //   item.money2 = app.util.towTwice(item.total_amount)
+      // })
+      // this.setData({
+      //   list
+      // })
+    })
+  }
 })

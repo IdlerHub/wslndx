@@ -4,12 +4,14 @@
     <view class="search-box">
       <image src="{{$state.imgHost}}/searchp.png"></image>
       <form wx:if="{{focus}}">
-        <input placeholder="搜索课程名称" placeholder-style="color:#999;" confirm-type="search" type="text" class="search-txt" focus="focus"  value="{{text}}" bindinput="txtchange" bindconfirm="earchlesss"></input>
-        <button wx:if="{{text != ''}}" form-type="reset" catchtap="cleartxt"></button> 
+        <input placeholder="搜索课程名称" placeholder-style="color:#999;" confirm-type="search" type="text" class="search-txt"
+          focus="focus" value="{{text}}" bindinput="txtchange" bindconfirm="earchlesss"></input>
+        <button wx:if="{{text != ''}}" form-type="reset" catchtap="cleartxt"></button>
       </form>
       <form wx:else>
-        <input  placeholder-style="color:#999;" confirm-type="search" type="text" class="search-txt"  value="{{text}}" bindinput="txtchange" bindconfirm="earchlesss"></input>
-        <button wx:if="{{text != ''}}" form-type="reset" catchtap="cleartxt"></button> 
+        <input placeholder-style="color:#999;" confirm-type="search" type="text" class="search-txt" value="{{text}}"
+          bindinput="txtchange" bindconfirm="earchlesss"></input>
+        <button wx:if="{{text != ''}}" form-type="reset" catchtap="cleartxt"></button>
       </form>
     </view>
     <view class="cancle" bindtap="backhome">取消</view>
@@ -17,7 +19,8 @@
   <view class="wrap">
     <view catchtap="detailTap" wx:for="{{ lessList }}" wx:key="index" class="item" data-item="{{ item }}">
       <view class="left">
-        <image class="poster" mode="aspectFill" src="{{ item.image + '?x-image-process=image/resize,m_fixed,w_260,h_160/quality,Q_80' }}"></image>
+        <image class="poster" mode="aspectFill"
+          src="{{ item.image + '?x-image-process=image/resize,m_fixed,w_260,h_160/quality,Q_80' }}"></image>
         <image class="icon" mode="aspectFill" src="{{ $state.imgHost }}/play.png"></image>
         <image src="/images/coursestautes.png" class="status" wx:if="{{item.is_finish}}"></image>
       </view>
@@ -27,22 +30,26 @@
         <!-- <text class="line actor" wx:else>{{ item.name }}-{{ item.honor }}</text> -->
         <text class="line info">
           <text class="dramaNum"><text class="key">剧集</text>{{ item.lesson_count }}集</text>
-        <text class="playNum"><text class="key">播放</text>{{ item.bw || item.browse }}</text>
+          <text class="playNum"><text class="key">播放</text>{{ item.bw || item.browse }}</text>
         </text>
       </view>
     </view>
     <view class="qst" wx:if="{{showqst && !lessList[0]}}">
-      <image class="ast-img" src="/images/no-com.png"></image>
+      <image class="ast-img" src="{{$state.imgHost}}/no-com.png"></image>
     </view>
   </view>
-  <view class="voice-box" style="bottom:{{voiceheight}}px" wx:if="{{$state.authRecord && showvioce && !lessList[0].image}}">
-    <view style="background:url({{voiceImg}});background-size:100% 100%;" class="voice-image" catchtouchstart="touchstart" catchtouchend="touchend"></view>
+  <view class="voice-box" style="bottom:{{voiceheight}}px"
+    wx:if="{{$state.authRecord && showvioce && !lessList[0].image}}">
+    <view style="background:url({{voiceImg}});background-size:100% 100%;" class="voice-image"
+      catchtouchstart="touchstart" catchtouchend="touchend"></view>
     <div class="voice-water1" wx:if="{{voiceActon}}"></div>
     <div class="voice-water1 voice-water2" wx:if="{{voiceActon}}"></div>
     <view class="voice-txt" style="height:12rpx;"> {{voiceActon? '' : '按住说话'}}</view>
   </view>
-  <view class="voice-box" style="bottom:{{voiceheight}}px" wx:if="{{!$state.authRecord && showvioce && !lessList[0].image}}">
-    <view style="background:url({{voiceImg}});background-size:100% 100%;" class="voice-image" bindtap="authrecord" catchtouchstart="authrecord"></view>
+  <view class="voice-box" style="bottom:{{voiceheight}}px"
+    wx:if="{{!$state.authRecord && showvioce && !lessList[0].image}}">
+    <view style="background:url({{voiceImg}});background-size:100% 100%;" class="voice-image" bindtap="authrecord"
+      catchtouchstart="authrecord"></view>
     <view class="voice-txt" style="height:12rpx;"> {{voiceActon? '' : '按住说话'}}</view>
   </view>
 </view>

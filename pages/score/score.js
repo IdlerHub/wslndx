@@ -77,6 +77,17 @@ Page({
       }
     },
     {
+      title: "每日看完十个短视频",
+      score: 100,
+      status: false,
+      page: "/pages/video/video",
+      authorization: true,
+      showStatus: {
+        name: 'day_lesson_comment_status',
+        status: false
+      }
+    },
+    {
       title: "每日秀风采首次发帖",
       score: 20,
       status: false,

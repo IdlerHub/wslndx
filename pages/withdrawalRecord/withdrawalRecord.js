@@ -18,18 +18,9 @@ Page({
     this.setData({
       list
     })
-  },
-  onReady: function () {
+    app.tutor.extractAmount().then()
   },
   onShow: function () {
-  },
-  onHide: function () {
-  },
-  onUnload: function () {
-  },
-  onPullDownRefresh: function () {
-  },
-  onReachBottom: function () {
   },
   onShareAppMessage: function () {
   }

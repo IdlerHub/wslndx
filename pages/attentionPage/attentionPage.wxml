@@ -9,11 +9,12 @@
       </view>
       <view class="univers">{{item.university == mull ? '暂无'  : item.university}}</view>
     </view>
-    <view class="{{item.status == '关注'? 'joinbtn' : 'btn'}}" catchtap="closeattention" data-index="{{index}}" data-status="{{item.status}}">{{item.status}}</view>
+    <view class="{{item.status == '关注'? 'joinbtn' : 'btn'}}" catchtap="closeattention" data-index="{{index}}"
+      data-status="{{item.status}}">{{item.status}}</view>
   </view>
 </view>
 <view class="qstBox" wx:else>
-  <image src="/images/delBlog.png"></image>
+  <image src="{{$state.imgHost}}/delBlog.png"></image>
   <view class="txt">啥都没有呢</view>
   <view class="txt">赶快去关注有趣的人吧！</view>
 </view>

@@ -45,6 +45,7 @@ var video = require("data/Video.js");
 var circle = require("data/Circle.js");
 var lottery = require("data/Lottery.js");
 var vote = require("data/Vote.js");
+var tutor =  require("data/Tutor.js")
 //app.js
 App({
   API_URL: store.API_URL,
@@ -57,6 +58,7 @@ App({
   circle,
   lottery,
   vote,
+  tutor,
   socket,
   store,
   fundebug,
@@ -72,7 +74,7 @@ App({
   /*埋点统计*/
   onLaunch: async function(opts) {
     console.log(opts)
-    this.getSecureToken()
+    // this.getSecureToken()
     let optsStr = decodeURIComponent(opts.query.scene).split("&");
     let opstObj = {};
     optsStr.forEach((item, index) => {
@@ -393,6 +395,12 @@ App({
     let phoneList = JSON.parse(res.data);
     this.store.setState({
       phoneList: phoneList.data
+    });
+  },
+  withdrawmessage(res) {
+    let withdrawList = JSON.parse(res.data);
+    this.store.setState({
+      withdrawList: withdrawList.data
     });
   },
   onPageNotFound() {
