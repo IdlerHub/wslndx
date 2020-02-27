@@ -80,35 +80,39 @@ Page({
       app.globalData.rlSuc = false
     }
     let list = this.data.list, flowList = this.data.flowList
-    list.forEach(item => {
+    list.forEach((item,index) => {
       if (item.id == app.globalData.detail.id) {
         if (app.globalData.detail.likestatus > 0) {
-          item.likes = app.globalData.detail.likes
-          item.likestatus = app.globalData.detail.likestatus
-          item.comments = app.globalData.detail.comments
+          this.setData({
+            [`list[${index}].likestatus`]: app.globalData.detail.likestatus,
+            [`list[${index}].likes`]: app.globalData.detail.likes,
+            [`list[${index}].comments`]: app.globalData.detail.comments
+          })
         } else {
-          item.likes = app.globalData.detail.likes
-          item.comments = app.globalData.detail.comments
-          item.likestatus = app.globalData.detail.likestatus
+          this.setData({
+            [`list[${index}].likestatus`]: app.globalData.detail.likestatus,
+            [`list[${index}].likes`]: app.globalData.detail.likes,
+            [`list[${index}].comments`]: app.globalData.detail.comments
+          })
         }
       }
     })
-    flowList.forEach(item => {
+    flowList.forEach((item, index) => {
       if (item.id == app.globalData.detail.id) {
         if (app.globalData.detail.likestatus > 0) {
-          item.likes = app.globalData.detail.likes
-          item.comments = app.globalData.detail.comments
-          item.likestatus = app.globalData.detail.likestatus
+          this.setData({
+            [`flowList[${index}].likestatus`]: app.globalData.detail.likestatus,
+            [`flowList[${index}].likes`]: app.globalData.detail.likes,
+            [`flowList[${index}].comments`]: app.globalData.detail.comments
+          })
         } else {
-          item.likes = app.globalData.detail.likes
-          item.comments = app.globalData.detail.comments
-          item.likestatus = app.globalData.detail.likestatus
+          this.setData({
+            [`flowList[${index}].likestatus`]: app.globalData.detail.likestatus,
+            [`flowList[${index}].likes`]: app.globalData.detail.likes,
+            [`flowList[${index}].comments`]: app.globalData.detail.comments
+          })
         }
       }
-    })
-    this.setData({
-      list,
-      flowList
     })
     if (((this.data.releaseParam.content != null && this.data.releaseParam.content != "") || this.data.releaseParam.image[0] || this.data.releaseParam.video != null) && this.data.showRelease) {
       let that = this
