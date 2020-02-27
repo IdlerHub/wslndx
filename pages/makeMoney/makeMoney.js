@@ -3,7 +3,8 @@ const app = getApp()
 Page({
   data: {
     list: [],
-    topMsg: {}
+    topMsg: {},
+    total_amount:0
   },
   onLoad: function (options) {},
   onShow: function () {
@@ -53,6 +54,14 @@ Page({
         })
         this.setData({
           list
+        })
+      }
+    })
+    app.tutor.totalAmount().then(res => {
+      if(res.code == 1) {
+        res.total_amount = Number(res.total_amount).toFixed(1)
+        this.setData({
+          total_amount: res.total_amount
         })
       }
     })

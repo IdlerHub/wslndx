@@ -30,6 +30,7 @@ page {
   float: right;
   display: flex;
   align-items: center;
+  position: relative;
 }
 .container .top .topBox .moneyBox image:nth-child(1) {
   width: 50rpx;
@@ -46,7 +47,11 @@ page {
 .container .top .topBox .moneyBox image:nth-child(3) {
   width: 11rpx;
   height: 19rpx;
-  margin-bottom: -4rpx
+  /* margin-bottom: -4rpx; */
+  position: absolute;
+  right: 30rpx;
+  top: 50%;
+  margin-top:-7rpx ;
 }
 .container .top .bottomBox {
   margin-top: 40rpx;

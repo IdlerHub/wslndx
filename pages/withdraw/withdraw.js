@@ -56,10 +56,14 @@ Page({
   },
   withdraw(e) {
     let index = e.currentTarget.dataset.index
-    if(Number(this.data.userMoney) >= Number(this.data.windrawlist[index].amount)) {
+    if(Number(this.data.$state.userInfo.amount) >= Number(this.data.windrawlist[index].amount)) {
       let param = { amount: this.data.windrawlist[index].amount }
       app.tutor.extractFinance(param).then(res => {
         if(res.code == 1) {
+          let amount = this.data.$state.userInfo.amount - this.data.windrawlist[index].amount
+          app.store.setState({
+            ['userInfo.amount']:  [Number(amount).toFixed(2)]
+          })
           this.setData({
             showToast: true,
             ['toastMsg.num']: this.data.windrawlist[index].amount,
