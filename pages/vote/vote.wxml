@@ -11,9 +11,9 @@
             <text>规则</text>
         </view>
     </view>
-    <view class="vote-search">
+    <view class="vote-search" catchtap="toSearch">
         <image src="../../images/vote-search.png" alt="" />
-        <input type="text" placeholder="请输入作品名称或作者名" placeholder-class="search-ipt" />
+        <input type="text" placeholder="请输入作品名称或作者名" placeholder-class="search-ipt" disabled />
         <view class="search-btn">搜索</view>
     </view>
     <view class="vote-body">
@@ -23,7 +23,7 @@
             </view>
             <scroll-view class="swiper-list" enable-flex scroll-x="true">
                 <block wx:for="{{classifyList}}" wx:key="index">
-                    <view class="swiper-item {{selectedIndex==index? 'active' : ''}}" bindtap="changeclassify" data-index="{{index}}">
+                    <view class="swiper-item {{selectedIndex==index? 'active' : ''}}" bindtap="changeclassify" data-type="{{item.id}}" data-index="{{index}}">
                         {{item.name}}
                     </view>
                 </block>
@@ -32,7 +32,7 @@
         <view class="vote-list">
             <block wx:for="{{productionList}}" wx:key="index">
                 <view class="vote-item">
-                    <view class="item-up" bindtap="toDetail">
+                    <view class="item-up" bindtap="toDetail" data-id="{{item.id}}">
                         <view class="item-rank">
                             <view class="rank-text"><text>当前</text><text>排名</text></view>
                             <view class="num">{{index+1}}</view>
@@ -40,11 +40,11 @@
                         <image wx:if="{{item.type==1}}" class="item-classify" src="../../images/vote-img.png" alt="" />
                         <image wx:if="{{item.type==2}}" class="item-classify" src="../../images/vote-video.png" alt="" />
                         <view class="item-img">
-                            
+                            <image src="{{item.banner_image}}" alt="" mode="widthFix" />
                         </view>
                     </view>
                     <view class="item-down">
-                        <view class="item-name" bindtap="toDetail">{{item.name}}</view>
+                        <view class="item-name" bindtap="toDetail" data-id="{{item.id}}">{{item.name}}</view>
                         <view class="item-footer">
                             <view class="item-zan">{{item.prise_numbers}}赞</view>
                             <view class="zan-btn"  data-id="{{item.id}}" data-index='{{index}}'  catchtap="giveLike">点赞加油</view>

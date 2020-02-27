@@ -50,11 +50,12 @@
     "pages/vote/vote",
     "pages/myProduction/myProduction",
     "pages/voteProduction/voteProduction",
-    "pages/voteRule/voteRule",
     "pages/voteDetail/voteDetail",
+    "pages/voteRule/voteRule",
     "pages/voteFail/voteFail",
     "pages/voteSearch/voteSearch",
-    "pages/voteClassify/voteClassify"
+    "pages/voteClassify/voteClassify",
+    "pages/voteSuccess/voteSuccess"
   ],
   "permission": {
     "scope.userLocation": {

@@ -10,7 +10,7 @@ let imgHost
 let activityUrl
 let API_URL
 let socket_host
-let mpVersion = 'v20' /* 版本管理 */
+let mpVersion = 'v19' /* 版本管理 */
 if (env == "develop") {
   /* 测试环境 */
   imgHost = "https://hwcdn.jinlingkeji.cn/images/dev" /* 图片等静态资源服务器 */

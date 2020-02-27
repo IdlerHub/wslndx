@@ -1,6 +1,7 @@
 /* pages/voteDetail/voteDetail.wxss */
 .voteDetail{
     position: relative;
+    background-color: black;
 }
 .img-list,
 .video{
@@ -8,7 +9,32 @@
     width: 100%;
     overflow: hidden;
 }
+.pause-img{
+    position: fixed;
+    z-index: 99;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    right: 0;
+    top: -28rpx;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0,0,0,0.6);
+}
+.pause-img image{
+    width: 146rpx;
+    height: 146rpx;
+}
 .swiper-item{
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.swiper-item>image{
+    width: 100%;
     height: 100%;
 }
 .img-index{
@@ -63,7 +89,7 @@
     max-width: 551rpx;
     /* margin-top: 204rpx; */
 }
-.info-left .user-info image{
+.info-left .user-info>image{
     width: 54rpx;
     height: 54rpx;
     border-radius: 100%;
@@ -119,6 +145,15 @@
     background:linear-gradient(314deg,rgba(230,80,0,1) 0%,rgba(255,144,26,1) 100%);
     box-shadow:3rpx 3rpx 12rpx 0rpx rgba(169,20,0,0.7);
 }
+.share{ position: relative; }
+/* .share .share-btn{
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    border: none;
+} */
 .join .circle{
     text-align: center;
     color: white;
@@ -130,11 +165,11 @@
     background:rgba(255,0,0,1);
     box-shadow:3rpx 3rpx 12rpx 0rpx rgba(132,16,0,0.7);
 }
-.zan .circle image{
+.zan .circle>image{
     width: 56rpx;
     height: 52rpx;
 }
-.share .circle image{
+.share .circle>image{
     width: 52rpx;
     height: 58rpx;
 }
@@ -150,3 +185,85 @@
     color:rgba(249,249,249,1);
     text-shadow:0rpx 2rpx 6rpx rgba(0,0,0,0.35);
 }
+
+.share-container{
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 100;
+    background-color:rgba(0,0,0,0.6);
+}
+.share-container .share-footer{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 328rpx;
+    background: white;
+    border-radius:30rpx 30rpx 0rpx 0rpx;
+    animation: shareup 1.5s;
+    -webkit-animation: shareup 1.5s;
+}
+.share-footer .share-mode{
+    display: flex;
+    justify-content: space-between;
+    height: 160rpx;
+    border-bottom: 10rpx solid #F7F7F7;
+}
+.share-mode .share-wx{
+    border-right: 2rpx solid #EDEDED;
+}
+/* .share-mode .share-wx image{
+    margin-right: 11rpx;
+} */
+.share-mode .share-wx,
+.share-mode .share-img{
+    width: 50%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.share-mode .share-img image,
+.share-mode .share-wx image{
+    width: 80rpx;
+    height: 80rpx;
+    margin-right: 21rpx;
+}
+.share-mode .share-wx text,
+.share-mode .share-img text{
+    font-size:36rpx;
+    font-family:PingFangSC-Regular,PingFang SC;
+    font-weight:400;
+    color:rgba(51,51,51,1);
+}
+.share-footer .share-none{
+    height: 108rpx;
+    line-height: 108rpx;
+    text-align: center;
+    font-size:40rpx;
+    font-family:PingFangSC-Regular,PingFang SC;
+    font-weight:400;
+    color:rgba(102,102,102,1);
+}
+/*底部弹窗动画*/
+@-webkit-keyframes shareup{
+    from { height: 0rpx; }
+    to { height: 328rpx; }
+}
+@keyframes shareup{
+    from { height: 0rpx; }
+    to { height: 328rpx; }
+}
+
+
+.ani {
+  width: 180rpx;
+  height: 180rpx;
+  background-size: cover;
+  animation: ani steps(20) 0.8s both; }
