@@ -51,6 +51,7 @@
             </view>
         </view>
     </view>
+
     <view wx:if="{{shareFlag}}" class="share-container">
         <view class="share-footer">
             <view class="share-mode">
@@ -66,4 +67,12 @@
             <view class="share-none" catchtap="shareOff">取消</view>
         </view>
     </view>
+
+    <!-- <canvas canvas-id="shareImg" style="width: 600rpx; height: 800rpx; z-index: 100; background: red;" />
+
+    <view class="create-img" hidden="{{true}}">
+        <image src="{{imgUrl}}" alt="" />
+        <button bindtap='save'>保存图片到相册</button>
+    </view> -->
+
 </view>

@@ -6,6 +6,9 @@ Page({
     current: 0,
     pause: false,
     shareFlag: false,
+    imgUrl: '', //展示图片
+    code: '', //二维码
+    imgs: '', //下载图片
     item:{
       type: 2,
       imgList: [],
@@ -76,6 +79,11 @@ Page({
     console.log("生成海报")
     this.setData({
       shareFlag: false
+    })
+
+    //下载二维码
+    wx.downloadFile({
+      url: '/images/'
     })
   },
   shareOff(){ //取消分享

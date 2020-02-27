@@ -202,6 +202,13 @@
 					"pathName": "pages/voteProduction/voteProduction",
 					"query": "id=88&curid=293&type=share",
 					"scene": null
+				},
+				{
+					"id": 16,
+					"name": "参赛作品详情页面",
+					"pathName": "pages/voteDetail/voteDetail",
+					"query": "id=1",
+					"scene": null
 				}
 			]
 		}
