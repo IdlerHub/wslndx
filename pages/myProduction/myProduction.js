@@ -7,8 +7,8 @@ Page({
       { id: 0, title: '待审核' },
       { id: 1, title: '未通过' }
     ],
-    type: 2,
-    stateIndex: 0,
+    type: 2,  //状态值
+    stateIndex: 0,  //选中的sate下标
     stateNum: [1,2,3],
     productionList: [
       {
@@ -27,6 +27,14 @@ Page({
       }
     ],    //作品列表
 
+  },
+  toVoteFail(e){
+    console.log(this.data.type)
+    if(this.data.type == 1){
+      wx.navigateTo({ //去未通过的缺省页
+        url: '/pages/voteProduction/voteProduction?item=' + e.currentTarget.dataset.item
+      })
+    }
   },
   changeState(e){
     console.log(e)
@@ -49,6 +57,6 @@ Page({
     })
   },
   onLoad(){
-    this.getMyOpus(2) //默认初始获取已通过
+    this.getMyOpus(2) //默认初始获取已通过状态 type=2
   }
 })

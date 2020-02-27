@@ -48,7 +48,7 @@ Page({
     })
   },
   toClassify() {  //分类页
-    wx.redirectTo({
+    wx.navigateTo({
       url: "/pages/voteClassify/voteClassify"
     })
   },

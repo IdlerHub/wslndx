@@ -7,7 +7,7 @@
     </view>
     <view class="production-list"   wx:if="{{productionList.length}}">
         <block wx:for="{{productionList}}" wx:key="index">
-            <view class="production-item">
+            <view class="production-item" bindtap="toVoteFail" data-item="{{item}}">
                 <view class="item-left">
                     <image wx:if="{{item.type==1}}" class="item-classify" src="../../images/vote-img.png" alt="" />
                     <image wx:if="{{item.type==2}}" class="item-classify" src="../../images/vote-video.png" alt="" />

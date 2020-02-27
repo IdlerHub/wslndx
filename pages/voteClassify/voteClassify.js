@@ -20,7 +20,7 @@ Page({
       url: "/pages/myProduction/myProduction"
     })
   },
-  onLoad(){
+  getCategory(){
     var data = this.data.classifyList;
     app.vote.getCategory().then(res => {
       console.log(res)
@@ -28,5 +28,11 @@ Page({
         classifyList: data.concat(res.data)
       })
     })
+  },
+  onLoad(){
+    let pages = getCurrentPages();
+    this.beforePage = pages[0];
+    console.log("页面路径??",pages)
+    this.getCategory()
   }
 })
