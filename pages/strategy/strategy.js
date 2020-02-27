@@ -14,12 +14,9 @@ Page({
       content,
       rule
     })
+    app.tutor.explain().then(res => {})
   },
   onShow: function () { },
-  onUnload: function () { },
-  onPullDownRefresh: function () { },
-  onReachBottom: function () { },
-  onShareAppMessage: function () { },
   check(e) {
     e.currentTarget.dataset.type ? this.setData({
       current: 2

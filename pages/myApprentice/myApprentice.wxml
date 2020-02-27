@@ -4,11 +4,11 @@
     <image src="{{item.avatar || '/images/apprenticeAva.png'}}"></image>
     <view class="itemMsg">
       <view class="msgTop">
-        <text>{{item.name}}</text>
-        <text>+{{item.money}}</text>
+        <text>{{item.nickname || '****'}}</text>
+        <text>+{{item.number ||  item.total_points}}</text>
       </view>
       <view class="msgTop">
-        <view class="createtimes">{{item.createtimes}} {{item.time}}</view>
+        <view class="createtimes">{{item.createtime || '暂无'}}</view>
         <view class="txt">总进贡(学分)</view>
       </view>
     </view>

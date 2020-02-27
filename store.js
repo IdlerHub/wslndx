@@ -9,27 +9,24 @@ let env = "develop"
 let imgHost
 let activityUrl
 let API_URL
-let mpVersion
 let socket_host
+let mpVersion = 'v20' /* 版本管理 */
 if (env == "develop") {
   /* 测试环境 */
   imgHost = "https://hwcdn.jinlingkeji.cn/images/dev" /* 图片等静态资源服务器 */
   activityUrl = "https://gqjydev.jinlingkeji.cn/?" /* 国情教育链接 */
-  mpVersion = "v19" /* 版本管理 */
-  API_URL = "https://develop.jinlingkeji.cn/api/v19/" /* 数据服务器 */
+  API_URL = `https://develop.jinlingkeji.cn/api/${mpVersion}/` /* 数据服务器 */
   socket_host = "develop.jinlingkeji.cn:8182"
 } else if (env == "production") {
   /* 发布环境 */
   imgHost = "https://hwcdn.jinlingkeji.cn/images/pro"
   activityUrl = "https://gqjy.jinlingkeji.cn/?"
-  mpVersion = "v19"
-  API_URL = "https://apielb.jinlingkeji.cn/api/v19/"
+  API_URL = `https://apielb.jinlingkeji.cn/api/${mpVersion}/`
   socket_host = "api.jinlingkeji.cn:8182"
 } else {
   imgHost = "https://hwcdn.jinlingkeji.cn/images/pro"
   activityUrl = "https://gqjy.jinlingkeji.cn/?"
-  mpVersion = "v19"
-  API_URL = "https://lndxpre.jinlingkeji.cn/api/v19/"
+  API_URL = `https://lndxpre.jinlingkeji.cn/api/${mpVersion}/`
   socket_host = "api.jinlingkeji.cn:8182"
 }
 

@@ -55,9 +55,9 @@
         <view class="ranking" wx:else>{{index+1}}</view>
         <view class="itemMsg" style="border:{{index == (list.length - 1) ? '0' : ''}};">
           <image src="{{item.avatar || '/images/apprenticeAva.png'}}"></image>
-          <text>{{item.name}}</text>
-          <text>{{item.number2 || item.number}}</text>
-          <text>+{{item.money2 || item.money}}</text>
+          <text>{{item.nickname}}</text>
+          <text>{{item.number2 || item.prentice_count}}</text>
+          <text>+{{item.money2 || item.total_amount}}</text>
         </view>
       </view>
     </view>
