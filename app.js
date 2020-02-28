@@ -76,7 +76,6 @@ App({
     console.log(opts);
     this.getSecureToken();
     let optsStr = decodeURIComponent(opts.query.scene).split("&");
-    console.log(optsStr)
     let opstObj = {};
     optsStr.forEach((item, index) => {
       opstObj[item.split("=")[0]] = item.split("=")[1];
@@ -88,7 +87,6 @@ App({
       this.globalData.query = opts.query; /* 卡片页面参数 */
       this.globalData.shareObj = opstObj;
       this.globalData.lotteryId = opstObj.id;
-      console.log(opstObj)
       if (
         opts.query.type == "invite" ||
         opts.query.type == "share" ||
@@ -157,7 +155,6 @@ App({
         ) {
           wx.setStorageSync("invite", opts.query.uid); /* 邀请码存储 */
         }
-        console.log(this.globalData.query);
       }
 
       if (!this.store.$state.userInfo.mobile) {
@@ -216,7 +213,6 @@ App({
             wx.setStorageSync("uid", msg.data.uid);
             wx.setStorageSync("authKey", msg.data.authKey);
             this.setUser(msg.data.userInfo);
-            // console.log(msg.data.userInfo)
             if (
               this.globalData.query.type == "share" ||
               this.globalData.shareObj.type == "lottery"
