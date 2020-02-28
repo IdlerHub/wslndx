@@ -7,7 +7,8 @@ Page({
     locolurl: "",
     qrcode: null,
     withdraw: false,
-    small: false
+    small: false,
+    type: 1
   },
   param: {
     count: 0,
@@ -17,12 +18,14 @@ Page({
   },
   //options(Object)
   onLoad: function(options) {
+    console.log(options)
     let system = wx.getSystemInfoSync()
     system.windowWidth <= 320 ? this.setData({
       small: true
     }) : ''
     options.type ? this.setData({
-      withdraw: true
+      withdraw: true,
+      type:4
     }) : ''
     let user = this.data.$state.userInfo;
     wxp.getImageInfo({ src: user.avatar }).then(res => {
@@ -33,7 +36,7 @@ Page({
       }
     });
 
-    app.user.userQr().then(res => {
+    app.user.userQr({type:this.data.type}).then(res => {
       wxp.getImageInfo({ src: res.data }).then(res => {
         if (res.errMsg == "getImageInfo:ok") {
           this.param.count += 1;

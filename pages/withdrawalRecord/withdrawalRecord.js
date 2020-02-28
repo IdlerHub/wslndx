@@ -9,7 +9,7 @@ Page({
       if(res.code == 1) {
         let list = res.data
         list.forEach(item => {
-          item.amount = Number(item.amount).toFixed(2)
+          item.amount = Number(item.amount).toFixed(2).replace('-', '')
         })
         this.setData({
           list

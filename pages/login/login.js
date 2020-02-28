@@ -18,11 +18,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (option) {
-    let name =  app.globalData.query.activity ? 'master_uid': 'invite_uid' , param = {
-      tempCode: app.globalData.tempCode,
-      [app.globalData.query.activity ? 'master_uid': 'invite_uid']: wx.getStorageSync("invite") /* 邀请码 */
-    }
-    console.log(name,param)
+    console.log(app.globalData.shareObj)
     if(option.phone) {
       this.setData({
         phone: option.phone
@@ -60,7 +56,6 @@ Page({
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-    console.log(app.globalData.query)
     if (!this.data.$state.userInfo.mobile){
       this.params.mode = this.data.mode
       console.log(this.params)
@@ -77,7 +72,7 @@ Page({
         mobileEncryptedData: e.detail.encryptedData,
         mobileiv: e.detail.iv,
         tempCode: app.globalData.tempCode,
-        [app.globalData.query.activity ? 'master_uid': 'invite_uid']: wx.getStorageSync("invite")
+        [app.globalData.query.activity || app.globalData.shareObj.t == 4 ? 'master_uid': 'invite_uid']: wx.getStorageSync("invite")
         // invite_uid: wx.getStorageSync("invite") /* 邀请码 */
       }
       this.login(param)
@@ -166,7 +161,7 @@ Page({
         tempCode: app.globalData.tempCode,
         mobile: this.params.tel,
         captcha: this.params.authCode,
-        [app.globalData.query.activity ? 'master_uid': 'invite_uid']: wx.getStorageSync("invite")
+        [app.globalData.query.activity || app.globalData.shareObj.t == 4 ? 'master_uid': 'invite_uid']: wx.getStorageSync("invite")
         // invite_uid: wx.getStorageSync("invite") /* 邀请码 */
       }
       this.login(params)

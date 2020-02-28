@@ -52,9 +52,9 @@ Page({
           item.number2 = app.util.towTwice(item.prentice_count)
           item.money2 = app.util.towTwice(item.total_amount)
         })
-        // this.setData({
-        //   list
-        // })
+        this.setData({
+          list
+        })
       }
     })
     app.tutor.totalAmount().then(res => {
