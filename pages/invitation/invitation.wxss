@@ -5,7 +5,8 @@ page {
     width: 592rpx;
     height: 837rpx;
     position: absolute;
-    top: -2000rpx; }
+    top: -2000rpx; 
+  }
   page .scroll {
     padding-bottom: 300rpx; }
     page .scroll .theme {

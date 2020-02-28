@@ -1,4 +1,4 @@
-<canvas class="cav" canvas-id="canva_invite"></canvas>
+<canvas class="cav" canvas-id="canva_invite" style="height:{{small ? '900rpx' : ''}}; width:{{ small ? '680rpx' : ''}}"></canvas>
 <scroll-view class="scroll" scroll-y="true">
   <view class="theme" hover-class="none">
     <image class="bg" src="/images/invitation{{withdraw ? '2' : ''}}.png" mode="aspectFill"> </image>

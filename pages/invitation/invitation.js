@@ -6,7 +6,8 @@ Page({
   data: {
     locolurl: "",
     qrcode: null,
-    withdraw: false
+    withdraw: false,
+    small: false
   },
   param: {
     count: 0,
@@ -16,7 +17,10 @@ Page({
   },
   //options(Object)
   onLoad: function(options) {
-    console.log(options.type)
+    let system = wx.getSystemInfoSync()
+    system.windowWidth < 375 ? this.setData({
+      small: true
+    }) : ''
     options.type ? this.setData({
       withdraw: true
     }) : ''
@@ -65,12 +69,18 @@ Page({
     );
     ctx.save();
     ctx.beginPath();
-    ctx.arc(85 * ratio, 430 * ratio, 35 * ratio, 0, Math.PI * 2, false);
+    ctx.arc(
+      85 * ratio, 
+      this.data.small ? 367 * ratio : 430 * ratio,
+      35 * ratio,
+      0, 
+      Math.PI * 2, 
+      false);
     ctx.clip();
     ctx.drawImage(
       this.param.lcoalAvatar,
       50 * ratio,
-      395 * ratio,
+      this.data.small ? 331 * ratio : 395 * ratio,
       70 * ratio,
       70 * ratio
     );
@@ -80,11 +90,11 @@ Page({
     ctx.fillText(
       "我是" + this.data.$state.userInfo.nickname,
       140 * ratio,
-      444 * ratio
+      this.data.small ?  380 * ratio : 444 * ratio
     );
     ctx.setFontSize(40 * ratio);
-    ctx.fillText("十万个免费老年课程", 140 * ratio, 510 * ratio);
-    ctx.fillText("打造新时代“三有老人”", 140 * ratio, 564 * ratio);
+    ctx.fillText("十万个免费老年课程", 140 * ratio, this.data.small ? 450 * ratio : 510 * ratio);
+    ctx.fillText("打造新时代“三有老人”", 140 * ratio,this.data.small ? 510 * ratio : 564 * ratio);
     ctx.fillRect(
       0,
       this.param.container.height - 210 * ratio,

@@ -150,7 +150,7 @@
 				{
 					"id": 8,
 					"name": "收徒赚钱",
-					"pathName": "pages/makeMoney/makeMoney",
+					"pathName": "pages/invitation/invitation",
 					"query": "",
 					"scene": null
 				},
