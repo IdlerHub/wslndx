@@ -11,21 +11,6 @@ Page({
     showToast:false
   },
   onLoad: function (options) {
-    let msgeList = [
-      {'msg':'用户张**提现50元'},
-      {'msg':'用户张**提现50元'},
-      {'msg':'用户张**提现50元'},
-      {'msg':'用户张**提现50元'},
-      {'msg':'用户张**提现50元'},
-      {'msg':'用户张**提现50元'},
-      {'msg':'用户张**提现50元'},
-      {'msg':'用户张**提现50元'},
-    ],
-    windrawlist=['0.5','1','5','10','50','100']
-    this.setData({
-      msgeList,
-      windrawlist,
-    })
   },
   onShow: function () {
     this.getamount()
@@ -50,6 +35,13 @@ Page({
         this.setData({
           windrawlist: res.data,
           userMoney: this.data.$state.userInfo.amount
+        })
+      }
+    })
+    app.tutor.totalExtractAmount().then(res => {
+      if(res.code == 1) {
+        this.setData({
+          msgeList: res.data
         })
       }
     })

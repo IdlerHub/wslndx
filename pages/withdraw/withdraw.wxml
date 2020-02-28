@@ -11,7 +11,7 @@
       <image src="/images/messageImg.png"></image>
       <swiper class="swiper" autoplay interval="1500" circular vertical>
         <swiper-item wx:for='{{msgeList}}' wx:key="index">
-          {{item.msg}}-{{index}}
+          {{item}}
         </swiper-item>
       </swiper>
     </view>

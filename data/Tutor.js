@@ -48,6 +48,10 @@ function totalAmount(param) {
   return httpService.post("Tutor/totalAmount", param)
 }
 
+//POST Tutor/totalExtractAmount 用户提现轮播表
+function totalExtractAmount(param) {
+  return httpService.post("Tutor/totalExtractAmount", param)
+}
 
 module.exports = {
   myIndex,
@@ -58,5 +62,6 @@ module.exports = {
   extractAmountConfig,
   prenticePointsList,
   extractFinance,
-  totalAmount
+  totalAmount,
+  totalExtractAmount
 }
