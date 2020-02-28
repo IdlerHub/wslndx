@@ -76,6 +76,7 @@ App({
     console.log(opts);
     this.getSecureToken();
     let optsStr = decodeURIComponent(opts.query.scene).split("&");
+    console.log(optsStr)
     let opstObj = {};
     optsStr.forEach((item, index) => {
       opstObj[item.split("=")[0]] = item.split("=")[1];
@@ -85,22 +86,25 @@ App({
     if (this.globalData.scenes.indexOf(opts.scene) >= 0) {
       this.globalData.path = "/" + opts.path; /* 卡片页面路径 */
       this.globalData.query = opts.query; /* 卡片页面参数 */
-      this.globalData.outObj = opstObj;
       this.globalData.shareObj = opstObj;
       this.globalData.lotteryId = opstObj.id;
+      console.log(opstObj)
       if (
         opts.query.type == "invite" ||
         opts.query.type == "share" ||
         opstObj.type == "invite" ||
         opstObj.type == "lottery" ||
-        opts.query.type == "lottery"
+        opts.query.type == "lottery"||
+        opstObj.t >= 0
       ) {
         if (opts.query.uid) {
           wx.setStorageSync("invite", opts.query.uid); /* 邀请码记录 */
           wx.setStorageSync("goosId", opts.query.id);
-        } else {
+        } else if(opstObj.uid){
           wx.setStorageSync("invite", opstObj.uid); /* 邀请码记录 */
           wx.setStorageSync("goosId", opstObj.id);
+        } else {
+          wx.setStorageSync("invite", opstObj.u); /* 邀请码记录 */
         }
       }
     }
@@ -406,12 +410,6 @@ App({
     let phoneList = JSON.parse(res.data);
     this.store.setState({
       phoneList: phoneList.data
-    });
-  },
-  withdrawmessage(res) {
-    let withdrawList = JSON.parse(res.data);
-    this.store.setState({
-      withdrawList: withdrawList.data
     });
   },
   onPageNotFound() {

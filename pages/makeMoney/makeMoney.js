@@ -3,14 +3,12 @@ const app = getApp()
 Page({
   data: {
     list: [],
-    topMsg: {}
+    topMsg: {},
+    total_amount:0
   },
   onLoad: function (options) {},
   onShow: function () {
     this.init()
-  },
-  onHide: function () {
-
   },
   onShareAppMessage: function (ops) {
     if (ops.from === "menu") {
@@ -29,7 +27,7 @@ Page({
             total: res.data.user_total_num
           },
           {
-            up: res.data.user_today_amount,
+            up: Number(res.data.user_today_amount).toFixed(2),
             total: res.data.user_total_amount
           },
           {
@@ -37,7 +35,8 @@ Page({
             total: res.data.user_total_points
           }
         ]
-        topMsg.forEach(item => {
+        topMsg.forEach((item,index) => {
+          index == 1 ? item.total = Number(item.total).toFixed(2) : ''
           item.number2 = app.util.towTwice(item.total)
         })
         this.setData({
@@ -49,11 +48,20 @@ Page({
       if (res.code == 1) {
         let list = res.data
         list.forEach(item => {
+          item.total_amount = Number(item.total_amount).toFixed(2)
           item.number2 = app.util.towTwice(item.prentice_count)
           item.money2 = app.util.towTwice(item.total_amount)
         })
         this.setData({
           list
+        })
+      }
+    })
+    app.tutor.totalAmount().then(res => {
+      if(res.code == 1) {
+        res.total_amount = Number(res.data.total_amount).toFixed(2)
+        this.setData({
+          total_amount: res.total_amount
         })
       }
     })

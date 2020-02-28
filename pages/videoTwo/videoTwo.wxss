@@ -338,3 +338,13 @@
     text-align:center;
     line-height: 124rpx;
   }
+  .info .moneyPackt {
+    position: absolute;
+    width: 88rpx;
+    height: 88rpx;
+    top: -109rpx;
+    right: 37rpx;
+    background: url('https://hwcdn.jinlingkeji.cn/images/pro/moneyActive.png');
+    background-size: cover;
+    animation: ani 1s steps(23, end) infinite;
+  }

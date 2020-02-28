@@ -23,6 +23,7 @@ Page({
     /*  rect: wx.getMenuButtonBoundingClientRect() */
   },
   pageName: '短视频页',
+  recordVideo_id: '-1',
   onLoad(options) {
     let systemInfo = wx.getSystemInfoSync()
     this.wifi = false
@@ -129,14 +130,28 @@ Page({
   //获取红包奖励内容
   recordFinish() {
     let param = { shortvideo_id: this.data.cur.id }
+    if(this.data.cur.id == this.recordVideo_id) return
     app.video.recordFinish(param).then(res => {
       if (res.code == 1) {
+        if(res.data.day_read == 1) {
+          this.setData({
+            integral: '+100 学分',
+            integralContent: '每日看完十个短视频',
+            showintegral: true
+          })
+          setTimeout(() => {
+            this.setData({
+              showintegral: false
+            })
+          }, 2000)
+        }
         this.setData({
           loop: true,
           isshowRedbig: res.data.today_award,
           wechatnum: res.data.wechat_num
         })
         this.videoContext.play()
+        this.recordVideo_id = this.data.cur.id
       }
     })
   },

@@ -34,7 +34,24 @@ function extractAmountConfig(param) {
   return httpService.post("Tutor/extractAmountConfig", param)
 }
 
+/**
+ * @description:现金提现
+ * @param: amount
+ * @return:promise
+ */
+function extractFinance(param) {
+  return httpService.post("Tutor/extractFinance", param)
+}
 
+//POST Tutor/totalAmount 用户累计收徒收益
+function totalAmount(param) {
+  return httpService.post("Tutor/totalAmount", param)
+}
+
+//POST Tutor/totalExtractAmount 用户提现轮播表
+function totalExtractAmount(param) {
+  return httpService.post("Tutor/totalExtractAmount", param)
+}
 
 module.exports = {
   myIndex,
@@ -43,5 +60,8 @@ module.exports = {
   amountList,
   extractAmount,
   extractAmountConfig,
-  prenticePointsList
+  prenticePointsList,
+  extractFinance,
+  totalAmount,
+  totalExtractAmount
 }

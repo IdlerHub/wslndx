@@ -3,7 +3,7 @@
 </image>
 <view class="container">
   <!-- <image src="{{ $state.imgHost }}/drawBg.png" class="drawbg"></image> -->
-  <image src="{{ $state.imgHost }}/drawTle.png" class="drawTitle"></image>
+  <image src="{{ $state.imgHost }}/drawTle2.png" class="drawTitle"></image>
   <swiper autoplay interval="2000" vertical class="swiper" circular>
     <swiper-item wx:for="{{$state.phoneList}}" wx:key="index" class="swiper-item">
       {{item}}
