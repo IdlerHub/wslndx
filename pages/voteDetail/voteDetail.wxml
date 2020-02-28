@@ -18,7 +18,11 @@
             <image mode="aspectFill" src="/images/play-hl.png"/>
         </view>
     </block>
-    
+    <!-- <view class="cartoon">
+        <view class="ani-img">
+            <image class="zan-ani" src="/images/zan-ani.png" alt="" mode="top" />
+        </view>
+    </view> -->
     <view class="footer-info">
         <view class="info-left">
             <view class="user-info">
@@ -28,14 +32,12 @@
             <view class="info-title">{{item.name}}</view>
             <view class="info-content">{{item.content}}</view>
         </view>
+        
         <view class="info-right">
-            <view class="zan">
+            <view class="zan" data-id="{{item.id}}" data-index='{{index}}'  catchtap="giveLike">
                 <view class="circle">
-                    <image src="/images/heart.png" alt="" />
-                    <!-- <image  mode="aspectFill" src="/images/heart-orange.png" /> -->
-                    <!-- <view class="praising">    动画
-                        <view class="ani" bindanimationend="aniend" data-index="{{ index }}" style="background-image: url({{$state.imgHost}}/heart-ani.png)"></view>
-                    </view> -->
+                    <image src="{{item.is_praise ? '/images/heart-orange.png': '/images/heart.png'}}" alt="" />
+                    
                 </view>
                 <text>{{item.prise_numbers}}</text>
             </view>
@@ -68,11 +70,35 @@
         </view>
     </view>
 
-    <!-- <canvas canvas-id="shareImg" style="width: 600rpx; height: 800rpx; z-index: 100; background: red;" />
+    <!-- <canvas class="sharePoster" canvas-id="poster" style="width: 600rpx; height: 800rpx; z-index: 100; background: red;" /> -->
 
-    <view class="create-img" hidden="{{true}}">
-        <image src="{{imgUrl}}" alt="" />
-        <button bindtap='save'>保存图片到相册</button>
-    </view> -->
+    <view class="show-img" wx:if="{{sharePoster}}">
+        <view class="canvas-img">
+            <image class="share-bg" src="/images/share-bg.png" alt="" />
+            <image class="share-del" src="/images/unshare.png" alt="" catchtap="unshare" />
+            <view class="canvas-user">
+                <image class="user-img" src="{{shareInfo.avatar}}" alt=""></image>
+                <view class="canvas-info">
+                    <view class="user-name">{{shareInfo.nickname}}</view>
+                    <view class="tip">正在参赛...</view>
+                </view>
+            </view>
+            <view class="canvas-works">
+                <image src="{{shareInfo.opus_type==1?  shareInfo.opus_url[0] :  shareInfo.opus_banner_image || '/images/vote-wei.png'}}" alt="" mode="widthFix" />
+            </view>
+            <view class="canvas-info">
+                <view class="canvas-name">{{shareInfo.opus_name}}</view>
+                <view class="canvas-content">{{shareInfo.opus_content}}</view>
+            </view>
+            <view class="canvas-footer">
+                <image class="canvas-code" src="{{shareInfo.qrcode_url}}" alt="" />
+                <view class="code-tip">
+                    <view>长按识别二维码</view>
+                    <view>为好友加油，一起参赛！</view>
+                </view>
+            </view>
+        </view>
+        <view class="sava-img" catchtap='savePoster'>保存到本地</view>
+    </view>
 
 </view>

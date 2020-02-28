@@ -8,7 +8,7 @@ Page({
 
   },
   toMyproduction(){
-    wx.navigateTo({
+    wx.redirectTo({
       url: '/pages/myProduction/myProduction'
     })
   }

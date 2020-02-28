@@ -76,6 +76,16 @@ function uploadOpus(params) {
   return httpService.post("h5opus/uploadOpus", params);
 }
 
+
+/** /h5opus/getPosterInfo
+ *  @description: 获取海报信息
+ * @param {uid，ho_id}
+ * @return:  promise
+ * **/
+function getPosterInfo(params) {
+  return httpService.post("h5opus/getPosterInfo", params);
+}
+
 module.exports = {
   getCategory,
   getOpusList,
@@ -85,5 +95,6 @@ module.exports = {
   searchOpus,
   getMyOpus,
   getOpusInfo,
-  getSearchWord
+  getSearchWord,
+  getPosterInfo
 };

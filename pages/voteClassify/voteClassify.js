@@ -6,9 +6,14 @@ Page({
     selectedIndex: 0,
   },
   toVote(e){
-    wx.redirectTo({
-      url: `/pages/vote/vote?index=${e.currentTarget.dataset.index}&type=${e.currentTarget.dataset.type} `
-    })
+    let list = getCurrentPages();
+    const page = list[list.length - 2];
+    console.log(page,'111111111111')
+    page.changeData(e.currentTarget.dataset.index, e.currentTarget.dataset.type)
+    wx.navigateBack()
+    // wx.redirectTo({
+    //   url: `/pages/vote/vote?index=${e.currentTarget.dataset.index}&type=${e.currentTarget.dataset.type} `
+    // })
   },
   join() {
     wx.navigateTo({

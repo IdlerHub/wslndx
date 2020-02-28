@@ -207,7 +207,7 @@
 					"id": 16,
 					"name": "参赛作品详情页面",
 					"pathName": "pages/voteDetail/voteDetail",
-					"query": "id=1",
+					"query": "id=2",
 					"scene": null
 				}
 			]
