@@ -1,7 +1,7 @@
 /*
  * @Date: 2019-05-28 09:50:08
  * @LastEditors: hxz
- * @LastEditTime: 2020-02-21 18:20:55
+ * @LastEditTime: 2020-02-27 15:20:18
  */
 import { wxp } from "./utils/service";
 import { uma } from "umtrack-wx";
@@ -45,7 +45,7 @@ var video = require("data/Video.js");
 var circle = require("data/Circle.js");
 var lottery = require("data/Lottery.js");
 var vote = require("data/Vote.js");
-var tutor =  require("data/Tutor.js")
+var tutor = require("data/Tutor.js");
 //app.js
 App({
   API_URL: store.API_URL,
@@ -73,7 +73,12 @@ App({
   },
   /*埋点统计*/
   onLaunch: async function(opts) {
+<<<<<<< HEAD
     this.getSecureToken()
+=======
+    console.log(opts);
+    this.getSecureToken();
+>>>>>>> dev
     let optsStr = decodeURIComponent(opts.query.scene).split("&");
     console.log(optsStr)
     let opstObj = {};
@@ -156,7 +161,7 @@ App({
         ) {
           wx.setStorageSync("invite", opts.query.uid); /* 邀请码存储 */
         }
-        console.log(this.globalData.query)
+        console.log(this.globalData.query);
       }
 
       if (!this.store.$state.userInfo.mobile) {
@@ -216,12 +221,23 @@ App({
             wx.setStorageSync("authKey", msg.data.authKey);
             this.setUser(msg.data.userInfo);
             // console.log(msg.data.userInfo)
-            if (this.globalData.query.type == "share" ||  this.globalData.shareObj.type == 'lottery') {
-              let params = []
+            if (
+              this.globalData.query.type == "share" ||
+              this.globalData.shareObj.type == "lottery"
+            ) {
+              let params = [];
               for (let attr in this.globalData.query) {
-                params.push(attr + "=" + this.globalData.query[attr])
+                params.push(attr + "=" + this.globalData.query[attr]);
               }
-              this.globalData.shareObj.type == 'lottery' ? wx.reLaunch({ url: "/pages/education/education?type=lottery&login=1&id=" + this.globalData.lotteryId}) : wx.reLaunch({ url: this.globalData.path + "?" + params.join("&") })
+              this.globalData.shareObj.type == "lottery"
+                ? wx.reLaunch({
+                    url:
+                      "/pages/education/education?type=lottery&login=1&id=" +
+                      this.globalData.lotteryId
+                  })
+                : wx.reLaunch({
+                    url: this.globalData.path + "?" + params.join("&")
+                  });
             } else {
               wx.reLaunch({
                 url: "/pages/index/index"
@@ -451,21 +467,24 @@ App({
     });
   },
   withdrawShare(ops) {
-      return {
-        title: this.store.$state.shareTitle || "福利！老年大学十万集免费课程在线学习",
-        path: "/pages/index/index?uid=" + this.store.$state.userInfo.id + "&type=invite&activity=1",
-        imageUrl: this.store.$state.imgHost + '/withdrawShareImg.jpg'
-      }
+    return {
+      title:
+        this.store.$state.shareTitle || "福利！老年大学十万集免费课程在线学习",
+      path:
+        "/pages/index/index?uid=" +
+        this.store.$state.userInfo.id +
+        "&type=invite&activity=1",
+      imageUrl: this.store.$state.imgHost + "/withdrawShareImg.jpg"
+    };
   },
-  getSecureToken(){
-     setTimeout(()=>{
-       vote.getSecureToken().then(res => {
-         this.store.setState({
-           security: res.data.credential
-         })
-       })
-     })
-
+  getSecureToken() {
+    setTimeout(() => {
+      vote.getSecureToken().then(res => {
+        this.store.setState({
+          security: res.data.credential
+        });
+      });
+    });
   },
   globalData: {
     /*wx.login 返回值 code */
@@ -475,8 +494,7 @@ App({
     /* 卡片路径 */
     path: null,
     /* 卡片参数 */
-    query: {
-    },
+    query: {},
     /* 卡片进入的场景值 */
     scenes: [1001, 1007, 1008, 1047, 1048, 1049],
     /* 后台模式*/

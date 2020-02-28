@@ -4,7 +4,7 @@
         <view class="classify-title">作品分类</view>
         <view class="classify-list">
             <block wx:for="{{classifyList}}" wx:key="index">
-                <view class="classify-item">{{item}}</view>
+                <view class="classify-item" data-type="{{item.id}}" data-index="{{index}}" bindtap="toVote">{{item.name}}</view>
             </block>
         </view>
     </view>

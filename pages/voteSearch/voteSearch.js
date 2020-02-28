@@ -1,45 +1,91 @@
 // pages/voteSearch/voteSearch.js
+const app = getApp();
 Page({
-
   data: {
     clearhidden: true,
-    inputcontent: '',
-    productionList: [
-      {
-        "id": 1,
-        "author": '用户昵称',
-        "name": "风景风景风景风景风景风景风景风景",
-        "prise_numbers": 888,
-        "type": 1,
-      },
-      {
-        "id": 2,
-        "author": '用户昵称',
-        "name": "名胜",
-        "prise_numbers": 888,
-        "type": 2,
-      }
-    ],    //作品列表
+    inputcontent: '',       //输入框的内容
+    searchWord: '',   //搜索关键词
+    productionList: [],    //作品列表
+    page: 1,
+    history: []
   },
-  changeSearch(e){
+  goBack(){
+    wx.navigateBack();  //返回
+  },
+  toDetail(e){
+    wx.navigateTo({
+      url: "/pages/voteDetail/voteDetail?id=" + e.currentTarget.dataset.id
+    })
+  },
+  clickSearch(e){ //选中历史记录搜索
+    this.setData({
+      searchWord: e.currentTarget.dataset.word
+    })
+    this.searchOpus(1);
+  },
+  toSearch(e){  //输入结束
+    console.log('最终关键词',e);
+    this.setData({
+      searchWord: e.detail.value
+    })
+    this.searchOpus(1);
+  },
+  changeSearch(e){  //输入时
     console.log(e)
-    if (e.detail.value){  //输入
+    if (e.detail.value){  //输入框还有内容
       this.setData({
         clearhidden: false,
-        inputcontent: e.detail.value
+        inputcontent: e.detail.value,
+        searchWord: ''
       })
-    }else{  //删除
-      this.setData({
-        clearhidden: true,
-        inputcontent: ''
-      })
+      this.getSearchWord(); //获取搜索历史
+    }else{  //输入框清空
+      this.clearInput()
     }
   },
+  delhistory(){ 
+    console.log("删除当前历史记录")
+  },
   clearInput(){
-    console.log(111)
     this.setData({
       clearhidden: true,
-      inputcontent: ''
+      inputcontent: '',
+      searchWord: '',
+      history: []
     })
+  },
+  getSearchWord(){  //搜索记录
+    app.vote.getSearchWord().then(res=>{
+      console.log(res)
+      this.setData({
+        history: res.data
+      })
+    })
+  },
+  searchOpus(page){ //搜索结果
+    let params ={
+      word: this.data.searchWord,
+      page: page
+    }
+    let data =[]
+    app.vote.searchOpus(params).then(res=>{
+      if (page == 1) {
+        data = res.data.data;
+      } else {
+        var oldData = this.data.productionList;
+        data = oldData.concat(res.data.data)
+      }
+      this.setData({
+        productionList: data,
+        page: page,
+      })
+      console.log(res)
+    })
+  },
+  onLoad(){
+    this.searchOpus(1);
+  },
+  onReachBottom() {
+    this.searchOpus(this.data.page + 1)
   }
 })

@@ -1,7 +1,14 @@
 // pages/voteClassify/voteClassify.js
+const app = getApp();
 Page({
   data: {
-    classifyList: ['全部', '书法绘画', '花艺', '园林', '书法绘画', '花艺', '花艺']
+    classifyList: [{ id: '0', name: '全部' }],
+    selectedIndex: 0,
+  },
+  toVote(e){
+    wx.redirectTo({
+      url: `/pages/vote/vote?index=${e.currentTarget.dataset.index}&type=${e.currentTarget.dataset.type} `
+    })
   },
   join() {
     wx.navigateTo({
@@ -13,4 +20,19 @@ Page({
       url: "/pages/myProduction/myProduction"
     })
   },
+  getCategory(){
+    var data = this.data.classifyList;
+    app.vote.getCategory().then(res => {
+      console.log(res)
+      this.setData({
+        classifyList: data.concat(res.data)
+      })
+    })
+  },
+  onLoad(){
+    let pages = getCurrentPages();
+    this.beforePage = pages[0];
+    console.log("页面路径??",pages)
+    this.getCategory()
+  }
 })

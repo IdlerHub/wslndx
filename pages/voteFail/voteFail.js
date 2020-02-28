@@ -4,7 +4,10 @@ Page({
   data: {
 
   },
-  reupload(){ //直接跳转到未通过的作品,并且填充??
+  reupload(){ // 跳转到上传作品页,并且填充作品??
     
   },
+  onLoad(options){
+    console.log(options.item)
+  }
 })

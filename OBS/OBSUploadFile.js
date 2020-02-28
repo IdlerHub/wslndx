@@ -1,7 +1,7 @@
 /*
  * @Date: 2019-12-20 10:54:37
  * @LastEditors: hxz
- * @LastEditTime: 2020-02-26 19:32:19
+ * @LastEditTime: 2020-02-27 13:15:27
  */
 const getPolicyEncode = require("./getPolicy.js");
 const getSignature = require("./GetSignature.js");
@@ -60,16 +60,43 @@ function checkType(file) {
   return attrs;
 }
 
-const OBSupload = function(dir, filePath) {
-  let checkRes = checkType(filePath);
-  if (!checkRes) {
-    uni.showToast({
-      icon: "none",
-      title: "图片类型未知,请重新选择上传",
-      duration: 1500
-    });
-    return Promise.reject("");
+function checkVideo(file) {
+  const legalType = [".mov", ".mp4"];
+  const ctList = ["video/quicktime", "video/mpeg4"];
+  let attrs = null;
+  legalType.some((v, i) => {
+    if (file.endsWith(v)) {
+      attrs = { type: v, ct: ctList[i] };
+      return true;
+    }
+  });
+  return attrs;
+}
+
+const OBSupload = function(dir, filePath, type) {
+  let checkRes;
+  if (type == "image") {
+    checkRes = checkType(filePath);
+    if (!checkRes) {
+      wx.showToast({
+        icon: "none",
+        title: "图片类型未知,请重新选择上传",
+        duration: 1500
+      });
+      return Promise.reject("");
+    }
+  } else {
+    checkRes = checkVideo(filePath);
+    if (!checkRes) {
+      wx.showToast({
+        icon: "none",
+        title: "视频类型未知,请重新选择上传",
+        duration: 1500
+      });
+      return Promise.reject("");
+    }
   }
+
   let {
     access,
     expires_at,
@@ -115,8 +142,6 @@ const OBSupload = function(dir, filePath) {
   return wxp
     .uploadFile(req)
     .then(res => {
-      console.log(req);
-      console.log(res);
       return "https://hwcdn.jinlingkeji.cn/" + fileName;
     })
     .catch(err => {

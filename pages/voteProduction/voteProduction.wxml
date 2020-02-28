@@ -3,17 +3,16 @@
     <view class="production">
         <view class="production-title">
             <view>作品名称</view>
-            <input type="text" maxlength="30"  placeholder-class="ipt-place" placeholder="请输入30字以内作品名称" value="{{productionName}}" bindinput="changeName" />
+            <input type="text" maxlength="15"  placeholder-class="ipt-place" placeholder="请输入15字以内作品名称" value="{{productionName}}" bindinput="changeName" />
         </view>
         <view class="production-title">
             <view>作品介绍</view>
-            <textarea type="text" maxlength="80" placeholder-class="area-place" placeholder="请输入80字以内作品介绍" bindinput="changeIntroduction" />
+            <textarea type="text" maxlength="45" placeholder-class="area-place" placeholder="请输入45字以内作品介绍" bindinput="changeIntroduction" />
         </view>
         <view class="production-title">
             <view>作品选择分类</view>
-            <picker bindchange="classifyChange" value="{{classifyIndex}}" range="{{classifyArray}}">
-                <!-- <view class="picker">{{classifyArray[classifyIndex]}}</view> -->
-                <input  type="text"  placeholder-class="picker"  placeholder="请输入作品分类" value="{{classifyArray[classifyIndex]}}" disabled="{{true}}" />
+            <picker bindchange="classifyChange" value="{{classifyIndex}}" range="{{classifyArray}}" range-key='name'>
+                <input  type="text"  placeholder-class="picker"  placeholder="请输入作品分类" value="{{classifyArray[classifyIndex].name}}" disabled />
                 <image src="../../images/Return-black.png" alt="" />
             </picker>
         </view>
@@ -27,7 +26,7 @@
         </view>
     </view>
     <view class="production-upload">
-        <view class="upload-title">{{modalityIndex==0? '上传图片（9张以内）': '上传视频'}}</view>
+        <view class="upload-title">{{modalityIndex==0? '上传图片（6张以内）': '上传视频'}}</view>
         <view class="upload-tip">{{modalityIndex==0? '图片尺寸建议950*550支持jpg、png': '视频大小不超过200MB，支持MP4等格式'}}</view>
         <view class="upload-img" wx:if="{{modalityIndex==0}}">
             <view class="btn-img" bindtap="uploadImg"  wx:if="{{imgList.length < 9 }}">添加图片</view>
@@ -37,13 +36,13 @@
             </view>
         </view>
         <view class="upload-img" wx:else>
-            <view class="btn-img" hidden="{{poster}}" bindtap="uploadVideo">添加视频</view>
-            <view class="show-img"  hidden="{{!poster}}">
-                <image src="" alt="" mode="widthFix" />
+            <view class="btn-img" hidden="{{video}}" bindtap="uploadVideo">添加视频</view>
+            <view class="show-img"  hidden="{{!video}}">
+                <image src="/images/uploadVideo.png" alt="" mode="widthFix" />
                 <icon class="clear" data-index="4" size="19" type="clear" role="img" catchtap="delVideo"></icon>
             </view>
         </view>
-        <view wx:if="{{modalityIndex==0}}" class="upload-tip" style="font-size: 32rpx; color: #999;">共{{imgList.length}}张图片，点击图片预览，长按拖拽排序</view>
+        <view wx:if="{{modalityIndex==0}}" class="upload-tip" style="font-size: 32rpx; color: #999;">共{{imgList.length}}张图片，点击图片预览</view>
     </view>
     <view class="production-footer" bindtap="submitProduction">立即参赛</view>
 </view>

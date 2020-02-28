@@ -41,7 +41,6 @@
 		"es6": true,
 		"enhance": true,
 		"postcss": true,
-		"preloadBackgroundData": false,
 		"minified": true,
 		"newFeature": true,
 		"coverView": true,
@@ -58,7 +57,8 @@
 			"disablePlugins": [],
 			"outputPath": ""
 		},
-		"bundle": true
+		"bundle": true,
+		"preloadBackgroundData": false
 	},
 	"compileType": "miniprogram",
 	"libVersion": "2.9.5",
@@ -197,11 +197,17 @@
 					"scene": null
 				},
 				{
-					"id": 15,
-					"name": "新小程序码邀请注册",
-					"pathName": "pages/index/index",
-					"query": "scene=u%3D1016%26t%3D4",
-					"scene": 1047
+					"id": 16,
+					"name": "参赛作品详情页面",
+					"pathName": "pages/voteDetail/voteDetail",
+					"query": "id=1",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/voteProduction/voteProduction",
+					"pathName": "pages/voteProduction/voteProduction",
+					"scene": null
 				}
 			]
 		}
