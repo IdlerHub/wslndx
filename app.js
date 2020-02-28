@@ -400,12 +400,6 @@ App({
       phoneList: phoneList.data
     });
   },
-  withdrawmessage(res) {
-    let withdrawList = JSON.parse(res.data);
-    this.store.setState({
-      withdrawList: withdrawList.data
-    });
-  },
   onPageNotFound() {
     wx.reLaunch({
       url: "/pages/index/index"

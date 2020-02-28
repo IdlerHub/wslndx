@@ -133,6 +133,18 @@ Page({
     if(this.data.cur.id == this.recordVideo_id) return
     app.video.recordFinish(param).then(res => {
       if (res.code == 1) {
+        if(res.data.day_read == 1) {
+          this.setData({
+            integral: '+100 学分',
+            integralContent: '每日看完十个短视频',
+            showintegral: true
+          })
+          setTimeout(() => {
+            this.setData({
+              showintegral: false
+            })
+          }, 2000)
+        }
         this.setData({
           loop: true,
           isshowRedbig: res.data.today_award,
