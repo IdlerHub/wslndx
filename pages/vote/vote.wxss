@@ -273,6 +273,7 @@ page{
     left: 30rpx;
     display: flex;
     justify-content: center;
+    z-index: 100;
 }
 .vote-footer>image{
     width: 100%;

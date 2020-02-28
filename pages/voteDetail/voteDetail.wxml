@@ -32,26 +32,27 @@
             <view class="info-title">{{item.name}}</view>
             <view class="info-content">{{item.content}}</view>
         </view>
-        
-        <view class="info-right">
-            <view class="zan" data-id="{{item.id}}" data-index='{{index}}'  catchtap="giveLike">
-                <view class="circle">
-                    <image src="{{item.is_praise ? '/images/heart-orange.png': '/images/heart.png'}}" alt="" />
-                    
+        <!-- 如果是未审核的,就不显示点赞等功能 -->
+        <block wx:if="{{!waitingFlag}}">
+            <view class="info-right">
+                <view class="zan" data-id="{{item.id}}" data-index='{{index}}' catchtap="giveLike">
+                    <view class="circle">
+                        <image src="{{item.is_praise ? '/images/heart-orange.png': '/images/heart.png'}}" alt="" />
+                    </view>
+                    <text>{{item.prise_numbers}}</text>
                 </view>
-                <text>{{item.prise_numbers}}</text>
-            </view>
-            <view class="share">
-                <!-- <button class="share-btn" open-type="share"></button> -->
-                <view class="circle" catchtap="shareMode">
-                    <image src="/images/share.png" alt="" />
+                <view class="share">
+                    <!-- <button class="share-btn" open-type="share"></button> -->
+                    <view class="circle" catchtap="shareMode">
+                        <image src="/images/share.png" alt="" />
+                    </view>
+                    <text>{{item.share_numbers}}</text>
                 </view>
-                <text>{{item.share_numbers}}</text>
+                <view class="join" catchtap="toJoin">
+                    <view class="circle">参赛</view>
+                </view>
             </view>
-            <view class="join" catchtap="toJoin" >
-                <view class="circle">参赛</view>
-            </view>
-        </view>
+        </block>
     </view>
 
     <view wx:if="{{shareFlag}}" class="share-container">
@@ -70,8 +71,7 @@
         </view>
     </view>
 
-    <!-- <canvas class="sharePoster" canvas-id="poster" style="width: 600rpx; height: 800rpx; z-index: 100; background: red;" /> -->
-
+    <canvas class="sharePoster" canvas-id="poster"></canvas>
     <view class="show-img" wx:if="{{sharePoster}}">
         <view class="canvas-img">
             <image class="share-bg" src="/images/share-bg.png" alt="" />
@@ -84,7 +84,7 @@
                 </view>
             </view>
             <view class="canvas-works">
-                <image src="{{shareInfo.opus_type==1?  shareInfo.opus_url[0] :  shareInfo.opus_banner_image || '/images/vote-wei.png'}}" alt="" mode="widthFix" />
+                <image src="{{shareInfo.opus_type==1?  shareInfo.opus_url :  shareInfo.opus_banner_image || '/images/vote-wei.png'}}" alt="" />
             </view>
             <view class="canvas-info">
                 <view class="canvas-name">{{shareInfo.opus_name}}</view>

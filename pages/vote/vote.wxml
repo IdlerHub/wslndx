@@ -21,9 +21,9 @@
             <view class="classify-img" catchtap="toClassify">
                 <image src="/images/classify.png" alt="" />
             </view>
-            <scroll-view class="swiper-list" enable-flex scroll-x="true">
+            <scroll-view class="swiper-list" enable-flex scroll-x="true" scroll-into-view="item{{selectedIndex < 4 ? 0 :  selectedIndex - 3}}">
                 <block wx:for="{{classifyList}}" wx:key="index">
-                    <view class="swiper-item {{selectedIndex==index? 'active' : ''}}" bindtap="changeclassify" data-type="{{item.id}}" data-index="{{index}}">
+                    <view class="swiper-item {{selectedIndex==index? 'active' : ''}}" id="item{{index}}" bindtap="changeclassify" data-type="{{item.id}}" data-index="{{index}}">
                         {{item.name}}
                     </view>
                 </block>

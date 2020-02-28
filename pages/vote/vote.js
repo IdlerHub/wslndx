@@ -173,6 +173,9 @@ Page({
     // }
     this.getdata(1);
   },
+  onshow(){
+    this.getdata(1);
+  },
   onReachBottom(){
     this.getdata(this.data.page + 1)
   }
