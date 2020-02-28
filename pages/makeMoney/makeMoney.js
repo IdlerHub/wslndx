@@ -27,7 +27,7 @@ Page({
             total: res.data.user_total_num
           },
           {
-            up: res.data.user_today_amount,
+            up: Number(res.data.user_today_amount).toFixed(2),
             total: res.data.user_total_amount
           },
           {
@@ -52,14 +52,14 @@ Page({
           item.number2 = app.util.towTwice(item.prentice_count)
           item.money2 = app.util.towTwice(item.total_amount)
         })
-        this.setData({
-          list
-        })
+        // this.setData({
+        //   list
+        // })
       }
     })
     app.tutor.totalAmount().then(res => {
       if(res.code == 1) {
-        res.total_amount = Number(res.total_amount).toFixed(1)
+        res.total_amount = Number(res.data.total_amount).toFixed(2)
         this.setData({
           total_amount: res.total_amount
         })

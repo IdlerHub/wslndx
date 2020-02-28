@@ -30,7 +30,7 @@ Page({
           list
         })
         app.store.setState({
-          ['userInfo.amount']:  [Number(res.data.total_amount).toFixed(2)]
+          ['userInfo.amount']:  Number(res.data.total_amount).toFixed(2)
         })
       }
     })

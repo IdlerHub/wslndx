@@ -18,7 +18,7 @@ Page({
   //options(Object)
   onLoad: function(options) {
     let system = wx.getSystemInfoSync()
-    system.windowWidth < 375 ? this.setData({
+    system.windowWidth <= 320 ? this.setData({
       small: true
     }) : ''
     options.type ? this.setData({

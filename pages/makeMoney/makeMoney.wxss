@@ -113,7 +113,7 @@ page {
 }
 .container .rankin_list {
   width: 690rpx;
-  min-height: 574rpx;
+  min-height: calc(100vh - 616rpx);
   margin: 0 auto;
   background:#fff;
   border-radius:10rpx;

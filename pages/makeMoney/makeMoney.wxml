@@ -5,7 +5,7 @@
       <view class="title">我的收益</view>
       <navigator class="moneyBox" hover-class="none" url="/pages/myEarnings/myEarnings" open-type="navigate">
         <image src="{{$state.imgHost}}/makeMoneyImg.png"></image>
-        <text>累计 ¥{{total_amount == 'NaN' ?  '0.0'  :  total_amount}}</text>
+        <text>累计 ¥{{ total_amount}}</text>
         <image src="{{$state.imgHost}}/makeMoneyRbtn.png"></image>
       </navigator>
     </view>

@@ -73,9 +73,9 @@ App({
   },
   /*埋点统计*/
   onLaunch: async function(opts) {
-    console.log(opts)
     // this.getSecureToken()
     let optsStr = decodeURIComponent(opts.query.scene).split("&");
+    console.log(optsStr)
     let opstObj = {};
     optsStr.forEach((item, index) => {
       opstObj[item.split("=")[0]] = item.split("=")[1];
