@@ -482,7 +482,7 @@ App({
           security: res.data.credential
         });
       });
-    });
+    },1000);
   },
   globalData: {
     /*wx.login 返回值 code */
