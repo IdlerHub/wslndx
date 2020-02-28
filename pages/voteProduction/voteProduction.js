@@ -74,7 +74,7 @@ Page({
     //上传图片
     wxp
       .chooseImage({
-        count: 9 - this.data.imgList.length,
+        count: 6 - this.data.imgList.length,
         sizeType: ["compressed"],
         sourceType: ["album", "camera"]
       })

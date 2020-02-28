@@ -41,7 +41,6 @@
 		"es6": true,
 		"enhance": true,
 		"postcss": true,
-		"preloadBackgroundData": false,
 		"minified": true,
 		"newFeature": true,
 		"coverView": true,
@@ -58,7 +57,8 @@
 			"disablePlugins": [],
 			"outputPath": ""
 		},
-		"bundle": true
+		"bundle": true,
+		"preloadBackgroundData": false
 	},
 	"compileType": "miniprogram",
 	"libVersion": "2.9.5",
