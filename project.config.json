@@ -197,11 +197,11 @@
 					"scene": null
 				},
 				{
-					"id": -1,
-					"name": "二维码邀请注册",
+					"id": 15,
+					"name": "新小程序码邀请注册",
 					"pathName": "pages/index/index",
 					"query": "scene=u%3D1016%26t%3D4",
-					"scene": null
+					"scene": 1047
 				}
 			]
 		}
