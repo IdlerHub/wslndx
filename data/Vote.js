@@ -9,6 +9,11 @@ function getCategory() {
   return httpService.post("h5opus/getCategory");
 }
 
+//POST h5opus/getNewestOpus 获取最新发布的作品消息
+function getNewestOpus() {
+  return httpService.post("h5opus/getNewestOpus");
+}
+
 /** POST h5opus/getOpusList
  * @description: 获取作品列表
  * @param {type,page}
@@ -105,5 +110,6 @@ module.exports = {
   getOpusInfo,
   getSearchWord,
   recordInvite,
-  getPosterInfo
+  getPosterInfo,
+  getNewestOpus
 };

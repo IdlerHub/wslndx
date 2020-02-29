@@ -33,7 +33,7 @@ page{
     height: 29rpx;
 }
 .header-left .text{
-    max-width: 509rpx;
+    width: 509rpx;
     height:40rpx;
     font-size:28rpx;
     font-family:PingFangSC-Regular,PingFang SC;
@@ -41,6 +41,12 @@ page{
     color:rgba(255,255,255,0.8);
     line-height:40rpx;
     margin-left: 12rpx;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.header-left .text .swiper-item{
+    width: 100%;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -110,7 +116,7 @@ page{
 .swiper-list{
     height: 80rpx;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-start;
     white-space: nowrap;
     overflow-x: auto;
 }

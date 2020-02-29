@@ -48,7 +48,7 @@ Page({
       })
       let params = {
         id: e.currentTarget.dataset.id,
-        type: this.data.selectedIndex
+        type: this.data.item.hoc_id
       }
       this.praiseOpus(params)
       console.log('点赞', params)
