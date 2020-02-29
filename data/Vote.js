@@ -76,6 +76,16 @@ function uploadOpus(params) {
   return httpService.post("h5opus/uploadOpus", params);
 }
 
+/**
+ *  @description: 记录活动邀请用户数
+ * @param {uid, invite_id , invite_type}
+ * @return:  promise
+ * **/
+function recordInvite(params) {
+  return httpService.post("h5opus/recordInvite", params);
+}
+
+
 module.exports = {
   getCategory,
   getOpusList,
@@ -85,5 +95,6 @@ module.exports = {
   searchOpus,
   getMyOpus,
   getOpusInfo,
-  getSearchWord
+  getSearchWord,
+  recordInvite
 };

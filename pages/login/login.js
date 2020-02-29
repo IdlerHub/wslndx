@@ -18,7 +18,6 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (option) {
-    console.log(app.globalData.shareObj)
     if(option.phone) {
       this.setData({
         phone: option.phone
@@ -184,24 +183,31 @@ Page({
             goods_id: wx.getStorageSync("goosId")
           }
           app.user.addLotteryInvite(params).then()
+        } else if(app.globalData.shareObj.p || app.globalData.query.voteid){
+          let params = {
+            invite_id: wx.getStorageSync("invite"),
+            invite_type: app.globalData.shareObj.p ? app.globalData.shareObj.p : 2
+          }
+          app.vote.recordInvite(params)
         }
         if (res.data.userInfo.mobile) {
-          if (app.globalData.query.type == "share" ||  app.globalData.shareObj.type == 'lottery') {
+          this.setData({
+            showintegral: true
+          })
+          if (app.globalData.query.type == "share" ||  app.globalData.query.type == 'lottery') {
             let params = []
             for (let attr in app.globalData.query) {
               params.push(attr + "=" + app.globalData.query[attr])
             }
-            this.setData({
-              showintegral: true
-            })
             setTimeout(() => {
               app.globalData.shareObj.type == 'lottery' ? wx.reLaunch({ url: "/pages/education/education?type=lottery&login=1&id=" + app.globalData.lotteryId}) : wx.reLaunch({ url: app.globalData.path + "?" + params.join("&") })
             }, 2000)
+          } else if(app.globalData.shareObj.p || app.globalData.query.vote){
+            setTimeout(() => {
+              wx.reLaunch({ url: "/pages/voteDetail/voteDetail?voteid=" + (app.globalData.shareObj.o  ? app.globalData.shareObj.o : app.globalData.query.voteid)})
+            }, 2000);
           } else {
             /*跳转首页*/
-            this.setData({
-              showintegral: true
-            })
             setTimeout(() => {
               wx.reLaunch({ url: "/pages/index/index?type=login" })
             }, 2000)

@@ -73,10 +73,10 @@ App({
   },
   /*埋点统计*/
   onLaunch: async function(opts) {
-    console.log(opts);
-    this.getSecureToken();
+    // console.log(opts);
+    // this.getSecureToken();
     let optsStr = decodeURIComponent(opts.query.scene).split("&");
-    console.log(optsStr)
+    // console.log(optsStr)
     let opstObj = {};
     optsStr.forEach((item, index) => {
       opstObj[item.split("=")[0]] = item.split("=")[1];
@@ -135,10 +135,16 @@ App({
       wx.reLaunch({
         url: "/pages/sign/sign"
       });
-    } else if (opts.type == "lottery" || opstObj.type == "lottery") {
+    } else if (this.globalData.shareObj.p) {
+        wx.reLaunch({ url: "/pages/voteDetail/voteDetail?id=" + this.globalData.shareObj.o})
     }
   },
   onShow: function(opts) {
+    let optsStr = decodeURIComponent(opts.query.scene).split("&");
+    let opstObj = {};
+    optsStr.forEach((item, index) => {
+      opstObj[item.split("=")[0]] = item.split("=")[1];
+    });
     let lists = ["share", "invite"];
     /* 小程序(在后台运行中时)从分享卡片切到前台 */
     if (this.globalData.backstage) {
@@ -168,6 +174,8 @@ App({
         wx.reLaunch({
           url: "/pages/education/education?type=lottery&login=1"
         });
+      } else if (opstObj.p) {
+        wx.reLaunch({ url: "/pages/voteDetail/voteDetail?id=" + opstObj.o})
       } else if (opts.path == "pages/loading/loading") {
         wx.reLaunch({
           url: "/pages/index/index"
