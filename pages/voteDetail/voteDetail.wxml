@@ -13,7 +13,7 @@
         </swiper>
     </block>
     <block wx:else>
-        <video class="video" id="videoWorks" src="{{item.url[0]}}" controls="{{false}}" autoplay="{{true}}" loop="{{false}}" bindplay="videoplay" bindtap="controlVideo" />
+        <video class="video" id="videoWorks" src="{{item.url}}" controls="{{false}}" autoplay="{{true}}" loop="{{false}}" bindplay="videoplay" bindtap="controlVideo" />
         <view wx:if="{{ pause }}" class="pause-img" bindtap="controlVideo">
             <image mode="aspectFill" src="/images/play-hl.png"/>
         </view>
@@ -58,7 +58,7 @@
         </block>
     </view>
     <view class="back-vote" catchtap="toVote">
-        <text>查看</text><text>排行</text>
+        <text>返回</text><text>主页</text>
     </view>
     <view wx:if="{{shareFlag}}" class="share-container">
         <view class="share-footer">

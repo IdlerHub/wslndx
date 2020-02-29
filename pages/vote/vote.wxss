@@ -7,7 +7,7 @@ page{
 }
 .vote-img{
     width: 100%;
-    height: 1448rpx;
+    height: 100%;
     z-index: -1;
     position: absolute;
     top: 0;
@@ -33,7 +33,7 @@ page{
     height: 29rpx;
 }
 .header-left .text{
-    max-width: 509rpx;
+    width: 509rpx;
     height:40rpx;
     font-size:28rpx;
     font-family:PingFangSC-Regular,PingFang SC;
@@ -41,6 +41,12 @@ page{
     color:rgba(255,255,255,0.8);
     line-height:40rpx;
     margin-left: 12rpx;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.header-left .text .swiper-item{
+    width: 100%;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -110,7 +116,7 @@ page{
 .swiper-list{
     height: 80rpx;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-start;
     white-space: nowrap;
     overflow-x: auto;
 }
@@ -154,6 +160,32 @@ page{
     background:rgba(25,117,255,1);
     border-radius:20rpx 20rpx 0rpx 0rpx;
 }
+/* .vote-none{
+    margin: 30rpx;
+    height:352rpx;
+    background:rgba(32,16,255,1);
+    border-radius:10rpx;
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+} */
+.none-con{
+    width: 690rpx;
+    height: 352rpx;
+    border-radius:10rpx;
+    background:rgba(32,16,255,1);
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+}
+.vote-none .none-con image{
+    width: 100rpx;
+    height: 86rpx;
+    margin-bottom: 15rpx;
+}
+.vote-none,
 .vote-list{
     padding:30rpx;
     display: flex;
@@ -162,6 +194,7 @@ page{
     background:rgba(25,117,255,1);
     padding-bottom: 128rpx;
 }
+.vote-none{ padding-bottom: 160rpx; }
 .vote-list .vote-item:nth-child(2n){
     margin-right: 0;
 }

@@ -141,6 +141,7 @@ page{
     font-weight:400;
     color:rgba(153,153,153,1);
 }
+.production-upload .upload-img .show-img .img-over{ border: none; }
 .production-upload .upload-img .show-img { position: relative; border: none; }
 .production-upload .upload-img .show-img .img-over image{ width: 100%; height: 100%; }
 .production-upload .upload-img .show-img .clear{
