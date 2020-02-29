@@ -5,7 +5,7 @@ Page({
 
   },
   reupload(){ // 跳转到上传作品页,并且填充作品??
-    wx.navigateTo({
+    wx.redirectTo({
       url: "/pages/voteProduction/voteProduction"
     })
   },

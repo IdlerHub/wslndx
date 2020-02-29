@@ -145,25 +145,19 @@ Page({
     })
     this.getdata(1);
   },
-  onLoad(){
-    // this.setData({
-    //   styleNone : 279 * 750 / wx.getSystemInfoSync().windowWidth + 'rpx'
-    // })
-    // console.log(this.data.styleNone)
-    // console.log('加载',this.data.type)
-    // this.getdata(1);
-    // this.getNewestOpus()
+  init(){
+    return Promise.all([this.getCategory(), this.getdata(1), this.getNewestOpus()])
   },
   onShow(){
-    this.getCategory();
-    this.getdata(1);
-    this.getNewestOpus()
+    this.init()
   },
   onPullDownRefresh() {
-    console.log("下拉加载")
-    this.getCategory();
-    this.getdata(1);
-    this.getNewestOpus()
+    // this.getCategory();
+    // this.getdata(1);
+    // this.getNewestOpus();
+    this.init().then(()=>{
+      wx.stopPullDownRefresh()
+    })
   },
   onReachBottom(){
     this.getdata(this.data.page + 1)

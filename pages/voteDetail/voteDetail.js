@@ -73,7 +73,7 @@ Page({
   },
   toVote(){
     console.log(111)
-    wx.redirectTo({
+    wx.navigateTo({
       url: "/pages/vote/vote"
     })
   },
@@ -181,9 +181,6 @@ Page({
   savePoster() {    //保存本地
     console.log('保存到本地')
     let that = this;
-
-    
-
     setTimeout(()=>{
       wx.saveImageToPhotosAlbum({
         filePath: that.data.tempImg,
