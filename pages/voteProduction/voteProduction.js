@@ -207,7 +207,10 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-    http.getCategory().then(res => {
+    //上传作品需要加分类
+    let params = { type: "classify" }
+    http.getCategory(params).then(res => {
+      console.log(res)
       this.setData({
         classifyArray: res.data
       });

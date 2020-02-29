@@ -181,6 +181,9 @@ Page({
   savePoster() {    //保存本地
     console.log('保存到本地')
     let that = this;
+
+    
+
     setTimeout(()=>{
       wx.saveImageToPhotosAlbum({
         filePath: that.data.tempImg,
@@ -192,12 +195,38 @@ Page({
           }, 1000)
           that.shareOff() //关闭窗口
         },
-        fail(err) {
-          console.log(err)
-          wx.showToast({
-            title: '图标保存失败',
-            icon: 'none'
-          }, 1000)
+        fail(err) { //授权问题报错
+          if (err.errMsg === "saveImageToPhotosAlbum:fail:auth denied" || err.errMsg === "saveImageToPhotosAlbum:fail auth deny" || err.errMsg === "saveImageToPhotosAlbum:fail authorize no response"){
+            wx.showModal({
+              title: '提示',
+              content: '需要您授权保存相册',
+              showCancel: false,
+              success: modalSuccess => {
+                wx.openSetting({
+                  success(settingdata) {
+                    console.log("settingdata", settingdata)
+                    if (settingdata.authSetting['scope.writePhotosAlbum']) {
+                      wx.showToast({
+                        title: '获取权限成功,再次点击即可保存',
+                        icon: 'none'
+                      }, 500)
+                    } else {
+                      wx.showToast({
+                        title: '获取权限失败，将无法保存到相册哦~',
+                        icon: 'none',
+                      }, 500)
+                    }
+                  },
+                  fail(failData) {
+                    console.log("failData", failData)
+                  },
+                  complete(finishData) {
+                    console.log("finishData", finishData)
+                  }
+                })
+              }
+            })
+          }
         }
       })
     },1000)
@@ -354,7 +383,8 @@ Page({
     // ctx.fill();
     // ctx.draw();
     ctx.restore();
-
+    let windowWidth = wx.getSystemInfoSync().windowWidth;
+    console.log(windowWidth)
     ctx.draw(true, () => {
       let timer = setTimeout(()=>{
         wx.canvasToTempFilePath({
@@ -362,8 +392,8 @@ Page({
           y: 0,
           width: 375,
           height: 680,
-          destWidth: 375 * 750 / wx.getSystemInfoSync().windowWidth,
-          destHeight: 680 * 750 / wx.getSystemInfoSync().windowWidth,
+          destWidth: 375 * 750 / windowWidth,
+          destHeight: 680 * 750 / windowWidth,
           canvasId: "poster",
           // fileType: 'jpg',  //如果png的话，图片存到手机可能有黑色背景部分
           success(res) {
@@ -378,16 +408,22 @@ Page({
             clearTimeout(timer)
           }
         },this);
-      },50)
+      },100)
     });
   },
   onLoad(options) {
-    if (options.flag == 'true'){  //未审核
-      this.setData({
-        waitingFlag: options.flag
-      })
+    // this.store.$state.userInfo
+    let userInfo = wx.getStorageSync('userInfo')
+    if(userInfo){
+      if (options.flag == 'true') {  //未审核
+        this.setData({
+          waitingFlag: options.flag
+        })
+      }
+      this.getOpusInfo(options.voteid);
+    }else{
+      console.log("没有用户信息,即新用户")
     }
-    this.getOpusInfo(options.voteid);
   },
   onShareAppMessage(ops){
     let id = this.data.item.id

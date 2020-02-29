@@ -93,7 +93,6 @@
     width: 54rpx;
     height: 54rpx;
     border-radius: 100%;
-    background: red;
 }
 .info-name{
     margin-left: 23rpx;

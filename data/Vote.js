@@ -5,8 +5,8 @@
 var httpService = require("../utils/service.js");
 
 //POST h5opus/getCategory 获取分类列表
-function getCategory() {
-  return httpService.post("h5opus/getCategory");
+function getCategory(params) {
+  return httpService.post("h5opus/getCategory", params);
 }
 
 //POST h5opus/getNewestOpus 获取最新发布的作品消息
@@ -63,6 +63,12 @@ function getOpusInfo(params) {
 function getSearchWord() {
   return httpService.post("h5opus/getSearchWord");
 }
+
+// POST h5opus / delSearchWord 删除历史搜索记录
+function delSearchWord(params) {
+  return httpService.post("h5opus/delSearchWord", params);
+}
+
 /**
  *  @description: 获取桶上传的ak/sk等相关参数
  * @param {*}
@@ -111,5 +117,6 @@ module.exports = {
   getSearchWord,
   recordInvite,
   getPosterInfo,
-  getNewestOpus
+  getNewestOpus,
+  delSearchWord
 };

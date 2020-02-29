@@ -58,7 +58,7 @@ Page({
       })
       let params = {
         id: e.currentTarget.dataset.id,
-        type: this.data.selectedIndex
+        type: work.hoc_id //需要作品带的type
       }
       this.praiseOpus(params)
       console.log('点赞',params)
@@ -118,10 +118,11 @@ Page({
     //  setData ({  selectedIndex , page  })
   },
   getCategory(){  //获取分类数据
-    var data = this.data.classifyList;
+    let data = [{ id: '0', name: '全部' }];
     app.vote.getCategory().then(res=>{
+      data = data.concat(res.data)
       this.setData({
-        classifyList: data.concat(res.data)
+        classifyList: data
       })
     })
   },
@@ -145,13 +146,22 @@ Page({
     this.getdata(1);
   },
   onLoad(){
-    console.log('加载',this.data.type)
-    this.getCategory();
+    // this.setData({
+    //   styleNone : 279 * 750 / wx.getSystemInfoSync().windowWidth + 'rpx'
+    // })
+    // console.log(this.data.styleNone)
+    // console.log('加载',this.data.type)
     // this.getdata(1);
     // this.getNewestOpus()
   },
   onShow(){
-    console.log('页面刷新')
+    this.getCategory();
+    this.getdata(1);
+    this.getNewestOpus()
+  },
+  onPullDownRefresh() {
+    console.log("下拉加载")
+    this.getCategory();
     this.getdata(1);
     this.getNewestOpus()
   },

@@ -56,7 +56,7 @@
                     <image src="/images/vote-history.png" alt="" />
                     <text>{{item.word}}</text>
                 </view>
-                <view class="history-right"catchtap="delhistory">
+                <view class="history-right" data-searchid="{{item.id}}" data-index="{{index}}" catchtap="delhistory">
                     <image src="/images/history-none.png" alt="" />
                 </view>
             </view>
