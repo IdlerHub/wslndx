@@ -74,7 +74,7 @@ App({
   /*埋点统计*/
   onLaunch: async function (opts) {
     // console.log(opts);
-    // this.getSecureToken();
+    this.getSecureToken();
     let optsStr = decodeURIComponent(opts.query.scene).split("&");
     // console.log(optsStr)
     let opstObj = {};
