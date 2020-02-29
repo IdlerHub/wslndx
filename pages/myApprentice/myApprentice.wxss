@@ -10,7 +10,6 @@
 .container .item image{
   width: 100rpx;
   height: 100rpx;
-  background:rgba(216,216,216,1);
   border-radius:4rpx;
   margin: 0 30rpx;
 }

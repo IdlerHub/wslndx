@@ -116,7 +116,7 @@ const OBSupload = function(dir, filePath, type) {
       { "Content-Type": checkRes.ct },
       { success_action_status: 200 },
       {
-        success_action_redirect: getApp().API_URL + "h5opus/putUploadParams"
+        success_action_redirect: 'https://lndxcallbackdev.jinlingkeji.cn/tool/moderationImage'
       }
     ]
   };
@@ -134,7 +134,7 @@ const OBSupload = function(dir, filePath, type) {
       key: fileName,
       "Content-Type": checkRes.ct,
       success_action_status: 200,
-      success_action_redirect: getApp().API_URL + "h5opus/putUploadParams",
+      success_action_redirect: 'https://lndxcallbackdev.jinlingkeji.cn/tool/moderationImage',
       "x-obs-security-token": securitytoken
     }
   };
@@ -142,11 +142,13 @@ const OBSupload = function(dir, filePath, type) {
   return wxp
     .uploadFile(req)
     .then(res => {
-      return "https://hwcdn.jinlingkeji.cn/" + fileName;
+      if (res.statusCode == 200){
+        res.data = JSON.parse(res.data)
+        if(res.data.code == 1){
+          return "https://hwcdn.jinlingkeji.cn/" + fileName;
+        }
+      }
     })
-    .catch(err => {
-      console.log(err);
-    });
 };
 
 export default OBSupload;

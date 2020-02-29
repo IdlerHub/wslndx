@@ -42,6 +42,8 @@
           <image class="icon" src="/images/mask.png"></image>
           <view class="synopsis" wx:if="{{nextRtight != 3}}">{{ cur.intro_content }}</view>
           <view class="redPacket" catchtap="showred" wx:if="{{isshowRed}}"></view>
+          <navigator class="moneyPackt" hover-class="none" url="/pages/makeMoney/makeMoney" wx:if="{{$state.authUserInfo}}"></navigator>
+          <button open-type="getUserInfo" bindgetuserinfo="onGotUserInfo" class="moneyPackt" data-type="money" wx:else></button>
         </view>
         <!-- 返回首页 -->
         <!-- <view wx:if="{{ vistor || home }}" class="vistor-home" catchtap="tohome">

@@ -83,7 +83,7 @@ Page({
       page: "/pages/video/video",
       authorization: true,
       showStatus: {
-        name: 'day_lesson_comment_status',
+        name: 'day_shortvideo_read_10_status',
         status: false
       }
     },

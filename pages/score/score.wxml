@@ -44,8 +44,7 @@
           <view class="item" wx:for="{{ newbie }}" wx:key="index">
             <text class="title">{{ item.title }}</text>
             <!-- prettier-ignore -->
-            <text class="score"><text class="num">+{{ item.score }}</text> 学分
-              {{item.title == '每日签到' ?'(连签7天+120学分)' : '' }}</text>
+            <text class="score"><text class="num">+{{ item.score }}</text> 学分</text>
             <!-- prettier-ignore -->
             <text wx:if="{{ item.times }}" class="times">每天还有<text class="num">{{ item.times }}</text>次机会</text>
             <button class="status {{ item.status ? 'finish' : '' }}" bindtap="tabnav" data-index="{{ index }}"
@@ -61,8 +60,7 @@
           <view class="item" wx:for="{{ sources }}" wx:key="index">
             <text class="title">{{ item.title }}</text>
             <!-- prettier-ignore -->
-            <text class="score"><text class="num">+{{ item.score }}</text> 学分
-              {{item.title == '每日签到' ?'(连签7天+120学分)' : '' }}</text>
+            <text class="score"><text class="num">+{{ item.score }}</text> 学分 {{item.title == '每日签到' ?'(连签7天+120学分)' : '' }}</text>
             <!-- prettier-ignore -->
             <text wx:if="{{ item.total && item.total != 0}}" class="times">每天还有<text
                 class="num">{{ item.total }}</text>次机会</text>

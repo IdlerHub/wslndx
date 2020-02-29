@@ -72,10 +72,11 @@ App({
     debug: false //是否打开调试模式
   },
   /*埋点统计*/
-  onLaunch: async function(opts) {
-    console.log(opts);
-    this.getSecureToken();
+  onLaunch: async function (opts) {
+    // console.log(opts);
+    // this.getSecureToken();
     let optsStr = decodeURIComponent(opts.query.scene).split("&");
+    // console.log(optsStr)
     let opstObj = {};
     optsStr.forEach((item, index) => {
       opstObj[item.split("=")[0]] = item.split("=")[1];
@@ -85,7 +86,6 @@ App({
     if (this.globalData.scenes.indexOf(opts.scene) >= 0) {
       this.globalData.path = "/" + opts.path; /* 卡片页面路径 */
       this.globalData.query = opts.query; /* 卡片页面参数 */
-      this.globalData.outObj = opstObj;
       this.globalData.shareObj = opstObj;
       this.globalData.lotteryId = opstObj.id;
       if (
@@ -93,14 +93,17 @@ App({
         opts.query.type == "share" ||
         opstObj.type == "invite" ||
         opstObj.type == "lottery" ||
-        opts.query.type == "lottery"
+        opts.query.type == "lottery" ||
+        opstObj.t >= 0
       ) {
         if (opts.query.uid) {
           wx.setStorageSync("invite", opts.query.uid); /* 邀请码记录 */
           wx.setStorageSync("goosId", opts.query.id);
-        } else {
+        } else if (opstObj.uid) {
           wx.setStorageSync("invite", opstObj.uid); /* 邀请码记录 */
           wx.setStorageSync("goosId", opstObj.id);
+        } else {
+          wx.setStorageSync("invite", opstObj.u); /* 邀请码记录 */
         }
       }
     }
@@ -131,10 +134,16 @@ App({
       wx.reLaunch({
         url: "/pages/sign/sign"
       });
-    } else if (opts.type == "lottery" || opstObj.type == "lottery") {
+    } else if (this.globalData.shareObj.p) {
+      wx.reLaunch({ url: "/pages/voteDetail/voteDetail?id=" + this.globalData.shareObj.o })
     }
   },
-  onShow: function(opts) {
+  onShow: function (opts) {
+    let optsStr = decodeURIComponent(opts.query.scene).split("&");
+    let opstObj = {};
+    optsStr.forEach((item, index) => {
+      opstObj[item.split("=")[0]] = item.split("=")[1];
+    });
     let lists = ["share", "invite"];
     /* 小程序(在后台运行中时)从分享卡片切到前台 */
     if (this.globalData.backstage) {
@@ -153,7 +162,6 @@ App({
         ) {
           wx.setStorageSync("invite", opts.query.uid); /* 邀请码存储 */
         }
-        console.log(this.globalData.query);
       }
 
       if (!this.store.$state.userInfo.mobile) {
@@ -164,6 +172,8 @@ App({
         wx.reLaunch({
           url: "/pages/education/education?type=lottery&login=1"
         });
+      } else if (opstObj.p) {
+        wx.reLaunch({ url: "/pages/voteDetail/voteDetail?id=" + opstObj.o })
       } else if (opts.path == "pages/loading/loading") {
         wx.reLaunch({
           url: "/pages/index/index"
@@ -184,10 +194,10 @@ App({
       socket.close();
     }
   },
-  onError: function(err) {
+  onError: function (err) {
     fundebug.notifyError(err);
   },
-  wxLogin: async function() {
+  wxLogin: async function () {
     await wxp.login({}).then(res => {
       if (res.code) {
         this.globalData.code = res.code;
@@ -212,7 +222,6 @@ App({
             wx.setStorageSync("uid", msg.data.uid);
             wx.setStorageSync("authKey", msg.data.authKey);
             this.setUser(msg.data.userInfo);
-            // console.log(msg.data.userInfo)
             if (
               this.globalData.query.type == "share" ||
               this.globalData.shareObj.type == "lottery"
@@ -223,13 +232,13 @@ App({
               }
               this.globalData.shareObj.type == "lottery"
                 ? wx.reLaunch({
-                    url:
-                      "/pages/education/education?type=lottery&login=1&id=" +
-                      this.globalData.lotteryId
-                  })
+                  url:
+                    "/pages/education/education?type=lottery&login=1&id=" +
+                    this.globalData.lotteryId
+                })
                 : wx.reLaunch({
-                    url: this.globalData.path + "?" + params.join("&")
-                  });
+                  url: this.globalData.path + "?" + params.join("&")
+                });
             } else {
               wx.reLaunch({
                 url: "/pages/index/index"
@@ -240,7 +249,7 @@ App({
       });
   },
   /* 初始化store */
-  initStore: function() {
+  initStore: function () {
     let sign = wx.getStorageSync("signStatus") || {};
     if (sign.time !== new Date().toDateString()) {
       sign = {
@@ -257,7 +266,7 @@ App({
     this.getSets();
   },
   /* 更新store中的userInfo */
-  setUser: function(data) {
+  setUser: function (data) {
     let areaArray = data.university.split(",");
     if ((!data.address || !data.school) && areaArray.length == 3) {
       data.address = areaArray.slice(0, 2);
@@ -276,21 +285,21 @@ App({
     }
   },
   /* 更新AuthKey */
-  setAuthKey: function(data) {
+  setAuthKey: function (data) {
     this.store.setState({
       authKey: data
     });
     wx.setStorageSync("authKey", data);
   },
   /* 更新转发分享 */
-  setShare: function(data) {
+  setShare: function (data) {
     this.store.setState({
       shareImgurl: data.data.img_url,
       shareTitle: data.data.title
     });
   },
   /* 更新store中的用户授权  */
-  getSets: function() {
+  getSets: function () {
     let self = this;
     wx.getSetting({
       success: res => {
@@ -309,7 +318,7 @@ App({
     });
   },
   /* 更新store中的用户免费查看的视频数目 */
-  addVisitedNum: function(id) {
+  addVisitedNum: function (id) {
     let arr = this.store.$state.visitedNum;
     if (!this.store.$state.authUserInfo && arr.indexOf(id) == -1) {
       arr.push(id);
@@ -341,8 +350,8 @@ App({
     type == "wifi"
       ? ""
       : this.store.setState({
-          flow: true
-        });
+        flow: true
+      });
   },
   /* 更新签到信息 */
   setSignIn(data, bl) {
@@ -362,20 +371,20 @@ App({
       });
   },
   /* 版本检测 */
-  checkVersion: function() {
+  checkVersion: function () {
     let systemInfo = wx.getSystemInfoSync();
     if (wx.canIUse("getUpdateManager")) {
       const updateManager = wx.getUpdateManager();
-      updateManager.onCheckForUpdate(function(res) {
+      updateManager.onCheckForUpdate(function (res) {
         console.log("onCheckForUpdate====", res);
         // 请求完新版本信息的回调
         if (res.hasUpdate) {
           console.log("res.hasUpdate====");
-          updateManager.onUpdateReady(function() {
+          updateManager.onUpdateReady(function () {
             wx.showModal({
               title: "更新提示",
               content: "新版本已经准备好，是否重启应用？",
-              success: function(res) {
+              success: function (res) {
                 if (res.confirm) {
                   // 新的版本已经下载好，调用 applyUpdate 应用新版本并重启
                   updateManager.applyUpdate();
@@ -383,7 +392,7 @@ App({
               }
             });
           });
-          updateManager.onUpdateFailed(function() {
+          updateManager.onUpdateFailed(function () {
             // 新的版本下载失败
             wx.showModal({
               title: "已经有新版本了哟~",
@@ -406,12 +415,6 @@ App({
     let phoneList = JSON.parse(res.data);
     this.store.setState({
       phoneList: phoneList.data
-    });
-  },
-  withdrawmessage(res) {
-    let withdrawList = JSON.parse(res.data);
-    this.store.setState({
-      withdrawList: withdrawList.data
     });
   },
   onPageNotFound() {
@@ -482,7 +485,7 @@ App({
           security: res.data.credential
         });
       });
-    });
+    }, 1000);
   },
   globalData: {
     /*wx.login 返回值 code */

@@ -11,23 +11,6 @@ Page({
     showToast:false
   },
   onLoad: function (options) {
-    let msgeList = [
-      {'msg':'用户张**提现50元'},
-      {'msg':'用户张**提现50元'},
-      {'msg':'用户张**提现50元'},
-      {'msg':'用户张**提现50元'},
-      {'msg':'用户张**提现50元'},
-      {'msg':'用户张**提现50元'},
-      {'msg':'用户张**提现50元'},
-      {'msg':'用户张**提现50元'},
-    ],
-    windrawlist=['0.5','1','5','10','50','100'],
-    userMoney = 40
-    this.setData({
-      msgeList,
-      windrawlist,
-      userMoney
-    })
   },
   onShow: function () {
     this.getamount()
@@ -48,21 +31,44 @@ Page({
   },
   getamount() {
     app.tutor.extractAmountConfig().then(res => {
-
+      if(res.code == 1) {
+        this.setData({
+          windrawlist: res.data,
+          userMoney: this.data.$state.userInfo.amount
+        })
+      }
+    })
+    app.tutor.totalExtractAmount().then(res => {
+      if(res.code == 1) {
+        this.setData({
+          msgeList: res.data
+        })
+      }
     })
   },
   withdraw(e) {
     let index = e.currentTarget.dataset.index
-    if(Number(this.data.userMoney) >= Number(this.data.windrawlist[index])) {
-      this.setData({
-        showToast: true,
-        ['toastMsg.num']: this.data.windrawlist[index],
-        ['toastMsg.status']: true
+    if(Number(this.data.$state.userInfo.amount) >= Number(this.data.windrawlist[index].amount)) {
+      let param = { amount: this.data.windrawlist[index].amount }
+      app.tutor.extractFinance(param).then(res => {
+        if(res.code == 1) {
+          let amount = this.data.$state.userInfo.amount - this.data.windrawlist[index].amount
+          app.store.setState({
+            ['userInfo.amount']:  [Number(amount).toFixed(2)]
+          })
+          this.setData({
+            showToast: true,
+            ['toastMsg.num']: this.data.windrawlist[index].amount,
+            ['toastMsg.status']: true
+          })
+        } else {
+
+        }
       })
     } else {
       this.setData({
         showToast: true,
-        ['toastMsg.num']: this.data.windrawlist[index],
+        ['toastMsg.num']: this.data.windrawlist[index].amount,
         ['toastMsg.status']: false
       })
     }

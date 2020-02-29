@@ -409,6 +409,9 @@ Page({
   onGotUserInfo: function (e) {
     if (e.detail.errMsg == "getUserInfo:ok") {
       app.updateBase(e)
+      e.currentTarget.dataset.type ? wx.navigateTo({
+        url: '/pages/makeMoney/makeMoney',
+      }) : ''
     }
   },
   onUnload() {

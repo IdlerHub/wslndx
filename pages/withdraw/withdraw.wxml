@@ -6,12 +6,12 @@
       <text>提现记录</text>
       <image src="/images/cashRight.png"></image>
     </navigator>
-    <view class="money">{{userMoney}}<text>元</text></view>
+    <view class="money">{{$state.userInfo.amount}}<text>元</text></view>
     <view class="banner">
       <image src="/images/messageImg.png"></image>
       <swiper class="swiper" autoplay interval="1500" circular vertical>
         <swiper-item wx:for='{{msgeList}}' wx:key="index">
-          {{item.msg}}-{{index}}
+          {{item}}
         </swiper-item>
       </swiper>
     </view>
@@ -24,16 +24,17 @@
     <view class="windrawlist">
       <text>提现到微信零钱</text>
       <view class="listBox">
-        <button wx:for="{{windrawlist}}" wx:key="index" hover-class="none" bindtap="withdraw" data-index="{{index}}">{{item}}元</button>
+        <button wx:for="{{windrawlist}}" wx:key="index" hover-class="none" bindtap="withdraw" data-index="{{index}}">{{item.amount}}元</button>
       </view>
     </view>
   </view>
+  <view class="kong">21</view>
 </view>
 <view class="toast" wx:if="{{showToast}}">
    <view class="toastBox">
      <image src="{{$state.imgHost}}{{toastMsg.status ?'/withdrawSucs.png' : '/withdrawFail.png' }}"></image>
      <text>{{toastMsg.status ? '发起提现成功' : '发起提现失败'}}</text>
-     <view class="number" wx:if="{{toastMsg.status}}">
+     <view class="number" wx:if="{{toastMsg.status}}" style="color: rgba(254,155,2,1);">
         {{toastMsg.num}} <text>元</text>
      </view>
      <view class="number" style="font-size: 40rpx;margin-top: 160rpx;" wx:else>

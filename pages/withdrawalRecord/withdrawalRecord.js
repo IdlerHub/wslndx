@@ -5,20 +5,17 @@ Page({
     list:[]
   },
   onLoad: function (options) {
-    let list = [
-      {num: '50',createtime: '1582507826',status: 0},
-      {num: '100',createtime: '1582507826',status: 1},
-      {num: '0.5',createtime: '1582507826',status: 0},
-      {num: '10',createtime: '1582507826',status: 1},
-      {num: '1',createtime: '1582507826',status: 0},
-    ]
-    list.forEach(v => {
-      v.time = app.util.formatTime(new Date(v.createtime * 1000))
+    app.tutor.extractAmount().then(res => {
+      if(res.code == 1) {
+        let list = res.data
+        list.forEach(item => {
+          item.amount = Number(item.amount).toFixed(2).replace('-', '')
+        })
+        this.setData({
+          list
+        })
+      }
     })
-    this.setData({
-      list
-    })
-    app.tutor.extractAmount().then()
   },
   onShow: function () {
   },

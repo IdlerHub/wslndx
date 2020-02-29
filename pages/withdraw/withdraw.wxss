@@ -122,7 +122,7 @@ page {
   margin-top: 30rpx;
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: flex-start;
 }
 .container .centerBox .windrawlist .listBox button {
   width:190rpx;
@@ -135,6 +135,15 @@ page {
   font-weight:500;
   color:rgba(254,155,2,1);
   margin-bottom: 30rpx;
+  margin-right: 30rpx;
+}
+.container .centerBox .windrawlist .listBox button:nth-child(3n) {
+  margin-right: 0;
+}
+.container .kong {
+  height: 280rpx;
+  color: rgba(244,244,244,1);
+  opacity: 0;
 }
 .toast  {
   width: 100%;
@@ -177,7 +186,7 @@ page {
 .toast .number {
   width: 100%;
   text-align: center;
-  margin-top: 117rpx;
+  margin-top: 138rpx;
   font-size:80rpx;
   font-family:PingFangSC-Medium,PingFang SC;
   font-weight:500;

@@ -6,14 +6,19 @@ Page({
    * 页面的初始数据
    */
   data: {
-    toLogin: false
+    toLogin: false,
+    isPad: 0
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function() {
-   
+    let system = wx.getSystemInfoSync()
+    console.log(system.model.indexOf('iPad'))
+    system.model.indexOf('iPad') > -1 ?  this.setData({
+      isPad: 1
+    }) : ''
   },
 
   /**
