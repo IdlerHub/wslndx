@@ -239,6 +239,11 @@ Page({
       });
     }, 2000);
   },
+  played() {
+    wx.uma.trackEvent("lessonsPlay", {
+      lessonsName: this.data.detail.title
+    });
+  },
   ended() {
     this.data.sublessons.forEach(item => {
       item.id == this.data.cur.id ? (item.played = 1) : "";

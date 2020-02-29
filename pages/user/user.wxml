@@ -55,7 +55,7 @@
       <image src="{{ $state.imgHost }}/userfengcai.png" class="iconfont"></image>
       <text>风采展示</text>
     </navigator>
-    <navigator class="nav" url="/pages/experience/experience" open-type="navigate">
+    <navigator hover-class="none" class="nav" url="/pages/experience/experience" open-type="navigate">
       <image src="{{ $state.imgHost }}/experience.png" class="iconfont"></image>
       <text>体验官申请</text>
     </navigator>
