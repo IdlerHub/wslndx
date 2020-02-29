@@ -13,7 +13,7 @@ Page({
     isshowRedbig: false
     /*  rect: wx.getMenuButtonBoundingClientRect() */
   },
-  pageName: '短视频页',
+  pageName: '单用户短视频全部展示页',
   onLoad(options) {
     this.videoContext = wx.createVideoContext(this.data.vid)
     wx.setNavigationBarTitle({

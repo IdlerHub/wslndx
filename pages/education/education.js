@@ -4,6 +4,7 @@ Page({
   data: {
     url: ""
   },
+  pageName:'外链页（开心农场&amp;老年电台&amp;早报）',
   onLoad: function (options) {
     console.log(options)
     if (!options.type) {

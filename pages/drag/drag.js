@@ -16,6 +16,7 @@ Page({
     altList: [] /* 备选列表 */,
     guideNum: 1
   },
+  pageName: '分类配置页面',
   private: {
     startX: 0 /* 拖动目标标准坐标(计算偏移的基准点)  */,
     startY: 0,

@@ -5,7 +5,8 @@ Page({
 		isIphoneX: app.globalData.isIphoneX,
 		size: 1,
     showcopm:false
-	},
+  },
+  pageName: '加入圈子',
 	change(e) {
 		this.setData({
 			listData: e.detail.listData

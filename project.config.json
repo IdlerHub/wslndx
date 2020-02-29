@@ -162,7 +162,7 @@
 					"scene": null
 				},
 				{
-					"id": -1,
+					"id": 10,
 					"name": "pages/vote/vote",
 					"pathName": "pages/vote/vote",
 					"query": "",

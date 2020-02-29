@@ -5,6 +5,7 @@ Page({
   data: {
     none: false
   },
+  pageName: '证书（云课堂观看完成证书）',
   onLoad(options) {
     this.setData({
       course: options["name"]

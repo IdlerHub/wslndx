@@ -9,7 +9,7 @@ Page({
     showT: false,
     showSheet: false
   },
-  pageName: '学友圈详情页',
+  pageName: '圈内帖子列表',
   onLoad(options) {
     this.id = options.id
     this.param = { fs_id: this.id, page: 1, pageSize: 10 }

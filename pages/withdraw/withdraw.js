@@ -10,6 +10,7 @@ Page({
     },
     showToast:false
   },
+  pageName: '邀请收学员金额提现页',
   onLoad: function (options) {
   },
   onShow: function () {

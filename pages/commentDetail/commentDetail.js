@@ -26,7 +26,7 @@ Page({
     voiceplayimg: 'https://hwcdn.jinlingkeji.cn/images/pro/triangle.png',
     replyshow: false
   },
-
+  pageName: '多回复详情页',
   /**
    * 生命周期函数--监听页面加载
    */

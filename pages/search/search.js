@@ -16,6 +16,7 @@ Page({
     showqst: false,
     showvioce: true
   },
+  pagename:'课程搜索',
   onLoad: function (options) {
     this.param = {
       page_size: 10

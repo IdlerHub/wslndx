@@ -8,7 +8,7 @@ Page({
     currentTab: 0,
     circleList: []
   },
-  pageName: '我的收藏',
+  pageName: '收藏课程',
   //options(Object)
   onLoad: function (options) {
     this.collectParam = { page: 1, pageSize: 10 }
