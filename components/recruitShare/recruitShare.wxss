@@ -29,7 +29,7 @@
   justify-content: center;
   align-items: center;
 } 
-.shareBox  .shareBtn:nth-child(2) {
+.shareBox  .shareBtn2 {
   margin: 0;
   border:1px solid rgba(0,189,2,1);
   background: #fff;
@@ -45,12 +45,12 @@
   font-weight:500;
   color:rgba(255,255,255,1);
 } 
-.shareBox  .shareBtn:nth-child(2) image{
+.shareBox  .shareBtn2 image{
   width: 40rpx;
   height: 40rpx;
   margin-right: 30rpx;
 } 
-.shareBox  .shareBtn:nth-child(2) text{
+.shareBox  .shareBtn2 text{
   font-size:38rpx;
   font-family:PingFangSC-Medium,PingFang SC;
   font-weight:500;
