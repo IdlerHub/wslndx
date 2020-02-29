@@ -5,11 +5,13 @@ Page({
   data: {
     current: 0,
     pause: false,
+    zan: false,
     shareFlag: false,
     sharePoster: false,
     supportFlag: 0,
+    zanFlag: false,
     waitingFlag: false,
-    userImg: '',
+    userImg: '',  //用户头像
     showImg: '', //展示图片
     code: '', //二维码
     imgs: '/images/share-bg.png', //海报背景图片
@@ -28,13 +30,18 @@ Page({
         icon: "none",
         duration: 1500
       })
+      this.setData({
+        zanFlag: true
+      })
     } else {
       let index = e.currentTarget.dataset.index
       let work = this.data.item
-      work.prise_numbers += 1
+      work.prise_numbers += 1;
+      work.is_praise = 1;
       this.setData({
         item: work,
-        supportFlag: 0
+        supportFlag: 0,
+        zanFlag: true
       })
       let params = {
         id: e.currentTarget.dataset.id,
@@ -61,7 +68,12 @@ Page({
       sharePoster: false
     })
   },
-  
+  toVote(){
+    console.log(111)
+    wx.navigateTo({
+      url: "/pages/vote/vote"
+    })
+  },
   toJoin(){
     wx.navigateTo({
       url: "/pages/voteProduction/voteProduction"
@@ -175,16 +187,17 @@ Page({
             title: '保存成功',
             icon: 'none'
           }, 1000)
+          that.shareOff() //关闭窗口
         },
         fail(err) {
-          console.log(that.data.tempImg)
+          console.log(err)
           wx.showToast({
             title: '图标保存失败',
             icon: 'none'
           }, 1000)
         }
       })
-    },100)
+    },1000)
   },
   shareOff(){ //取消分享
     this.setData({
@@ -336,7 +349,7 @@ Page({
     )
     // ctx.setFillStyle('white');
     // ctx.fill();
-    ctx.draw()
+    // ctx.draw();
     ctx.restore();
 
     ctx.draw(true, () => {
@@ -349,22 +362,24 @@ Page({
           destWidth: 375 * 750 / wx.getSystemInfoSync().windowWidth,
           destHeight: 680 * 750 / wx.getSystemInfoSync().windowWidth,
           canvasId: "poster",
-          // fileType: 'jpg',  //这里为图片格式，最好改为jpg，如果png的话，图片存到手机可能有黑色背景部分
+          // fileType: 'jpg',  //如果png的话，图片存到手机可能有黑色背景部分
           success(res) {
             console.log('生成成功回调', res)
-            that.data.tempImg = res.tempFilePath;
+            that.setData({
+              tempImg: res.tempFilePath
+            })
             clearTimeout(timer)
           },
           fail: res => {
-            console.log(res)
+            console.log('生成失败',res)
             clearTimeout(timer)
           }
-        });
+        },this);
       },50)
     });
   },
   onLoad(options) {
-    if (options.flag){  //未审核
+    if (options.flag == 'true'){  //未审核
       this.setData({
         waitingFlag: options.flag
       })
@@ -379,7 +394,7 @@ Page({
     }
     return {
       title: '网上老年大学',
-      path: 'pages/voteDetail/voteDetail?id=' + id,  // 路径，传递参数到指定页面。
+      path: '/pages/voteDetail/voteDetail?id=' + id + '&type=share',  // 路径，传递参数到指定页面。
      success: function (res) {
         // 转发成功
         console.log("转发成功:" + JSON.stringify(res));

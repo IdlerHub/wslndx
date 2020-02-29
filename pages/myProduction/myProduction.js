@@ -40,7 +40,9 @@ Page({
         url: '/pages/voteFail/voteFail'
       })
     }else{
-      wx.navigateTo({ //去未通过的缺省页
+      console.log(this.data.type)
+      console.log('传去详情页的id',e.currentTarget.dataset.flag)
+      wx.navigateTo({ //去详情页
         url: `/pages/voteDetail/voteDetail?id=${e.currentTarget.dataset.id}&flag=${e.currentTarget.dataset.flag}`
       })
     }

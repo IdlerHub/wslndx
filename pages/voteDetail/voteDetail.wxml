@@ -13,16 +13,19 @@
         </swiper>
     </block>
     <block wx:else>
-        <video class="video" id="videoWorks" src="{{item.videoUrl}}" controls="{{false}}" autoplay="{{true}}" loop="{{false}}" bindplay="videoplay" bindtap="controlVideo" />
+        <video class="video" id="videoWorks" src="{{item.url[0]}}" controls="{{false}}" autoplay="{{true}}" loop="{{false}}" bindplay="videoplay" bindtap="controlVideo" />
         <view wx:if="{{ pause }}" class="pause-img" bindtap="controlVideo">
             <image mode="aspectFill" src="/images/play-hl.png"/>
         </view>
     </block>
-    <!-- <view class="cartoon">
-        <view class="ani-img">
-            <image class="zan-ani" src="/images/zan-ani.png" alt="" mode="top" />
-        </view>
+    <!-- 点赞动画 右下角的 -->
+    <!-- <view class="praising-orange">
+        <view class="ani-orange" style="background-image: url('/images/zan-orange.png')"></view>
     </view> -->
+    <!-- 点赞动画 中间的 -->
+    <view class="praising-red" wx:if="{{zanFlag}}" hidden="{{zanFlag}}">
+        <view class="ani-red" style="background-image: url('/images/zan-red.png')"></view>
+    </view>
     <view class="footer-info">
         <view class="info-left">
             <view class="user-info">
@@ -54,7 +57,9 @@
             </view>
         </block>
     </view>
-
+    <view class="back-vote" catchtap="toVote">
+        <text>查看</text><text>排行</text>
+    </view>
     <view wx:if="{{shareFlag}}" class="share-container">
         <view class="share-footer">
             <view class="share-mode">

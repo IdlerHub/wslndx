@@ -136,6 +136,7 @@
     align-items: center;
     justify-content: center;
     border-radius: 100%;
+    position: relative;
 }
 .zan .circle{
     background:linear-gradient(305deg,rgba(223,0,134,1) 0%,rgba(255,85,187,1) 100%);
@@ -167,10 +168,10 @@
 }
 .zan .circle>image{
     width: 56rpx;
-    height: 52rpx;
+    height: 56rpx;
 }
 .share .circle>image{
-    width: 52rpx;
+    width: 58rpx;
     height: 58rpx;
 }
 .zan text,
@@ -416,20 +417,60 @@
     left: 50%;
     z-index: 100;
 }
-.ani-img{
-    width: 330rpx;
-    height: 330rpx;
-    position: absolute;
+
+.praising-orange{
+    width: 216rpx;
+    height: 216rpx;
+    overflow: hidden;
+    position: fixed;
+    top: 62%;
+    right: -21rpx;
+    z-index: 101;
+}
+.ani-orange{
+    width: 216rpx;
+    height: 216rpx;
+    animation: ani steps(16) 1s both;
+}
+.praising-red{
+    width: 100%;
+    height: 100%;
+    position: fixed;
     top: 0;
     left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
 }
-.ani {
-  width: 180rpx;
-  height: 180rpx;
-  background-size: cover;
-  animation: ani steps(20) 0.8s both; }
+.ani-red{
+    width: 680rpx;
+    height: 680rpx;
+    animation: ani steps(19) 2s both;
+    z-index: 100;
+}
 
+  /* 返回首页 ||  */
+.back-vote{
+  position: fixed;
+  top: 28rpx;
+  right: 30rpx;
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  align-items: center;
 
+  width:98rpx;
+  height:98rpx;
+  border-radius: 100%;
+  background:rgba(25,117,255,1);
+  box-shadow:3rpx 3rpx 12rpx 0rpx rgba(0,60,149,1);
+  font-size:26rpx;
+  font-family:PingFangSC-Regular,PingFang SC;
+  font-weight:400;
+  color:rgba(255,255,255,1);
+  
+}
   /* canvas */
   .sharePoster{
     width:630rpx;
