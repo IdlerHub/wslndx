@@ -202,13 +202,6 @@
 					"pathName": "pages/voteProduction/voteProduction",
 					"query": "",
 					"scene": null
-				},
-				{
-					"id": 16,
-					"name": "消息卡片分享赛事视频",
-					"pathName": "pages/voteDetail/voteDetail",
-					"query": "uid=1016&voteid=14&type=share",
-					"scene": null
 				}
 			]
 		}
