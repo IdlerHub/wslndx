@@ -54,7 +54,7 @@ Page({
   },
   toDetail(e) { //作品详情页
     wx.navigateTo({
-      url: "/pages/voteDetail/voteDetail?id=" + e.currentTarget.dataset.id
+      url: "/pages/voteDetail/voteDetail?voteid=" + e.currentTarget.dataset.id
     })
   },
   toSearch(){
@@ -171,6 +171,10 @@ Page({
     //     type: parseInt(options.type)
     //   })
     // }
+    this.getdata(1);
+  },
+  onshow(){
+    console.log('页面刷新')
     this.getdata(1);
   },
   onReachBottom(){

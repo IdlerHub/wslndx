@@ -8,7 +8,6 @@ Page({
   toVote(e){
     let list = getCurrentPages();
     const page = list[list.length - 2];
-    console.log(page,'111111111111')
     page.changeData(e.currentTarget.dataset.index, e.currentTarget.dataset.type)
     wx.navigateBack()
     // wx.redirectTo({

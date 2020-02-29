@@ -110,6 +110,14 @@
     display: flex;
     justify-content: space-between;
     flex-flow: column;
+    overflow: hidden;
+}
+.item-right .perfect{
+    font-size:36rpx;
+    font-family:PingFangSC-Regular,PingFang SC;
+    font-weight:400;
+    color:rgba(102,102,102,1);
+    line-height:50rpx;
 }
 .item-author{
     font-size:32rpx;
@@ -117,6 +125,9 @@
     font-weight:400;
     color:rgba(102,102,102,1);
     margin-bottom: 7rpx;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 .item-title{
     max-width:330rpx;
@@ -128,8 +139,8 @@
     line-height:56rpx;
     margin-bottom: 10rpx;
     overflow: hidden;
-    text-overflow: ellipsis;
     white-space: nowrap;
+    text-overflow: ellipsis;
 }
 
 .none-production{

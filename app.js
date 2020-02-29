@@ -1,7 +1,7 @@
 /*
  * @Date: 2019-05-28 09:50:08
  * @LastEditors: hxz
- * @LastEditTime: 2020-02-27 15:20:18
+ * @LastEditTime: 2020-02-29 14:09:23
  */
 import { wxp } from "./utils/service";
 import { uma } from "umtrack-wx";
@@ -73,10 +73,8 @@ App({
   },
   /*埋点统计*/
   onLaunch: async function (opts) {
-    // console.log(opts);
     this.getSecureToken();
     let optsStr = decodeURIComponent(opts.query.scene).split("&");
-    // console.log(optsStr)
     let opstObj = {};
     optsStr.forEach((item, index) => {
       opstObj[item.split("=")[0]] = item.split("=")[1];
@@ -135,7 +133,9 @@ App({
         url: "/pages/sign/sign"
       });
     } else if (this.globalData.shareObj.p) {
-      wx.reLaunch({ url: "/pages/voteDetail/voteDetail?id=" + this.globalData.shareObj.o })
+      wx.reLaunch({
+        url: "/pages/voteDetail/voteDetail?id=" + this.globalData.shareObj.o
+      });
     }
   },
   onShow: function (opts) {
@@ -173,7 +173,7 @@ App({
           url: "/pages/education/education?type=lottery&login=1"
         });
       } else if (opstObj.p) {
-        wx.reLaunch({ url: "/pages/voteDetail/voteDetail?id=" + opstObj.o })
+        wx.reLaunch({ url: "/pages/voteDetail/voteDetail?id=" + opstObj.o });
       } else if (opts.path == "pages/loading/loading") {
         wx.reLaunch({
           url: "/pages/index/index"

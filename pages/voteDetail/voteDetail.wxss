@@ -136,6 +136,7 @@
     align-items: center;
     justify-content: center;
     border-radius: 100%;
+    position: relative;
 }
 .zan .circle{
     background:linear-gradient(305deg,rgba(223,0,134,1) 0%,rgba(255,85,187,1) 100%);
@@ -167,10 +168,10 @@
 }
 .zan .circle>image{
     width: 56rpx;
-    height: 52rpx;
+    height: 56rpx;
 }
 .share .circle>image{
-    width: 52rpx;
+    width: 58rpx;
     height: 58rpx;
 }
 .zan text,
@@ -275,14 +276,20 @@
     justify-content: center;
     padding: 0 60rpx;
 }
+.show-con{
+    width: 630rpx;
+    height: 1002rpx;
+    margin-bottom: 30rpx;
+    position: relative;
+}
 
 .canvas-img{
     width: 570rpx;
-    height: 1002rpx;
+    height: 100%;
     border-radius: 20rpx;
     padding: 0 30rpx;
-    margin-bottom: 30rpx;
     position: relative;
+    overflow: hidden;
 }
 .share-bg{
     width: 100%;
@@ -291,6 +298,8 @@
     position: absolute;
     top: 0;
     left: 0;
+    right: 0;
+    bottom: 0;
 }
 .share-del{
     width: 72rpx;
@@ -338,6 +347,7 @@
     background:rgba(32,16,255,1);
     border-radius:14rpx;
     margin-bottom: 22rpx;
+    overflow: hidden;
 }
 .canvas-works image{
     width: 100%;
@@ -374,6 +384,7 @@
     height: 153rpx;
     padding: 21rpx 30rpx;
     display: flex;
+    border-radius: 0 0 20rpx 20rpx;
     align-items: center;
 }
 .canvas-code{
@@ -415,15 +426,68 @@
     left: 50%;
     z-index: 100;
 }
-.ani-img{
-    width: 330rpx;
-    height: 330rpx;
-    position: absolute;
+
+/* .praising-orange{
+    width: 216rpx;
+    height: 216rpx;
+    overflow: hidden;
+    position: fixed;
+    top: 62%;
+    right: -21rpx;
+    z-index: 101;
+}
+.ani-orange{
+    width: 216rpx;
+    height: 216rpx;
+    animation: ani steps(16) 1s both;
+} */
+.praising-red{
+    width: 100%;
+    height: 100%;
+    position: fixed;
     top: 0;
     left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    /* z-index: 101; */
 }
-.ani {
-  width: 180rpx;
-  height: 180rpx;
-  background-size: cover;
-  animation: ani steps(20) 0.8s both; }
+.ani-red{
+    width: 680rpx;
+    height: 680rpx;
+    animation: ani steps(19) 2s both;
+    z-index: 101;
+}
+
+  /* 返回首页 ||  */
+.back-vote{
+  position: fixed;
+  top: 28rpx;
+  right: 30rpx;
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  align-items: center;
+
+  width:98rpx;
+  height:98rpx;
+  border-radius: 100%;
+  background:rgba(25,117,255,1);
+  box-shadow:3rpx 3rpx 12rpx 0rpx rgba(0,60,149,1);
+  font-size:26rpx;
+  font-family:PingFangSC-Regular,PingFang SC;
+  font-weight:400;
+  color:rgba(255,255,255,1);
+  
+}
+  /* canvas */
+  .sharePoster{
+    width:630rpx;
+    height:1002rpx;
+    overflow: hidden;
+    /* position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100; */
+  }

@@ -23,14 +23,16 @@
                         <image wx:if="{{item.type==1}}" class="item-classify" src="../../images/vote-img.png" alt="" />
                         <image wx:if="{{item.type==2}}" class="item-classify" src="../../images/vote-video.png" alt="" />
                         <view class="item-img">
-                            <image wx:if="{{item.type==1}}" src="{{item.url[0] || '/images/vote-wei.png'}}" alt="" />
-                            <image wx:if="{{item.type==2}}" src="{{item.banner_image|| '/images/vote-wei.png'}}" alt="" />
+                            <image wx:if="{{item.type==1}}" src="{{item.url[0] || '/images/vote-wei.png'}}" alt="" mode="aspectFit" />
+                            <image wx:if="{{item.type==2}}" src="{{item.banner_image|| '/images/vote-wei.png'}}" alt="" mode="aspectFit" />
                         </view>
                     </view>
                     <view class="item-right">
                         <view>
-                            <view class="item-author">{{item.nickname}}</view>
-                            <view class="item-title">{{item.name}}</view>
+                            <rich-text class="item-author" nodes="{{ item.nickname }}"></rich-text>
+                            <rich-text class="item-title" nodes="{{ item.name }}"></rich-text>
+                            <!-- <view class="item-author">{{item.nickname}}</view>
+                            <view class="item-title">{{item.name}}</view> -->
                         </view>
                         <view class="perfect">{{item.prise_numbers}}赞</view>
                     </view>

@@ -138,6 +138,7 @@ Page({
           })
         });
     }
+    
   },
   delImg(e) {
     //删除图片
@@ -196,6 +197,7 @@ Page({
     };
 
     http.uploadOpus(params).then(res => {
+      console.log('上传状态',res)
       wx.redirectTo({
         url: "/pages/voteSuccess/voteSuccess"
       });
