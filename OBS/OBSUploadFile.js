@@ -1,7 +1,7 @@
 /*
  * @Date: 2019-12-20 10:54:37
  * @LastEditors: hxz
- * @LastEditTime: 2020-02-27 13:15:27
+ * @LastEditTime: 2020-02-29 13:50:08
  */
 const getPolicyEncode = require("./getPolicy.js");
 const getSignature = require("./GetSignature.js");
@@ -78,6 +78,7 @@ const OBSupload = function(dir, filePath, type) {
   if (type == "image") {
     checkRes = checkType(filePath);
     if (!checkRes) {
+      console.log("图片类型未知,请重新选择上传");
       wx.showToast({
         icon: "none",
         title: "图片类型未知,请重新选择上传",
@@ -116,7 +117,8 @@ const OBSupload = function(dir, filePath, type) {
       { "Content-Type": checkRes.ct },
       { success_action_status: 200 },
       {
-        success_action_redirect: 'https://lndxcallbackdev.jinlingkeji.cn/tool/moderationImage'
+        success_action_redirect:
+          "https://lndxcallbackdev.jinlingkeji.cn/tool/moderationImage"
       }
     ]
   };
@@ -134,21 +136,27 @@ const OBSupload = function(dir, filePath, type) {
       key: fileName,
       "Content-Type": checkRes.ct,
       success_action_status: 200,
-      success_action_redirect: 'https://lndxcallbackdev.jinlingkeji.cn/tool/moderationImage',
+      success_action_redirect:
+        "https://lndxcallbackdev.jinlingkeji.cn/tool/moderationImage",
       "x-obs-security-token": securitytoken
     }
   };
 
-  return wxp
-    .uploadFile(req)
-    .then(res => {
-      if (res.statusCode == 200){
-        res.data = JSON.parse(res.data)
-        if(res.data.code == 1){
-          return "https://hwcdn.jinlingkeji.cn/" + fileName;
-        }
+  console.log(req);
+
+  return wxp.uploadFile(req).then(res => {
+    console.log(res);
+    if (res.statusCode == 200) {
+      res.data = JSON.parse(res.data);
+      if (res.data.code == 1) {
+        return "https://hwcdn.jinlingkeji.cn/" + fileName;
+      } else {
+        getApp().fundebug.notifyHttpError(req, res);
       }
-    })
+    } else {
+      getApp().fundebug.notifyHttpError(req, res);
+    }
+  });
 };
 
 export default OBSupload;
