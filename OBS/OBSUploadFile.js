@@ -1,7 +1,7 @@
 /*
  * @Date: 2019-12-20 10:54:37
  * @LastEditors: hxz
- * @LastEditTime: 2020-02-29 12:15:17
+ * @LastEditTime: 2020-02-29 13:50:08
  */
 const getPolicyEncode = require("./getPolicy.js");
 const getSignature = require("./GetSignature.js");
@@ -150,7 +150,11 @@ const OBSupload = function(dir, filePath, type) {
       res.data = JSON.parse(res.data);
       if (res.data.code == 1) {
         return "https://hwcdn.jinlingkeji.cn/" + fileName;
+      } else {
+        getApp().fundebug.notifyHttpError(req, res);
       }
+    } else {
+      getApp().fundebug.notifyHttpError(req, res);
     }
   });
 };
