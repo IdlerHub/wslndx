@@ -9,7 +9,7 @@ Page({
     toLogin: false,
     isPad: 0
   },
-
+  pagename:'注册页',
   /**
    * 生命周期函数--监听页面加载
    */

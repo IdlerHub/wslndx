@@ -12,7 +12,7 @@ Page({
     my_score: 0,
     showGuide: true
   },
-  pageName: '学分抽奖',
+  pageName: '个人中心',
   onLoad() { },
   onShow() {
     // wx.hideHomeButton({

@@ -18,7 +18,7 @@ Page({
       num: 0
     }
   },
-  pageName: '风采展示',
+  pageName: '风采展示（风采展示）',
   //options(Object)
   onLoad: function (options) {
     this.circleParam = { page: 1, pageSize: 10, }

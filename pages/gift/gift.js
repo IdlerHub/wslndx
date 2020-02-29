@@ -2,6 +2,7 @@
 Page({
   data: {},
   //options(Object)
+  pageName: '礼品兑换成功',
   onLoad: function(options) {
     this.setData({
       name: options.name,

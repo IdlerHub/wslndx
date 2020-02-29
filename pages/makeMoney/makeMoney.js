@@ -6,6 +6,7 @@ Page({
     topMsg: {},
     total_amount:0
   },
+  pageName:'学员邀请赚钱首页',
   onLoad: function (options) {},
   onShow: function () {
     this.init()

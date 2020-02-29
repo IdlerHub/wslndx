@@ -73,6 +73,9 @@ let store = new Store({
         };
       }
     },
+    onShow() {
+      wx.uma.trackEvent("join_page", { pageName: this.pageName });
+    },
     onHide() {
       wx.uma.trackEvent("move", { pageName: this.pageName });
     }

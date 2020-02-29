@@ -5,7 +5,7 @@ Page({
     list: [],
     showintegral: false
   },
-  pageName: '个人风采',
+  pageName: '个人简介页面',
   onLoad(options) {
     console.log(options)
     this.setData({

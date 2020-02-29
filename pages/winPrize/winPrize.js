@@ -10,7 +10,7 @@ Page({
     duijiang: '兑奖',
     lingqu: '领取'
   },
-
+  pageName: '中奖记录',
   /**
    * 生命周期函数--监听页面加载
    */

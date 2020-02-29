@@ -4,6 +4,7 @@ Page({
   data: {
     list:[]
   },
+  pageName:'邀请收学员提现记录页',
   onLoad: function (options) {
     app.tutor.extractAmount().then(res => {
       if(res.code == 1) {

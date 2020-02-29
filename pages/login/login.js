@@ -13,6 +13,7 @@ Page({
     btnName: "获取验证码",
     showintegral: false
   },
+  pageName:'登陆页',
   params: { tel: "", authCode: "", telFormat: false, codeFormat: false, mode: 1, tempCode: null },
   /**
    * 生命周期函数--监听页面加载
