@@ -23,8 +23,8 @@
         <view class="ani-orange" style="background-image: url('/images/zan-orange.png')"></view>
     </view> -->
     <!-- 点赞动画 中间的 -->
-    <view class="praising-red" wx:if="{{zanFlag}}" hidden="{{zanFlag}}">
-        <view class="ani-red" style="background-image: url('/images/zan-red.png')"></view>
+    <view class="praising-red" wx:if="{{zanFlag}}">
+        <view class="ani-red" bindanimationend="aniend" style="background-image: url('{{$state.imgHost}}/zan-red.png')"></view>
     </view>
     <view class="footer-info">
         <view class="info-left">
@@ -78,28 +78,31 @@
 
     <canvas class="sharePoster" canvas-id="poster"></canvas>
     <view class="show-img" wx:if="{{sharePoster}}">
-        <view class="canvas-img">
-            <image class="share-bg" src="/images/share-bg.png" alt="" />
+    <!-- <view class="show-img"> -->
+        <view class="show-con">
             <image class="share-del" src="/images/unshare.png" alt="" catchtap="unshare" />
-            <view class="canvas-user">
-                <image class="user-img" src="{{shareInfo.avatar}}" alt=""></image>
-                <view class="canvas-info">
-                    <view class="user-name">{{shareInfo.nickname}}</view>
-                    <view class="tip">正在参赛...</view>
+            <view class="canvas-img">
+                <image class="share-bg" src="/images/share-bg.png" alt="" />
+                <view class="canvas-user">
+                    <image class="user-img" src="{{shareInfo.avatar}}" alt=""></image>
+                    <view class="canvas-info">
+                        <view class="user-name">{{shareInfo.nickname}}</view>
+                        <view class="tip">正在参赛...</view>
+                    </view>
                 </view>
-            </view>
-            <view class="canvas-works">
-                <image src="{{shareInfo.opus_type==1?  shareInfo.opus_url :  shareInfo.opus_banner_image || '/images/vote-wei.png'}}" alt="" />
-            </view>
-            <view class="canvas-info">
-                <view class="canvas-name">{{shareInfo.opus_name}}</view>
-                <view class="canvas-content">{{shareInfo.opus_content}}</view>
-            </view>
-            <view class="canvas-footer">
-                <image class="canvas-code" src="{{shareInfo.qrcode_url}}" alt="" />
-                <view class="code-tip">
-                    <view>长按识别二维码</view>
-                    <view>为好友加油，一起参赛！</view>
+                <view class="canvas-works">
+                    <image src="{{shareInfo.opus_type==1?  shareInfo.opus_url :  shareInfo.opus_banner_image || '/images/vote-wei.png'}}" alt="" />
+                </view>
+                <view class="canvas-info">
+                    <view class="canvas-name">{{shareInfo.opus_name}}</view>
+                    <view class="canvas-content">{{shareInfo.opus_content}}</view>
+                </view>
+                <view class="canvas-footer">
+                    <image class="canvas-code" src="{{shareInfo.qrcode_url}}" alt="" />
+                    <view class="code-tip">
+                        <view>长按识别二维码</view>
+                        <view>为好友加油，一起参赛！</view>
+                    </view>
                 </view>
             </view>
         </view>

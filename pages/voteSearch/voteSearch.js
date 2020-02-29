@@ -14,12 +14,13 @@ Page({
   },
   toDetail(e){
     wx.navigateTo({
-      url: "/pages/voteDetail/voteDetail?id=" + e.currentTarget.dataset.id
+      url: "/pages/voteDetail/voteDetail?voteid=" + e.currentTarget.dataset.id
     })
   },
   clickSearch(e){ //选中历史记录搜索
     this.setData({
-      searchWord: e.currentTarget.dataset.word
+      searchWord: e.currentTarget.dataset.word,
+      inputcontent: e.currentTarget.dataset.word
     })
     this.searchOpus(1);
   },

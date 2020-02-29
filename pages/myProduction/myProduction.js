@@ -43,7 +43,7 @@ Page({
       console.log(this.data.type)
       console.log('传去详情页的id',e.currentTarget.dataset.flag)
       wx.navigateTo({ //去详情页
-        url: `/pages/voteDetail/voteDetail?id=${e.currentTarget.dataset.id}&flag=${e.currentTarget.dataset.flag}`
+        url: `/pages/voteDetail/voteDetail?voteid=${e.currentTarget.dataset.id}&flag=${e.currentTarget.dataset.flag}`
       })
     }
   },

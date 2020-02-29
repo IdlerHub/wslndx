@@ -8,8 +8,8 @@ Page({
     zan: false,
     shareFlag: false,
     sharePoster: false,
-    supportFlag: 0,
-    zanFlag: false,
+    supportFlag: 0,   //点赞权限
+    zanFlag: false, //点赞动画
     waitingFlag: false,
     userImg: '',  //用户头像
     showImg: '', //展示图片
@@ -18,6 +18,12 @@ Page({
     tempImg: '',  //canvas临时路径
     item:{},  //作品详情
     shareInfo: {}   //海报信息
+  },
+  aniend(){
+    console.log("动画播放结束")
+    this.setData({
+      zanFlag: false
+    })
   },
   giveLike(e){
     console.log('我给你点赞', this.data.supportFlag)
@@ -30,11 +36,8 @@ Page({
         icon: "none",
         duration: 1500
       })
-      this.setData({
-        zanFlag: true
-      })
     } else {
-      let index = e.currentTarget.dataset.index
+      console.log("点赞了")
       let work = this.data.item
       work.prise_numbers += 1;
       work.is_praise = 1;
@@ -53,7 +56,7 @@ Page({
   },
   praiseOpus(params) {
     app.vote.praiseOpus(params).then(res => {
-      console.log(res)
+      console.log('点赞成功',res)
       wx.showToast({
         title: "今日点赞成功,请明日再来",
         icon: "none",
@@ -70,7 +73,7 @@ Page({
   },
   toVote(){
     console.log(111)
-    wx.navigateTo({
+    wx.redirectTo({
       url: "/pages/vote/vote"
     })
   },
@@ -384,17 +387,18 @@ Page({
         waitingFlag: options.flag
       })
     }
-    this.getOpusInfo(options.id);
+    this.getOpusInfo(options.voteid);
   },
   onShareAppMessage(ops){
     let id = this.data.item.id
+    let uid = this.store.$state.userInfo.id
     if (ops.from === 'button') {
       // 来自页面内转发按钮
       console.log(ops.target)
     }
     return {
       title: '网上老年大学',
-      path: '/pages/voteDetail/voteDetail?id=' + id + '&type=share',  // 路径，传递参数到指定页面。
+      path: '/pages/voteDetail/voteDetail?voteid=' + id + '&type=share&vote=0&uid=' + uid,  // 路径，传递参数到指定页面。
      success: function (res) {
         // 转发成功
         console.log("转发成功:" + JSON.stringify(res));

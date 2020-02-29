@@ -31,14 +31,18 @@
         <view class="upload-img" wx:if="{{modalityIndex==0}}">
             <view class="btn-img" bindtap="uploadImg"  wx:if="{{imgList.length < 9 }}">添加图片</view>
             <view class="show-img" wx:for="{{imgList}}" wx:key="index" >
-                <image src="{{item}}" alt="" mode="widthFix" data-index="{{index}}" catchtap="preview" />
+                <view class="img-over">
+                    <image src="{{item}}" alt="" data-index="{{index}}" catchtap="preview" mode="aspectFit" />
+                </view>
                 <icon class="clear" data-index="{{index}}" size="19" type="clear"role="img" catchtap="delImg"></icon>
             </view>
         </view>
         <view class="upload-img" wx:else>
             <view class="btn-img" hidden="{{video}}" bindtap="uploadVideo">添加视频</view>
             <view class="show-img"  hidden="{{!video}}">
-                <image src="/images/uploadVideo.png" alt="" mode="widthFix" />
+                <view class="img-over">
+                    <image src="/images/uploadVideo.png" alt="" mode="aspectFit" />
+                </view>
                 <icon class="clear" data-index="4" size="19" type="clear" role="img" catchtap="delVideo"></icon>
             </view>
         </view>

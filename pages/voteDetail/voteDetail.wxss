@@ -276,14 +276,20 @@
     justify-content: center;
     padding: 0 60rpx;
 }
+.show-con{
+    width: 630rpx;
+    height: 1002rpx;
+    margin-bottom: 30rpx;
+    position: relative;
+}
 
 .canvas-img{
     width: 570rpx;
-    height: 1002rpx;
+    height: 100%;
     border-radius: 20rpx;
     padding: 0 30rpx;
-    margin-bottom: 30rpx;
     position: relative;
+    overflow: hidden;
 }
 .share-bg{
     width: 100%;
@@ -292,6 +298,8 @@
     position: absolute;
     top: 0;
     left: 0;
+    right: 0;
+    bottom: 0;
 }
 .share-del{
     width: 72rpx;
@@ -376,6 +384,7 @@
     height: 153rpx;
     padding: 21rpx 30rpx;
     display: flex;
+    border-radius: 0 0 20rpx 20rpx;
     align-items: center;
 }
 .canvas-code{
@@ -418,7 +427,7 @@
     z-index: 100;
 }
 
-.praising-orange{
+/* .praising-orange{
     width: 216rpx;
     height: 216rpx;
     overflow: hidden;
@@ -431,7 +440,7 @@
     width: 216rpx;
     height: 216rpx;
     animation: ani steps(16) 1s both;
-}
+} */
 .praising-red{
     width: 100%;
     height: 100%;
@@ -442,12 +451,13 @@
     align-items: center;
     justify-content: center;
     overflow: hidden;
+    /* z-index: 101; */
 }
 .ani-red{
     width: 680rpx;
     height: 680rpx;
     animation: ani steps(19) 2s both;
-    z-index: 100;
+    z-index: 101;
 }
 
   /* 返回首页 ||  */
