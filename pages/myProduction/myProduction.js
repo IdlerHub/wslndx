@@ -29,7 +29,7 @@ Page({
 
   },
   toWorks(){
-    wx.navigateTo({ //去未通过的缺省页
+    wx.navigateTo({ 
       url: '/pages/voteProduction/voteProduction'
     })
   },
@@ -37,7 +37,13 @@ Page({
     console.log(this.data.type)
     if(this.data.type == 1){
       wx.navigateTo({ //去未通过的缺省页
-        url: '/pages/voteProduction/voteProduction?item=' + e.currentTarget.dataset.item
+        url: '/pages/voteFail/voteFail'
+      })
+    }else{
+      console.log(this.data.type)
+      console.log('传去详情页的id',e.currentTarget.dataset.flag)
+      wx.navigateTo({ //去详情页
+        url: `/pages/voteDetail/voteDetail?voteid=${e.currentTarget.dataset.id}&flag=${e.currentTarget.dataset.flag}`
       })
     }
   },
