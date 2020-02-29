@@ -48,8 +48,8 @@
 .production-list .production-item .item-left{
     width: 330rpx;
     height: 220rpx;
-    background: #0D00C6;
     border-radius:10rpx;
+    overflow: hidden;
     position: relative;
 }
 .item-classify{

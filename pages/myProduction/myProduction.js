@@ -28,6 +28,11 @@ Page({
     ],    //作品列表
 
   },
+  toWorks(){
+    wx.navigateTo({ //去未通过的缺省页
+      url: '/pages/voteProduction/voteProduction'
+    })
+  },
   toVoteFail(e){
     console.log(this.data.type)
     if(this.data.type == 1){
@@ -57,6 +62,7 @@ Page({
     })
   },
   onLoad(){
+    //考虑改成this.data.type
     this.getMyOpus(2) //默认初始获取已通过状态 type=2
   }
 })

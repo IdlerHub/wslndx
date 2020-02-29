@@ -85,6 +85,14 @@ function recordInvite(params) {
   return httpService.post("h5opus/recordInvite", params);
 }
 
+/** /h5opus/getPosterInfo
+ *  @description: 获取海报信息
+ * @param {uid，ho_id}
+ * @return:  promise
+ * **/
+function getPosterInfo(params) {
+  return httpService.post("h5opus/getPosterInfo", params);
+}
 
 module.exports = {
   getCategory,
@@ -96,5 +104,6 @@ module.exports = {
   getMyOpus,
   getOpusInfo,
   getSearchWord,
-  recordInvite
+  recordInvite,
+  getPosterInfo
 };

@@ -176,6 +176,7 @@ page{
     height: 220rpx;
     background: blue;
     position: relative;
+    overflow: hidden;
 }
 .item-img,
 .item-up .item-img image{

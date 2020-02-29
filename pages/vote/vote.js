@@ -119,6 +119,7 @@ Page({
     }
     let data = []
     app.vote.getOpusList(params).then(res=>{
+      console.log(res)
       if(page==1){
         data = res.data.data;
       }else{
@@ -154,14 +155,22 @@ Page({
       console.log(err)
     })
   }, 
-  onLoad(options){
+  changeData(index,type){
+    this.setData({
+      selectedIndex: index,
+      type: type
+    })
+    this.getdata(1);
+  },
+  onLoad(){
+    console.log('加载',this.data.type)
     this.getCategory();
-    if(options.index){
-      this.setData({
-        selectedIndex: parseInt(options.index),
-        type: parseInt(options.type)
-      })
-    }
+    // if(options.index){
+    //   this.setData({
+    //     selectedIndex: parseInt(options.index),
+    //     type: parseInt(options.type)
+    //   })
+    // }
     this.getdata(1);
   },
   onReachBottom(){

@@ -1,5 +1,7 @@
 // pages/voteProduction/voteProduction.js
-import { wxp } from "../../utils/service";
+import {
+  wxp
+} from "../../utils/service";
 var http = require("../../data/Vote.js");
 import OBS from "../../OBS/OBSUploadFile.js";
 
@@ -91,13 +93,23 @@ Page({
       //视频
       OBS("ballot/video", medias, "video")
         .then(res => {
-          this.setData({
-            video: res
-          });
-          wx.hideLoading();
+          if (res) {
+            this.setData({
+              video: res
+            });
+            wx.hideLoading();
+          } else {
+            wx.showToast({
+              icon: 'none',
+              title: '上传失败',
+            })
+          }
         })
         .catch(() => {
-          wx.hideLoading();
+          wx.showToast({
+            icon: 'none',
+            title: '上传失败',
+          })
         });
     } else {
       //图片
@@ -107,13 +119,23 @@ Page({
       });
       Promise.all(reqs)
         .then(res => {
-          this.setData({
-            imgList: this.data.imgList.concat(res)
-          });
-          wx.hideLoading();
+          if (res[0]) {
+            this.setData({
+              imgList: this.data.imgList.concat(res)
+            });
+            wx.hideLoading();
+          } else {
+            wx.showToast({
+              icon:'none',
+              title: '上传失败',
+            })
+          }
         })
         .catch(() => {
-          wx.hideLoading();
+          wx.showToast({
+            icon: 'none',
+            title: '上传失败',
+          })
         });
     }
   },

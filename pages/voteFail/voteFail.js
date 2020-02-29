@@ -5,7 +5,9 @@ Page({
 
   },
   reupload(){ // 跳转到上传作品页,并且填充作品??
-    
+    wx.navigateTo({
+      url: "/pages/voteProduction/voteProduction"
+    })
   },
   onLoad(options){
     console.log(options.item)
