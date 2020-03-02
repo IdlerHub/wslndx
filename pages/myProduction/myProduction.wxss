@@ -18,7 +18,7 @@
 }
 .state .active{
     font-weight:500;
-    color:rgba(0,85,255,1);
+    color:#1975FF;
     position: relative;
 }
 .state .active::after{
@@ -30,7 +30,7 @@
     right: 50%;
     left: 50%;
     margin-left: -34rpx;
-    background: #0055FF;
+    background: #1975FF;
     border-radius:4rpx;
 }
 .production-list{
@@ -107,11 +107,12 @@
     justify-content: space-around;
     flex-flow: column;
     align-items: center;
+    margin-top: 50rpx;
 }
 .none-production .none-img{
     width: 316rpx;
     height: 196rpx;
-    margin-top: 119rpx;
+    margin-top: 200rpx;
     margin-bottom: 54rpx;
 }
 image{
@@ -132,7 +133,7 @@ image{
 .none-production .none-btn{
     width:300rpx;
     height:88rpx;
-    background:rgba(0,85,255,1);
+    background:#1975FF;
     border-radius:6rpx;
     text-align: center;
     line-height: 88rpx;

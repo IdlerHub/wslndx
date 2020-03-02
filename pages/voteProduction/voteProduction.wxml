@@ -13,7 +13,7 @@
             <view>作品选择分类</view>
             <picker bindchange="classifyChange" value="{{classifyIndex}}" range="{{classifyArray}}" range-key='name'>
                 <input  type="text"  placeholder-class="picker"  placeholder="请输入作品分类" value="{{classifyArray[classifyIndex].name}}" disabled />
-                <image src="../../images/Return-black.png" alt="" />
+                <image src="../../images/classify-right.png" alt="" />
             </picker>
         </view>
         <view class="production-title">
@@ -29,21 +29,29 @@
         <view class="upload-title">{{modalityIndex==0? '上传图片（6张以内）': '上传视频'}}</view>
         <view class="upload-tip">{{modalityIndex==0? '图片尺寸建议950*550支持jpg、png': '视频大小不超过200MB，支持MP4等格式'}}</view>
         <view class="upload-img" wx:if="{{modalityIndex==0}}">
-            <view class="btn-img" bindtap="uploadImg"  wx:if="{{imgList.length < 6 }}">添加图片</view>
+            <view class="btn-img" bindtap="uploadImg"  wx:if="{{imgList.length < 6 }}">
+                <image src="/images/vote-addimg.png" style="width: 50rpx;height: 44rpx;" alt="" />
+                <text>添加图片</text>
+            </view>
             <view class="show-img" wx:for="{{imgList}}" wx:key="index" >
                 <view class="img-over">
                     <image src="{{item}}" alt="" data-index="{{index}}" catchtap="preview" mode="aspectFit" />
                 </view>
-                <icon class="clear" data-index="{{index}}" size="19" type="clear"role="img" catchtap="delImg"></icon>
+                <image class="clear" data-index="{{index}}" catchtap="delImg" src="/images/del-production.png" alt="" />
+                <!-- <icon class="clear" data-index="{{index}}" size="24" type="clear"role="img" catchtap="delImg"></icon> -->
             </view>
         </view>
         <view class="upload-img" wx:else>
-            <view class="btn-img" hidden="{{video}}" bindtap="uploadVideo">添加视频</view>
+            <view class="btn-img" hidden="{{video}}" bindtap="uploadVideo">
+                <image src="/images/vote-addvideo.png" style="width: 60rpx;height: 40rpx;" alt="" />
+                <text>添加视频</text>
+            </view>
             <view class="show-img"  hidden="{{!video}}">
                 <view class="img-over">
                     <image src="/images/uploadVideo.png" alt="" mode="aspectFit" />
                 </view>
-                <icon class="clear" data-index="4" size="19" type="clear" role="img" catchtap="delVideo"></icon>
+                <image class="clear" catchtap="delVideo" src="/images/del-production.png" alt="" />
+                <!-- <icon class="clear" data-index="4" size="24" type="clear" role="img" catchtap="delVideo"></icon> -->
             </view>
         </view>
         <view wx:if="{{modalityIndex==0}}" class="upload-tip" style="font-size: 32rpx; color: #999;">共{{imgList.length}}张图片，点击图片预览</view>

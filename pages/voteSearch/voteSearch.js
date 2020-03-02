@@ -32,22 +32,25 @@ Page({
     this.searchOpus(1);
   },
   changeSearch(e){  //输入时
-    console.log(e)
-    if (e.detail.value){  //输入框还有内容
-      this.setData({
-        clearhidden: false,
-        inputcontent: e.detail.value,
-        searchWord: ''
-      })
-      this.getSearchWord(); //获取搜索历史
-    }else{  //输入框清空
+    // console.log(e)
+    // if (e.detail.value){  //输入框还有内容
+    //   this.setData({
+    //     clearhidden: false,
+    //     inputcontent: e.detail.value,
+    //     searchWord: ''
+    //   })
+    //   this.getSearchWord(); //获取搜索历史
+    // }else{  //输入框清空
+    //   this.clearInput()
+    // }
+    if(!e.detail.value){
       this.clearInput()
     }
   },
   delhistory(e){
     console.log(e)
     let index = e.currentTarget.dataset.index;
-    let id = e.currentTarget.dataset.searchid
+    let id = e.currentTarget.dataset.searchid;
     let item = this.data.history;
     item.splice(index,1)
     this.setData({
@@ -63,6 +66,7 @@ Page({
       searchWord: '',
       history: []
     })
+    this.getSearchWord(); //获取搜索历史
   },
   delSearchWord(id){
     let params = { id: id }
@@ -97,7 +101,8 @@ Page({
     })
   },
   onLoad(){
-    this.searchOpus(1);
+    this.getSearchWord(); //搜索历史
+    // this.searchOpus(1);
   },
   onReachBottom() {
     this.searchOpus(this.data.page + 1)

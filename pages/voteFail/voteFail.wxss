@@ -44,7 +44,7 @@ image{
 .fail-btn{
     width:420rpx;
     height:88rpx;
-    background:rgba(0,85,255,1);
+    background:#1975FF;
     border-radius:6rpx;
     text-align: center;
     line-height: 88rpx;

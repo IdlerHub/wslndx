@@ -12,8 +12,9 @@
             <!-- <view class="text">用户158****2804发布了#书法与绘sdasdasdsds画</view> -->
         </view>
         <view class="header-right" bindtap="toRule">
-            <text>活动</text>
-            <text>规则</text>
+            <!-- <text>活动</text>
+            <text>规则</text> -->
+            <view>活动规则</view>
         </view>
     </view>
     <!-- <view class="header-none" style="{{styleNone}}"></view> -->
@@ -42,8 +43,9 @@
                         <view class="item-up" bindtap="toDetail" data-id="{{item.id}}">
                             <view class="item-rank">
                                 <view class="rank-text">
-                                    <text>当前</text>
-                                    <text>排名</text>
+                                    <!-- <text>当前</text>
+                                    <text>排名</text> -->
+                                    <view>当前排名</view>
                                 </view>
                                 <view class="num">{{index+1}}</view>
                             </view>

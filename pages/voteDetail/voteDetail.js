@@ -6,7 +6,7 @@ Page({
     current: 0,
     pause: false,
     zan: false,
-    guideFlag: [1,0,0],    //引导显示状态
+    guideFlag: [0,0,0],    //引导显示状态
     shareFlag: false,
     sharePoster: false,
     supportFlag: 0,   //点赞权限
@@ -40,11 +40,16 @@ Page({
       app.vote.noteGuide();
     }
   },
-  aniend(){
+  aniend(e){
     console.log("动画播放结束")
     this.setData({
       zanFlag: false
     })
+    let params = {
+      id: e.currentTarget.dataset.id,
+      type: this.data.item.hoc_id
+    }
+    this.praiseOpus(params)
   },
   giveLike(e){
     console.log('我给你点赞', this.data.supportFlag)
@@ -53,7 +58,7 @@ Page({
     if (this.data.supportFlag == 0) {
       //提示
       wx.showToast({
-        title: "您今日已经点赞过了哦",
+        title: "您今日已点赞,请明日再来",
         icon: "none",
         duration: 1500
       })
@@ -67,19 +72,19 @@ Page({
         supportFlag: 0,
         zanFlag: true
       })
-      let params = {
-        id: e.currentTarget.dataset.id,
-        type: this.data.item.hoc_id
-      }
-      this.praiseOpus(params)
-      console.log('点赞', params)
+      // let params = { //
+      //   id: e.currentTarget.dataset.id,
+      //   type: this.data.item.hoc_id
+      // }
+      // this.praiseOpus(params)
+      // console.log('点赞', params)
     }
   },
   praiseOpus(params) {
     app.vote.praiseOpus(params).then(res => {
       console.log('点赞成功',res)
       wx.showToast({
-        title: "今日点赞成功,请明日再来",
+        title: "今日点赞成功",
         icon: "none",
         duration: 2500
       })
@@ -131,10 +136,6 @@ Page({
       pause: false
     })
   },
-  // videopause(e){  //暂停时触发
-  //   console.log(222)
-    
-  // },
   getOpusInfo(id){
     let params = { id: id }
     app.vote.getOpusInfo(params).then(res=>{
@@ -212,8 +213,9 @@ Page({
           console.log("保存成功")
           wx.showToast({
             title: '保存成功',
-            icon: 'none'
+            icon: 'success'
           }, 1000)
+          that.unshare();
           that.shareOff() //关闭窗口
         },
         fail(err) { //授权问题报错
@@ -363,14 +365,13 @@ Page({
     //可以尝试切割字符串,循环数组,达到换行的效果
     let len = 0;
     for (var a = 0; a < 3; a++) {
-      let content = this.data.shareInfo.opus_content.substr(len,15)
+      let content = this.data.shareInfo.opus_content.substr(len, 15)
       len += 15;
       ctx.fillText(
         content,
         30 * ratio,
         (658 + a * 48) / v,
       )
-
     }
     ctx.restore();
 
@@ -447,8 +448,10 @@ Page({
     }
   },
   onShareAppMessage(ops){
+    console.log(ops)
     let id = this.data.item.id
-    let uid = this.store.$state.userInfo.id
+    let uid = wx.getStorageSync('userInfo').id;
+    let imgUrl = this.data.item.banner_image || this.data.item.url[0] || none;
     if (ops.from === 'button') {
       // 来自页面内转发按钮
       console.log(ops.target)
@@ -456,6 +459,7 @@ Page({
     return {
       title: '网上老年大学',
       path: '/pages/voteDetail/voteDetail?voteid=' + id + '&type=share&vote=0&uid=' + uid,  // 路径，传递参数到指定页面。
+      imageUrl: imgUrl,
      success: function (res) {
         // 转发成功
         console.log("转发成功:" + JSON.stringify(res));

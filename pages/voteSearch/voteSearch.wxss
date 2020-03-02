@@ -14,6 +14,7 @@
     align-items: center;
     padding-left: 23rpx;
     padding-right: 30rpx;
+    border-radius: 8rpx;
 }
 .search-right{
     flex: 1;
@@ -70,8 +71,7 @@
     top: 0rpx;
     left: 0rpx;
     text-align: center;
-    min-width: 78rpx;
-    padding: 11rpx;
+    min-width: 100rpx;
     display: flex;
     align-items: center;
     background:linear-gradient(90deg,rgba(255,75,0,1) 0%,rgba(255,136,0,1) 100%);
@@ -93,7 +93,13 @@
     align-items: center;
     flex-flow: column;
     justify-content: center;
-    margin-right: 12rpx;
+    /* margin-right: 12rpx; */
+    padding: 11rpx;
+}
+.item-rank .rank-text>view{
+    width:45rpx;
+    height:40rpx;
+    line-height: 20rpx;
 }
 .item-rank .num{
     font-size:44rpx;
@@ -190,18 +196,18 @@ image{
 }
 .history-item{
     height: 42rpx;
-    padding: 33rpx 0;
+    padding-top: 48rpx;
+    padding-bottom: 30rpx;
     display: flex;
     justify-content: space-between;
     align-items: center;
     border-bottom: 2rpx solid #EDEDED;
 }
-.history-item:last-child{
-    border: none;
-}
+
 .history-left{
     display: flex;
     justify-content: center;
+    align-items: center;
 }
 .history-left text{
     font-size:36rpx;

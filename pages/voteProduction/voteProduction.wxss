@@ -38,6 +38,7 @@ page{
     background:rgba(247,247,247,1);
     border-radius:6rpx;
     margin-bottom: 39rpx;
+    font-family:PingFangSC-Regular,PingFang SC;
 }
 .production-title textarea{
     height: 200rpx;
@@ -61,6 +62,7 @@ page{
     height:108rpx;
     background:rgba(247,247,247,1);
     border-radius:6rpx;
+    font-size: 36rpx;
 }
 .production-title picker .picker{
     font-size:36rpx;
@@ -93,7 +95,7 @@ page{
     color:#333333;
 }
 .production-title .modality .active{
-    background: #0055FF;
+    background: #1975FF;
     color: white;
 }
 .production-upload{
@@ -123,13 +125,13 @@ page{
     align-items: center;
     min-width: 720rpx;
 }
-.production-upload .upload-img .btn-img,
 .production-upload .upload-img .show-img .img-over{
     overflow: hidden;
     width: 214rpx;
     height: 160rpx;
     text-align: center;
     line-height: 160rpx;
+    
     margin-right: 22rpx;
     background: #F7F7F7;
     border-radius:6rpx;
@@ -141,13 +143,37 @@ page{
     font-weight:400;
     color:rgba(153,153,153,1);
 }
+.production-upload .upload-img .btn-img{
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    width: 214rpx;
+    height: 160rpx;
+    
+    margin-right: 22rpx;
+    background: #F7F7F7;
+    border-radius:6rpx;
+    border: 2rpx dashed rgba(204,204,204,1);
+    margin-bottom: 17rpx;
+
+    font-size:36rpx;
+    font-family:PingFangSC-Regular,PingFang SC;
+    font-weight:400;
+    color:rgba(153,153,153,1);
+}
+/* .production-upload .upload-img .btn-img image{
+    width: 50rpx;
+    height: 44rpx;
+} */
 .production-upload .upload-img .show-img .img-over{ border: none; }
 .production-upload .upload-img .show-img { position: relative; border: none; }
 .production-upload .upload-img .show-img .img-over image{ width: 100%; height: 100%; }
 .production-upload .upload-img .show-img .clear{
     position: absolute;
-    right: 2rpx;
-    top: -12rpx;
+    right: 10rpx;
+    top: -10rpx;
     width: 48rpx;
     height: 48rpx;
     border-radius: 100%;
@@ -162,7 +188,7 @@ page{
     height: 128rpx;
     line-height:128rpx;
     text-align: center;
-    background: #0055FF;
+    background: #1975FF;
     color: white;
     font-size:40rpx;
     font-family:PingFangSC-Medium,PingFang SC;

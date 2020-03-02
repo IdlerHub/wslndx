@@ -24,7 +24,7 @@
     </view> -->
     <!-- 点赞动画 中间的 -->
     <view class="praising-red" wx:if="{{zanFlag}}">
-        <view class="ani-red" bindanimationend="aniend" style="background-image: url('{{$state.imgHost}}/zan-red.png')"></view>
+        <view class="ani-red" data-id="{{item.id}}" bindanimationend="aniend" style="background-image: url('{{$state.imgHost}}/zan-red.png')"></view>
     </view>
     <view class="footer-info">
         <view class="info-left">
@@ -58,6 +58,11 @@
                 <view class="guide" wx:if="{{guideFlag[0]}}">
                     <view class="guide-first" wx:if="{{guideFlag[0]&&!guideFlag[1]&&!guideFlag[2]}}">
                         <image src="/images/guide-first.png" alt="" />
+                        <view class="guide-btn">
+                            <image src="/images/guide-zan.png" alt="" />
+                            <image src="/images/guide-share.png" alt="" />
+                        </view>
+                        <!-- <image src="/images/guide-first.png" alt="" mode="bottom" /> -->
                         <view class="first-btn" catchtap="nextGuide" data-guide="first"></view>
                     </view>
                     <view class="guide-second" wx:if="{{guideFlag[1]&&!guideFlag[2]}}">
@@ -74,7 +79,8 @@
     </view>
     
     <view class="back-vote" catchtap="toVote">
-        <text>返回</text><text>主页</text>
+        <!-- <text>返回</text><text>主页</text> -->
+        <view>返回主页</view>
     </view>
     <view wx:if="{{shareFlag}}" class="share-container">
         <view class="share-footer">

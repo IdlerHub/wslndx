@@ -29,7 +29,7 @@ Page({
 
   },
   toWorks(){
-    wx.navigateTo({ 
+    wx.redirectTo({ 
       url: '/pages/voteProduction/voteProduction'
     })
   },

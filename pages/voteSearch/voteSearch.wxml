@@ -2,7 +2,7 @@
 <view class="voteSearch">
     <view class="search">
         <view class="search-left">
-            <icon type="search" size="56rpx" />
+            <image src="{{$state.imgHost}}/searchp.png" style="width: 56rpx;height: 56rpx;" alt="" />
             <input type="text"  confirm-type="search" placeholder="请输入作品名称或作者名" maxlength="15" value="{{inputcontent}}" bindinput="changeSearch" bindconfirm="toSearch" focus/>
             <icon hidden="{{clearhidden}}" type="clear" size="36rpx" bindtap="clearInput" />
         </view>
@@ -15,8 +15,9 @@
                     <view class="item-left">
                         <view class="item-rank">
                             <view class="rank-text">
-                                <text>当前</text>
-                                <text>排名</text>
+                                <!-- <text>当前</text>
+                                <text>排名</text> -->
+                                <view>当前排名</view>
                             </view>
                             <view class="num">{{item.list_rank}}</view>
                         </view>
