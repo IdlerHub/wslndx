@@ -244,6 +244,19 @@
 					"pathName": "pages/voteProduction/voteProduction",
 					"query": "",
 					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/voteProduction/voteProduction",
+					"pathName": "pages/voteProduction/voteProduction",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/voteProduction/voteProduction",
+					"pathName": "pages/voteProduction/voteProduction",
+					"scene": null
 				}
 			]
 		}
