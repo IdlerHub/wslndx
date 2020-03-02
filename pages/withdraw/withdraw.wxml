@@ -1,7 +1,7 @@
 <!--pages/withdraw/withdraw.wxml-->
 <view class="container">
   <view class="topBox">
-    <text class="txt">总金额</text>
+    <text class="txt">余额</text>
     <navigator class="withdrawRecord" hover-class="none" url="/pages/withdrawalRecord/withdrawalRecord" open-type="navigate">
       <text>提现记录</text>
       <image src="/images/cashRight.png"></image>
