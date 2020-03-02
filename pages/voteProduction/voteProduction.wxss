@@ -39,6 +39,7 @@ page{
     border-radius:6rpx;
     margin-bottom: 39rpx;
     font-family:PingFangSC-Regular,PingFang SC;
+    font-size: 36rpx;
 }
 .production-title textarea{
     height: 200rpx;
