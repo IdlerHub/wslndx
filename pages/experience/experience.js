@@ -7,6 +7,7 @@ Page({
       content: ''
     }
   },
+  pageName:'体验官申请',
   onLoad: function (options) {
 
   },

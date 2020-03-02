@@ -11,6 +11,7 @@ Page({
     list: [],
     category: {}
   },
+  pageName:'短视频分类页（点击短视频头像进入页）',
   params: {
     page: 1,
     pageSize: 14

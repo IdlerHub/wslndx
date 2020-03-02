@@ -5,6 +5,7 @@ Page({
   data: {
     list:[]
   },
+  pageName:'邀请学员我的收益页',
   onLoad: function (options) { 
   },
   onShow: function () {

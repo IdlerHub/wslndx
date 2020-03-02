@@ -6,7 +6,7 @@
       <image src="{{$state.imgHost}}/makeMoneywx.png"></image>
       <text>邀请好友</text>
     </button>
-    <navigator class="shareBtn" hover-class="none" url="/pages/invitation/invitation?type=withdraw" open-type="navigate">
+    <navigator class="shareBtn shareBtn2" hover-class="none" url="/pages/invitation/invitation?type=withdraw" open-type="navigate">
       <image src="{{$state.imgHost}}/sharefriends.png"></image>
       <text>朋友圈</text>
     </navigator>

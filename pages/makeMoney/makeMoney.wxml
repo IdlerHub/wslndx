@@ -20,14 +20,14 @@
         <view class="bottomBox-txt">已收学员(人)</view>
         <view class="border"></view>
       </navigator>
-      <view class="bottomBox_person bottomBox_money">
+      <navigator class="bottomBox_person bottomBox_money" hover-class="none" url="/pages/myEarnings/myEarnings">
         <view class="dayadd">今日+{{topMsg[1].up}}</view>
         <view class="bottomBox_center">
           <text>¥{{topMsg[1].number2 || topMsg[1].total}}</text>
         </view>
         <view class="bottomBox-txt">学员收益(元)</view>
         <view class="border"></view>
-      </view>
+      </navigator>
       <navigator class="bottomBox_person bottomBox_tribute" hover-class="none" url="/pages/score/score?type=index&curren=3" open-type="navigate">
         <view class="dayadd">今日+{{topMsg[2].up}}</view>
         <view class="bottomBox_center">

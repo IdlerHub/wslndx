@@ -4,6 +4,7 @@ Page({
   data: {
     list:[]
   },
+  pageName: '我的关注页',
   onLoad: function (options) {
   },
   onShow(){

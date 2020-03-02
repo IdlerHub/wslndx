@@ -1,7 +1,5 @@
 // pages/voteProduction/voteProduction.js
-import {
-  wxp
-} from "../../utils/service";
+import { wxp } from "../../utils/service";
 var http = require("../../data/Vote.js");
 import OBS from "../../OBS/OBSUploadFile.js";
 
@@ -100,16 +98,19 @@ Page({
             wx.hideLoading();
           } else {
             wx.showToast({
-              icon: 'none',
-              title: '上传失败',
-            })
+              icon: "none",
+              title: "上传失败"
+            });
           }
         })
-        .catch(() => {
-          wx.showToast({
-            icon: 'none',
-            title: '上传失败',
-          })
+        .catch(err => {
+          console.log(err);
+          if (err != "type") {
+            wx.showToast({
+              icon: "none",
+              title: (err.data && err.data.msg) || "上传失败"
+            });
+          }
         });
     } else {
       //图片
@@ -126,19 +127,21 @@ Page({
             wx.hideLoading();
           } else {
             wx.showToast({
-              icon:'none',
-              title: '上传失败',
-            })
+              icon: "none",
+              title: "上传失败"
+            });
           }
         })
-        .catch(() => {
-          wx.showToast({
-            icon: 'none',
-            title: '上传失败',
-          })
+        .catch(err => {
+          console.log(err);
+          if (err != "type") {
+            wx.showToast({
+              icon: "none",
+              title: (err.data && err.data.msg) || "上传失败"
+            });
+          }
         });
     }
-    
   },
   delImg(e) {
     //删除图片
@@ -197,7 +200,7 @@ Page({
     };
 
     http.uploadOpus(params).then(res => {
-      console.log('上传状态',res)
+      //console.log("上传状态", res);
       wx.redirectTo({
         url: "/pages/voteSuccess/voteSuccess"
       });
@@ -208,9 +211,8 @@ Page({
    */
   onLoad: function(options) {
     //上传作品需要加分类
-    let params = { type: "classify" }
+    let params = { type: "classify" };
     http.getCategory(params).then(res => {
-      console.log(res)
       this.setData({
         classifyArray: res.data
       });

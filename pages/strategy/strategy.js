@@ -5,6 +5,7 @@ Page({
   data: {
     current: 1
   },
+  pageName: '收学员攻略页',
   onLoad: function (options) {
     app.tutor.explain().then(res => {
       if(res.code == 1) {

@@ -4,6 +4,7 @@ Page({
   data: {
     list:[]
   },
+  pageName:'邀请学员进贡分数列表页',
   onLoad: function (options) {
     let list = []
     app.tutor.prenticePointsList().then(res =>{

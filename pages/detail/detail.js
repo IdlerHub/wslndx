@@ -45,7 +45,7 @@ Page({
     showintegral: false
     /* rect: wx.getMenuButtonBoundingClientRect() */
   },
-  pageName: "课程详情页",
+  pageName: "视频页（视频详情页）",
   onLoad(options) {
     /*todo:考虑去掉that*/
     let that = this;
@@ -238,6 +238,11 @@ Page({
         showintegral: false
       });
     }, 2000);
+  },
+  played() {
+    wx.uma.trackEvent("lessonsPlay", {
+      lessonsName: this.data.detail.title
+    });
   },
   ended() {
     this.data.sublessons.forEach(item => {

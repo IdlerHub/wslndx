@@ -5,7 +5,7 @@ Page({
   data: {
     isRefreshing: false
   },
-  pageName: '学友圈成员页',
+  pageName: '圈子成员',
   onLoad(options) {
     this.param = { fs_id: options.id, page: 1, pageSize: 10 }
     this.setData({

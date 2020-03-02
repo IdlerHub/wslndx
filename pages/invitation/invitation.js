@@ -16,6 +16,7 @@ Page({
     container: null, //canvas容器
     tempImg: null
   },
+  pageName:'邀请页（邀请好友）',
   //options(Object)
   onLoad: function(options) {
     console.log(options)

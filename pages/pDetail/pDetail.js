@@ -32,6 +32,7 @@ Page({
     showSheet: false,
     /* rect: wx.getMenuButtonBoundingClientRect() */
   },
+  pageName: '博客详情（秀风采正文）',
   onLoad(options) {
     this.id = options.id
     this.comParam = { blog_id: this.id, page: 1, pageSize: 10 }

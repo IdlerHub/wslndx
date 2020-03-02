@@ -4,6 +4,7 @@ Page({
   data: {
     newsList:[]
   },
+  pageName:'我的消息页',
   onLoad: function (options) {
   },
   onShow: function () {

@@ -13,7 +13,7 @@ Page({
     padding: false,
     showintegral: false
   },
-  pageName: '完善资料页',
+  pageName: '修改资料（完善资料）',
   onLoad() {
     let userInfo = JSON.parse(JSON.stringify(this.data.$state.userInfo))
     this.setData({

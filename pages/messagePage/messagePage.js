@@ -6,6 +6,7 @@ Page({
   data: {
 
   },
+  pageName:'我的消息详情页',
   onLoad: function (ops) {
     let id = ops.id
     this.getMessage(id)
