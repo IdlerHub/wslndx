@@ -20,7 +20,8 @@ Page({
   clickSearch(e){ //选中历史记录搜索
     this.setData({
       searchWord: e.currentTarget.dataset.word,
-      inputcontent: e.currentTarget.dataset.word
+      inputcontent: e.currentTarget.dataset.word,
+      clearhidden: false
     })
     this.searchOpus(1);
   },
@@ -33,19 +34,20 @@ Page({
   },
   changeSearch(e){  //输入时
     // console.log(e)
-    // if (e.detail.value){  //输入框还有内容
-    //   this.setData({
-    //     clearhidden: false,
-    //     inputcontent: e.detail.value,
-    //     searchWord: ''
-    //   })
-    //   this.getSearchWord(); //获取搜索历史
-    // }else{  //输入框清空
-    //   this.clearInput()
-    // }
-    if(!e.detail.value){
+    if (e.detail.value){  //输入框还有内容
+      this.setData({
+        clearhidden: false,
+        // inputcontent: e.detail.value,
+        // searchWord: ''
+      })
+      // this.getSearchWord(); //获取搜索历史
+    }else{  //输入框清空
       this.clearInput()
     }
+  
+    // if(!e.detail.value){
+    //   this.clearInput()
+    // }
   },
   delhistory(e){
     console.log(e)

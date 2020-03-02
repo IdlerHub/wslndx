@@ -30,7 +30,7 @@
         <view class="upload-tip">{{modalityIndex==0? '图片尺寸建议950*550支持jpg、png': '视频大小不超过200MB，支持MP4等格式'}}</view>
         <view class="upload-img" wx:if="{{modalityIndex==0}}">
             <view class="btn-img" bindtap="uploadImg"  wx:if="{{imgList.length < 6 }}">
-                <image src="/images/vote-addimg.png" style="width: 50rpx;height: 44rpx;" alt="" />
+                <image src="/images/vote-addimg.png" style="width: 54rpx;height: 48rpx;" alt="" />
                 <text>添加图片</text>
             </view>
             <view class="show-img" wx:for="{{imgList}}" wx:key="index" >
@@ -43,7 +43,7 @@
         </view>
         <view class="upload-img" wx:else>
             <view class="btn-img" hidden="{{video}}" bindtap="uploadVideo">
-                <image src="/images/vote-addvideo.png" style="width: 60rpx;height: 40rpx;" alt="" />
+                <image src="/images/vote-addvideo.png" style="width: 56rpx;height: 37rpx;" alt="" />
                 <text>添加视频</text>
             </view>
             <view class="show-img"  hidden="{{!video}}">

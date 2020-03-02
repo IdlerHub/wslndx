@@ -30,6 +30,7 @@
 .search-left input{
     width: 430rpx;
     margin-left: 11rpx;
+    font-size: 36rpx;
 }
 
 .production-list{
@@ -154,6 +155,7 @@
     justify-content: space-around;
     flex-flow: column;
     align-items: center;
+    margin-top: 50rpx;
 }
 .none-production .none-img{
     width: 316rpx;
