@@ -15,26 +15,12 @@
   </video>
   <view class="info">
     <view class="top">
-      <text class="name line">{{ detail.title }}</text>
-      <text class="dramaNum">共{{ detail.lesson_count }}讲</text>
-    </view>
-    <text class="line actor" wx:if="{{ detail.teacher_id == 0 }}">{{ detail.subtitle }}</text>
-    <text class="line actor" wx:else>{{ detail.teacher.name }}-{{ detail.teacher.honor }}</text>
-    <view class="bottom">
-      <view class="left">
-        <view class="collect" bindtap="collect">
-          <image wx:if="{{ detail.collected }}" mode="aspectFill" src="/images/yishoucang.png"></image>
-          <image wx:else mode="aspectFill" src="/images/shoucang.png"></image>
-        </view>
-        <button class="share" open-type="share" hover-class="btn-hover">
-          <image class="icon" mode="aspectFill" src="/images/fenxiang.png"></image>
-        </button>
+      <view>
+        <text class="name line">{{ detail.title }}</text>
+        <view class="line actor" wx:if="{{ detail.teacher_id == 0 }}">共{{ detail.lesson_count }}讲 <text>.</text> {{ detail.subtitle }}</view>
+        <view class="line actor" wx:else>共{{ detail.lesson_count }}讲 <text>.</text> {{ detail.teacher.name }}-{{ detail.teacher.honor }}</view>
       </view>
-      <navigator class="moneyPackt" hover-class="none" url="/pages/makeMoney/makeMoney" wx:if="{{$state.authUserInfo}}">
-      </navigator>
-      <button open-type="getUserInfo" bindgetuserinfo="onGotUserInfo" class="moneyPackt" data-type="money"
-        wx:else></button>
-      <view class="right">
+      <view class="right" style="padding-top: {{detail.progress < 100 ? '' : 0}};">
         <view class="progress" wx:if="{{ detail.progress < 100 }}">
           <view class="line">
             <text class="num">{{ detail.progress ? detail.progress : 0 }}%</text>
@@ -49,6 +35,32 @@
           <image class="icon" mode="aspectFill" src="{{ $state.imgHost }}/badge.png"></image>
           <text class="des">查看证书</text>
         </view>
+      </view>
+    </view>
+    <view class="bottom">
+      <view class="left">
+        <button class="addTe" open-type="contact">
+          <image src="{{ $state.imgHost }}/class-addTeacher.png"></image>
+        </button>
+        <navigator class="addTe" hover-class="none" url="/pages/makeMoney/makeMoney" wx:if="{{$state.authUserInfo}}">
+          <image src="{{ $state.imgHost }}/class-invite.png"></image>
+        </navigator>
+        <button open-type="getUserInfo" bindgetuserinfo="onGotUserInfo" class="addTe" data-type="money"
+        wx:else>
+        <image src="{{ $state.imgHost }}/class-invite.png"></image>
+        </button>
+      </view>
+      <view class="right">
+        <view class="after"></view>
+        <view class="right-box" bindtap="collect">
+          <image src="{{$state.imgHost}}/class-collected.png" wx:if="{{ detail.collected }}"></image>
+          <image src="{{$state.imgHost}}/class-collect.png" wx:else></image>
+          <text>收藏</text>
+        </view>
+        <button class="right-box" open-type="share" hover-class="btn-hover">
+          <image src="{{$state.imgHost}}/class-share.png"></image>
+          <text>分享</text>
+        </button>
       </view>
     </view>
   </view>

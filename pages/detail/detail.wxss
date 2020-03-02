@@ -27,77 +27,124 @@ page {
   margin: auto; }
 
 .info {
-  padding: 30rpx 0;
+  padding: 30rpx 0 14rpx 0;
   box-sizing: border-box;
   background: #fff; }
   .info .top {
-    padding: 0 30rpx;
+    padding: 0 0 0 30rpx;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    line-height: 62rpx; }
+    line-height: 62rpx;
+    overflow:hidden ; }
     .info .top .name {
-      width: 600rpx;
-      font-size: 44rpx;
-      color: #3a3a3a; }
-    .info .top .dramaNum {
-      width: 150rpx;
-      font-size: 36rpx;
-      color: #7e7e7e;
-      text-align: right; }
+      font-size: 40rpx;
+      color: rgba(58,58,58,1);
+      width: 480rpx;
+      overflow: hidden;
+      text-overflow:ellipsis;
+      white-space: nowrap;
+     }
   .info .actor {
-    padding: 0 30rpx;
-    color: #646464;
+    color: rgba(126,126,126,1);
     font-size: 30rpx;
     line-height: 42rpx;
-    margin-top: 10rpx; }
-  .info .bottom {
-    padding-left: 30rpx;
-    display: flex;
-    align-items: flex-end;
-    justify-content: space-between;
-    height: 80rpx;
-    margin-top: 30rpx;
-    margin-bottom: 10rpx; }
-    .info .bottom .left {
-      display: flex;
-      align-items: center; }
-    .info .bottom .collect, .info .bottom .share {
-      font-size: 0; }
-      .info .bottom .collect image, .info .bottom .share image {
-        width: 200rpx;
-        height: 66rpx; }
-    .info .bottom .share {
-      margin-left: 30rpx; }
-    .info .bottom .right {
-      width: 200rpx;
+    margin-top: 10rpx;
+    width: 492rpx;
+    overflow: hidden;
+    text-overflow:ellipsis;
+    white-space: nowrap; }
+    .info .actor text {
+      display: inline-block;
+      position: relative;
+      top: -8rpx;
+    }
+    .info .top .right {
+      padding-top: 10rpx;
+      padding-left: 15rpx;
+      /* width: 200rpx; */
+      margin-left: 28rpx;
+      flex:1;
       height: 80rpx;
       background: #f0f0f0;
-      border-radius: 40rpx 0 0 40rpx;
+      border-radius: 50rpx 0 0 50rpx;
       display: flex;
       align-items: center;
       justify-content: center; }
-    .info .bottom .progress .line {
+    .info .top .right .progress .line {
       width: 150rpx;
       display: flex;
       justify-content: space-between;
-      align-items: center; }
-    .info .bottom .progress .num {
+      align-items: center;}
+    .info .top .right .progress .num {
       font-size: 30rpx;
       color: #df2020;
       line-height: 42rpx; }
-    .info .bottom .progress .des {
+    .info .top .right .progress .des {
       font-size: 24rpx;
       color: #9b9b9b; }
-    .info .bottom .certificate .des {
+    .info .top .right .certificate .des {
       font-size: 24rpx;
       color: #9b9b9b; }
-      .info .bottom .moneyPackt {
-        width: 77rpx;
-        height: 77rpx;
-        background: url('https://hwcdn.jinlingkeji.cn/images/pro/moneyActive2.png');
-        background-size: cover;
-        animation: ani 1s steps(23, end) infinite;
+      .info .bottom {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        height: 80rpx;
+        margin-top: 30rpx;
+        margin-bottom: 10rpx; }
+        .info .bottom .left {
+          display: flex;
+          align-items: center;
+          margin-right: 12rpx; }    
+      .info .bottom .left .addTe {
+        width: 270rpx;
+        height: 110rpx;
+      }
+      .info .bottom .left .addTe:nth-child(2) {
+        margin-left: -20rpx;
+      }
+      .info .bottom .left .addTe image{
+        width: 100%;
+        height: 100%;
+      }
+      .info .bottom .right {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+      }
+      .info .bottom .right .after {
+        width:1px;
+        height:60rpx;
+        background:rgba(216,216,216,1);
+        position: absolute;
+        top: 50%;
+        left: 5rpx;
+        margin-top: -30rpx;
+      }
+      .info .bottom .right .right-box {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin-left: 45rpx;
+        line-height: 34rpx;
+      }
+      .info .bottom .right .right-box:nth-child(2){
+        margin-left: 10rpx;
+      }
+      .info .bottom .right .right-box image{
+        width: 46rpx;
+        height: 40rpx;
+      }
+      .info .bottom .right .right-box text{
+        margin-top: 5rpx;
+        font-size:24rpx;
+        font-family:PingFangSC-Regular,PingFang SC;
+        font-weight:400;
+        color:rgba(126,126,126,1);
       }
 .videomask {
   width: 100%;
@@ -224,7 +271,8 @@ rich-text {
   width: 150rpx;
   height: 10rpx;
   border: 2rpx solid #bdbdbd;
-  border-radius: 38rpx; }
+  border-radius: 38rpx;
+  margin-bottom: 24rpx; }
 
 .por-cur {
   position: absolute;
