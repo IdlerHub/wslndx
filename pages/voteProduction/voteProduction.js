@@ -196,7 +196,8 @@ Page({
       content: introduction,
       type: modalityIndex + 1,
       hoc_id: classifyArray[classifyIndex].id,
-      url: modalityIndex ? [video] : imgList
+      url: modalityIndex ? [] : imgList,
+      object_key: video || ""
     };
 
     http.uploadOpus(params).then(res => {
