@@ -11,34 +11,8 @@ Page({
     classifyList: [{id: '0',name: '全部'}],
     selectedIndex: 0,
     type: 0,  //分类的id
-    productionList: [{
-        "id": 13,
-        "name": "测试作品9",
-        "type": 1,
-        "url": [
-          "https://jxglcdnbj4.jinlingkeji.cn/uploads/images/201911/20/1b90fa4fd118477f89fddfe02aaab4a7.jpg"
-        ],
-        "prise_numbers": 999
-      },
-      {
-        "id": 13,
-        "name": "测试作品10",
-        "type": 2,
-        "url": [
-          "https://jxglcdnbj4.jinlingkeji.cn/uploads/images/201911/20/1b90fa4fd118477f89fddfe02aaab4a7.jpg"
-        ],
-        "prise_numbers": 0
-      },
-      {
-        "id": 13,
-        "name": "测试作品9",
-        "type": 2,
-        "url": [
-          "https://jxglcdnbj4.jinlingkeji.cn/uploads/images/201911/20/1b90fa4fd118477f89fddfe02aaab4a7.jpg"
-        ],
-        "prise_numbers": 999
-      },
-    ],
+    newProduction: [],
+    productionList: [],
     page: 1,
     supportFlag: 1, //今日点赞权限 0=无, 1=有
   },
@@ -84,7 +58,7 @@ Page({
       })
       let params = {
         id: e.currentTarget.dataset.id,
-        type: this.data.selectedIndex
+        type: work.hoc_id //需要作品带的type
       }
       this.praiseOpus(params)
       console.log('点赞',params)
@@ -112,6 +86,14 @@ Page({
       url: "/pages/myProduction/myProduction"
     })
   },
+  getNewestOpus(){  //获取最新作品
+    app.vote.getNewestOpus().then(res => {
+      console.log(res)
+      this.setData({
+        newProduction: res.data
+      })
+    })
+  },
   getdata(page){  // 请求作品列表数据
     var params = {
       type: this.data.type,
@@ -136,10 +118,11 @@ Page({
     //  setData ({  selectedIndex , page  })
   },
   getCategory(){  //获取分类数据
-    var data = this.data.classifyList;
+    let data = [{ id: '0', name: '全部' }];
     app.vote.getCategory().then(res=>{
+      data = data.concat(res.data)
       this.setData({
-        classifyList: data.concat(res.data)
+        classifyList: data
       })
     })
   },
@@ -162,20 +145,19 @@ Page({
     })
     this.getdata(1);
   },
-  onLoad(){
-    console.log('加载',this.data.type)
-    this.getCategory();
-    // if(options.index){
-    //   this.setData({
-    //     selectedIndex: parseInt(options.index),
-    //     type: parseInt(options.type)
-    //   })
-    // }
-    this.getdata(1);
+  init(){
+    return Promise.all([this.getCategory(), this.getdata(1), this.getNewestOpus()])
   },
-  onshow(){
-    console.log('页面刷新')
-    this.getdata(1);
+  onShow(){
+    this.init()
+  },
+  onPullDownRefresh() {
+    // this.getCategory();
+    // this.getdata(1);
+    // this.getNewestOpus();
+    this.init().then(()=>{
+      wx.stopPullDownRefresh()
+    })
   },
   onReachBottom(){
     this.getdata(this.data.page + 1)

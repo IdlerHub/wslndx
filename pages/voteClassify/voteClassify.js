@@ -25,13 +25,20 @@ Page({
     })
   },
   getCategory(){
-    var data = this.data.classifyList;
+    let data = [{ id: '0', name: '全部' }];
     app.vote.getCategory().then(res => {
-      console.log(res)
+      data = data.concat(res.data)
       this.setData({
-        classifyList: data.concat(res.data)
+        classifyList: data
       })
     })
+    // var data = this.data.classifyList;
+    // app.vote.getCategory().then(res => {
+    //   console.log(res)
+    //   this.setData({
+    //     classifyList: data.concat(res.data)
+    //   })
+    // })
   },
   onLoad(){
     let pages = getCurrentPages();

@@ -1,7 +1,7 @@
 /*
  * @Date: 2019-12-20 10:54:37
  * @LastEditors: hxz
- * @LastEditTime: 2020-02-29 13:50:08
+ * @LastEditTime: 2020-03-02 18:30:44
  */
 const getPolicyEncode = require("./getPolicy.js");
 const getSignature = require("./GetSignature.js");
@@ -73,18 +73,24 @@ function checkVideo(file) {
   return attrs;
 }
 
-const OBSupload = function(dir, filePath, type) {
+//兼容android未重定向
+function fitAndroid(url) {
+  return wxp.request({
+    url: url
+  });
+}
+
+const OBSupload = async function(dir, filePath, type) {
   let checkRes;
   if (type == "image") {
     checkRes = checkType(filePath);
     if (!checkRes) {
-      console.log("图片类型未知,请重新选择上传");
       wx.showToast({
         icon: "none",
         title: "图片类型未知,请重新选择上传",
         duration: 1500
       });
-      return Promise.reject("");
+      return Promise.reject("type");
     }
   } else {
     checkRes = checkVideo(filePath);
@@ -94,7 +100,7 @@ const OBSupload = function(dir, filePath, type) {
         title: "视频类型未知,请重新选择上传",
         duration: 1500
       });
-      return Promise.reject("");
+      return Promise.reject("type");
     }
   }
 
@@ -107,6 +113,11 @@ const OBSupload = function(dir, filePath, type) {
     endpoint
   } = store.getState().security;
   const fileName = cacheUrl(dir, checkRes.type); //指定上传到OBS桶中的对象名
+  const redirects = {
+    image: "https://lndxcallbackdev.jinlingkeji.cn/tool/moderationImage",
+    video: getApp().API_URL + "h5opus/putUploadVideo"
+  };
+
   const OBSPolicy = {
     //设定policy内容
     expiration: expires_at,
@@ -117,8 +128,7 @@ const OBSupload = function(dir, filePath, type) {
       { "Content-Type": checkRes.ct },
       { success_action_status: 200 },
       {
-        success_action_redirect:
-          "https://lndxcallbackdev.jinlingkeji.cn/tool/moderationImage"
+        success_action_redirect: redirects[type]
       }
     ]
   };
@@ -136,27 +146,41 @@ const OBSupload = function(dir, filePath, type) {
       key: fileName,
       "Content-Type": checkRes.ct,
       success_action_status: 200,
-      success_action_redirect:
-        "https://lndxcallbackdev.jinlingkeji.cn/tool/moderationImage",
+      success_action_redirect: redirects[type],
       "x-obs-security-token": securitytoken
     }
   };
 
-  console.log(req);
-
-  return wxp.uploadFile(req).then(res => {
-    console.log(res);
-    if (res.statusCode == 200) {
-      res.data = JSON.parse(res.data);
-      if (res.data.code == 1) {
-        return "https://hwcdn.jinlingkeji.cn/" + fileName;
+  let uploadResponse = await wxp.uploadFile(req);
+  let fitResponse = null;
+  //console.log(uploadResponse);
+  if (uploadResponse.statusCode == 200) {
+    uploadResponse.data = JSON.parse(uploadResponse.data);
+    if (uploadResponse.data.code == 1) {
+      if (type == "image") {
+        return Promise.resolve("https://hwcdn.jinlingkeji.cn/" + fileName);
       } else {
-        getApp().fundebug.notifyHttpError(req, res);
+        return Promise.resolve(fileName);
       }
     } else {
-      getApp().fundebug.notifyHttpError(req, res);
+      getApp().fundebug.notifyHttpError(req, uploadResponse);
     }
-  });
+  } else if (uploadResponse.statusCode == 303) {
+    fitResponse = await fitAndroid(uploadResponse.header.Location);
+    // console.log(fitResponse);
+    if (fitResponse.statusCode == 200) {
+      if (fitResponse.data && fitResponse.data.code == 1) {
+        if (type == "image") {
+          return Promise.resolve("https://hwcdn.jinlingkeji.cn/" + fileName);
+        } else {
+          return Promise.resolve(fileName);
+        }
+      }
+    }
+  } else {
+    getApp().fundebug.notifyHttpError(req, uploadResponse);
+  }
+  return Promise.reject(fitResponse || uploadResponse);
 };
 
 export default OBSupload;

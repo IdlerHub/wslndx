@@ -1,7 +1,5 @@
 // pages/voteProduction/voteProduction.js
-import {
-  wxp
-} from "../../utils/service";
+import { wxp } from "../../utils/service";
 var http = require("../../data/Vote.js");
 import OBS from "../../OBS/OBSUploadFile.js";
 
@@ -100,16 +98,19 @@ Page({
             wx.hideLoading();
           } else {
             wx.showToast({
-              icon: 'none',
-              title: '上传失败',
-            })
+              icon: "none",
+              title: "上传失败"
+            });
           }
         })
-        .catch(() => {
-          wx.showToast({
-            icon: 'none',
-            title: '上传失败',
-          })
+        .catch(err => {
+          console.log(err);
+          if (err != "type") {
+            wx.showToast({
+              icon: "none",
+              title: (err.data && err.data.msg) || "上传失败"
+            });
+          }
         });
     } else {
       //图片
@@ -126,19 +127,21 @@ Page({
             wx.hideLoading();
           } else {
             wx.showToast({
-              icon:'none',
-              title: '上传失败',
-            })
+              icon: "none",
+              title: "上传失败"
+            });
           }
         })
-        .catch(() => {
-          wx.showToast({
-            icon: 'none',
-            title: '上传失败',
-          })
+        .catch(err => {
+          console.log(err);
+          if (err != "type") {
+            wx.showToast({
+              icon: "none",
+              title: (err.data && err.data.msg) || "上传失败"
+            });
+          }
         });
     }
-    
   },
   delImg(e) {
     //删除图片
@@ -193,11 +196,12 @@ Page({
       content: introduction,
       type: modalityIndex + 1,
       hoc_id: classifyArray[classifyIndex].id,
-      url: modalityIndex ? [video] : imgList
+      url: modalityIndex ? [] : imgList,
+      object_key: video || ""
     };
 
     http.uploadOpus(params).then(res => {
-      console.log('上传状态',res)
+      //console.log("上传状态", res);
       wx.redirectTo({
         url: "/pages/voteSuccess/voteSuccess"
       });
@@ -207,7 +211,9 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-    http.getCategory().then(res => {
+    //上传作品需要加分类
+    let params = { type: "classify" };
+    http.getCategory(params).then(res => {
       this.setData({
         classifyArray: res.data
       });

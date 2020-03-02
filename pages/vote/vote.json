@@ -1,3 +1,5 @@
 {
-  "usingComponents": {}
+  "usingComponents": {},
+  "navigationBarTitleText": "抗击疫情，“艺”起加油",
+  "enablePullDownRefresh": true
 }

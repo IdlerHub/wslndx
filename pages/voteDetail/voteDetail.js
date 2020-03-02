@@ -6,6 +6,7 @@ Page({
     current: 0,
     pause: false,
     zan: false,
+    guideFlag: [1,0,0],    //引导显示状态
     shareFlag: false,
     sharePoster: false,
     supportFlag: 0,   //点赞权限
@@ -18,6 +19,26 @@ Page({
     tempImg: '',  //canvas临时路径
     item:{},  //作品详情
     shareInfo: {}   //海报信息
+  },
+  nextGuide(e){
+    console.log(e)
+    if(e.currentTarget.dataset.guide == "first"){
+      this.setData({
+        guideFlag: [1,1,0]
+      })
+      console.log("第一步引导完成,进入下一步引导")
+    } else if(e.currentTarget.dataset.guide == "second"){
+      console.log("第二步引导完成,进入最后一步引导")
+      this.setData({
+        guideFlag: [1, 1, 1]
+      })
+    }else{
+      console.log("完成引导")
+      this.setData({
+        guideFlag: [0, 1, 1]
+      })
+      app.vote.noteGuide();
+    }
   },
   aniend(){
     console.log("动画播放结束")
@@ -48,7 +69,7 @@ Page({
       })
       let params = {
         id: e.currentTarget.dataset.id,
-        type: this.data.selectedIndex
+        type: this.data.item.hoc_id
       }
       this.praiseOpus(params)
       console.log('点赞', params)
@@ -73,7 +94,7 @@ Page({
   },
   toVote(){
     console.log(111)
-    wx.redirectTo({
+    wx.navigateTo({
       url: "/pages/vote/vote"
     })
   },
@@ -118,10 +139,13 @@ Page({
     let params = { id: id }
     app.vote.getOpusInfo(params).then(res=>{
       console.log(res)
+      let temp = res.data.is_guide;
       this.setData({
         item: res.data,
-        supportFlag: res.data.have_praise
+        supportFlag: res.data.have_praise,
+        guideFlag: [!temp, 0, 0]
       })
+      console.log(this.data.guideFlag)
       wx.setNavigationBarTitle({
         title: this.data.item.name
       })
@@ -192,12 +216,38 @@ Page({
           }, 1000)
           that.shareOff() //关闭窗口
         },
-        fail(err) {
-          console.log(err)
-          wx.showToast({
-            title: '图标保存失败',
-            icon: 'none'
-          }, 1000)
+        fail(err) { //授权问题报错
+          if (err.errMsg === "saveImageToPhotosAlbum:fail:auth denied" || err.errMsg === "saveImageToPhotosAlbum:fail auth deny" || err.errMsg === "saveImageToPhotosAlbum:fail authorize no response"){
+            wx.showModal({
+              title: '提示',
+              content: '需要您授权保存相册',
+              showCancel: false,
+              success: modalSuccess => {
+                wx.openSetting({
+                  success(settingdata) {
+                    console.log("settingdata", settingdata)
+                    if (settingdata.authSetting['scope.writePhotosAlbum']) {
+                      wx.showToast({
+                        title: '获取权限成功,再次点击即可保存',
+                        icon: 'none'
+                      }, 500)
+                    } else {
+                      wx.showToast({
+                        title: '获取权限失败，将无法保存到相册哦~',
+                        icon: 'none',
+                      }, 500)
+                    }
+                  },
+                  fail(failData) {
+                    console.log("failData", failData)
+                  },
+                  complete(finishData) {
+                    console.log("finishData", finishData)
+                  }
+                })
+              }
+            })
+          }
         }
       })
     },1000)
@@ -354,7 +404,8 @@ Page({
     // ctx.fill();
     // ctx.draw();
     ctx.restore();
-
+    let windowWidth = wx.getSystemInfoSync().windowWidth;
+    console.log(windowWidth)
     ctx.draw(true, () => {
       let timer = setTimeout(()=>{
         wx.canvasToTempFilePath({
@@ -362,8 +413,8 @@ Page({
           y: 0,
           width: 375,
           height: 680,
-          destWidth: 375 * 750 / wx.getSystemInfoSync().windowWidth,
-          destHeight: 680 * 750 / wx.getSystemInfoSync().windowWidth,
+          destWidth: 375 * 750 / windowWidth,
+          destHeight: 680 * 750 / windowWidth,
           canvasId: "poster",
           // fileType: 'jpg',  //如果png的话，图片存到手机可能有黑色背景部分
           success(res) {
@@ -378,16 +429,22 @@ Page({
             clearTimeout(timer)
           }
         },this);
-      },50)
+      },100)
     });
   },
   onLoad(options) {
-    if (options.flag == 'true'){  //未审核
-      this.setData({
-        waitingFlag: options.flag
-      })
+    // this.store.$state.userInfo
+    let userInfo = wx.getStorageSync('userInfo')
+    if(userInfo){
+      if (options.flag == 'true') {  //未审核
+        this.setData({
+          waitingFlag: options.flag
+        })
+      }
+      this.getOpusInfo(options.voteid);
+    }else{
+      console.log("没有用户信息,即新用户")
     }
-    this.getOpusInfo(options.voteid);
   },
   onShareAppMessage(ops){
     let id = this.data.item.id
