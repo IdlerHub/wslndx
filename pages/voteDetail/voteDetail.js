@@ -6,6 +6,7 @@ Page({
     current: 0,
     pause: false,
     zan: false,
+    guideFlag: [1,0,0],    //引导显示状态
     shareFlag: false,
     sharePoster: false,
     supportFlag: 0,   //点赞权限
@@ -18,6 +19,26 @@ Page({
     tempImg: '',  //canvas临时路径
     item:{},  //作品详情
     shareInfo: {}   //海报信息
+  },
+  nextGuide(e){
+    console.log(e)
+    if(e.currentTarget.dataset.guide == "first"){
+      this.setData({
+        guideFlag: [1,1,0]
+      })
+      console.log("第一步引导完成,进入下一步引导")
+    } else if(e.currentTarget.dataset.guide == "second"){
+      console.log("第二步引导完成,进入最后一步引导")
+      this.setData({
+        guideFlag: [1, 1, 1]
+      })
+    }else{
+      console.log("完成引导")
+      this.setData({
+        guideFlag: [0, 1, 1]
+      })
+      app.vote.noteGuide();
+    }
   },
   aniend(){
     console.log("动画播放结束")
@@ -118,10 +139,13 @@ Page({
     let params = { id: id }
     app.vote.getOpusInfo(params).then(res=>{
       console.log(res)
+      let temp = res.data.is_guide;
       this.setData({
         item: res.data,
-        supportFlag: res.data.have_praise
+        supportFlag: res.data.have_praise,
+        guideFlag: [!temp, 0, 0]
       })
+      console.log(this.data.guideFlag)
       wx.setNavigationBarTitle({
         title: this.data.item.name
       })

@@ -54,15 +54,25 @@
                 <view class="join" catchtap="toJoin">
                     <view class="circle">参赛</view>
                 </view>
+                <!-- 引导页 -->
+                <view class="guide" wx:if="{{guideFlag[0]}}">
+                    <view class="guide-first" wx:if="{{guideFlag[0]&&!guideFlag[1]&&!guideFlag[2]}}">
+                        <image src="/images/guide-first.png" alt="" />
+                        <view class="first-btn" catchtap="nextGuide" data-guide="first"></view>
+                    </view>
+                    <view class="guide-second" wx:if="{{guideFlag[1]&&!guideFlag[2]}}">
+                        <image src="/images/guide-second.png" alt="" />
+                        <view class="second-btn" catchtap="nextGuide" data-guide="second"></view>
+                    </view>
+                    <view class="guide-end" wx:if="{{guideFlag[2]}}">
+                        <image src="/images/guide-end.png" alt="" />
+                        <view class="end-btn" catchtap="nextGuide" data-guide="end"></view>
+                    </view>
+                </view>
             </view>
         </block>
-        <!-- 引导页 -->
-        <!-- <block wx:else>
-            <view class="guide">
-                <view class="guide-first"></view>
-            </view>
-        </block> -->
     </view>
+    
     <view class="back-vote" catchtap="toVote">
         <text>返回</text><text>主页</text>
     </view>
