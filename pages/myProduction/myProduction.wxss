@@ -51,6 +51,7 @@
     border-radius:10rpx;
     overflow: hidden;
     position: relative;
+    background: #CCCCCC;
 }
 .item-classify{
     width: 40rpx;

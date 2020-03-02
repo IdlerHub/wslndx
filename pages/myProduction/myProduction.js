@@ -36,7 +36,7 @@ Page({
   toVoteFail(e){
     console.log(this.data.type)
     if(this.data.type == 1){
-      wx.navigateTo({ //去未通过的缺省页
+      wx.redirectTo({ //去未通过的缺省页
         url: '/pages/voteFail/voteFail'
       })
     }else{

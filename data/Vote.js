@@ -64,7 +64,13 @@ function getSearchWord() {
   return httpService.post("h5opus/getSearchWord");
 }
 
-// POST h5opus / delSearchWord 删除历史搜索记录
+
+// POST h5opus/noteGuide 记录用户活动引导状态
+function noteGuide() {
+  return httpService.post("h5opus/noteGuide");
+}
+
+// POST h5opus/delSearchWord 删除历史搜索记录
 function delSearchWord(params) {
   return httpService.post("h5opus/delSearchWord", params);
 }
@@ -118,5 +124,6 @@ module.exports = {
   recordInvite,
   getPosterInfo,
   getNewestOpus,
-  delSearchWord
+  delSearchWord,
+  noteGuide
 };
