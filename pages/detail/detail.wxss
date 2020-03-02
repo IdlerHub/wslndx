@@ -312,7 +312,8 @@ rich-text {
   .now .icon {
     position: absolute;
     left: 0;
-    top: -10rpx;
+    top: 50%;
+    margin-top: -45.5rpx;
     width: 690rpx;
     height: 95rpx; }
 

@@ -2,6 +2,9 @@
 page {
   background:rgba(244,244,244,1);
 }
+.container {
+  min-height: 100vh;
+}
 .container .topBox {
   width: 730rpx;
   height: 378rpx;
@@ -82,18 +85,19 @@ page {
 }
 .container .centerBox {
   width:690rpx;
-  min-height:574rpx;
+  min-height: calc(100vh - 616rpx);
   background:rgba(255,255,255,1);
   border-radius:10rpx;
   margin: 2rpx auto;
 }
 .container .centerBox .centerTop {
   height: 113rpx;
-  border-bottom: 1px solid #E9E9E9;
+  border-bottom: 1rpx solid #E9E9E9;
   position: relative;
   padding-left: 30rpx;
   line-height: 113rpx;
   text-align: left;
+  border-radius: 0;
 }
 .container .centerBox .centerTop text {
   font-size:38rpx;

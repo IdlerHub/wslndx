@@ -174,7 +174,7 @@ Page({
       this.data.$state.newGuide.lesson == 0 ? this.closeGuide() : "";
     }
   },
-  onHide() { },
+  onHide() {},
   onGotUserInfo: function (e) {
     if (e.detail.errMsg == "getUserInfo:ok") {
       app.updateBase(e)
