@@ -14,13 +14,13 @@ Page({
     /*  rect: wx.getMenuButtonBoundingClientRect() */
   },
   pageName: '单用户短视频全部展示页',
+  recordVideo_id: -1,
   onLoad(options) {
     this.videoContext = wx.createVideoContext(this.data.vid)
     wx.setNavigationBarTitle({
       title: options.title
     })
     this.wifi = false
-    this.judgeWifi()
     let pages = getCurrentPages()
     let prePage = pages[pages.length - 2]
     if (prePage && prePage.route == "pages/videoItemize/videoItemize") {
@@ -57,6 +57,7 @@ Page({
         app.addVisitedNum(`v${this.data.cur.id}`)
         // app.aldstat.sendEvent("短视频播放", { name: this.data.cur.title })
         wx.uma.trackEvent('sortVideo_play', { 'videoName': this.data.cur.title });
+        this.judgeWifi()
       })
     }
   },
@@ -82,8 +83,21 @@ Page({
   //获取红包奖励内容
   recordFinish() {
     let param = { shortvideo_id: this.data.cur.id }
+    if(this.data.cur.id == this.recordVideo_id) return
     app.video.recordFinish(param).then(res => {
       if (res.code == 1) {
+        if(res.data.day_read == 1) {
+          this.setData({
+            integral: '+100 学分',
+            integralContent: '每日看完十个短视频',
+            showintegral: true
+          })
+          setTimeout(() => {
+            this.setData({
+              showintegral: false
+            })
+          }, 2000)
+        }
         this.setData({
           loop: true,
           isshowRedbig: res.data.today_award,
