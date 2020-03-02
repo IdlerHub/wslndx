@@ -15,26 +15,12 @@
   </video>
   <view class="info">
     <view class="top">
-      <text class="name line">{{ detail.title }}</text>
-      <text class="dramaNum">共{{ detail.lesson_count }}讲</text>
-    </view>
-    <text class="line actor" wx:if="{{ detail.teacher_id == 0 }}">{{ detail.subtitle }}</text>
-    <text class="line actor" wx:else>{{ detail.teacher.name }}-{{ detail.teacher.honor }}</text>
-    <view class="bottom">
-      <view class="left">
-        <view class="collect" bindtap="collect">
-          <image wx:if="{{ detail.collected }}" mode="aspectFill" src="/images/yishoucang.png"></image>
-          <image wx:else mode="aspectFill" src="/images/shoucang.png"></image>
-        </view>
-        <button class="share" open-type="share" hover-class="btn-hover">
-          <image class="icon" mode="aspectFill" src="/images/fenxiang.png"></image>
-        </button>
+      <view>
+        <text class="name line">{{ detail.title }}</text>
+        <view class="line actor" wx:if="{{ detail.teacher_id == 0 }}">共{{ detail.lesson_count }}讲 <text>.</text> {{ detail.subtitle }}</view>
+        <view class="line actor" wx:else>共{{ detail.lesson_count }}讲 <text>.</text> {{ detail.teacher.name }}-{{ detail.teacher.honor }}</view>
       </view>
-      <navigator class="moneyPackt" hover-class="none" url="/pages/makeMoney/makeMoney" wx:if="{{$state.authUserInfo}}">
-      </navigator>
-      <button open-type="getUserInfo" bindgetuserinfo="onGotUserInfo" class="moneyPackt" data-type="money"
-        wx:else></button>
-      <view class="right">
+      <view class="right" style="padding-top: {{detail.progress < 100 ? '' : 0}};">
         <view class="progress" wx:if="{{ detail.progress < 100 }}">
           <view class="line">
             <text class="num">{{ detail.progress ? detail.progress : 0 }}%</text>
@@ -51,10 +37,36 @@
         </view>
       </view>
     </view>
+    <view class="bottom">
+      <view class="left">
+        <view class="addTe" catchtap="showServise">
+          <image src="{{ $state.imgHost }}/class-addTeacher.png"></image>
+        </view>
+        <navigator class="addTe" hover-class="none" url="/pages/makeMoney/makeMoney" wx:if="{{$state.authUserInfo}}">
+          <image src="{{ $state.imgHost }}/class-invite.png"></image>
+        </navigator>
+        <button open-type="getUserInfo" bindgetuserinfo="onGotUserInfo" class="addTe" data-type="money"
+        wx:else>
+        <image src="{{ $state.imgHost }}/class-invite.png"></image>
+        </button>
+      </view>
+      <view class="right">
+        <view class="after"></view>
+        <view class="right-box" bindtap="collect">
+          <image src="{{$state.imgHost}}/class-collected.png" wx:if="{{ detail.collected }}"></image>
+          <image src="{{$state.imgHost}}/class-collect.png" wx:else></image>
+          <text>收藏</text>
+        </view>
+        <button class="right-box" open-type="share" hover-class="btn-hover">
+          <image src="{{$state.imgHost}}/class-share.png"></image>
+          <text>分享</text>
+        </button>
+      </view>
+    </view>
   </view>
   <view class="now" wx:if="{{ detail.current_sublesson_id != 0 && !hideRecode }}" bindtap="recordAdd">
     <view class="line">继续播放：{{ cur.sub_id }}. {{ cur.title }}</view>
-    <image class="icon" mode="widthFix" src="{{ $state.imgHost }}/rectangle.png"></image>
+    <image class="icon" mode="widthFix" src="{{ $state.imgHost }}/rectangleTwo.png"></image>
   </view>
   <view class="content">
     <scroll-view scroll-x="true" class="nav" scroll-left="{{ navScrollLeft }}" scroll-with-animation="{{ true }}">
@@ -256,6 +268,16 @@
       style="top:{{ detail.current_sublesson_id != 0 && !hideRecode ? 738 : '' }}rpx"></cover-image>
   </cover-view>
 </view>
+<!-- 消息盒子 -->
+<cover-view class="servise" wx:if="{{showServise}}">
+  <cover-view class="serviseBox">
+    <cover-view class="text">进入客服消息后，点击右下角</cover-view>
+    <cover-view class="text">快捷图片，扫码添加老师为好友</cover-view>
+    <cover-image src="{{$state.imgHost}}/serviseImg.png" class="image"></cover-image>
+    <button open-type="contact" hover-class="none" show-message-card send-message-img="../../images/serviseIMG.png" send-message-title="添加老师" catchtap="showServise">去客服页面添加</button>
+  </cover-view>
+  <cover-image src="{{$state.imgHost}}/cancel.png" class="cancel" catchtap="showServise"></cover-image>
+</cover-view>
 <!-- 学分动画 -->
 <integralAnimation integral="{{integral}}" integralContent="{{integralContent}}" wx:if="{{showintegral}}">
 </integralAnimation>

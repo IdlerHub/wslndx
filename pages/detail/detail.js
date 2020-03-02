@@ -42,7 +42,8 @@ Page({
     voivetext: "",
     voiceplayimg: "https://hwcdn.jinlingkeji.cn/images/pro/triangle.png",
     replyshow: false,
-    showintegral: false
+    showintegral: false,
+    showServise: false,
     /* rect: wx.getMenuButtonBoundingClientRect() */
   },
   pageName: "视频页（视频详情页）",
@@ -173,7 +174,7 @@ Page({
       this.data.$state.newGuide.lesson == 0 ? this.closeGuide() : "";
     }
   },
-  onHide() { },
+  onHide() {},
   onGotUserInfo: function (e) {
     if (e.detail.errMsg == "getUserInfo:ok") {
       app.updateBase(e)
@@ -1422,5 +1423,13 @@ Page({
         });
       }
     }
+  },
+  //客服盒子
+  showServise() {
+    this.data.showServise ? this.setData({
+      showServise: false
+    }) : this.setData({
+      showServise: true
+    })
   }
 });

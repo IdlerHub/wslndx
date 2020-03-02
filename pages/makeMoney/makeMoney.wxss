@@ -120,7 +120,7 @@ page {
 }
 .container .rankin_list .rankin_listTop {
   height: 113rpx;
-  border-bottom:1px solid #E9E9E9 ;
+  border-bottom:1rpx solid #E9E9E9 ;
   padding: 0 30rpx;
 }
 .container .rankin_list .rankin_listTop .title {
@@ -224,7 +224,7 @@ page {
 .container .rankin_list .list .item .itemMsg {
   flex:1;
   height: 100%;
-  border-bottom:1px solid #E9E9E9;
+  border-bottom:1rpx solid #E9E9E9;
   display: flex;
   align-items: center;
 }
