@@ -90,7 +90,7 @@ Page({
           this.setData({
             integral: '+100 学分',
             integralContent: '每日看完十个短视频',
-            showintegral: true
+            showintegral: true 
           })
           setTimeout(() => {
             this.setData({

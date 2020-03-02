@@ -39,9 +39,9 @@
     </view>
     <view class="bottom">
       <view class="left">
-        <button class="addTe" open-type="contact">
+        <view class="addTe" catchtap="showServise">
           <image src="{{ $state.imgHost }}/class-addTeacher.png"></image>
-        </button>
+        </view>
         <navigator class="addTe" hover-class="none" url="/pages/makeMoney/makeMoney" wx:if="{{$state.authUserInfo}}">
           <image src="{{ $state.imgHost }}/class-invite.png"></image>
         </navigator>
@@ -268,6 +268,16 @@
       style="top:{{ detail.current_sublesson_id != 0 && !hideRecode ? 738 : '' }}rpx"></cover-image>
   </cover-view>
 </view>
+<!-- 消息盒子 -->
+<cover-view class="servise" wx:if="{{showServise}}">
+  <cover-view class="serviseBox">
+    <cover-view class="text">进入客服消息后，点击右下角</cover-view>
+    <cover-view class="text">快捷图片，扫码添加老师为好友</cover-view>
+    <cover-image src="{{$state.imgHost}}/serviseImg.png" class="image"></cover-image>
+    <button open-type="contact" hover-class="none" show-message-card send-message-img="../../images/serviseIMG.png" send-message-title="添加老师">去客服页面添加</button>
+  </cover-view>
+  <cover-image src="{{$state.imgHost}}/cancel.png" class="cancel" catchtap="showServise"></cover-image>
+</cover-view>
 <!-- 学分动画 -->
 <integralAnimation integral="{{integral}}" integralContent="{{integralContent}}" wx:if="{{showintegral}}">
 </integralAnimation>
