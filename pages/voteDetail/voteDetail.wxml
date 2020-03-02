@@ -56,6 +56,12 @@
                 </view>
             </view>
         </block>
+        <!-- 引导页 -->
+        <!-- <block wx:else>
+            <view class="guide">
+                <view class="guide-first"></view>
+            </view>
+        </block> -->
     </view>
     <view class="back-vote" catchtap="toVote">
         <text>返回</text><text>主页</text>
