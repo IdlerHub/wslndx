@@ -1,7 +1,7 @@
 /*
  * @Date: 2019-12-20 10:54:37
  * @LastEditors: hxz
- * @LastEditTime: 2020-03-02 17:58:02
+ * @LastEditTime: 2020-03-02 18:30:44
  */
 const getPolicyEncode = require("./getPolicy.js");
 const getSignature = require("./GetSignature.js");
@@ -110,8 +110,7 @@ const OBSupload = async function(dir, filePath, type) {
     secret,
     securitytoken,
     bucket,
-    endpoint,
-    x_auth_token
+    endpoint
   } = store.getState().security;
   const fileName = cacheUrl(dir, checkRes.type); //指定上传到OBS桶中的对象名
   const redirects = {
