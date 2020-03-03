@@ -229,7 +229,7 @@ page{
 
 .item-up{
     height: 220rpx;
-    background: blue;
+    background: #0071B3;
     position: relative;
     overflow: hidden;
 }

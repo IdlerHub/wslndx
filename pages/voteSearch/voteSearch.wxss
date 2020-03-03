@@ -49,7 +49,7 @@
 .production-list .production-item .item-left{
     width: 330rpx;
     height: 220rpx;
-    background: #0D00C6;
+    background: #CCCCCC;
     border-radius:10rpx;
     position: relative;
     border-radius:10rpx;
