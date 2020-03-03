@@ -1,5 +1,6 @@
 // pages/voteRule/voteRule.js
 const app = getApp();
+var htmlparser = require("../../utils/htmlparser.js");
 Page({
   data: {
     rule: ''
@@ -7,8 +8,9 @@ Page({
   getRule(){  //获取活动规则
     let that = this;
     app.vote.getH5Rule().then(res=>{
-      that.setData({
-        rule: res.data.rule
+      let content = htmlparser.default(res.data.rule)
+      this.setData({
+        rule: content
       })
     })
   },
