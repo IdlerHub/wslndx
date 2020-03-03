@@ -100,10 +100,21 @@ Page({
   toVote(){
     console.log(111)
     let list = getCurrentPages();
-    const page = list[list.length - 2];
-    wx.redirectTo({
-      url: "/pages/vote/vote"
-    })
+    console.log(list)
+    if(list[1]){
+      if (list[1].route == "pages/vote/vote" || list[0].route == 'pages/vote/vote') {
+        console.log(list, list.length - 1)
+        console.log("票选首页", list[1])
+        wx.navigateBack({
+          delta: list.length - 2
+        })
+      }
+    }else{
+      wx.reLaunch({
+        url: "/pages/vote/vote"
+      })
+    }
+    
   },
   toJoin(){
     wx.navigateTo({
@@ -149,8 +160,12 @@ Page({
         guideFlag: [!temp, 0, 0]
       })
       console.log(this.data.guideFlag)
+      let title = this.data.item.name
+      if (title.length> 10){  //标题过长
+        title = title.substr(0,10) + '...'
+      }
       wx.setNavigationBarTitle({
-        title: this.data.item.name
+        title: title
       })
       //如果是视频就自动播放
     })
@@ -337,7 +352,8 @@ Page({
     ctx.restore();    //恢复限制
     //分享图片
     ctx.rect(30 / v, 157 / v, 570 / v, 380 / v)
-
+    ctx.lineJoin = "round";
+    ctx.lineWidth = 20 / v;
     //作品图片
     let worksImg = this.data.showImg || '/images/vote-wei.png';
     ctx.drawImage(
@@ -365,29 +381,64 @@ Page({
     ctx.setFillStyle('white')
     console.log('长度长度长度',this.data.shareInfo.opus_content.length)
     //可以尝试切割字符串,循环数组,达到换行的效果
+    let info = this.data.shareInfo.opus_content;
     let len = 0;
-    for (var a = 0; a < 3; a++) {
-      let content = this.data.shareInfo.opus_content.substr(len, 15)
-      len += 15;
+    if (info.length > 15 && info.length < 30) {
+      console.log("在三行之内")
+      for (var a = 0; a < 2; a++) {
+        let content = info.substr(len, 15)
+        len += 15;
+        ctx.fillText(
+          content,
+          30 * ratio,
+          (658 + a * 48) / v,
+        )
+      }
+    } else if (info.length > 30){
+      console.log("超过了三行")
+      let con1 = info.substr(len, 15);
+      let con2 = info.substr(15,14) + '...'
       ctx.fillText(
-        content,
+        con1,
         30 * ratio,
-        (658 + a * 48) / v,
+        658 / v,
+      )
+      ctx.fillText(
+        con2,
+        30 * ratio,
+        (658 + 48) / v,
+      )
+      // for (var a = 0; a < 2; a++) {
+      //   let content = info.substr(len, 15)
+      //   len += 15;
+      //   ctx.fillText(
+      //     content,
+      //     30 * ratio,
+      //     (658 + a * 48) / v,
+      //   )
+      // }
+    }else{
+      console.log("就一行")
+      ctx.fillText(
+        info,
+        30 * ratio,
+        658 / v,
       )
     }
+    
     ctx.restore();
 
     //二维码
     ctx.save();
     ctx.setFillStyle('white');
-    ctx.lineJoin = "round";
-    ctx.lineWidth = 20 / v;
+    // ctx.lineJoin = "round";
+    // ctx.lineWidth = 20 / v;
 
-    ctx.fillRect(0 / v, 788 / v, 630 / v, 235 / v);
+    ctx.fillRect(0 / v, 740 / v, 630 / v, 235 / v);
     ctx.drawImage(
       this.data.code,
       30 / v,
-      821 / v,
+      761 / v,
       153 / v,
       153 / v
     )
@@ -395,13 +446,13 @@ Page({
     ctx.setFillStyle('#666666')
     ctx.fillText(
       '长按识别二维码',
-      230 / v,
-      886 / v
+      210 / v,
+      826 / v
     )
     ctx.fillText(
       '为好友加油,一起参赛!',
-      230 / v,
-      937 / v
+      210 / v,
+      877 / v
     )
     // ctx.setFillStyle('white');
     // ctx.fill();
@@ -448,6 +499,7 @@ Page({
     }else{
       console.log("没有用户信息,即新用户")
     }
+    wx.hideShareMenu();
   },
   onShareAppMessage(ops){
     console.log(ops)

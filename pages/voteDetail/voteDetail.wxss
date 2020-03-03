@@ -290,7 +290,7 @@
 }
 .show-con{
     width: 630rpx;
-    height: 1002rpx;
+    height: 940rpx;
     margin-bottom: 30rpx;
     position: relative;
 }
@@ -386,6 +386,12 @@
     font-family:PingFangSC-Regular,PingFang SC;
     font-weight:400;
     color:rgba(255,255,255,1);
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    text-overflow: ellipsis;
+    -webkit-box-orient: vertical;
+
 }
 .canvas-footer{
     background: white;
@@ -501,12 +507,12 @@
 /* canvas */
 .sharePoster{
 width:630rpx;
-height:1002rpx;
+height:940rpx;
 overflow: hidden;
 /* position: fixed;
 top: 0;
 left: 0;
-z-index: 100; */
+z-index: 101; */
 }
 
 /* 引导页 */
