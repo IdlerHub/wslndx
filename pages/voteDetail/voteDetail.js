@@ -9,6 +9,7 @@ Page({
     guideFlag: [0,0,0],    //引导显示状态
     shareFlag: false,
     sharePoster: false,
+    overTime: 0,      //活动是否过期  0=未过期,1=已过期
     supportFlag: 0,   //点赞权限
     zanFlag: false, //点赞动画
     waitingFlag: false,
@@ -53,32 +54,36 @@ Page({
   },
   giveLike(e){
     console.log('我给你点赞', this.data.supportFlag)
+    //step  活动是否过期
     // step1 判断今天是否点赞过
     // step2  作品点赞数添加 （修改data中数据），不刷新页面
-    if (this.data.supportFlag == 0) {
-      //提示
+    if(this.data.overTime == 1){
       wx.showToast({
-        title: "您今日已点赞,请明日再来",
+        title: "活动已过期,无法点赞",
         icon: "none",
         duration: 1500
       })
-    } else {
-      console.log("点赞了")
-      let work = this.data.item
-      work.prise_numbers += 1;
-      work.is_praise = 1;
-      this.setData({
-        item: work,
-        supportFlag: 0,
-        zanFlag: true
-      })
-      // let params = { //
-      //   id: e.currentTarget.dataset.id,
-      //   type: this.data.item.hoc_id
-      // }
-      // this.praiseOpus(params)
-      // console.log('点赞', params)
+    }else{
+      if (this.data.supportFlag == 0) {
+        //提示
+        wx.showToast({
+          title: "您今日已点赞,请明日再来",
+          icon: "none",
+          duration: 1500
+        })
+      } else {
+        console.log("点赞了")
+        let work = this.data.item
+        work.prise_numbers += 1;
+        work.is_praise = 1;
+        this.setData({
+          item: work,
+          supportFlag: 0,
+          zanFlag: true
+        })
+      }
     }
+    
   },
   praiseOpus(params) {
     app.vote.praiseOpus(params).then(res => {
@@ -102,10 +107,15 @@ Page({
     let list = getCurrentPages();
     console.log(list)
     if(list[1]){
-      if (list[1].route == "pages/vote/vote" || list[0].route == 'pages/vote/vote') {
+      if (list[1].route == "pages/vote/vote") {
         console.log("票选首页", list[1])
         wx.navigateBack({
           delta: list.length - 2
+        })
+      } else if (list[0].route == 'pages/vote/vote'){
+        console.log("这是分享进来的",list)
+        wx.navigateBack({
+          delta: list.length
         })
       }
     }else{
@@ -148,6 +158,11 @@ Page({
       pause: false
     })
   },
+  videoend(){ //播放结束
+    this.setData({
+      pause: true
+    })
+  },
   getOpusInfo(id){
     let params = { id: id }
     app.vote.getOpusInfo(params).then(res=>{
@@ -156,7 +171,8 @@ Page({
       this.setData({
         item: res.data,
         supportFlag: res.data.have_praise,
-        guideFlag: [!temp, 0, 0]
+        guideFlag: [!temp, 0, 0],
+        overTime: res.data.over_time
       })
       console.log(this.data.guideFlag)
       let title = this.data.item.name
@@ -464,10 +480,10 @@ Page({
         wx.canvasToTempFilePath({
           x: 0,
           y: 0,
-          width: 375,
-          height: 680,
-          destWidth: 375 * 750 / windowWidth,
-          destHeight: 680 * 750 / windowWidth,
+          width: 315,
+          height: 470,
+          destWidth: 315 * 750 / windowWidth,
+          destHeight: 470 * 750 / windowWidth,
           canvasId: "poster",
           // fileType: 'jpg',  //如果png的话，图片存到手机可能有黑色背景部分
           success(res) {
@@ -502,13 +518,23 @@ Page({
   },
   onShareAppMessage(ops){
     console.log(ops)
-    let id = this.data.item.id
+    let item = this.data.item;
+    let id = item.id
     let uid = wx.getStorageSync('userInfo').id;
-    let imgUrl = this.data.item.banner_image || this.data.item.url[0] || none;
+    let imgUrl = this.data.imgs;
+    if(item.type==2){
+      imgUrl = item.banner_image;
+      console.log("视频图片", imgUrl)
+    }else if(item.type==1){
+      console.log("图片")
+      imgUrl = item.url[0]
+    }
+    
     if (ops.from === 'button') {
       // 来自页面内转发按钮
       console.log(ops.target)
     }
+    console.log(imgUrl)
     return {
       title: '网上老年大学',
       path: '/pages/voteDetail/voteDetail?voteid=' + id + '&type=share&vote=0&uid=' + uid,  // 路径，传递参数到指定页面。

@@ -1,6 +1,18 @@
 // pages/voteRule/voteRule.js
+const app = getApp();
 Page({
   data: {
-    text: '茶文化意为饮茶活动过程中形成的文化特征，包括茶道、茶德、茶精神、茶联、茶书、茶具、茶画、茶学、茶故事、茶艺等等。茶文化起源地为中国。中国是茶的故乡，中国饮茶，据说始于神农时代，少说也有4700多年了。直到现在，汉族还有民以茶代礼的风俗。汉族对茶的配制是多种多样的：有太湖的熏豆茶、苏州的香味茶、湖南的姜盐茶、蜀山的侠君茶、台湾的冻顶茶、杭州的龙井茶、福建的乌龙茶等'
+    rule: ''
   },
+  getRule(){  //获取活动规则
+    let that = this;
+    app.vote.getH5Rule().then(res=>{
+      that.setData({
+        rule: res.data.rule
+      })
+    })
+  },
+  onLoad(){
+    this.getRule()
+  }
 })

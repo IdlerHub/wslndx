@@ -4,6 +4,11 @@
  */
 var httpService = require("../utils/service.js");
 
+//POST h5opus/getH5Rule 获取活动规则
+function getH5Rule() {
+  return httpService.post("h5opus/getH5Rule");
+}
+
 //POST h5opus/getCategory 获取分类列表
 function getCategory(params) {
   return httpService.post("h5opus/getCategory", params);
@@ -81,7 +86,7 @@ function delSearchWord(params) {
  * @return:  promise
  * **/
 function getSecureToken() {
-  return httpService.post("h5opus/getSecureToken");
+  return httpService.post("h5opus/getSecureToken", {}, true);
 }
 
 /**
@@ -112,6 +117,7 @@ function getPosterInfo(params) {
 }
 
 module.exports = {
+  getH5Rule,
   getCategory,
   getOpusList,
   praiseOpus,

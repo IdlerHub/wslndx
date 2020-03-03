@@ -274,7 +274,7 @@
     <cover-view class="text">进入客服消息后，点击右下角</cover-view>
     <cover-view class="text">快捷图片，扫码添加老师为好友</cover-view>
     <cover-image src="{{$state.imgHost}}/serviseImg.png" class="image"></cover-image>
-    <button open-type="contact" hover-class="none" show-message-card send-message-img="{{$state.imgHost}}/serviceIMG.jpg" send-message-title="添加老师" catchtap="showServise" session-from='{"name": "{{$state.userInfo.nickname}}","avatarUrl":"{{$state.userInfo.avatar}}"}'>去客服页面添加</button>
+    <button open-type="contact" hover-class="none" show-message-card send-message-img="{{$state.imgHost}}/serviceIMG.jpg" send-message-title="添加老师" catchtap="showServise" session-from='{"name": "{{$state.userInfo.nickname}}","avatarUrl":"{{$state.userInfo.avatar}}","nickName":"{{$state.userInfo.nickname}}"}'>去客服页面添加</button>
   </cover-view>
   <cover-image src="{{$state.imgHost}}/cancel.png" class="cancel" catchtap="showServise"></cover-image>
 </cover-view>
