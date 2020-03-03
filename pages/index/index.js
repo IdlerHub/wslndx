@@ -160,9 +160,6 @@ Page({
     if (cur != 0) {
       let id = this.data.nav[cur].id
       this.geteCatrcommend(id, cur)
-      // app.aldstat.sendEvent("栏目按钮点击", {
-      //   name: this.data.nav[cur].name
-      // })
       wx.uma.trackEvent('classify_btnClick', { 'name': this.data.nav[cur].name });
     }
     setTimeout(() => {
@@ -278,9 +275,6 @@ Page({
     wx.navigateTo({
       url: "/pages/score/score?type=index"
     })
-    // app.aldstat.sendEvent("首页按钮点击", {
-    //   name: '学分兑换'
-    // })
     wx.uma.trackEvent('index_btnClick', { 'btnName': '学分兑换' });
   },
   touchstart() {
@@ -317,8 +311,6 @@ Page({
     wx.navigateTo({
       url: `../detail/detail?id=${e.currentTarget.dataset.id}&name=${e.currentTarget.dataset.title}&play=true`
     })
-    //用于数据统计
-    // app.aldstat.sendEvent("继续播放", { name: e.currentTarget.dataset.title })
     wx.uma.trackEvent('video_historyPlay', { 'lessonsName': e.currentTarget.dataset.title });
   },
   closenow() {
@@ -333,20 +325,13 @@ Page({
     })
     //用于数据统计
     if (e.currentTarget.dataset.type) {
-      // app.aldstat.sendEvent("栏目-" + this.data.nav[this.data.currentTab].name + "-课程点击", {
-      //   name: e.currentTarget.dataset.item.title
-      // })
       wx.uma.trackEvent('classify_lessonsClick', { ['classifyID_' + this.data.nav[this.data.currentTab].id]: e.currentTarget.dataset.item.title });
     } else {
-      // app.aldstat.sendEvent("首页推荐栏目课程点击", {
-      //   name: e.currentTarget.dataset.item.title
-      // })
       wx.uma.trackEvent('index_recommendLessons', { 'lessonsName': e.currentTarget.dataset.item.title });
     }
   },
   //用于数据统计
   onHide() {
-    // app.aldstat.sendEvent("退出", { name: "首页" })
   },
   // 用户昵称等信息授权
   onGotUserInfo(e) {
@@ -356,12 +341,12 @@ Page({
         this.toUser()
       } else if (e.currentTarget.dataset.role == "post") {
         this.toPost()
-      } else if(e.currentTarget.dataset.type == "score") {
+      } else if (e.currentTarget.dataset.type == "score") {
         this.toScore()
       } else if (e.currentTarget.dataset.type == "banner") {
         let item = e.currentTarget.dataset.item;
         console.log(item)
-        if(item.jump_type == '5') {
+        if (item.jump_type == '5') {
           wx.navigateTo({
             url: item.clickurl,
           })
@@ -372,9 +357,6 @@ Page({
             })
           }, 500);
         }
-        // app.aldstat.sendEvent("首页轮播-公众号点击", {
-            //   title: item.title
-            // })
         wx.uma.trackEvent('index_bannerClick', { 'bannerTencent': item.title });
       }
     }
@@ -497,50 +479,32 @@ Page({
       wx.navigateTo({
         url: `../education/education?type=0&url=${item.clickurl}&login=${item.is_login}`
       })
-      // app.aldstat.sendEvent("首页轮播-公众号点击", {
-      //   title: item.title
-      // })
       wx.uma.trackEvent('index_bannerClick', { 'bannerTencent': item.title });
     } else if (item.jump_type == 2) {
       /* 视频 */
       wx.navigateTo({
         url: `../detail/detail?id=${item.video_id}&name=${item.title}`
       })
-      // app.aldstat.sendEvent("首页轮播-视频点击", {
-      //   title: item.title
-      // })
       wx.uma.trackEvent('index_bannerClick', { 'bannerVideo': item.title });
     } else if (item.jump_type == 4) {
       this.minigo(item.clickurl)
-      // app.aldstat.sendEvent("首页轮播-跳小程序点击", {
-      //   title: item.title
-      // })
       wx.uma.trackEvent('index_bannerClick', { 'bannerMini': item.title });
     } else if (item.jump_type == 5) {
       wx.navigateTo({
         url: item.clickurl,
       })
-      // wx.navigateTo({
-      //   url: `../education/education?url=${item.clickurl}&login=${item.is_login}&id=0&type=1`
-      // })
       wx.uma.trackEvent('index_bannerClick', { 'bannerActivity': item.title });
     } else {
       /* 文章 */
       wx.navigateTo({
         url: "../pDetail/pDetail?id=" + item.article_id
       })
-      // app.aldstat.sendEvent("首页轮播-博客点击", {
-      //   title: item.title
-      // })
       wx.uma.trackEvent('index_bannerClick', { 'bannerBlog': item.title });
     }
   },
   // 跳友方小程序
   jumpmini() {
     this.minigo('{"appid":"wx92d650b253f8f2e3","url":"/pages/index/index?zbid=1826546606"}')
-    // app.aldstat.sendEvent("首页按钮点击", {
-    //   name: '老年电台'
-    // })
     wx.uma.trackEvent('index_btnClick', { 'btnName': '课程直播' });
   },
   minigo(url) {
@@ -581,12 +545,8 @@ Page({
   jumpPeper(e) {
     if (e.currentTarget.dataset.type == 'dialog') {
       this.closeSignIn()
-      // app.aldstat.sendEvent("活动弹框点击")
       wx.uma.trackEvent('index_activityClick');
     } else {
-      // app.aldstat.sendEvent("首页轮播-公众号点击", {
-      //   title: this.data.paperMsg.title
-      // })
       wx.uma.trackEvent('index_bannerClick', { 'bannerTencent': this.data.paperMsg.title });
     }
     wx.navigateTo({

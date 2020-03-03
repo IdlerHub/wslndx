@@ -2,5 +2,5 @@
   "usingComponents": {
     "recruitShare": "/components/recruitShare/recruitShare"
   },
-  "navigationBarTitleText": "我的收益"
+  "navigationBarTitleText": "收益明细"
 }

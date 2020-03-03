@@ -18,10 +18,10 @@ Page({
     showSignbox: false,
     sign_days: 0,
     paddingAdd: false,
-    bannerList:[
+    bannerList: [
       {
-        img:'https://hwcdn.jinlingkeji.cn/images/pro/withdrawBanner2.png',
-        clickUrl:'/pages/makeMoney/makeMoney'
+        img: 'https://hwcdn.jinlingkeji.cn/images/pro/withdrawBanner2.png',
+        clickUrl: '/pages/makeMoney/makeMoney'
       }
     ]
   },
@@ -400,9 +400,6 @@ Page({
       })
     }
     id == 2 ? wx.uma.trackEvent('integral_btnClick', { 'btnName': '学分兑换' }) : ''
-    // app.aldstat.sendEvent("学分页按钮点击" , {
-    //   name: '学分兑换'
-    // })
   },
   gift(e) {
     if (!e.currentTarget.dataset.stock) {
@@ -536,9 +533,6 @@ Page({
     wx: wx.navigateTo({
       url: '/pages/drawPage/drawPage',
     })
-    // app.aldstat.sendEvent("学分页按钮点击", {
-    //   name: '学分抽奖'
-    // })
     wx.uma.trackEvent('integral_btnClick', { 'btnName': '学分抽奖' })
   },
   onGotUserInfo(e) {

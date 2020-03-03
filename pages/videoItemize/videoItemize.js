@@ -11,7 +11,7 @@ Page({
     list: [],
     category: {}
   },
-  pageName:'短视频分类页（点击短视频头像进入页）',
+  pageName: '短视频分类页（点击短视频头像进入页）',
   params: {
     page: 1,
     pageSize: 14
@@ -66,9 +66,6 @@ Page({
     wx.navigateTo({
       url: "/pages/videoTwo/videoTwo?id=" + id + "&categoryId=" + this.params.categoryId + end + "&title=" + this.data.category.category_name
     })
-    // app.aldstat.sendEvent("短视频类别-" + this.data.category.category_name, {
-    //   'videoName': e.currentTarget.dataset.name
-    // })
     wx.uma.trackEvent('sortVideo_classify', { ['categoryId_' + this.data.category.category_id]: e.currentTarget.dataset.name });
   },
   tohome: function () {

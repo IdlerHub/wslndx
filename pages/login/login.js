@@ -19,6 +19,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (option) {
+    console.log(app.globalData.shareObj)
     if(option.phone) {
       this.setData({
         phone: option.phone

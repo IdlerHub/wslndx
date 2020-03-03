@@ -192,6 +192,5 @@ Page({
   },
   //用于数据统计
   onHide() {
-    // app.aldstat.sendEvent("退出", { name: "完善资料页" })
   }
 })

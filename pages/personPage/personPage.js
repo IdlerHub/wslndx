@@ -18,7 +18,6 @@ Page({
     })
     this.param = { page: 1, pageSize: 10, }
     this.getList([])
-    // app.aldstat.sendEvent("个人风采", { name: "个人风采" })
     wx.uma.trackEvent('post_persons', { 'pageName': '个人风采' });
     this.pages = getCurrentPages()[0]
   },
@@ -176,9 +175,6 @@ Page({
           this.setData({
             list: list
           })
-          // app.aldstat.sendEvent("秀风采按钮点击", {
-          //   name: '点赞按钮'
-          // })
           wx.uma.trackEvent('post_btnClick', { 'btnName': '点赞按钮' });
           this.pages.pagePraise(e.currentTarget.dataset.id)
         } else if (msg.code == -2) {
@@ -220,7 +216,6 @@ Page({
   },
   //用于数据统计
   onHide() {
-    // app.aldstat.sendEvent("退出", { name: "个人风采" })
   },
   unShare() {
     wx.showToast({
@@ -241,9 +236,6 @@ Page({
       }) : wx.navigateTo({
         url: '/pages/release/release',
       })
-      // app.aldstat.sendEvent("秀风采按钮点击", {
-      //   name: '评论按钮'
-      // })
       wx.uma.trackEvent('post_btnClick', { 'btnName': '评论按钮' });
     }
   },

@@ -55,7 +55,6 @@ Page({
           index: 0
         })
         app.addVisitedNum(`v${this.data.cur.id}`)
-        // app.aldstat.sendEvent("短视频播放", { name: this.data.cur.title })
         wx.uma.trackEvent('sortVideo_play', { 'videoName': this.data.cur.title });
         this.judgeWifi()
       })
@@ -63,7 +62,7 @@ Page({
   },
   onShow() {
     this.shortvideoAward()
-    wx.onNetworkStatusChange( res => {
+    wx.onNetworkStatusChange(res => {
       res.networkType == 'wifi' ? app.playVedio("wifi") : ''
     })
   },
@@ -83,14 +82,14 @@ Page({
   //获取红包奖励内容
   recordFinish() {
     let param = { shortvideo_id: this.data.cur.id }
-    if(this.data.cur.id == this.recordVideo_id) return
+    if (this.data.cur.id == this.recordVideo_id) return
     app.video.recordFinish(param).then(res => {
       if (res.code == 1) {
-        if(res.data.day_read == 1) {
+        if (res.data.day_read == 1) {
           this.setData({
             integral: '+100 学分',
             integralContent: '每日看完十个短视频',
-            showintegral: true 
+            showintegral: true
           })
           setTimeout(() => {
             this.setData({
@@ -135,17 +134,17 @@ Page({
       let that = this
       wx.getNetworkType({
         success: res => {
-          if(res.networkType == 'wifi') {
+          if (res.networkType == 'wifi') {
             app.playVedio('wifi')
-              that.videoContext.play()
-              that.wifi = true
-              that.setData({
-                autoplay: true,
-                pause: false
-              })
-              setTimeout(() => {
-                that.vedioRecordAdd()
-              }, 200);
+            that.videoContext.play()
+            that.wifi = true
+            that.setData({
+              autoplay: true,
+              pause: false
+            })
+            setTimeout(() => {
+              that.vedioRecordAdd()
+            }, 200);
           } else {
             that.videoContext.pause()
             that.setData({
@@ -291,7 +290,6 @@ Page({
       this.vedioRecordAdd()
     }, 200);
     app.addVisitedNum(`v${this.data.cur.id}`)
-    // app.aldstat.sendEvent("短视频播放", { name: this.data.cur.title })
     wx.uma.trackEvent('sortVideo_play', { 'videoName': this.data.cur.title });
   },
   praise() {
@@ -348,7 +346,6 @@ Page({
           })
         }
       })
-      // app.aldstat.sendEvent("短视频点赞", { name: this.data.cur.title })
       wx.uma.trackEvent('sortVideo_play', { 'videoName': this.data.cur.title });
     }
   },
@@ -380,7 +377,6 @@ Page({
             list: list,
             cur: list[index]
           })
-          // app.aldstat.sendEvent("短视频转发", { name: this.data.cur.title })
           wx.uma.trackEvent('sortVideo_play', { 'videoName': this.data.cur.title });
         }
       })
@@ -417,7 +413,6 @@ Page({
   },
   // 用于数据统计
   onHide() {
-    // app.aldstat.sendEvent("退出", { name: "短视频页" })
   },
   // 获取用户的微信昵称头像
   onGotUserInfo: function (e) {

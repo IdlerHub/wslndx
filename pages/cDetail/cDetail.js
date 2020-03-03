@@ -18,9 +18,6 @@ Page({
       wx.setNavigationBarTitle({
         title: this.data.circle.title
       })
-      // app.aldstat.sendEvent("学友圈点击",{
-      //   name: this.data.circle.title
-      // })
       wx.uma.trackEvent('circleClick', { 'circleName': this.data.circle.title });
     })
     getCurrentPages().forEach(item => {
@@ -256,7 +253,6 @@ Page({
   },
   //用于数据统计
   onHide() {
-    // app.aldstat.sendEvent("退出", { name: "学友圈详情页" })
   },
   //收藏风采
   collect(e) {

@@ -70,12 +70,10 @@ Page({
         })
         this.shortvideoAward()
         app.addVisitedNum(`v${this.data.cur.id}`)
-        // app.aldstat.sendEvent("短视频播放", { name: this.data.cur.title })
         wx.uma.trackEvent('sortVideo_play', { 'videoName': this.data.cur.title });
       })
     }
     wx.uma.trackEvent('menu', { 'pageName': '短视频' });
-    // app.aldstat.sendEvent("菜单", { name: "短视频" })
     let share = options.type == "share"
     if (!share) {
       this.setData({
@@ -90,7 +88,7 @@ Page({
   },
   onShow(opts) {
     console.log(opts)
-    wx.onNetworkStatusChange( res => {
+    wx.onNetworkStatusChange(res => {
       res.networkType == 'wifi' ? app.playVedio("wifi") : ''
     })
     if (this.data.$state.userInfo.mobile) {
@@ -130,10 +128,10 @@ Page({
   //获取红包奖励内容
   recordFinish() {
     let param = { shortvideo_id: this.data.cur.id }
-    if(this.data.cur.id == this.recordVideo_id) return
+    if (this.data.cur.id == this.recordVideo_id) return
     app.video.recordFinish(param).then(res => {
       if (res.code == 1) {
-        if(res.data.day_read == 1) {
+        if (res.data.day_read == 1) {
           this.setData({
             integral: '+100 学分',
             integralContent: '每日看完十个短视频',
@@ -180,7 +178,7 @@ Page({
       let that = this
       wx.getNetworkType({
         success: res => {
-          if(res.networkType == 'wifi') {
+          if (res.networkType == 'wifi') {
             that.wifi = true
             app.playVedio('wifi')
             that.videoContext.play()
@@ -347,7 +345,6 @@ Page({
     }, 200);
     app.addVisitedNum(`v${this.data.cur.id}`)
     wx.uma.trackEvent('sortVideo_play', { 'videoName': this.data.cur.title });
-    // app.aldstat.sendEvent("短视频播放", { name: this.data.cur.title })
   },
   praise() {
     let list = this.data.list
@@ -403,7 +400,6 @@ Page({
           })
         }
       })
-      // app.aldstat.sendEvent("短视频点赞", { name: this.data.cur.title })
       wx.uma.trackEvent('sortVideo_praise', { 'videoName': this.data.cur.title });
     }
   },
@@ -438,7 +434,6 @@ Page({
             list: list,
             cur: list[index]
           })
-          // app.aldstat.sendEvent("短视频转发", { name: this.data.cur.title })
           wx.uma.trackEvent('sortVideo_share', { 'videoName': this.data.cur.title });
         }
       })
@@ -465,9 +460,6 @@ Page({
     wx.navigateTo({
       url: "/pages/videoItemize/videoItemize?categoryId=" + id + "&share=" + this.data.vistor
     })
-    // app.aldstat.sendEvent("短视频首页推荐/分类点击", {
-    //   name: e.currentTarget.dataset.name
-    // })
     wx.uma.trackEvent('sortVideo_index', { 'name': e.currentTarget.dataset.name });
   },
   // 完整视频
@@ -482,7 +474,6 @@ Page({
     setTimeout(() => {
       this.videoContext.stop()
     }, 500);
-    // app.aldstat.sendEvent("退出", { name: "短视频页" })
   },
   //指引
   nextGuide(e) {
