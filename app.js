@@ -5,8 +5,6 @@
  */
 import { wxp } from "./utils/service";
 import { uma } from "umtrack-wx";
-/*埋点统计*/
-const ald = require("./utils/ald-stat.js");
 /* 全局状态管理 */
 import store from "./store";
 /* sse */

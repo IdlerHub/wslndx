@@ -52,7 +52,6 @@ Page({
         topT: res[0][0].height + 23
       })
     })
-    // app.aldstat.sendEvent("菜单", { name: "风采展示" })
     wx.uma.trackEvent('menu, ', { 'pageName': '风采展示' });
   },
   onShow: function () {
@@ -80,7 +79,7 @@ Page({
       app.globalData.rlSuc = false
     }
     let list = this.data.list, flowList = this.data.flowList
-    list.forEach((item,index) => {
+    list.forEach((item, index) => {
       if (item.id == app.globalData.detail.id) {
         if (app.globalData.detail.likestatus > 0) {
           this.setData({
@@ -370,9 +369,6 @@ Page({
             type: 'Bokemessage',
             data: { uid: e.currentTarget.dataset.uid }
           })
-          // app.aldstat.sendEvent("秀风采按钮点击", {
-          //   name: '点赞按钮'
-          // })
           wx.uma.trackEvent('post_btnClick', { 'btnName': '点赞按钮' });
         } else if (msg.code == -2) {
           wx.showToast({
@@ -510,7 +506,6 @@ Page({
   },
   //用于数据统计
   onHide() {
-    // app.aldstat.sendEvent("退出", { name: "秀风采页" })
   },
   onUnload() {
   },
@@ -532,17 +527,11 @@ Page({
         wx.navigateTo({
           url: `/pages/pDetail/pDetail?id= ${status.currentTarget.dataset.id}&comment`,
         })
-        // app.aldstat.sendEvent("秀风采按钮点击", {
-        //   name: '评论按钮'
-        // })
         wx.uma.trackEvent('post_btnClick', { 'btnName': '评论按钮' });
       } else {
         wx.navigateTo({
           url: '/pages/release/release',
         })
-        // app.aldstat.sendEvent("秀风采按钮点击", {
-        //   name: '发帖按钮'
-        // })
         wx.uma.trackEvent('post_btnClick', { 'btnName': '发帖按钮' });
       }
     }

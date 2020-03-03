@@ -165,7 +165,7 @@ Page({
     app.getGuide();
     this.initRecord();
     this.getRecordAuth();
-    wx.onNetworkStatusChange( res => {
+    wx.onNetworkStatusChange(res => {
       res.networkType == 'wifi' ? app.playVedio("wifi") : ''
     })
   },
@@ -174,7 +174,7 @@ Page({
       this.data.$state.newGuide.lesson == 0 ? this.closeGuide() : "";
     }
   },
-  onHide() {},
+  onHide() { },
   onGotUserInfo: function (e) {
     if (e.detail.errMsg == "getUserInfo:ok") {
       app.updateBase(e)
@@ -379,10 +379,6 @@ Page({
           });
         }
       });
-      //用于数据统计
-      // app.aldstat.sendEvent("课程收藏", {
-      //   name: this.data.title
-      // })
       wx.uma.trackEvent("collectionLessons", {
         lessonsName: this.data.detail.title
       });
@@ -416,7 +412,7 @@ Page({
     } else {
       wx.getNetworkType({
         success: res => {
-          if(res.networkType == 'wifi') {
+          if (res.networkType == 'wifi') {
             app.playVedio("wifi");
             that.recordAddVedio(param);
           } else {
@@ -1102,9 +1098,6 @@ Page({
   },
   //用于数据统计
   onHide() {
-    // app.aldstat.sendEvent("退出", {
-    //   name: "课程详情页"
-    // })
   },
   closeGuide() {
     let param = {

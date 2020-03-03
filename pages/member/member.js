@@ -55,6 +55,5 @@ Page({
   },
   //用于数据统计
   onHide() {
-    // app.aldstat.sendEvent("退出", { name: "学友圈成员页" })
   }
 })

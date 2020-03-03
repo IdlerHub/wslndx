@@ -4,7 +4,7 @@ Page({
   data: {
     url: ""
   },
-  pageName:'外链页（开心农场&amp;老年电台&amp;早报）',
+  pageName: '外链页（开心农场&amp;老年电台&amp;早报）',
   onLoad: function (options) {
     console.log(options)
     if (!options.type) {
@@ -15,15 +15,9 @@ Page({
     } else {
       if (options.type === 'farm') {
         this.junmpOut('https://h5xyx.jinlingkeji.cn')
-        // app.aldstat.sendEvent("首页按钮点击",{
-        //   name:'开心农场'
-        // })
         wx.uma.trackEvent('index_btnClick', { 'btnName': '开心农场' });
       } else if (options.type === 'station') {
         this.junmpOut('https://open.ximalaya.com/site/index/174/ca5492cf55806b41713dada77a1d2ed5')
-        // app.aldstat.sendEvent("首页按钮点击",{
-        //   name:'老年电台'
-        // })
         wx.uma.trackEvent('index_btnClick', { 'btnName': '老年电台' });
       } else {
         if (options.login) {

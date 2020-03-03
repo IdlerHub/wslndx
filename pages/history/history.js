@@ -15,7 +15,6 @@ Page({
   onShow: function () { },
   onHide: function () { },
   onUnload: function () {
-    // app.aldstat.sendEvent("退出", { name: "学习历史" })
   },
   onPullDownRefresh: function () {
     this.setData({

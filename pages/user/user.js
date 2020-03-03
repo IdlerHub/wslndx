@@ -48,32 +48,22 @@ Page({
     }, 1000)
   },
   handleContact(e) {
-    // app.aldstat.sendEvent("个人中心按钮点击",{
-    //   name:'联系客服'
-    // })
     wx.uma.trackEvent('personal_btnClick', { 'btnName': '联系客服' })
   },
   toScore() {
     wx.navigateTo({
       url: "/pages/score/score?type=index"
     })
-    // app.aldstat.sendEvent("个人中心按钮点击",{
-    //   name:'学分兑换'
-    // })
     wx.uma.trackEvent('personal_btnClick', { 'btnName': '学分兑换' })
   },
   toInvite() {
     wx.navigateTo({
       url: "/pages/invitation/invitation"
     })
-    // app.aldstat.sendEvent("个人中心按钮点击",{
-    //   name:'邀请好友'
-    // })
     wx.uma.trackEvent('personal_btnClick', { 'btnName': '邀请好友' })
   },
   //用于数据统计
   onUnload() {
-    // app.aldstat.sendEvent("退出", { name: "学分抽奖" })
   },
   closeGuide() {
     let param = {
@@ -86,9 +76,6 @@ Page({
     })
   },
   drawPage() {
-    // app.aldstat.sendEvent("个人中心按钮点击",{
-    //   name:'学分抽奖'
-    // })
     wx.uma.trackEvent('personal_btnClick', { 'btnName': '学分抽奖' })
   },
   unreadNum() {

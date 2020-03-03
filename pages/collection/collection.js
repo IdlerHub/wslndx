@@ -36,7 +36,6 @@ Page({
   },
   onHide: function () { },
   onUnload: function () {
-    // app.aldstat.sendEvent("退出", { name: "收藏课程" })
   },
   onPullDownRefresh: function () {
     this.setData({

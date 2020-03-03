@@ -184,9 +184,6 @@ Page({
             }, 2000)
           }
           this.setData({ detail: detail })
-          // app.aldstat.sendEvent("秀风采按钮点击", {
-          //   name: '点赞按钮'
-          // })
           wx.uma.trackEvent('post_btnClick', { 'btnName': '点赞按钮' });
         } else if (msg.code == -2) {
           /* 帖子已经删除 */
@@ -260,14 +257,8 @@ Page({
           replyplaceholder: '',
           replyshow: false
         })
-        // app.aldstat.sendEvent("秀风采按钮点击", {
-        //   name: '评论按钮'
-        // })
         wx.uma.trackEvent('post_btnClick', { 'btnName': '评论按钮' });
       }
-      // wx.pageScrollTo({
-      //   scrollTop: 1000
-      // })
       this.setData({
         write: true,
         focus: true
