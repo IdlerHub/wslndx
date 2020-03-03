@@ -17,12 +17,12 @@ Page({
   },
   changeName(e) {
     this.setData({
-      productionName: e.detail.value
+      productionName: e.detail.value.trim()
     });
   },
   changeIntroduction(e) {
     this.setData({
-      introduction: e.detail.value
+      introduction: e.detail.value.trim()
     });
   },
   classifyChange(e) {
