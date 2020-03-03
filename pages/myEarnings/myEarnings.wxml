@@ -12,7 +12,7 @@
         <text>{{item.type_desc}}</text>
         <text>{{item.createtime}}</text>
       </view>
-      <view class="right">+{{item.amount}}</view>
+      <view class="right"> <text wx:if="{{item.type_desc != '金额提取'}}">+</text>{{item.amount}}</view>
     </view>
     <view class="item" style="height: 171rpx;border: 0;">
     </view>
