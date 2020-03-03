@@ -195,3 +195,7 @@ page{
     font-family:PingFangSC-Medium,PingFang SC;
     font-weight:500;
 }
+
+.hid{
+    display: none !important;
+}

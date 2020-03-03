@@ -99,7 +99,9 @@ Page({
   },
   toVote(){
     console.log(111)
-    wx.navigateTo({
+    let list = getCurrentPages();
+    const page = list[list.length - 2];
+    wx.redirectTo({
       url: "/pages/vote/vote"
     })
   },

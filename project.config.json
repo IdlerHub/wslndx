@@ -179,7 +179,7 @@
 					"id": 12,
 					"name": "参赛作品详情页面",
 					"pathName": "pages/voteDetail/voteDetail",
-					"query": "voteid=61",
+					"query": "voteid=66",
 					"scene": null
 				},
 				{

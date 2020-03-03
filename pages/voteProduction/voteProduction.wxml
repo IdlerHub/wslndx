@@ -42,11 +42,11 @@
             </view>
         </view>
         <view class="upload-img" wx:else>
-            <view class="btn-img" hidden="{{video}}" bindtap="uploadVideo">
+            <view class="btn-img {{video? 'hid': ''}}" hidden="{{video}}" bindtap="uploadVideo">
                 <image src="/images/vote-addvideo.png" style="width: 56rpx;height: 37rpx;" alt="" />
                 <text>添加视频</text>
             </view>
-            <view class="show-img"  hidden="{{!video}}">
+            <view class="show-img" hidden="{{!video}}">
                 <view class="img-over">
                     <image src="/images/uploadVideo.png" alt="" mode="aspectFit" />
                 </view>

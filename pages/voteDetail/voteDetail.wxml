@@ -26,6 +26,7 @@
     <view class="praising-red" wx:if="{{zanFlag}}">
         <view class="ani-red" data-id="{{item.id}}" bindanimationend="aniend" style="background-image: url('{{$state.imgHost}}/zan-red.png')"></view>
     </view>
+    <view class="footer-bg"></view>
     <view class="footer-info">
         <view class="info-left">
             <view class="user-info">
