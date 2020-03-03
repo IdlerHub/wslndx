@@ -148,13 +148,14 @@ Page({
   init(){
     return Promise.all([this.getCategory(), this.getdata(1), this.getNewestOpus()])
   },
-  onShow(){
+  onLoad(){
     this.init()
   },
   onPullDownRefresh() {
     // this.getCategory();
     // this.getdata(1);
     // this.getNewestOpus();
+    console.log("下拉刷新")
     this.init().then(()=>{
       wx.stopPullDownRefresh()
     })

@@ -102,10 +102,15 @@ Page({
     let list = getCurrentPages();
     console.log(list)
     if(list[1]){
-      if (list[1].route == "pages/vote/vote" || list[0].route == 'pages/vote/vote') {
+      if (list[1].route == "pages/vote/vote") {
         console.log("票选首页", list[1])
         wx.navigateBack({
           delta: list.length - 2
+        })
+      } else if (list[0].route == 'pages/vote/vote'){
+        console.log("这是分享进来的",list)
+        wx.navigateBack({
+          delta: list.length
         })
       }
     }else{
@@ -146,6 +151,11 @@ Page({
     console.log("自动播放")
     this.setData({
       pause: false
+    })
+  },
+  videoend(){ //播放结束
+    this.setData({
+      pause: true
     })
   },
   getOpusInfo(id){
@@ -464,10 +474,10 @@ Page({
         wx.canvasToTempFilePath({
           x: 0,
           y: 0,
-          width: 375,
-          height: 680,
-          destWidth: 375 * 750 / windowWidth,
-          destHeight: 680 * 750 / windowWidth,
+          width: 315,
+          height: 470,
+          destWidth: 315 * 750 / windowWidth,
+          destHeight: 470 * 750 / windowWidth,
           canvasId: "poster",
           // fileType: 'jpg',  //如果png的话，图片存到手机可能有黑色背景部分
           success(res) {
@@ -502,13 +512,23 @@ Page({
   },
   onShareAppMessage(ops){
     console.log(ops)
-    let id = this.data.item.id
+    let item = this.data.item;
+    let id = item.id
     let uid = wx.getStorageSync('userInfo').id;
-    let imgUrl = this.data.item.banner_image || this.data.item.url[0] || none;
+    let imgUrl = this.data.imgs;
+    if(item.type==2){
+      imgUrl = item.banner_image;
+      console.log("视频图片", imgUrl)
+    }else if(item.type==1){
+      console.log("图片")
+      imgUrl = item.url[0]
+    }
+    
     if (ops.from === 'button') {
       // 来自页面内转发按钮
       console.log(ops.target)
     }
+    console.log(imgUrl)
     return {
       title: '网上老年大学',
       path: '/pages/voteDetail/voteDetail?voteid=' + id + '&type=share&vote=0&uid=' + uid,  // 路径，传递参数到指定页面。
