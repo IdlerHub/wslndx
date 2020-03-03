@@ -50,14 +50,18 @@ Page({
     })
     if (this.data.$state.userInfo.mobile) {
       await app.user.signed().then(res => {
-        let sign = res.data && res.data.signed
-        app.store.setState({
-          signdays: res.data.sign_days
-        })
-        app.setSignIn({ status: sign, count: sign ? 1 : this.data.$state.signStatus.count }, true)
+        if(res.code == 1) {
+          let sign = res.data && res.data.signed
+          app.store.setState({
+            signdays: res.data.sign_days
+          })
+          app.setSignIn({ status: sign, count: sign ? 1 : this.data.$state.signStatus.count }, true)
+        }
       })
       await app.user.share({}).then(res => {
-        app.setShare(res)
+        if(res.code == 1) {
+          app.setShare(res)
+        }
       })
       this.init()
       this.integrationTime()
@@ -404,10 +408,12 @@ Page({
       })
     } else {
       app.user.sign().then(res => {
-        console.log('签到成功')
-        app.store.setState({
-          signdays: res.data.sign_days
-        })
+        if(res.code == 1) {
+          console.log('签到成功')
+          app.store.setState({
+            signdays: res.data.sign_days
+          })
+        }
       })
     }
   },
