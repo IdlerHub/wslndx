@@ -17,7 +17,7 @@
     </view>
   </view>
   <view class="centerBox">
-    <button class="centerTop" hover-class="none" open-type="contact">
+    <button class="centerTop" hover-class="none" session-from='{"name": "{{$state.userInfo.nickname}}","avatarUrl":"{{$state.userInfo.avatar}}"}' open-type="contact">
       <text>联系客服，快速提现到账</text>
       <image src="/images/vedioRight.png"></image>
     </button>
@@ -40,7 +40,7 @@
      <view class="number" style="font-size: 40rpx;margin-top: 160rpx;" wx:else>
       提现金额不足{{toastMsg.num}}元
      </view>
-     <button class="button" hover-class="none" open-type="contact" wx:if="{{toastMsg.status}}" >联系客服，快速提现到账</button>
+     <button class="button" hover-class="none" open-type="contact" wx:if="{{toastMsg.status}}" session-from='{"name": "{{$state.userInfo.nickname}}","avatarUrl":"{{$state.userInfo.avatar}}"}' >联系客服，快速提现到账</button>
      <navigator class="button" hover-class="none" url="/pages/invitation/invitation?type=withdraw" open-type="navigate" wx:else >去赚钱，邀请好友</navigator>
      <icon type="cancel" size="46" color="white" data-id="0" catchtap="close" class="cancel"></icon>
    </view>

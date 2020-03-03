@@ -115,7 +115,8 @@
     <text class="prizrbox-gifttitle"> {{lotteryres.title}}</text>
     <button class="prizrbox-button" open-type="contact" bindcontact="handleContact" show-message-card
       send-message-title="{{ lotteryres.title  +  '奖品序号' + lotteryres.record_id}}"
-      send-message-img="{{lotteryres.image}}" wx:if="{{lotteryres.get_type == 1}}" catchtap="closeToast">联系客服兑换
+      send-message-img="{{lotteryres.image}}" wx:if="{{lotteryres.get_type == 1}}" catchtap="closeToast"
+      session-from='{"name": "{{$state.userInfo.nickname}}","avatarUrl":"{{$state.userInfo.avatar}}"}'>联系客服兑换
     </button>
     <view class="prizrbox-button" style="width:200px;margin-left:-100px" catchtap="toWinprize"
       wx:if="{{lotteryres.get_type == 2}}">立即领取</view>

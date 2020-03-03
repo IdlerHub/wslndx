@@ -63,7 +63,7 @@
       <image src="{{ $state.imgHost }}/useraddquan.png" class="iconfont"></image>
       <text>加入圈子</text>
     </navigator>
-    <button class="nav" open-type="contact" bindcontact="handleContact">
+    <button class="nav" open-type="contact" bindcontact="handleContact" session-from='{"name": "{{$state.userInfo.nickname}}","avatarUrl":"{{$state.userInfo.avatar}}"}'>
       <image src="{{ $state.imgHost }}/userkefu.png" class="iconfont"></image>
       <text>联系客服</text>
     </button>
