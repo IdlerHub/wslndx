@@ -103,7 +103,6 @@ Page({
     console.log(list)
     if(list[1]){
       if (list[1].route == "pages/vote/vote" || list[0].route == 'pages/vote/vote') {
-        console.log(list, list.length - 1)
         console.log("票选首页", list[1])
         wx.navigateBack({
           delta: list.length - 2
