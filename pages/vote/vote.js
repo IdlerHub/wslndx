@@ -66,6 +66,7 @@ Page({
         })
       } else {
         let index = e.currentTarget.dataset.index
+        let work = this.data.productionList[index]
         this.setLikeData(index);
         let params = {
           id: e.currentTarget.dataset.id,
