@@ -9,6 +9,7 @@ Page({
     guideFlag: [0,0,0],    //引导显示状态
     shareFlag: false,
     sharePoster: false,
+    overTime: 0,      //活动是否过期  0=未过期,1=已过期
     supportFlag: 0,   //点赞权限
     zanFlag: false, //点赞动画
     waitingFlag: false,
@@ -53,32 +54,36 @@ Page({
   },
   giveLike(e){
     console.log('我给你点赞', this.data.supportFlag)
+    //step  活动是否过期
     // step1 判断今天是否点赞过
     // step2  作品点赞数添加 （修改data中数据），不刷新页面
-    if (this.data.supportFlag == 0) {
-      //提示
+    if(this.data.overTime == 1){
       wx.showToast({
-        title: "您今日已点赞,请明日再来",
+        title: "活动已过期,无法点赞",
         icon: "none",
         duration: 1500
       })
-    } else {
-      console.log("点赞了")
-      let work = this.data.item
-      work.prise_numbers += 1;
-      work.is_praise = 1;
-      this.setData({
-        item: work,
-        supportFlag: 0,
-        zanFlag: true
-      })
-      // let params = { //
-      //   id: e.currentTarget.dataset.id,
-      //   type: this.data.item.hoc_id
-      // }
-      // this.praiseOpus(params)
-      // console.log('点赞', params)
+    }else{
+      if (this.data.supportFlag == 0) {
+        //提示
+        wx.showToast({
+          title: "您今日已点赞,请明日再来",
+          icon: "none",
+          duration: 1500
+        })
+      } else {
+        console.log("点赞了")
+        let work = this.data.item
+        work.prise_numbers += 1;
+        work.is_praise = 1;
+        this.setData({
+          item: work,
+          supportFlag: 0,
+          zanFlag: true
+        })
+      }
     }
+    
   },
   praiseOpus(params) {
     app.vote.praiseOpus(params).then(res => {
@@ -166,7 +171,8 @@ Page({
       this.setData({
         item: res.data,
         supportFlag: res.data.have_praise,
-        guideFlag: [!temp, 0, 0]
+        guideFlag: [!temp, 0, 0],
+        overTime: res.data.over_time
       })
       console.log(this.data.guideFlag)
       let title = this.data.item.name

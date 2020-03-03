@@ -38,31 +38,41 @@ Page({
   },
   giveLike(e) { //点赞
     console.log('我给你点赞',this.data.supportFlag)
+    //step 活动是否过期
     // step1 判断今天是否点赞过
     // step2  作品点赞数添加 （修改data中数据），不刷新页面
-    if (this.data.supportFlag==0) {
-      //提示
+    if(this.data.overTime == 1){
       wx.showToast({
-        title: "您今日已经点赞过了哦",
+        title: "活动已过期,无法点赞",
         icon: "none",
         duration: 1500
       })
-    } else {
-      let index = e.currentTarget.dataset.index
-      let work = this.data.productionList[index]
-      work.prise_numbers += 1
-      let key = 'productionList[' + index + ']'
-      this.setData({
-        [key]: work,
-        supportFlag: 0
-      })
-      let params = {
-        id: e.currentTarget.dataset.id,
-        type: work.hoc_id //需要作品带的type
+    }else {
+      if (this.data.supportFlag == 0) {
+        //提示
+        wx.showToast({
+          title: "您今日已经点赞过了哦",
+          icon: "none",
+          duration: 1500
+        })
+      } else {
+        let index = e.currentTarget.dataset.index
+        let work = this.data.productionList[index]
+        work.prise_numbers += 1
+        let key = 'productionList[' + index + ']'
+        this.setData({
+          [key]: work,
+          supportFlag: 0
+        })
+        let params = {
+          id: e.currentTarget.dataset.id,
+          type: work.hoc_id //需要作品带的type
+        }
+        this.praiseOpus(params)
+        console.log('点赞', params)
       }
-      this.praiseOpus(params)
-      console.log('点赞',params)
     }
+    
   },
   changeclassify(e) { //切换分类
     let index = e.currentTarget.dataset.index
@@ -111,7 +121,8 @@ Page({
       this.setData({
         productionList: data,
         page: page,
-        supportFlag: res.data.have_praise
+        supportFlag: res.data.have_praise,
+        overTime: res.data.over_time
       })
     })
     //xhr (selectedIndex , page)

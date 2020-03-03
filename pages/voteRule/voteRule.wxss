@@ -1,6 +1,7 @@
 /* pages/voteRule/voteRule.wxss */
 .voteRule-content{
-    margin-top: 39rpx;
+    /* margin-top: 39rpx; */
+    margin: 39rpx 30rpx;
 }
 .voteRule-content .title{
     height:56rpx;
