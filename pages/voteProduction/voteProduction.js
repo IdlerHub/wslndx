@@ -12,7 +12,6 @@ Page({
     modality: ["图片", "视频"],
     modalityIndex: 0,
     imgList: [],
-    poster: "",
     video: ""
   },
   changeName(e) {
