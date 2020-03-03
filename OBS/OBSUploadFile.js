@@ -1,7 +1,7 @@
 /*
  * @Date: 2019-12-20 10:54:37
  * @LastEditors: hxz
- * @LastEditTime: 2020-03-02 18:30:44
+ * @LastEditTime: 2020-03-03 18:15:54
  */
 const getPolicyEncode = require("./getPolicy.js");
 const getSignature = require("./GetSignature.js");
@@ -114,7 +114,10 @@ const OBSupload = async function(dir, filePath, type) {
   } = store.getState().security;
   const fileName = cacheUrl(dir, checkRes.type); //指定上传到OBS桶中的对象名
   const redirects = {
-    image: "https://lndxcallbackdev.jinlingkeji.cn/tool/moderationImage",
+    image:
+      store.process == "production"
+        ? "https://lndxcallbackpro.jinlingkeji.cn/tool/moderationImage"
+        : "https://lndxcallbackdev.jinlingkeji.cn/tool/moderationImage",
     video: getApp().API_URL + "h5opus/putUploadVideo"
   };
 
