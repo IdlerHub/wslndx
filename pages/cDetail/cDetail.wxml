@@ -38,7 +38,7 @@
 					</view>
 				</view>
 				<view class="right">
-					<view class="attension" wx:if="{{!item.is_follow}}" data-index="{{index}}" data-userid="{{item.uid}}" data-name="{{item.nickname}}" catchtap="attention">关注</view>
+					<view class="attension" wx:if="{{!item.is_follow && $state.userInfo.id != item.uid}}" data-index="{{index}}" data-userid="{{item.uid}}" data-name="{{item.nickname}}" catchtap="attention">关注</view>
 					<view class="collect" catchtap="collect" data-id="{{item.id}}" data-status="{{item.collectstatus}}" data-index="{{index}}" data-userid="{{item.uid}}" data-follow="{{item.is_follow}}" data-name="{{item.nickname}}">...</view>
 				</view>
 			</view>
@@ -99,7 +99,7 @@
 </view>
 <view class="ActionSheet" wx:if="{{showSheet}}" bindtap="closeSheet">
 	<view class="ActionSheet-box">
-		<view class="ActionSheet-item" catchtap="{{is_follow ? 'clsocancelFollowing' : 'attention'}}">
+		<view class="ActionSheet-item" catchtap="{{is_follow ? 'clsocancelFollowing' : 'attention'}}" wx:if="{{flowId != $state.userInfo.id}}" >
 			{{is_follow ? '取消关注' : '关注'}}
 		</view>
 		<view class="ActionSheet-item" catchtap="{{collectstatus ? 'cancelCollection' : 'setCollect'}}">

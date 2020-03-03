@@ -279,7 +279,7 @@
 <navBar path="post" />
 <view class="ActionSheet" wx:if="{{showSheet}}" bindtap="closeSheet">
 	<view class="ActionSheet-box">
-		<view class="ActionSheet-item" catchtap="{{is_follow ? 'clsocancelFollowing' : 'attention'}}">
+		<view class="ActionSheet-item" catchtap="{{is_follow ? 'clsocancelFollowing' : 'attention'}}" wx:if="{{flowId != $state.userInfo.id}}">
 			{{is_follow ? '取消关注' : '关注'}}
 		</view>
 		<view class="ActionSheet-item" catchtap="{{collectstatus ? 'cancelCollection' : 'setCollect'}}">

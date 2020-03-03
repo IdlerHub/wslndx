@@ -1138,4 +1138,9 @@ Page({
       }
     })
   },
+  closeSheet() {
+    this.setData({
+      showSheet: false
+    })
+  },
 })
