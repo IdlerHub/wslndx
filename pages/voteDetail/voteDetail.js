@@ -47,11 +47,11 @@ Page({
     this.setData({
       zanFlag: false
     })
-    let params = {
-      id: e.currentTarget.dataset.id,
-      type: this.data.item.hoc_id
-    }
-    this.praiseOpus(params)
+    wx.showToast({
+      title: "今日点赞成功",
+      icon: "none",
+      duration: 2500
+    })
   },
   giveLike(e){
     console.log('我给你点赞', this.data.supportFlag)
@@ -83,6 +83,11 @@ Page({
           supportFlag: 0,
           zanFlag: true
         })
+        let params = {
+          id: e.currentTarget.dataset.id,
+          type: this.data.item.hoc_id
+        }
+        this.praiseOpus(params)
       }
     }
   },
@@ -90,11 +95,7 @@ Page({
     let that = this;
     app.vote.praiseOpus(params).then(res => {
       console.log('点赞成功',res)
-      wx.showToast({
-        title: "今日点赞成功",
-        icon: "none",
-        duration: 2500
-      })
+      
       let list = getCurrentPages();
       const page = list[list.length - 2];
       if (page.route == 'pages/vote/vote') {
@@ -103,6 +104,11 @@ Page({
       }
     }).catch(err => {
       console.log(err)
+      wx.showToast({
+        title: "网络波动过大",
+        icon: "none",
+        duration: 2500
+      })
     })
   },
   unshare(){

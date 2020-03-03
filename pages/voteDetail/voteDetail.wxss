@@ -133,7 +133,7 @@
 }
 .info-right{
     position: absolute;
-    bottom: 52rpx;
+    bottom: 72rpx;
     right: 0;
 }
 .zan,.share{
