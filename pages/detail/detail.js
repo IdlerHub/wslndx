@@ -253,6 +253,13 @@ Page({
       playing: false,
       sublessons: this.data.sublessons
     });
+    wx.setStorage({
+      key: "lessonProgress",
+      data: {
+        id: this.data.cur.id,
+        time: 0
+      }
+    });
     let param = {
       lesson_id: this.data.detail.id,
       sublesson_id: this.data.cur.id
