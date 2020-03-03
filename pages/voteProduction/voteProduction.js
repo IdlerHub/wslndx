@@ -103,7 +103,6 @@ Page({
           }
         })
         .catch(err => {
-          console.log(err);
           if (err != "type") {
             wx.showToast({
               icon: "none",
@@ -132,7 +131,6 @@ Page({
           }
         })
         .catch(err => {
-          console.log(err);
           if (err != "type") {
             wx.showToast({
               icon: "none",
@@ -199,8 +197,7 @@ Page({
       object_key: video || ""
     };
 
-    http.uploadOpus(params).then(res => {
-      //console.log("上传状态", res);
+    http.uploadOpus(params).then(res => { //上传状态
       wx.redirectTo({
         url: "/pages/voteSuccess/voteSuccess"
       });

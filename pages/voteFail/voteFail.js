@@ -10,6 +10,6 @@ Page({
     })
   },
   onLoad(options){
-    console.log(options.item)
+    // console.log(options.item)
   }
 })

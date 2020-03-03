@@ -46,7 +46,6 @@ Page({
     })
   },
   giveLike(e) { //点赞
-    console.log('我给你点赞',this.data.supportFlag)
     //step 活动是否过期
     // step1 判断今天是否点赞过
     // step2  作品点赞数添加 （修改data中数据），不刷新页面
@@ -73,7 +72,6 @@ Page({
           type: work.hoc_id //需要作品带的type
         }
         this.praiseOpus(params)
-        console.log('点赞', params)
       }
     }
     
@@ -103,7 +101,6 @@ Page({
   },
   getNewestOpus(){  //获取最新作品
     app.vote.getNewestOpus().then(res => {
-      console.log(res)
       this.setData({
         newProduction: res.data
       })
@@ -116,7 +113,6 @@ Page({
     }
     let data = []
     app.vote.getOpusList(params).then(res=>{
-      console.log(res)
       if(page==1){
         data = res.data.data;
       }else{
@@ -144,7 +140,6 @@ Page({
   },
   praiseOpus(params){
     app.vote.praiseOpus(params).then(res=>{
-      console.log(res)
       wx.showToast({
         title: "今日已点赞成功",
         icon: "none",
@@ -171,7 +166,6 @@ Page({
     // this.getCategory();
     // this.getdata(1);
     // this.getNewestOpus();
-    console.log("下拉刷新")
     this.init().then(()=>{
       wx.stopPullDownRefresh()
     })

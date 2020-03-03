@@ -43,7 +43,6 @@ Page({
   onLoad(){
     let pages = getCurrentPages();
     this.beforePage = pages[0];
-    console.log("页面路径??",pages)
     this.getCategory()
   }
 })
