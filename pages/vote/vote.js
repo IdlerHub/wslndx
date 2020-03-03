@@ -28,12 +28,21 @@ Page({
   },
   toDetail(e) { //作品详情页
     wx.navigateTo({
-      url: "/pages/voteDetail/voteDetail?voteid=" + e.currentTarget.dataset.id
+      url: "/pages/voteDetail/voteDetail?voteid=" + e.currentTarget.dataset.id + '&index=' + e.currentTarget.dataset.index
     })
   },
   toSearch(){
     wx.navigateTo({
       url: "/pages/voteSearch/voteSearch"
+    })
+  },
+  setLikeData(index){
+    let work = this.data.productionList[index]
+    work.prise_numbers += 1
+    let key = 'productionList[' + index + ']'
+    this.setData({
+      [key]: work,
+      supportFlag: 0
     })
   },
   giveLike(e) { //点赞
@@ -51,19 +60,13 @@ Page({
       if (this.data.supportFlag == 0) {
         //提示
         wx.showToast({
-          title: "您今日已经点赞过了哦",
+          title: "您今日已点赞,请明日再来",
           icon: "none",
           duration: 1500
         })
       } else {
         let index = e.currentTarget.dataset.index
-        let work = this.data.productionList[index]
-        work.prise_numbers += 1
-        let key = 'productionList[' + index + ']'
-        this.setData({
-          [key]: work,
-          supportFlag: 0
-        })
+        this.setLikeData(index);
         let params = {
           id: e.currentTarget.dataset.id,
           type: work.hoc_id //需要作品带的type
@@ -78,6 +81,7 @@ Page({
     let index = e.currentTarget.dataset.index
     let type = e.currentTarget.dataset.type
     if (index != this.data.selectedIndex) {
+      this.getCategory()
       this.setData({
         selectedIndex: index,
         type: type
@@ -141,7 +145,7 @@ Page({
     app.vote.praiseOpus(params).then(res=>{
       console.log(res)
       wx.showToast({
-        title: "今日点赞成功,请明日再来",
+        title: "今日已点赞成功",
         icon: "none",
         duration: 2500
       })

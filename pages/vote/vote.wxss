@@ -190,6 +190,12 @@ page{
     flex-flow: column;
     justify-content: center;
     align-items: center;
+
+    font-size:36rpx;
+    font-family:PingFangSC-Regular,PingFang SC;
+    font-weight:400;
+    color:rgba(0,161,255,1);
+    line-height:50rpx;
 }
 .vote-none .none-con image{
     width: 100rpx;
