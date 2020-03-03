@@ -34,7 +34,7 @@ function handle(req,res) {
       break;
     case 500:
       wx.showToast({
-        title: "系统正在维护，请耐心等待",
+        title: "系统正在维护，请稍后重试",
         icon: "none",
         duration: 2000
       });

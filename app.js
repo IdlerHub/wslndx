@@ -473,7 +473,7 @@ App({
         "/pages/index/index?uid=" +
         this.store.$state.userInfo.id +
         "&type=invite&activity=1",
-      imageUrl: this.store.$state.imgHost + "/withdrawShareImg.jpg"
+      imageUrl: "https://hwcdn.jinlingkeji.cn/images/dev/withdrawShareImg.jpg"
     };
   },
   getSecureToken() {
