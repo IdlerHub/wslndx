@@ -556,7 +556,7 @@ Page({
     }
     console.log(imgUrl)
     return {
-      title: '网上老年大学',
+      title: '抗击疫情,"艺"起加油',
       path: '/pages/voteDetail/voteDetail?voteid=' + id + '&type=share&vote=0&uid=' + uid,  // 路径，传递参数到指定页面。
       imageUrl: imgUrl,
      success: function (res) {
