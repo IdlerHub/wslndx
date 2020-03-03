@@ -3,6 +3,7 @@ const app = getApp()
 let videoCtx = null;
 Page({
   data: {
+    hocIndex: Number,
     current: 0,
     pause: false,
     zan: false,
@@ -57,6 +58,7 @@ Page({
     //step  活动是否过期
     // step1 判断今天是否点赞过
     // step2  作品点赞数添加 （修改data中数据），不刷新页面
+    
     if(this.data.overTime == 1){
       wx.showToast({
         title: "活动已过期,无法点赞",
@@ -83,9 +85,9 @@ Page({
         })
       }
     }
-    
   },
   praiseOpus(params) {
+    let that = this;
     app.vote.praiseOpus(params).then(res => {
       console.log('点赞成功',res)
       wx.showToast({
@@ -93,6 +95,12 @@ Page({
         icon: "none",
         duration: 2500
       })
+      let list = getCurrentPages();
+      const page = list[list.length - 2];
+      if (page.route == 'pages/vote/vote') {
+        console.log("首页的数据修改")
+        page.setLikeData(that.data.hocIndex);
+      }
     }).catch(err => {
       console.log(err)
     })
@@ -513,6 +521,12 @@ Page({
       this.getOpusInfo(options.voteid);
     }else{
       console.log("没有用户信息,即新用户")
+    }
+    if(options.index){
+      console.log("选中的index",options.index)
+      this.setData({
+        hocIndex: options.index
+      })
     }
     wx.hideShareMenu();
   },
