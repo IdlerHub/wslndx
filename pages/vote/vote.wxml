@@ -36,7 +36,7 @@
                 </block>
             </scroll-view>
         </view>
-        <block wx:if="{{productionList}}">
+        <block wx:if="{{productionList.length}}">
             <view class="vote-list">
                 <block wx:for="{{productionList}}" wx:key="index">
                     <view class="vote-item">

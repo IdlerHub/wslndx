@@ -1,7 +1,8 @@
 <!--pages/voteRule/voteRule.wxml-->
 <view class="voteRule">
     <view class="voteRule-content">
-        <view class="title">活动规则</view>
-        <view class="text">{{text}}</view>
+        <!-- <view class="title">活动规则</view> -->
+        <!-- <view class="text">{{text}}</view> -->
+        <rich-text nodes="{{  rule }}"></rich-text>
     </view>
 </view>

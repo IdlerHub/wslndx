@@ -9,6 +9,7 @@ Page({
     guideFlag: [0,0,0],    //引导显示状态
     shareFlag: false,
     sharePoster: false,
+    overTime: 0,      //活动是否过期  0=未过期,1=已过期
     supportFlag: 0,   //点赞权限
     zanFlag: false, //点赞动画
     waitingFlag: false,
@@ -53,32 +54,36 @@ Page({
   },
   giveLike(e){
     console.log('我给你点赞', this.data.supportFlag)
+    //step  活动是否过期
     // step1 判断今天是否点赞过
     // step2  作品点赞数添加 （修改data中数据），不刷新页面
-    if (this.data.supportFlag == 0) {
-      //提示
+    if(this.data.overTime == 1){
       wx.showToast({
-        title: "您今日已点赞,请明日再来",
+        title: "活动已过期,无法点赞",
         icon: "none",
         duration: 1500
       })
-    } else {
-      console.log("点赞了")
-      let work = this.data.item
-      work.prise_numbers += 1;
-      work.is_praise = 1;
-      this.setData({
-        item: work,
-        supportFlag: 0,
-        zanFlag: true
-      })
-      // let params = { //
-      //   id: e.currentTarget.dataset.id,
-      //   type: this.data.item.hoc_id
-      // }
-      // this.praiseOpus(params)
-      // console.log('点赞', params)
+    }else{
+      if (this.data.supportFlag == 0) {
+        //提示
+        wx.showToast({
+          title: "您今日已点赞,请明日再来",
+          icon: "none",
+          duration: 1500
+        })
+      } else {
+        console.log("点赞了")
+        let work = this.data.item
+        work.prise_numbers += 1;
+        work.is_praise = 1;
+        this.setData({
+          item: work,
+          supportFlag: 0,
+          zanFlag: true
+        })
+      }
     }
+    
   },
   praiseOpus(params) {
     app.vote.praiseOpus(params).then(res => {
@@ -99,9 +104,26 @@ Page({
   },
   toVote(){
     console.log(111)
-    wx.navigateTo({
-      url: "/pages/vote/vote"
-    })
+    let list = getCurrentPages();
+    console.log(list)
+    if(list[1]){
+      if (list[1].route == "pages/vote/vote") {
+        console.log("票选首页", list[1])
+        wx.navigateBack({
+          delta: list.length - 2
+        })
+      } else if (list[0].route == 'pages/vote/vote'){
+        console.log("这是分享进来的",list)
+        wx.navigateBack({
+          delta: list.length
+        })
+      }
+    }else{
+      wx.reLaunch({
+        url: "/pages/vote/vote"
+      })
+    }
+    
   },
   toJoin(){
     wx.navigateTo({
@@ -136,6 +158,11 @@ Page({
       pause: false
     })
   },
+  videoend(){ //播放结束
+    this.setData({
+      pause: true
+    })
+  },
   getOpusInfo(id){
     let params = { id: id }
     app.vote.getOpusInfo(params).then(res=>{
@@ -144,11 +171,16 @@ Page({
       this.setData({
         item: res.data,
         supportFlag: res.data.have_praise,
-        guideFlag: [!temp, 0, 0]
+        guideFlag: [!temp, 0, 0],
+        overTime: res.data.over_time
       })
       console.log(this.data.guideFlag)
+      let title = this.data.item.name
+      if (title.length> 10){  //标题过长
+        title = title.substr(0,10) + '...'
+      }
       wx.setNavigationBarTitle({
-        title: this.data.item.name
+        title: title
       })
       //如果是视频就自动播放
     })
@@ -335,7 +367,8 @@ Page({
     ctx.restore();    //恢复限制
     //分享图片
     ctx.rect(30 / v, 157 / v, 570 / v, 380 / v)
-
+    ctx.lineJoin = "round";
+    ctx.lineWidth = 20 / v;
     //作品图片
     let worksImg = this.data.showImg || '/images/vote-wei.png';
     ctx.drawImage(
@@ -363,29 +396,64 @@ Page({
     ctx.setFillStyle('white')
     console.log('长度长度长度',this.data.shareInfo.opus_content.length)
     //可以尝试切割字符串,循环数组,达到换行的效果
+    let info = this.data.shareInfo.opus_content;
     let len = 0;
-    for (var a = 0; a < 3; a++) {
-      let content = this.data.shareInfo.opus_content.substr(len, 15)
-      len += 15;
+    if (info.length > 15 && info.length < 30) {
+      console.log("在三行之内")
+      for (var a = 0; a < 2; a++) {
+        let content = info.substr(len, 15)
+        len += 15;
+        ctx.fillText(
+          content,
+          30 * ratio,
+          (658 + a * 48) / v,
+        )
+      }
+    } else if (info.length > 30){
+      console.log("超过了三行")
+      let con1 = info.substr(len, 15);
+      let con2 = info.substr(15,14) + '...'
       ctx.fillText(
-        content,
+        con1,
         30 * ratio,
-        (658 + a * 48) / v,
+        658 / v,
+      )
+      ctx.fillText(
+        con2,
+        30 * ratio,
+        (658 + 48) / v,
+      )
+      // for (var a = 0; a < 2; a++) {
+      //   let content = info.substr(len, 15)
+      //   len += 15;
+      //   ctx.fillText(
+      //     content,
+      //     30 * ratio,
+      //     (658 + a * 48) / v,
+      //   )
+      // }
+    }else{
+      console.log("就一行")
+      ctx.fillText(
+        info,
+        30 * ratio,
+        658 / v,
       )
     }
+    
     ctx.restore();
 
     //二维码
     ctx.save();
     ctx.setFillStyle('white');
-    ctx.lineJoin = "round";
-    ctx.lineWidth = 20 / v;
+    // ctx.lineJoin = "round";
+    // ctx.lineWidth = 20 / v;
 
-    ctx.fillRect(0 / v, 788 / v, 630 / v, 235 / v);
+    ctx.fillRect(0 / v, 740 / v, 630 / v, 235 / v);
     ctx.drawImage(
       this.data.code,
       30 / v,
-      821 / v,
+      761 / v,
       153 / v,
       153 / v
     )
@@ -393,13 +461,13 @@ Page({
     ctx.setFillStyle('#666666')
     ctx.fillText(
       '长按识别二维码',
-      230 / v,
-      886 / v
+      210 / v,
+      826 / v
     )
     ctx.fillText(
       '为好友加油,一起参赛!',
-      230 / v,
-      937 / v
+      210 / v,
+      877 / v
     )
     // ctx.setFillStyle('white');
     // ctx.fill();
@@ -412,10 +480,10 @@ Page({
         wx.canvasToTempFilePath({
           x: 0,
           y: 0,
-          width: 375,
-          height: 680,
-          destWidth: 375 * 750 / windowWidth,
-          destHeight: 680 * 750 / windowWidth,
+          width: 315,
+          height: 470,
+          destWidth: 315 * 750 / windowWidth,
+          destHeight: 470 * 750 / windowWidth,
           canvasId: "poster",
           // fileType: 'jpg',  //如果png的话，图片存到手机可能有黑色背景部分
           success(res) {
@@ -446,16 +514,27 @@ Page({
     }else{
       console.log("没有用户信息,即新用户")
     }
+    wx.hideShareMenu();
   },
   onShareAppMessage(ops){
     console.log(ops)
-    let id = this.data.item.id
+    let item = this.data.item;
+    let id = item.id
     let uid = wx.getStorageSync('userInfo').id;
-    let imgUrl = this.data.item.banner_image || this.data.item.url[0] || none;
+    let imgUrl = this.data.imgs;
+    if(item.type==2){
+      imgUrl = item.banner_image;
+      console.log("视频图片", imgUrl)
+    }else if(item.type==1){
+      console.log("图片")
+      imgUrl = item.url[0]
+    }
+    
     if (ops.from === 'button') {
       // 来自页面内转发按钮
       console.log(ops.target)
     }
+    console.log(imgUrl)
     return {
       title: '网上老年大学',
       path: '/pages/voteDetail/voteDetail?voteid=' + id + '&type=share&vote=0&uid=' + uid,  // 路径，传递参数到指定页面。

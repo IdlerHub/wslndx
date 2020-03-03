@@ -297,6 +297,7 @@ page{
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+    min-height: 50rpx;
 }
 .item-footer{
     margin: 20rpx;

@@ -13,7 +13,7 @@
         </swiper>
     </block>
     <block wx:else>
-        <video class="video" id="videoWorks" src="{{item.url}}" controls="{{false}}" autoplay="{{true}}" loop="{{false}}" bindplay="videoplay" bindtap="controlVideo" />
+        <video class="video" id="videoWorks" src="{{item.url}}" controls="{{false}}" autoplay="{{true}}" loop="{{false}}" bindended="videoend" bindplay="videoplay" bindtap="controlVideo" />
         <view wx:if="{{ pause }}" class="pause-img" bindtap="controlVideo">
             <image mode="aspectFill" src="/images/play-hl.png"/>
         </view>
@@ -26,6 +26,7 @@
     <view class="praising-red" wx:if="{{zanFlag}}">
         <view class="ani-red" data-id="{{item.id}}" bindanimationend="aniend" style="background-image: url('{{$state.imgHost}}/zan-red.png')"></view>
     </view>
+    <view class="footer-bg"></view>
     <view class="footer-info">
         <view class="info-left">
             <view class="user-info">
