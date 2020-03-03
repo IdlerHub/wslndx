@@ -23,27 +23,22 @@ Page({
     shareInfo: {}   //海报信息
   },
   nextGuide(e){
-    console.log(e)
     if(e.currentTarget.dataset.guide == "first"){
       this.setData({
         guideFlag: [1,1,0]
       })
-      console.log("第一步引导完成,进入下一步引导")
     } else if(e.currentTarget.dataset.guide == "second"){
-      console.log("第二步引导完成,进入最后一步引导")
       this.setData({
         guideFlag: [1, 1, 1]
       })
     }else{
-      console.log("完成引导")
       this.setData({
         guideFlag: [0, 1, 1]
       })
       app.vote.noteGuide();
     }
   },
-  aniend(e){
-    console.log("动画播放结束")
+  aniend(e){  //动画播放结束
     this.setData({
       zanFlag: false
     })
@@ -54,11 +49,9 @@ Page({
     })
   },
   giveLike(e){
-    console.log('我给你点赞', this.data.supportFlag)
     //step  活动是否过期
     // step1 判断今天是否点赞过
     // step2  作品点赞数添加 （修改data中数据），不刷新页面
-    
     if(this.data.overTime == 1){
       wx.showToast({
         title: "活动已过期,无法点赞",
@@ -74,7 +67,6 @@ Page({
           duration: 1500
         })
       } else {
-        console.log("点赞了")
         let work = this.data.item
         work.prise_numbers += 1;
         work.is_praise = 1;
@@ -94,16 +86,12 @@ Page({
   praiseOpus(params) {
     let that = this;
     app.vote.praiseOpus(params).then(res => {
-      console.log('点赞成功',res)
-      
       let list = getCurrentPages();
       const page = list[list.length - 2];
       if (page.route == 'pages/vote/vote') {
-        console.log("首页的数据修改")
         page.setLikeData(that.data.hocIndex);
       }
     }).catch(err => {
-      console.log(err)
       wx.showToast({
         title: "网络波动过大",
         icon: "none",
@@ -117,17 +105,13 @@ Page({
     })
   },
   toVote(){
-    console.log(111)
     let list = getCurrentPages();
-    console.log(list)
     if(list[1]){
-      if (list[1].route == "pages/vote/vote") {
-        console.log("票选首页", list[1])
+      if (list[1].route == "pages/vote/vote") { //小程序主页进来的
         wx.navigateBack({
           delta: list.length - 2
         })
-      } else if (list[0].route == 'pages/vote/vote'){
-        console.log("这是分享进来的",list)
+      } else if (list[0].route == 'pages/vote/vote'){ //分享进来的
         wx.navigateBack({
           delta: list.length
         })
@@ -145,29 +129,25 @@ Page({
     })
   },
   changeIndex(e){
-    console.log(e)
     this.setData({
       current: e.detail.current
     })
   },
-  controlVideo(){
+  controlVideo(){ //音频播放
     videoCtx = wx.createVideoContext('videoWorks', this)
     if(this.data.pause){
       videoCtx.play()
       this.setData({
         pause: false
       })
-    console.log("开始播放了",this.data.pause)
     }else{
       videoCtx.pause()
       this.setData({
         pause: true
       })
-      console.log("暂停视频",this.data.pause)
     }
   },
   videoplay(e){ //播放时触发
-    console.log("自动播放")
     this.setData({
       pause: false
     })
@@ -180,7 +160,6 @@ Page({
   getOpusInfo(id){
     let params = { id: id }
     app.vote.getOpusInfo(params).then(res=>{
-      console.log(res)
       let temp = res.data.is_guide;
       this.setData({
         item: res.data,
@@ -188,7 +167,6 @@ Page({
         guideFlag: [!temp, 0, 0],
         overTime: res.data.over_time
       })
-      console.log(this.data.guideFlag)
       let title = this.data.item.name
       if (title.length> 10){  //标题过长
         title = title.substr(0,10) + '...'
@@ -203,7 +181,6 @@ Page({
     let params = { ho_id: ho_id }
     let that = this;
     app.vote.getPosterInfo(params).then(res => {
-      console.log("获取海报信息", res)
       wx.hideLoading()
       this.setData({
         shareFlag: false,
@@ -215,19 +192,15 @@ Page({
       //这里需要下载对应的网络图片资源并且开始绘画canvas
       this.downloadImg(this.data.shareInfo.avatar, 'userImg');
       if (this.data.item.type == 1) {
-        console.log("图片下载")
-        this.downloadImg(this.data.shareInfo.opus_url, 'showImg');
+        this.downloadImg(this.data.shareInfo.opus_url, 'showImg');  //图片下载
       } else {
-        console.log("视频封面下载")
-        this.downloadImg(this.data.shareInfo.opus_banner_image, 'showImg');
+        this.downloadImg(this.data.shareInfo.opus_banner_image, 'showImg'); //视频封面下载
       }
-      console.log("二维码下载")
-      this.downloadImg(this.data.shareInfo.qrcode_url, 'code');
+      this.downloadImg(this.data.shareInfo.qrcode_url, 'code'); //二维码下载
       setTimeout(()=>{
         wx.getSystemInfo({
           success: function (res) {
-            var v = 750 / res.windowWidth;  //手机比例
-            console.log("获取手机比例", v)
+            var v = 750 / res.windowWidth;  //获取手机比例
             that.drawPoster(v)
           }
         })
@@ -240,7 +213,6 @@ Page({
     })
   },
   shareImg(e){ //点击生成海报
-    console.log("生成海报")
     wx.showLoading({
       title: '图片生成中...',
       mask: true
@@ -250,13 +222,11 @@ Page({
     
   },
   savePoster() {    //保存本地
-    console.log('保存到本地')
     let that = this;
     setTimeout(()=>{
       wx.saveImageToPhotosAlbum({
         filePath: that.data.tempImg,
         success(res) {
-          console.log("保存成功")
           wx.showToast({
             title: '保存成功',
             icon: 'success'
@@ -272,8 +242,7 @@ Page({
               showCancel: false,
               success: modalSuccess => {
                 wx.openSetting({
-                  success(settingdata) {
-                    console.log("settingdata", settingdata)
+                  success(settingdata) {  //授权状态
                     if (settingdata.authSetting['scope.writePhotosAlbum']) {
                       wx.showToast({
                         title: '获取权限成功,再次点击即可保存',
@@ -310,27 +279,23 @@ Page({
     wx.downloadFile({
       url: url,
       success: function (res) {
-        switch (data) {
+        switch (data) {//临时路径
           case 'code':
-            console.log('我是二维码：' + res.tempFilePath);
-            that.setData({
+            that.setData({  
               code: res.tempFilePath
             })
             break;
           case 'userImg':
-            console.log('我是头像：' + res.tempFilePath);
             that.setData({
               userImg: res.tempFilePath
             })
             break;
           case 'showImg':
-            console.log('我是封面：' + res.tempFilePath);
             that.setData({
               showImg: res.tempFilePath
             })
             break;
-          default:
-            console.log("没有下载")
+          default:  //没有下载
             break;
         }
       }
@@ -408,12 +373,10 @@ Page({
 
     ctx.setFontSize(36 * ratio);
     ctx.setFillStyle('white')
-    console.log('长度长度长度',this.data.shareInfo.opus_content.length)
     //可以尝试切割字符串,循环数组,达到换行的效果
     let info = this.data.shareInfo.opus_content;
     let len = 0;
-    if (info.length > 15 && info.length < 30) {
-      console.log("在三行之内")
+    if (info.length > 15 && info.length < 30) { //两行以内
       for (var a = 0; a < 2; a++) {
         let content = info.substr(len, 15)
         len += 15;
@@ -423,8 +386,7 @@ Page({
           (658 + a * 48) / v,
         )
       }
-    } else if (info.length > 30){
-      console.log("超过了三行")
+    } else if (info.length > 30){ //超过三行
       let con1 = info.substr(len, 15);
       let con2 = info.substr(15,14) + '...'
       ctx.fillText(
@@ -437,17 +399,7 @@ Page({
         30 * ratio,
         (658 + 48) / v,
       )
-      // for (var a = 0; a < 2; a++) {
-      //   let content = info.substr(len, 15)
-      //   len += 15;
-      //   ctx.fillText(
-      //     content,
-      //     30 * ratio,
-      //     (658 + a * 48) / v,
-      //   )
-      // }
-    }else{
-      console.log("就一行")
+    }else{  //就一行
       ctx.fillText(
         info,
         30 * ratio,
@@ -488,7 +440,6 @@ Page({
     // ctx.draw();
     ctx.restore();
     let windowWidth = wx.getSystemInfoSync().windowWidth;
-    console.log(windowWidth)
     ctx.draw(true, () => {
       let timer = setTimeout(()=>{
         wx.canvasToTempFilePath({
@@ -500,15 +451,13 @@ Page({
           destHeight: 470 * 750 / windowWidth,
           canvasId: "poster",
           // fileType: 'jpg',  //如果png的话，图片存到手机可能有黑色背景部分
-          success(res) {
-            console.log('生成成功回调', res)
+          success(res) {  //生成成功
             that.setData({
               tempImg: res.tempFilePath
             })
             clearTimeout(timer)
           },
-          fail: res => {
-            console.log('生成失败',res)
+          fail: res => {  //生成失败
             clearTimeout(timer)
           }
         },this);
@@ -528,8 +477,7 @@ Page({
     }else{
       console.log("没有用户信息,即新用户")
     }
-    if(options.index){
-      console.log("选中的index",options.index)
+    if(options.index){  //选中的index
       this.setData({
         hocIndex: options.index
       })
@@ -537,24 +485,20 @@ Page({
     wx.hideShareMenu();
   },
   onShareAppMessage(ops){
-    console.log(ops)
     let item = this.data.item;
     let id = item.id
     let uid = wx.getStorageSync('userInfo').id;
     let imgUrl = this.data.imgs;
     if(item.type==2){
       imgUrl = item.banner_image;
-      console.log("视频图片", imgUrl)
     }else if(item.type==1){
-      console.log("图片")
       imgUrl = item.url[0]
     }
     
-    if (ops.from === 'button') {
-      // 来自页面内转发按钮
-      console.log(ops.target)
-    }
-    console.log(imgUrl)
+    // if (ops.from === 'button') {
+    //   // 来自页面内转发按钮
+    //   console.log(ops.target)
+    // }
     return {
       title: '抗击疫情,"艺"起加油',
       path: '/pages/voteDetail/voteDetail?voteid=' + id + '&type=share&vote=0&uid=' + uid,  // 路径，传递参数到指定页面。

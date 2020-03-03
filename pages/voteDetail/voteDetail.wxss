@@ -530,7 +530,7 @@ right: 0;
     height: 510rpx;
     position: absolute;
     right: 14rpx;
-    bottom: 202rpx;
+    bottom: 222rpx;
     /* transform: scale(1.1); */
 }
 
@@ -574,7 +574,7 @@ right: 0;
     height: 367rpx;
     position: absolute;
     right: 14rpx;
-    bottom: 36rpx;
+    bottom: 56rpx;
 }
 .guide-second image{
     width: 564rpx;

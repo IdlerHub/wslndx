@@ -25,8 +25,7 @@ Page({
     })
     this.searchOpus(1);
   },
-  toSearch(e){  //输入结束
-    console.log('最终关键词',e);
+  toSearch(e){  //输入结束后的关键词
     this.setData({
       searchWord: e.detail.value
     })
@@ -50,7 +49,6 @@ Page({
     // }
   },
   delhistory(e){
-    console.log(e)
     let index = e.currentTarget.dataset.index;
     let id = e.currentTarget.dataset.searchid;
     let item = this.data.history;
@@ -59,7 +57,7 @@ Page({
       history: item
     })
     this.delSearchWord(id)
-    console.log("删除当前历史记录",item)
+    // console.log("删除当前历史记录",item)
   },
   clearInput(){
     this.setData({
@@ -76,7 +74,6 @@ Page({
   },
   getSearchWord(){  //搜索记录
     app.vote.getSearchWord().then(res=>{
-      console.log(res)
       this.setData({
         history: res.data
       })
@@ -99,7 +96,6 @@ Page({
         productionList: data,
         page: page,
       })
-      console.log(res)
     })
   },
   onLoad(){
