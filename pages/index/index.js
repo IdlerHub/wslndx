@@ -232,8 +232,11 @@ Page({
     })
   },
   getCategory() {
+    this.setData({
+      currentTab: 0,
+    })
     this.categoryParams = {}
-    app.user.getLessonCategory().then(msg => {
+    return app.user.getLessonCategory().then(msg => {
       if (msg.code == 1) {
         let arr = this.data.nav.slice(0, 1)
         msg.data.user_lesson_category.forEach((i, index) => {
