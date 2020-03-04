@@ -31,7 +31,6 @@ Page({
   },
   //options(Object)
   onLoad: function (options) {
-    console.log(options)
     options.type !== 'index' ? this.setData({
       showHome: true
     }) : this.setData({
@@ -259,7 +258,6 @@ Page({
         })
       }
       this.data.newbie.forEach((item, index) => {
-        // console.log(this.data.$state.taskStatus[item.showStatus.name])
         if (this.data.$state.taskStatus[item.showStatus.name] == 0) {
           brr.push(this.data.newbie[index])
         }
@@ -277,7 +275,6 @@ Page({
       if (res.code == 1) {
         res.data.lists.forEach(v => {
           v.time = app.util.formatTime(new Date(v.createtime * 1000))
-          console.log(v.time)
         })
         if (this.params.page == 1) {
           /* 每天分享课程最多3次获取学分 */
@@ -555,7 +552,6 @@ Page({
   },
   toMessage(e) {
     let item = e.currentTarget.dataset.item
-    console.log(item)
     wx.navigateTo({
       url: '/pages/giftMessage/giftMessage?totalPoints=' + this.data.totalPoints,
       success: function (res) {

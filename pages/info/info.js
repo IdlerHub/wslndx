@@ -131,7 +131,6 @@ Page({
     this.setData({
       "param.age": this.data.age[e.detail.value]
     })
-    console.log()
     this.submit()
   },
   setUserinfo(param) {
@@ -183,7 +182,6 @@ Page({
       }
       this.setUserinfo(param)
     }
-    console.log(e.detail.value)
   },
   focus() {
     this.setData({

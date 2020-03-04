@@ -435,7 +435,6 @@ Page({
                   that.recordAddVedio(param);
                   wx.offNetworkStatusChange()
                 } else if (res.cancel) {
-                  console.log("用户点击取消");
                 }
               }
             })
@@ -637,7 +636,6 @@ Page({
       return this.menuAppShare();
     }
     if (ops.from === "button") {
-      console.log("ShareAppMessage  button");
       app.classroom.share({
         lesson_id: this.data.id,
         sublesson_id: this.data.cur.id
@@ -1141,13 +1139,11 @@ Page({
         scope: "scope.record",
         success() {
           // 用户已经同意小程序使用录音功能，后续调用 wx.startRecord 接口不会弹窗询问
-          console.log("succ auth");
           app.store.setState({
             authRecord: true
           });
         },
         fail() {
-          console.log("fail auth");
           app.store.setState({
             authRecordfail: true
           });
@@ -1164,7 +1160,6 @@ Page({
         });
       },
       fail(res) {
-        console.log("fail");
       }
     });
   },

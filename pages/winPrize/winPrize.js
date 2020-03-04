@@ -42,7 +42,6 @@ Page({
   },
   // 领取学分 
   conversion(e) {
-    console.log(e)
     if (e.currentTarget.dataset.finish == 1) return
     let param = {
       id: e.currentTarget.dataset.id

@@ -4,7 +4,7 @@ const app = getApp()
 Page({
   data: {
     list: [],
-    cur:{},
+    cur: {},
     tip: true,
     vid: "short-video" + Date.now(),
     top: 20,
@@ -114,7 +114,6 @@ Page({
   //获取是否红包奖励
   shortvideoAward() {
     return app.video.shortvideoAward().then(res => {
-      console.log(res)
       if (res.code == 1) {
         this.setData({
           isshowRed: res.data.today_first
@@ -161,12 +160,11 @@ Page({
   },
   vedioRecordAdd() {
     let param = { shortvideo_id: this.data.cur.id }
-    if(this.recordVideo_id == this.data.cur.id) return
+    if (this.recordVideo_id == this.data.cur.id) return
     app.video.recordAdd(param).then(res => {
       if (res.code == 1) {
-        console.log('发送成功')
       }
-    }) 
+    })
   },
   copywechat() {
     app.copythat(this.data.wechatnum)
@@ -221,7 +219,6 @@ Page({
                     pause: true,
                     autoplay: false
                   })
-                  console.log('用户点击取消')
                 }
               }
             })
@@ -272,7 +269,6 @@ Page({
     }
   },
   tap() {
-    console.log(555)
     if (this.data.pause) {
       this.judgeWifi()
       this.setData({
@@ -289,7 +285,6 @@ Page({
     this.sy = e.touches[0].pageY
   },
   scrollTouchEnd(e) {
-    console.log(e)
     let list = this.data.list
     let index = this.data.index
     this.ey = e.changedTouches[0].pageY
@@ -321,7 +316,6 @@ Page({
       }
     } else if (this.ey - this.sy < -30) {
       // 上拉
-      console.log(this)
       let temp = index >= list.length - 1 ? (this.param.type == "recommend" ? 0 : index) : index + 1
       this.setData({
         cur: list[temp],
@@ -415,14 +409,12 @@ Page({
   },
   // 转发
   share() {
-    console.log(share)
   },
   onShareAppMessage: function (ops) {
     if (ops.from === "menu") {
       return this.menuAppShare()
     }
     if (ops.from === "button") {
-      console.log("ShareAppMessage  button")
       let list = this.data.list
       let index = this.data.index
       let param2 = {

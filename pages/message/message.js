@@ -13,16 +13,15 @@ Page({
   data: {
     messages: []
   },
-  pageName:'评论列表（点击顶部评论消息进入的页面）',
+  pageName: '评论列表（点击顶部评论消息进入的页面）',
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function(options) {
+  onLoad: function (options) {
     app.circle.getMessage().then(res => {
       if (res.code == 1) {
         res.data.forEach(item => {
           item.msg = item.msg.replace(/\↵/g, '').replace(/\n/g, '')
-          console.log(item.msg)
         })
         this.setData({
           messages: res.data
@@ -31,7 +30,7 @@ Page({
       // app.socket.send(this.data.$state.userInfo.id)
       app.socket.send({
         type: 'Bokemessage',
-        data: {uid: this.data.$state.userInfo.id}
+        data: { uid: this.data.$state.userInfo.id }
       })
     })
   },
@@ -39,22 +38,22 @@ Page({
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
-  onReady: function() {},
+  onReady: function () { },
 
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function() {},
+  onShow: function () { },
 
   /**
    * 生命周期函数--监听页面隐藏
    */
-  onHide: function() {},
+  onHide: function () { },
 
   /**
    * 生命周期函数--监听页面卸载
    */
-  onUnload: function() {},
+  onUnload: function () { },
   todetail(e) {
     let msg = e.currentTarget.dataset.item
     if (msg.blog_is_delete) {

@@ -16,17 +16,16 @@ Page({
     container: null, //canvas容器
     tempImg: null
   },
-  pageName:'邀请页（邀请好友）',
+  pageName: '邀请页（邀请好友）',
   //options(Object)
-  onLoad: function(options) {
-    console.log(options)
+  onLoad: function (options) {
     let system = wx.getSystemInfoSync()
     system.windowWidth <= 320 ? this.setData({
       small: true
     }) : ''
     options.type ? this.setData({
       withdraw: true,
-      type:4
+      type: 4
     }) : ''
     let user = this.data.$state.userInfo;
     wxp.getImageInfo({ src: user.avatar }).then(res => {
@@ -37,7 +36,7 @@ Page({
       }
     });
 
-    app.user.userQr({type:this.data.type}).then(res => {
+    app.user.userQr({ type: this.data.type }).then(res => {
       wxp.getImageInfo({ src: res.data }).then(res => {
         if (res.errMsg == "getImageInfo:ok") {
           this.param.count += 1;
@@ -60,7 +59,7 @@ Page({
       })
       .exec();
   },
-  draw: function() {
+  draw: function () {
     let img = this.data.withdraw ? '../../images/invitation2.png' : '../../images/invitation.png'
     let ctx = wx.createCanvasContext("canva_invite", this)
     let ratio = 0.5;
@@ -74,11 +73,11 @@ Page({
     ctx.save();
     ctx.beginPath();
     ctx.arc(
-      85 * ratio, 
+      85 * ratio,
       this.data.small ? 367 * ratio : 430 * ratio,
       35 * ratio,
-      0, 
-      Math.PI * 2, 
+      0,
+      Math.PI * 2,
       false);
     ctx.clip();
     ctx.drawImage(
@@ -94,11 +93,11 @@ Page({
     ctx.fillText(
       "我是" + this.data.$state.userInfo.nickname,
       140 * ratio,
-      this.data.small ?  380 * ratio : 444 * ratio
+      this.data.small ? 380 * ratio : 444 * ratio
     );
     ctx.setFontSize(40 * ratio);
     ctx.fillText("十万个免费老年课程", 140 * ratio, this.data.small ? 450 * ratio : 510 * ratio);
-    ctx.fillText("打造新时代“三有老人”", 140 * ratio,this.data.small ? 510 * ratio : 564 * ratio);
+    ctx.fillText("打造新时代“三有老人”", 140 * ratio, this.data.small ? 510 * ratio : 564 * ratio);
     ctx.fillRect(
       0,
       this.param.container.height - 210 * ratio,
@@ -141,13 +140,12 @@ Page({
           that.param.tempImg = res.tempFilePath;
         },
         fail: res => {
-          // console.log(res)
         }
       });
     });
   },
-  onReady: function() {},
-  onPullDownRefresh: function() {
+  onReady: function () { },
+  onPullDownRefresh: function () {
     wx.stopPullDownRefresh();
   },
   // 保存
@@ -181,12 +179,11 @@ Page({
     }, time);
   },
   // 转发
-  onShareAppMessage: function(ops) {
+  onShareAppMessage: function (ops) {
     if (ops.from === "menu") {
       return this.menuAppShare();
     }
     if (ops.from === "button") {
-      console.log("ShareAppMessage  button");
       return {
         title: "福利！老年大学十万集免费课程在线学习",
         path:

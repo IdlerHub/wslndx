@@ -23,7 +23,6 @@ Page({
     }
     this.voiceheight = 0
     wx.onKeyboardHeightChange(res => {
-      console.log(res.height)
       let systems = wx.getSystemInfoSync()
       this.voiceheight == 0 ? this.voiceheight = res.height : ''
       this.voiceheight != 0 ? res.height == 0 ? '' : this.setData({
@@ -88,13 +87,11 @@ Page({
         scope: 'scope.record',
         success() {
           // 用户已经同意小程序使用录音功能，后续调用 wx.startRecord 接口不会弹窗询问
-          console.log("succ auth")
           app.store.setState({
             authRecord: true
           })
         },
         fail() {
-          console.log("fail auth")
           app.store.setState({
             authRecordfail: true
           })
@@ -111,7 +108,6 @@ Page({
         })
       },
       fail(res) {
-        console.log("fail")
       }
     })
   },
@@ -179,7 +175,6 @@ Page({
 
       },
       fail: function (res) {
-        console.log(res);
       }
     });
   },

@@ -6,7 +6,6 @@ Page({
   },
   pageName: '外链页（开心农场&amp;老年电台&amp;早报）',
   onLoad: function (options) {
-    console.log(options)
     if (!options.type) {
       let optsStr = decodeURIComponent(options.scene).split("&"), opstObj = {};
       optsStr.forEach((item, index) => {

@@ -9,18 +9,17 @@ Page({
     canIUse: wx.canIUse("button.open-type.getPhoneNumber"),
     mode: 1,
     authenable: false,
-    check:false,
+    check: false,
     btnName: "获取验证码",
     showintegral: false
   },
-  pageName:'登陆页',
+  pageName: '登陆页',
   params: { tel: "", authCode: "", telFormat: false, codeFormat: false, mode: 1, tempCode: null },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (option) {
-    console.log(app.globalData.shareObj)
-    if(option.phone) {
+    if (option.phone) {
       this.setData({
         phone: option.phone
       })
@@ -35,7 +34,7 @@ Page({
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
-  onReady: function() {
+  onReady: function () {
     setTimeout(wx.hideLoading, 500)
   },
 
@@ -53,27 +52,25 @@ Page({
       mode: parseInt(e.currentTarget.dataset.type)
     })
   },
-   /**
-   * 生命周期函数--监听页面卸载
-   */
+  /**
+  * 生命周期函数--监听页面卸载
+  */
   onUnload: function () {
-    if (!this.data.$state.userInfo.mobile){
+    if (!this.data.$state.userInfo.mobile) {
       this.params.mode = this.data.mode
-      console.log(this.params)
       wx.redirectTo({
         url: `/pages/login/login?phone=${this.params.tel}&mode=${this.params.mode}&tempCode=${this.params.tempCode}`
       })
     }
-    console.log(this.data.$state.userInfo.length)
   },
   /* 授权获取电话号码 */
-  getPhoneNumber: function(e) {
+  getPhoneNumber: function (e) {
     if (e.detail.errMsg == "getPhoneNumber:ok") {
       let param = {
         mobileEncryptedData: e.detail.encryptedData,
         mobileiv: e.detail.iv,
         tempCode: app.globalData.tempCode,
-        [app.globalData.query.activity || app.globalData.shareObj.t == 4 ? 'master_uid': 'invite_uid']: wx.getStorageSync("invite")
+        [app.globalData.query.activity || app.globalData.shareObj.t == 4 ? 'master_uid' : 'invite_uid']: wx.getStorageSync("invite")
         // invite_uid: wx.getStorageSync("invite") /* 邀请码 */
       }
       this.login(param)
@@ -83,7 +80,7 @@ Page({
   },
   /* 输入电话号码 */
   // inputTel(e) {
-   
+
   // },
   inputNum(e) {
     this.params.telFormat = app.util.isPoneAvailable(e.detail.value)
@@ -96,14 +93,12 @@ Page({
   },
   /* 获取验证码 */
   getCode() {
-    console.log(this.params.tel)
     if (this.params.telFormat) {
       /* send  code */
-      app.user.getAuthCode({ mobile: this.params.tel }).then(res =>{
-        console.log(res)
+      app.user.getAuthCode({ mobile: this.params.tel }).then(res => {
         this.setData({
           btnName: "重新获取",
-        }) 
+        })
         res.code !== 1 ? wx.showToast({
           title: res.msg,
           icon: "none",
@@ -156,13 +151,13 @@ Page({
         icon: "none",
         duration: 1500,
         mask: false
-      }) 
+      })
     } else {
       let params = {
         tempCode: app.globalData.tempCode,
         mobile: this.params.tel,
         captcha: this.params.authCode,
-        [app.globalData.query.activity || app.globalData.shareObj.t == 4 ? 'master_uid': 'invite_uid']: wx.getStorageSync("invite")
+        [app.globalData.query.activity || app.globalData.shareObj.t == 4 ? 'master_uid' : 'invite_uid']: wx.getStorageSync("invite")
         // invite_uid: wx.getStorageSync("invite") /* 邀请码 */
       }
       this.login(params)
@@ -179,13 +174,13 @@ Page({
         wx.setStorageSync("authKey", res.data.authKey)
         app.setUser(res.data.userInfo)
         app.setAuthKey(res.data.authKey)
-        if(wx.getStorageSync("goosId")) {
+        if (wx.getStorageSync("goosId")) {
           let params = {
             invite_uid: wx.getStorageSync("invite"),
             goods_id: wx.getStorageSync("goosId")
           }
           app.user.addLotteryInvite(params).then()
-        } else if(app.globalData.shareObj.p || app.globalData.query.voteid){
+        } else if (app.globalData.shareObj.p || app.globalData.query.voteid) {
           let params = {
             invite_id: wx.getStorageSync("invite"),
             invite_type: app.globalData.shareObj.p ? app.globalData.shareObj.p : 2
@@ -196,17 +191,17 @@ Page({
           this.setData({
             showintegral: true
           })
-          if (app.globalData.query.type == "share" ||  app.globalData.query.type == 'lottery') {
+          if (app.globalData.query.type == "share" || app.globalData.query.type == 'lottery') {
             let params = []
             for (let attr in app.globalData.query) {
               params.push(attr + "=" + app.globalData.query[attr])
             }
             setTimeout(() => {
-              app.globalData.shareObj.type == 'lottery' ? wx.reLaunch({ url: "/pages/education/education?type=lottery&login=1&id=" + app.globalData.lotteryId}) : wx.reLaunch({ url: app.globalData.path + "?" + params.join("&") })
+              app.globalData.shareObj.type == 'lottery' ? wx.reLaunch({ url: "/pages/education/education?type=lottery&login=1&id=" + app.globalData.lotteryId }) : wx.reLaunch({ url: app.globalData.path + "?" + params.join("&") })
             }, 2000)
-          } else if(app.globalData.shareObj.p || app.globalData.query.vote){
+          } else if (app.globalData.shareObj.p || app.globalData.query.vote) {
             setTimeout(() => {
-              wx.reLaunch({ url: "/pages/voteDetail/voteDetail?voteid=" + (app.globalData.shareObj.o  ? app.globalData.shareObj.o : app.globalData.query.voteid)})
+              wx.reLaunch({ url: "/pages/voteDetail/voteDetail?voteid=" + (app.globalData.shareObj.o ? app.globalData.shareObj.o : app.globalData.query.voteid) })
             }, 2000);
           } else {
             /*跳转首页*/
@@ -226,12 +221,11 @@ Page({
     })
   },
   checkboxChange: function (e) {
-    console.log(this.data.check)
-    if(this.data.check) {
+    if (this.data.check) {
       this.setData({
         check: false
       })
-    }else {
+    } else {
       this.setData({
         check: true
       })

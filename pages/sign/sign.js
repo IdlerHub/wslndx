@@ -9,14 +9,13 @@ Page({
     toLogin: false,
     isPad: 0
   },
-  pagename:'注册页',
+  pagename: '注册页',
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function() {
+  onLoad: function () {
     let system = wx.getSystemInfoSync()
-    console.log(system.model.indexOf('iPad'))
-    system.model.indexOf('iPad') > -1 ?  this.setData({
+    system.model.indexOf('iPad') > -1 ? this.setData({
       isPad: 1
     }) : ''
   },
@@ -24,20 +23,20 @@ Page({
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
-  onReady: function() {
+  onReady: function () {
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function() {
+  onShow: function () {
 
   },
 
   /**
    * 生命周期函数--监听页面隐藏
    */
-  onHide: function() {
+  onHide: function () {
 
   },
 
@@ -45,34 +44,34 @@ Page({
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-      // wx.redirectTo({
-      //   url: '/pages/sign/sign',
-      // })
+    // wx.redirectTo({
+    //   url: '/pages/sign/sign',
+    // })
   },
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
-  onPullDownRefresh: function() {
+  onPullDownRefresh: function () {
 
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
-  onReachBottom: function() {
+  onReachBottom: function () {
 
   },
 
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function() {
+  onShareAppMessage: function () {
 
   },
   toLogin() {
     this.setData({
-      toLogin:true
+      toLogin: true
     })
     wx.reLaunch({
       url: "/pages/login/login?"

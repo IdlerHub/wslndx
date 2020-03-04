@@ -91,7 +91,6 @@ Page({
       that.setData({
         height: height
       })
-      console.log(height)
     })
   },
   switchNav(event) {
@@ -218,7 +217,6 @@ Page({
     })
   },
   show(e) {
-    console.log(e)
     if (this.data.$state.userInfo.status !== 'normal') {
       wx.showModal({
         content: '由于您近期不合规操作，您的账户已被管理员禁止发帖留言，如有疑问请在个人中心联系客服处理'
@@ -241,7 +239,6 @@ Page({
                 replyshow: true
               }) : ''
           } else if (this.data.$state.blogcomment[this.data.detail.id]['replyInfo']) {
-            console.log(this.data.$state.blogcomment[this.data.detail.id]['replyInfo'][this.replyInfo.id])
             this.setData({
               replycontent: this.data.$state.blogcomment[this.data.detail.id]['replyInfo'][this.replyInfo.id] != undefined ? this.data.$state.blogcomment[this.data.detail.id]['replyInfo'][this.replyInfo.id] : '',
               replycontenLength: this.data.$state.blogcomment[this.data.detail.id]['replyInfo'][this.replyInfo.id] != undefined ? this.data.$state.blogcomment[this.data.detail.id]['replyInfo'][this.replyInfo.id].length : 0,
@@ -517,7 +514,6 @@ Page({
       current: current,
       urls: urls, // 需要预览的图片http链接列表
       complete: () => {
-        console.log('关闭成功')
       }
     })
   },
@@ -676,8 +672,6 @@ Page({
         this.getDetail()
         this.comParam.page = 1
         this.getComment([])
-        console.log(params.to_user)
-        // app.socket.send(params.to_user)
         app.socket.send({
           type: 'Bokemessage',
           data: { uid: params.to_user }
@@ -777,13 +771,11 @@ Page({
         scope: 'scope.record',
         success() {
           // 用户已经同意小程序使用录音功能，后续调用 wx.startRecord 接口不会弹窗询问
-          console.log("succ auth")
           app.store.setState({
             authRecord: true
           })
         },
         fail() {
-          console.log("fail auth")
           app.store.setState({
             authRecordfail: true
           })

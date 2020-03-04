@@ -171,7 +171,6 @@ Page({
       return this.menuAppShare()
     }
     if (ops.from === "button") {
-      console.log("ShareAppMessage  button")
       let i = ops.target.dataset.index
       let article = this.data.list[i]
       let bkid = article.id
@@ -256,7 +255,6 @@ Page({
   },
   //收藏风采
   collect(e) {
-    console.log(e)
     let blog_id = e.currentTarget.dataset.id, status = e.currentTarget.dataset.status, blog_index = e.currentTarget.dataset.index, flowId = e.currentTarget.dataset.userid, is_follow = e.currentTarget.dataset.follow, follownickname = e.currentTarget.dataset.name
     this.setData({
       blog_id,

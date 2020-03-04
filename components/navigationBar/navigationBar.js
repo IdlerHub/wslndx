@@ -8,7 +8,7 @@ Component({
         background: { //导航栏背景色
             type: String,
             value: '#ffffff', //默认
-            observer: function(newVal, oldVal, changedPath) {
+            observer: function (newVal, oldVal, changedPath) {
                 if (!newVal) {
                     let obj = {};
                     obj[changedPath[0]] = oldVal;
@@ -19,7 +19,7 @@ Component({
         placeholderBg: { //导航栏占位栏背景色
             type: String,
             value: 'transparent', //默认
-            observer: function(newVal, oldVal, changedPath) {
+            observer: function (newVal, oldVal, changedPath) {
                 if (!newVal) {
                     let obj = {};
                     obj[changedPath[0]] = oldVal;
@@ -30,7 +30,7 @@ Component({
         color: { //导航栏字体色
             type: String,
             value: '#000000', //默认
-            observer: function(newVal, oldVal, changedPath) {
+            observer: function (newVal, oldVal, changedPath) {
                 if (!newVal) {
                     let obj = {};
                     obj[changedPath[0]] = oldVal;
@@ -41,7 +41,7 @@ Component({
         fontSize: { //导航栏字大小
             type: String,
             value: '40rpx', //默认
-            observer: function(newVal, oldVal, changedPath) {
+            observer: function (newVal, oldVal, changedPath) {
                 if (!newVal) {
                     let obj = {};
                     obj[changedPath[0]] = oldVal;
@@ -52,8 +52,7 @@ Component({
         title: { //导航栏标题
             type: String,
             value: 'none', //默认
-            observer: function(newVal, oldVal, changedPath) {
-                // console.log(newVal,oldVal,changedPath);
+            observer: function (newVal, oldVal, changedPath) {
                 if (!newVal) {
                     let obj = {};
                     obj[changedPath[0]] = oldVal;
@@ -64,7 +63,7 @@ Component({
         fixed: { //导航栏是否fixed定位
             type: Boolean,
             value: true, //默认
-            observer: function(newVal, oldVal, changedPath) {
+            observer: function (newVal, oldVal, changedPath) {
                 if (newVal !== false && newVal !== true) {
                     let obj = {};
                     obj[changedPath[0]] = oldVal;
@@ -80,7 +79,7 @@ Component({
         showHomeButton: false, //是否显示返回首页
         show: true, //是否显示导航栏
     },
-    attached: function(option) {
+    attached: function (option) {
         //检测首页是否在当前页面栈中
         let pages = getCurrentPages();
         let showHomeButton = false;

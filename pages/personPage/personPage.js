@@ -7,7 +7,6 @@ Page({
   },
   pageName: '个人简介页面',
   onLoad(options) {
-    console.log(options)
     this.setData({
       us_id: options.uid,
       nickname: options.nickname,
@@ -124,7 +123,6 @@ Page({
     })
   },
   praise(e) {
-    console.log(e)
     let i = e.currentTarget.dataset.index
     let list = this.data.list
     let param = {
@@ -243,7 +241,6 @@ Page({
   collect(e) {
     let blog_id = e.currentTarget.dataset.id
     let status = e.currentTarget.dataset.status
-    console.log(status)
     let blog_index = e.currentTarget.dataset.index
     this.setData({
       blog_id,

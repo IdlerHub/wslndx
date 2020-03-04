@@ -50,7 +50,7 @@ Page({
     })
     if (this.data.$state.userInfo.mobile) {
       await app.user.signed().then(res => {
-        if(res.code == 1) {
+        if (res.code == 1) {
           let sign = res.data && res.data.signed
           app.store.setState({
             signdays: res.data.sign_days
@@ -59,7 +59,7 @@ Page({
         }
       })
       await app.user.share({}).then(res => {
-        if(res.code == 1) {
+        if (res.code == 1) {
           app.setShare(res)
         }
       })
@@ -140,8 +140,6 @@ Page({
         currentTab: cur
       })
     }
-    console.log(cur)
-    // this.geteCatrcommend(id)
     if (this.data.currentTab == 0) {
       this.setData({
         navScrollLeft: 0
@@ -149,8 +147,6 @@ Page({
     }
   },
   getFeatureCode(e) {
-    console.log(e)
-    console.log(e.detail.formId)
   },
   switchTab(event) {
     let cur = event.detail.current, that = this, currren = this.data.currentTab
@@ -171,8 +167,7 @@ Page({
     }, 500)
   },
   lastswitchTab(event) {
-    console.log(event)
-    if(!event) {
+    if (!event) {
       this.setData({
         currentTab: 0
       })
@@ -181,7 +176,6 @@ Page({
       arr.forEach((i, index) => {
         i.id == event ? num = index : 0
       })
-      console.log(num)
       this.setData({
         currentTab: num
       })
@@ -193,7 +187,6 @@ Page({
     }
   },
   getSomthin() {
-    console.log('q')
   },
   getRecommend() {
     let param = { page: 1, pageSize: 10, province: this.data.$state.userInfo.university.split(',')[0] }
@@ -210,7 +203,6 @@ Page({
     })
   },
   geteCatrcommend(id, currtab) {
-    console.log(this.data.catrecommend[id])
     if (this.data.catrecommend[id]) {
       if (this.data.catrecommend[id][0]) return
     }
@@ -221,7 +213,7 @@ Page({
           item.thousand = app.util.tow(item.browse)
         })
         let catrecommend = this.data.catrecommend
-        catrecommend[id]= temp.concat(msg.data)
+        catrecommend[id] = temp.concat(msg.data)
         this.setData({
           [`catrecommend[${id}]`]: temp.concat(msg.data)
         })
@@ -361,7 +353,6 @@ Page({
         this.toScore()
       } else if (e.currentTarget.dataset.type == "banner") {
         let item = e.currentTarget.dataset.item;
-        console.log(item)
         if (item.jump_type == '5') {
           wx.navigateTo({
             url: item.clickurl,
@@ -420,7 +411,7 @@ Page({
       })
     } else {
       app.user.sign().then(res => {
-        if(res.code == 1) {
+        if (res.code == 1) {
           console.log('签到成功')
           app.store.setState({
             signdays: res.data.sign_days
@@ -526,7 +517,6 @@ Page({
     wx.uma.trackEvent('index_btnClick', { 'btnName': '课程直播' });
   },
   minigo(url) {
-    console.log(url)
     let system = JSON.parse(url)
     wx.navigateToMiniProgram({
       appId: system.appid,

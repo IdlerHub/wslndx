@@ -2,19 +2,19 @@
 const app = getApp()
 Page({
   data: {
-    list:[]
+    list: []
   },
   pageName: '我的关注页',
   onLoad: function (options) {
   },
-  onShow(){
+  onShow() {
     app.user.userFollowing().then(res => {
       res.data.forEach(item => {
         item.status = '取消关注'
       })
-      if(res.code == 1) {
+      if (res.code == 1) {
         this.setData({
-          list : res.data
+          list: res.data
         })
       }
     })
@@ -22,18 +22,18 @@ Page({
   closeattention(e) {
     let index = e.currentTarget.dataset.index, status = e.currentTarget.dataset.status
     let that = this
-    if(status == '取消关注') {
+    if (status == '取消关注') {
       wx.showModal({
         content: '是否取消关注？',
-        confirmColor:'#DF2020',
-        cancelColor:'#999999',
-        confirmText:'是',
-        cancelText:'否',
-        success (res) {
+        confirmColor: '#DF2020',
+        cancelColor: '#999999',
+        confirmText: '是',
+        cancelText: '否',
+        success(res) {
           if (res.confirm) {
-            let param  = { follower_uid: that.data.list[index].id }
+            let param = { follower_uid: that.data.list[index].id }
             app.user.cancelFollowing(param).then(msg => {
-              if(msg.code == 1) {
+              if (msg.code == 1) {
                 that.data.list[index].status = '关注'
                 that.setData({
                   list: that.data.list
@@ -41,20 +41,19 @@ Page({
               }
             })
           } else if (res.cancel) {
-            console.log('用户点击取消')
           }
         }
       })
     } else {
-      let param  = { follower_uid: that.data.list[index].id }
-      app.user.following(param).then(res=> {
+      let param = { follower_uid: that.data.list[index].id }
+      app.user.following(param).then(res => {
         that.data.list[index].status = '取消关注'
         that.setData({
           list: that.data.list
         })
       })
     }
-    
+
   },
   touser(e) {
     let index = e.currentTarget.dataset.index

@@ -44,7 +44,6 @@ Page({
     let systemInfo = wx.getSystemInfoSync()
     query.selectAll(".tabnav").boundingClientRect()
     query.exec(res => {
-      console.log(res[0][0])
       systemInfo.statusBarHeight < 30 ? this.setData({
         topT: res[0][0].height
       }) : this.setData({
@@ -122,7 +121,6 @@ Page({
         confirmText: '保留',
         success(res) {
           if (res.confirm) {
-            console.log('用户点击确定')
             that.setData({
               showRelease: false
             })
@@ -222,7 +220,6 @@ Page({
       }
     })
     app.circle.defaultCircle().then(res => {
-      console.log(res)
       if (res.code == 1) {
         this.setData({
           joinedList: res.data
@@ -397,7 +394,6 @@ Page({
   // 写帖成功动效
   rlSuc() {
     /* 重新到第一页 */
-    // console.log('adfasdsad')
     this.param[this.data.currentTab].page = 1
     this.getList([])
     this.setData({
@@ -538,7 +534,6 @@ Page({
   },
   //收藏风采
   collect(e) {
-    console.log(e)
     let blog_id = e.currentTarget.dataset.id, status = e.currentTarget.dataset.status, blog_index = e.currentTarget.dataset.index, flowId = e.currentTarget.dataset.userid, is_follow = e.currentTarget.dataset.follow, follownickname = e.currentTarget.dataset.name
     this.setData({
       blog_id,
@@ -635,7 +630,6 @@ Page({
     query.exec(res => {
       let arr = []
       res[0].forEach((item, index) => {
-        // console.log(item)
         if (item.height >= 120) {
           arr.push(index)
         }

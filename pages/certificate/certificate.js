@@ -49,7 +49,6 @@ Page({
           })
         },
         fail: res => {
-          // console.log(res)
         }
       })
     })
@@ -72,12 +71,11 @@ Page({
     })
   },
   // 转发
-  onShareAppMessage: function(ops) {
+  onShareAppMessage: function (ops) {
     if (ops.from === "menu") {
       return this.menuAppShare()
     }
     if (ops.from === "button") {
-      console.log("ShareAppMessage  button")
       return {
         title: "福利！老年大学十万集免费课程在线学习",
         path: "/pages/loading/loading"
