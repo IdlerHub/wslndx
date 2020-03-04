@@ -31,6 +31,7 @@ Page({
     queue: []
   },
   sorIndex: false,
+  delItm: {},
   onLoad: function (ops) {
     this.currentTab = ops.index
     let pages = getCurrentPages();
@@ -78,7 +79,7 @@ Page({
   },
   edit() {
     if (this.data.touch) {
-      this.sorIndex ? this.beforePage.lastswitchTab(false) : ''
+      this.sorIndex && this.delItm.class ? this.beforePage.lastswitchTab(false) : ''
       let arr = JSON.parse(JSON.stringify(this.data.sortList)), num = '',number = 0
         arr.sort((a, b) => {
           return a.sort - b.sort
@@ -336,6 +337,10 @@ Page({
   remove(e) {
     if (this.private.flyId > 0) return;
     let i = e.target.dataset.index;
+    if(i == (this.data.sortList.length - 1)) {
+      this.sorIndex = true,
+      this.delItm = this.data.sortList[i]
+    }
     i == (this.data.sortList.length - 1) ? this.sorIndex = true : ''
     let arr1 = this.data.sortList;
     let originY = this.getMoldStart(-1);
