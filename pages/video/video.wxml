@@ -21,7 +21,7 @@
     <swiper-item bindtouchstart="scrollTouchStart" bindtouchend="scrollTouchEnd">
       <video class="myVideo" id="{{ vid }}" src="{{ cur.url }}" controls="{{ false }}"
         show-center-play-btn="{{ false }}" object-fit="fill" autoplay="{{ autoplay }}" loop="{{loop}}"
-        bindplay="{{vedioRecordAdd}}" bindended="recordFinish">
+        bindplay="vedioRecordAdd" bindended="recordFinish">
         <!-- 功能  滑动及视频播/停监听-->
         <view wx:if="{{ cur && !$state.baseInfo }}" class="dropback">
           <view hover-class="none" catchtap="tap" wx:if="{{ !$state.baseInfo }}" class="tapbg">

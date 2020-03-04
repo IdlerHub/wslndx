@@ -4,6 +4,7 @@ const app = getApp()
 Page({
   data: {
     list: [],
+    cur:{},
     tip: true,
     vid: "short-video" + Date.now(),
     top: 20,
@@ -87,7 +88,6 @@ Page({
     }
   },
   onShow(opts) {
-    console.log(opts)
     wx.onNetworkStatusChange(res => {
       res.networkType == 'wifi' ? app.playVedio("wifi") : ''
     })
@@ -161,11 +161,12 @@ Page({
   },
   vedioRecordAdd() {
     let param = { shortvideo_id: this.data.cur.id }
+    if(this.recordVideo_id == this.data.cur.id) return
     app.video.recordAdd(param).then(res => {
       if (res.code == 1) {
         console.log('发送成功')
       }
-    })
+    }) 
   },
   copywechat() {
     app.copythat(this.data.wechatnum)
@@ -186,9 +187,9 @@ Page({
               autoplay: true,
               pause: false
             })
-            setTimeout(() => {
-              that.vedioRecordAdd()
-            }, 200);
+            // setTimeout(() => {
+            //   that.vedioRecordAdd()
+            // }, 200);
           } else {
             that.videoContext.pause()
             that.setData({
@@ -209,9 +210,9 @@ Page({
                     pause: false
                   })
                   that.videoContext.play()
-                  setTimeout(() => {
-                    that.vedioRecordAdd()
-                  }, 200);
+                  // setTimeout(() => {
+                  //   that.vedioRecordAdd()
+                  // }, 200);
                   wx.offNetworkStatusChange()
                 } else if (res.cancel) {
                   app.playVedio('wifi')
@@ -233,9 +234,9 @@ Page({
         autoplay: true
       })
       this.videoContext.play()
-      setTimeout(() => {
-        this.vedioRecordAdd()
-      }, 200);
+      // setTimeout(() => {
+      //   this.vedioRecordAdd()
+      // }, 200);
     }
   },
   getList(list) {
@@ -340,9 +341,9 @@ Page({
         this.getList()
       }
     }
-    setTimeout(() => {
-      this.vedioRecordAdd()
-    }, 200);
+    // setTimeout(() => {
+    //   this.vedioRecordAdd()
+    // }, 200);
     app.addVisitedNum(`v${this.data.cur.id}`)
     wx.uma.trackEvent('sortVideo_play', { 'videoName': this.data.cur.title });
   },

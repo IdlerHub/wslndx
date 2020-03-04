@@ -254,9 +254,6 @@ Page({
         })
       } else {
         this.data.sources.forEach((item, index) => {
-          if (this.data.$state.dayStatus[item.showStatus.name]) {
-            item.status = true
-          }
           item.status ? arr.push(this.data.sources[index]) : ''
           !item.status ? crr.push(this.data.sources[index]) : ''
         })
