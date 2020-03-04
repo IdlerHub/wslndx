@@ -78,8 +78,7 @@ Page({
   },
   edit() {
     if (this.data.touch) {
-      console.log(this.sorIndex)
-      this.sorIndex ? this.beforePage.lastswitchTab(10000) : ''
+      this.sorIndex ? this.beforePage.lastswitchTab(false) : ''
       let arr = JSON.parse(JSON.stringify(this.data.sortList)), num = '',number = 0
         arr.sort((a, b) => {
           return a.sort - b.sort

@@ -171,18 +171,25 @@ Page({
     }, 500)
   },
   lastswitchTab(event) {
-    let arr = this.data.nav, num = 0
-    arr.forEach((i, index) => {
-      i.id == event ? num = index : 0
-    })
-    console.log(num)
-    this.setData({
-      currentTab: num
-    })
-    if (this.data.catrecommend[event]) {
-      if (!this.data.catrecommend[event][0]) this.geteCatrcommend(event, this.data.currentTab)
+    console.log(event)
+    if(!event) {
+      this.setData({
+        currentTab: 0
+      })
     } else {
-      this.geteCatrcommend(event, this.data.currentTab)
+      let arr = this.data.nav, num = 0
+      arr.forEach((i, index) => {
+        i.id == event ? num = index : 0
+      })
+      console.log(num)
+      this.setData({
+        currentTab: num
+      })
+      if (this.data.catrecommend[event]) {
+        if (!this.data.catrecommend[event][0]) this.geteCatrcommend(event, this.data.currentTab)
+      } else {
+        this.geteCatrcommend(event, this.data.currentTab)
+      }
     }
   },
   getSomthin() {
@@ -203,6 +210,7 @@ Page({
     })
   },
   geteCatrcommend(id, currtab) {
+    console.log(this.data.catrecommend[id])
     if (this.data.catrecommend[id]) {
       if (this.data.catrecommend[id][0]) return
     }
@@ -213,9 +221,9 @@ Page({
           item.thousand = app.util.tow(item.browse)
         })
         let catrecommend = this.data.catrecommend
-        catrecommend[id] = temp.concat(msg.data)
+        catrecommend[id]= temp.concat(msg.data)
         this.setData({
-          catrecommend
+          [`catrecommend[${id}]`]: temp.concat(msg.data)
         })
         setTimeout(() => {
           currtab != this.data.currentTab ? '' : this.setHeight()
@@ -454,7 +462,7 @@ Page({
           if (!next) return
           this.data.catrecommend[id] = temp.concat(msg.data)
           this.setData({
-            catrecommend: this.data.catrecommend
+            [`catrecommend[${id}]`]: temp.concat(msg.data)
           })
           let query = wx.createSelectorQuery().in(this)
           let that = this, nav = this.data.nav, currentTab = this.data.currentTab
@@ -590,7 +598,7 @@ Page({
     this.data.recommend.forEach(item => {
       item.id == id ? item.is_finish = 1 : ''
     })
-    this.data.catrecommend.forEach(item => {
+    this.data.catrecommend.forEach((item, index) => {
       item.forEach(i => {
         i.id == id ? i.is_finish = 1 : ''
       })
