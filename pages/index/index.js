@@ -173,8 +173,9 @@ Page({
   lastswitchTab(event) {
     let arr = this.data.nav, num = 0
     arr.forEach((i, index) => {
-      i.id == event ? num = index : ''
+      i.id == event ? num = index : 0
     })
+    console.log(num)
     this.setData({
       currentTab: num
     })

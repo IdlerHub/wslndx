@@ -15,16 +15,6 @@ Page({
   pageName: '个人中心',
   onLoad() { },
   onShow() {
-    // wx.hideHomeButton({
-    //   successL: function () {
-    //     console.log(2)
-    //   },
-    //   fail: function(res) {
-    //     console.log(3)
-    //   },
-    //   complete: function () {
-    //   console.log(1)
-    // }})
     app.user.pointsinfo().then(res => {
       if (res.code == 1) {
         this.setData({

@@ -30,6 +30,7 @@ Page({
     anime: false,
     queue: []
   },
+  sorIndex: false,
   onLoad: function (ops) {
     this.currentTab = ops.index
     let pages = getCurrentPages();
@@ -77,6 +78,8 @@ Page({
   },
   edit() {
     if (this.data.touch) {
+      console.log(this.sorIndex)
+      this.sorIndex ? this.beforePage.lastswitchTab(10000) : ''
       let arr = JSON.parse(JSON.stringify(this.data.sortList)), num = '',number = 0
         arr.sort((a, b) => {
           return a.sort - b.sort
@@ -90,6 +93,7 @@ Page({
         }
         this.addCategory(param).then(() => {
           this.beforePage.getCategory()
+          if(this.sorIndex) return
           setTimeout(() => {
             this.beforePage.lastswitchTab(number)
           }, 200)
@@ -333,6 +337,7 @@ Page({
   remove(e) {
     if (this.private.flyId > 0) return;
     let i = e.target.dataset.index;
+    i == (this.data.sortList.length - 1) ? this.sorIndex = true : ''
     let arr1 = this.data.sortList;
     let originY = this.getMoldStart(-1);
     let block = arr1[i];

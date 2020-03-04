@@ -36,7 +36,7 @@
         size="19"
         catchtap="remove"
         data-index="{{ i }}"
-        wx:if="{{ touch && !item.unMove && !item.fly }}"
+        wx:if="{{ touch && !item.unMove && !item.fly}}"
         class="clear"
       ></icon>
        <view 

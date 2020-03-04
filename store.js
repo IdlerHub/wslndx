@@ -5,7 +5,7 @@
  */
 import Store from "wxministore";
 const app = getApp();
-let env = "to";
+let env = "develop";
 let imgHost;
 let activityUrl;
 let API_URL;
