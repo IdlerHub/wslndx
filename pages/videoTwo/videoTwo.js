@@ -4,6 +4,7 @@ const app = getApp()
 Page({
   data: {
     list: [],
+    cur: {},
     tip: true,
     vid: "short-video" + Date.now(),
     autoplay: false,
@@ -403,7 +404,6 @@ Page({
     })
   },
   vedioRecordAdd() {
-    console.log(this.data.cur)
     let param = { shortvideo_id: this.data.cur.id }
     app.video.recordAdd(param).then(res => {
       if (res.code == 1) {
