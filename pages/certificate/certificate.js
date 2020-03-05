@@ -27,10 +27,17 @@ Page({
     this.context.setTextBaseline("top")
     this.context.fillText(userInfo.nickname, 107 * r + (200 * r - this.context.measureText(userInfo.nickname).width) / 2, 340 * r, 200 * r)
     this.context.font = `18px sans-serif`
-    this.context.measureText(course).width > 170 ? this.context.fillText(course, 180 * r + (348 * r - this.context.measureText(course).width) / 2, 425 * r, 310 * r) :
+    if(this.context.measureText(course).width < 170) {
       this.context.fillText(course, 180 * r + (310 * r - this.context.measureText(course).width) / 2, 425 * r, 310 * r)
+    } else if (this.context.measureText(course).width > 170 && this.context.measureText(course).width < 220) {
+      this.context.fillText(course, 180 * r + (348 * r - this.context.measureText(course).width) / 2, 425 * r, 310 * r) 
+    } else if(this.context.measureText(course).width > 220 && this.context.measureText(course).width < 300){
+      this.context.fillText(course, 180 * r + (522 * r - this.context.measureText(course).width) / 2, 425 * r, 310 * r)
+    } else {
+      this.context.fillText(course, 180 * r + (730 * r - this.context.measureText(course).width) / 2, 425 * r, 310 * r)
+    }
     this.context.font = `14px sans-serif`
-    this.context.fillText(app.util.dateUnit(), 390 * r, 780 * r)
+    this.context.fillText(app.util.dateUnit(), 420 * r, 780 * r)
     // this.context.setTextAlign("right")
     let that = this
     this.context.draw(true, () => {
@@ -49,7 +56,6 @@ Page({
           })
         },
         fail: res => {
-          // console.log(res)
         }
       })
     })
@@ -72,12 +78,11 @@ Page({
     })
   },
   // 转发
-  onShareAppMessage: function(ops) {
+  onShareAppMessage: function (ops) {
     if (ops.from === "menu") {
       return this.menuAppShare()
     }
     if (ops.from === "button") {
-      console.log("ShareAppMessage  button")
       return {
         title: "福利！老年大学十万集免费课程在线学习",
         path: "/pages/loading/loading"

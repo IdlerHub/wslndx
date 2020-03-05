@@ -6,7 +6,6 @@ Page({
   },
   pageName: '外链页（开心农场&amp;老年电台&amp;早报）',
   onLoad: function (options) {
-    console.log(options)
     if (!options.type) {
       let optsStr = decodeURIComponent(options.scene).split("&"), opstObj = {};
       optsStr.forEach((item, index) => {
@@ -19,6 +18,10 @@ Page({
       } else if (options.type === 'station') {
         this.junmpOut('https://open.ximalaya.com/site/index/174/ca5492cf55806b41713dada77a1d2ed5')
         wx.uma.trackEvent('index_btnClick', { 'btnName': '老年电台' });
+      } else if(options.type === 'lottery') {
+        this.setData({
+          url: 'https://gqjydev.jinlingkeji.cn/' + "?uid=" + encodeURIComponent(this.data.$state.userInfo.id) + "&id=" + encodeURIComponent(options.id)
+        })
       } else {
         if (options.login) {
           if (options.login == 0) {

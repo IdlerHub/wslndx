@@ -30,8 +30,7 @@ Page({
     anime: false,
     queue: []
   },
-  sorIndex: false,
-  delItm: {},
+  guide:0,
   onLoad: function (ops) {
     this.currentTab = ops.index
     let pages = getCurrentPages();
@@ -79,7 +78,6 @@ Page({
   },
   edit() {
     if (this.data.touch) {
-      this.sorIndex && this.delItm.class ? this.beforePage.lastswitchTab(false) : ''
       let arr = JSON.parse(JSON.stringify(this.data.sortList)), num = '',number = 0
         arr.sort((a, b) => {
           return a.sort - b.sort
@@ -92,11 +90,9 @@ Page({
           category_str: num.substring(1)
         }
         this.addCategory(param).then(() => {
-          this.beforePage.getCategory()
-          if(this.sorIndex) return
-          setTimeout(() => {
+          this.beforePage.getCategory().then(() => {
             this.beforePage.lastswitchTab(number)
-          }, 200)
+          })
         })
     }
     this.setData({
@@ -337,10 +333,6 @@ Page({
   remove(e) {
     if (this.private.flyId > 0) return;
     let i = e.target.dataset.index;
-    if(i == (this.data.sortList.length - 1)) {
-      this.sorIndex = true,
-      this.delItm = this.data.sortList[i]
-    }
     i == (this.data.sortList.length - 1) ? this.sorIndex = true : ''
     let arr1 = this.data.sortList;
     let originY = this.getMoldStart(-1);
@@ -433,6 +425,8 @@ Page({
         touch: !this.data.touch
       })
     } else {
+      if(this.guide) return
+      this.guide = true
       this.setData({
         guideNum: 3,
         touch: !this.data.touch
@@ -444,6 +438,8 @@ Page({
         if (res.code == 1) {
           app.getGuide()
         }
+      }).catch(() => {
+        this.guide = 0
       })
     }
   }

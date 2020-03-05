@@ -26,7 +26,6 @@ Page({
   },
   onReady: function () { },
   onShow: function () {
-    console.log(this.data.releaseParam)
     if (((this.data.releaseParam.content != null && this.data.releaseParam.content != "") || this.data.releaseParam.image[0] || this.data.releaseParam.video != null) && this.data.showRelease) {
       let that = this
       wx.showModal({
@@ -36,7 +35,6 @@ Page({
         confirmText: '保留',
         success(res) {
           if (res.confirm) {
-            console.log('用户点击确定')
             that.setData({
               showRelease: false
             })

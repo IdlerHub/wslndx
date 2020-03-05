@@ -13,6 +13,7 @@ Page({
     showGuide: true
   },
   pageName: '个人中心',
+  guide: 0, 
   onLoad() { },
   onShow() {
     app.user.pointsinfo().then(res => {
@@ -56,6 +57,8 @@ Page({
   onUnload() {
   },
   closeGuide() {
+    if(this.guide) return
+    this.guide = true
     let param = {
       guide_name: 'user'
     }
@@ -63,6 +66,8 @@ Page({
       if (res.code == 1) {
         app.getGuide()
       }
+    }).catch(() => {
+      this.guide = 0
     })
   },
   drawPage() {

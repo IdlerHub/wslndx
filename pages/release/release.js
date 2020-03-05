@@ -99,7 +99,6 @@ Page({
   selectImg(e) {
     let up = true
     let index = e.currentTarget.dataset.index
-    console.log(e)
     this.uploadImg(1, index, up)
   },
   //上传图片
@@ -171,7 +170,6 @@ Page({
       .upload(val.tempFilePath, type)
       .then(msg => {
         msg = JSON.parse(msg)
-        console.log(msg)
         if (msg.code == 1) {
           this.setData({
             "param.video": msg.data.url,
@@ -210,7 +208,6 @@ Page({
           })
           return
         }
-        console.log(res)
         this.next2(res, 2)
       }
     })

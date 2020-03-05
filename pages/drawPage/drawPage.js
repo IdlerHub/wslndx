@@ -35,7 +35,6 @@ Page({
     systems.screenHeight > 736 ? this.setData({
       screenHeight: true
     }) : ''
-    console.log(systems.screenHeight)
   },
   onShow() {
     this.getLotteryCfglist()
@@ -95,7 +94,6 @@ Page({
   // 轮盘动画
   clickLuck(e) {
     let that = this
-    console.log(that.touchEndTime - that.touchStartTime)
     if (that.touchEndTime - that.touchStartTime < 350) {
       // 当前点击的时间
       let currentTime = e.timeStamp;

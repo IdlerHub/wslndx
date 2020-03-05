@@ -69,7 +69,6 @@ Page({
   },
   shortvideoAward() {
     return app.video.shortvideoAward().then(res => {
-      console.log(res)
       if (res.code == 1) {
         this.setData({
           isshowRed: res.data.today_first
@@ -175,7 +174,6 @@ Page({
                     pause: true,
                     autoplay: false
                   })
-                  console.log('用户点击取消')
                 }
               }
             })
@@ -407,7 +405,6 @@ Page({
     let param = { shortvideo_id: this.data.cur.id }
     app.video.recordAdd(param).then(res => {
       if (res.code == 1) {
-        console.log('发送成功')
       }
     })
   },

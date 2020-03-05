@@ -5,6 +5,7 @@ const plugin = requirePlugin("WechatSI");
 // 获取**全局唯一**的语音识别管理器**recordRecoManager**
 const manager = plugin.getRecordRecognitionManager();
 const innerAudioContext = wx.createInnerAudioContext();
+var htmlparser = require("../../utils/htmlparser.js");
 Page({
   data: {
     sort: 0,
@@ -47,6 +48,7 @@ Page({
     /* rect: wx.getMenuButtonBoundingClientRect() */
   },
   pageName: "视频页（视频详情页）",
+  guide:0,
   onLoad(options) {
     /*todo:考虑去掉that*/
     let that = this;
@@ -213,6 +215,7 @@ Page({
         msg.data.sublesson.forEach(function (item) {
           item.minute = (item.film_length / 60).toFixed(0);
         });
+        msg.data.intro_content =  htmlparser.default(msg.data.intro_content)
         wx.setNavigationBarTitle({
           title: msg.data.title
         });
@@ -435,7 +438,6 @@ Page({
                   that.recordAddVedio(param);
                   wx.offNetworkStatusChange()
                 } else if (res.cancel) {
-                  console.log("用户点击取消");
                 }
               }
             })
@@ -637,7 +639,6 @@ Page({
       return this.menuAppShare();
     }
     if (ops.from === "button") {
-      console.log("ShareAppMessage  button");
       app.classroom.share({
         lesson_id: this.data.id,
         sublesson_id: this.data.cur.id
@@ -1107,6 +1108,8 @@ Page({
   onHide() {
   },
   closeGuide() {
+    if(this.guide) return
+    this.guide = true
     let param = {
       guide_name: "lesson"
     };
@@ -1115,6 +1118,8 @@ Page({
         app.getGuide();
         this.setIntegral("+45 学分", "完成[云课堂]新手指引");
       }
+    }).catch(() => {
+      this.guide = 0
     });
   },
   // 语音
@@ -1141,13 +1146,11 @@ Page({
         scope: "scope.record",
         success() {
           // 用户已经同意小程序使用录音功能，后续调用 wx.startRecord 接口不会弹窗询问
-          console.log("succ auth");
           app.store.setState({
             authRecord: true
           });
         },
         fail() {
-          console.log("fail auth");
           app.store.setState({
             authRecordfail: true
           });
@@ -1164,7 +1167,6 @@ Page({
         });
       },
       fail(res) {
-        console.log("fail");
       }
     });
   },
