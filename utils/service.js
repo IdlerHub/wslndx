@@ -1,25 +1,17 @@
 /*
  * @Date: 2019-05-28 09:50:08
  * @LastEditors: hxz
- * @LastEditTime: 2019-12-02 15:30:19
+ * @LastEditTime: 2020-03-04 17:31:36
  */
 import { promisifyAll } from "miniprogram-api-promise";
 const wxp = {};
 promisifyAll(wx, wxp);
 
-import md5 from "./md5.js"
-
-//配置
-const content_type = ["application/json", "application/x-www-form-urlencoded"];
-let header = {
-  "content-type": content_type[0]
-};
+import md5 from "./md5.js";
 
 //验证code
-function handle(req,res) {
-  if (res.statusCode != 200 || (res.data&&res.data.code !=1) ){
-    getApp().fundebug.notifyHttpError(req,res)
-  }
+function handle(req, res) {
+  getApp().fundebug.notifyHttpError(req, res);
   switch (res.statusCode) {
     case 401:
       wx.clearStorage();
@@ -54,90 +46,55 @@ function handle(req,res) {
   }
 }
 
-// post  return  promise
-function post(path, param = {}, noToken, type) {
+function xhr(path, method, param = {}, noToken) {
   wx.showNavigationBarLoading();
-  let url = getApp().API_URL + path;
+  //是否需要登录信息才能请求
   if (!noToken) {
     let token = wx.getStorageSync("token");
-    if (!token) return;
+    if (!token) return Promise.reject("请登录后再请求");
     param.uid = wx.getStorageSync("uid");
     param.timestamp = parseInt(new Date().getTime() / 1000 + "");
     param.sign = md5(
       "uid=" + param.uid + "&token=" + token + "&timestamp=" + param.timestamp
     );
   }
-  if (type) {
-    header["content-type"] = content_type[type];
-  } else {
-    header["content-type"] = content_type[0];
-  }
 
   let req = {
-    method: "POST",
-    header: header,
+    method: method,
     data: param || {},
-    url: url
-  }
-  return wxp
-    .request(req)
-    .then(
-      function(res) {
-        handle(req, res);
-        wx.hideNavigationBarLoading();
-        return res.data;
+    url: getApp().API_URL + path
+  };
+
+  return new Promise((resolve, reject) => {
+    wx.request({
+      ...req,
+      success(res) {
+        if (res.statusCode == 200 && res.data && res.data.code == 1) {
+          resolve(res.data);
+        } else {
+          handle(req, res);
+          reject(err);
+        }
       },
-      function(res) {
-        /* fail部分 */
-        handle(req, res);
+      fail(err) {
+        handle(req, err);
+        reject(err);
+      },
+      complete() {
         wx.hideNavigationBarLoading();
-        return res.data;
       }
-    ).catch(err=>{
-      /* 断网等特殊情况 */
-      handle(req, err);
-      wx.hideNavigationBarLoading();
-    })
+    });
+  });
+}
+
+// post
+function post(path, param = {}, noToken) {
+  return xhr(path, "POST", param, noToken);
 }
 
 // delete
-function del(path, param, noToken, type) {
-  wx.showNavigationBarLoading();
-  let url = getApp().API_URL + path;
-  if (!noToken) {
-    let token = wx.getStorageSync("token");
-    if (!token) return;
-    param.uid = wx.getStorageSync("uid");
-    param.timestamp = parseInt(new Date().getTime() / 1000 + "");
-    param.sign = md5(
-      "uid=" + param.uid + "&token=" + token + "&timestamp=" + param.timestamp
-    );
-  }
-  if (type) {
-    header["content-type"] = content_type[type];
-  } else {
-    header["content-type"] = content_type[0];
-  }
-  let req = {
-    method: "DELETE",
-    header: header,
-    url: url,
-    data: param || {}
-  }
-  return wxp
-    .request(req)
-    .then(
-      function(res) {
-        handle(req, res);
-        wx.hideNavigationBarLoading();
-        return res.data;
-      },
-      function(res) {
-        handle(req, res);
-        wx.hideNavigationBarLoading();
-        return res.data;
-      }
-    )
+function del(path, param = {}, noToken, type) {
+  return xhr(path, "DELETE", param, noToken);
 }
 
 //文件上传
@@ -156,23 +113,21 @@ function upload(path, file, noLoading) {
     header: header,
     name: "file",
     formData: {}
-  }
-  return wxp
-    .uploadFile(req)
-    .then(
-      function(res) {
-        handle(req, res);
-        if (!noLoading) wx.hideLoading();
-        wx.hideNavigationBarLoading();
-        return res.data;
-      },
-      function(res) {
-        handle(req, res);
-        if (!noLoading) wx.hideLoading();
-        wx.hideNavigationBarLoading();
-        return res;
-      }
-    )
+  };
+  return wxp.uploadFile(req).then(
+    function(res) {
+      handle(req, res);
+      if (!noLoading) wx.hideLoading();
+      wx.hideNavigationBarLoading();
+      return res.data;
+    },
+    function(res) {
+      handle(req, res);
+      if (!noLoading) wx.hideLoading();
+      wx.hideNavigationBarLoading();
+      return res;
+    }
+  );
 }
 
 module.exports = {
