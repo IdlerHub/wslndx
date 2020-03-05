@@ -35,7 +35,7 @@ socket.prototype = {
       console.log("连接断开")
       this.connectState = false
       this.beat && clearInterval(this.beat) && (this.beat = null)
-      this.reconnection()
+      // this.reconnection()
     })
     wx.onSocketOpen(res => {
       console.log("连接成功")

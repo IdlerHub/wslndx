@@ -30,6 +30,7 @@ Page({
     anime: false,
     queue: []
   },
+  guide:0,
   onLoad: function (ops) {
     this.currentTab = ops.index
     let pages = getCurrentPages();
@@ -424,6 +425,8 @@ Page({
         touch: !this.data.touch
       })
     } else {
+      if(this.guide) return
+      this.guide = true
       this.setData({
         guideNum: 3,
         touch: !this.data.touch
@@ -435,6 +438,8 @@ Page({
         if (res.code == 1) {
           app.getGuide()
         }
+      }).catch(() => {
+        this.guide = 0
       })
     }
   }

@@ -48,6 +48,7 @@ Page({
     /* rect: wx.getMenuButtonBoundingClientRect() */
   },
   pageName: "视频页（视频详情页）",
+  guide:0,
   onLoad(options) {
     /*todo:考虑去掉that*/
     let that = this;
@@ -1107,6 +1108,8 @@ Page({
   onHide() {
   },
   closeGuide() {
+    if(this.guide) return
+    this.guide = true
     let param = {
       guide_name: "lesson"
     };
@@ -1115,6 +1118,8 @@ Page({
         app.getGuide();
         this.setIntegral("+45 学分", "完成[云课堂]新手指引");
       }
+    }).catch(() => {
+      this.guide = 0
     });
   },
   // 语音

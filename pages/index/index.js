@@ -18,6 +18,7 @@ Page({
   },
   navHeightList: [],
   pageName: '首页',
+  guide: 0,
   onLoad: async function (e) {
     e.type != undefined ? this.pageType = e.type : ''
     let reg = /ios/i
@@ -573,6 +574,8 @@ Page({
         guidetxt: '我知道了'
       })
     } else {
+      if(this.guide) return
+      this.guide = true
       let param = {
         guide_name: 'index'
       }
@@ -583,6 +586,8 @@ Page({
             guideNum: 5
           })
         }
+      }).catch(() => {
+        this.guide = 0
       })
     }
   },

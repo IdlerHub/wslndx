@@ -25,6 +25,7 @@ Page({
   },
   pageName: '短视频页',
   recordVideo_id: '-1',
+  guide: 0,
   onLoad(options) {
     let systemInfo = wx.getSystemInfoSync()
     this.wifi = false
@@ -484,6 +485,8 @@ Page({
         guideTxt: '我知道了'
       })
     } else {
+      if(this.guide) return
+      this.guide = true
       let param = {
         guide_name: 'shortvideo'
       }
@@ -503,6 +506,8 @@ Page({
             this.judgeWifi()
           }, 2000)
         }
+      }).catch(() => {
+        this.guide = 0
       })
     }
   },

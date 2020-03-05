@@ -32,6 +32,7 @@ Page({
     showBottom: false
   },
   pageName: '秀风采页',
+  guide: 0,
   onLoad(options) {
     this.param = [{ page: 1, pageSize: 10, is_follow: 0 }, { page: 1, pageSize: 10, is_follow: 1 }]
     this.setData({
@@ -603,6 +604,8 @@ Page({
         guideTxt: '我知道了'
       })
     } else {
+      if(this.guide) return
+      this.guide = true
       let param = {
         guide_name: 'blog'
       }
@@ -620,6 +623,8 @@ Page({
           }, 2000)
           app.getGuide()
         }
+      }).catch(() => {
+        this.guide = 0
       })
     }
   },
