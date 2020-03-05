@@ -5,6 +5,7 @@ const plugin = requirePlugin("WechatSI");
 // 获取**全局唯一**的语音识别管理器**recordRecoManager**
 const manager = plugin.getRecordRecognitionManager();
 const innerAudioContext = wx.createInnerAudioContext();
+var htmlparser = require("../../utils/htmlparser.js");
 Page({
   data: {
     sort: 0,
@@ -213,6 +214,7 @@ Page({
         msg.data.sublesson.forEach(function (item) {
           item.minute = (item.film_length / 60).toFixed(0);
         });
+        msg.data.intro_content =  htmlparser.default(msg.data.intro_content)
         wx.setNavigationBarTitle({
           title: msg.data.title
         });
