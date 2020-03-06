@@ -1,7 +1,7 @@
 /*
  * @Date: 2019-05-28 09:50:08
  * @LastEditors: hxz
- * @LastEditTime: 2020-03-06 10:03:25
+ * @LastEditTime: 2020-03-06 10:11:55
  */
 import { promisifyAll } from "miniprogram-api-promise";
 const wxp = {};
@@ -73,7 +73,7 @@ function xhr(path, method, param = {}, noToken) {
           resolve(res.data);
         } else {
           handle(req, res);
-          reject(res);
+          reject(res.data);
         }
       },
       fail(err) {
