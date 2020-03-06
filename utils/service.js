@@ -8,7 +8,6 @@ const wxp = {};
 promisifyAll(wx, wxp);
 
 import md5 from "./md5.js";
-
 //验证code
 function handle(req, res) {
   getApp().fundebug.notifyHttpError(req, res);
@@ -110,7 +109,9 @@ function upload(path, file, noLoading) {
   let req = {
     url: url,
     filePath: file,
-    header: header,
+    header: {
+      "content-type": "application/json"
+    },
     name: "file",
     formData: {}
   };

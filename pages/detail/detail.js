@@ -48,7 +48,10 @@ Page({
     /* rect: wx.getMenuButtonBoundingClientRect() */
   },
   pageName: "视频页（视频详情页）",
-  guide: 0,
+  turnOff:{
+    guide: 0,
+    collect:0
+  },
   onLoad(options) {
     /*todo:考虑去掉that*/
     let that = this;
@@ -242,11 +245,13 @@ Page({
     }, 2000);
   },
   played() {
+    this.vedioRecordAdd()
     wx.uma.trackEvent("lessonsPlay", {
       lessonsName: this.data.detail.title
     });
   },
   ended() {
+    console.log('视频播放完速度就会发动')
     this.data.sublessons.forEach(item => {
       item.id == this.data.cur.id ? (item.played = 1) : "";
     });
@@ -351,6 +356,7 @@ Page({
   // 收藏
   collect() {
     /*todo:考虑去掉that*/
+    if(this.turnOff.collect) return
     let that = this;
     let param = {
       lesson_id: this.param.id
@@ -361,10 +367,14 @@ Page({
         content: "是否取消收藏",
         success: function (res) {
           if (res.confirm) {
+            that.turnOff.collect = 1
             app.classroom.collectCancel(param).then(msg => {
               that.setData({
                 "detail.collected": 0
               });
+              that.turnOff.collect = 0
+            }).catch(() => {
+              that.turnOff.collect = 0
             });
           } else if (res.cancel) {
             return;
@@ -372,10 +382,14 @@ Page({
         }
       });
     } else {
+      this.turnOff.collect = 1
       app.classroom.collect(param).then(msg => {
         this.setData({
           "detail.collected": 1
         });
+        this.turnOff.collect = 0
+      }).catch(() => {
+        this.turnOff.collect = 0
       });
       wx.uma.trackEvent("collectionLessons", {
         lessonsName: this.data.detail.title
@@ -400,19 +414,15 @@ Page({
     });
   },
   recordAdd() {
-    let param = {
-      lesson_id: this.param.id,
-      sublesson_id: this.data.cur.id
-    };
     let that = this;
     if (this.data.$state.flow) {
-      that.recordAddVedio(param);
+      that.recordAddVedio();
     } else {
       wx.getNetworkType({
         success: res => {
           if (res.networkType == 'wifi') {
             app.playVedio("wifi");
-            that.recordAddVedio(param);
+            that.recordAddVedio();
           } else {
             wx.showModal({
               content:
@@ -423,7 +433,7 @@ Page({
               success(res) {
                 if (res.confirm) {
                   app.playVedio("flow");
-                  that.recordAddVedio(param);
+                  that.recordAddVedio();
                   wx.offNetworkStatusChange()
                 } else if (res.cancel) {
                 }
@@ -434,8 +444,7 @@ Page({
       })
     }
   },
-  recordAddVedio(param) {
-    app.classroom.recordAdd(param).then(msg => {
+  recordAddVedio() {
       this.getProgress();
       this.videoContext.play();
       this.setData({
@@ -443,7 +452,13 @@ Page({
         hideRecode: true
       });
       app.addVisitedNum(`k${this.data.cur.id}`);
-    });
+  },
+  vedioRecordAdd() {
+    let param = {
+      lesson_id: this.param.id,
+      sublesson_id: this.data.cur.id
+    };
+    app.classroom.recordAdd(param).then(msg => {});
   },
   // 获取讨论
   getComment(list, options) {
@@ -1088,8 +1103,8 @@ Page({
   onHide() {
   },
   closeGuide() {
-    if (this.guide) return
-    this.guide = true
+    if (this.turnOff.guide) return
+    this.turnOff.guide = true
     let param = {
       guide_name: "lesson"
     };
@@ -1097,7 +1112,7 @@ Page({
       app.getGuide();
       this.setIntegral("+45 学分", "完成[云课堂]新手指引");
     }).catch(() => {
-      this.guide = 0
+      this.turnOff.guide = 0
     });
   },
   // 语音
