@@ -30,7 +30,7 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function(options) {
+  onLoad: function (options) {
     if (options.lesson_id) {
       this.navParams = options
       this.getlesData()
@@ -42,11 +42,11 @@ Page({
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
-  onReady: function() {},
+  onReady: function () { },
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function() {
+  onShow: function () {
     this.initRecord()
     this.getRecordAuth()
   },
@@ -55,26 +55,22 @@ Page({
    */
   getData() {
     return app.circle.replyDetail(this.navParams).then(res => {
-      if (res.code == 1) {
-        res.data.reply_array.forEach(v => {
-          v.rtext = `回复<span  class="respond">${v.to_user}</span>:&nbsp;&nbsp;`
-        })
-        this.setData({
-          detail: res.data
-        })
-      }
+      res.data.reply_array.forEach(v => {
+        v.rtext = `回复<span  class="respond">${v.to_user}</span>:&nbsp;&nbsp;`
+      })
+      this.setData({
+        detail: res.data
+      })
     })
   },
   getlesData() {
     return app.classroom.replyList(this.navParams).then(res => {
-      if (res.code == 1) {
-        res.data.reply_array.forEach(v => {
-          v.rtext = `回复<span  class="respond">${v.to_user}</span>:&nbsp;&nbsp;`
-        })
-        this.setData({
-          detail: res.data
-        })
-      }
+      res.data.reply_array.forEach(v => {
+        v.rtext = `回复<span  class="respond">${v.to_user}</span>:&nbsp;&nbsp;`
+      })
+      this.setData({
+        detail: res.data
+      })
     })
   },
   showModal(e) {
@@ -102,15 +98,15 @@ Page({
         comment_id: this.data.detail.id
       }
       app.classroom.delComment(param).then(msg => {
-        if (msg.code == 1) {
-          this.toast("删除成功")
-          this.emitEvent()
-          setTimeout(() => {
-            wx.navigateBack({
-              delta: 1
-            })
-          }, 1500)
-        } else if (msg.code == -2) {
+        this.toast("删除成功")
+        this.emitEvent()
+        setTimeout(() => {
+          wx.navigateBack({
+            delta: 1
+          })
+        }, 1500)
+      }).catch(err => {
+        if (err.code == -2) {
           /* 帖子已经删除 */
           this.setData({
             detail: {}
@@ -125,15 +121,15 @@ Page({
         id: this.data.detail.id
       }
       app.circle.delComment(param).then(msg => {
-        if (msg.code == 1) {
-          this.toast("删除成功")
-          this.emitEvent()
-          setTimeout(() => {
-            wx.navigateBack({
-              delta: 1
-            })
-          }, 1500)
-        } else if (msg.code == -2) {
+        this.toast("删除成功")
+        this.emitEvent()
+        setTimeout(() => {
+          wx.navigateBack({
+            delta: 1
+          })
+        }, 1500)
+      }).catch(err => {
+        if (err.code == -2) {
           /* 帖子已经删除 */
           this.setData({
             detail: {}
@@ -152,11 +148,11 @@ Page({
         id: e.currentTarget.dataset.item.reply_id
       }
       app.classroom.delReply(params).then(msg => {
-        if (msg.code == 1) {
-          this.toast("删除成功")
-          this.emitEvent()
-          this.getlesData()
-        } else if (msg.code == -2) {
+        this.toast("删除成功")
+        this.emitEvent()
+        this.getlesData()
+      }).catch(err => {
+        if (err.code == -2) {
           /* 帖子已经删除 */
           this.setData({
             detail: {}
@@ -172,11 +168,11 @@ Page({
         id: e.currentTarget.dataset.item.reply_id
       }
       app.circle.replydel(params).then(msg => {
-        if (msg.code == 1) {
-          this.toast("删除成功")
-          this.emitEvent()
-          this.getData()
-        } else if (msg.code == -2) {
+        this.toast("删除成功")
+        this.emitEvent()
+        this.getData()
+      }).catch(err => {
+        if (err.code == -2) {
           /* 帖子已经删除 */
           this.setData({
             detail: {}
@@ -186,7 +182,6 @@ Page({
         }
       })
     }
-
   },
   toast(msg) {
     wx.showToast({
@@ -332,63 +327,62 @@ Page({
       title: "发布中"
     })
     if (this.data.detail.lesson_id) {
-
-      app.classroom.addReply(params).then(msg => {
-        if (msg.code == 1) {
-          this.toast("回复成功")
-          this.emitEvent()
-          this.getlesData()
-          let lessDiscussion = this.data.$state.lessDiscussion
-          if (this.replyInfo) {
-            lessDiscussion[this.data.detail.lesson_id]['replyParent'][this.data.detail.id] = ''
-          } else {
-            lessDiscussion[this.data.detail.lesson_id]['replyInfo'][this.data.detail.id] = ''
-          }
-          app.store.setState({
-            lessDiscussion
-          })
-          this.setData({
-            content: "",
-            showvoice: false,
-            showvoiceauto: false,
-            voicetime: 0,
-            contenLength: 0,
-            write: false
-          })
-        } else if (msg.code == -2) {
+      app.classroom.addReply(params).then(() => {
+        this.toast("回复成功")
+        this.emitEvent()
+        this.getlesData()
+        let lessDiscussion = this.data.$state.lessDiscussion
+        if (this.replyInfo) {
+          lessDiscussion[this.data.detail.lesson_id]['replyParent'][this.data.detail.id] = ''
+        } else {
+          lessDiscussion[this.data.detail.lesson_id]['replyInfo'][this.data.detail.id] = ''
+        }
+        app.store.setState({
+          lessDiscussion
+        })
+        this.setData({
+          content: "",
+          showvoice: false,
+          showvoiceauto: false,
+          voicetime: 0,
+          contenLength: 0,
+          write: false
+        })
+      }).catch(err => {
+        if (err.code == -2) {
           this.toast("帖子已删除,回复失败")
-        } else if (msg.code == -3) {
+        } else if (err.code == -3) {
           this.toast("信息已删除,回复失败")
         } else {
           this.toast("回复失败")
         }
       })
     } else {
-      app.circle.reply(params).then(msg => {
-        if (msg.code == 1) {
-          this.toast("回复成功")
-          this.emitEvent()
-          this.getData()
-          let blogcomment = this.data.$state.blogcomment
-          if (this.replyInfo) {
-            blogcomment[this.data.detail.blog_id]['replyParent'][this.data.detail.id] = ''
-          } else {
-            blogcomment[this.data.detail.blog_id]['replyInfo'][this.data.detail.id] = ''
-          }
-          app.store.setState({
-            blogcomment
-          })
-          this.setData({
-            content: "",
-            showvoice: false,
-            showvoiceauto: false,
-            voicetime: 0,
-            contenLength: 0,
-            write: false
-          })
-        } else if (msg.code == -2) {
+      app.circle.reply(params).then(() => {
+        this.toast("回复成功")
+        this.emitEvent()
+        this.getData()
+        let blogcomment = this.data.$state.blogcomment
+        if (this.replyInfo) {
+          blogcomment[this.data.detail.blog_id]['replyParent'][this.data.detail.id] = ''
+        } else {
+          blogcomment[this.data.detail.blog_id]['replyInfo'][this.data.detail.id] = ''
+        }
+        app.store.setState({
+          blogcomment
+        })
+        this.setData({
+          content: "",
+          showvoice: false,
+          showvoiceauto: false,
+          voicetime: 0,
+          contenLength: 0,
+          write: false
+        })
+      }).catch(err => {
+        if (err.code == -2) {
           this.toast("帖子已删除,回复失败")
-        } else if (msg.code == -3) {
+        } else if (err.code == -3) {
           this.toast("信息已删除,回复失败")
         } else {
           this.toast("回复失败")
@@ -405,7 +399,7 @@ Page({
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
-  onPullDownRefresh: function() {
+  onPullDownRefresh: function () {
     this.getData().then(() => {
       wx.stopPullDownRefresh()
     })
@@ -470,13 +464,11 @@ Page({
         scope: 'scope.record',
         success() {
           // 用户已经同意小程序使用录音功能，后续调用 wx.startRecord 接口不会弹窗询问
-          console.log("succ auth")
           app.store.setState({
             authRecord: true
           })
         },
         fail() {
-          console.log("fail auth")
           app.store.setState({
             authRecordfail: true
           })
@@ -484,7 +476,7 @@ Page({
       })
     }
   },
-  getRecordAuth: function() {
+  getRecordAuth: function () {
     wx.getSetting({
       success(res) {
         let record = res.authSetting['scope.record']
@@ -492,15 +484,12 @@ Page({
           authRecord: record || false,
         })
       },
-      fail(res) {
-        console.log("fail")
-      }
     })
   },
   /**
    * 初始化语音识别回调
    */
-  initRecord: function() {
+  initRecord: function () {
     //有新的识别内容返回，则会调用此事件
     manager.onRecognize = (res) => {
       clearInterval(this.timer)
@@ -609,7 +598,6 @@ Page({
   // 语音播放
   playvoice() {
     innerAudioContext.src = this.data.filePath;
-    console.log(this.data.filePath)
     innerAudioContext.play()
     innerAudioContext.onPlay(() => {
       this.setData({

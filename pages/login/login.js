@@ -99,12 +99,14 @@ Page({
         this.setData({
           btnName: "重新获取",
         })
-        res.code !== 1 ? wx.showToast({
-          title: res.msg,
+        this.countDown()
+      }).catch(err => {
+        wx.showToast({
+          title: err.msg,
           icon: "none",
           duration: 1500,
           mask: false
-        }) : this.countDown()
+        })
       })
     } else {
       wx.showToast({
@@ -166,58 +168,56 @@ Page({
   /* 登录请求 */
   login(param) {
     app.user.register(param).then(res => {
-      if (res.code === 1) {
-        /* 新用户注册不用提示签到 */
-        app.setSignIn({ status: false, count: 1 })
-        wx.setStorageSync("token", res.data.token)
-        wx.setStorageSync("uid", res.data.uid)
-        wx.setStorageSync("authKey", res.data.authKey)
-        app.setUser(res.data.userInfo)
-        app.setAuthKey(res.data.authKey)
-        if (wx.getStorageSync("goosId")) {
-          let params = {
-            invite_uid: wx.getStorageSync("invite"),
-            goods_id: wx.getStorageSync("goosId")
-          }
-          app.user.addLotteryInvite(params).then()
-        } else if (app.globalData.shareObj.p || app.globalData.query.voteid) {
-          let params = {
-            invite_id: wx.getStorageSync("invite"),
-            invite_type: app.globalData.shareObj.p ? app.globalData.shareObj.p : 2
-          }
-          app.vote.recordInvite(params)
+      /* 新用户注册不用提示签到 */
+      app.setSignIn({ status: false, count: 1 })
+      wx.setStorageSync("token", res.data.token)
+      wx.setStorageSync("uid", res.data.uid)
+      wx.setStorageSync("authKey", res.data.authKey)
+      app.setUser(res.data.userInfo)
+      app.setAuthKey(res.data.authKey)
+      if (wx.getStorageSync("goosId")) {
+        let params = {
+          invite_uid: wx.getStorageSync("invite"),
+          goods_id: wx.getStorageSync("goosId")
         }
-        if (res.data.userInfo.mobile) {
-          this.setData({
-            showintegral: true
-          })
-          if (app.globalData.query.type == "share" || app.globalData.query.type == 'lottery') {
-            let params = []
-            for (let attr in app.globalData.query) {
-              params.push(attr + "=" + app.globalData.query[attr])
-            }
-            setTimeout(() => {
-              app.globalData.shareObj.type == 'lottery' ? wx.reLaunch({ url: "/pages/education/education?type=lottery&login=1&id=" + app.globalData.lotteryId }) : wx.reLaunch({ url: app.globalData.path + "?" + params.join("&") })
-            }, 2000)
-          } else if (app.globalData.shareObj.p || app.globalData.query.vote) {
-            setTimeout(() => {
-              wx.reLaunch({ url: "/pages/voteDetail/voteDetail?voteid=" + (app.globalData.shareObj.o ? app.globalData.shareObj.o : app.globalData.query.voteid) })
-            }, 2000);
-          } else {
-            /*跳转首页*/
-            setTimeout(() => {
-              wx.reLaunch({ url: "/pages/index/index?type=login" })
-            }, 2000)
-          }
+        app.user.addLotteryInvite(params).then()
+      } else if (app.globalData.shareObj.p || app.globalData.query.voteid) {
+        let params = {
+          invite_id: wx.getStorageSync("invite"),
+          invite_type: app.globalData.shareObj.p ? app.globalData.shareObj.p : 2
         }
-      } else {
-        wx.showToast({
-          title: res.msg,
-          icon: "none",
-          duration: 1500,
-          mask: false
-        })
+        app.vote.recordInvite(params)
       }
+      if (res.data.userInfo.mobile) {
+        this.setData({
+          showintegral: true
+        })
+        if (app.globalData.query.type == "share" || app.globalData.query.type == 'lottery') {
+          let params = []
+          for (let attr in app.globalData.query) {
+            params.push(attr + "=" + app.globalData.query[attr])
+          }
+          setTimeout(() => {
+            app.globalData.shareObj.type == 'lottery' ? wx.reLaunch({ url: "/pages/education/education?type=lottery&login=1&id=" + app.globalData.lotteryId }) : wx.reLaunch({ url: app.globalData.path + "?" + params.join("&") })
+          }, 2000)
+        } else if (app.globalData.shareObj.p || app.globalData.query.vote) {
+          setTimeout(() => {
+            wx.reLaunch({ url: "/pages/voteDetail/voteDetail?voteid=" + (app.globalData.shareObj.o ? app.globalData.shareObj.o : app.globalData.query.voteid) })
+          }, 2000);
+        } else {
+          /*跳转首页*/
+          setTimeout(() => {
+            wx.reLaunch({ url: "/pages/index/index?type=login" })
+          }, 2000)
+        }
+      }
+    }).catch(err => {
+      wx.showToast({
+        title: err.msg,
+        icon: "none",
+        duration: 1500,
+        mask: false
+      })
     })
   },
   checkboxChange: function (e) {

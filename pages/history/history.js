@@ -37,19 +37,17 @@ Page({
   getHistory(list) {
     let temp = list || this.data.history.history
     return app.user.history(this.historyParam).then(msg => {
-      if (msg.code == 1) {
-        for (let i in msg.data.history) {
-          msg.data.history[i].forEach(function (item) {
-            item.createtime = app.util.formatTime(new Date(item.createtime * 1000)).slice(10)
-          })
-          temp.push({ date: i, data: msg.data.history[i] })
-        }
-        this.setData({
-          "history.history": temp,
-          "history.last_lesson": msg.data.last_lesson || ""
+      for (let i in msg.data.history) {
+        msg.data.history[i].forEach(function (item) {
+          item.createtime = app.util.formatTime(new Date(item.createtime * 1000)).slice(10)
         })
-        this.historyParam.max = msg.data.total_page
+        temp.push({ date: i, data: msg.data.history[i] })
       }
+      this.setData({
+        "history.history": temp,
+        "history.last_lesson": msg.data.last_lesson || ""
+      })
+      this.historyParam.max = msg.data.total_page
     })
   }
 })

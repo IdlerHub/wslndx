@@ -30,7 +30,7 @@ Page({
     anime: false,
     queue: []
   },
-  guide:0,
+  guide: 0,
   onLoad: function (ops) {
     this.currentTab = ops.index
     let pages = getCurrentPages();
@@ -43,57 +43,55 @@ Page({
   },
   getCategory() {
     app.user.getLessonCategory().then(msg => {
-      if (msg.code == 1) {
-        let arr1 = [
-          { id: 1, name: "推荐", unMove: true }
-        ];
-        msg.data.user_lesson_category.forEach((i, index) => {
-          arr1.push(i)
-        })
-        arr1[this.currentTab]['class'] = true
-        const res = wx.getSystemInfoSync();
-        this.private.ratio = Math.floor((res.windowWidth * 100) / 375) / 100;
+      let arr1 = [
+        { id: 1, name: "推荐", unMove: true }
+      ];
+      msg.data.user_lesson_category.forEach((i, index) => {
+        arr1.push(i)
+      })
+      arr1[this.currentTab]['class'] = true
+      const res = wx.getSystemInfoSync();
+      this.private.ratio = Math.floor((res.windowWidth * 100) / 375) / 100;
 
-        let sortArr = arr1;
-        sortArr.forEach((v, i) => {
-          v.sort = i;
-          let { x, y } = this.getPosition(i);
-          v.x = x;
-          v.y = y;
-        });
-        let arr2 = msg.data.user_define_lesson_category;;
-        let altArr = arr2;
-        let originY = this.getMoldStart(sortArr.length);
-        altArr.forEach((v, i) => {
-          let { x, y } = this.getPosition(i);
-          v.x = x;
-          v.y = y + originY;
-        });
-        this.setData({
-          sortList: sortArr,
-          altList: altArr
-        });
-      }
+      let sortArr = arr1;
+      sortArr.forEach((v, i) => {
+        v.sort = i;
+        let { x, y } = this.getPosition(i);
+        v.x = x;
+        v.y = y;
+      });
+      let arr2 = msg.data.user_define_lesson_category;;
+      let altArr = arr2;
+      let originY = this.getMoldStart(sortArr.length);
+      altArr.forEach((v, i) => {
+        let { x, y } = this.getPosition(i);
+        v.x = x;
+        v.y = y + originY;
+      });
+      this.setData({
+        sortList: sortArr,
+        altList: altArr
+      });
     })
   },
   edit() {
     if (this.data.touch) {
-      let arr = JSON.parse(JSON.stringify(this.data.sortList)), num = '',number = 0
-        arr.sort((a, b) => {
-          return a.sort - b.sort
+      let arr = JSON.parse(JSON.stringify(this.data.sortList)), num = '', number = 0
+      arr.sort((a, b) => {
+        return a.sort - b.sort
+      })
+      arr.forEach((i, index) => {
+        index != 0 ? num = `${num},${i.id}` : ''
+        i['class'] ? number = i.id : ''
+      })
+      let param = {
+        category_str: num.substring(1)
+      }
+      this.addCategory(param).then(() => {
+        this.beforePage.getCategory().then(() => {
+          this.beforePage.lastswitchTab(number)
         })
-        arr.forEach((i, index) => {
-          index != 0 ? num = `${num},${i.id}` : ''
-          i['class'] ? number = i.id : ''
-        })
-        let param = {
-          category_str: num.substring(1)
-        }
-        this.addCategory(param).then(() => {
-          this.beforePage.getCategory().then(() => {
-            this.beforePage.lastswitchTab(number)
-          })
-        })
+      })
     }
     this.setData({
       touch: !this.data.touch
@@ -259,7 +257,6 @@ Page({
     let curIndex = arr.findIndex(v => v.id == this.data.currentItem);
     let curBlock = arr[curIndex];
     curBlock.sort = arrow > 0 ? start : end;
-
     setTimeout(() => {
       if (this.private.queue.length) {
         this.sortMove("iteration");
@@ -318,16 +315,12 @@ Page({
       }
       this.addCategory(param).then(() => {
         this.beforePage.getCategory()
-      })  
+      })
     }, 500)
   },
   /* 收藏分类 */
   addCategory(param) {
-     return app.user.collectLessonCategory(param).then(res => {
-      if (res.code == 1) {
-
-      }
-    })
+    return app.user.collectLessonCategory(param).then()
   },
   /* 排序列表删除元素 */
   remove(e) {
@@ -412,10 +405,10 @@ Page({
     });
     return Math.floor((moldStartY + 45 * this.private.ratio) * 10) / 10;
   },
-   moveontab(e) {
+  moveontab(e) {
     if (!this.data.touch) {
-        this.beforePage.lastswitchTab(e.currentTarget.dataset.id)
-        wx.navigateBack()
+      this.beforePage.lastswitchTab(e.currentTarget.dataset.id)
+      wx.navigateBack()
     }
   },
   nextguid() {
@@ -425,7 +418,7 @@ Page({
         touch: !this.data.touch
       })
     } else {
-      if(this.guide) return
+      if (this.guide) return
       this.guide = true
       this.setData({
         guideNum: 3,
@@ -435,9 +428,7 @@ Page({
         guide_name: 'lesson_category'
       }
       app.user.guideRecordAdd(param).then(res => {
-        if (res.code == 1) {
-          app.getGuide()
-        }
+        app.getGuide()
       }).catch(() => {
         this.guide = 0
       })

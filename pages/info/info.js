@@ -48,25 +48,19 @@ Page({
   getProvince() {
     let param = { level: 1 }
     return app.user.search(param).then(msg => {
-      if (msg.code == 1) {
-        this.province = msg.data
-      }
+      this.province = msg.data
     })
   },
   getCity(val) {
     let param = { level: 2, name: val || this.province[0] }
     return app.user.search(param).then(msg => {
-      if (msg.code == 1) {
-        this.city = msg.data
-      }
+      this.city = msg.data
     })
   },
   getSchool(val) {
     let param = { level: 3, name: val || this.city[0] }
     return app.user.search(param).then(msg => {
-      if (msg.code == 1) {
-        this.school = msg.data
-      }
+      this.school = msg.data
     })
   },
   bindMultiPickerColumnChange(e) {
@@ -135,29 +129,17 @@ Page({
   },
   setUserinfo(param) {
     app.user.profile(param).then(msg => {
-      if (msg.code == 1) {
-        if (msg.data.is_first == 'first') {
+      if (msg.data.is_first == 'first') {
+        this.setData({
+          showintegral: true
+        })
+        setTimeout(() => {
           this.setData({
-            showintegral: true
+            showintegral: false
           })
-          setTimeout(() => {
-            this.setData({
-              showintegral: false
-            })
-          }, 2000)
-        }
-        app.setUser(msg.data.userInfo)
-        // app.classroom.recommend({ page: 1, pageSize: 10, province: this.data.$state.userInfo.university.split(',')[0] }).then(msg => {
-        //   if (msg.code == 1) {
-        //     msg.data.forEach(function (item) {
-        //       item.bw = app.util.tow(item.browse)
-        //     })
-        //     app.store.setState({
-        //       recommend: msg.data
-        //     })
-        //   }
-        // })
+        }, 2000)
       }
+      app.setUser(msg.data.userInfo)
     })
   },
   submit() {

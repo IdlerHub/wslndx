@@ -46,31 +46,27 @@ Page({
   getList: function (list) {
     let temp = list || this.data.list
     return app.circle.news(this.param).then(msg => {
-      if (msg.code === 1 && msg.data) {
-        msg.data.forEach(function (item) {
-          item.lw = app.util.tow(item.likes)
-          item.cw = app.util.tow(item.comments)
-          item.image_compress = item.images.map(i => {
-            return i.image_compress
-          })
-          item.images = item.images.map(i => {
-            return i.image
-          })
-          item.auditing = new Date().getTime() - new Date(item.createtime * 1000) < 7000
+      msg.data.forEach(function (item) {
+        item.lw = app.util.tow(item.likes)
+        item.cw = app.util.tow(item.comments)
+        item.image_compress = item.images.map(i => {
+          return i.image_compress
         })
-        this.setData({
-          list: temp.concat(msg.data)
+        item.images = item.images.map(i => {
+          return i.image
         })
-      }
+        item.auditing = new Date().getTime() - new Date(item.createtime * 1000) < 7000
+      })
+      this.setData({
+        list: temp.concat(msg.data)
+      })
     })
   },
   getCircleInfo() {
     return app.circle.fsinfo(this.param).then(msg => {
-      if (msg.code === 1) {
-        this.setData({
-          circle: msg.data
-        })
-      }
+      this.setData({
+        circle: msg.data
+      })
     })
   },
   praise(e) {
@@ -82,25 +78,21 @@ Page({
     if (temp[i].likestatus) {
       // 取消点赞
       app.circle.delPraise(param).then(msg => {
-        if (msg.code === 1) {
-          temp[i].likestatus = 0
-          temp[i].likes--
-          this.setData({
-            list: temp
-          })
-        }
+        temp[i].likestatus = 0
+        temp[i].likes--
+        this.setData({
+          list: temp
+        })
       })
     } else {
       // 点赞
       app.circle.praise(param).then(msg => {
-        if (msg.code === 1) {
-          temp[i].likestatus = 1
-          temp[i].likes += 1
-          temp[i].praising = true
-          this.setData({
-            list: temp
-          })
-        }
+        temp[i].likestatus = 1
+        temp[i].likes += 1
+        temp[i].praising = true
+        this.setData({
+          list: temp
+        })
       })
     }
   },
@@ -116,18 +108,16 @@ Page({
     let circle = this.data.circle
     let param = { fs_id: this.id }
     return app.circle.addOne(param).then(msg => {
-      if (msg.code === 1) {
-        wx.showToast({
-          title: "您已成功加入\r\n【" + circle.title + "】学友圈",
-          icon: "none",
-          duration: 1500
-        })
-        circle.joined = 1
-        circle.members += 1
-        this.setData({
-          circle: circle
-        })
-      }
+      wx.showToast({
+        title: "您已成功加入\r\n【" + circle.title + "】学友圈",
+        icon: "none",
+        duration: 1500
+      })
+      circle.joined = 1
+      circle.members += 1
+      this.setData({
+        circle: circle
+      })
     })
   },
   //图片预览
@@ -175,13 +165,11 @@ Page({
       let article = this.data.list[i]
       let bkid = article.id
       app.circle.addForward({ blog_id: bkid }).then(res => {
-        if (res.code == 1) {
-          let list = this.data.list
-          list[i].forward += 1
-          this.setData({
-            list: list
-          })
-        }
+        let list = this.data.list
+        list[i].forward += 1
+        this.setData({
+          list: list
+        })
       })
       return {
         title: article.content,
@@ -269,15 +257,15 @@ Page({
   cancelCollection() {
     let param = { blog_id: this.data.blog_id }
     app.circle.collectCancel(param).then(res => {
-      if (res.code == 1) {
-        thispagesCollect(this.data.blog_id, 0)
-        this.postPages.pagesCollect(this.data.blog_id, 0)
-        wx.showToast({
-          title: res.msg,
-          icon: 'success',
-          duration: 800
-        })
-      } else {
+      this.pagesCollect(this.data.blog_id, 0)
+      this.postPages.pagesCollect(this.data.blog_id, 0)
+      wx.showToast({
+        title: res.msg,
+        icon: 'success',
+        duration: 800
+      })
+    }).catch(res => {
+      if (res.code == 0) {
         wx.showToast({
           title: res.msg,
           image: '/images/warn.png',
@@ -294,17 +282,17 @@ Page({
       blog_id: this.data.blog_id
     }
     app.circle.collect(param).then(res => {
-      if (res.code == 1) {
-        thispagesCollect(this.data.blog_id, 1)
-        this.postPages.pagesCollect(this.data.blog_id, 1)
-        this.closeSheet()
-        wx.showToast({
-          title: res.msg,
-          icon: 'success',
-          duration: 1500
-        })
-      } else {
-        this.closeSheet()
+      this.pagesCollect(this.data.blog_id, 1)
+      this.postPages.pagesCollect(this.data.blog_id, 1)
+      this.closeSheet()
+      wx.showToast({
+        title: res.msg,
+        icon: 'success',
+        duration: 1500
+      })
+    }).catch(res => {
+      this.closeSheet()
+      if (res.code == 0) {
         wx.showToast({
           title: res.msg,
           image: '/images/warn.png',
@@ -328,31 +316,27 @@ Page({
     }
     let param = { follower_uid: this.data.flowId }
     app.user.following(param).then(res => {
-      if (res.code == 1) {
-        wx.showToast({
-          title: '您已成功关注' + this.data.follownickname,
-          icon: 'none',
-          duration: 1500
-        })
-        this.setfollow(this.data.flowId, true)
-        this.postPages.setfollow(this.data.flowId, true)
-        this.closeSheet()
-      }
+      wx.showToast({
+        title: '您已成功关注' + this.data.follownickname,
+        icon: 'none',
+        duration: 1500
+      })
+      this.setfollow(this.data.flowId, true)
+      this.postPages.setfollow(this.data.flowId, true)
+      this.closeSheet()
     })
   },
   clsocancelFollowing() {
     let param = { follower_uid: this.data.flowId }
     app.user.cancelFollowing(param).then(res => {
-      if (res.code == 1) {
-        wx.showToast({
-          title: '取消关注成功',
-          icon: 'none',
-          duration: 1500
-        })
-        this.setfollow(this.data.flowId)
-        this.postPages.setfollow(this.data.flowId)
-        this.closeSheet()
-      }
+      wx.showToast({
+        title: '取消关注成功',
+        icon: 'none',
+        duration: 1500
+      })
+      this.setfollow(this.data.flowId)
+      this.postPages.setfollow(this.data.flowId)
+      this.closeSheet()
     })
   },
   pagesCollect(id, type) {
