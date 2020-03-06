@@ -1,7 +1,7 @@
 /*
  * @Date: 2019-05-28 09:50:08
  * @LastEditors: hxz
- * @LastEditTime: 2020-03-06 13:50:11
+ * @LastEditTime: 2020-03-06 15:01:04
  */
 import { wxp } from "./utils/service";
 import { uma } from "umtrack-wx";
@@ -416,12 +416,14 @@ App({
   },
   // 获取新手指引
   getGuide() {
-    return this.user.guideRecord().then(res => {
-      let newGuide = res.data;
-      this.store.setState({
-        newGuide
+    if (this.store.$state.userInfo.mobile) {
+      return this.user.guideRecord().then(res => {
+        let newGuide = res.data;
+        this.store.setState({
+          newGuide
+        });
       });
-    });
+    }
   },
   // 获取任务状态
   getTaskStatus() {
