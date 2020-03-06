@@ -45,24 +45,22 @@ Page({
   },
   getLotteryCfglist() {
     return app.lottery.lotteryCfgList().then(res => {
-      if (res.code == 1) {
-        this.setData({
-          lotteryCfgList: res.data.list,
-          lottery_count: res.data.today_lottery_count
-        })
-      }
+      this.setData({
+        lotteryCfgList: res.data.list,
+        lottery_count: res.data.today_lottery_count
+      })
     })
   },
   getLotteryres() {
     return app.lottery.lotteryRes().then(res => {
-      if (res.code == 1) {
-        this.startRoll()
-        this.setData({
-          lotteryres: res.data
-        })
-      } else {
+      this.startRoll()
+      this.setData({
+        lotteryres: res.data
+      })
+    }).catch(err => {
+      if (err.code == 0) {
         wx.showToast({
-          title: '很抱歉，您的' + res.msg,
+          title: '很抱歉，您的' + err.msg,
           icon: 'none'
         })
         this.setData({
@@ -97,12 +95,10 @@ Page({
     if (that.touchEndTime - that.touchStartTime < 350) {
       // 当前点击的时间
       let currentTime = e.timeStamp;
-      console.log(currentTime)
       let lastTapTime = that.lastTapTime || currentTime - 310;
       // 更新最后一次点击时间
       that.lastTapTime = currentTime;
       // 如果两次点击时间在300毫秒内，则认为是双击事件
-      console.log(currentTime - lastTapTime)
       if (currentTime - lastTapTime > 300) {
         // do something 点击事件具体执行那个业务
         if (this.data.lottery_count >= 2) return
@@ -123,7 +119,6 @@ Page({
               })
               that.getLotteryres()
             } else if (res.cancel) {
-              console.log('用户点击取消')
               that.setData({
                 showmask: false,
                 clickLuck: 'clickLuck'

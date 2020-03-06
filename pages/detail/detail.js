@@ -48,7 +48,7 @@ Page({
     /* rect: wx.getMenuButtonBoundingClientRect() */
   },
   pageName: "视频页（视频详情页）",
-  guide:0,
+  guide: 0,
   onLoad(options) {
     /*todo:考虑去掉that*/
     let that = this;
@@ -211,24 +211,22 @@ Page({
       pageSize: 100
     };
     return app.classroom.detail(this.param).then(msg => {
-      if (msg.code === 1) {
-        msg.data.sublesson.forEach(function (item) {
-          item.minute = (item.film_length / 60).toFixed(0);
-        });
-        msg.data.intro_content =  htmlparser.default(msg.data.intro_content)
-        wx.setNavigationBarTitle({
-          title: msg.data.title
-        });
-        this.setData({
-          detail: msg.data,
-          sublessons: msg.data.sublesson
-        });
-        this.manage();
-        this.getComment();
-        setTimeout(() => {
-          this.tolesson();
-        }, 800);
-      }
+      msg.data.sublesson.forEach(function (item) {
+        item.minute = (item.film_length / 60).toFixed(0);
+      });
+      msg.data.intro_content = htmlparser.default(msg.data.intro_content)
+      wx.setNavigationBarTitle({
+        title: msg.data.title
+      });
+      this.setData({
+        detail: msg.data,
+        sublessons: msg.data.sublesson
+      });
+      this.manage();
+      this.getComment();
+      setTimeout(() => {
+        this.tolesson();
+      }, 800);
     });
   },
   setIntegral(integral, integralContent) {
@@ -268,28 +266,24 @@ Page({
       sublesson_id: this.data.cur.id
     };
     app.classroom.sublessonfinish(param).then(res => {
-      if (res.code == 1) {
-        if (res.data.is_first == "first") {
-          this.setIntegral("+70 学分", "完成首次学习课程");
-        } else if (res.data.is_first == "finish") {
-          this.setIntegral("+20 学分", "完成学完一门新课程");
-        }
+      if (res.data.is_first == "first") {
+        this.setIntegral("+70 学分", "完成首次学习课程");
+      } else if (res.data.is_first == "finish") {
+        this.setIntegral("+20 学分", "完成学完一门新课程");
       }
       app.classroom.detail(this.param).then(msg => {
-        if (msg.code === 1) {
-          this.setData({
-            "detail.progress": msg.data.progress
+        this.setData({
+          "detail.progress": msg.data.progress
+        });
+        if (msg.data.progress == 100) {
+          this.pages.forEach(item => {
+            item.route == "pages/index/index"
+              ? item.doneless(this.data.detail.id)
+              : "";
+            item.route == "pages/search/search"
+              ? item.doneless(this.data.detail.id)
+              : "";
           });
-          if (msg.data.progress == 100) {
-            this.pages.forEach(item => {
-              item.route == "pages/index/index"
-                ? item.doneless(this.data.detail.id)
-                : "";
-              item.route == "pages/search/search"
-                ? item.doneless(this.data.detail.id)
-                : "";
-            });
-          }
         }
       });
     });
@@ -337,18 +331,16 @@ Page({
     query.exec(res => {
       param.pageSize = res[0].length;
       app.classroom.detail(param).then(msg => {
-        if (msg.code === 1) {
-          msg.data.sublesson.forEach(function (item) {
-            item.minute = (item.film_length / 60).toFixed(0);
-          });
-          wx.setNavigationBarTitle({
-            title: msg.data.title
-          });
-          this.setData({
-            detail: msg.data,
-            sublessons: msg.data.sublesson
-          });
-        }
+        msg.data.sublesson.forEach(function (item) {
+          item.minute = (item.film_length / 60).toFixed(0);
+        });
+        wx.setNavigationBarTitle({
+          title: msg.data.title
+        });
+        this.setData({
+          detail: msg.data,
+          sublessons: msg.data.sublesson
+        });
         setTimeout(() => {
           this.tolesson();
         }, 800);
@@ -370,11 +362,9 @@ Page({
         success: function (res) {
           if (res.confirm) {
             app.classroom.collectCancel(param).then(msg => {
-              if (msg.code == 1) {
-                that.setData({
-                  "detail.collected": 0
-                });
-              }
+              that.setData({
+                "detail.collected": 0
+              });
             });
           } else if (res.cancel) {
             return;
@@ -383,11 +373,9 @@ Page({
       });
     } else {
       app.classroom.collect(param).then(msg => {
-        if (msg.code == 1) {
-          this.setData({
-            "detail.collected": 1
-          });
-        }
+        this.setData({
+          "detail.collected": 1
+        });
       });
       wx.uma.trackEvent("collectionLessons", {
         lessonsName: this.data.detail.title
@@ -448,36 +436,32 @@ Page({
   },
   recordAddVedio(param) {
     app.classroom.recordAdd(param).then(msg => {
-      if (msg.code == 1) {
-        // this.getDetail().then(() => {
-        this.getProgress();
-        this.videoContext.play();
-        this.setData({
-          playing: true,
-          hideRecode: true
-        });
-        app.addVisitedNum(`k${this.data.cur.id}`);
-        // })
-      }
+      this.getProgress();
+      this.videoContext.play();
+      this.setData({
+        playing: true,
+        hideRecode: true
+      });
+      app.addVisitedNum(`k${this.data.cur.id}`);
     });
   },
   // 获取讨论
   getComment(list, options) {
     let comment = list || this.data.comment;
     return app.classroom.commentDetail(this.comParam).then(msg => {
-      if (msg.code == 1) {
-        msg.data.forEach(function (item) {
-          item.reply_array.forEach(v => {
-            v.rtext = `回复<span  class="respond">${v.to_user}</span>:&nbsp;&nbsp;`;
-          });
-          comment.push(item);
+      msg.data.forEach(function (item) {
+        item.reply_array.forEach(v => {
+          v.rtext = `回复<span  class="respond">${v.to_user}</span>:&nbsp;&nbsp;`;
         });
-        this.comment = JSON.parse(JSON.stringify(comment));
-        this.setData({
-          comment: comment
-        });
-        this.setHeight();
-      } else if (msg.code == -2) {
+        comment.push(item);
+      });
+      this.comment = JSON.parse(JSON.stringify(comment));
+      this.setData({
+        comment: comment
+      });
+      this.setHeight();
+    }).catch(err => {
+      if (err.code == -2) {
         /* 帖子已经删除 */
         this.setData({
           detail: "",
@@ -538,7 +522,6 @@ Page({
     if (this.data.cur.id == lesson.id) {
       this.videoContext.seek(lesson.time);
     }
-    // console.log(lesson)
     // if (lesson && lesson[this.data.cur.lesson_id]) {
     //   for (let i in lesson[this.data.cur.lesson_id]) {
     //     i == this.data.cur.id ? this.videoContext.seek(lesson[this.data.cur.lesson_id][i].time) : ''
@@ -572,7 +555,6 @@ Page({
     //       data: lesson
     //     })
     //   }
-    //   console.log(lesson)
     // } else {
     //   let videoTime = {}
     //   videoTime[this.data.cur.lesson_id] = {}
@@ -603,15 +585,15 @@ Page({
           };
           app.classroom.delComment(param).then(msg => {
             wx.hideLoading();
-            if (msg.code == 1) {
-              wx.showToast({
-                title: "删除成功",
-                icon: "none",
-                duration: 1500
-              });
-              this.comParam.page = 1;
-              this.getComment([]);
-            } else if (msg.code == -2) {
+            wx.showToast({
+              title: "删除成功",
+              icon: "none",
+              duration: 1500
+            });
+            this.comParam.page = 1;
+            this.getComment([]);
+          }).catch(err => {
+            if (err.code == -2) {
               /* 帖子已经删除 */
               this.setData({
                 detail: "",
@@ -703,43 +685,41 @@ Page({
   // 增加评论
   addComment(param) {
     app.classroom.addComment(param).then(res => {
-      if (res.code == 1) {
-        this.setData({
-          write: false,
-          placeholder: "发评论",
-          content: "",
-          write: true,
-          writeTow: false,
-          focus: false,
-          keyheight: 0,
-          contenLength: 0,
-          showvoice: false,
-          voicetime: 0,
-          showvoiceauto: false
-        });
-        if (res.data.is_first == "day") {
-          this.setIntegral("+10 学分", "完成[云课堂]每日课程首次讨论");
-        } else {
-          wx.showToast({
-            title: "评论成功",
-            icon: "none",
-            duration: 800
-          });
-        }
-        this.comParam.page = 1;
-        this.getComment([]);
-        let lessDiscussion = this.data.$state.lessDiscussion;
-        lessDiscussion[this.data.detail.id].replycontent = "";
-        app.store.setState({
-          lessDiscussion
-        });
+      this.setData({
+        write: false,
+        placeholder: "发评论",
+        content: "",
+        write: true,
+        writeTow: false,
+        focus: false,
+        keyheight: 0,
+        contenLength: 0,
+        showvoice: false,
+        voicetime: 0,
+        showvoiceauto: false
+      });
+      if (res.data.is_first == "day") {
+        this.setIntegral("+10 学分", "完成[云课堂]每日课程首次讨论");
       } else {
         wx.showToast({
-          title: res.msg,
-          image: "/images/warn.png",
+          title: "评论成功",
+          icon: "none",
           duration: 800
         });
       }
+      this.comParam.page = 1;
+      this.getComment([]);
+      let lessDiscussion = this.data.$state.lessDiscussion;
+      lessDiscussion[this.data.detail.id].replycontent = "";
+      app.store.setState({
+        lessDiscussion
+      });
+    }).catch(() => {
+      wx.showToast({
+        title: res.msg,
+        image: "/images/warn.png",
+        duration: 800
+      });
     });
   },
   //回复评论
@@ -749,53 +729,53 @@ Page({
     });
     app.classroom.addReply(params).then(msg => {
       wx.hideLoading();
-      if (msg.code == 1) {
-        this.setData({
-          write: false,
-          placeholder: "发评论",
-          replycontent: "",
-          write: true,
-          writeTow: false,
-          focus: false,
-          keyheight: 0,
-          contenLength: 0,
-          showvoice: false,
-          voicetime: 0,
-          showvoiceauto: false
+      this.setData({
+        write: false,
+        placeholder: "发评论",
+        replycontent: "",
+        write: true,
+        writeTow: false,
+        focus: false,
+        keyheight: 0,
+        contenLength: 0,
+        showvoice: false,
+        voicetime: 0,
+        showvoiceauto: false
+      });
+      if (msg.data.is_first == "day") {
+        this.setIntegral("+10 学分", "完成[云课堂]每日课程首次讨论");
+      } else {
+        wx.showToast({
+          title: "评论成功",
+          icon: "none",
+          duration: 800
         });
-        if (msg.data.is_first == "day") {
-          this.setIntegral("+10 学分", "完成[云课堂]每日课程首次讨论");
-        } else {
-          wx.showToast({
-            title: "评论成功",
-            icon: "none",
-            duration: 800
-          });
-        }
-        let lessDiscussion = this.data.$state.lessDiscussion;
-        if (this.replyParent) {
-          lessDiscussion[this.data.detail.id].replyParent[this.replyParent] =
-            "";
-          app.store.setState({
-            lessDiscussion
-          });
-        } else {
-          lessDiscussion[this.data.detail.id].replyInfo[this.replyInfo.id] = "";
-          app.store.setState({
-            lessDiscussion
-          });
-        }
-        this.comParam.page = 1;
-        this.getComment([]);
-        this.replyInfo = null;
-        this.replyParent = null;
-      } else if (msg.code == -2) {
+      }
+      let lessDiscussion = this.data.$state.lessDiscussion;
+      if (this.replyParent) {
+        lessDiscussion[this.data.detail.id].replyParent[this.replyParent] =
+          "";
+        app.store.setState({
+          lessDiscussion
+        });
+      } else {
+        lessDiscussion[this.data.detail.id].replyInfo[this.replyInfo.id] = "";
+        app.store.setState({
+          lessDiscussion
+        });
+      }
+      this.comParam.page = 1;
+      this.getComment([]);
+      this.replyInfo = null;
+      this.replyParent = null;
+    }).catch(err => {
+      if (err.code == -2) {
         /* 帖子已经删除 */
         this.setData({
           detail: "",
           delState: true
         });
-      } else if (msg.code == -3) {
+      } else if (err.code == -3) {
         /* 消息已经删除 */
         wx.showToast({
           title: "消息已删除",
@@ -827,15 +807,15 @@ Page({
           };
           app.classroom.delReply(params).then(msg => {
             wx.hideLoading();
-            if (msg.code == 1) {
-              wx.showToast({
-                title: "删除成功",
-                icon: "none",
-                duration: 1500
-              });
-              this.comParam.page = 1;
-              this.getComment([]);
-            } else if (msg.code == -2) {
+            wx.showToast({
+              title: "删除成功",
+              icon: "none",
+              duration: 1500
+            });
+            this.comParam.page = 1;
+            this.getComment([]);
+          }).catch(err => {
+            if (err.code == -2) {
               /* 帖子已经删除 */
               this.setData({
                 detail: "",
@@ -1108,16 +1088,14 @@ Page({
   onHide() {
   },
   closeGuide() {
-    if(this.guide) return
+    if (this.guide) return
     this.guide = true
     let param = {
       guide_name: "lesson"
     };
     app.user.guideRecordAdd(param).then(res => {
-      if (res.code == 1) {
-        app.getGuide();
-        this.setIntegral("+45 学分", "完成[云课堂]新手指引");
-      }
+      app.getGuide();
+      this.setIntegral("+45 学分", "完成[云课堂]新手指引");
     }).catch(() => {
       this.guide = 0
     });

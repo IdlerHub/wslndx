@@ -70,44 +70,40 @@ Page({
   getCollect(list) {
     let collect = list || this.data.collect
     return app.user.collect(this.collectParam).then(msg => {
-      if (msg.code == 1) {
-        this.setData({
-          collect: collect.concat(msg.data)
-        })
-      }
+      this.setData({
+        collect: collect.concat(msg.data)
+      })
     })
   },
   getCircle(list) {
     let temp = list || this.data.circleList
     return app.user.collectBlog(this.circleparam).then(msg => {
-      if (msg.code == 1) {
-        msg.data.length == 0 ? this.setData({
-          showNomore: true
-        }) : this.setData({
-          showNomore: false
-        })
-        if (msg.data) {
-          let arr = [];
-          for (let i in msg.data) {
-            arr.push(msg.data[i])
-          }
-          arr.forEach(function (item) {
-            item.fw = app.util.tow(item.forward)
-            item.cw = app.util.tow(item.comments)
-            item.lw = app.util.tow(item.likes)
-            item.image_compress = item.images.map(i => {
-              return i.image_compress
-            })
-            item.images = item.images.map(i => {
-              return i.image
-            })
-            item.auditing = item.check_status
-          })
-          temp.push(...arr)
-          this.setData({
-            circleList: temp
-          })
+      msg.data.length == 0 ? this.setData({
+        showNomore: true
+      }) : this.setData({
+        showNomore: false
+      })
+      if (msg.data) {
+        let arr = [];
+        for (let i in msg.data) {
+          arr.push(msg.data[i])
         }
+        arr.forEach(function (item) {
+          item.fw = app.util.tow(item.forward)
+          item.cw = app.util.tow(item.comments)
+          item.lw = app.util.tow(item.likes)
+          item.image_compress = item.images.map(i => {
+            return i.image_compress
+          })
+          item.images = item.images.map(i => {
+            return i.image
+          })
+          item.auditing = item.check_status
+        })
+        temp.push(...arr)
+        this.setData({
+          circleList: temp
+        })
       }
     })
   },
@@ -120,13 +116,13 @@ Page({
     if (list[i].likestatus == 1) {
       // 取消点赞
       app.circle.delPraise(param).then(msg => {
-        if (msg.code == 1) {
-          list[i].likestatus = 0
-          list[i].likes--
-          this.setData({
-            circleList: list
-          })
-        } else if (msg.code == -2) {
+        list[i].likestatus = 0
+        list[i].likes--
+        this.setData({
+          circleList: list
+        })
+      }).catch(msg => {
+        if (msg.code == -2) {
           wx.showToast({
             title: "帖子已删除",
             icon: "none",
@@ -137,19 +133,19 @@ Page({
     } else {
       // 点赞
       app.circle.praise(param).then(msg => {
-        if (msg.code == 1) {
-          list[i].likestatus = 1
-          list[i].likes++
-          list[i].praising = true
-          // app.socket.send(list[i].uid)
-          app.socket.send({
-            type: 'Bokemessage',
-            data: { uid: list[i].uid }
-          })
-          this.setData({
-            circleList: list
-          })
-        } else if (msg.code == -2) {
+        list[i].likestatus = 1
+        list[i].likes++
+        list[i].praising = true
+        // app.socket.send(list[i].uid)
+        app.socket.send({
+          type: 'Bokemessage',
+          data: { uid: list[i].uid }
+        })
+        this.setData({
+          circleList: list
+        })
+      }).catch(msg => {
+        if (msg.code == -2) {
           wx.showToast({
             title: "帖子已删除",
             icon: "none",
@@ -214,18 +210,15 @@ Page({
       return this.menuAppShare()
     }
     if (ops.from === "button") {
-      console.log("ShareAppMessage  button")
       let i = ops.target.dataset.index
       let article = this.data.circleList[i]
       let bkid = article.id
       app.circle.addForward({ blog_id: bkid }).then(res => {
-        if (res.code == 1) {
-          let list = this.data.circleList
-          list[i].forward += 1
-          this.setData({
-            circleList: list
-          })
-        }
+        let list = this.data.circleList
+        list[i].forward += 1
+        this.setData({
+          circleList: list
+        })
       })
       return {
         title: article.content,
@@ -244,24 +237,22 @@ Page({
   cancelCollection() {
     let param = { blog_id: this.data.blog_id }
     app.circle.collectCancel(param).then(res => {
-      if (res.code == 1) {
-        let list = this.data.circleList
-        list.splice(this.data.blog_index, 1)
-        this.setData({
-          circleList: list
-        })
-        wx.showToast({
-          title: res.msg,
-          icon: 'success',
-          duration: 800
-        })
-      } else {
-        wx.showToast({
-          title: res.msg,
-          image: '/images/warn.png',
-          duration: 800
-        })
-      }
+      let list = this.data.circleList
+      list.splice(this.data.blog_index, 1)
+      this.setData({
+        circleList: list
+      })
+      wx.showToast({
+        title: res.msg,
+        icon: 'success',
+        duration: 800
+      })
+    }).catch(err => {
+      wx.showToast({
+        title: err.msg,
+        image: '/images/warn.png',
+        duration: 800
+      })
     })
     this.setData({
       showSheet: false

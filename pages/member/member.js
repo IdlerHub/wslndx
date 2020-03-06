@@ -23,13 +23,11 @@ Page({
     let detail = this.data.detail
     let temp = list || this.data.detail.user
     return app.circle.member(this.param).then(msg => {
-      if (msg.code == 1) {
-        detail = msg.data
-        detail.user = temp.concat(msg.data.user || [])
-        this.setData({
-          detail: detail
-        })
-      }
+      detail = msg.data
+      detail.user = temp.concat(msg.data.user || [])
+      this.setData({
+        detail: detail
+      })
     })
   },
   //下拉刷新

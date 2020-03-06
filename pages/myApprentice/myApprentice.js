@@ -2,31 +2,26 @@
 const app = getApp()
 Page({
   data: {
-    list:[]
+    list: []
   },
-  pageName:'邀请学员进贡分数列表页',
+  pageName: '邀请学员进贡分数列表页',
   onLoad: function (options) {
     let list = []
-    app.tutor.prenticePointsList().then(res =>{
-      if(res.code == 1) {
-        res.data.forEach(item => {
-          item.number = app.util.towTwice(item.total_points)
-        });
-        list = res.data
-        this.setData({
-          list
-        })
-      }
+    app.tutor.prenticePointsList().then(res => {
+      res.data.forEach(item => {
+        item.number = app.util.towTwice(item.total_points)
+      });
+      list = res.data
+      this.setData({
+        list
+      })
     })
   },
-  onShow: function () {},
-  onUnload: function () {},
   onShareAppMessage: function (ops) {
     if (ops.from === "menu") {
       return this.menuAppShare()
     }
     if (ops.from === "button") {
-      console.log("ShareAppMessage  button")
       return app.withdrawShare(ops)
     }
   },

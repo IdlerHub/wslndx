@@ -12,11 +12,9 @@ Page({
       res.data.forEach(item => {
         item.status = '取消关注'
       })
-      if (res.code == 1) {
-        this.setData({
-          list: res.data
-        })
-      }
+      this.setData({
+        list: res.data
+      })
     })
   },
   closeattention(e) {
@@ -33,14 +31,11 @@ Page({
           if (res.confirm) {
             let param = { follower_uid: that.data.list[index].id }
             app.user.cancelFollowing(param).then(msg => {
-              if (msg.code == 1) {
-                that.data.list[index].status = '关注'
-                that.setData({
-                  list: that.data.list
-                })
-              }
+              that.data.list[index].status = '关注'
+              that.setData({
+                list: that.data.list
+              })
             })
-          } else if (res.cancel) {
           }
         }
       })

@@ -28,15 +28,13 @@ Page({
   getList() {
     //获取已经加入的圈子list
     return app.circle.joinedCircles().then(msg => {
-      if (msg.code === 1) {
-        msg.data.forEach(item => {
-          item.fixed = false
-        })
-        this.setData({
-          joinList: msg.data,
-          showcopm: true
-        })
-      }
+      msg.data.forEach(item => {
+        item.fixed = false
+      })
+      this.setData({
+        joinList: msg.data,
+        showcopm: true
+      })
     })
   },
   onLoad() {

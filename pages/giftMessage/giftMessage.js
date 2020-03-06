@@ -7,7 +7,7 @@ Page({
    */
   data: {
   },
-  pageName:'积分商品详情',
+  pageName: '积分商品详情',
   /**
    * 生命周期函数--监听页面加载
    */
@@ -48,11 +48,9 @@ Page({
             success: res => {
               if (res.confirm) {
                 app.user.exchange(param).then(res => {
-                  if (res.code == 1) {
-                    wx.navigateTo({
-                      url: "/pages/gift/gift?name=" + this.data.gift.title + '&image=' + this.data.gift.image
-                    })
-                  }
+                  wx.navigateTo({
+                    url: "/pages/gift/gift?name=" + this.data.gift.title + '&image=' + this.data.gift.image
+                  })
                 })
               }
             }
@@ -69,11 +67,9 @@ Page({
             success: res => {
               if (res.confirm) {
                 app.user.exchange(param).then(res => {
-                  if (res.code == 1) {
-                    wx.navigateTo({
-                      url: "/pages/gift/gift?name=" + this.data.gift.title + '&image=' + this.data.gift.image
-                    })
-                  }
+                  wx.navigateTo({
+                    url: "/pages/gift/gift?name=" + this.data.gift.title + '&image=' + this.data.gift.image
+                  })
                 })
               }
             }

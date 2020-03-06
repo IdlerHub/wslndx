@@ -51,18 +51,14 @@ Page({
     })
     if (this.data.$state.userInfo.mobile) {
       await app.user.signed().then(res => {
-        if (res.code == 1) {
-          let sign = res.data && res.data.signed
-          app.store.setState({
-            signdays: res.data.sign_days
-          })
-          app.setSignIn({ status: sign, count: sign ? 1 : this.data.$state.signStatus.count }, true)
-        }
+        let sign = res.data && res.data.signed
+        app.store.setState({
+          signdays: res.data.sign_days
+        })
+        app.setSignIn({ status: sign, count: sign ? 1 : this.data.$state.signStatus.count }, true)
       })
       await app.user.share({}).then(res => {
-        if (res.code == 1) {
-          app.setShare(res)
-        }
+        app.setShare(res)
       })
       this.init()
       this.integrationTime()
@@ -103,12 +99,10 @@ Page({
   // 获取新手指引
   getGuide() {
     return app.user.guideRecord().then(res => {
-      if (res.code == 1) {
-        let newGuide = res.data
-        app.store.setState({
-          newGuide
-        })
-      }
+      let newGuide = res.data
+      app.store.setState({
+        newGuide
+      })
     })
   },
   setHeight() {
@@ -192,15 +186,13 @@ Page({
   getRecommend() {
     let param = { page: 1, pageSize: 10, province: this.data.$state.userInfo.university.split(',')[0] }
     return app.classroom.recommend(param).then(msg => {
-      if (msg.code == 1) {
-        msg.data.forEach(function (item) {
-          item.bw = app.util.tow(item.browse)
-        })
-        this.setData({
-          recommend: msg.data
-        })
-        wx.hideLoading()
-      }
+      msg.data.forEach(function (item) {
+        item.bw = app.util.tow(item.browse)
+      })
+      this.setData({
+        recommend: msg.data
+      })
+      wx.hideLoading()
     })
   },
   geteCatrcommend(id, currtab) {
@@ -209,19 +201,17 @@ Page({
     }
     let temp = []
     return app.classroom.lessons(this.categoryParams[id]).then(msg => {
-      if (msg.code === 1) {
-        msg.data.forEach(function (item) {
-          item.thousand = app.util.tow(item.browse)
-        })
-        let catrecommend = this.data.catrecommend
-        catrecommend[id] = temp.concat(msg.data)
-        this.setData({
-          [`catrecommend[${id}]`]: temp.concat(msg.data)
-        })
-        setTimeout(() => {
-          currtab != this.data.currentTab ? '' : this.setHeight()
-        }, 600)
-      }
+      msg.data.forEach(function (item) {
+        item.thousand = app.util.tow(item.browse)
+      })
+      let catrecommend = this.data.catrecommend
+      catrecommend[id] = temp.concat(msg.data)
+      this.setData({
+        [`catrecommend[${id}]`]: temp.concat(msg.data)
+      })
+      setTimeout(() => {
+        currtab != this.data.currentTab ? '' : this.setHeight()
+      }, 600)
     })
   },
   getCategory() {
@@ -230,21 +220,19 @@ Page({
     })
     this.categoryParams = {}
     return app.user.getLessonCategory().then(msg => {
-      if (msg.code == 1) {
-        let arr = this.data.nav.slice(0, 1)
-        msg.data.user_lesson_category.forEach((i, index) => {
-          this.categoryParams[i.id] = {
-            category_id: i.id,
-            page: 1,
-            pageSize: 10
-          }
-          i['class'] = '#recommend' + i.id
-          arr.push(i)
-        })
-        this.setData({
-          nav: arr
-        })
-      }
+      let arr = this.data.nav.slice(0, 1)
+      msg.data.user_lesson_category.forEach((i, index) => {
+        this.categoryParams[i.id] = {
+          category_id: i.id,
+          page: 1,
+          pageSize: 10
+        }
+        i['class'] = '#recommend' + i.id
+        arr.push(i)
+      })
+      this.setData({
+        nav: arr
+      })
     })
   },
   getactivite() {
@@ -263,11 +251,9 @@ Page({
   getHistory() {
     let historyParam = { page: 1, pageSize: 10 }
     return app.user.history(historyParam).then(msg => {
-      if (msg.code == 1) {
-        this.setData({
-          "history.last_lesson": msg.data.last_lesson || ""
-        })
-      }
+      this.setData({
+        "history.last_lesson": msg.data.last_lesson || ""
+      })
     })
   },
   toUser() {
@@ -386,38 +372,33 @@ Page({
     app.setSignIn({ status: true, count: 1 }, true)
     if (sign) {
       app.user.sign().then(res => {
-        if (res.code == 1) {
-          /* 前往学分页面 */
-          wx.navigateTo({ url: "/pages/score/score?type=index" })
-          app.store.setState({
-            signdays: res.data.sign_days
+        /* 前往学分页面 */
+        wx.navigateTo({ url: "/pages/score/score?type=index" })
+        app.store.setState({
+          signdays: res.data.sign_days
+        })
+      }).catch(err => {
+        wx.showToast({
+          title: err.msg,
+          icon: "none",
+          duration: 1500,
+          mask: true
+        })
+        let timer = setTimeout(() => {
+          wx.hideToast({
+            success: () => {
+              wx.navigateTo({ url: "/pages/score/score" })
+            }
           })
-        } else {
-          wx.showToast({
-            title: res.msg,
-            icon: "none",
-            duration: 1500,
-            mask: true
-          })
-
-          let timer = setTimeout(() => {
-            wx.hideToast({
-              success: () => {
-                wx.navigateTo({ url: "/pages/score/score" })
-              }
-            })
-            clearTimeout(timer)
-          }, 1500)
-        }
+          clearTimeout(timer)
+        }, 1500)
       })
     } else {
       app.user.sign().then(res => {
-        if (res.code == 1) {
-          console.log('签到成功')
-          app.store.setState({
-            signdays: res.data.sign_days
-          })
-        }
+        console.log('签到成功')
+        app.store.setState({
+          signdays: res.data.sign_days
+        })
       })
     }
   },
@@ -446,30 +427,28 @@ Page({
       let temp = this.data.catrecommend[id]
       this.categoryParams[id].page++
       return app.classroom.lessons(this.categoryParams[id]).then(msg => {
-        if (msg.code === 1) {
-          let next = true
-          msg.data.forEach(function (item) {
-            item.thousand = app.util.tow(item.browse)
-            temp.forEach(i => {
-              i.id == item.id ? next = false : ''
-            })
+        let next = true
+        msg.data.forEach(function (item) {
+          item.thousand = app.util.tow(item.browse)
+          temp.forEach(i => {
+            i.id == item.id ? next = false : ''
           })
-          if (!next) return
-          this.data.catrecommend[id] = temp.concat(msg.data)
-          this.setData({
-            [`catrecommend[${id}]`]: temp.concat(msg.data)
+        })
+        if (!next) return
+        this.data.catrecommend[id] = temp.concat(msg.data)
+        this.setData({
+          [`catrecommend[${id}]`]: temp.concat(msg.data)
+        })
+        let query = wx.createSelectorQuery().in(this)
+        let that = this, nav = this.data.nav, currentTab = this.data.currentTab
+        query.select(nav[currentTab].class).boundingClientRect()
+        query.exec(res => {
+          let height = res[0].height
+          that.navHeightList[currentTab] = height
+          that.setData({
+            height: height
           })
-          let query = wx.createSelectorQuery().in(this)
-          let that = this, nav = this.data.nav, currentTab = this.data.currentTab
-          query.select(nav[currentTab].class).boundingClientRect()
-          query.exec(res => {
-            let height = res[0].height
-            that.navHeightList[currentTab] = height
-            that.setData({
-              height: height
-            })
-          })
-        }
+        })
       })
     }
     this.setData({
@@ -542,13 +521,11 @@ Page({
   getDialog() {
     if (this.pageType) return
     app.user.dialog().then(res => {
-      if (res.code == 1) {
-        res.data[0] ?
-          this.setData({
-            dialog: res.data,
-            showdialog: true
-          }) : 0
-      }
+      res.data[0] ?
+        this.setData({
+          dialog: res.data,
+          showdialog: true
+        }) : 0
     })
   },
   jumpPeper(e) {
@@ -574,18 +551,16 @@ Page({
         guidetxt: '我知道了'
       })
     } else {
-      if(this.guide) return
+      if (this.guide) return
       this.guide = true
       let param = {
         guide_name: 'index'
       }
       app.user.guideRecordAdd(param).then(res => {
-        if (res.code == 1) {
-          app.getGuide()
-          this.setData({
-            guideNum: 5
-          })
-        }
+        app.getGuide()
+        this.setData({
+          guideNum: 5
+        })
       }).catch(() => {
         this.guide = 0
       })

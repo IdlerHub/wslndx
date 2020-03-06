@@ -19,14 +19,12 @@ Page({
    */
   onLoad: function (options) {
     app.circle.getMessage().then(res => {
-      if (res.code == 1) {
-        res.data.forEach(item => {
-          item.msg = item.msg.replace(/\↵/g, '').replace(/\n/g, '')
-        })
-        this.setData({
-          messages: res.data
-        })
-      }
+      res.data.forEach(item => {
+        item.msg = item.msg.replace(/\↵/g, '').replace(/\n/g, '')
+      })
+      this.setData({
+        messages: res.data
+      })
       // app.socket.send(this.data.$state.userInfo.id)
       app.socket.send({
         type: 'Bokemessage',

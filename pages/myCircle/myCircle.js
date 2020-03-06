@@ -78,26 +78,26 @@ Page({
     let circle = list || this.data.circle
     this.circleParam.us_id = 0
     return app.circle.news(this.circleParam).then(msg => {
-      if (msg.code == 1) {
-        if (msg.data) {
-          msg.data.forEach(function (item) {
-            item.fw = app.util.tow(item.forward)
-            item.cw = app.util.tow(item.comments)
-            item.lw = app.util.tow(item.likes)
-            item.image_compress = item.images.map(i => {
-              return i.image_compress
-            })
-            item.images = item.images.map(i => {
-              return i.image
-            })
-            item.auditing = new Date().getTime() - new Date(item.createtime * 1000) < 7000
-            circle.push(item)
+      if (msg.data) {
+        msg.data.forEach(function (item) {
+          item.fw = app.util.tow(item.forward)
+          item.cw = app.util.tow(item.comments)
+          item.lw = app.util.tow(item.likes)
+          item.image_compress = item.images.map(i => {
+            return i.image_compress
           })
-        }
-        this.setData({
-          circle: circle
+          item.images = item.images.map(i => {
+            return i.image
+          })
+          item.auditing = new Date().getTime() - new Date(item.createtime * 1000) < 7000
+          circle.push(item)
         })
-      } else if (msg.code == -2) {
+      }
+      this.setData({
+        circle: circle
+      })
+    }).catch(err => {
+      if (err.code == -2) {
         this.setData({
           circle: []
         })
@@ -132,12 +132,10 @@ Page({
       success: res => {
         if (res.confirm) {
           app.circle.delPost(param).then(msg => {
-            if (msg.code == 1) {
-              circle.splice(i, 1)
-              this.setData({
-                circle: circle
-              })
-            }
+            circle.splice(i, 1)
+            this.setData({
+              circle: circle
+            })
           })
         } else {
           return
@@ -164,18 +162,15 @@ Page({
       return this.menuAppShare()
     }
     if (ops.from === "button") {
-      console.log("ShareAppMessage  button")
       let i = ops.target.dataset.index
       let article = this.data.circle[i]
       let bkid = article.id
       app.circle.addForward({ blog_id: bkid }).then(res => {
-        if (res.code == 1) {
-          let list = this.data.circle
-          list[i].forward += 1
-          this.setData({
-            circle: list
-          })
-        }
+        let list = this.data.circle
+        list[i].forward += 1
+        this.setData({
+          circle: list
+        })
       })
       return {
         title: article.content,
@@ -193,25 +188,21 @@ Page({
     if (list[i].likestatus == 1) {
       // 取消点赞
       app.circle.delPraise(param).then(msg => {
-        if (msg.code == 1) {
-          list[i].likestatus = 0
-          list[i].likes--
-          this.setData({
-            circle: list
-          })
-        }
+        list[i].likestatus = 0
+        list[i].likes--
+        this.setData({
+          circle: list
+        })
       })
     } else {
       // 点赞
       app.circle.praise(param).then(msg => {
-        if (msg.code == 1) {
-          list[i].likestatus = 1
-          list[i].likes++
-          list[i].praising = true
-          this.setData({
-            circle: list
-          })
-        }
+        list[i].likestatus = 1
+        list[i].likes++
+        list[i].praising = true
+        this.setData({
+          circle: list
+        })
       })
     }
   },
