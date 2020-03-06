@@ -1,7 +1,7 @@
 /*
  * @Date: 2019-05-28 09:50:08
  * @LastEditors: hxz
- * @LastEditTime: 2020-03-06 10:45:04
+ * @LastEditTime: 2020-03-06 10:50:11
  */
 //index.js
 //获取应用实例
@@ -143,7 +143,7 @@ Page({
         return msg.code;
       })
       .catch(err => {
-        if (err && err.code == -2) {
+        if (err.code == -2) {
           /* 帖子已经删除 */
           this.setData({
             detail: "",
@@ -165,7 +165,7 @@ Page({
           this.aniend();
         })
         .catch(err => {
-          if (err && err.code == -2) {
+          if (err.code == -2) {
             /* 帖子已经删除 */
             this.setData({
               detail: "",
@@ -200,7 +200,7 @@ Page({
           wx.uma.trackEvent("post_btnClick", { btnName: "点赞按钮" });
         })
         .catch(err => {
-          if (err && err.code == -2) {
+          if (err.code == -2) {
             /* 帖子已经删除 */
             this.setData({
               detail: "",
@@ -461,7 +461,7 @@ Page({
         this.getComment([]);
       })
       .catch(msg => {
-        if (msg && msg.code == -2) {
+        if (msg.code == -2) {
           /* 帖子已经删除 */
           this.setData({
             detail: "",
@@ -501,7 +501,7 @@ Page({
         }
       })
       .catch(msg => {
-        if (msg && msg.code == -2) {
+        if (msg.code == -2) {
           /* 帖子已经删除 */
           this.setData({
             detail: "",
@@ -525,7 +525,7 @@ Page({
         }, 1000);
       })
       .catch(msg => {
-        if (msg && msg.code == -2) {
+        if (msg.code == -2) {
           /* 帖子已经删除 */
           this.setData({
             detail: "",
@@ -641,7 +641,7 @@ Page({
               this.getComment([]);
             })
             .catch(msg => {
-              if (msg && msg.code == -2) {
+              if (msg.code == -2) {
                 /* 帖子已经删除 */
                 this.setData({
                   detail: "",
@@ -685,7 +685,7 @@ Page({
               this.getComment([]);
             })
             .catch(msg => {
-              if (msg && msg.code == -2) {
+              if (msg.code == -2) {
                 /* 帖子已经删除 */
                 this.setData({
                   detail: "",
@@ -772,13 +772,13 @@ Page({
         });
       })
       .catch(msg => {
-        if (msg && msg.code == -2) {
+        if (msg.code == -2) {
           /* 帖子已经删除 */
           this.setData({
             detail: "",
             delState: true
           });
-        } else if (msg && msg.code == -3) {
+        } else if (msg.code == -3) {
           /* 消息已经删除 */
           wx.showToast({
             title: "消息已删除",
