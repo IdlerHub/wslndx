@@ -1,278 +1,290 @@
 // pages/search/search.js
-const app = getApp()
-const plugin = requirePlugin("WechatSI")
+const app = getApp();
+const plugin = requirePlugin("WechatSI");
 // 获取**全局唯一**的语音识别管理器**recordRecoManager**
-const manager = plugin.getRecordRecognitionManager()
+const manager = plugin.getRecordRecognitionManager();
 
 // const innerAudioContext = wx.createInnerAudioContext();
 Page({
   data: {
-    voiceImg: 'https://hwcdn.jinlingkeji.cn/images/pro/voicebtn2.png',
+    voiceImg: "https://hwcdn.jinlingkeji.cn/images/pro/voicebtn2.png",
     voiceActon: false,
-    voiceheight: '',
+    voiceheight: "",
     focus: true,
-    text: '',
+    text: "",
     lessList: [],
     showqst: false,
     showvioce: true
   },
-  pagename: '课程搜索',
-  onLoad: function (options) {
+  pagename: "课程搜索",
+  onLoad: function(options) {
     this.param = {
       page_size: 10
-    }
-    this.voiceheight = 0
+    };
+    this.voiceheight = 0;
     wx.onKeyboardHeightChange(res => {
-      let systems = wx.getSystemInfoSync()
-      this.voiceheight == 0 ? this.voiceheight = res.height : ''
-      this.voiceheight != 0 ? res.height == 0 ? '' : this.setData({
-        voiceheight: this.voiceheight + (systems.screenHeight * 0.05),
-        showvioce: true,
-        showqst: false
-      }) : ''
-    })
+      let systems = wx.getSystemInfoSync();
+      this.voiceheight == 0 ? (this.voiceheight = res.height) : "";
+      this.voiceheight != 0
+        ? res.height == 0
+          ? ""
+          : this.setData({
+              voiceheight: this.voiceheight + systems.screenHeight * 0.05,
+              showvioce: true,
+              showqst: false
+            })
+        : "";
+    });
   },
   onShow() {
-    this.getRecordAuth()
-    this.initRecord()
+    this.getRecordAuth();
+    this.initRecord();
   },
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
-  onPullDownRefresh: function () {
-
-  },
+  onPullDownRefresh: function() {},
 
   /**
    * 页面上拉触底事件的处理函数
    */
-  onReachBottom: function () {
-    this.lesssearch(true)
+  onReachBottom: function() {
+    this.lesssearch(true);
   },
 
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function () {
-
-  },
-  detailTap: function (e) {
-    let title = e.currentTarget.dataset.item.title.replace('<p style="width:410rpx;display: block;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">', '').replace('</p>', '').replace('<span style="color:#DF2020">', '').replace('</span>', '')
+  onShareAppMessage: function() {},
+  detailTap: function(e) {
+    let title = e.currentTarget.dataset.item.title
+      .replace(
+        '<p style="width:410rpx;display: block;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">',
+        ""
+      )
+      .replace("</p>", "")
+      .replace('<span style="color:#DF2020">', "")
+      .replace("</span>", "");
     wx.navigateTo({
       url: `../detail/detail?id=${e.currentTarget.dataset.item.id}&name=${title}`
-    })
+    });
     //用于数据统计
-    wx.uma.trackEvent('searchLessons', { 'lessonsName': e.currentTarget.dataset.item.name })
+    wx.uma.trackEvent("searchLessons", {
+      lessonsName: e.currentTarget.dataset.item.name
+    });
   },
   // 权限询问
   authrecord() {
     this.setData({
       focus: false
-    })
+    });
     if (this.data.$state.authRecordfail) {
       wx.showModal({
-        content: '您已拒绝授权使用麦克风录音权限，请打开获取麦克风授权！否则无法使用小程序部分功能',
-        confirmText: '去授权',
+        content:
+          "您已拒绝授权使用麦克风录音权限，请打开获取麦克风授权！否则无法使用小程序部分功能",
+        confirmText: "去授权",
         confirmColor: "#df2020",
         success: res => {
           if (res.confirm) {
-            wx.openSetting({})
+            wx.openSetting({});
           }
         }
-      })
+      });
     }
     if (!this.data.$state.authRecord) {
       wx.authorize({
-        scope: 'scope.record',
+        scope: "scope.record",
         success() {
           // 用户已经同意小程序使用录音功能，后续调用 wx.startRecord 接口不会弹窗询问
           app.store.setState({
             authRecord: true
-          })
+          });
         },
         fail() {
           app.store.setState({
             authRecordfail: true
-          })
+          });
         }
-      })
+      });
     }
   },
-  getRecordAuth: function () {
+  getRecordAuth: function() {
     wx.getSetting({
       success(res) {
-        let record = res.authSetting['scope.record']
+        let record = res.authSetting["scope.record"];
         app.store.setState({
-          authRecord: record || false,
-        })
+          authRecord: record || false
+        });
       },
-      fail(res) {
-      }
-    })
+      fail(res) {}
+    });
   },
   /**
    * 初始化语音识别回调
    */
-  initRecord: function () {
+  initRecord: function() {
     //有新的识别内容返回，则会调用此事件
-    manager.onRecognize = (res) => {
+    manager.onRecognize = res => {
       this.setData({
         newtxt: res.result
-      })
-    }
+      });
+    };
 
     // 识别结束事件
-    manager.onStop = (res) => {
+    manager.onStop = res => {
       // 取出录音文件识别出来的文字信息
-      let text = this.data.text + res.result.replace('。', '').replace('，', '')
+      let text =
+        this.data.text + res.result.replace("。", "").replace("，", "");
       // 获取音频文件临时地址
-      let duration = res.duration
-      if (text == '') {
-        this.showRecordEmptyTip()
-        return
+      let duration = res.duration;
+      if (text == "") {
+        this.showRecordEmptyTip();
+        return;
       }
 
       if (res.duration < 1000) {
         wx.showToast({
-          title: '录音时间过短',
-          icon: 'none',
-          duration: 2000,
-        })
+          title: "录音时间过短",
+          icon: "none",
+          duration: 2000
+        });
         // util.showTips('录音时间过短')
-        return
+        return;
       }
       this.setData({
         text
-      })
+      });
       this.param = {
         page_size: 10
-      }
-      this.lesssearch()
-    }
+      };
+      this.lesssearch();
+    };
     // 识别错误事件
-    manager.onError = (res) => {
+    manager.onError = res => {
       this.setData({
         recording: false,
-        bottomButtonDisabled: false,
-      })
-    }
+        bottomButtonDisabled: false
+      });
+    };
   },
   /**
    * 识别内容为空时的反馈
    */
-  showRecordEmptyTip: function () {
+  showRecordEmptyTip: function() {
     this.setData({
-      recording: false,
+      recording: false
       // bottomButtonDisabled: false,
-    })
+    });
     wx.showToast({
       title: "未识别到语音",
-      icon: 'none',
-      image: '../../images/no_voice.png',
+      icon: "none",
+      image: "../../images/no_voice.png",
       duration: 1500,
-      success: function (res) {
-
-      },
-      fail: function (res) {
-      }
+      success: function(res) {},
+      fail: function(res) {}
     });
   },
   backhome() {
-    wx.navigateBack()
+    wx.navigateBack();
   },
   touchstart(e) {
     manager.start({
-      lang: "zh_CN",
-    })
+      lang: "zh_CN"
+    });
     this.setData({
-      voiceImg: 'https://hwcdn.jinlingkeji.cn/images/pro/voicebtnr.png',
+      voiceImg: "https://hwcdn.jinlingkeji.cn/images/pro/voicebtnr.png",
       voiceActon: true
-    })
+    });
   },
   touchend() {
-    manager.stop()
+    manager.stop();
     this.setData({
-      voiceImg: 'https://hwcdn.jinlingkeji.cn/images/pro/voicebtn2.png',
+      voiceImg: "https://hwcdn.jinlingkeji.cn/images/pro/voicebtn2.png",
       voiceActon: false
-    })
+    });
   },
   keychange(e) {
     // let systems = wx.getSystemInfoSync()
     // wx.onKeyboardHeightChange(res => {
-    //   console.log(res.height)
     //   res.height != 0 ? this.setData({
     //     voiceheight: res.heightt + (systems.screenHeight * 0.05)
     //   }) : ''
-    // })   
+    // })
   },
   txtchange(e) {
     this.setData({
       text: e.detail.value
-    })
+    });
     this.param = {
       page_size: 10
-    }
-    e.detail.value.length < 1 ? this.setData({
-      lessList: [],
-      showqst: false,
-      showvioce: true
-    }) : this.lesssearch()
+    };
+    e.detail.value.length < 1
+      ? this.setData({
+          lessList: [],
+          showqst: false,
+          showvioce: true
+        })
+      : this.lesssearch();
   },
   cleartxt() {
     this.setData({
-      text: '',
+      text: "",
       focus: false,
       lessList: []
-    })
+    });
     this.setData({
       focus: true
-    })
+    });
   },
   earchlesss() {
     this.param = {
       page_size: 10
-    }
-    this.lesssearch()
+    };
+    this.lesssearch();
   },
   lesssearch(list) {
-    this.param['keyword'] = this.data.text
-    let lesslist = []
-    list ? lesslist = this.data.lessList : ''
+    this.param["keyword"] = this.data.text;
+    let lesslist = [];
+    list ? (lesslist = this.data.lessList) : "";
     app.classroom.lessSearch(this.param).then(res => {
-      if (res.code == 1) {
-        if (!res.data.data) {
-          this.setData({
-            showqst: true,
-            showvioce: false,
-            voiceActon: false
-          })
-          return
-        }
-        let lessList = res.data.data
-        this.param['scroll_id'] = res.data.scroll_id,
-          lessList.forEach(item => {
-            item.name = item.title.replace(/<highlight>/g, '').replace(/<\/highlight>/g, '')
-            item.title = `<p style="width:410rpx;display: block;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">${item.title.replace(/<highlight>/g, '<span style="color:#DF2020">').replace(/<\/highlight>/g, '</span>')}</p>`
-            item.subtitle = `<p style="width:410rpx;display: block;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">${item.subtitle.replace(/<highlight>/g, '<span style="color:#DF2020">').replace(/<\/highlight>/g, '</span>')}</p>`
-            item.bw = app.util.tow(item.browse)
-          })
-        lesslist.push(...lessList)
+      if (!res.data.data) {
         this.setData({
+          showqst: true,
           showvioce: false,
-          lessList: lesslist,
           voiceActon: false
-        })
+        });
+        return;
       }
-    })
+      let lessList = res.data.data;
+      (this.param["scroll_id"] = res.data.scroll_id),
+        lessList.forEach(item => {
+          item.name = item.title
+            .replace(/<highlight>/g, "")
+            .replace(/<\/highlight>/g, "");
+          item.title = `<p style="width:410rpx;display: block;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">${item.title
+            .replace(/<highlight>/g, '<span style="color:#DF2020">')
+            .replace(/<\/highlight>/g, "</span>")}</p>`;
+          item.subtitle = `<p style="width:410rpx;display: block;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">${item.subtitle
+            .replace(/<highlight>/g, '<span style="color:#DF2020">')
+            .replace(/<\/highlight>/g, "</span>")}</p>`;
+          item.bw = app.util.tow(item.browse);
+        });
+      lesslist.push(...lessList);
+      this.setData({
+        showvioce: false,
+        lessList: lesslist,
+        voiceActon: false
+      });
+    });
   },
   // 课程完成状态
   doneless(id) {
     this.data.lessList.forEach(item => {
-      item.id == id ? item.is_finish = 1 : ''
-    })
+      item.id == id ? (item.is_finish = 1) : "";
+    });
     this.setData({
       lessList: this.data.lessList
-    })
+    });
   }
-})
+});

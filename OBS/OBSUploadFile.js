@@ -1,7 +1,7 @@
 /*
  * @Date: 2019-12-20 10:54:37
  * @LastEditors: hxz
- * @LastEditTime: 2020-03-03 18:15:54
+ * @LastEditTime: 2020-03-06 13:50:55
  */
 const getPolicyEncode = require("./getPolicy.js");
 const getSignature = require("./GetSignature.js");
@@ -156,7 +156,6 @@ const OBSupload = async function(dir, filePath, type) {
 
   let uploadResponse = await wxp.uploadFile(req);
   let fitResponse = null;
-  //console.log(uploadResponse);
   if (uploadResponse.statusCode == 200) {
     uploadResponse.data = JSON.parse(uploadResponse.data);
     if (uploadResponse.data.code == 1) {
@@ -170,7 +169,6 @@ const OBSupload = async function(dir, filePath, type) {
     }
   } else if (uploadResponse.statusCode == 303) {
     fitResponse = await fitAndroid(uploadResponse.header.Location);
-    // console.log(fitResponse);
     if (fitResponse.statusCode == 200) {
       if (fitResponse.data && fitResponse.data.code == 1) {
         if (type == "image") {

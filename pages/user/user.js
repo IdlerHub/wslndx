@@ -1,85 +1,81 @@
 /*
  * @Date: 2019-05-28 09:50:08
  * @LastEditors: hxz
- * @LastEditTime: 2019-08-12 16:44:58
+ * @LastEditTime: 2020-03-06 11:26:43
  */
 //index.js
 //获取应用实例
-const app = getApp()
+const app = getApp();
 Page({
   data: {
     isRefreshing: false,
     my_score: 0,
     showGuide: true
   },
-  pageName: '个人中心',
-  guide: 0, 
-  onLoad() { },
+  pageName: "个人中心",
+  guide: 0,
+  onLoad() {},
   onShow() {
     app.user.pointsinfo().then(res => {
-      if (res.code == 1) {
-        this.setData({
-          my_score: res.data.mypoints
-        })
-      }
-    })
-    this.unreadNum()
+      this.setData({
+        my_score: res.data.mypoints
+      });
+    });
+    this.unreadNum();
   },
-  onPullDownRefresh: function () {
+  onPullDownRefresh: function() {
     this.setData({
       isRefreshing: true
-    })
+    });
 
     let timer = setTimeout(() => {
       this.setData({
         isRefreshing: false
-      })
-      wx.stopPullDownRefresh()
-      clearTimeout(timer)
-    }, 1000)
+      });
+      wx.stopPullDownRefresh();
+      clearTimeout(timer);
+    }, 1000);
   },
   handleContact(e) {
-    wx.uma.trackEvent('personal_btnClick', { 'btnName': '联系客服' })
+    wx.uma.trackEvent("personal_btnClick", { btnName: "联系客服" });
   },
   toScore() {
     wx.navigateTo({
       url: "/pages/score/score?type=index"
-    })
-    wx.uma.trackEvent('personal_btnClick', { 'btnName': '学分兑换' })
+    });
+    wx.uma.trackEvent("personal_btnClick", { btnName: "学分兑换" });
   },
   toInvite() {
     wx.navigateTo({
       url: "/pages/invitation/invitation"
-    })
-    wx.uma.trackEvent('personal_btnClick', { 'btnName': '邀请好友' })
+    });
+    wx.uma.trackEvent("personal_btnClick", { btnName: "邀请好友" });
   },
   //用于数据统计
-  onUnload() {
-  },
+  onUnload() {},
   closeGuide() {
-    if(this.guide) return
-    this.guide = true
+    if (this.guide) return;
+    this.guide = true;
     let param = {
-      guide_name: 'user'
-    }
-    app.user.guideRecordAdd(param).then(res => {
-      if (res.code == 1) {
-        app.getGuide()
-      }
-    }).catch(() => {
-      this.guide = 0
-    })
+      guide_name: "user"
+    };
+    app.user
+      .guideRecordAdd(param)
+      .then(res => {
+        app.getGuide();
+      })
+      .catch(() => {
+        this.guide = 0;
+      });
   },
   drawPage() {
-    wx.uma.trackEvent('personal_btnClick', { 'btnName': '学分抽奖' })
+    wx.uma.trackEvent("personal_btnClick", { btnName: "学分抽奖" });
   },
   unreadNum() {
     app.user.unreadNum().then(res => {
-      if (res.code == 1) {
-        this.setData({
-          showMes: res.data.unread_count
-        })
-      }
-    })
+      this.setData({
+        showMes: res.data.unread_count
+      });
+    });
   }
-})
+});

@@ -1,7 +1,7 @@
 /*
  * @Date: 2019-05-28 09:50:08
  * @LastEditors: hxz
- * @LastEditTime: 2020-02-29 14:09:23
+ * @LastEditTime: 2020-03-06 13:50:11
  */
 import { wxp } from "./utils/service";
 import { uma } from "umtrack-wx";
@@ -70,7 +70,7 @@ App({
     debug: false //是否打开调试模式
   },
   /*埋点统计*/
-  onLaunch: async function (opts) {
+  onLaunch: async function(opts) {
     this.getSecureToken();
     let optsStr = decodeURIComponent(opts.query.scene).split("&");
     let opstObj = {};
@@ -136,7 +136,7 @@ App({
       });
     }
   },
-  onShow: function (opts) {
+  onShow: function(opts) {
     let optsStr = decodeURIComponent(opts.query.scene).split("&");
     let opstObj = {};
     optsStr.forEach((item, index) => {
@@ -192,10 +192,10 @@ App({
       socket.close();
     }
   },
-  onError: function (err) {
+  onError: function(err) {
     fundebug.notifyError(err);
   },
-  wxLogin: async function () {
+  wxLogin: async function() {
     await wxp.login({}).then(res => {
       if (res.code) {
         this.globalData.code = res.code;
@@ -209,45 +209,43 @@ App({
         code: this.globalData.code
       })
       .then(msg => {
-        if (msg.code === 1) {
-          if (msg.data.tempCode) {
-            /* 新用户未注册 */
-            console.log("tempCode", msg.data.tempCode);
-            this.globalData.tempCode = msg.data.tempCode;
-          } else {
-            /* 旧用户 */
-            wx.setStorageSync("token", msg.data.token);
-            wx.setStorageSync("uid", msg.data.uid);
-            wx.setStorageSync("authKey", msg.data.authKey);
-            this.setUser(msg.data.userInfo);
-            if (
-              this.globalData.query.type == "share" ||
-              this.globalData.shareObj.type == "lottery"
-            ) {
-              let params = [];
-              for (let attr in this.globalData.query) {
-                params.push(attr + "=" + this.globalData.query[attr]);
-              }
-              this.globalData.shareObj.type == "lottery"
-                ? wx.reLaunch({
+        if (msg.data.tempCode) {
+          /* 新用户未注册 */
+          console.log("tempCode", msg.data.tempCode);
+          this.globalData.tempCode = msg.data.tempCode;
+        } else {
+          /* 旧用户 */
+          wx.setStorageSync("token", msg.data.token);
+          wx.setStorageSync("uid", msg.data.uid);
+          wx.setStorageSync("authKey", msg.data.authKey);
+          this.setUser(msg.data.userInfo);
+          if (
+            this.globalData.query.type == "share" ||
+            this.globalData.shareObj.type == "lottery"
+          ) {
+            let params = [];
+            for (let attr in this.globalData.query) {
+              params.push(attr + "=" + this.globalData.query[attr]);
+            }
+            this.globalData.shareObj.type == "lottery"
+              ? wx.reLaunch({
                   url:
                     "/pages/education/education?type=lottery&login=1&id=" +
                     this.globalData.lotteryId
                 })
-                : wx.reLaunch({
+              : wx.reLaunch({
                   url: this.globalData.path + "?" + params.join("&")
                 });
-            } else {
-              wx.reLaunch({
-                url: "/pages/index/index"
-              });
-            }
+          } else {
+            wx.reLaunch({
+              url: "/pages/index/index"
+            });
           }
         }
       });
   },
   /* 初始化store */
-  initStore: function () {
+  initStore: function() {
     let sign = wx.getStorageSync("signStatus") || {};
     if (sign.time !== new Date().toDateString()) {
       sign = {
@@ -264,7 +262,7 @@ App({
     this.getSets();
   },
   /* 更新store中的userInfo */
-  setUser: function (data) {
+  setUser: function(data) {
     let areaArray = data.university.split(",");
     if ((!data.address || !data.school) && areaArray.length == 3) {
       data.address = areaArray.slice(0, 2);
@@ -283,21 +281,21 @@ App({
     }
   },
   /* 更新AuthKey */
-  setAuthKey: function (data) {
+  setAuthKey: function(data) {
     this.store.setState({
       authKey: data
     });
     wx.setStorageSync("authKey", data);
   },
   /* 更新转发分享 */
-  setShare: function (data) {
+  setShare: function(data) {
     this.store.setState({
       shareImgurl: data.data.img_url,
       shareTitle: data.data.title
     });
   },
   /* 更新store中的用户授权  */
-  getSets: function () {
+  getSets: function() {
     let self = this;
     wx.getSetting({
       success: res => {
@@ -316,7 +314,7 @@ App({
     });
   },
   /* 更新store中的用户免费查看的视频数目 */
-  addVisitedNum: function (id) {
+  addVisitedNum: function(id) {
     let arr = this.store.$state.visitedNum;
     if (!this.store.$state.authUserInfo && arr.indexOf(id) == -1) {
       arr.push(id);
@@ -339,17 +337,15 @@ App({
       iv: e.detail.iv
     };
     this.user.profile(param).then(msg => {
-      if (msg.code == 1) {
-        this.setUser(msg.data.userInfo);
-      }
+      this.setUser(msg.data.userInfo);
     });
   },
   playVedio(type) {
     type == "wifi"
       ? ""
       : this.store.setState({
-        flow: true
-      });
+          flow: true
+        });
   },
   /* 更新签到信息 */
   setSignIn(data, bl) {
@@ -369,20 +365,18 @@ App({
       });
   },
   /* 版本检测 */
-  checkVersion: function () {
+  checkVersion: function() {
     let systemInfo = wx.getSystemInfoSync();
     if (wx.canIUse("getUpdateManager")) {
       const updateManager = wx.getUpdateManager();
-      updateManager.onCheckForUpdate(function (res) {
-        console.log("onCheckForUpdate====", res);
+      updateManager.onCheckForUpdate(function(res) {
         // 请求完新版本信息的回调
         if (res.hasUpdate) {
-          console.log("res.hasUpdate====");
-          updateManager.onUpdateReady(function () {
+          updateManager.onUpdateReady(function() {
             wx.showModal({
               title: "更新提示",
               content: "新版本已经准备好，是否重启应用？",
-              success: function (res) {
+              success: function(res) {
                 if (res.confirm) {
                   // 新的版本已经下载好，调用 applyUpdate 应用新版本并重启
                   updateManager.applyUpdate();
@@ -390,7 +384,7 @@ App({
               }
             });
           });
-          updateManager.onUpdateFailed(function () {
+          updateManager.onUpdateFailed(function() {
             // 新的版本下载失败
             wx.showModal({
               title: "已经有新版本了哟~",
@@ -423,29 +417,23 @@ App({
   // 获取新手指引
   getGuide() {
     return this.user.guideRecord().then(res => {
-      if (res.code == 1) {
-        let newGuide = res.data;
-        this.store.setState({
-          newGuide
-        });
-      }
+      let newGuide = res.data;
+      this.store.setState({
+        newGuide
+      });
     });
   },
   // 获取任务状态
   getTaskStatus() {
     this.user.getNewTaskStatus().then(res => {
-      if (res.code == 1) {
-        this.store.setState({
-          taskStatus: res.data
-        });
-      }
+      this.store.setState({
+        taskStatus: res.data
+      });
     });
     this.user.getDayTaskStatus().then(res => {
-      if (res.code == 1) {
-        this.store.setState({
-          dayStatus: res.data
-        });
-      }
+      this.store.setState({
+        dayStatus: res.data
+      });
     });
   },
   /*长按复制内容 */
