@@ -251,7 +251,6 @@ Page({
     });
   },
   ended() {
-    console.log('视频播放完速度就会发动')
     this.data.sublessons.forEach(item => {
       item.id == this.data.cur.id ? (item.played = 1) : "";
     });
@@ -401,7 +400,7 @@ Page({
     let i = 0,
       list = this.data.sublessons;
     if (type != undefined) {
-      i = e;
+      i = e || 0;
     } else {
       i = e.currentTarget.dataset.index;
       if (this.data.cur.id == list[i].id) return;

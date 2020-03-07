@@ -32,7 +32,10 @@ Page({
     showBottom: false
   },
   pageName: "秀风采页",
-  guide: 0,
+  stopTap:{
+    guide: 0,
+    praise: 0,
+  },
   onLoad(options) {
     this.param = [
       { page: 1, pageSize: 10, is_follow: 0 },
@@ -267,6 +270,8 @@ Page({
     }
   },
   praise(e, index) {
+    if(this.stopTap.praise) return
+    this.stopTap.praise = true
     let i = e.currentTarget.dataset.index;
     let list = this.data.list,
       flowList = this.data.flowList,
@@ -324,6 +329,7 @@ Page({
                   [`flowList[${i}].likes`]: flowList[i].likes
                 });
           }
+          this.stopTap.praise = 0
         })
         .catch(msg => {
           if (msg.code == -2) {
@@ -333,6 +339,7 @@ Page({
               duration: 1500
             });
           }
+          this.stopTap.praise = 0
         });
     } else {
       // 点赞
@@ -399,6 +406,7 @@ Page({
             data: { uid: e.currentTarget.dataset.uid }
           });
           wx.uma.trackEvent("post_btnClick", { btnName: "点赞按钮" });
+          this.stopTap.praise = 0
         })
         .catch(msg => {
           if (msg.code == -2) {
@@ -408,6 +416,7 @@ Page({
               duration: 1500
             });
           }
+          this.stopTap.praise = 0
         });
     }
   },
@@ -645,8 +654,8 @@ Page({
         guideTxt: "我知道了"
       });
     } else {
-      if (this.guide) return;
-      this.guide = true;
+      if (this.stopTap.guide) return;
+      this.stopTap.guide = true;
       let param = {
         guide_name: "blog"
       };
@@ -666,7 +675,7 @@ Page({
           app.getGuide();
         })
         .catch(() => {
-          this.guide = 0;
+          this.stopTap.guide = 0;
         });
     }
   },
