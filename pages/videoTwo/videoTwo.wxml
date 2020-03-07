@@ -1,6 +1,6 @@
 <view class="container">
   <video class="myVideo" id="{{ vid }}" src="{{ cur.url }}" controls="{{ false }}" show-center-play-btn="{{ false }}"
-    object-fit="fill" autoplay="{{autoplay}}" loop="{{loop}}" bindended="recordFinish">
+    object-fit="fill" autoplay="{{autoplay}}" loop="{{loop}}" bindended="recordFinish" bindloadedmetadata="vedioRecordAdd">
     <!-- 功能  滑动及视频播/停监听-->
     <view wx:if="{{ cur && !$state.baseInfo }}" class="dropback">
       <view hover-class="none" bindtap="tap" bindtouchstart="scrollTouchStart" bindtouchend="scrollTouchEnd"
