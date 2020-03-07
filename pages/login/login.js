@@ -212,12 +212,16 @@ Page({
         }
       }
     }).catch(err => {
-      wx.showToast({
-        title: err.msg,
-        icon: "none",
-        duration: 1500,
-        mask: false
-      })
+      if(err.msg == '您已经注册过') {
+        wx.reLaunch({ url: "/pages/index/index?type=login" })
+      } else {
+        wx.showToast({
+          title: err.msg,
+          icon: "none",
+          duration: 1500,
+          mask: false
+        })
+      }
     })
   },
   checkboxChange: function (e) {

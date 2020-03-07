@@ -30,6 +30,9 @@ Page({
         type: 'Bokemessage',
         data: { uid: this.data.$state.userInfo.id }
       })
+      app.store.setState({
+        unRead: 0
+      })
     })
   },
 

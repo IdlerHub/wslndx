@@ -490,7 +490,7 @@ Page({
             clearTimeout(timer);
           }, 1000);
         });
-        this.gettop();
+        this.data.currentTab == 0 ?  this.gettop() : '';
       }
     }
   },
