@@ -42,12 +42,8 @@
         <view class="addTe" catchtap="showServise">
           <image src="{{ $state.imgHost }}/class-addTeacher.png"></image>
         </view>
-        <navigator class="addTe" hover-class="none" url="/pages/makeMoney/makeMoney" wx:if="{{$state.authUserInfo}}">
+        <button class="addTe" open-type="share" hover-class="btn-hover">
           <image src="{{ $state.imgHost }}/class-invite.png"></image>
-        </navigator>
-        <button open-type="getUserInfo" bindgetuserinfo="onGotUserInfo" class="addTe" data-type="money"
-        wx:else>
-        <image src="{{ $state.imgHost }}/class-invite.png"></image>
         </button>
       </view>
       <view class="right">
@@ -57,10 +53,6 @@
           <image src="{{$state.imgHost}}/class-collect.png" wx:else></image>
           <text>收藏</text>
         </view>
-        <button class="right-box" open-type="share" hover-class="btn-hover">
-          <image src="{{$state.imgHost}}/class-share.png"></image>
-          <text>分享</text>
-        </button>
       </view>
     </view>
   </view>
@@ -80,6 +72,12 @@
         </view>
         <view wx:if="{{ sort == 1 }}" class="box">
           <image class="icon" mode="aspectFill" src="{{ $state.imgHost }}/order-fall.png"></image>倒序
+        </view>
+      </view>
+      <view class="order" wx:if="{{ currentTab == 2 }}"> 
+        <view class="order_box">
+          <image src="../../images/copyThat.png"></image>
+          <test>复制简介</test>
         </view>
       </view>
     </scroll-view>

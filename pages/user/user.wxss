@@ -164,7 +164,7 @@ page .navgationto .navgationBox .toInvite {
   border-radius: 50%;
   position: absolute;
   top: 62rpx;
-  right: 80rpx;
+  right: 40rpx;
   display: flex;
   align-items: center;
   justify-content: center;

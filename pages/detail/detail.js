@@ -45,12 +45,13 @@ Page({
     replyshow: false,
     showintegral: false,
     showServise: false,
+    replycontent: ''
     /* rect: wx.getMenuButtonBoundingClientRect() */
   },
   pageName: "视频页（视频详情页）",
-  turnOff:{
+  turnOff: {
     guide: 0,
-    collect:0
+    collect: 0
   },
   onLoad(options) {
     /*todo:考虑去掉that*/
@@ -139,11 +140,7 @@ Page({
     };
     if (this.data.$state.lessDiscussion[options.id]) {
       this.setData({
-        content: this.data.$state.lessDiscussion[options.id].replycontent,
-        contenLength:
-          this.data.$state.lessDiscussion[options.id].replycontent != ""
-            ? this.data.$state.lessDiscussion[options.id].replycontent.length
-            : 0
+        content: this.data.$state.lessDiscussion[options.id].replycontent
       });
     }
     wx.onKeyboardHeightChange(res => {
@@ -355,7 +352,7 @@ Page({
   // 收藏
   collect() {
     /*todo:考虑去掉that*/
-    if(this.turnOff.collect) return
+    if (this.turnOff.collect) return
     let that = this;
     let param = {
       lesson_id: this.param.id
@@ -444,20 +441,20 @@ Page({
     }
   },
   recordAddVedio() {
-      this.getProgress();
-      this.videoContext.play();
-      this.setData({
-        playing: true,
-        hideRecode: true
-      });
-      app.addVisitedNum(`k${this.data.cur.id}`);
+    this.getProgress();
+    this.videoContext.play();
+    this.setData({
+      playing: true,
+      hideRecode: true
+    });
+    app.addVisitedNum(`k${this.data.cur.id}`);
   },
   vedioRecordAdd() {
     let param = {
       lesson_id: this.param.id,
       sublesson_id: this.data.cur.id
     };
-    app.classroom.recordAdd(param).then(msg => {});
+    app.classroom.recordAdd(param).then(msg => { });
   },
   // 获取讨论
   getComment(list, options) {

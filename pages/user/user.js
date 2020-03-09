@@ -47,7 +47,7 @@ Page({
   },
   toInvite() {
     wx.navigateTo({
-      url: "/pages/invitation/invitation"
+      url: "/pages/invitation/invitation?type=withdraw"
     });
     wx.uma.trackEvent("personal_btnClick", { btnName: "邀请好友" });
   },

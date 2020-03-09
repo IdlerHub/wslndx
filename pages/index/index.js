@@ -410,7 +410,8 @@ Page({
   onPullDownRefresh() {
     wx.stopPullDownRefresh()
     this.setData({
-      isRefreshing: true
+      isRefreshing: true,
+      catrecommend:[]
     })
     this.init().then(() => {
       let timer = setTimeout(() => {

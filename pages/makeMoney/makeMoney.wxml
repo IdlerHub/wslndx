@@ -47,7 +47,7 @@
       <text>排名</text>
       <text>导师昵称</text>
       <text>学员人数</text>
-      <text>累计现金</text>
+      <text>累计学分</text>
     </view>
     <view class="list" wx:if="{{list.length > 0}}">
       <view class="item" wx:for="{{list}}" wx:key="index">
