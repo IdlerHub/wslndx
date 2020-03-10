@@ -268,9 +268,10 @@ Page({
   },
   toScore() {
     wx.navigateTo({
-      url: "/pages/score/score?type=index"
+      url: "/pages/makeMoney/makeMoney"
+      // url: "/pages/score/score?type=index"
     })
-    wx.uma.trackEvent('index_btnClick', { 'btnName': '学分兑换' });
+    wx.uma.trackEvent('index_btnClick', { 'btnName': '邀请学员' });
   },
   touchstart() {
     this.shownow = true

@@ -45,9 +45,8 @@ Page({
     app.tutor.rankList().then(res => {
       let list = res.data
       list.forEach(item => {
-        item.total_amount = Number(item.total_amount).toFixed(2)
         item.number2 = app.util.towTwice(item.prentice_count)
-        item.money2 = app.util.towTwice(item.total_amount)
+        item.money2 = app.util.tow(item.total_amount)
       })
       this.setData({
         list
