@@ -74,7 +74,7 @@
           <image class="icon" mode="aspectFill" src="{{ $state.imgHost }}/order-fall.png"></image>倒序
         </view>
       </view>
-      <view class="order" wx:if="{{ currentTab == 2 }}"> 
+      <view class="order" wx:if="{{ currentTab == 2 }}" bindtap="copySynopsis"> 
         <view class="order_box">
           <image src="../../images/copyThat.png"></image>
           <test>复制简介</test>
@@ -90,7 +90,7 @@
             class="item {{ item.played == 1 ? 'played' : '' }} {{ item.id == cur.id ? 'active' : '' }} {{'sublessonsd' + item.id}}"
             id="sublessonsd">
             <view class="left">
-              <text class="name">{{ item.sub_id }}. {{ item.title }}</text>
+              <text class="name">{{ item.index }}. {{ item.title }}</text>
               <text class="time">{{ item.minute }}分钟</text>
             </view>
             <view class="right">

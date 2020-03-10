@@ -446,7 +446,7 @@ App({
             wx.showToast({
               title: "内容复制成功",
               icon: "none",
-              duration: 2500
+              duration: 3000
             });
           }
         });

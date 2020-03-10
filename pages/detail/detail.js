@@ -211,8 +211,9 @@ Page({
       pageSize: 100
     };
     return app.classroom.detail(this.param).then(msg => {
-      msg.data.sublesson.forEach(function (item) {
+      msg.data.sublesson.forEach((item, index) => {
         item.minute = (item.film_length / 60).toFixed(0);
+        item['index'] = index + 1
       });
       msg.data.intro_content = htmlparser.default(msg.data.intro_content)
       wx.setNavigationBarTitle({
@@ -321,32 +322,55 @@ Page({
       scrollviewtop: 0
     });
     this.sublessParam.page = 1;
-    let param = {
-      id: this.data.id,
-      sort: this.data.sort,
-      page: 1,
-      pageSize: 100
-    };
-    let query = wx.createSelectorQuery().in(this);
-    query.selectAll("#sublessonsd").boundingClientRect();
-    query.exec(res => {
-      param.pageSize = res[0].length;
-      app.classroom.detail(param).then(msg => {
-        msg.data.sublesson.forEach(function (item) {
-          item.minute = (item.film_length / 60).toFixed(0);
-        });
-        wx.setNavigationBarTitle({
-          title: msg.data.title
-        });
-        this.setData({
-          detail: msg.data,
-          sublessons: msg.data.sublesson
-        });
-        setTimeout(() => {
-          this.tolesson();
-        }, 800);
-      });
-    });
+    let sublessons = this.data.sublessons
+    if(this.data.sort) {
+      sublessons.sort((a, b) => {
+        return b.index - a.index
+      })
+      this.setData({
+        sublessons
+      })
+      setTimeout(() => {
+        this.tolesson();
+      }, 800);
+    } else {
+      sublessons.sort((a, b) => {
+        return a.index - b.index
+      })
+      this.setData({
+        sublessons
+      })
+      setTimeout(() => {
+        this.tolesson();
+      }, 800);
+    }
+    // let param = {
+    //   id: this.data.id,
+    //   sort: this.data.sort,
+    //   page: 1,
+    //   pageSize: 100
+    // };
+    // let query = wx.createSelectorQuery().in(this);
+    // query.selectAll("#sublessonsd").boundingClientRect();
+    // query.exec(res => {
+    //   param.pageSize = res[0].length;
+    //   app.classroom.detail(param).then(msg => {
+    //     msg.data.sublesson.forEach((item, index) =>  {
+    //       item.minute = (item.film_length / 60).toFixed(0);
+          
+    //     });
+    //     wx.setNavigationBarTitle({
+    //       title: msg.data.title
+    //     });
+    //     this.setData({
+    //       detail: msg.data,
+    //       sublessons: msg.data.sublesson
+    //     });
+    //     setTimeout(() => {
+    //       this.tolesson();
+    //     }, 800);
+    //   });
+    // });
     // this.getDetail()
   },
   // 收藏
@@ -1396,6 +1420,20 @@ Page({
           comment: this.data.comment
         });
       }, 2500);
+    }
+  },
+  copySynopsis() {
+    let content = this.data.detail.intro_content, txt = ''
+    if(Array.isArray(content)) {
+      content.forEach(item => {
+        item.children[0]['text'] ? txt = txt + item.children[0]['text'] : 
+        item.children[0]['children'] ? item.children[0]['children'][0]['text'] ? txt = txt + item.children[0]['children'][0]['text'] : '' : ''
+        // console.log(item.children[0]['children'])
+      })
+      txt = txt.replace(/&nbsp;/g,'')
+      app.copythat(txt)
+    } else {
+      app.copythat(content)
     }
   },
   toUser(e) {
