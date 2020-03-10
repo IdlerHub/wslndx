@@ -98,15 +98,20 @@ page {
           align-items: center;
           margin-right: 12rpx; }    
       .info .bottom .left .addTe {
-        width: 270rpx;
+        width: 242rpx;
         height: 110rpx;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 8rpx;
+        margin-left: 24rpx;
       }
       .info .bottom .left .addTe:nth-child(2) {
-        margin-left: -20rpx;
+        margin-left: 18rpx;
       }
       .info .bottom .left .addTe image{
         width: 100%;
-        height: 100%;
+        height: 82rpx;
       }
       .info .bottom .right {
         flex: 1;
