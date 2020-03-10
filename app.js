@@ -161,7 +161,6 @@ App({
           wx.setStorageSync("invite", opts.query.uid); /* 邀请码存储 */
         }
       }
-
       if (!this.store.$state.userInfo.mobile) {
         wx.reLaunch({
           url: "/pages/sign/sign"
@@ -172,11 +171,7 @@ App({
         });
       } else if (opstObj.p) {
         wx.reLaunch({ url: "/pages/voteDetail/voteDetail?id=" + opstObj.o });
-      } else if (opts.path == "pages/loading/loading") {
-        wx.reLaunch({
-          url: "/pages/index/index"
-        });
-      }
+      } 
     }
     if (this.store.$state.userInfo.id) {
       setTimeout(() => {

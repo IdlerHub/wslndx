@@ -160,6 +160,13 @@
 					"pathName": "pages/vote/vote",
 					"query": "",
 					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/sign/sign",
+					"pathName": "/pages/loading/loading",
+					"query": "uid=12661&type=invite",
+					"scene": null
 				}
 			]
 		}
