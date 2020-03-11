@@ -73,7 +73,7 @@ Page({
     //上传图片
     wxp
       .chooseImage({
-        count: 6 - this.data.imgList.length,
+        count: 9 - this.data.imgList.length,
         sizeType: ["compressed"],
         sourceType: ["album", "camera"]
       })
@@ -197,7 +197,8 @@ Page({
       object_key: video || ""
     };
 
-    http.uploadOpus(params).then(res => { //上传状态
+    http.uploadOpus(params).then(res => {
+      //上传状态
       wx.redirectTo({
         url: "/pages/voteSuccess/voteSuccess"
       });
