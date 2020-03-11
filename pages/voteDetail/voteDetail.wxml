@@ -5,7 +5,7 @@
         <swiper class="img-list" current="{{current}}" circular  bindchange="changeIndex">
             <block wx:for="{{item.url}}" wx:key="index">
                 <swiper-item>
-                    <view class="swiper-item">
+                    <view class="swiper-item" catchtap="preview" data-url="{{item}}">
                         <image src="{{item}}" alt="" mode="aspectFit"/>
                     </view>
                 </swiper-item>
@@ -31,7 +31,7 @@
         <view class="info-left">
             <view class="user-info">
                 <image src="{{item.avatar}}" alt="" />
-                <view class="info-name">作者: {{item.nickname}}</view>
+                <view class="info-name">作者: {{item.author || item.nickname}}</view>
             </view>
             <view class="info-title">{{item.name}}</view>
             <view class="info-content">{{item.content}}</view>

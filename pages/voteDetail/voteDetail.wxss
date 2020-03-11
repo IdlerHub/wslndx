@@ -111,6 +111,8 @@
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+    display: flex;
+    align-items: center;
 }
 .info-title{
     margin: 14rpx 0;

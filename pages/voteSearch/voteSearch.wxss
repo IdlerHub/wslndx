@@ -198,12 +198,14 @@ image{
 }
 .history-item{
     height: 42rpx;
+    line-height: 42rpx;
     padding-top: 48rpx;
     padding-bottom: 30rpx;
     display: flex;
     justify-content: space-between;
     align-items: center;
     border-bottom: 2rpx solid #EDEDED;
+    
 }
 
 .history-left{
@@ -212,10 +214,14 @@ image{
     align-items: center;
 }
 .history-left text{
+    max-width: 530rpx;
     font-size:36rpx;
     font-family:PingFangSC-Regular,PingFang SC;
     font-weight:400;
     color:rgba(46,46,46,1);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 .history-left image{
     width: 42rpx;

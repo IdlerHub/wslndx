@@ -48,6 +48,15 @@ Page({
   },
   onLoad(){
     //考虑改成this.data.type
-    this.getMyOpus(2) //默认初始获取已通过状态 type=2
+    this.getMyOpus(this.data.type) //默认初始获取已通过状态 type=2
+  },
+  init(){
+    let type = this.data.type;
+    return Promise.all([this.getMyOpus(type)])
+  },
+  onPullDownRefresh() {
+    this.init().then(() => { //默认初始获取已通过状态 type=2
+      wx.stopPullDownRefresh();
+    })
   }
 })
