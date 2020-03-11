@@ -38,6 +38,13 @@ Page({
       app.vote.noteGuide();
     }
   },
+  preview(e){
+    let url = e.currentTarget.dataset.url;
+    wx.previewImage({
+      current: url,
+      urls: this.data.item.url
+    })
+  },
   aniend(e) {
     //动画播放结束
     this.setData({
