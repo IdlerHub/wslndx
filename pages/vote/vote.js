@@ -11,8 +11,8 @@ Page({
     type: 0, //分类的id
     newProduction: [],
     productionList: [],
-    page: 1,
-    supportFlag: 1 //今日点赞权限 0=无, 1=有
+    page: 1
+    // supportFlag: 1 //今日点赞权限 0=无, 1=有
   },
   toRule() {
     //跳转到活动规则
@@ -44,10 +44,11 @@ Page({
   setLikeData(index) {
     let work = this.data.productionList[index];
     work.prise_numbers += 1;
+    work.is_praise = 1;
     let key = "productionList[" + index + "]";
     this.setData({
       [key]: work,
-      supportFlag: 0
+      // supportFlag: 0
     });
   },
   giveLike(e) {
@@ -62,16 +63,18 @@ Page({
         duration: 1500
       });
     } else {
-      if (this.data.supportFlag == 0) {
+      let index = e.currentTarget.dataset.index;
+      let work = this.data.productionList[index];
+      if (work.is_praise == 1) {
         //提示
         wx.showToast({
-          title: "您今日已点赞,请明日再来",
+          title: "您今日已点赞,去看看其他作品~",
           icon: "none",
           duration: 1500
         });
       } else {
-        let index = e.currentTarget.dataset.index;
-        let work = this.data.productionList[index];
+        // let index = e.currentTarget.dataset.index;
+        // let work = this.data.productionList[index];
         this.setLikeData(index);
         let params = {
           id: e.currentTarget.dataset.id,
@@ -130,7 +133,7 @@ Page({
       this.setData({
         productionList: data,
         page: page,
-        supportFlag: res.data.have_praise,
+        // supportFlag: res.data.have_praise,
         overTime: res.data.over_time
       });
     });

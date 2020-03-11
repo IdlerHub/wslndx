@@ -11,7 +11,7 @@ Page({
     shareFlag: false,
     sharePoster: false,
     overTime: 0, //活动是否过期  0=未过期,1=已过期
-    supportFlag: 0, //点赞权限
+    // supportFlag: 0, //点赞权限
     zanFlag: false, //点赞动画
     waitingFlag: false,
     userImg: "", //用户头像
@@ -67,10 +67,10 @@ Page({
         duration: 1500
       });
     } else {
-      if (this.data.supportFlag == 0) {
+      if (this.data.item.is_praise == 1) {
         //提示
         wx.showToast({
-          title: "您今日已点赞,请明日再来",
+          title: "您今日已点赞,去看看其他作品~",
           icon: "none",
           duration: 1500
         });
@@ -80,7 +80,7 @@ Page({
         work.is_praise = 1;
         this.setData({
           item: work,
-          supportFlag: 0,
+          // supportFlag: 0,
           zanFlag: true
         });
         let params = {
@@ -178,7 +178,7 @@ Page({
       let temp = res.data.is_guide;
       this.setData({
         item: res.data,
-        supportFlag: res.data.have_praise,
+        // supportFlag: res.data.have_praise,
         guideFlag: [!temp, 0, 0],
         overTime: res.data.over_time
       });
