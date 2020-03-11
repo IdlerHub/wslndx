@@ -1,3 +1,8 @@
+<!--
+ * @Date: 2020-03-03 14:07:56
+ * @LastEditors: hxz
+ * @LastEditTime: 2020-03-11 14:08:00
+ -->
 <!--pages/voteProduction/voteProduction.wxml-->
 <view class="vote-production">
     <view class="production">
@@ -26,10 +31,10 @@
         </view>
     </view>
     <view class="production-upload">
-        <view class="upload-title">{{modalityIndex==0? '上传图片（6张以内）': '上传视频'}}</view>
+        <view class="upload-title">{{modalityIndex==0? '上传图片（9张以内）': '上传视频'}}</view>
         <view class="upload-tip">{{modalityIndex==0? '图片尺寸建议950*550支持jpg、png': '视频大小不超过200MB，支持MP4等格式'}}</view>
         <view class="upload-img" wx:if="{{modalityIndex==0}}">
-            <view class="btn-img" bindtap="uploadImg"  wx:if="{{imgList.length < 6 }}">
+            <view class="btn-img" bindtap="uploadImg"  wx:if="{{imgList.length < 9 }}">
                 <image src="/images/vote-addimg.png" style="width: 54rpx;height: 48rpx;" alt="" />
                 <text>添加图片</text>
             </view>
