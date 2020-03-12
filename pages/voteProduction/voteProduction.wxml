@@ -15,6 +15,21 @@
             <textarea type="text" maxlength="45" placeholder-class="area-place" placeholder="请输入45字以内作品介绍" bindinput="changeIntroduction" />
         </view>
         <view class="production-title">
+            <view>地区选择</view>
+            <picker mode="multiSelector" value="{{addressIndex}}" range="{{addressArray}}"  bindchange="addressChange" bindcolumnchange="addressColumnChange" range-key='name'>
+                <input wx:if="{{!select}}" placeholder-class="picker" placeholder="请选择地区" bindtap="selectCity" disabled />
+                <input wx:if="{{select}}" class="section" value="{{addressArray[0][addressIndex[0]].name}} {{addressArray[1][addressIndex[1]].name}}" />
+                <image src="../../images/classify-right.png" alt="" />
+            </picker>
+        </view>
+        <view class="production-title" bindtap="tipSchool">
+            <view>学校选择</view>
+            <picker disabled="{{!schoolArray.length}}" bindchange="schoolChange" value="{{schoolIndex}}" range="{{schoolArray}}" range-key='name'>
+                <input type="text" placeholder-class="picker" placeholder="请选择学校" value="{{schoolArray[schoolIndex].name}}" disabled />
+                <image src="../../images/classify-right.png" alt="" />
+            </picker>
+        </view>
+        <view class="production-title">
             <view>作品选择分类</view>
             <picker bindchange="classifyChange" value="{{classifyIndex}}" range="{{classifyArray}}" range-key='name'>
                 <input  type="text"  placeholder-class="picker"  placeholder="请输入作品分类" value="{{classifyArray[classifyIndex].name}}" disabled />
@@ -22,18 +37,16 @@
             </picker>
         </view>
         <view class="production-title">
-            <view>选择表现形式</view>
+            <view>表现形式</view>
             <view class="modality">
-                <block wx:for="{{modality}}" wx:key="index">
-                    <view class="{{index==modalityIndex? 'active' : ''}}"  bindtap="changeModality" data-index="{{index}}">{{item}}</view>
-                </block>
+                <view class="active">{{selectType==1?'图片':'视频'}}</view>
             </view>
         </view>
     </view>
     <view class="production-upload">
-        <view class="upload-title">{{modalityIndex==0? '上传图片（9张以内）': '上传视频'}}</view>
-        <view class="upload-tip">{{modalityIndex==0? '图片尺寸建议950*550支持jpg、png': '视频大小不超过200MB，支持MP4等格式'}}</view>
-        <view class="upload-img" wx:if="{{modalityIndex==0}}">
+        <view class="upload-title">{{selectType==1? '上传图片（9张以内）': '上传视频'}}</view>
+        <view class="upload-tip">{{selectType==1? '图片尺寸建议950*550支持jpg、png': '视频大小不超过200MB，支持MP4等格式'}}</view>
+        <view class="upload-img" wx:if="{{selectType==1}}">
             <view class="btn-img" bindtap="uploadImg"  wx:if="{{imgList.length < 9 }}">
                 <image src="/images/vote-addimg.png" style="width: 54rpx;height: 48rpx;" alt="" />
                 <text>添加图片</text>
@@ -59,7 +72,7 @@
                 <!-- <icon class="clear" data-index="4" size="24" type="clear" role="img" catchtap="delVideo"></icon> -->
             </view>
         </view>
-        <view wx:if="{{modalityIndex==0}}" class="upload-tip" style="font-size: 32rpx; color: #999;">共{{imgList.length}}张图片，点击图片预览</view>
+        <view wx:if="{{selectType==1}}" class="upload-tip" style="font-size: 32rpx; color: #999;">共{{imgList.length}}张图片，点击图片预览</view>
     </view>
     <view class="production-footer" bindtap="submitProduction">立即参赛</view>
 </view>

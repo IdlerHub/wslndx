@@ -9,6 +9,21 @@ function getH5Rule() {
   return httpService.post("h5opus/getH5Rule");
 }
 
+//POST Studyreport/getAllProvince 获取省份
+function getAllProvince() {
+  return httpService.post("Studyreport/getAllProvince");
+}
+
+//POST Studyreport/getCity 获取城市
+function getCity(params) {
+  return httpService.post("Studyreport/getCity", params);
+}
+
+//POST Studyreport/getAllUniversity 获取学校
+function getSchool(params) {
+  return httpService.post("Studyreport/getAllUniversity", params);
+}
+
 //POST h5opus/getCategory 获取分类列表
 function getCategory(params) {
   return httpService.post("h5opus/getCategory", params);
@@ -117,6 +132,9 @@ function getPosterInfo(params) {
 }
 
 module.exports = {
+  getAllProvince,
+  getCity,
+  getSchool,
   getH5Rule,
   getCategory,
   getOpusList,

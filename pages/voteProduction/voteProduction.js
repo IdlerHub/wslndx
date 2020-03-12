@@ -2,15 +2,19 @@
 import { wxp } from "../../utils/service";
 var http = require("../../data/Vote.js");
 import OBS from "../../OBS/OBSUploadFile.js";
-
 Page({
   data: {
-    productionName: "", //作品名称
-    introduction: "", //作品介绍
+    productionName: "",  //作品名称
+    introduction: "",   //作品介绍
+    select: false,
+    school: "",        //学校
+    addressArray: [], //学校选择分类
+    addressIndex: [0,0],
+    schoolArray: [], //学校选择分类
+    schoolIndex: 0,
     classifyArray: [], //作品选择分类
     classifyIndex: 0,
-    modality: ["图片", "视频"],
-    modalityIndex: 0,
+    selectType: 1,    //当前选中类型
     imgList: [],
     video: ""
   },
@@ -26,15 +30,95 @@ Page({
   },
   classifyChange(e) {
     // 修改分类
+    let index = e.detail.value;
+    let classifyArray = this.data.classifyArray
     this.setData({
-      classifyIndex: e.detail.value
+      classifyIndex: index,
+      selectType: classifyArray[index].type
     });
   },
-  changeModality(e) {
-    // 图片 || 视频
+  addressChange(e){
+    let index = e.detail.value;
+    this.getSchool(index[1]).then(res=>{
+      this.setData({
+        schoolArray: res.data,
+        addressIndex: index
+      })
+    })
+  },
+  addressColumnChange(e){
+    let index = e.detail.value;
+    let addressArray = this.data.addressArray;
+    let addressIndex = this.data.addressIndex;
+    if (e.detail.column == 0){  //第一列改变
+      this.getCity(addressArray[0][index].id).then(res=>{
+        addressArray[1] = res.data
+        addressIndex = [index,0]
+        this.setData({
+          addressArray: addressArray,
+          addressIndex: addressIndex
+        })
+        this.getSchool(0).then(res => {
+          this.setData({
+            schoolArray: res.data
+          })
+        })
+      })
+    } else {  //第二列改变
+      addressIndex[1] = index
+      this.getSchool(index).then(res => {
+        this.setData({
+          schoolArray: res.data,
+          addressIndex: addressIndex
+        })
+      })
+    }
+    
+  },
+  schoolChange(e){
     this.setData({
-      modalityIndex: e.currentTarget.dataset.index
+      schoolIndex: e.detail.value
+    })
+  },
+  selectCity(){
+    this.getSchool(0).then(res=>{
+      this.setData({
+        select: true,
+        schoolArray: res.data
+      })
+    })
+  },
+  tipSchool(){
+    if(!this.data.schoolArray.length){
+      wx.showToast({
+        title: "请先选择地区",
+        icon: "none",
+        duration: 1500,
+        mask: false
+      })
+    }
+  },
+  getAllProvince(){  //获取省份
+    let that = this;
+    let addressArray = []
+    return http.getAllProvince().then(res=>{
+      addressArray[0] = res.data
+      that.getCity(res.data[0].id).then(res=>{
+        addressArray[1] = res.data
+        this.setData({
+          addressArray: addressArray
+        })
+      })
     });
+  },
+  getCity(province_id){
+    let params = { province_id }
+    return http.getCity(params);
+  },
+  getSchool(index){  //获取学校
+    let addressArray = this.data.addressArray;
+    let params = { city_id: addressArray[1][index].id }
+    return http.getSchool(params);
   },
   uploadVideo() {
     //上传视频
@@ -86,7 +170,7 @@ Page({
       title: "作品正在上传",
       mask: true
     });
-    if (this.data.modalityIndex) {
+    if (this.data.selectType !== 1) {
       //视频
       OBS("ballot/video", medias, "video")
         .then(res => {
@@ -162,12 +246,13 @@ Page({
       errTip = "作品名称不能为空";
     } else if (!this.data.introduction) {
       errTip = "作品介绍不能为空";
-    } else if (this.data.modalityIndex == 0 && this.data.imgList.length == 0) {
-      errTip = "请选上传图片";
-    } else if (this.data.modalityIndex == 1 && !this.data.video) {
+    } else if (!this.data.schoolArray.length){
+      errTip = "学校不能为空";
+    } else if (this.data.selectType == 1 && this.data.imgList.length == 0) {
+      errTip = "请先上传图片";
+    } else if (this.data.selectType == 2 && !this.data.video) {
       errTip = "请先上传视频";
     }
-
     if (errTip) {
       wx.showToast({
         icon: "none",
@@ -180,20 +265,22 @@ Page({
     let {
       productionName,
       introduction,
-      modalityIndex,
+      selectType,
+      schoolArray,
+      schoolIndex,
       classifyArray,
       classifyIndex,
       imgList,
       video
     } = this.data;
-
     let params = {
+      school: schoolArray[schoolIndex].name,
       uid: this.data.$state.userInfo.id,
       name: productionName,
       content: introduction,
-      type: modalityIndex + 1,
+      type: selectType,
       hoc_id: classifyArray[classifyIndex].id,
-      url: modalityIndex ? [] : imgList,
+      url: selectType == 2 ? [] : imgList,
       object_key: video || ""
     };
 
@@ -212,9 +299,11 @@ Page({
     let params = { type: "classify" };
     http.getCategory(params).then(res => {
       this.setData({
-        classifyArray: res.data
+        classifyArray: res.data,
+        selectType: res.data[0].type
       });
     });
+    this.getAllProvince();
   },
 
   /**
