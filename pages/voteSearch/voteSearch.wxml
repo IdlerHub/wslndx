@@ -31,7 +31,7 @@
                     <view class="item-right">
                         <view>
                             <rich-text class="item-title" nodes="{{ item.name }}"></rich-text>
-                            <rich-text class="item-author" nodes="{{ item.nickname }}"></rich-text>
+                            <rich-text class="item-author" nodes="{{ item.author || item.nickname }}"></rich-text>
                             <rich-text class="item-author" nodes="{{ item.school }}"></rich-text>
                             <!-- <view class="item-author">{{item.nickname}}</view>
                             <view class="item-title">{{item.name}}</view> -->
