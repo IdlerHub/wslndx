@@ -43,7 +43,7 @@ function add(param) {
 
 //POST bokeblog/index 获取学友圈最新动态
 function news(param) {
-  return httpService.post("bokeblog/index", param)
+  return httpService.post("bokeblog/recommend", param)
 }
 
 //POST Userfriendscircle/index 获取某个圈的成员
