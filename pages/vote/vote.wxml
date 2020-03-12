@@ -25,7 +25,7 @@
     <!-- <view class="header-none" style="{{styleNone}}"></view> -->
     <view class="vote-search" catchtap="toSearch">
         <image src="../../images/vote-search.png" alt="" />
-        <input type="text" placeholder="请输入作品名称或作者名" placeholder-class="search-ipt" disabled />
+        <input type="text" placeholder="请输入关键字搜索" placeholder-class="search-ipt" disabled />
         <view class="search-btn">搜索</view>
     </view>
     <view class="vote-body">

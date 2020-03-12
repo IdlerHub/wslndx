@@ -48,7 +48,7 @@
             </picker>
         </view>
         <view class="production-title">
-            <view>选择表现形式</view>
+            <view>表现形式</view>
             <view class="modality">
                 <!-- <block wx:for="{{modality}}" wx:key="index">
                     <view class="active">{{item}}</view>
