@@ -62,7 +62,7 @@
 .footer-info{
     /* height: 504rpx; */
     position: fixed;
-    bottom: 0;
+    bottom: 43rpx;
     right: 30rpx;
     left: 30rpx;
     z-index: 100;
@@ -88,7 +88,7 @@
 }
 .user-info{
     display: flex;
-    margin-bottom: 10rpx;
+    margin-bottom: 23rpx;
     font-family:PingFangSC-Medium,PingFang SC;
     font-weight:500;
     color:rgba(255,255,255,1);
@@ -99,9 +99,13 @@
     max-width: 551rpx;
     /* margin-top: 204rpx; */
 }
+.info-left .user-info{
+    display: flex;
+    align-items: center;
+}
 .info-left .user-info>image{
-    width: 54rpx;
-    height: 54rpx;
+    width: 90rpx;
+    height: 90rpx;
     border-radius: 100%;
     border: 1px solid #EDEDED;
 }
@@ -112,7 +116,10 @@
     white-space: nowrap;
     text-overflow: ellipsis;
     display: flex;
-    align-items: center;
+    flex-direction: column;
+}
+.info-name view:first-child{
+    margin-bottom: 4rpx;
 }
 .info-title{
     margin: 14rpx 0;

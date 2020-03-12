@@ -31,7 +31,10 @@
         <view class="info-left">
             <view class="user-info">
                 <image src="{{item.avatar}}" alt="" />
-                <view class="info-name">作者: {{item.author || item.nickname}}</view>
+                <view class="info-name">
+                    <view>作者: {{item.author || item.nickname}}</view>
+                    <view>{{item.school}}</view>
+                </view>
             </view>
             <view class="info-title">{{item.name}}</view>
             <view class="info-content">{{item.content}}</view>

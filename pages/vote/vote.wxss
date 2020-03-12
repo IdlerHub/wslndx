@@ -220,7 +220,7 @@ page{
 }
 .vote-item{
     width: 330rpx;
-    height: 366rpx;
+    height: 428rpx;
     margin-right: 30rpx;
     margin-bottom: 30rpx;
     overflow: hidden;
@@ -289,13 +289,13 @@ page{
     right: 10rpx;
 }
 .item-down{
-    height: 146rpx;
+    height: 208rpx;
     background: white;
 }
 .item-name{
     padding-top: 12rpx;
     margin: 0 20rpx;
-    margin-bottom: 8rpx;
+    margin-bottom: 4rpx;
     font-size:36rpx;
     font-family:PingFangSC-Medium,PingFang SC;
     font-weight:500;
@@ -304,6 +304,17 @@ page{
     white-space: nowrap;
     text-overflow: ellipsis;
     min-height: 50rpx;
+}
+.item-school{
+    margin: 0 20rpx;
+    margin-bottom: 22rpx;
+    font-size:32rpx;
+    font-family:PingFangSC-Regular,PingFang SC;
+    font-weight:400;
+    color:rgba(102,102,102,1);
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 .item-footer{
     margin: 20rpx;
