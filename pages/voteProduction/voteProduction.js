@@ -30,7 +30,6 @@ Page({
   },
   classifyChange(e) {
     // 修改分类
-    console.log('修改',e)
     let index = e.detail.value;
     let classifyArray = this.data.classifyArray
     this.setData({
@@ -39,7 +38,6 @@ Page({
     });
   },
   addressChange(e){
-    console.log(e,"值改变")
     let index = e.detail.value;
     this.getSchool(index[1]).then(res=>{
       this.setData({
@@ -55,7 +53,6 @@ Page({
     if (e.detail.column == 0){  //第一列改变
       this.getCity(addressArray[0][index].id).then(res=>{
         addressArray[1] = res.data
-        console.log(addressArray[1][0].id)
         addressIndex = [index,0]
         this.setData({
           addressArray: addressArray,
@@ -68,7 +65,6 @@ Page({
         })
       })
     } else {  //第二列改变
-      console.log(e)
       addressIndex[1] = index
       this.getSchool(index).then(res => {
         this.setData({
@@ -176,7 +172,6 @@ Page({
     });
     if (this.data.selectType !== 1) {
       //视频
-      console.log("上传视频")
       OBS("ballot/video", medias, "video")
         .then(res => {
           if (res) {
@@ -278,7 +273,6 @@ Page({
       imgList,
       video
     } = this.data;
-    console.log(schoolArray, schoolIndex)
     let params = {
       school: schoolArray[schoolIndex].name,
       uid: this.data.$state.userInfo.id,
