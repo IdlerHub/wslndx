@@ -196,46 +196,90 @@ Page({
     currentTab == 0
       ? (temp = list || this.data.list)
       : (temp = list || this.data.flowList);
-    return app.circle.news(this.param[currentTab]).then(msg => {
-      if (msg.data) {
-        msg.data[0]
-          ? ""
-          : this.setData({
-              showBottom: true
-            });
-        let arr = [];
-        for (let i in msg.data) {
-          arr.push(msg.data[i]);
-        }
-        arr.forEach(function(item) {
-          item.fw = app.util.tow(item.forward);
-          item.cw = app.util.tow(item.comments);
-          item.lw = app.util.tow(item.likes);
-          item.image_compress = item.images.map(i => {
-            return i.image_compress;
-          });
-          item.images = item.images.map(i => {
-            return i.image;
-          });
-          item.auditing = item.check_status;
-        });
-        temp.push(...arr);
-        setTimeout(() => {
-          this.setData({
-            showLoading: false
-          });
-          if (this.data.currentTab != currentTab) return;
-          this.data.currentTab == 0
-            ? this.setData({
-                list: temp
-              })
-            : this.setData({
-                flowList: temp
+      if(currentTab == 0) {
+        return app.circle.news(this.param[currentTab]).then(msg => {
+          if (msg.data) {
+            msg.data[0]
+              ? ""
+              : this.setData({
+                  showBottom: true
+                });
+            let arr = [];
+            for (let i in msg.data) {
+              arr.push(msg.data[i]);
+            }
+            arr.forEach(function(item) {
+              item.fw = app.util.tow(item.forward);
+              item.cw = app.util.tow(item.comments);
+              item.lw = app.util.tow(item.likes);
+              item.image_compress = item.images.map(i => {
+                return i.image_compress;
               });
-        }, 800);
-        this.setHeight();
+              item.images = item.images.map(i => {
+                return i.image;
+              });
+              item.auditing = item.check_status;
+            });
+            temp.push(...arr);
+            setTimeout(() => {
+              this.setData({
+                showLoading: false
+              });
+              if (this.data.currentTab != currentTab) return;
+              this.data.currentTab == 0
+                ? this.setData({
+                    list: temp
+                  })
+                : this.setData({
+                    flowList: temp
+                  });
+            }, 800);
+            this.setHeight();
+          }
+        });
+      } else {
+        return app.circle.myNews(this.param[currentTab]).then(msg => {
+          if (msg.data) {
+            msg.data[0]
+              ? ""
+              : this.setData({
+                  showBottom: true
+                });
+            let arr = [];
+            for (let i in msg.data) {
+              arr.push(msg.data[i]);
+            }
+            arr.forEach(function(item) {
+              item.fw = app.util.tow(item.forward);
+              item.cw = app.util.tow(item.comments);
+              item.lw = app.util.tow(item.likes);
+              item.image_compress = item.images.map(i => {
+                return i.image_compress;
+              });
+              item.images = item.images.map(i => {
+                return i.image;
+              });
+              item.auditing = item.check_status;
+            });
+            temp.push(...arr);
+            setTimeout(() => {
+              this.setData({
+                showLoading: false
+              });
+              if (this.data.currentTab != currentTab) return;
+              this.data.currentTab == 0
+                ? this.setData({
+                    list: temp
+                  })
+                : this.setData({
+                    flowList: temp
+                  });
+            }, 800);
+            this.setHeight();
+          }
+        });
       }
-    });
+    
   },
   gettop() {
     app.circle.bokeblogTop().then(res => {

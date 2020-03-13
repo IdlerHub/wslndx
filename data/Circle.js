@@ -46,6 +46,11 @@ function news(param) {
   return httpService.post("bokeblog/recommend", param)
 }
 
+//POST bokeblog/index 获取学友圈最新动态
+function myNews(param) {
+  return httpService.post("bokeblog/index", param)
+}
+
 //POST Userfriendscircle/index 获取某个圈的成员
 function member(param) {
   return httpService.post("Userfriendscircle/index", param)
@@ -188,5 +193,6 @@ module.exports = {
   collectCancel,
   bokeblogTop,
   defaultCircle,
-  addOne
+  addOne,
+  myNews
 }

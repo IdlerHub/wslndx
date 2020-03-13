@@ -9,7 +9,7 @@ Page({
   //options(Object)
   onLoad: function (options) {
     this.historyParam = { page: 1, pageSize: 10 }
-    this.getHistory([])
+    // this.getHistory([])
   },
   onReady: function () { },
   onShow: function () { },

@@ -45,7 +45,7 @@ Page({
   },
   getList: function (list) {
     let temp = list || this.data.list
-    return app.circle.news(this.param).then(msg => {
+    return app.circle.myNews(this.param).then(msg => {
       msg.data.forEach(function (item) {
         item.lw = app.util.tow(item.likes)
         item.cw = app.util.tow(item.comments)
