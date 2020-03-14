@@ -549,7 +549,7 @@ right: 0;
     height: 100%;
     position: absolute;
     right: 0;
-    bottom: -40rpx;
+    bottom: 0rpx;
 }
 .guide-btn>image{
     width: 136rpx;
@@ -577,7 +577,7 @@ right: 0;
     height: 367rpx;
     position: absolute;
     right: 14rpx;
-    bottom: 56rpx;
+    bottom: 100rpx;
 }
 .guide-second image{
     width: 564rpx;
