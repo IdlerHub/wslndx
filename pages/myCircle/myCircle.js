@@ -77,7 +77,7 @@ Page({
   getCircle(list) {
     let circle = list || this.data.circle
     this.circleParam.us_id = 0
-    return app.circle.news(this.circleParam).then(msg => {
+    return app.circle.myNews(this.circleParam).then(msg => {
       if (msg.data) {
         msg.data.forEach(function (item) {
           item.fw = app.util.tow(item.forward)

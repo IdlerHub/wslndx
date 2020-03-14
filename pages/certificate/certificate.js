@@ -66,6 +66,7 @@ Page({
     wx.saveImageToPhotosAlbum({
       filePath: this.data.img,
       success() {
+       wx.uma.trackEvent("savaCertificate", { [`$uid_${this.data.$state.userInfo.id}`]: this.data.course});
         wx.showToast({
           title: "保存成功"
         })
@@ -82,6 +83,7 @@ Page({
     if (ops.from === "menu") {
       return this.menuAppShare()
     }
+    wx.uma.trackEvent("savaCertificate", { [`$uid_${this.data.$state.userInfo.id}`]: this.data.course});
     if (ops.from === "button") {
       return {
         title: "福利！老年大学十万集免费课程在线学习",

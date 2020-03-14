@@ -12,7 +12,7 @@ Page({
   pageName: "我的消息页",
   onLoad: function(options) {},
   onShow: function() {
-    this.getMessage();
+    // this.getMessage();
   },
   onPullDownRefresh: function() {},
   onReachBottom: function() {},

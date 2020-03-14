@@ -52,6 +52,8 @@ Page({
     })
   },
   getCity(val) {
+    console.log(this.province)
+
     let param = { level: 2, name: val || this.province[0] }
     return app.user.search(param).then(msg => {
       this.city = msg.data

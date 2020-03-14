@@ -77,6 +77,7 @@ App({
     optsStr.forEach((item, index) => {
       opstObj[item.split("=")[0]] = item.split("=")[1];
     });
+    console.log(optsStr)
     this.checkVersion();
     /* 检查用户从分享卡片启动 */
     if (this.globalData.scenes.indexOf(opts.scene) >= 0) {
@@ -132,7 +133,7 @@ App({
       });
     } else if (this.globalData.shareObj.p) {
       wx.reLaunch({
-        url: "/pages/voteDetail/voteDetail?id=" + this.globalData.shareObj.o
+        url: "/pages/voteDetail/voteDetail?voteid=" + this.globalData.shareObj.o
       });
     }
   },
@@ -161,7 +162,6 @@ App({
           wx.setStorageSync("invite", opts.query.uid); /* 邀请码存储 */
         }
       }
-
       if (!this.store.$state.userInfo.mobile) {
         wx.reLaunch({
           url: "/pages/sign/sign"
@@ -171,12 +171,8 @@ App({
           url: "/pages/education/education?type=lottery&login=1"
         });
       } else if (opstObj.p) {
-        wx.reLaunch({ url: "/pages/voteDetail/voteDetail?id=" + opstObj.o });
-      } else if (opts.path == "pages/loading/loading") {
-        wx.reLaunch({
-          url: "/pages/index/index"
-        });
-      }
+        wx.reLaunch({ url: "/pages/voteDetail/voteDetail?voteid=" + opstObj.o });
+      } 
     }
     if (this.store.$state.userInfo.id) {
       setTimeout(() => {
@@ -448,7 +444,7 @@ App({
             wx.showToast({
               title: "内容复制成功",
               icon: "none",
-              duration: 2500
+              duration: 3000
             });
           }
         });

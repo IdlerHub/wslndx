@@ -262,9 +262,11 @@ Page({
                       "replyParent"
                     ][this.replyParent] || "",
                   replycontenLength:
-                    this.data.$state.blogcomment[this.data.detail.id][
+                  this.data.$state.blogcomment[this.data.detail.id][
+                    "replyParent"
+                  ][this.replyParent] ? this.data.$state.blogcomment[this.data.detail.id][
                       "replyParent"
-                    ][this.replyParent].length || 0,
+                    ][this.replyParent].length : 0,
                   replyshow: true
                 })
               : "";

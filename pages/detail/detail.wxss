@@ -98,15 +98,20 @@ page {
           align-items: center;
           margin-right: 12rpx; }    
       .info .bottom .left .addTe {
-        width: 270rpx;
+        width: 242rpx;
         height: 110rpx;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 8rpx;
+        margin-left: 24rpx;
       }
       .info .bottom .left .addTe:nth-child(2) {
-        margin-left: -20rpx;
+        margin-left: 18rpx;
       }
       .info .bottom .left .addTe image{
         width: 100%;
-        height: 100%;
+        height: 82rpx;
       }
       .info .bottom .right {
         flex: 1;
@@ -126,7 +131,6 @@ page {
       }
       .info .bottom .right .right-box {
         display: flex;
-        flex-direction: column;
         justify-content: center;
         align-items: center;
         margin-left: 45rpx;
@@ -138,10 +142,10 @@ page {
       .info .bottom .right .right-box image{
         width: 46rpx;
         height: 40rpx;
+        margin-right: 18rpx;
       }
       .info .bottom .right .right-box text{
-        margin-top: 5rpx;
-        font-size:24rpx;
+        font-size:32rpx;
         font-family:PingFangSC-Regular,PingFang SC;
         font-weight:400;
         color:rgba(126,126,126,1);
@@ -200,7 +204,22 @@ page {
       width: 30rpx;
       height: 30rpx;
       margin: 0 8rpx; }
-
+      .order .order_box {
+        display: flex;
+        align-items: center;
+        margin-top: 6rpx;
+      }
+      .order .order_box image{
+        width: 34rpx;
+        height: 34rpx;
+        margin-right: 10rpx;
+      }
+      .order  .order_box test {
+        font-size:30rpx;
+        font-family:PingFangSC-Regular,PingFang SC;
+        font-weight:400;
+        color:rgba(126,126,126,1);
+      }
 .wrap {
   height: 100%;
   padding: 0 30rpx;

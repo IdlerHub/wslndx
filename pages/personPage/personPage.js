@@ -91,7 +91,7 @@ Page({
   getList(list) {
     let temp = list || this.data.list;
     this.param.us_id = this.data.us_id;
-    return app.circle.news(this.param).then(msg => {
+    return app.circle.myNews(this.param).then(msg => {
       if (msg.data) {
         let arr = [];
         for (let i in msg.data) {

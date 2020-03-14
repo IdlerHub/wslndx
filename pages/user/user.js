@@ -47,9 +47,10 @@ Page({
   },
   toInvite() {
     wx.navigateTo({
-      url: "/pages/invitation/invitation"
+      url: "/pages/makeMoney/makeMoney"
+      // url: "/pages/invitation/invitation?type=withdraw"
     });
-    wx.uma.trackEvent("personal_btnClick", { btnName: "邀请好友" });
+    // wx.uma.trackEvent("personal_btnClick", { btnName: "邀请好友" });
   },
   //用于数据统计
   onUnload() {},

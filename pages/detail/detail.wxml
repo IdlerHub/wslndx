@@ -1,6 +1,6 @@
 <view class="container">
   <video id="myVideo" src="{{ cur.url }}" controls page-gesture enable-play-gesture bindended="ended"
-    bindtimeupdate="timeupdate" bindplay="played">
+    bindtimeupdate="timeupdate" bindloadedmetadata="played">
     <cover-view wx:if="{{ vistor && tip }}" class="vistor-head">
       <cover-view>点击“</cover-view>
       <cover-image src="/images/xiaochengxu.png" class="iconfont"></cover-image>
@@ -40,14 +40,10 @@
     <view class="bottom">
       <view class="left">
         <view class="addTe" catchtap="showServise">
-          <image src="{{ $state.imgHost }}/class-addTeacher.png"></image>
+          <image src="{{ $state.imgHost }}/class-addTeacher3.png"></image>
         </view>
-        <navigator class="addTe" hover-class="none" url="/pages/makeMoney/makeMoney" wx:if="{{$state.authUserInfo}}">
-          <image src="{{ $state.imgHost }}/class-invite.png"></image>
-        </navigator>
-        <button open-type="getUserInfo" bindgetuserinfo="onGotUserInfo" class="addTe" data-type="money"
-        wx:else>
-        <image src="{{ $state.imgHost }}/class-invite.png"></image>
+        <button class="addTe" open-type="share" hover-class="btn-hover">
+          <image src="{{ $state.imgHost }}/class-invite2.png"></image>
         </button>
       </view>
       <view class="right">
@@ -57,10 +53,6 @@
           <image src="{{$state.imgHost}}/class-collect.png" wx:else></image>
           <text>收藏</text>
         </view>
-        <button class="right-box" open-type="share" hover-class="btn-hover">
-          <image src="{{$state.imgHost}}/class-share.png"></image>
-          <text>分享</text>
-        </button>
       </view>
     </view>
   </view>
@@ -82,6 +74,12 @@
           <image class="icon" mode="aspectFill" src="{{ $state.imgHost }}/order-fall.png"></image>倒序
         </view>
       </view>
+      <view class="order" wx:if="{{ currentTab == 2 }}" bindtap="copySynopsis"> 
+        <view class="order_box">
+          <image src="../../images/copyThat.png"></image>
+          <test>复制简介</test>
+        </view>
+      </view>
     </scroll-view>
     <swiper class="tab" style="height:{{ height }}px" current="{{ currentTab }}" duration="300" bindchange="switchTab">
       <swiper-item class="tab-item">
@@ -92,7 +90,7 @@
             class="item {{ item.played == 1 ? 'played' : '' }} {{ item.id == cur.id ? 'active' : '' }} {{'sublessonsd' + item.id}}"
             id="sublessonsd">
             <view class="left">
-              <text class="name">{{ item.sub_id }}. {{ item.title }}</text>
+              <text class="name">{{ item.index }}. {{ item.title }}</text>
               <text class="time">{{ item.minute }}分钟</text>
             </view>
             <view class="right">

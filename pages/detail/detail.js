@@ -45,10 +45,14 @@ Page({
     replyshow: false,
     showintegral: false,
     showServise: false,
+    replycontent: ''
     /* rect: wx.getMenuButtonBoundingClientRect() */
   },
   pageName: "视频页（视频详情页）",
-  guide: 0,
+  turnOff: {
+    guide: 0,
+    collect: 0
+  },
   onLoad(options) {
     /*todo:考虑去掉that*/
     let that = this;
@@ -136,11 +140,7 @@ Page({
     };
     if (this.data.$state.lessDiscussion[options.id]) {
       this.setData({
-        content: this.data.$state.lessDiscussion[options.id].replycontent,
-        contenLength:
-          this.data.$state.lessDiscussion[options.id].replycontent != ""
-            ? this.data.$state.lessDiscussion[options.id].replycontent.length
-            : 0
+        content: this.data.$state.lessDiscussion[options.id].replycontent
       });
     }
     wx.onKeyboardHeightChange(res => {
@@ -211,8 +211,9 @@ Page({
       pageSize: 100
     };
     return app.classroom.detail(this.param).then(msg => {
-      msg.data.sublesson.forEach(function (item) {
+      msg.data.sublesson.forEach((item, index) => {
         item.minute = (item.film_length / 60).toFixed(0);
+        item['index'] = index + 1
       });
       msg.data.intro_content = htmlparser.default(msg.data.intro_content)
       wx.setNavigationBarTitle({
@@ -242,6 +243,7 @@ Page({
     }, 2000);
   },
   played() {
+    this.vedioRecordAdd()
     wx.uma.trackEvent("lessonsPlay", {
       lessonsName: this.data.detail.title
     });
@@ -320,37 +322,61 @@ Page({
       scrollviewtop: 0
     });
     this.sublessParam.page = 1;
-    let param = {
-      id: this.data.id,
-      sort: this.data.sort,
-      page: 1,
-      pageSize: 100
-    };
-    let query = wx.createSelectorQuery().in(this);
-    query.selectAll("#sublessonsd").boundingClientRect();
-    query.exec(res => {
-      param.pageSize = res[0].length;
-      app.classroom.detail(param).then(msg => {
-        msg.data.sublesson.forEach(function (item) {
-          item.minute = (item.film_length / 60).toFixed(0);
-        });
-        wx.setNavigationBarTitle({
-          title: msg.data.title
-        });
-        this.setData({
-          detail: msg.data,
-          sublessons: msg.data.sublesson
-        });
-        setTimeout(() => {
-          this.tolesson();
-        }, 800);
-      });
-    });
+    let sublessons = this.data.sublessons
+    if(this.data.sort) {
+      sublessons.sort((a, b) => {
+        return b.index - a.index
+      })
+      this.setData({
+        sublessons
+      })
+      setTimeout(() => {
+        this.tolesson();
+      }, 800);
+    } else {
+      sublessons.sort((a, b) => {
+        return a.index - b.index
+      })
+      this.setData({
+        sublessons
+      })
+      setTimeout(() => {
+        this.tolesson();
+      }, 800);
+    }
+    // let param = {
+    //   id: this.data.id,
+    //   sort: this.data.sort,
+    //   page: 1,
+    //   pageSize: 100
+    // };
+    // let query = wx.createSelectorQuery().in(this);
+    // query.selectAll("#sublessonsd").boundingClientRect();
+    // query.exec(res => {
+    //   param.pageSize = res[0].length;
+    //   app.classroom.detail(param).then(msg => {
+    //     msg.data.sublesson.forEach((item, index) =>  {
+    //       item.minute = (item.film_length / 60).toFixed(0);
+          
+    //     });
+    //     wx.setNavigationBarTitle({
+    //       title: msg.data.title
+    //     });
+    //     this.setData({
+    //       detail: msg.data,
+    //       sublessons: msg.data.sublesson
+    //     });
+    //     setTimeout(() => {
+    //       this.tolesson();
+    //     }, 800);
+    //   });
+    // });
     // this.getDetail()
   },
   // 收藏
   collect() {
     /*todo:考虑去掉that*/
+    if (this.turnOff.collect) return
     let that = this;
     let param = {
       lesson_id: this.param.id
@@ -361,10 +387,14 @@ Page({
         content: "是否取消收藏",
         success: function (res) {
           if (res.confirm) {
+            that.turnOff.collect = 1
             app.classroom.collectCancel(param).then(msg => {
               that.setData({
                 "detail.collected": 0
               });
+              that.turnOff.collect = 0
+            }).catch(() => {
+              that.turnOff.collect = 0
             });
           } else if (res.cancel) {
             return;
@@ -372,10 +402,14 @@ Page({
         }
       });
     } else {
+      this.turnOff.collect = 1
       app.classroom.collect(param).then(msg => {
         this.setData({
           "detail.collected": 1
         });
+        this.turnOff.collect = 0
+      }).catch(() => {
+        this.turnOff.collect = 0
       });
       wx.uma.trackEvent("collectionLessons", {
         lessonsName: this.data.detail.title
@@ -387,7 +421,7 @@ Page({
     let i = 0,
       list = this.data.sublessons;
     if (type != undefined) {
-      i = e;
+      i = e || 0;
     } else {
       i = e.currentTarget.dataset.index;
       if (this.data.cur.id == list[i].id) return;
@@ -400,19 +434,15 @@ Page({
     });
   },
   recordAdd() {
-    let param = {
-      lesson_id: this.param.id,
-      sublesson_id: this.data.cur.id
-    };
     let that = this;
     if (this.data.$state.flow) {
-      that.recordAddVedio(param);
+      that.recordAddVedio();
     } else {
       wx.getNetworkType({
         success: res => {
           if (res.networkType == 'wifi') {
             app.playVedio("wifi");
-            that.recordAddVedio(param);
+            that.recordAddVedio();
           } else {
             wx.showModal({
               content:
@@ -423,7 +453,7 @@ Page({
               success(res) {
                 if (res.confirm) {
                   app.playVedio("flow");
-                  that.recordAddVedio(param);
+                  that.recordAddVedio();
                   wx.offNetworkStatusChange()
                 } else if (res.cancel) {
                 }
@@ -434,16 +464,21 @@ Page({
       })
     }
   },
-  recordAddVedio(param) {
-    app.classroom.recordAdd(param).then(msg => {
-      this.getProgress();
-      this.videoContext.play();
-      this.setData({
-        playing: true,
-        hideRecode: true
-      });
-      app.addVisitedNum(`k${this.data.cur.id}`);
+  recordAddVedio() {
+    this.getProgress();
+    this.videoContext.play();
+    this.setData({
+      playing: true,
+      hideRecode: true
     });
+    app.addVisitedNum(`k${this.data.cur.id}`);
+  },
+  vedioRecordAdd() {
+    let param = {
+      lesson_id: this.param.id,
+      sublesson_id: this.data.cur.id
+    };
+    app.classroom.recordAdd(param).then(msg => { });
   },
   // 获取讨论
   getComment(list, options) {
@@ -1088,8 +1123,8 @@ Page({
   onHide() {
   },
   closeGuide() {
-    if (this.guide) return
-    this.guide = true
+    if (this.turnOff.guide) return
+    this.turnOff.guide = true
     let param = {
       guide_name: "lesson"
     };
@@ -1097,7 +1132,7 @@ Page({
       app.getGuide();
       this.setIntegral("+45 学分", "完成[云课堂]新手指引");
     }).catch(() => {
-      this.guide = 0
+      this.turnOff.guide = 0
     });
   },
   // 语音
@@ -1385,6 +1420,20 @@ Page({
           comment: this.data.comment
         });
       }, 2500);
+    }
+  },
+  copySynopsis() {
+    let content = this.data.detail.intro_content, txt = ''
+    if(Array.isArray(content)) {
+      content.forEach(item => {
+        item.children[0]['text'] ? txt = txt + item.children[0]['text'] : 
+        item.children[0]['children'] ? item.children[0]['children'][0]['text'] ? txt = txt + item.children[0]['children'][0]['text'] : '' : ''
+        // console.log(item.children[0]['children'])
+      })
+      txt = txt.replace(/&nbsp;/g,'')
+      app.copythat(txt)
+    } else {
+      app.copythat(content)
     }
   },
   toUser(e) {

@@ -38,7 +38,6 @@ Page({
           topT: 168
         });
     this.videoContext = wx.createVideoContext(this.data.vid);
-    this.getCategory();
     let pages = getCurrentPages();
     let prePage = pages[pages.length - 2];
     if (prePage && prePage.route == "pages/videoItemize/videoItemize") {
@@ -89,6 +88,7 @@ Page({
         app.addVisitedNum(`v${this.data.cur.id}`);
         wx.uma.trackEvent("sortVideo_play", { videoName: this.data.cur.title });
       });
+      this.getCategory();
     }
     wx.uma.trackEvent("menu", { pageName: "短视频" });
     let share = options.type == "share";
@@ -197,9 +197,6 @@ Page({
               autoplay: true,
               pause: false
             });
-            // setTimeout(() => {
-            //   that.vedioRecordAdd()
-            // }, 200);
           } else {
             that.videoContext.pause();
             that.setData({
@@ -221,9 +218,6 @@ Page({
                     pause: false
                   });
                   that.videoContext.play();
-                  // setTimeout(() => {
-                  //   that.vedioRecordAdd()
-                  // }, 200);
                   wx.offNetworkStatusChange();
                 } else if (res.cancel) {
                   app.playVedio("wifi");
@@ -244,9 +238,6 @@ Page({
         autoplay: true
       });
       this.videoContext.play();
-      // setTimeout(() => {
-      //   this.vedioRecordAdd()
-      // }, 200);
     }
   },
   getList(list) {

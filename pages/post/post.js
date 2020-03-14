@@ -32,7 +32,10 @@ Page({
     showBottom: false
   },
   pageName: "秀风采页",
-  guide: 0,
+  stopTap:{
+    guide: 0,
+    praise: 0,
+  },
   onLoad(options) {
     this.param = [
       { page: 1, pageSize: 10, is_follow: 0 },
@@ -193,46 +196,90 @@ Page({
     currentTab == 0
       ? (temp = list || this.data.list)
       : (temp = list || this.data.flowList);
-    return app.circle.news(this.param[currentTab]).then(msg => {
-      if (msg.data) {
-        msg.data[0]
-          ? ""
-          : this.setData({
-              showBottom: true
-            });
-        let arr = [];
-        for (let i in msg.data) {
-          arr.push(msg.data[i]);
-        }
-        arr.forEach(function(item) {
-          item.fw = app.util.tow(item.forward);
-          item.cw = app.util.tow(item.comments);
-          item.lw = app.util.tow(item.likes);
-          item.image_compress = item.images.map(i => {
-            return i.image_compress;
-          });
-          item.images = item.images.map(i => {
-            return i.image;
-          });
-          item.auditing = item.check_status;
-        });
-        temp.push(...arr);
-        setTimeout(() => {
-          this.setData({
-            showLoading: false
-          });
-          if (this.data.currentTab != currentTab) return;
-          this.data.currentTab == 0
-            ? this.setData({
-                list: temp
-              })
-            : this.setData({
-                flowList: temp
+      if(currentTab == 0) {
+        return app.circle.news(this.param[currentTab]).then(msg => {
+          if (msg.data) {
+            msg.data[0]
+              ? ""
+              : this.setData({
+                  showBottom: true
+                });
+            let arr = [];
+            for (let i in msg.data) {
+              arr.push(msg.data[i]);
+            }
+            arr.forEach(function(item) {
+              item.fw = app.util.tow(item.forward);
+              item.cw = app.util.tow(item.comments);
+              item.lw = app.util.tow(item.likes);
+              item.image_compress = item.images.map(i => {
+                return i.image_compress;
               });
-        }, 800);
-        this.setHeight();
+              item.images = item.images.map(i => {
+                return i.image;
+              });
+              item.auditing = item.check_status;
+            });
+            temp.push(...arr);
+            setTimeout(() => {
+              this.setData({
+                showLoading: false
+              });
+              if (this.data.currentTab != currentTab) return;
+              this.data.currentTab == 0
+                ? this.setData({
+                    list: temp
+                  })
+                : this.setData({
+                    flowList: temp
+                  });
+            }, 800);
+            this.setHeight();
+          }
+        });
+      } else {
+        return app.circle.myNews(this.param[currentTab]).then(msg => {
+          if (msg.data) {
+            msg.data[0]
+              ? ""
+              : this.setData({
+                  showBottom: true
+                });
+            let arr = [];
+            for (let i in msg.data) {
+              arr.push(msg.data[i]);
+            }
+            arr.forEach(function(item) {
+              item.fw = app.util.tow(item.forward);
+              item.cw = app.util.tow(item.comments);
+              item.lw = app.util.tow(item.likes);
+              item.image_compress = item.images.map(i => {
+                return i.image_compress;
+              });
+              item.images = item.images.map(i => {
+                return i.image;
+              });
+              item.auditing = item.check_status;
+            });
+            temp.push(...arr);
+            setTimeout(() => {
+              this.setData({
+                showLoading: false
+              });
+              if (this.data.currentTab != currentTab) return;
+              this.data.currentTab == 0
+                ? this.setData({
+                    list: temp
+                  })
+                : this.setData({
+                    flowList: temp
+                  });
+            }, 800);
+            this.setHeight();
+          }
+        });
       }
-    });
+    
   },
   gettop() {
     app.circle.bokeblogTop().then(res => {
@@ -267,6 +314,8 @@ Page({
     }
   },
   praise(e, index) {
+    if(this.stopTap.praise) return
+    this.stopTap.praise = true
     let i = e.currentTarget.dataset.index;
     let list = this.data.list,
       flowList = this.data.flowList,
@@ -324,6 +373,7 @@ Page({
                   [`flowList[${i}].likes`]: flowList[i].likes
                 });
           }
+          this.stopTap.praise = 0
         })
         .catch(msg => {
           if (msg.code == -2) {
@@ -333,6 +383,7 @@ Page({
               duration: 1500
             });
           }
+          this.stopTap.praise = 0
         });
     } else {
       // 点赞
@@ -399,6 +450,7 @@ Page({
             data: { uid: e.currentTarget.dataset.uid }
           });
           wx.uma.trackEvent("post_btnClick", { btnName: "点赞按钮" });
+          this.stopTap.praise = 0
         })
         .catch(msg => {
           if (msg.code == -2) {
@@ -408,6 +460,7 @@ Page({
               duration: 1500
             });
           }
+          this.stopTap.praise = 0
         });
     }
   },
@@ -481,7 +534,7 @@ Page({
             clearTimeout(timer);
           }, 1000);
         });
-        this.gettop();
+        this.data.currentTab == 0 ?  this.gettop() : '';
       }
     }
   },
@@ -645,8 +698,8 @@ Page({
         guideTxt: "我知道了"
       });
     } else {
-      if (this.guide) return;
-      this.guide = true;
+      if (this.stopTap.guide) return;
+      this.stopTap.guide = true;
       let param = {
         guide_name: "blog"
       };
@@ -666,7 +719,7 @@ Page({
           app.getGuide();
         })
         .catch(() => {
-          this.guide = 0;
+          this.stopTap.guide = 0;
         });
     }
   },

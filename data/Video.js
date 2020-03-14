@@ -42,7 +42,7 @@ function category(param) {
  * @description: 获取短视频分类列表
  */
 function categoryMore(param) {
-  return httpService.post("Shortvideo/Category", param)
+  return httpService.post("Shortvideo/Category", param, true)
 }
 
 /**

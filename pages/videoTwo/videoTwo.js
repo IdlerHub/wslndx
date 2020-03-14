@@ -153,9 +153,6 @@ Page({
               autoplay: true,
               pause: false
             });
-            setTimeout(() => {
-              that.vedioRecordAdd();
-            }, 200);
           } else {
             that.videoContext.pause();
             that.setData({
@@ -176,9 +173,6 @@ Page({
                     pause: false
                   });
                   that.videoContext.play();
-                  setTimeout(() => {
-                    that.vedioRecordAdd();
-                  }, 200);
                   wx.offNetworkStatusChange();
                 } else if (res.cancel) {
                   that.videoContext.pause();
@@ -198,9 +192,6 @@ Page({
         autoplay: true
       });
       this.videoContext.play();
-      setTimeout(() => {
-        this.vedioRecordAdd();
-      }, 200);
     }
   },
   getList(list) {
@@ -306,9 +297,6 @@ Page({
         this.getList();
       }
     }
-    setTimeout(() => {
-      this.vedioRecordAdd();
-    }, 200);
     app.addVisitedNum(`v${this.data.cur.id}`);
     wx.uma.trackEvent("sortVideo_play", { videoName: this.data.cur.title });
   },
