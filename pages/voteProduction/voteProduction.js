@@ -4,6 +4,7 @@ var http = require("../../data/Vote.js");
 import OBS from "../../OBS/OBSUploadFile.js";
 Page({
   data: {
+    disabled: false,  //禁止点击
     productionName: "",  //作品名称
     introduction: "",   //作品介绍
     select: false,
@@ -283,13 +284,20 @@ Page({
       url: selectType == 2 ? [] : imgList,
       object_key: video || ""
     };
-
-    http.uploadOpus(params).then(res => {
-      //上传状态
-      wx.redirectTo({
-        url: "/pages/voteSuccess/voteSuccess"
+    this.setData({
+      disabled: true
+    })
+    setTimeout(()=>{
+      http.uploadOpus(params).then(res => {
+        //上传状态
+        wx.redirectTo({
+          url: "/pages/voteSuccess/voteSuccess"
+        });
+        this.setData({
+          disabled: false
+        })
       });
-    });
+    },1000)
   },
   /**
    * 生命周期函数--监听页面加载

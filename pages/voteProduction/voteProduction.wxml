@@ -74,5 +74,5 @@
         </view>
         <view wx:if="{{selectType==1}}" class="upload-tip" style="font-size: 32rpx; color: #999;">共{{imgList.length}}张图片，点击图片预览</view>
     </view>
-    <view class="production-footer" bindtap="submitProduction">立即参赛</view>
+    <button class="production-footer"  hover-class="none" bindtap="submitProduction" disabled="{{disabled}}" >立即参赛</button>
 </view>
