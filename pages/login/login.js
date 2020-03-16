@@ -213,6 +213,11 @@ Page({
       }
     }).catch(err => {
       if(err.msg == '您已经注册过') {
+        wx.setStorageSync("token", err.data.token)
+        wx.setStorageSync("uid", err.data.uid)
+        wx.setStorageSync("authKey", err.data.authKey)
+        app.setUser(err.data.userInfo)
+        app.setAuthKey(err.data.authKey)
         wx.reLaunch({ url: "/pages/index/index?type=login" })
       } else {
         wx.showToast({
