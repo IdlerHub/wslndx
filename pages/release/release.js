@@ -46,10 +46,13 @@ Page({
     pages.forEach(item => {
       if (item.route == "pages/myCircle/myCircle") {
         prePage = item;
-      } else if (item.route == "pages/post/post") {
+      } else if (item.route == "pages/cDetail/cDetail") {
+        prePage = item;
+      } else if (item.route == "pages/post/post"){
         prePage = item;
       }
     });
+    if(prePage == []) return
     prePage.setData({
       releaseParam: this.data.param,
       media_type: this.data.media_type,

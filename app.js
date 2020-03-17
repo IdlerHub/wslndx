@@ -77,7 +77,6 @@ App({
     optsStr.forEach((item, index) => {
       opstObj[item.split("=")[0]] = item.split("=")[1];
     });
-    console.log(optsStr)
     this.checkVersion();
     /* 检查用户从分享卡片启动 */
     if (this.globalData.scenes.indexOf(opts.scene) >= 0) {

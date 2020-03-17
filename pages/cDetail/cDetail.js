@@ -7,7 +7,15 @@ Page({
     circle: null,
     isRefreshing: false,
     showT: false,
-    showSheet: false
+    showSheet: false,
+    releaseParam: {
+      image: [],
+      content: null,
+      video: null,
+      cover: null,
+      fs_id: "",
+      num: 0
+    },
   },
   pageName: '圈内帖子列表',
   onLoad(options) {
@@ -42,6 +50,34 @@ Page({
         list
       })
     })
+    if (((this.data.releaseParam.content != null && this.data.releaseParam.content != "") || this.data.releaseParam.image[0] || this.data.releaseParam.video != null) && this.data.showRelease) {
+      let that = this
+      wx.showModal({
+        content: '保留本次编辑',
+        confirmColor: '#df2020',
+        cancelText: "不保留",
+        confirmText: '保留',
+        success(res) {
+          if (res.confirm) {
+            that.setData({
+              showRelease: false
+            })
+            app.store.setState({
+              releaseParam: that.data.releaseParam,
+              media_type: that.data.media_type
+            })
+          } else if (res.cancel) {
+            that.setData({
+              releaseParam: null
+            })
+            app.store.setState({
+              releaseParam: null,
+              media_type: null
+            })
+          }
+        }
+      })
+    }
   },
   getList: function (list) {
     let temp = list || this.data.list
