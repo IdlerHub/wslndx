@@ -197,6 +197,15 @@ function addLotteryInvite(param) {
   return httpService.post("User/addLotteryInvite", param)
 }
 
+//POST /user/getAreainfo 获取省市区
+function getAreainfo(param) {
+  return httpService.post("user/getAreainfo", param)
+}
+
+//POST /user/getAreainfo 获取收货地址信息
+function getGoodsAddress() {
+  return httpService.post("user/getGoodsAddress")
+}
 
 module.exports = {
   wxLoginCode,
@@ -231,5 +240,7 @@ module.exports = {
   userFollowing,
   lessonFinishStatus,
   unreadNum,
-  addLotteryInvite
+  addLotteryInvite,
+  getAreainfo,
+  getGoodsAddress
 }

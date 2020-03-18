@@ -11,22 +11,24 @@ Page({
       num: 0
     },
     media_type: null,
-    showFlag: false,
+    showFlag: true,
     showintegral: false
   },
   pageName: "发帖页",
   onLoad(ops) {
     if (ops.title) {
       this.getCircleList().then(() => {
-        this.data.allCircle.forEach(item => {
-          item.title == ops.title
-            ? this.setData({
-                circleTitle: ops.title,
-                selId: ops.id,
-                showFlag: true
-              })
-            : "";
+        let allCircle = this.data.allCircle;
+        allCircle.forEach(item => {
+          if (item.title == ops.title){
+            item.isSel = true;
+          }
         });
+        this.setData({
+          allCircle: allCircle,
+          selId: ops.id,
+          showFlag: false
+        })
       });
     } else {
       this.getCircleList();
@@ -253,11 +255,11 @@ Page({
     });
   },
   //是否同步到圈子
-  switchChange: function(e) {
-    this.setData({
-      showFlag: e.detail.value
-    });
-  },
+  // switchChange: function(e) {
+  //   this.setData({
+  //     showFlag: e.detail.value
+  //   });
+  // },
   // 获取所有圈子信息
   getCircleList() {
     return app.circle.joinedCircles().then(msg => {
@@ -272,11 +274,22 @@ Page({
     allCircle.forEach(item => {
       item.isSel = false;
     });
-    allCircle[e.currentTarget.dataset.index].isSel = true;
-    this.setData({
-      allCircle: allCircle,
-      selId: e.currentTarget.dataset.fsid
-    });
+    if (e.currentTarget.dataset.other){
+      this.setData({
+        allCircle: allCircle,
+        selId: '',
+        showFlag: true
+      })
+      console.log("我太难了,我没有圈子啊",this.data.selId);
+    }else{
+      allCircle[e.currentTarget.dataset.index].isSel = true;
+      this.setData({
+        allCircle: allCircle,
+        selId: e.currentTarget.dataset.fsid,
+        showFlag: false
+      });
+      console.log("这是有圈子的人了",this.data.selId)
+    }
   },
   // 发布帖子
   result() {
@@ -287,7 +300,9 @@ Page({
           : this.data.param.cover,
       content: this.data.param.content || "",
       video: this.data.param.video,
-      fs_id: this.data.showFlag && (this.data.selId || ""),
+      //选择展示到圈子,并且选中或者是为空
+      // fs_id: this.data.showFlag && (this.data.selId || ""),
+      fs_id: this.data.selId || "",
       asset_id: this.data.param.asset_id || ""
     };
     let num = this.data.param.num;
@@ -301,6 +316,7 @@ Page({
           title: "发布中",
           mask: true
         });
+        console.log("看看是啥",param)
         app.circle
           .add(param)
           .then(msg => {

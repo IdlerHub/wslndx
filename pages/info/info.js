@@ -170,6 +170,11 @@ Page({
       padding: true
     })
   },
+  fill(){
+    wx.navigateTo({
+      url: "/pages/infoAddress/infoAddress?type=first"
+    })
+  },
   //用于数据统计
   onHide() {
   }

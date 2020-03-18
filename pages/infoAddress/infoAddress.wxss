@@ -1,0 +1,104 @@
+/* pages/infoAddress/infoAddress.wxss */
+.infoAddress{
+    height: 100vh;
+    background: #F4F4F4;
+}
+.info-page{
+    background: white;
+}
+.info{
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  border-bottom: 1px solid #EDEDED;
+  height: 118rpx;
+  margin-left: 28rpx;
+  margin-right: 30rpx;
+  background: white;
+}
+.info-address .info-title,
+.info .info-title{
+    margin-right: 75rpx;
+    font-size:36rpx;
+    font-family:PingFangSC-Medium,PingFang SC;
+    font-weight:500;
+    color:rgba(51,51,51,1);
+    height: 100%;
+    line-height: 118rpx;
+}
+.info .info-content{
+    height: 100%;
+    line-height: 118rpx;
+    font-size:36rpx;
+    font-family:PingFangSC-Regular,PingFang SC;
+    font-weight:400;
+    color:rgba(51,51,51,1);
+}
+.info-address{
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  border-bottom: 1px solid #EDEDED;
+  height: 176rpx;
+  line-height: 118rpx;
+  margin-left: 28rpx;
+  margin-right: 30rpx;
+  background: white;
+}
+.info-address .info-area{
+    margin-top: 34rpx;
+    margin-bottom: 34rpx;
+    width: 403rpx;
+    height:108rpx;
+    font-size:36rpx;
+    font-family:PingFangSC-Regular,PingFang SC;
+    font-weight:400;
+    color:rgba(51,51,51,1);
+    line-height:54rpx;
+}
+.info picker{
+    flex: 1;
+}
+
+.info .placeholder{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.info .placeholder .change text{
+    font-size:36rpx;
+    font-family:PingFangSC-Regular,PingFang SC;
+    font-weight:400;
+    color:rgba(153,153,153,1);
+    margin-right: 24rpx;
+}
+.info .placeholder image{
+    width:18rpx;
+    height:33rpx;
+}
+.tip{
+    margin: 21rpx 36rpx;
+    width:686rpx;
+    height:96rpx;
+    font-size:32rpx;
+    font-family:PingFangSC-Regular,PingFang SC;
+    font-weight:400;
+    color:rgba(102,102,102,1);
+    line-height:48rpx;
+}
+
+.save-btn{
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height:138rpx;
+    font-size:40rpx;
+    font-family:PingFangSC-Medium,PingFang SC;
+    font-weight:500;
+    color:rgba(255,255,255,1);
+    line-height:138rpx;
+    text-align: center;
+    background:rgba(223,32,32,1);
+}

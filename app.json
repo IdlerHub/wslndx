@@ -55,7 +55,8 @@
     "pages/voteFail/voteFail",
     "pages/voteSearch/voteSearch",
     "pages/voteClassify/voteClassify",
-    "pages/voteSuccess/voteSuccess"
+    "pages/voteSuccess/voteSuccess",
+    "pages/infoAddress/infoAddress"
   ],
   "permission": {
     "scope.userLocation": {
