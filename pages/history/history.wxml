@@ -19,13 +19,13 @@
   <view wx:if="{{ history.history.length > 0 }}" class="wrap history">
     <view wx:for="{{ history.history }}" wx:key="index" class="item">
       <view class="date">{{ item.date }}</view>
-      <view wx:for="{{ item.data }}" wx:for-item="items" wx:key="index" class="li">
+      <navigator wx:for="{{ item.data }}" wx:for-item="items" wx:key="index" class="li" url="../detail/detail?id={{ items.lesson_id}}&play&name={{ items.subtitle }}&lessonid={{items.id}}">
         <view class="time">{{ items.createtime }} 学习</view>
         <view class="title">
           <text class="dName">{{ items.subtitle }}</text>
           <text class="name" wx:if="{{ items.title }}">{{ items.title }}</text>
         </view>
-      </view>
+      </navigator>
     </view>
   </view>
   <view class="nhis" wx:else>

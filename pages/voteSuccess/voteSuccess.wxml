@@ -1,0 +1,8 @@
+<!--pages/voteSuccess/voteSuccess.wxml-->
+<view class="voteSuccess">
+    <view class="success-img">
+        <image src="/images/vote-success.png" alt="" />
+        <view class="success-text">上传成功,请等待审核</view>
+        <view class="success-btn" bindtap="toMyproduction">点击查看我的作品</view>
+    </view>
+</view>

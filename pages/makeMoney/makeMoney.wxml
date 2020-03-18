@@ -1,0 +1,73 @@
+<!--pages/makeMoney/makeMoney.wxml-->
+<view class="container">
+  <view class="top">
+    <view class="topBox">
+      <view class="title">我的收益</view>
+      <navigator class="moneyBox" hover-class="none" url="/pages/myEarnings/myEarnings" open-type="navigate">
+        <image src="{{$state.imgHost}}/makeMoneyImg.png"></image>
+        <text>余额 ¥{{ total_amount}}</text>
+        <image src="{{$state.imgHost}}/makeMoneyRbtn.png"></image>
+      </navigator>
+    </view>
+    <view class="bottomBox">
+      <navigator class="bottomBox_person" hover-class="none" url="/pages/myApprentice/myApprentice"
+        open-type="navigate">
+        <view class="dayadd">今日+{{topMsg[0].up}}</view>
+        <view class="bottomBox_center">
+          <text>{{topMsg[0].number2 ||topMsg[0].total}}</text>
+          <image src="{{$state.imgHost}}/makeMoneyRbtn.png"></image>
+        </view>
+        <view class="bottomBox-txt">已收学员(人)</view>
+        <view class="border"></view>
+      </navigator>
+      <navigator class="bottomBox_person bottomBox_money" hover-class="none" url="/pages/myEarnings/myEarnings">
+        <view class="dayadd">今日+{{topMsg[1].up}}</view>
+        <view class="bottomBox_center">
+          <text>¥{{topMsg[1].number2 || topMsg[1].total}}</text>
+        </view>
+        <view class="bottomBox-txt">学员收益(元)</view>
+        <view class="border"></view>
+      </navigator>
+      <navigator class="bottomBox_person bottomBox_tribute" hover-class="none" url="/pages/score/score?type=index&curren=3" open-type="navigate">
+        <view class="dayadd">今日+{{topMsg[2].up}}</view>
+        <view class="bottomBox_center">
+          <text>{{topMsg[2].number2 ||  topMsg[2].total}}</text>
+          <image src="{{$state.imgHost}}/makeMoneyRbtn.png"></image>
+        </view>
+        <view class="bottomBox-txt">学员进贡(学分)</view>
+      </navigator>
+    </view>
+  </view>
+  <view class="rankin_list">
+    <view class="rankin_listTop">
+      <view class="title">排行榜</view>
+      <navigator class="strategy" hover-class="none" url="/pages/strategy/strategy">收学员攻略></navigator>
+    </view>
+    <view class="rankin_listTitle">
+      <text>排名</text>
+      <text>导师昵称</text>
+      <text>学员人数</text>
+      <text>累计学分</text>
+    </view>
+    <view class="list" wx:if="{{list.length > 0}}">
+      <view class="item" wx:for="{{list}}" wx:key="index">
+        <image src="/images/apprentice{{index < 3 ? index : ''}}.png" class="ranking" wx:if="{{index < 3}}"></image>
+        <view class="ranking" style="padding-bottom:14rpx ;" wx:else>{{index+1}}</view>
+        <view class="itemMsg" style="border:{{index == (list.length - 1) ? '0' : ''}};">
+          <image src="{{item.avatar || '/images/apprenticeAva.png'}}"></image>
+          <text>{{item.nickname}}</text>
+          <text>{{item.number2 || item.prentice_count}}</text>
+          <text>+{{item.money2 || item.total_amount}}</text>
+        </view>
+      </view>
+    </view>
+    <view class="qst" wx:else>
+      <image src="{{$state.imgHost}}/makeMoneyqst.png" class="qstImg"></image>
+      <text>暂无排名，去邀请好友</text>
+    </view>
+  </view>
+  <view class="kong" wx:if="{{list.length > 0}}">
+    454
+  </view>
+</view>
+<recruitShare type="{{false}}"></recruitShare>

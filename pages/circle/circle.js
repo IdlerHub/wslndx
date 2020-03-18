@@ -1,75 +1,52 @@
-//index.js
-//获取应用实例
 const app = getApp()
+
 Page({
   data: {
-    isEdit: false
+    isIphoneX: app.globalData.isIphoneX,
+    size: 1,
+    showcopm: false
   },
-  onShow() {
-    this.getList()
+  pageName: '加入圈子',
+  change(e) {
+    this.setData({
+      listData: e.detail.listData
+    });
+  },
+  itemClick(e) {
+  },
+  toggleFixed(e) {
+    let key = e.currentTarget.dataset.key;
+
+    let { listData } = this.data;
+
+    listData[key].fixed = !listData[key].fixed
+
+    this.setData({
+      listData: listData
+    });
   },
   getList() {
-    //获取没有加入的圈子list
-    app.circle.noJoinCircles().then(msg => {
-      if (msg.code === 1) {
-        this.setData({
-          noJoinList: msg.data
-        })
-      }
-    })
     //获取已经加入的圈子list
-    app.circle.joinedCircles().then(msg => {
-      if (msg.code === 1) {
-        this.setData({
-          joinList: msg.data
-        })
-      }
+    return app.circle.joinedCircles().then(msg => {
+      msg.data.forEach(item => {
+        item.fixed = false
+      })
+      this.setData({
+        joinList: msg.data,
+        showcopm: true
+      })
     })
   },
-  //加入加圈
-  fnJoin(e) {
-    let curItem = e.currentTarget.dataset.item
-    let param = { fs_id: curItem.id }
-    app.circle.join(param).then(msg => {
-      if (msg.code === 1) {
-        wx.showToast({
-          title: "您已成功加入\r\n【" + curItem.title + "】学友圈",
-          icon: "none",
-          duration: 1500
-        })
-        this.getList()
-      }
-    })
+  onLoad() {
   },
-
-  //取消加圈
-  fnCancelJoin(e) {
-    let curItem = e.currentTarget.dataset.item
-    let param = { fs_id: curItem.id }
-    app.circle.cancelJoin(param).then(msg => {
-      if (msg.code == 1) {
-        wx.showToast({
-          title: "您已取消加入\r\n【" + curItem.title + "】学友圈",
-          icon: "none",
-          duration: 1500
-        })
-        this.getList()
-      }
-    })
-  },
-
-  //编辑
-  fnEdit: function() {
+  onShow() {
     this.setData({
-      isEdit: !this.data.isEdit
+      showcopm: false
     })
-  },
-  gotoCdetail(e) {
-    wx.navigateTo({
-      url: "/pages/cDetail/cDetail?id=" + e.currentTarget.dataset.id
+    this.getList().then(() => {
+      this.drag = this.selectComponent('#drag');
+      this.drag.dataChange();
     })
-  },
-  onHide() {
-    app.aldstat.sendEvent("退出", { name: "加圈页" })
   }
+
 })

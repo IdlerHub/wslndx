@@ -1,0 +1,38 @@
+<!--pages/myProduction/myProduction.wxml-->
+<view class="myProduction">
+    <view class="state">
+        <block wx:for="{{state}}" wx:key="index">
+            <view class="{{stateIndex==index? 'active' : ''}}" bindtap="changeState" data-type="{{item.id}}" data-index="{{index}}">{{item.title}}{{stateNum[index]}}</view>
+        </block>
+    </view>
+    <view class="production-list"   wx:if="{{productionList.length}}">
+        <block wx:for="{{productionList}}" wx:key="index">
+            <view class="production-item" bindtap="toVoteFail" data-flag="{{type==0}}" data-id="{{item.id}}">
+                <view class="item-left">
+                    <image wx:if="{{item.type==1}}" class="item-classify" src="../../images/vote-img.png" alt="" />
+                    <image wx:if="{{item.type==2}}" class="item-classify" src="../../images/vote-video.png" alt="" />
+                    <view class="item-img">
+                        <image wx:if="{{item.type==1}}" src="{{item.url[0] || '/images/vote-wei.png'}}" alt="" mode="aspectFit" />
+                        <image wx:if="{{item.type==2}}" src="{{item.banner_image || '/images/vote-wei.png'}}" alt="" mode="aspectFit" />
+                    </view>
+                </view>
+                <view class="item-right">
+                    <view>
+                        <view class="item-title">{{item.name}}</view>
+                        <view class="item-time">{{item.createtime}}</view>
+                    </view>
+                    <view class="perfect">{{item.prise_numbers}}赞</view>
+                </view>
+            </view>
+        </block>
+    </view>
+    <view class="none-production" wx:else>
+        <view class="none-img">
+            <image src="../../images/myproduction.png" alt="" />
+        </view>
+        <view class="none-content">
+            <text>{{stateIndex==0? '您还没有上传作品': '暂无作品'}}</text>
+        </view>
+        <view wx:if="{{stateIndex!==2}}" class="none-btn" bindtap="toWorks">去上传</view>
+    </view>
+</view>

@@ -3,5 +3,7 @@
   "navigationBarTitleText": "网上老年大学",
   "navigationBarTextStyle": "black",
   "enablePullDownRefresh": false,
-  "usingComponents": {}
+  "usingComponents": {
+    "integralAnimation":"/components/integralAni/integralAni"
+  }
 }

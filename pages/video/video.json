@@ -4,5 +4,9 @@
   "navigationBarTextStyle": "black",
   "enablePullDownRefresh": false,
   "disableScroll": true,
-  "usingComponents": {}
+  "usingComponents": {
+    "navBar": "/components/navBar/navBar",
+    "integralAnimation": "/components/integralAni/integralAni"
+  },
+  "navigationStyle": "custom"
 }

@@ -6,6 +6,10 @@ page {
 canvas {
   margin: 72rpx auto; }
 
+page image{
+ margin: 72rpx auto;
+ display: block;
+}
 .title {
   line-height: 40rpx;
   font-size: 28rpx;

@@ -1,0 +1,6 @@
+<view class="integralmark">
+  <view class="integraimg">
+    <view class="integral">{{integral}}</view>
+    <view class="integralContent">{{integralContent}}</view>
+  </view>
+</view>

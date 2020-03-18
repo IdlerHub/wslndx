@@ -2,6 +2,7 @@
 node_modules/
 /dist/
 /demo/
+leetCode/
 images/temp
 miniprogram_npm/
 npm-debug.log*

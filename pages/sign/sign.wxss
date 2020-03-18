@@ -1,0 +1,70 @@
+/* pages/sign/sign.wxss */
+page {
+  height: 100%;
+}
+.container {
+  text-align: center;
+  padding: 120rpx 0;
+}
+ .container .content {
+   width: 100%;
+   position: absolute;
+   top:64rpx;
+   z-index: 9;
+   background: #fff;
+   padding-top: 184rpx;
+}
+.content .logo {
+  width: 160rpx;
+  height: 160rpx;
+  margin-bottom: 30rpx;
+}
+
+.content .logo-title {
+  display: block;
+  font-size: 44rpx;
+  color: #3a3a3a;
+  letter-spacing: 1rpx;
+  margin-bottom: 63rpx;
+}
+
+.authorize-phone {
+  width: 630rpx;
+  position: absolute;
+  border-radius: 6rpx;
+  background:rgba(226,30,30,1);
+  font-size: 38rpx;
+  font-weight: bold;
+  color: white;
+  padding: 10rpx;
+  bottom: 140rpx;
+  left: 60rpx;
+  /* width: 100%; */
+
+}
+.mesg {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 22rpx;
+}
+.mesg .mesg-r {
+  display: block;
+  width:8rpx;
+  height:8rpx;
+  background:rgba(204,204,204,1);
+  border-radius: 50%;
+  margin-right: 30rpx;
+  margin-top: -46rpx;
+}
+.mesg .content-p {
+  font-size:34rpx;
+  font-weight:400;
+  color:rgba(153,153,153,1);
+  line-height:46rpx;
+  text-align: left;
+}
+.mesg .content-p text {
+  display: block;
+}

@@ -8,6 +8,8 @@
   z-index: 99;
   text-align: center;
   transition: 300ms;
+  width: 100%;
+  z-index: 99999;
 }
 .back{
   position: absolute;

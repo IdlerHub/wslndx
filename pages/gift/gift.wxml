@@ -3,5 +3,5 @@
     <icon class="iconfont icon-dui"></icon>
   </view>
   <text class="title">兑换成功</text>
-  <button class="customer" hover-class="button-hover" open-type="contact" bindcontact="handleContact">联系客服领取</button>
+  <button class="customer" hover-class="button-hover" open-type="contact" bindcontact="handleContact" show-message-card send-message-title="{{ name }}" send-message-img="{{ image }}" session-from='{"name": "{{$state.userInfo.nickname}}","avatarUrl":"{{$state.userInfo.avatar}}","nickName":"{{$state.userInfo.nickname}}"}'>联系客服领取</button>
 </view>

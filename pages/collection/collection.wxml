@@ -1,28 +1,131 @@
 <!-- 下拉刷新 -->
+<wxs module="fn">
+	module.exports = {
+		search: function(str) {
+			return str.search('gif');
+		}
+	}
+</wxs>
 <view wx:if="{{ isRefreshing }}" class="weui-loadmore indexdrop">
-  <view class="weui-loading"></view>
+	<view class="weui-loading"></view>
 </view>
-<!-- 收藏课程 -->
-<navigator url="../detail/detail?id={{ item.id }}&name={{ item.title }}" wx:for="{{ collect }}" wx:key="index" hover-class="none" open-type="navigate" class="item">
-  <view class="content">
-    <view class="left">
-      <image class="poster" mode="widthFix" src="{{ item.image }}"></image>
-      <image class="icon" mode="aspectFill" src="{{ $state.imgHost }}/play.png"></image>
-    </view>
-    <view class="right">
-      <text class="line name">{{ item.title }}</text>
-      <text class="line actor" wx:if="{{ item.teacher_id == 0 }}">{{ item.subtitle }}</text>
-      <text class="line actor" wx:else>{{ item.name }}-{{ item.honor }}</text>
-      <text class="line info">
+<view class="collectionBar">
+	<view class="{{currentTab == 0 ? 'collectionBar-itemActive collectionBar-item' : 'collectionBar-item'}}" bindtap="tap" data-type="0">收藏课程
+		<view class="tap-bottom" wx:if="{{currentTab == 0}}"></view>
+	</view>
+	<view class="{{currentTab == 1 ? 'collectionBar-itemActive collectionBar-item' : 'collectionBar-item'}}" bindtap="tap" data-type="1">收藏帖子
+		<view class="tap-bottom" wx:if="{{currentTab == 1}}"></view>
+	</view>
+</view>
+<swiper class="swiper" current="{{ currentTab }}" duration="300" bindchange="switchTab">
+	<swiper-item>
+		<!-- 收藏课程 -->
+		<scroll-view scroll-y bindscrolltolower="scrollEnd" style="height:100%;{{collect.length > 0 ? 'background: #eee' : 'background: #fff'}}">
+			<navigator url="../detail/detail?id={{ item.id }}&name={{ item.title }}" wx:for="{{ collect }}" wx:key="index" hover-class="none" open-type="navigate" class="item">
+				<view class="vedio-content">
+					<view class="left">
+						<image class="poster" mode="widthFix" src="{{ item.image }}"></image>
+						<image class="icon" mode="aspectFill" src="{{ $state.imgHost }}/play.png"></image>
+					</view>
+					<view class="right">
+						<text class="line name">{{ item.title }}</text>
+						<text class="line actor" wx:if="{{ item.teacher_id == 0 }}">{{ item.subtitle }}</text>
+						<text class="line actor" wx:else>{{ item.name }}-{{ item.honor }}</text>
+						<text class="line info">
         <!-- prettier-ignore -->
         <text class="dramaNum"><text class="key">剧集</text>{{ item.lesson_count }}集</text>
-        <!-- prettier-ignore -->
-        <text class="playNum"><text class="key">播放</text>{{ item.thousand || item.browse }}</text>
-      </text>
-    </view>
-  </view>
-</navigator>
-<view class="ncol" wx:if="{{ collect.length == 0 }}">
-  <image mode="widthFix" src="{{ $state.imgHost }}/ncol.png"></image>
-  <text class="line">啥都没有呢~\n赶紧去收藏课程吧</text>
+						<!-- prettier-ignore -->
+						<text class="playNum"><text class="key">播放</text>{{ item.thousand || item.browse }}</text>
+						</text>
+					</view>
+				</view>
+			</navigator>
+		</scroll-view>
+		<view class="ncol" wx:if="{{ collect.length == 0 }}">
+			<image mode="widthFix" src="{{ $state.imgHost }}/ncol.png"></image>
+			<text class="line">啥都没有呢~\n赶紧去收藏课程吧</text>
+		</view>
+	</swiper-item>
+	<swiper-item bindtouchstart="scrollTouchStart" bindtouchend="scrollTouchEnd" style="background: #eee">
+		<scroll-view scroll-y bindscrolltolower="scrollEnd" style="height:100%;{{circleList.length > 0 ? 'background: #eee' : 'background: #fff'}}">
+			<view class="wrap">
+				<view wx:for="{{ circleList }}" wx:key="index" class="item">
+					<view class="top" catchtap="navigate" data-id="{{ item.id }}">
+						<view class="left">
+							<view class="avatarUrl" style="border:{{item.is_cert ? '2rpx solid rgba(253,169,0,1);' :''}}">
+								<image mode="aspectFill" src="{{ item.avatar }}" data-item="{{ item }}" catchtap="toUser" lazy-load></image>
+								<image class="fs" src="/images/approve.png" wx:if="{{item.is_cert}}"></image>
+							</view>
+							<view class="text">
+								<view class="nickName line">
+									{{ item.nickname }}
+								</view>
+								<text class="date">{{ item.createtimes }}</text>
+								<text wx:if="{{ item.university_name }}" class="school">{{ item.university_name }}</text>
+							</view>
+						</view>
+
+						<view class="collect" catchtap="collect" data-id="{{item.id}}" data-index="{{index}}">...</view>
+					</view>
+					<view catchtap="navigate" data-id="{{ item.id }}">
+						<rich-text wx:if="{{ item.content }}" class="name" nodes="{{ item.content }}" space="emsp"></rich-text>
+						<view class="content" wx:if="{{ item.images.length > 0 }}">
+							<view class="img one" wx:if="{{ item.images.length == 1 }}">
+								<image mode="widthFix" wx:for="{{ item.images }}" wx:for-item="items" wx:key="index" src="{{ fn.search(item.images[0]) > 0 ?  item.images : item.image_compress + '/resize,p_50' }}" data-urls="{{ item.images }}" data-current="{{ items }}" data-index="{{ index }}" catchtap="previewImage" lazy-load></image>
+							</view>
+							<view class="img three" wx:if="{{ item.images.length > 1 }}">
+								<image mode="aspectFill" wx:for="{{ item.images }}" wx:for-item="items" wx:key="index" src="{{ fn.search(item.images[index]) > 0 ? item.images[index] : item.image_compress[index] + '/resize,m_fixed,w_216,h_216' }}" data-urls="{{ item.images }}" data-current="{{ items }}" data-index="{{ index }}" catchtap="previewImage" lazy-load></image>
+							</view>
+						</view>
+						<!-- wx:if="{{ item.url }}" -->
+						<view class="content" wx:if="{{ item.check_status == 1 || item.check_status == 2 || item.check_status == 0 }}">
+							<view class="bg">
+								<image mode="aspectFill" src="{{ item.check_status == 0 ?  $state.imgHost + '/tip.jpg' : item.check_status == 2 ? $state.imgHost + '/sensitivity.png' : item.image }}" class="poster" lazy-load></image>
+								<image mode="aspectFill" src="{{ $state.imgHost }}/play-hl.png" class="play" lazy-load></image>
+							</view>
+						</view>
+					</view>
+					<navigator wx:if="{{ item.fs_title }}" url="../cDetail/cDetail?id={{ item.fs_id }}" hover-class="none" open-type="navigate" class="label"> #{{ item.fs_title }}精选</navigator>
+					<view class="btn">
+						<button class="share item" open-type="share" data-index="{{ index }}" hover-class="btn-hover" wx:if="{{ item.check_status != 0 && item.check_status != 2}}">
+							<icon class="iconfont icon-fenxiang"></icon>
+							<text class="text">{{ item.fw || item.forward }}</text>
+						</button>
+						<button class="share item" bindtap="unShare" wx:if="{{ item.check_status == 0 || item.check_status == 2}}">
+							<icon class="iconfont icon-fenxiang"></icon>
+							<text class="text">{{ item.fw || item.forward }}</text>
+						</button>
+						<text class="division"></text>
+						<!-- 评论 -->
+						<view hover-class="none" class="item" bindtap="handleRelse" data-status="{{ $state.userInfo.status }}" data-id="{{ item.id }}" data-type="reply">
+							<formCode>
+								<view class="container-sub">
+									<icon class="iconfont icon-comment"></icon>
+									<text class="text">{{ item.cw || item.comments }}</text>
+								</view>
+							</formCode>
+						</view>
+						<text class="division"></text>
+						<!-- 点赞 -->
+						<formCode bind:handler="praise" class="item" data-index="{{ index }}">
+							<view class="container-sub">
+								<view class="praise  {{ item.likestatus ? 'end' : '' }} {{ item.praising ? 'ani' : '' }}" data-index="{{ index }}" bindanimationend="aniend"></view>
+								<text class="text">{{ item.lw || item.likes }} </text>
+							</view>
+						</formCode>
+					</view>
+				</view>
+			</view>
+			<view class="noMore" wx:if="{{showNomore && circleList.length != 0}}">已经到底了哦!</view>
+		</scroll-view>
+		<view class="ncol" wx:if="{{ circleList.length == 0 }}">
+			<image mode="widthFix" src="{{ $state.imgHost }}/ncol.png"></image>
+			<text class="line">啥都没有呢~\n赶紧去收藏帖子吧</text>
+		</view>
+	</swiper-item>
+</swiper>
+<view class="ActionSheet" bindtap="closeSheet" wx:if="{{showSheet}}">
+	<view class="ActionSheet-cancelBox" catchtap="cancelCollection">
+		取消收藏
+	</view>
 </view>

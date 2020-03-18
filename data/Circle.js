@@ -1,3 +1,8 @@
+/*
+ * @Date: 2019-05-28 09:50:08
+ * @LastEditors: hxz
+ * @LastEditTime: 2019-08-10 10:45:27
+ */
 var httpService = require("../utils/service.js")
 
 // POST Friendscircle/index 获取所有学友圈集合
@@ -20,6 +25,12 @@ function join(param) {
   return httpService.post("Userfriendscircle/add", param)
 }
 
+//POST Userfriendscircle/addOne 单个加入学有圈
+function addOne(param) {
+  return httpService.post("Userfriendscircle/addOne", param)
+}
+
+
 //POST Userfriendscircle/add 取消加圈
 function cancelJoin(param) {
   return httpService.post("Friendscircle/cancel", param)
@@ -32,6 +43,11 @@ function add(param) {
 
 //POST bokeblog/index 获取学友圈最新动态
 function news(param) {
+  return httpService.post("bokeblog/recommend", param)
+}
+
+//POST bokeblog/index 获取学友圈最新动态
+function myNews(param) {
   return httpService.post("bokeblog/index", param)
 }
 
@@ -75,6 +91,32 @@ function comment(param) {
   return httpService.post("Bokecomments/add", param)
 }
 
+/**
+ * @description: 回复评论 （二级评论）
+ * @param {blog_id ,comment_id ,reply_type ,reply_id ,reply_content ,to_user }
+ * @return: promise
+ */
+function reply(param) {
+  return httpService.post("Bokereply/add", param)
+}
+
+/**
+ * @description:删除回复 （二级评论）
+ * @param { blog_id , comment_id  , id }
+ * @return:promise
+ */
+function replydel(param) {
+  return httpService.post("Bokereply/del", param)
+}
+/**
+ * @description: 评论详情
+ * @param {blog_id , comment_id }
+ * @return:promise
+ */
+function replyDetail(param) {
+  return httpService.post("Bokereply/index", param)
+}
+
 //POST bokeblog/del  删除我的最新动态
 function delPost(param) {
   return httpService.post("bokeblog/del", param)
@@ -98,6 +140,31 @@ function addForward(param) {
   return httpService.post("bokeforward/add", param)
 }
 
+/* 博客通知列表 */
+function getMessage(param) {
+  return httpService.post("Bokeblog/blogMessageList", param)
+}
+
+/* 收藏博客 */
+function collect(param) {
+  return httpService.post("Bokeblog/collect", param)
+}
+
+// Bokeblog/collectCancel 取消收藏博客 
+function collectCancel(param) {
+  return httpService.post("Bokeblog/collectCancel", param)
+}
+
+/* 获取置顶博客 */
+function bokeblogTop(param) {
+  return httpService.post("Bokeblog/top", param)
+}
+
+/* 展示默认博客列表 */
+function defaultCircle(param) {
+  return httpService.post("Friendscircle/defaultCircle", param)
+}
+
 module.exports = {
   allCircles,
   noJoinCircles,
@@ -113,9 +180,19 @@ module.exports = {
   delPraise,
   member,
   comment,
+  reply,
+  replydel,
+  replyDetail,
   delPost,
   upload,
   fsinfo,
   delComment,
-  addForward
+  addForward,
+  getMessage,
+  collect,
+  collectCancel,
+  bokeblogTop,
+  defaultCircle,
+  addOne,
+  myNews
 }

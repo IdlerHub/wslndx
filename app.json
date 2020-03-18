@@ -1,9 +1,8 @@
 {
   "pages": [
-    "pages/loading/loading",
     "pages/index/index",
+    "pages/loading/loading",
     "pages/video/video",
-    "pages/comment/comment",
     "pages/release/release",
     "pages/post/post",
     "pages/circle/circle",
@@ -14,7 +13,6 @@
     "pages/certificate/certificate",
     "pages/info/info",
     "pages/user/user",
-    "pages/category/category",
     "pages/login/login",
     "pages/score/score",
     "pages/collection/collection",
@@ -23,7 +21,41 @@
     "pages/invitation/invitation",
     "pages/gift/gift",
     "pages/education/education",
-    "pages/videoItemize/videoItemize"
+    "pages/videoItemize/videoItemize",
+    "pages/commentDetail/commentDetail",
+    "pages/message/message",
+    "pages/sign/sign",
+    "pages/agreement/agreement",
+    "pages/videoTwo/videoTwo",
+    "pages/experience/experience",
+    "components/navBar/navBar",
+    "pages/upwxpage/upwxpage",
+    "pages/personPage/personPage",
+    "pages/drawPage/drawPage",
+    "pages/winPrize/winPrize",
+    "pages/giftMessage/giftMessage",
+    "pages/search/search",
+    "pages/drag/drag",
+    "components/integralAni/integralAni",
+    "pages/usermesseage/usermesseage",
+    "pages/messagePage/messagePage",
+    "pages/attentionPage/attentionPage",
+    "pages/makeMoney/makeMoney",
+    "pages/strategy/strategy",
+    "pages/myApprentice/myApprentice",
+    "pages/myEarnings/myEarnings",
+    "components/recruitShare/recruitShare",
+    "pages/withdraw/withdraw",
+    "pages/withdrawalRecord/withdrawalRecord",
+    "pages/vote/vote",
+    "pages/myProduction/myProduction",
+    "pages/voteProduction/voteProduction",
+    "pages/voteDetail/voteDetail",
+    "pages/voteRule/voteRule",
+    "pages/voteFail/voteFail",
+    "pages/voteSearch/voteSearch",
+    "pages/voteClassify/voteClassify",
+    "pages/voteSuccess/voteSuccess"
   ],
   "permission": {
     "scope.userLocation": {
@@ -31,8 +63,8 @@
     }
   },
   "networkTimeout": {
-    "request": 5000,
-    "uploadFile": 15000
+    "request": 10000,
+    "uploadFile": 60000
   },
   "window": {
     "backgroundTextStyle": "light",
@@ -41,5 +73,38 @@
     "navigationBarTextStyle": "black",
     "backgroundColor": "#eeefef"
   },
-  "sitemapLocation": "sitemap.json"
+  "sitemapLocation": "sitemap.json",
+  "tabBar": {
+    "custom": true,
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "云课堂"
+      },
+      {
+        "pagePath": "pages/video/video",
+        "text": "短视频"
+      },
+      {
+        "pagePath": "pages/post/post",
+        "text": "秀风采"
+      },
+      {
+        "pagePath": "pages/user/user",
+        "text": "我的"
+      }
+    ]
+  },
+  "navigateToMiniProgramAppIdList": [
+    "wxa61ccf86d0ba437e",
+    "wx92d650b253f8f2e3",
+    "wxb92e40c1a0520a27",
+    "wx21038783a46791dd"
+  ],
+  "plugins": {
+    "WechatSI": {
+      "version": "0.3.3",
+      "provider": "wx069ba97219f66d99"
+    }
+  }
 }

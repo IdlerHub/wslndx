@@ -3,5 +3,7 @@
   "navigationBarTitleText": "个人中心",
   "navigationBarTextStyle": "black",
   "enablePullDownRefresh": true,
-  "usingComponents": {}
+  "usingComponents": {
+    "navBar": "/components/navBar/navBar"
+  }
 }

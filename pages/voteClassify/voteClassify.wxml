@@ -1,0 +1,22 @@
+<!--pages/voteClassify/voteClassify.wxml-->
+<view class="voteClassify">
+    <view class="classify-body">
+        <view class="classify-title">作品分类</view>
+        <view class="classify-list">
+            <block wx:for="{{classifyList}}" wx:key="index">
+                <view class="classify-item" data-type="{{item.id}}" data-index="{{index}}" bindtap="toVote">{{item.name}}</view>
+            </block>
+        </view>
+    </view>
+    <view class="vote-footer">
+        <image src="/images/vote-btn.png" alt="" />
+        <view class="footer-left" catchtap="join">
+            <image src="../../images/vote-join.png" alt="" />
+            <text>我要参赛</text>
+        </view>
+        <view class="footer-right" catchtap="works">
+            <image src="../../images/vote-myproduction.png" alt="" />
+            <text>我的作品</text>
+        </view>
+    </view>
+</view>

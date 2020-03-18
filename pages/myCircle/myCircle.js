@@ -1,22 +1,64 @@
+/*
+ * @Date: 2019-05-28 09:50:08
+ * @LastEditors: hxz
+ * @LastEditTime: 2019-08-13 14:32:02
+ */
 const app = getApp()
 //Page Object
 Page({
   data: {
     circle: [],
-    isRefreshing: false
+    isRefreshing: false,
+    releaseParam: {
+      image: [],
+      content: null,
+      video: null,
+      cover: null,
+      fs_id: "",
+      num: 0
+    }
   },
+  pageName: '风采展示（风采展示）',
   //options(Object)
-  onLoad: function(options) {
-    this.circleParam = { page: 1, pageSize: 10 }
+  onLoad: function (options) {
+    this.circleParam = { page: 1, pageSize: 10, }
     this.getCircle([])
   },
-  onReady: function() {},
-  onShow: function() {},
-  onHide: function() {},
-  onUnload: function() {
-    app.aldstat.sendEvent("退出", { name: "风采展示" })
+  onReady: function () { },
+  onShow: function () {
+    if (((this.data.releaseParam.content != null && this.data.releaseParam.content != "") || this.data.releaseParam.image[0] || this.data.releaseParam.video != null) && this.data.showRelease) {
+      let that = this
+      wx.showModal({
+        content: '保留本次编辑',
+        confirmColor: '#df2020',
+        cancelText: "不保留",
+        confirmText: '保留',
+        success(res) {
+          if (res.confirm) {
+            that.setData({
+              showRelease: false
+            })
+            app.store.setState({
+              releaseParam: that.data.releaseParam,
+              media_type: that.data.media_type
+            })
+          } else if (res.cancel) {
+            that.setData({
+              releaseParam: null
+            })
+            app.store.setState({
+              releaseParam: null,
+              media_type: null
+            })
+          }
+        }
+      })
+    }
   },
-  onPullDownRefresh: function() {
+  onHide: function () { },
+  onUnload: function () {
+  },
+  onPullDownRefresh: function () {
     this.setData({
       isRefreshing: true
     })
@@ -28,26 +70,36 @@ Page({
       })
     })
   },
-  onReachBottom: function() {
+  onReachBottom: function () {
     this.circleParam.page++
     this.getCircle()
   },
   getCircle(list) {
     let circle = list || this.data.circle
     this.circleParam.us_id = 0
-    return app.circle.news(this.circleParam).then(msg => {
-      if (msg.code == 1) {
-        if (msg.data) {
-          msg.data.forEach(function(item) {
-            item.images = item.images.map(i => {
-              return i.image
-            })
-            item.auditing = new Date().getTime() - new Date(item.createtime * 1000) < 7000
-            circle.push(item)
+    return app.circle.myNews(this.circleParam).then(msg => {
+      if (msg.data) {
+        msg.data.forEach(function (item) {
+          item.fw = app.util.tow(item.forward)
+          item.cw = app.util.tow(item.comments)
+          item.lw = app.util.tow(item.likes)
+          item.image_compress = item.images.map(i => {
+            return i.image_compress
           })
-        }
+          item.images = item.images.map(i => {
+            return i.image
+          })
+          item.auditing = new Date().getTime() - new Date(item.createtime * 1000) < 7000
+          circle.push(item)
+        })
+      }
+      this.setData({
+        circle: circle
+      })
+    }).catch(err => {
+      if (err.code == -2) {
         this.setData({
-          circle: circle
+          circle: []
         })
       }
     })
@@ -57,26 +109,16 @@ Page({
     let that = this
     let urls = e.currentTarget.dataset.urls
     let current = e.currentTarget.dataset.current
-    this.setData({
-      preview: true
-    })
     wx.previewImage({
       current: current,
-      urls: urls, // 需要预览的图片http链接列表
-      complete: () => {
-        that.setData({
-          preview: false
-        })
-      }
+      urls: urls // 需要预览的图片http链接列表
     })
   },
   navigate(e) {
     let id = e.currentTarget.dataset.id
-    if (!this.data.preview) {
-      wx.navigateTo({
-        url: "../pDetail/pDetail?id=" + id
-      })
-    }
+    wx.navigateTo({
+      url: "../pDetail/pDetail?id=" + id
+    })
   },
   del(e) {
     let i = e.currentTarget.dataset.index
@@ -90,9 +132,10 @@ Page({
       success: res => {
         if (res.confirm) {
           app.circle.delPost(param).then(msg => {
-            if (msg.code == 1) {
-              wx.startPullDownRefresh()
-            }
+            circle.splice(i, 1)
+            this.setData({
+              circle: circle
+            })
           })
         } else {
           return
@@ -113,5 +156,73 @@ Page({
     }, 2000)
     this.circleParam.page = 1
     this.getCircle([])
+  },
+  onShareAppMessage: function (ops, b) {
+    if (ops.from === "menu") {
+      return this.menuAppShare()
+    }
+    if (ops.from === "button") {
+      let i = ops.target.dataset.index
+      let article = this.data.circle[i]
+      let bkid = article.id
+      app.circle.addForward({ blog_id: bkid }).then(res => {
+        let list = this.data.circle
+        list[i].forward += 1
+        this.setData({
+          circle: list
+        })
+      })
+      return {
+        title: article.content,
+        imageUrl: article.image || article.images[0] || "../../images/sharemessage.jpg",
+        path: "/pages/pDetail/pDetail?id=" + bkid + "&type=share&uid=" + this.data.$state.userInfo.id
+      }
+    }
+  },
+  praise(e) {
+    let i = e.currentTarget.dataset.index
+    let list = this.data.circle
+    let param = {
+      blog_id: list[i].id
+    }
+    if (list[i].likestatus == 1) {
+      // 取消点赞
+      app.circle.delPraise(param).then(msg => {
+        list[i].likestatus = 0
+        list[i].likes--
+        this.setData({
+          circle: list
+        })
+      })
+    } else {
+      // 点赞
+      app.circle.praise(param).then(msg => {
+        list[i].likestatus = 1
+        list[i].likes++
+        list[i].praising = true
+        this.setData({
+          circle: list
+        })
+      })
+    }
+  },
+  aniend(e) {
+    var i = e.currentTarget.dataset.index
+    var list = this.data.circle
+    list[i].praising = false
+    this.setData({
+      list: list
+    })
+  },
+  unShare() {
+    wx.showToast({
+      title: "非常抱歉，不能分享这个内容！",
+      icon: "none",
+      duration: 1500
+    })
+  },
+  /*长按复制内容 */
+  copythat(e) {
+    app.copythat(e.target.dataset.content)
   }
 })

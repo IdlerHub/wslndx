@@ -1,0 +1,138 @@
+<!--pages/voteDetail/voteDetail.wxml-->
+<view class="voteDetail">
+    <block wx:if="{{item.type==1}}">
+        <view class="img-index">{{current+1}}/{{item.url.length}}</view>
+        <swiper class="img-list" current="{{current}}" circular  bindchange="changeIndex">
+            <block wx:for="{{item.url}}" wx:key="index">
+                <swiper-item>
+                    <view class="swiper-item" catchtap="preview" data-url="{{item}}">
+                        <image src="{{item}}" alt="" mode="aspectFit"/>
+                    </view>
+                </swiper-item>
+            </block>
+        </swiper>
+    </block>
+    <block wx:else>
+        <video class="video" id="videoWorks" src="{{item.url}}" controls="{{false}}" autoplay="{{true}}" loop="{{false}}" bindended="videoend" bindplay="videoplay" bindtap="controlVideo" />
+        <view wx:if="{{ pause }}" class="pause-img" bindtap="controlVideo">
+            <image mode="aspectFill" src="/images/play-hl.png"/>
+        </view>
+    </block>
+    <!-- 点赞动画 右下角的 -->
+    <!-- <view class="praising-orange">
+        <view class="ani-orange" style="background-image: url('/images/zan-orange.png')"></view>
+    </view> -->
+    <!-- 点赞动画 中间的 -->
+    <view class="praising-red" wx:if="{{zanFlag}}">
+        <view class="ani-red" data-id="{{item.id}}" bindanimationend="aniend" style="background-image: url('{{$state.imgHost}}/zan-red.png')"></view>
+    </view>
+    <view class="footer-bg"></view>
+    <view class="footer-info">
+        <view class="info-left">
+            <view class="user-info">
+                <image src="{{item.avatar}}" alt="" />
+                <view class="info-name">
+                    <view>作者: {{item.author || item.nickname}}</view>
+                    <view>{{item.school}}</view>
+                </view>
+            </view>
+            <view class="info-title">{{item.name}}</view>
+            <view class="info-content">{{item.content}}</view>
+        </view>
+        <!-- 如果是未审核的,就不显示点赞等功能 -->
+        <block wx:if="{{!waitingFlag}}">
+            <view class="info-right">
+                <view class="zan" data-id="{{item.id}}" data-index='{{index}}' catchtap="giveLike">
+                    <view class="circle">
+                        <image src="{{item.is_praise ? '/images/heart-orange.png': '/images/heart.png'}}" alt="" />
+                    </view>
+                    <text>{{item.prise_numbers}}</text>
+                </view>
+                <view class="share">
+                    <!-- <button class="share-btn" open-type="share"></button> -->
+                    <view class="circle" catchtap="shareMode">
+                        <image src="/images/share.png" alt="" />
+                    </view>
+                    <text>{{item.share_numbers}}</text>
+                </view>
+                <view class="join" catchtap="toJoin">
+                    <view class="circle">参赛</view>
+                </view>
+                <!-- 引导页 -->
+                <view class="guide" wx:if="{{guideFlag[0]}}">
+                    <view class="guide-first" wx:if="{{guideFlag[0]&&!guideFlag[1]&&!guideFlag[2]}}">
+                        <image src="/images/guide-first.png" alt="" />
+                        <view class="guide-btn">
+                            <image src="/images/guide-zan.png" alt="" />
+                            <image src="/images/guide-share.png" alt="" />
+                        </view>
+                        <!-- <image src="/images/guide-first.png" alt="" mode="bottom" /> -->
+                        <view class="first-btn" catchtap="nextGuide" data-guide="first"></view>
+                    </view>
+                    <view class="guide-second" wx:if="{{guideFlag[1]&&!guideFlag[2]}}">
+                        <image src="/images/guide-second.png" alt="" />
+                        <view class="second-btn" catchtap="nextGuide" data-guide="second"></view>
+                    </view>
+                    <view class="guide-end" wx:if="{{guideFlag[2]}}">
+                        <image src="/images/guide-end.png" alt="" />
+                        <view class="end-btn" catchtap="nextGuide" data-guide="end"></view>
+                    </view>
+                </view>
+            </view>
+        </block>
+    </view>
+    
+    <view class="back-vote" catchtap="toVote">
+        <!-- <text>返回</text><text>主页</text> -->
+        <view>返回主页</view>
+    </view>
+    <view wx:if="{{shareFlag}}" class="share-container">
+        <view class="share-footer">
+            <view class="share-mode">
+                <button class="share-wx" open-type="share" catchtap="shareOff">
+                    <image src="/images/share-wx.png" alt="" />
+                    <text>发送给朋友</text>
+                </button>
+                <view class="share-img" catchtap="shareImg">
+                    <image src="/images/share-img.png" alt="" />
+                    <text>生成海报</text>
+                </view>
+            </view>
+            <view class="share-none" catchtap="shareOff">取消</view>
+        </view>
+    </view>
+
+    <canvas class="sharePoster" canvas-id="poster"></canvas>
+    <view class="show-img" wx:if="{{sharePoster}}">
+    <!-- <view class="show-img"> -->
+        <view class="show-con">
+            <image class="share-del" src="/images/unshare.png" alt="" catchtap="unshare" />
+            <view class="canvas-img">
+                <image class="share-bg" src="/images/share-bg.png" alt="" />
+                <view class="canvas-user">
+                    <image class="user-img" src="{{shareInfo.avatar}}" alt=""></image>
+                    <view class="canvas-info">
+                        <view class="user-name">{{shareInfo.nickname}}</view>
+                        <view class="tip">正在参赛...</view>
+                    </view>
+                </view>
+                <view class="canvas-works">
+                    <image src="{{shareInfo.opus_type==1?  shareInfo.opus_url :  shareInfo.opus_banner_image || '/images/vote-wei.png'}}" alt="" />
+                </view>
+                <view class="canvas-info">
+                    <view class="canvas-name">{{shareInfo.opus_name}}</view>
+                    <view class="canvas-content">{{shareInfo.opus_content}}</view>
+                </view>
+                <view class="canvas-footer">
+                    <image class="canvas-code" src="{{shareInfo.qrcode_url}}" alt="" />
+                    <view class="code-tip">
+                        <view>长按识别二维码</view>
+                        <view>为好友加油，一起参赛！</view>
+                    </view>
+                </view>
+            </view>
+        </view>
+        <view class="sava-img" catchtap='savePoster'>保存到本地</view>
+    </view>
+
+</view>

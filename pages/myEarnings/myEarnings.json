@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "recruitShare": "/components/recruitShare/recruitShare"
+  },
+  "navigationBarTitleText": "收益明细"
+}

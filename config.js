@@ -1,24 +1,43 @@
+/*
+ * @Date: 2019-06-11 14:24:48
+ * @LastEditors: hxz
+ * @LastEditTime: 2019-08-14 16:58:22
+ */
 import Store from "wxministore"
-
-let env = "/* @echo NODE_ENV */"
+// "/* @echo NODE_ENV */"
+let env = "production"
 let imgHost
 let activityUrl
 let API_URL
+let mpVersion
+let socket_host
 
 if (env == "develop") {
   /* 测试环境 */
-  imgHost = "https://jinling-xcx-dev.obs.cn-north-1.myhuaweicloud.com/images/dev" /* 图片等静态资源服务器 */
+  imgHost = "https://hwcdn.jinlingkeji.cn/images/dev" /* 图片等静态资源服务器 */
   activityUrl = "https://gqjydev.jinlingkeji.cn/?" /* 国情教育链接 */
-  API_URL = "https://develop.jinlingkeji.cn/api/v4/" /* 数据服务器 */
-} else {
+  mpVersion = "v19" /* 版本管理 */
+  API_URL = "https://develop.jinlingkeji.cn/api/v19/" /* 数据服务器 */
+  socket_host = "develop.jinlingkeji.cn:8182"
+} else if (env == "production"){
   /* 发布环境 */
-  imgHost = "https://jinling-xcx-dev.obs.cn-north-1.myhuaweicloud.com/images/pro"
+  imgHost = "https://hwcdn.jinlingkeji.cn/images/pro"
   activityUrl = "https://gqjy.jinlingkeji.cn/?"
-  API_URL = "https://apielb.jinlingkeji.cn/api/v4/"
+  mpVersion = "v19"
+  API_URL = "https://apielb.jinlingkeji.cn/api/v19/"
+  socket_host = "api.jinlingkeji.cn:8182"
+} else {
+  imgHost = "https://hwcdn.jinlingkeji.cn/images/pro"
+  activityUrl = "https://gqjy.jinlingkeji.cn/?"
+  mpVersion = "v19"
+  API_URL = "https://lndxmid.jinlingkeji.cn/api/v19/"
+  socket_host = "api.jinlingkeji.cn:8182"
 }
 
 Store.prototype.process = env
 Store.prototype.API_URL = API_URL
+Store.prototype.mpVersion = mpVersion
+Store.prototype.socket_host = socket_host
 
 let store = new Store({
   state: {
@@ -49,7 +68,7 @@ let store = new Store({
       console.log("ShareAppMessage  menu")
       return {
         title: "福利！老年大学十万集免费课程在线学习",
-        path: "/pages/loading/loading",
+        path: "/pages/loading/loading?uid=" + this.data.$state.userInfo.id + "&type=invite",
         imageUrl: "../../images/sharemessage.jpg"
       }
     }

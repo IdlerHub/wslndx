@@ -1,0 +1,99 @@
+/* pages/attentionPage/attentionPage.wxss */
+page {
+  height: 100%;
+}
+.container {
+  width: 100%;
+  padding: 0 30rpx;
+  box-sizing: border-box;
+}
+.item {
+  width: 100%;
+  padding: 41rpx 0;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid rgba(237,237,237,1) ;
+}
+.item .avatar {
+  width:90rpx;
+  height:90rpx;
+  border-radius: 50%;
+  border: 1rpx solid #d8d8d8;
+  background: #e9e9e9;
+  margin-right: 20rpx;
+}
+.item .titlecon {
+  flex: 1;
+  margin-top: -8rpx;
+}
+.item .title-name {
+  display: flex;
+  align-items: center;
+}
+.item .title-name .name {
+  font-size:40rpx;
+  font-weight:500;
+  color:rgba(58,58,58,1);
+  margin-right: 8rpx;
+}
+.item .title-name .label {
+  width:35rpx;
+  height:38rpx;
+  margin-bottom: -12rpx;
+
+}
+.item .univers {
+  height:30rpx;
+  font-size:28rpx;
+  font-weight:400;
+  color:rgba(153,153,153,1);
+  margin-top: 6rpx;
+}
+.item .btn {
+  width:160rpx;
+  height:68rpx;
+  background:rgba(237,237,237,1);
+  border-radius:4rpx;
+  font-size:32rpx;
+  font-weight:400;
+  color:rgba(153,153,153,1);
+  line-height:68rpx;
+  text-align: center;
+}
+.item .joinbtn {
+  width:160rpx;
+  height:68rpx;
+  background:rgba(223,32,32,1);
+  border-radius:4rpx;
+  font-size:32rpx;
+  font-weight:400;
+  color:#fff;
+  line-height:68rpx;
+  text-align: center;
+}
+.qstBox {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.qstBox image {
+  width: 598rpx;
+}
+.qstBox .txt {
+  font-size: 32rpx;
+  color: #949494;
+  width: 100%;
+  text-align: center;
+  position: absolute;
+}
+.qstBox .txt:nth-child(2) {
+  top: 56%;
+}
+.qstBox .txt:nth-child(3) {
+  top: 59%;
+  left: 50%;
+  margin-left: -358rpx;
+}

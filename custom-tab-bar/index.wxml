@@ -1,0 +1,24 @@
+<!--miniprogram/custom-tab-bar/index.wxml-->
+<!--components/navBar/navBar.wxml-->
+<!-- <view class="tabbar">
+    <view class="item" bindtap="toIndex">
+      <text  class="{{ $state.tabPath === 'index' ? 'active name' : 'name'}}" >云课堂</text>
+      <view class="resRow" wx:if="{{$state.tabPath === 'index'}}"></view>
+    </view>
+    <view bindtap="toVideo">
+      <view class="item">
+        <text class="{{ $state.tabPath === 'video' ? 'active name' : 'name'}}">短视频</text>
+      <view class="resRow" wx:if="{{$state.tabPath === 'video'}}"></view>
+      </view>
+    </view>
+    <button  class="item" open-type="getUserInfo" bindgetuserinfo="onGotUserInfo" data-role="post">
+      <text class="{{ $state.tabPath === 'post' ? 'active name' : 'name'}} ">秀风采</text>
+      <text class="badge" wx:if="{{ $state.unRead }}">{{ $state.surPass ? "···" : $state.unRead }}</text>
+      <view class="resRow" wx:if="{{$state.tabPath === 'post'}}"></view>
+    </button>
+    <button class="item" bindgetuserinfo="onGotUserInfo" open-type="getUserInfo" data-role="user">
+      <text  class="{{ $state.tabPath === 'user' ? 'active name' : 'name'}}" >我的</text>
+      <view class="resRow" wx:if="{{$state.tabPath === 'user'}}"></view>
+    </button>
+</view> -->
+

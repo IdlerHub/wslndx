@@ -1,0 +1,20 @@
+<!--pages/attentionPage/attentionPage.wxml-->
+<view class="container" wx:if="{{list[0].nickname}}">
+  <view wx:for="{{list}}" wx:key="index" class="item" bindtap="touser" data-index="{{index}}">
+    <image src="{{item.avatar}}" class="avatar"></image>
+    <view class="titlecon">
+      <view class="title-name">
+        <text class="name">{{item.nickname}}</text>
+        <image class="label" wx:if="{{item.fs != null}}" src="/images/approve.png"></image>
+      </view>
+      <view class="univers">{{item.university == mull ? '暂无'  : item.university}}</view>
+    </view>
+    <view class="{{item.status == '关注'? 'joinbtn' : 'btn'}}" catchtap="closeattention" data-index="{{index}}"
+      data-status="{{item.status}}">{{item.status}}</view>
+  </view>
+</view>
+<view class="qstBox" wx:else>
+  <image src="{{$state.imgHost}}/delBlog.png"></image>
+  <view class="txt">啥都没有呢</view>
+  <view class="txt">赶快去关注有趣的人吧！</view>
+</view>

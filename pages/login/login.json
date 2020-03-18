@@ -1,4 +1,8 @@
 {
   "disableSwipeBack": true,
-  "usingComponents": {}
+  "usingComponents": {
+    "navigationBar": "/components/navigationBar/navigationBar",
+    "integralAnimation": "/components/integralAni/integralAni"
+  },
+  "navigationStyle": "custom"
 }

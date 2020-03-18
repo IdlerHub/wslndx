@@ -1,0 +1,5 @@
+<form bindsubmit="saveFormId" report-submit class="form_class">
+  <button formType="submit" class="form_button">
+    <slot></slot>
+  </button>
+</form>

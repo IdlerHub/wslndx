@@ -41,10 +41,14 @@
 		"es6": true,
 		"enhance": true,
 		"postcss": true,
+		"preloadBackgroundData": false,
 		"minified": true,
 		"newFeature": true,
+		"coverView": true,
 		"nodeModules": true,
 		"autoAudits": false,
+		"showShadowRootInWxmlPanel": false,
+		"scopeDataCheck": false,
 		"uglifyFileName": false,
 		"checkInvalidKey": true,
 		"checkSiteMap": true,
@@ -53,10 +57,11 @@
 			"ignore": [],
 			"disablePlugins": [],
 			"outputPath": ""
-		}
+		},
+		"bundle": true
 	},
 	"compileType": "miniprogram",
-	"libVersion": "2.7.3",
+	"libVersion": "2.9.5",
 	"appid": "wx756d04f5d669cef0",
 	"projectname": "%E4%B8%AD%E5%9B%BD%E7%BD%91%E4%B8%8A%E8%80%81%E5%B9%B4%E5%A4%A7%E5%AD%A6",
 	"isGameTourist": false,
@@ -79,14 +84,18 @@
 			"currentL": -1,
 			"list": []
 		},
+		"gamePlugin": {
+			"current": -1,
+			"list": []
+		},
 		"miniprogram": {
-			"current": 6,
+			"current": -1,
 			"list": [
 				{
 					"id": 0,
 					"name": "微课堂分享卡片",
 					"pathName": "pages/detail/detail",
-					"query": "id=88&curid=263&type=share",
+					"query": "id=88&curid=279&type=share",
 					"scene": 1007
 				},
 				{
@@ -121,14 +130,43 @@
 					"id": 5,
 					"name": "秀风采分享卡片",
 					"pathName": "pages/pDetail/pDetail",
-					"query": "id=721&type=share",
+					"query": "id= 1535&type=share",
 					"scene": 1007
 				},
 				{
 					"id": -1,
-					"name": "小程序 profile 页",
-					"pathName": "pages/loading/loading",
-					"scene": 1024
+					"name": "从课程分享卡片进入小程序",
+					"pathName": "pages/detail/detail",
+					"query": "id=12661&type=share",
+					"scene": null
+				},
+				{
+					"id": 8,
+					"name": "消息卡片打开小程序",
+					"pathName": "pages/education/education",
+					"query": "uid=12661&type=lottery&id=856",
+					"scene": 1008
+				},
+				{
+					"id": 8,
+					"name": "收徒赚钱",
+					"pathName": "pages/makeMoney/makeMoney",
+					"query": "uid=1016&type=invite&activity=1",
+					"scene": null
+				},
+				{
+					"id": 10,
+					"name": "pages/vote/vote",
+					"pathName": "pages/vote/vote",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/sign/sign",
+					"pathName": "/pages/loading/loading",
+					"query": "uid=12661&type=invite",
+					"scene": null
 				}
 			]
 		}

@@ -38,11 +38,43 @@ function category(param) {
   return httpService.post("Shortvideo/categoryLists", param)
 }
 
+/**
+ * @description: 获取短视频分类列表
+ */
+function categoryMore(param) {
+  return httpService.post("Shortvideo/Category", param, true)
+}
+
+/**
+ * @description: 短视频播放记录(置顶)
+ */
+function recordAdd(param) {
+  return httpService.post("Shortvideo/recordAdd", param)
+}
+
+/**
+ * @description: 短视频奖励判断
+ */
+function shortvideoAward(param) {
+  return httpService.post("Shortvideo/shortvideoAward", param)
+}
+
+/**
+ * @description: 短视频完成播放
+ */
+function recordFinish(param) {
+  return httpService.post("Shortvideo/recordFinish", param)
+}
+
 module.exports = {
   list,
   praise,
   delPraise,
   share,
   search,
-  category
+  category,
+  categoryMore,
+  recordAdd,
+  shortvideoAward,
+  recordFinish
 }

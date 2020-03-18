@@ -1,3 +1,8 @@
+/*
+ * @Date: 2019-05-27 19:54:16
+ * @LastEditors: hxz
+ * @LastEditTime: 2019-08-13 17:26:55
+ */
 function formatTime(date) {
   date = date ? date : new Date()
   const year = date.getFullYear()
@@ -11,7 +16,7 @@ function formatTime(date) {
 
 function formatNumber(n) {
   n = n.toString()
-  return n[1] ? n : "0" + n
+  return n.padStart(2, "0")
 }
 
 function dateUnit() {
@@ -19,27 +24,9 @@ function dateUnit() {
   return date.getFullYear() + "年" + (date.getMonth() + 1) + "月" + date.getDate() + "日"
 }
 
-/**时间格式化 00:00:00 */
-function timeFormat(t) {
-  var t = t || 0
-  // t=Math.round(t/1000);
-  function format(n) {
-    var k = n.toString()
-    if (k.length <= 1) k = "0" + k
-    return k
-  }
-  var h = "00",
-    m = "00",
-    s = "00"
-  h = format(parseInt(t / 3600 + ""))
-  m = format(parseInt(t / 60 + "") % 60)
-  s = format(t % 60)
-  return h + "小时 " + m + "分 " + s + "秒"
-}
-
 /**验证是否手机号 */
 function isPoneAvailable(poneInput) {
-  if (!/^1[3|4|5|7|8|9]\d{9}$/.test(poneInput)) {
+  if (!/^1[3|4|5|6|7|8|9]\d{9}$/.test(poneInput)) {
     return false
   } else {
     return true
@@ -58,11 +45,15 @@ function tow(num) {
   return num / 10000 > 1 ? (num / 10000).toFixed(1) + "W" : null
 }
 
+function towTwice(num) {
+  return num / 10000 > 1 ? (num / 10000).toFixed(2) + "W" : null
+}
+
 module.exports = {
   formatTime,
-  timeFormat,
   isPoneAvailable,
   getQueryStringByName,
   tow,
+  towTwice,
   dateUnit
 }

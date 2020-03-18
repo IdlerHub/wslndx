@@ -1,9 +1,10 @@
 <view class="container">
     <view class='wrap'>
-        <textarea placeholder="说点什么吧…" focus="true" bindinput="input" value="{{param.content}}" placeholder-class="ph-class" />
+        <textarea placeholder="{{showintegral ? '' : '说点什么吧...'}}" focus="true" bindinput="input"
+            value="{{param.content}}" placeholder-class="ph-class" />
         <view class='box'>
             <view class='img' wx:key="index" wx:for="{{param.image}}">
-                <image class='image' mode='aspectFill' src="{{item}}" data-index='{{index}}' catchtap='selectImg'></image>
+                <image class='image' mode='aspectFill' src="{{item}}" data-index='{{index}}' data-url="{{item}}" catchtap='selectImg'></image>
                 <image class='close' mode='aspectFill' src="{{$state.imgHost}}/close.png" data-index='{{index}}' catchtap='delImg'></image>
             </view>
             <view class='video' wx:if="{{param.video}}">
@@ -13,7 +14,7 @@
             <view class='ub' wx:if="{{!hide}}" bindtap='addImg'>+</view>
         </view>
     </view>
-    <view class="cBox" wx:if="{{allCircle.length > 0 && $state.userInfo.fs_id == 0 }}">
+    <view class="cBox" wx:if="{{allCircle.length > 0 && $state.userInfo.fs_id == 0 && !circleTitle}}">
         <view class="hd">
             <text>是否同步到圈子 </text>
             <switch checked bindchange="switchChange" checked="{{showFlag}}" />
@@ -23,11 +24,22 @@
                 <text>{{item.title}}</text>
                 <image src="../../images/icon-sel.png" mode="aspectFill" wx:if="{{item.isSel}}"></image>
             </view>
-
+        </view>
+    </view>
+    <view class="cBox" wx:if="{{circleTitle}}">
+        <view class="hd">
+            <text>同步到{{circleTitle}} </text>
+            <switch checked bindchange="switchChange" checked="{{showFlag}}" />
         </view>
     </view>
     <view class='footer'>
-        <button class='item' disabled="{{!param.content&&!param.video&&param.image.length<1}}" bindtap='cancel'>取消</button>
-        <button class='item' disabled="{{!param.content&&!param.video&&param.image.length<1}}" bindtap='result'>发布</button>
+        <formCode  bind:handler='cancel'>
+            <button class='item' disabled="{{!param.content&&!param.video&&param.image.length<1}}">取消</button>
+        </formCode>
+        <formCode  bind:handler='result'>
+            <button class='item ensure' disabled="{{!param.content&&!param.video&&param.image.length<1}}">发布</button>
+        </formCode>
     </view>
 </view>
+<!-- 学分动画 -->
+<integralAnimation integral="{{integral}}" integralContent="{{integralContent}}" wx:if="{{showintegral}}"></integralAnimation>

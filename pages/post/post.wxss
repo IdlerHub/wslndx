@@ -3,9 +3,170 @@
 page {
   background: #eee; }
 
-.wrap {
+  .tabnav {
+    width: 100%;
+    position: fixed;
+    top: 0;
+    z-index: 1000;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    background: rgba(238,238,238,1);
+    padding-bottom: 20rpx;}
+    .tabnav .tabnav-item {
+      font-size:22px;
+      font-family:PingFangSC-Medium,PingFang SC;
+      font-weight:500;
+      color:rgba(51,51,51,1);
+      position: relative;
+    }
+    .tabnav-item .heng {
+      width: 40rpx;
+      height: 6rpx;
+      background: rgba(223,32,32,1);
+      border-radius: 4rpx;
+      position: absolute;
+      left: 50%;
+      margin-left: -20rpx;
+      bottom: -22rpx;
+    }
+    .tabnav .tabnav-item .smallred {
+      width:16rpx;
+      height:16rpx;
+      background:rgba(223,32,32,1);
+      border-radius: 50%;
+      position: absolute;
+      top: 0;
+      right: -20rpx;
+    }
+    .tabnav .tabnav-item:nth-child(1) {
+      margin-right: 60rpx;
+    }
+    .tabnav .lose {
+      font-size:18px;
+      font-weight:400;
+      color:rgba(153,153,153,1);
+    }
+    .swiper {
+      height: calc(100vh - 65px);
+      box-sizing: border-box;
+    }
+    .containerWrap {
+      height: 100%;
+    }
+.message {
+  background: white;
+  height: 120rpx;
+  overflow: hidden; }
+  .message .msg-btn {
+    width: 306rpx;
+    height: 80rpx;
+    background: #333333;
+    box-shadow: 0px 2px 15px 0px rgba(48, 19, 19, 0.08);
+    border-radius: 40rpx;
+    margin: 30rpx auto 0;
+    padding: 0 10px 0 3px;
+    display: flex;
+    align-items: center;
+    color: white; }
+    .message .msg-btn .img {
+      width: 60rpx;
+      height: 60rpx;
+      margin: 10rpx;
+      border-radius: 50%; }
+    .message .msg-btn .news {
+      flex: 1;
+      font-size: 30rpx;
+      padding-right: 10px;
+      text-align: right; }
+    .message .msg-btn .iconfont {
+      font-size: 12px;
+      line-height: 36px;
+      color: #808080; }
+.circle {
+  background: #fff;
+  padding:30rpx 0 24rpx 0;
   box-sizing: border-box;
-  padding-bottom: 120rpx; }
+  margin-bottom: 20rpx;
+  overflow:hidden;}
+.circle-scroll {
+  display: flex;
+  white-space:nowrap;
+  align-items: center;
+  overflow:hidden;
+}
+.circle-scroll .scroll-view {
+  display: inline-block;
+  text-align: center;
+  margin-left: 24rpx;
+  position: relative;
+}
+.circle-scroll .scroll-view:nth-child(1) {
+  margin-left: 30rpx;
+}
+.circle-scroll .scroll-view:last-child {
+  margin-right: 30rpx;
+}
+.circle-scroll .scroll-view image{
+  width:152rpx;
+  height:152rpx;
+  border-radius:6rpx;
+}
+.circle-scroll .scroll-view .label {
+  width:72rpx;
+  height:36rpx;
+  background:rgba(223,32,32,1);
+  border-radius:0rpx 0 8rpx 0;
+  font-size:26rpx;
+  font-weight:500;
+  color:rgba(255,255,255,1);
+  line-height:36rpx;
+  text-align: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.circle-scroll .scroll-view text{
+  display: block;
+  font-size:32rpx;
+  font-family:PingFangSC-Regular,PingFang SC;
+  font-weight:400;
+  color:rgba(102,102,102,1);
+}
+.stick {
+  width: 100%;
+  height: 128rpx;
+  padding: 0 30rpx;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #fff;
+  margin-bottom: 20rpx;
+}
+.stick image:nth-child(1) {
+  width: 64rpx;
+  height: 64rpx;
+  margin-right: 24rpx;
+}
+.stick .stickText {
+  flex: 1;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  overflow: hidden;
+  font-size:40rpx;
+  font-weight:400;
+  color:#3a3a3a;
+}
+.stick image:nth-child(3) {
+  width: 18rpx;
+  height: 31rpx;
+  margin-left: 25rpx;
+}
+.wrap {
+  box-sizing: border-box; }
   .wrap > .item {
     background: #fff;
     padding: 0 30rpx;
@@ -18,7 +179,7 @@ page {
       justify-content: space-between;
       padding: 30rpx 0 20rpx; }
       .wrap > .item .top .date {
-        font-size: 28rpx;
+        font-size: 26rpx;
         color: #bdbdbd; }
       .wrap > .item .top .left {
         display: flex;
@@ -27,7 +188,22 @@ page {
         width: 90rpx;
         height: 90rpx;
         border-radius: 50%;
-        border: 1rpx solid #d8d8d8; }
+        border: 1rpx solid #d8d8d8;
+        background:#e9e9e9;
+        position: relative;
+      }
+      .wrap > .item .top .avatarUrl image {
+        width: 90rpx;
+        height: 90rpx;
+        border-radius: 50%;
+      }
+      .wrap > .item .top .avatarUrl .fs {
+        width:22rpx;
+        height:24rpx;
+        position: absolute;
+        bottom: 0rpx;
+        right: -6rpx;
+      }
       .wrap > .item .top .text {
         margin-left: 20rpx;
         width: 400rpx;
@@ -36,31 +212,68 @@ page {
         white-space: nowrap; }
       .wrap > .item .top .nickName {
         font-size: 40rpx;
-        color: #343434; }
+        color: #343434;
+        display: flex;
+        align-items: center; }
       .wrap > .item .top .school {
         margin-top: 5rpx;
-        font-size: 28rpx;
+        margin-left: 21rpx;
+        font-size: 26rpx;
         color: #bdbdbd; }
+      .wrap > .item .top .right {
+        display: flex;
+        align-items: center;
+      }
+      .wrap > .item .top .right .attension {
+        width:100rpx;
+        height:48rpx;
+        border-radius:28rpx;
+        border:1px solid rgba(223,32,32,1);
+        font-size:28rpx;
+        font-weight:400;
+        color:rgba(223,32,32,1);
+        text-align: center;
+        line-height: 48rpx;
+        margin-right: 25rpx;
+      }
+      .wrap > .item .top .right .collect {
+        padding-bottom: 39rpx;
+        color: #B3B3B3;
+        font-size: 54rpx;
+      }
     .wrap > .item .name {
-      text-align: justify;
+      text-justify: newspaper;
+      word-break: break-all;
+      width: 100%;
       line-height: 60rpx;
       font-size: 40rpx;
-      color: #3a3a3a; }
+      color: #3a3a3a;
+      word-wrap: break-word;
+      white-space: pre-line;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 5;
+      overflow: hidden; 
+      /* text-align: justify; */
+      }
     .wrap > .item .content .img {
       display: flex;
       flex-wrap: wrap;
-      align-content: flex-start; }
+      align-content: flex-start;
+       }
       .wrap > .item .content .img image {
         margin-top: 20rpx; }
       .wrap > .item .content .img.one {
         max-height: 100vh;
         overflow: hidden; }
         .wrap > .item .content .img.one image {
-          width: 400rpx; }
+          width: 400rpx;
+          background: #e9e9e9; }
       .wrap > .item .content .img.three image {
         width: 216rpx;
         height: 216rpx;
-        margin-right: 20rpx; }
+        margin-right: 20rpx;
+        background: #e9e9e9; }
         .wrap > .item .content .img.three image:nth-of-type(3n) {
           margin-right: 0; }
     .wrap > .item .content video {
@@ -71,7 +284,8 @@ page {
       position: absolute;
       width: 100%;
       height: 100%;
-      filter: brightness(0.8); }
+      filter: brightness(0.8);
+       background: #e9e9e9;  }
     .wrap > .item .content .bg {
       position: relative;
       margin-top: 20rpx;
@@ -88,13 +302,13 @@ page {
       right: 0;
       margin: auto; }
     .wrap > .item .label {
-      background: #52d9c3;
+      background: #FFF6E6;
       margin: 20rpx 0;
       display: block;
       width: 230rpx;
       line-height: 44rpx;
       border-radius: 6rpx;
-      color: #fff;
+      color: #DB9200;
       font-size: 28rpx;
       text-align: center; }
   .wrap .btn {
@@ -109,7 +323,30 @@ page {
       width: 2rpx;
       height: 40rpx;
       background: #dbdbdb; }
-
+  .wrap > .item .top .left .loadingTxt {
+    width: 240rpx;
+    height: 42rpx;
+    background:#f5f6f8;
+    border-radius: 8rpx;
+  }
+  .wrap > .item .top .left .loadingTxt:nth-child(2) {
+    width: 230rpx;
+    height: 32rpx;
+    background:#f5f6f8;
+    border-radius: 8rpx;
+  }
+  .wrap > .item .top .loadingDate {
+    width: 121rpx;
+    height: 43rpx;
+    background:#f5f6f8;
+    border-radius: 8rpx;
+  }
+  .wrap > .item .contentTxt {
+    width: 690rpx;
+    height: 33rpx;
+    background:#f5f6f8;
+    border-radius: 8rpx;
+  }
 .btn > .item {
   flex: 1;
   display: flex;
@@ -119,6 +356,9 @@ page {
     font-size: 58rpx;
     color: #bdbdbd;
     text-align: center; }
+  .btn > .item .container-sub {
+    display: flex;
+    align-items: center; }
   .btn > .item .praise {
     width: 125rpx;
     height: 125rpx;
@@ -141,22 +381,14 @@ page {
 
 .footer {
   position: fixed;
-  bottom: 0;
-  height: 120rpx;
-  width: 100%;
-  background: #f8f8f8;
-  display: flex; }
-  .footer::after {
-    content: "";
-    width: 2rpx;
-    height: 40rpx;
-    background: #dbdbdb;
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    margin: auto; }
+  right: 30rpx;
+  bottom: 260rpx;
+  height: 140rpx;
+  width: 140rpx;
+  background:rgba(223,32,32,1);
+  border-radius: 50%; 
+  box-shadow:0px 4px 4px 0px rgba(166,19,19,0.3);
+}
 
 .write,
 .to {
@@ -164,7 +396,7 @@ page {
   align-items: center;
   justify-content: center;
   flex: 1;
-  height: 120rpx; }
+  height: 140rpx; }
 
 .write .icon {
   margin-top: 5rpx;
@@ -179,7 +411,99 @@ page {
 
 .write .text,
 .to .text {
-  font-size: 40rpx;
-  color: #343434;
+  font-size:36rpx;
+  color: #fff;
   padding: 0 15rpx;
   line-height: 56rpx; }
+.postGuide {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background:rgba(0,0,0,0.65); 
+  top: 0;
+  left: 0;
+  z-index: 200;
+}
+.postGuide .postGuideBox {
+  width: 100%;
+  height: 100%;
+}
+.postGuide .postGuideBox .postGuide-img {
+  position: absolute;
+  width: 133rpx;
+  height: 170rpx;
+  right: 23rpx;
+  top: 327px;
+}
+.postGuide .nextGude {
+  margin-top: 80rpx;
+  width: 202rpx;
+  height: 80rpx;
+  margin-left: 71rpx;
+}
+.postGuide .postGuideBox .postMsgone {
+  width: 396rpx;
+  position: absolute;
+  top: 437px;
+  left: 177rpx;
+}
+.postGuide .postGuideBox .postMsgoneo {
+  width: 396rpx;
+  height: 130rpx;
+}
+.postGuide .postGuideBox .postGuide-postguide {
+  width: 306rpx;
+  height: 175rpx;
+  position: absolute;
+  right: 15rpx;
+  bottom: 239rpx;
+
+}
+ .postGuideBtn {
+  width:176rpx;
+  height:60rpx;
+  border-radius:30rpx;
+  border:1px solid rgba(255,255,255,1);
+  font-size:34rpx;
+  font-weight:400;
+  color:rgba(255,255,255,1);
+  position: absolute;
+  right: 30rpx;
+  bottom: 130rpx;
+  z-index: 40;
+  text-align: center;
+  line-height: 60rpx;
+}
+.upbottom {
+  width: 100%;
+  padding:20rpx 0  30rpx 0;
+  text-align: center;
+  font-size: 28rpx;
+}
+.wrap .qstBox {
+  height: 100%;
+}
+.qstBox image {
+  width: 598rpx;
+  position: absolute;
+  top: 50%;
+  margin-top: -267rpx;
+  left: 50%;
+  margin-left: -299rpx;
+}
+.qstBox .txt {
+  font-size: 32rpx;
+  color: #949494;
+  width: 100%;
+  text-align: center;
+  position: absolute;
+}
+.qstBox .txt:nth-child(2) {
+  top: 56%;
+}
+.qstBox .txt:nth-child(3) {
+  top: 59%;
+  left: 50%;
+  margin-left: -358rpx;
+}
+

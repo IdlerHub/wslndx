@@ -3,6 +3,42 @@
 page {
   background: #eee;
 }
+
+.message {
+  background: white;
+  height: 120rpx;
+  overflow: hidden;
+  .msg-btn {
+    width: 306rpx;
+    height: 80rpx;
+    background: rgba(51, 51, 51, 1);
+    box-shadow: 0px 2px 15px 0px rgba(48, 19, 19, 0.08);
+    border-radius: 40rpx;
+    margin: 40rpx auto 0;
+    padding: 0 10px 0 3px;
+    display: flex;
+    align-items: center;
+    color: white;
+    .img {
+      width: 60rpx;
+      height: 60rpx;
+      margin: 10rpx;
+      border-radius: 50%;
+    }
+    .news {
+      flex: 1;
+      font-size: 30rpx;
+      padding-right: 10px;
+      text-align: right;
+    }
+    .iconfont {
+      font-size: 12px;
+      line-height: 36px;
+      color: #808080;
+    }
+  }
+}
+
 .wrap {
   box-sizing: border-box;
   padding-bottom: 120rpx;
@@ -55,6 +91,8 @@ page {
       line-height: 60rpx;
       font-size: 40rpx;
       color: #3a3a3a;
+      word-wrap: break-word;
+      white-space: pre-line;
     }
 
     .content {
@@ -150,6 +188,11 @@ page {
       font-size: 58rpx;
       color: #bdbdbd;
       text-align: center;
+    }
+
+    .container-sub {
+      display: flex;
+      align-items: center;
     }
 
     .praise {

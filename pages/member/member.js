@@ -5,6 +5,7 @@ Page({
   data: {
     isRefreshing: false
   },
+  pageName: '圈子成员',
   onLoad(options) {
     this.param = { fs_id: options.id, page: 1, pageSize: 10 }
     this.setData({
@@ -22,13 +23,11 @@ Page({
     let detail = this.data.detail
     let temp = list || this.data.detail.user
     return app.circle.member(this.param).then(msg => {
-      if (msg.code == 1) {
-        detail = msg.data
-        detail.user = temp.concat(msg.data.user || [])
-        this.setData({
-          detail: detail
-        })
-      }
+      detail = msg.data
+      detail.user = temp.concat(msg.data.user || [])
+      this.setData({
+        detail: detail
+      })
     })
   },
   //下拉刷新
@@ -54,6 +53,5 @@ Page({
   },
   //用于数据统计
   onHide() {
-    app.aldstat.sendEvent("退出", { name: "学友圈成员页" })
   }
 })
