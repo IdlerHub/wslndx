@@ -39,10 +39,12 @@ Page({
   onLoad(options) {
     this.param = [
       { page: 1, pageSize: 10, is_follow: 0 },
+      { page: 1, pageSize: 10, is_follow: 0 },
       { page: 1, pageSize: 10, is_follow: 1 }
     ];
     this.setData({
       list: [],
+      nowList: [],
       flowList: []
     });
     this.getList([]);
@@ -66,11 +68,13 @@ Page({
     if (app.globalData.postShow) {
       this.setData({
         list: [],
+        nowList: [],
         flowList: [],
         currentTab: 0,
         showBottom: false
       });
       this.param = [
+        { page: 1, pageSize: 10, is_follow: 0 },
         { page: 1, pageSize: 10, is_follow: 0 },
         { page: 1, pageSize: 10, is_follow: 1 }
       ];
@@ -192,94 +196,71 @@ Page({
       showLoading: true
     });
     let temp = [],
-      currentTab = this.data.currentTab;
-    currentTab == 0
-      ? (temp = list || this.data.list)
-      : (temp = list || this.data.flowList);
+    currentTab = this.data.currentTab;
+    if(currentTab == 0) {
+      temp = list || this.data.list
+    } else if(currentTab == 1) {
+      temp = list || this.data.nowList
+    } else {
+      temp = list || this.data.flowList
+    }
       if(currentTab == 0) {
         return app.circle.news(this.param[currentTab]).then(msg => {
           if (msg.data) {
-            msg.data[0]
-              ? ""
-              : this.setData({
-                  showBottom: true
-                });
-            let arr = [];
-            for (let i in msg.data) {
-              arr.push(msg.data[i]);
-            }
-            arr.forEach(function(item) {
-              item.fw = app.util.tow(item.forward);
-              item.cw = app.util.tow(item.comments);
-              item.lw = app.util.tow(item.likes);
-              item.image_compress = item.images.map(i => {
-                return i.image_compress;
-              });
-              item.images = item.images.map(i => {
-                return i.image;
-              });
-              item.auditing = item.check_status;
-            });
-            temp.push(...arr);
-            setTimeout(() => {
-              this.setData({
-                showLoading: false
-              });
-              if (this.data.currentTab != currentTab) return;
-              this.data.currentTab == 0
-                ? this.setData({
-                    list: temp
-                  })
-                : this.setData({
-                    flowList: temp
-                  });
-            }, 800);
-            this.setHeight();
+            this.upList(currentTab, temp, msg)
           }
         });
       } else {
         return app.circle.myNews(this.param[currentTab]).then(msg => {
           if (msg.data) {
-            msg.data[0]
-              ? ""
-              : this.setData({
-                  showBottom: true
-                });
-            let arr = [];
-            for (let i in msg.data) {
-              arr.push(msg.data[i]);
-            }
-            arr.forEach(function(item) {
-              item.fw = app.util.tow(item.forward);
-              item.cw = app.util.tow(item.comments);
-              item.lw = app.util.tow(item.likes);
-              item.image_compress = item.images.map(i => {
-                return i.image_compress;
-              });
-              item.images = item.images.map(i => {
-                return i.image;
-              });
-              item.auditing = item.check_status;
-            });
-            temp.push(...arr);
-            setTimeout(() => {
-              this.setData({
-                showLoading: false
-              });
-              if (this.data.currentTab != currentTab) return;
-              this.data.currentTab == 0
-                ? this.setData({
-                    list: temp
-                  })
-                : this.setData({
-                    flowList: temp
-                  });
-            }, 800);
-            this.setHeight();
+            this.upList(currentTab, temp, msg)
           }
         });
       }
-    
+  },
+  upList(currentTab, temp, msg) {
+      msg.data[0]
+        ? ""
+        : this.setData({
+            showBottom: true
+          });
+      let arr = msg.data;
+      // for (let i in msg.data) {
+      //   arr.push(msg.data[i]);
+      // }
+      arr.forEach(function(item) {
+        item.fw = app.util.tow(item.forward);
+        item.cw = app.util.tow(item.comments);
+        item.lw = app.util.tow(item.likes);
+        item.image_compress = item.images.map(i => {
+          return i.image_compress;
+        });
+        item.images = item.images.map(i => {
+          return i.image;
+        });
+        item.auditing = item.check_status;
+      });
+      temp.push(...arr);
+      setTimeout(() => {
+        this.setData({
+          showLoading: false
+        });
+        if (this.data.currentTab != currentTab) return;
+        if(this.data.currentTab == 0) {
+          this.setData({
+            list: temp
+          })
+        } else if(this.data.currentTab == 1) {
+          this.setData({
+            nowList: temp
+          })
+        } else {
+          this.setData({
+            flowList: temp
+          })
+        }
+      }, 800);
+      this.setHeight();
   },
   gettop() {
     app.circle.bokeblogTop().then(res => {
@@ -316,62 +297,107 @@ Page({
   praise(e, index) {
     if(this.stopTap.praise) return
     this.stopTap.praise = true
-    let i = e.currentTarget.dataset.index;
-    let list = this.data.list,
-      flowList = this.data.flowList,
+    let i = e.currentTarget.dataset.index,
+       list = [...this.data.list],
+      flowList = [...this.data.flowList],
+      nowList = [...this.data.nowList],
       status = 0,
-      fi = -1;
+      ti = -1,
+      fi = -1,
+      ni = -1;
     let param = {
       blog_id: e.currentTarget.dataset.id
     };
-    if (e.currentTarget.dataset.type) {
+    if (this.data.currentTab == 0) {
       status = list[i].likestatus;
-    } else {
+    } else if(this.data.currentTab == 2){
       status = flowList[i].likestatus;
+    } else {
+       status = nowList[i].likestatus;
     }
     if (status == 1) {
+      list.forEach((item, index) => {
+        if (item.id == e.currentTarget.dataset.id) {
+          ti = index;
+          item.likestatus = 0
+          item.likes--;
+        }
+      });
+      flowList.forEach((item, index) => {
+          if (item.id == e.currentTarget.dataset.id) {
+            fi = index;
+            item.likestatus = 0
+            item.likes--;
+          }
+        });
+      nowList.forEach((item, index) => {
+          if(item.id == e.currentTarget.dataset.id) {
+            ni = index;
+            item.likestatus = 0
+            item.likes--;
+          }
+        })
       // 取消点赞
       app.circle
         .delPraise(param)
         .then(msg => {
-          if (e.currentTarget.dataset.type) {
-            list[i].likes--;
-            flowList.forEach((item, index) => {
-              if (item.id == e.currentTarget.dataset.id) {
-                fi = index;
-                item.likes--;
-              }
-            });
-            fi > -1
-              ? this.setData({
-                  [`list[${i}].likestatus`]: 0,
-                  [`list[${i}].likes`]: list[i].likes,
-                  [`flowList[${fi}].likestatus`]: 0,
-                  [`flowList[${fi}].likes`]: flowList[fi].likes
-                })
-              : this.setData({
-                  [`list[${i}].likestatus`]: 0,
-                  [`list[${i}].likes`]: list[i].likes
-                });
+          if (this.data.currentTab ==0) {
+            if(fi > -1) {
+              ni > -1 ? this.setData({
+                [`list[${ti}].likestatus`] : list[ti],
+                [`flowList[${fi}]`]: flowList[fi],
+                [`nowList[${ni}]`]:nowList[ni],
+              }) : this.setData({
+                [`list[${ti}]`]: list[ti],
+                [`flowList[${fi}]`]: flowList[fi]
+              })
+            } else {
+              ni > -1 ? this.setData({
+                [`list[${ti}]`]: list[ti],
+                [`nowList[${ni}]`]:nowList[ni],
+              }) : this.setData({
+                [`list[${ti}]`]: list[ti]
+              });
+            }
+          } else if(this.data.currentTab == 2){
+            if(fi > -1) {
+              ni > -1 ? this.setData({
+                [`flowList[${i}]`]: flowList[i],
+                [`list[${ti}]`]: list[ti],
+                [`nowList[${ni}]`]: nowList[ni],
+              }) : this.setData({
+                [`flowList[${i}]`]: flowList[i],
+                [`list[${ti}]`]: list[ti].likes
+              })
+            } else {
+              ni > -1 ? this.setData({
+                [`flowList[${i}].likestatus`]: 0,
+                [`flowList[${i}].likes`]: flowList[i].likes,
+                [`nowList[${ni}].likestatus`]: 0,
+                [`nowList[${ni}].likes`]: nowList[ni].likes,
+              }) : this.setData({
+                [`flowList[${i}].likestatus`]: 0,
+                [`flowList[${i}].likes`]: flowList[i].likes
+              });
+            }
           } else {
-            flowList[i].likes--;
-            list.forEach((item, index) => {
-              if (item.id == e.currentTarget.dataset.id) {
-                fi = index;
-                item.likes--;
-              }
-            });
-            fi > -1
-              ? this.setData({
-                  [`flowList[${i}].likestatus`]: 0,
-                  [`flowList[${i}].likes`]: flowList[i].likes,
-                  [`list[${fi}].likestatus`]: 0,
-                  [`list[${fi}].likes`]: list[fi].likes
-                })
-              : this.setData({
-                  [`flowList[${i}].likestatus`]: 0,
-                  [`flowList[${i}].likes`]: flowList[i].likes
-                });
+            if(fi > -1) {
+              ti > -1 ? this.setData({
+                [`flowList[${fi}]`]: flowList[fi],
+                [`list[${ti}]`]: list[fi],
+                [`nowList[${ni}]`]: nowList[ni],
+              }) : this.setData({
+                [`flowList[${fi}]`]: flowList[fi],
+                [`nowList[${ni}]`]: nowList[ni]
+              })
+            } else {
+              ti > -1 ? this.setData({
+                [`nowList[${ni}]`]: nowList[ni],
+                [`list[${ti}]`]: list[ti],
+              }) : this.setData({
+                [`nowList[${ni}]`]: nowList[ni]
+              });
+            }
           }
           this.stopTap.praise = 0
         })
@@ -387,51 +413,85 @@ Page({
         });
     } else {
       // 点赞
+      list.forEach((item, index) => {
+        if (item.id == e.currentTarget.dataset.id) {
+          ti = index;
+          item.likestatus = 1
+          item.likes++;
+        }
+      });
+      flowList.forEach((item, index) => {
+          if (item.id == e.currentTarget.dataset.id) {
+            fi = index;
+            item.likestatus = 1
+            item.likes++;
+          }
+        });
+      nowList.forEach((item, index) => {
+          if(item.id == e.currentTarget.dataset.id) {
+            ni = index;
+            item.likestatus = 1
+            item.likes++;
+          }
+        })
       app.circle
         .praise(param)
         .then(msg => {
-          if (e.currentTarget.dataset.type) {
-            list[i].likes++;
-            flowList.forEach((item, index) => {
-              if (item.id == e.currentTarget.dataset.id) {
-                fi = index;
-                item.likes++;
-              }
-            });
-            fi > -1
-              ? this.setData({
-                  [`flowList[${fi}].likestatus`]: 1,
-                  [`flowList[${fi}].likes`]: flowList[fi].likes,
-                  [`list[${i}].likestatus`]: 1,
-                  [`list[${i}].likes`]: list[i].likes,
+          if (this.data.currentTab == 0) {
+            if(fi > -1) {
+              ni > -1 ? this.setData({
+                [`flowList[${fi}]`]: flowList[fi],
+                [`list[${i}]`]: list[i],
+                [`list[${i}].praising`]: true,
+                [`nowList[${ni}]`]: nowList[ni],
+              }) : this.setData({
+                  [`flowList[${fi}]`]: flowList[fi],
+                  [`list[${i}]`]: list[i],
+                  [`list[${i}].praising`]: true,
+                });
+            } else {
+              ni > -1 ? this.setData({
+                  [`list[${i}]`]: list[i],
+                  [`list[${i}].praising`]: true,
+                  [`nowList[${ni}]`]: nowList[ni],
+                }) : this.setData({
+                  [`list[${i}]`]: list[i],
                   [`list[${i}].praising`]: true
                 })
-              : this.setData({
-                  [`list[${i}].likestatus`]: 1,
-                  [`list[${i}].likes`]: list[i].likes,
-                  [`list[${i}].praising`]: true
-                });
+            }
+          } else if(this.data.currentTab == 2) {
+              ni > -1 ?  this.setData({
+                  [`flowList[${fi}]`]: flowList[fi],
+                  [`flowList[${fi}].praising`]: true,
+                  [`list[${ti}]`]: list[ti],
+                  [`nowList[${ni}]`]: nowList[ni]
+                }) : this.setData({
+                  [`flowList[${fi}]`]: flowList[fi],
+                  [`flowList[${fi}].praising`]: true,
+                  [`list[${ti}]`]: list[ti],
+                })
           } else {
-            flowList[i].likes++;
-            list.forEach((item, index) => {
-              if (item.id == e.currentTarget.dataset.id) {
-                fi = index;
-                item.likes++;
-              }
-            });
-            fi > -1
-              ? this.setData({
-                  [`flowList[${i}].likestatus`]: 1,
-                  [`flowList[${i}].likes`]: flowList[i].likes,
-                  [`flowList[${i}].praising`]: true,
-                  [`list[${fi}].likestatus`]: 1,
-                  [`list[${fi}].likes`]: list[fi].likes
+            if(fi > -1) {
+              ti > -1 ?  this.setData({
+                  [`flowList[${fi}]`]: flowList[fi],
+                  [`list[${ti}]`]: list[ti],
+                  [`nowList[${ni}]`]: nowList[ni],
+                  [`nowList[${ni}].praising`]: true,
+                }) : this.setData({
+                  [`nowList[${ni}]`]: flowList[ni],
+                  [`nowList[${ni}].praising`]: true,
+                  [`flowList[${fi}]`]: flowList[fi],
                 })
-              : this.setData({
-                  [`flowList[${i}].likestatus`]: 1,
-                  [`flowList[${i}].likes`]: flowList[i].likes,
-                  [`flowList[${i}].praising`]: true
-                });
+            } else {
+              ti > -1 ? this.setData({
+                  [`nowList[${ni}]`]: nowList[ni],
+                  [`nowList[${ni}].praising`]: true,
+                  [`list[${ti}]`]: list[ti],
+                }) : this.setData({
+                  [`nowList[${ni}]`]: nowList[ni],
+                  [`nowList[${ni}].praising`]: true   
+                })
+            }
           }
           if (msg.data.is_first == "first") {
             this.setData({
@@ -577,7 +637,11 @@ Page({
       currentTab: cur,
       showBottom: false
     });
-    this.data.currentTab == 1 && !this.data.flowList[0] ? this.getList([]) : "";
+    if(this.data.currentTab == 1 && !this.data.nowList[0]) {
+      this.getList([])
+    } else if(this.data.currentTab == 2 && !this.data.flowList[0]) {
+      this.getList([])
+    }
   },
   switchNav(event) {
     let cur = event.currentTarget.dataset.current;
@@ -589,9 +653,6 @@ Page({
       });
     }
   },
-  //用于数据统计
-  onHide() {},
-  onUnload() {},
   unShare() {
     wx.showToast({
       title: "非常抱歉，不能分享这个内容！",
