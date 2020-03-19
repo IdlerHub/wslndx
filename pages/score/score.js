@@ -23,7 +23,8 @@ Page({
         img: "https://hwcdn.jinlingkeji.cn/images/pro/withdrawBanner2.png",
         clickUrl: "/pages/makeMoney/makeMoney"
       }
-    ]
+    ],
+    giftInfo: {}, //兑换礼品信息
   },
   pageName: "学分兑换页",
   common: {

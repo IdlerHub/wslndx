@@ -4,5 +4,7 @@
   "navigationBarTextStyle": "black",
   "enablePullDownRefresh": true,
   "onReachBottomDistance": 0,
-  "usingComponents": {}
+  "usingComponents": {
+    "address": "../../components/address/address"
+  }
 }

@@ -169,7 +169,7 @@
 					"scene": null
 				},
 				{
-					"id": -1,
+					"id": 11,
 					"name": "pages/address/address",
 					"pathName": "pages/infoAddress/infoAddress",
 					"query": "uid=12661&type=invite",

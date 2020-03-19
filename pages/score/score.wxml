@@ -143,3 +143,5 @@
     <icon type="cancel" size="46" color="white" data-id="0" catchtap="closesignBox" class="signBox-cancel"></icon>
   </view>
 </view>
+
+<address params="{{giftInfo}}"></address>
