@@ -11,6 +11,7 @@ Page({
     type: 0, //分类的id
     newProduction: [],
     productionList: [],
+    infoFlag: {}, //活动时间以及弹窗提示信息
     page: 1
     // supportFlag: 1 //今日点赞权限 0=无, 1=有
   },
@@ -56,9 +57,9 @@ Page({
     //step 活动是否过期
     // step1 判断今天是否点赞过
     // step2  作品点赞数添加 （修改data中数据），不刷新页面
-    if (this.data.overTime == 1) {
+    if (this.data.infoFlag.flag == 0) {
       wx.showToast({
-        title: "活动已过期,无法点赞",
+        title: this.data.infoFlag.msg,
         icon: "none",
         duration: 1500
       });
@@ -134,7 +135,7 @@ Page({
         productionList: data,
         page: page,
         // supportFlag: res.data.have_praise,
-        overTime: res.data.over_time
+        infoFlag: res.data.info
       });
     });
     //xhr (selectedIndex , page)

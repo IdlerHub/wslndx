@@ -3,6 +3,7 @@ const app = getApp();
 let videoCtx = null;
 Page({
   data: {
+    infoFlag: {}, //活动时间以及弹窗提示
     hocIndex: Number,
     current: 0,
     pause: false,
@@ -60,9 +61,9 @@ Page({
     //step  活动是否过期
     // step1 判断今天是否点赞过
     // step2  作品点赞数添加 （修改data中数据），不刷新页面
-    if (this.data.overTime == 1) {
+    if (this.data.infoFlag.flag == 0) {
       wx.showToast({
-        title: "活动已过期,无法点赞",
+        title: this.data.infoFlag.msg,
         icon: "none",
         duration: 1500
       });
@@ -180,7 +181,7 @@ Page({
         item: res.data,
         // supportFlag: res.data.have_praise,
         guideFlag: [!temp, 0, 0],
-        overTime: res.data.over_time
+        infoFlag: res.data.info
       });
       let title = this.data.item.name;
       if (title.length > 10) {
