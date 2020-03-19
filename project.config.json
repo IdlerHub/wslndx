@@ -162,9 +162,9 @@
 					"scene": null
 				},
 				{
-					"id": -1,
-					"name": "pages/sign/sign",
-					"pathName": "/pages/loading/loading",
+					"id": 10,
+					"name": "pages/rankingList/rankingList",
+					"pathName": "pages/rankingList/rankingList",
 					"query": "uid=12661&type=invite",
 					"scene": null
 				}

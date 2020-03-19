@@ -65,7 +65,7 @@ page .vedio-content {
 }
 .vedio-content .left .poster {
   width: 260rpx;
-  height: 160rpx;
+  height: 160rpx !important;
   border-radius: 8rpx; }
 
 page .left .icon {

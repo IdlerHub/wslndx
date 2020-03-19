@@ -1,0 +1,123 @@
+/* pages/rankingList/rankingList.wxss */
+page {
+  background:rgba(247,247,247,1);
+}
+.container .buttons {
+  width: 100%;
+  font-size: 36rpx;
+  background: #fff;
+  color: rgba(153,153,153,1);
+  height: 118rpx;
+  line-height: 40rpx;
+  }
+  .container .buttons text {
+    position: relative;
+    display: inline-block;
+    width: 50%;
+    height: 100%;
+    text-align: center;
+    font-size: 36rpx;
+  }
+  .active {
+    color:rgba(226,30,30,1);
+    font-weight: 500;
+  }
+.container .buttons .redRow {
+  position: absolute;
+  display: inline-block;
+  bottom: 0;
+  width:74rpx;
+  left: 50%;
+  margin-left: -37rpx;
+  border-bottom: 2px solid #df2020;
+}
+.centerBox {
+  margin: 30rpx 30rpx 148rpx 30rpx;
+  background:rgba(255,255,255,1);
+  border-radius: 0 0 10rpx 10rpx;
+}
+.centerBox .centerTop {
+  height:98rpx;
+  border-radius:10rpx 10rpx 0 0;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+.centerBox .title {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size:40rpx;
+  font-family:PingFangSC-Regular,PingFang SC;
+  font-weight:400;
+  color:rgba(128,128,128,1);
+  position: relative;
+  z-index: 5;
+}
+.centerBox .centerTop .one {
+  width: 470rpx;
+  height: 98rpx;
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 1;
+}
+.centerBox .centerTop .three {
+  width: 470rpx;
+  height: 98rpx;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
+.centerBox .centerTop .tow {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.centerBox .active {
+  color:rgba(225,49,49,1);
+}
+.centerBox .center {
+  height: 108rpx;
+  padding: 0 30rpx;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.centerBox text {
+  font-size:28rpx;
+  font-family:PingFangSC-Regular,PingFang SC;
+  font-weight:400;
+  color:rgba(102,102,102,1);
+}
+.centerBox .right {
+  height:64rpx;
+  background:rgba(247,247,247,1);
+  border-radius:32rpx;
+  display: flex;
+  align-items: center;
+  font-size:28rpx;
+  font-family:PingFangSC-Regular,PingFang SC;
+  font-weight:400;
+  color:rgba(102,102,102,1);
+  padding: 0 24rpx;
+  box-sizing: border-box;
+  border-bottom: 1rpx solid rgba(237,237,237,1);
+}
+.centerBox .right text {
+  display: block;
+  width: 32rpx;
+  height: 32rpx;
+  font-size: 22rpx;
+  text-align: center;
+  border: 2rpx solid #666;
+  border-radius: 50%;
+  margin-right: 11rpx;
+}
+.centerBox .content {
+  padding: 0 30rpx;
+} 
