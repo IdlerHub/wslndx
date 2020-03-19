@@ -15,9 +15,9 @@
       <view class="title {{rankType == 1 ? 'active' : ''}}" bindtap="checkTop" data-type="1">日榜</view>
       <view class="title {{rankType == 2 ? 'active' : ''}}" bindtap="checkTop" data-type="2">周榜</view>
       <view class="title {{rankType == 3 ? 'active' : ''}}" bindtap="checkTop" data-type="3">月榜</view>
-      <image class="one" src="{{$state.imgHost}}/rankingPink1.png" wx:if="{{rankType == 1}}"></image>
-      <image class="tow" src="{{$state.imgHost}}/rankingPink4.png" wx:if="{{rankType == 2}}"></image>
-      <image class="three" src="{{$state.imgHost}}/rankingPink3.png" wx:if="{{rankType == 3}}"></image>
+      <image class="one" src="../../images/rankingPink1.png" wx:if="{{rankType == 1}}"></image>
+      <image class="tow" src="../../images/rankingPink2.png" wx:if="{{rankType == 2}}"></image>
+      <image class="three" src="../../images/rankingPink3.png" wx:if="{{rankType == 3}}"></image>
     </view>
     <view class="center">
       <text>截止 {{time}} 00:00</text> 
