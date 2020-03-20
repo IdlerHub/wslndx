@@ -45,7 +45,8 @@ Page({
     replyshow: false,
     showintegral: false,
     showServise: false,
-    replycontent: ''
+    replycontent: '',
+    showplece: true,
     /* rect: wx.getMenuButtonBoundingClientRect() */
   },
   pageName: "视频页（视频详情页）",
@@ -78,12 +79,18 @@ Page({
       that.setData({
         vistor: options.type == "share", //游客从分享卡片过来
         height: scrollViewHeight,
-        currentTab: 0,
+        currentTab: 1,
         navScrollLeft: 0,
         id: options.id,
         curid: options.curid || null,
         cur: {}
       });
+
+      setTimeout( () => {
+        wx.pageScrollTo({
+          scrollTop: 211
+        });
+      }, 1000)
       if (that.data.$state.newGuide) {
         that.data.$state.newGuide.lesson == 0
           ? this.setData({
@@ -131,6 +138,16 @@ Page({
       } else if (that.data.$state.userInfo.mobile) {
         that.getDetail();
       }
+      // if(that.data.$state.userInfo && that.data.$state.userInfo[university].length == 0 ) {
+        let plathParam = {
+          plath: '',
+          shool:'',
+        }
+        this.setData({
+          plathParam
+        })
+        this.getPlath()
+      // }
     });
     this.sublessParam = {
       id: options.id || this.data.detail.id,
@@ -311,7 +328,6 @@ Page({
       cur = detail.sublesson[0];
     }
     this.setData({
-      // "detail.progress": parseInt((current / total) * 100 + ""),
       cur: cur
     });
   },
@@ -344,34 +360,6 @@ Page({
         this.tolesson();
       }, 800);
     }
-    // let param = {
-    //   id: this.data.id,
-    //   sort: this.data.sort,
-    //   page: 1,
-    //   pageSize: 100
-    // };
-    // let query = wx.createSelectorQuery().in(this);
-    // query.selectAll("#sublessonsd").boundingClientRect();
-    // query.exec(res => {
-    //   param.pageSize = res[0].length;
-    //   app.classroom.detail(param).then(msg => {
-    //     msg.data.sublesson.forEach((item, index) =>  {
-    //       item.minute = (item.film_length / 60).toFixed(0);
-          
-    //     });
-    //     wx.setNavigationBarTitle({
-    //       title: msg.data.title
-    //     });
-    //     this.setData({
-    //       detail: msg.data,
-    //       sublessons: msg.data.sublesson
-    //     });
-    //     setTimeout(() => {
-    //       this.tolesson();
-    //     }, 800);
-    //   });
-    // });
-    // this.getDetail()
   },
   // 收藏
   collect() {
@@ -1110,7 +1098,6 @@ Page({
       }
     }
   },
-  keyheight(e) { },
   bindblur() {
     this.setData({
       keyHeight: false,
@@ -1118,9 +1105,6 @@ Page({
       write: true,
       writeTow: false
     });
-  },
-  //用于数据统计
-  onHide() {
   },
   closeGuide() {
     if (this.turnOff.guide) return
@@ -1428,7 +1412,6 @@ Page({
       content.forEach(item => {
         item.children[0]['text'] ? txt = txt + item.children[0]['text'] : 
         item.children[0]['children'] ? item.children[0]['children'][0]['text'] ? txt = txt + item.children[0]['children'][0]['text'] : '' : ''
-        // console.log(item.children[0]['children'])
       })
       txt = txt.replace(/&nbsp;/g,'')
       app.copythat(txt)
@@ -1460,5 +1443,138 @@ Page({
     }) : this.setData({
       showServise: true
     })
-  }
+  },
+  closeShool() {
+    wx.switchTab({
+      url: '/pages/index/index'
+    })
+  },
+  getPlath() {
+    this.getProvince().then(() => {
+      this.getCity().then(() => {
+        this.getSchool().then(() => {
+          let index1 = 0 , index2 = 0, index3 = 0
+          this.setData({
+            multiAddress: [this.province, this.city],
+            multiIndex: [index1, index2],
+            singleSchool: this.school,
+            singleIndex: index3
+          })
+        })
+      })
+    })
+  },
+  getProvince() {
+    let param = { level: 1 }
+    return app.user.search(param).then(msg => {
+      msg.data.push('暂无')
+      this.province = msg.data
+    })
+  },
+  getCity(val) {
+    let param = { level: 2, name: val || this.province[0] }
+    return app.user.search(param).then(msg => {
+      msg.data.push('暂无')
+      this.city = msg.data
+    })
+  },
+  getSchool(val) {
+    let param = { level: 3, name: val || this.city[0] }
+    return app.user.search(param).then(msg => {
+      this.school = msg.data
+    })
+  },
+  bindMultiPickerColumnChange(e) {
+    let temp = this.data.multiIndex
+    let col = e.detail.column
+    let val = e.detail.value
+    temp[col] = val
+    switch (col) {
+      case 0:
+        if(this.province[val] == '暂无') {
+          this.setData({
+            "multiAddress[1]": ['暂无'],
+          })
+        } else {
+          this.getCity(this.province[val]).then(() => {
+            this.getSchool().then(() => {
+              temp[1] = 0
+              this.setData({
+                "multiAddress[1]": this.city,
+                multiIndex: temp,
+                singleSchool: this.school,
+                singleIndex: 0
+              })
+            })
+          })
+        }
+        break
+      case 1:
+        if(this.city[val] == '暂无') {
+          this.school = ['暂无']
+          this.setData({
+            singleSchool: ['暂无'],
+            singleIndex: 0
+          })
+        } else {
+          this.getSchool(this.city[val]).then(() => {
+            this.setData({
+              singleSchool: this.school,
+              singleIndex: 0
+            })
+          })
+        }
+        break
+    }
+  },
+  bindMultiPickerChange(e) {
+    let arr = e.detail.value
+    this.province[arr[0]] == '暂无' || this.city[arr[1]] == '暂无' ? this.setData({
+      "plathParam.plath": '暂无'
+    }) : this.setData({
+      "plathParam.plath": this.province[arr[0]] + this.city[arr[1]]
+    })
+  },
+  bindSchool(e) {
+    let index = e.detail.value
+    this.school[index]
+    this.setData({
+      "plathParam.shool": this.school[index]
+    })
+  },
+  tipOrder() {
+    if (this.data.plathParam.plath.length == 0) {
+      wx.showToast({
+        title: "请先选择地区",
+        icon: "none",
+        duration: 1500,
+        mask: false
+      })
+    } else if(this.data.plathParam.shool.length == 0 && this.data.plathParam.plath != '暂无') {
+      wx.showToast({
+        title: "请先选择学校",
+        icon: "none",
+        duration: 1500,
+        mask: false
+      })
+    } else {
+      wx.showToast({
+        title: '提交成功',
+        image: '../../images/success.png',
+        duration: 2000
+      })
+    }
+  },
+  submit() {
+    if(this.data.plathParam.plath.length == 0 || this.data.plathParam.shool.length == 0) {
+      this.tipOrder()
+    } else {
+      let param = {
+        university: this.data.plathParam.shool,
+      } 
+      app.user.profile(param).then(msg => {
+        app.setUser(msg.data.userInfo)
+      })
+    }
+  },
 });

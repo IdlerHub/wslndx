@@ -11,7 +11,7 @@
     </cover-image>
     <cover-image wx:if="{{ !playing }}" mode="aspectFill" src="{{ $state.imgHost }}/play.png" class="play"
       bindtap="recordAdd"></cover-image>
-    <cover-view class="videomask" wx:if="{{showintegral}}"></cover-view>
+    <cover-view class="videomask" wx:if="{{showintegral || showplece}}"></cover-view>
   </video>
   <view class="info">
     <view class="top">
@@ -279,3 +279,30 @@
 <!-- 学分动画 -->
 <integralAnimation integral="{{integral}}" integralContent="{{integralContent}}" wx:if="{{showintegral}}">
 </integralAnimation>
+<!-- 学校选择 -->
+ <view class="chancesh">
+  <view class="chanBox">
+    <view class="top">请选择您的学校 <image src="../../images/icon-del.png" bindtap="closeShool"></image> </view>
+    <view class="plath">
+      <text>地区</text>
+      <picker mode="multiSelector" bindchange="bindMultiPickerChange" bindcolumnchange="bindMultiPickerColumnChange" value="{{multiIndex}}" range="{{ multiAddress }}">
+        <view class="plahtPicker">
+          <text wx:if="{{plathParam.plath.length == 0}}" class="plathoer">请选择地区</text>
+          <text wx:else class="adress"> {{ plathParam.plath }} </text>
+          <image src="../../images/stickright.png"></image>
+        </view>
+      </picker>
+    </view>
+    <view class="plath" bindtap="tipOrder">
+      <text>学校</text>
+      <picker mode="selector" bindchange="bindSchool" value="{{singleIndex}}" range="{{ singleSchool }}" disabled="{{ plathParam.plath.length == 0 }}">
+        <view class="plahtPicker">
+          <text class="plathoer" wx:if="{{plathParam.shool.length == 0}}">请选择地区</text>
+          <text wx:else class="adress"> {{ plathParam.shool }} </text>
+          <image src="../../images/stickright.png"></image>
+        </view>
+      </picker>
+    </view>
+    <view class="subPlath" bindtap="submit">确定提交</view>
+  </view>
+</view>
