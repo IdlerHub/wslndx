@@ -168,7 +168,7 @@ page {
       color:rgba(126,126,126,1);
     }
     .circle > .item  .lastComment {
-      height: 188rpx;
+      height: 120rpx;
       border-top: 1rpx solid #E8E8E8;
     }
     .circle > .item  .lastComment .lastContet {

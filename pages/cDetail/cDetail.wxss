@@ -93,7 +93,7 @@ page {
       color:rgba(126,126,126,1);
     }
     .wrap > .item  .lastComment {
-      height: 188rpx;
+      height: 120rpx;
       border-top: 1rpx solid #E8E8E8;
     }
      .item  .lastComment .lastContet {

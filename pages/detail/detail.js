@@ -46,7 +46,7 @@ Page({
     showintegral: false,
     showServise: false,
     replycontent: '',
-    showplece: true,
+    showplece: false,
     /* rect: wx.getMenuButtonBoundingClientRect() */
   },
   pageName: "视频页（视频详情页）",
@@ -132,19 +132,18 @@ Page({
       } else if (that.data.$state.userInfo.mobile) {
         that.getDetail();
       }
-      // if(that.data.$state.userInfo && that.data.$state.userInfo[university].length == 0 ) {
+      if(that.data.$state.userInfo && that.data.$state.userInfo.university.length == 0 ) {
         let plathParam = {
           plath: '',
           shool:'',
         }
-        app.store.setState({
-          'userInfo.school': '' 
-        })
         this.setData({
-          plathParam
+          plathParam,
+          showplece:true,
+          showToast: false
         })
         this.getPlath()
-      // }
+      }
     });
     this.sublessParam = {
       id: options.id || this.data.detail.id,
@@ -1574,4 +1573,12 @@ Page({
       })
     }
   },
+  closeToast() {
+   this.Toastimer = setTimeout(() => {
+      this.setState({
+        showToast: false
+      })
+      clearTimeout(this.Toastimer)
+    }, 1500)
+  }
 });

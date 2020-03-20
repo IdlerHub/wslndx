@@ -121,7 +121,6 @@
 					<view class="likesavatar"  wx:if="{{item.like_avatar_list[0] && item.likes!= 0 }}">
 						<view class="likesLeft">
 							<image wx:for="{{item.like_avatar_list}}" wx:for-item="linkeItem" wx:for-index="likeIndex" wx:key="likeIndex" src="{{linkeItem}}" style="left: -{{likeIndex * 10}}rpx;"></image>
-							<view class="likeTxt" style="margin-left:{{item.like_avatar_list.length == 3 ? '-10rpx' : item.like_avatar_list.length > 3 ?'-20rpx' : ''}} ;">等{{item.lw || item.likes}}人都说很赞</view>
 						</view>
 					</view>
 					<view class="btn">
@@ -163,10 +162,6 @@
 						<view class="lastContet">
 							<text>{{item.last_comment.nickname}}: </text>
 							<rich-text nodes="<div style='overflow:hidden;white-space:nowrap;text-overflow:ellipsis;'>{{ item.last_comment.content }} </div>"></rich-text>
-						</view>
-						<view class="more">
-							<text>更多评论</text>
-							<image src="../../images/stickright.png"></image>
 						</view>
 					</view>
 				</view>
@@ -241,7 +236,6 @@
 					<view class="likesavatar" wx:if="{{item.like_avatar_list[0] && item.likes!= 0 }}">
 						<view class="likesLeft">
 							<image wx:for="{{item.like_avatar_list}}" wx:for-item="linkeItem" wx:for-index="likeIndex" wx:key="likeIndex" src="{{linkeItem}}" style="left: -{{likeIndex * 10}}rpx;"></image>
-							<view class="likeTxt" style="margin-left:{{item.like_avatar_list.length == 3 ? '-10rpx' : item.like_avatar_list.length > 3 ?'-20rpx' : ''}} ;">等{{item.lw || item.likes}}人都说很赞</view>
 						</view>
 					</view>
 					<view class="btn">
@@ -281,10 +275,6 @@
 						<view class="lastContet">
 							<text>{{item.last_comment.nickname}}: </text>
 							<rich-text nodes="<div style='overflow:hidden;white-space:nowrap;text-overflow:ellipsis;'>{{ item.last_comment.content }} </div>"></rich-text>
-						</view>
-						<view class="more">
-							<text>更多评论</text>
-							<image src="../../images/stickright.png"></image>
 						</view>
 					</view>
 				</view>
@@ -365,7 +355,6 @@
 					<view class="likesavatar" wx:if="{{item.like_avatar_list[0] && item.likes!= 0}}">
 						<view class="likesLeft">
 							<image wx:for="{{item.like_avatar_list}}" wx:for-item="linkeItem" wx:for-index="likeIndex" wx:key="likeIndex" src="{{linkeItem}}" style="left: -{{likeIndex * 10}}rpx;"></image>
-							<view class="likeTxt" style="margin-left:{{item.like_avatar_list.length == 3 ? '-10rpx' : item.like_avatar_list.length > 3 ?'-20rpx' : ''}} ;">等{{item.lw || item.likes}}人都说很赞</view>
 						</view>
 					</view>
 					<view class="btn">
@@ -404,10 +393,6 @@
 						<view class="lastContet">
 							<text>{{item.last_comment.nickname}}: </text>
 							<rich-text nodes="<div style='overflow:hidden;white-space:nowrap;text-overflow:ellipsis;'>{{ item.last_comment.content }} </div>"></rich-text>
-						</view>
-						<view class="more">
-							<text>更多评论</text>
-							<image src="../../images/stickright.png"></image>
 						</view>
 					</view>
 				</view>
