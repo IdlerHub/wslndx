@@ -183,18 +183,21 @@ page .right {
       align-content: flex-start;
        }
       .wrap > .item .content .img image {
-        margin-top: 20rpx; }
+        margin-top: 20rpx;
+        border-radius: 6rpx; }
       .wrap > .item .content .img.one {
         max-height: 100vh;
         overflow: hidden; }
         .wrap > .item .content .img.one image {
           width: 400rpx;
-          background: #e9e9e9; }
+          background: #e9e9e9;
+          border-radius: 6rpx; }
       .wrap > .item .content .img.three image {
         width: 216rpx;
         height: 216rpx;
         margin-right: 20rpx;
-        background: #e9e9e9; }
+        background: #e9e9e9;
+        border-radius: 6rpx; }
         .wrap > .item .content .img.three image:nth-of-type(3n) {
           margin-right: 0; }
     .wrap > .item .content video {
@@ -223,10 +226,10 @@ page .right {
       right: 0;
       margin: auto; }
     .wrap > .item .label {
+      display:inline-block;
       background: #FFF6E6;
-      margin: 20rpx 0;
-      display: block;
-      width: 230rpx;
+      margin: 20rpx 0 0 0;
+      padding: 0 20rpx;
       line-height: 44rpx;
       border-radius: 6rpx;
       color: #DB9200;
@@ -234,17 +237,12 @@ page .right {
       text-align: center; }
   .wrap .btn {
     height: 125rpx;
-    margin-top: 30rpx;
+    margin-top: 10rpx;
     position: relative;
-    border-top: 2rpx solid #e8e8e8;
     display: flex;
     align-items: center;
     justify-content: stretch;
     overflow: hidden; }
-    .wrap .btn .division {
-      width: 2rpx;
-      height: 40rpx;
-      background: #dbdbdb; }
   .wrap > .item .top .left .loadingTxt {
     width: 240rpx;
     height: 42rpx;
@@ -270,10 +268,23 @@ page .right {
     border-radius: 8rpx;
   }
   .btn > .item {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center; }
+    flex: 1;
+    display: flex;
+    align-items: center;
+    padding-left: 20px;
+    box-sizing: border-box;
+  }
+   .btn > .item:nth-child(1) {
+    padding-left: 0;
+    justify-content: center;
+  }
+   .btn > .item:nth-child(2) {
+    padding-left: 30px;
+    justify-content: center;
+  }
+   .btn > .item:nth-child(3) {
+    justify-content: center;
+  } 
   .btn > .item .iconfont {
     font-size: 58rpx;
     color: #bdbdbd;

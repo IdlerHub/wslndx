@@ -61,22 +61,20 @@
 				<view wx:if="{{ item.fs_title }}" class="label">#{{ item.fs_title }}精选</view>
 			</view>
 			<view class="btn">
-				<button class="share item" open-type="share" data-index="{{ index }}" hover-class="btn-hover">
-					<icon class="iconfont icon-fenxiang"></icon>
-					<text class="text">{{ item.fw || item.forward }}</text>
-				</button>
-				<text class="division"></text>
-				<!-- 评论 -->
-				<navigator url="../pDetail/pDetail?id={{ item.id }}&comment" hover-class="none" open-type="navigate" class="item">
-					<icon class="iconfont icon-comment"></icon>
-					<text class="text">{{ item.cw || item.comments }}</text>
-				</navigator>
-				<text class="division"></text>
 				<!-- 点赞 -->
 				<view class="item" bindtap="praise" data-index="{{ index }}">
 					<view class="praise  {{ item.likestatus ? 'end' : '' }} {{ item.praising ? 'ani' : '' }}" data-index="{{ index }}" bindanimationend="aniend"></view>
-					<text class="text">{{ item.lw || item.likes }} </text>
+					<text class="text">{{ item.likes != 0 ? item.lw || item.likes : '点赞' }} </text>
 				</view>
+				<!-- 评论 -->
+				<navigator url="../pDetail/pDetail?id={{ item.id }}&comment" hover-class="none" open-type="navigate" class="item">
+					<icon class="iconfont icon-comment"></icon>
+					<text class="text">{{ item.comments != 0 ?  item.cw || item.comments : '评论' }}</text>
+				</navigator>
+				<button class="share item" open-type="share" data-index="{{ index }}" hover-class="btn-hover">
+					<icon class="iconfont icon-fenxiang"></icon>
+					<text class="text">{{ item.forward != 0 ? item.fw || item.forward : '分享' }}</text>
+				</button>
 			</view>
 		</view>
 	</view>

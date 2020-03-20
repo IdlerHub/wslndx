@@ -44,9 +44,6 @@ page {
       top: 0;
       right: -20rpx;
     }
-    .tabnav .tabnav-item {
-      
-    }
     .tabnav .lose {
       font-size:18px;
       font-weight:400;
@@ -308,10 +305,10 @@ page {
       right: 0;
       margin: auto; }
     .wrap > .item .label {
+      display: inline-block;
       background: #FFF6E6;
       margin-top: 20rpx;
-      display: block;
-      width: 230rpx;
+      padding: 0 20rpx;
       line-height: 44rpx;
       border-radius: 6rpx;
       color: #DB9200;

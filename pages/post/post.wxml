@@ -191,7 +191,7 @@
 							</view>
 						</view>
 						<view class="right">
-							<view class="attension" wx:if="{{!item.is_follow}}" data-index="{{index}}"
+							<view class="attension" wx:if="{{!item.is_follow && item.uid != $state.userInfo.id}}" data-index="{{index}}"
 								data-userid="{{item.uid}}" data-name="{{item.nickname}}" catchtap="attention">关注</view>
 							<view class="collect" catchtap="collect" data-id="{{item.id}}"
 								data-status="{{item.collectstatus}}" data-index="{{index}}" data-userid="{{item.uid}}"

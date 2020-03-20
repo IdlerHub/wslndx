@@ -67,10 +67,10 @@ page {
         height: 30rpx;
         margin-right: 5rpx; }
   .circle .label {
+    display: inline-block;
     background: #FFF6E6;
     margin-top: 30rpx;
-    display: block;
-    width: 230rpx;
+    padding: 0 20rpx;
     line-height: 44rpx;
     border-radius: 6rpx;
     color: #DB9200;
@@ -120,32 +120,44 @@ page {
     flex-wrap: wrap;
     align-content: flex-start; }
     .circle .img image {
-      margin-top: 20rpx; }
+      margin-top: 20rpx;
+      border-radius: 6rpx;
+       }
     .circle .img.one image {
-      width: 400rpx; }
+      width: 400rpx;
+      border-radius: 6rpx; }
     .circle .img.three image {
       width: 216rpx;
       height: 216rpx;
-      margin-right: 20rpx; }
+      margin-right: 20rpx;
+      border-radius: 6rpx; }
       .circle .img.three image:nth-of-type(3n) {
         margin-right: 0; }
   .circle .btn {
     height: 125rpx;
-    margin-top: 30rpx;
+    margin-top: 10rpx;
     position: relative;
-    border-top: 2rpx solid #e8e8e8;
     display: flex;
     align-items: center;
     justify-content: stretch; }
-    .circle .btn .division {
-      width: 2rpx;
-      height: 40rpx;
-      background: #dbdbdb; }
     .circle .btn > .item {
       flex: 1;
       display: flex;
       align-items: center;
-      justify-content: center; }
+      padding-left: 20px;
+      box-sizing: border-box;
+    }
+    .circle .btn > .item:nth-child(1) {
+      padding-left: 0;
+      justify-content: center;
+    }
+    .circle .btn > .item:nth-child(2) {
+      padding-left: 30px;
+      justify-content: center;
+    }
+    .circle .btn > .item:nth-child(3) {
+      justify-content: center;
+    } 
       .circle .btn > .item .iconfont {
         font-size: 58rpx;
         color: #bdbdbd;
