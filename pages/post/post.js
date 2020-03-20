@@ -468,7 +468,7 @@ Page({
     this.getList([]);
     this.setData({
       rlAni: true,
-      currentTab: 0,
+      currentTab: 1,
       scrollTop: 0
     });
     let timer = setTimeout(() => {
