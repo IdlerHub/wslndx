@@ -143,6 +143,9 @@ Page({
           plath: '',
           shool:'',
         }
+        app.store.setState({
+          'userInfo.school': '' 
+        })
         this.setData({
           plathParam
         })

@@ -320,7 +320,8 @@ page {
     position: relative;
     display: flex;
     align-items: center;
-    justify-content: stretch; }
+    justify-content: space-between;
+    padding: 0 30rpx 0  10rpx; }
     .wrap .btn .division {
       width: 2rpx;
       height: 40rpx;
@@ -377,7 +378,7 @@ page {
     color:rgba(126,126,126,1);
   }
 .btn > .item {
-  flex: 1;
+  /* flex: 1; */
   display: flex;
   align-items: center;
   padding-left: 20px;

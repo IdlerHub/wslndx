@@ -234,7 +234,8 @@ page .Pagetop {
     position: relative;
     display: flex;
     align-items: center;
-    justify-content: stretch; }
+    justify-content: space-between;
+    padding: 0 30rpx 0  10rpx; }
   .wrap > .item .top .left .loadingTxt {
     width: 240rpx;
     height: 42rpx;
@@ -260,7 +261,6 @@ page .Pagetop {
     border-radius: 8rpx;
   }
   .btn > .item {
-    flex: 1;
     display: flex;
     align-items: center;
     padding-left: 20px;
