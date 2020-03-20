@@ -74,6 +74,13 @@
     justify-content: space-between;
     align-items: center;
     position: relative;
+    width: 402rpx;
+}
+.card-body .card-info picker .placeholder .picker{
+    max-width: 290rpx;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 .change{
     display: flex;

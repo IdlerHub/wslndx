@@ -17,4 +17,5 @@
   <view class="btn-box">
     <button bindtap="gift" style="background:{{!gift.stock ? 'gray': ''}}">立即兑换</button>
   </view>
+  <address giftInfo="{{giftInfo}}" show-card="{{getAddress}}"></address>
 </view>

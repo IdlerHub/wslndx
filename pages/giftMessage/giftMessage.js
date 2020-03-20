@@ -6,6 +6,8 @@ Page({
    * 页面的初始数据
    */
   data: {
+    getAddress: false,
+    giftInfo: {}
   },
   pageName: '积分商品详情',
   /**
@@ -35,7 +37,8 @@ Page({
       })
     } else {
       if (this.data.totalPoints >= this.data.gift.need_points) {
-        let param = { gift_id: this.data.gift.id }
+        // let param = { gift_id: this.data.gift.id }
+        let param = gift
         if (this.data.gift.is_new == 1) {
           wx.showModal({
             title: "兑换提示",
@@ -47,11 +50,16 @@ Page({
             confirmColor: "#df2020",
             success: res => {
               if (res.confirm) {
-                app.user.exchange(param).then(res => {
-                  wx.navigateTo({
-                    url: "/pages/gift/gift?name=" + this.data.gift.title + '&image=' + this.data.gift.image
-                  })
+                this.setData({
+                  getAddress: true,
+                  giftInfo: param
                 })
+
+                // app.user.exchange(param).then(res => {
+                //   wx.navigateTo({
+                //     url: "/pages/gift/gift?name=" + this.data.gift.title + '&image=' + this.data.gift.image
+                //   })
+                // })
               }
             }
           })
@@ -66,11 +74,16 @@ Page({
             confirmColor: "#df2020",
             success: res => {
               if (res.confirm) {
-                app.user.exchange(param).then(res => {
-                  wx.navigateTo({
-                    url: "/pages/gift/gift?name=" + this.data.gift.title + '&image=' + this.data.gift.image
-                  })
+                this.setData({
+                  getAddress: true,
+                  giftInfo: param
                 })
+
+                // app.user.exchange(param).then(res => {
+                //   wx.navigateTo({
+                //     url: "/pages/gift/gift?name=" + this.data.gift.title + '&image=' + this.data.gift.image
+                //   })
+                // })
               }
             }
           })

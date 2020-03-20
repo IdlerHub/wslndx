@@ -3,24 +3,25 @@
     <view class="info-page">
         <view class="info">
             <view class="info-title">收 货 人</view>
-            <input type="text" class="info-content"
+            <input type="text" class="info-content" maxlength="8"
              placeholder="请填写收货人" placeholder-style="color:#B6B5B5"
              value="{{userInfo.username}}" bindblur="changeName"></input>
         </view>
         <view class="info">
             <view class="info-title">手机号码</view>
-            <input type="number" class="info-content"
+            <input type="number" class="info-content" maxlength="11"
              placeholder="请填写手机号" placeholder-style="color:#B6B5B5"
               value="{{userInfo.mobile}}" bindblur="changeMobile"></input>
         </view>
         <!-- 地区 -->
         <view class="info">
             <view class="info-title">所在地区</view>
-            <picker mode="multiSelector " value="{{ multiIndex }}" range="{{ multiAddress }}">
+            <picker mode="multiSelector" bindchange="changeArea" bindcolumnchange="changeColumn"
+             value="{{ multiIndex }}" range="{{ multiAddress }}">
                 <view class="placeholder">
-                    <text wx:if="{{ !param.address[1] }}">请选择</text>
-                    <view class="picker" wx:if="{{ param.address[1] }}">
-                        {{ param.address[0] }}，{{ param.address[1] }}，{{ param.address[2] }}
+                    <text wx:if="{{ !address[1] }}">请选择</text>
+                    <view class="picker" wx:if="{{ address[1] }}">
+                        {{ address[0] }} {{ address[1] }} {{ address[2] }}
                     </view>
                     <view class="change">
                         <text>修改</text>

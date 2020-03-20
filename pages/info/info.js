@@ -11,7 +11,8 @@ Page({
     gender: ["女", "男"],
     age: ["50以下", "50-60", "60-70", "70以上"],
     padding: false,
-    showintegral: false
+    showintegral: false,
+    userAddress: {}
   },
   pageName: '修改资料（完善资料）',
   onLoad() {
@@ -29,6 +30,7 @@ Page({
   },
   init() {
     let cascade = this.data.userInfo.university.split(",") || ["", "", ""]
+    this.getGoodsAddress()
     this.getProvince().then(() => {
       this.getCity(cascade[0]).then(() => {
         this.getSchool(cascade[1]).then(() => {
@@ -61,6 +63,13 @@ Page({
     let param = { level: 3, name: val || this.city[0] }
     return app.user.search(param).then(msg => {
       this.school = msg.data
+    })
+  },
+  getGoodsAddress() {  //获取收货地址信息
+    app.user.getGoodsAddress().then(res => {
+      this.setData({
+        userAddress: res.data
+      })
     })
   },
   bindMultiPickerColumnChange(e) {
@@ -170,9 +179,11 @@ Page({
       padding: true
     })
   },
-  fill(){
+  fill(e){
+    console.log("填充")
+    wx.setStorageSync("userAddress", JSON.stringify(e.currentTarget.dataset.useraddress))
     wx.navigateTo({
-      url: "/pages/infoAddress/infoAddress?type=first"
+      url: "/pages/infoAddress/infoAddress"
     })
   },
   //用于数据统计

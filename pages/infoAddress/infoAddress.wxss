@@ -23,6 +23,7 @@
     font-family:PingFangSC-Medium,PingFang SC;
     font-weight:500;
     color:rgba(51,51,51,1);
+    width: 144rpx;
     height: 100%;
     line-height: 118rpx;
 }
@@ -65,7 +66,12 @@
     justify-content: space-between;
     align-items: center;
 }
-
+.info .placeholder .picker{
+    max-width: 350rpx;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
 .info .placeholder .change text{
     font-size:36rpx;
     font-family:PingFangSC-Regular,PingFang SC;

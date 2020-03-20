@@ -202,9 +202,14 @@ function getAreainfo(param) {
   return httpService.post("user/getAreainfo", param)
 }
 
-//POST /user/getAreainfo 获取收货地址信息
+//POST /user/getGoodsAddress 获取收货地址信息
 function getGoodsAddress() {
   return httpService.post("user/getGoodsAddress")
+}
+
+//POST /user/putGoodsaddress 提交信息
+function putGoodsaddress(params) {
+  return httpService.post("user/putGoodsaddress",params)
 }
 
 module.exports = {
@@ -242,5 +247,6 @@ module.exports = {
   unreadNum,
   addLotteryInvite,
   getAreainfo,
-  getGoodsAddress
+  getGoodsAddress,
+  putGoodsaddress
 }
