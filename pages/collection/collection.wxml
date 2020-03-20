@@ -86,6 +86,12 @@
 						</view>
 					</view>
 					<navigator wx:if="{{ item.fs_title }}" url="../cDetail/cDetail?id={{ item.fs_id }}" hover-class="none" open-type="navigate" class="label"> #{{ item.fs_title }}精选</navigator>
+					<view class="likesavatar" wx:if="{{item.like_avatar_list[0] && item.likes!= 0}}">
+						<view class="likesLeft">
+							<image wx:for="{{item.like_avatar_list}}" wx:for-item="linkeItem" wx:for-index="likeIndex" wx:key="likeIndex" src="{{linkeItem}}" style="left: -{{likeIndex * 10}}rpx;"></image>
+							<view class="likeTxt" style="margin-left:{{item.like_avatar_list.length == 3 ? '-10rpx' : item.like_avatar_list.length > 3 ?'-20rpx' : ''}} ;">等{{item.lw || item.likes}}人都说很赞</view>
+						</view>
+					</view>
 					<view class="btn">
 						<!-- 点赞 -->
 						<formCode bind:handler="praise" class="item" data-index="{{ index }}">
@@ -111,6 +117,16 @@
 							<icon class="iconfont icon-fenxiang"></icon>
 							<text class="text">{{ item.forward != 0 ? item.fw || item.forward : '分享' }}</text>
 						</button>
+					</view>
+					<view class="lastComment" wx:if="{{item.last_comment.nickname}}" catchtap="navigate" data-id="{{ item.id }}">
+						<view class="lastContet">
+							<text>{{item.last_comment.nickname}}: </text>
+							<rich-text nodes="<div style='overflow:hidden;white-space:nowrap;text-overflow:ellipsis;'>{{ item.last_comment.content }} </div>"></rich-text>
+						</view>
+						<view class="more">
+							<text>更多评论</text>
+							<image src="../../images/stickright.png"></image>
+						</view>
 					</view>
 				</view>
 			</view>

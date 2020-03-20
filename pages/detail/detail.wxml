@@ -1,6 +1,6 @@
 <view class="container">
   <video id="myVideo" src="{{ cur.url }}" controls page-gesture enable-play-gesture bindended="ended"
-    bindtimeupdate="timeupdate" bindloadedmetadata="played">
+    bindtimeupdate="timeupdate" bindloadedmetadata="played"  wx:if="{{$state.userInfo.school.length > 0}}">
     <cover-view wx:if="{{ vistor && tip }}" class="vistor-head">
       <cover-view>点击“</cover-view>
       <cover-image src="/images/xiaochengxu.png" class="iconfont"></cover-image>
@@ -11,8 +11,20 @@
     </cover-image>
     <cover-image wx:if="{{ !playing }}" mode="aspectFill" src="{{ $state.imgHost }}/play.png" class="play"
       bindtap="recordAdd"></cover-image>
-    <cover-view class="videomask" wx:if="{{showintegral || showplece}}"></cover-view>
+    <cover-view class="videomask" wx:if="{{showintegral}}"></cover-view>
   </video>
+  <view id="myVideo" style="overflow: hidden;" wx:else>
+    <cover-view wx:if="{{ vistor && tip }}" class="vistor-head">
+      <cover-view>点击“</cover-view>
+      <cover-image src="/images/xiaochengxu.png" class="iconfont"></cover-image>
+      <cover-view>”添加到我的小程序 </cover-view>
+      <!-- <cover-image src="/images/shouzhi.png" class="iconfont" style="left:{{ rect.left + 10 }}px"></cover-image> -->
+    </cover-view>
+     <image wx:if="{{ !playing }}" mode="widthFix" src="{{ detail.image }}" class="poster">
+    </image>
+    <image wx:if="{{ !playing }}" mode="aspectFill" src="{{ $state.imgHost }}/play.png" class="play"
+    ></image>
+  </view>
   <view class="info">
     <view class="top">
       <view>
@@ -306,3 +318,9 @@
     <view class="subPlath" bindtap="submit">确定提交</view>
   </view>
 </view>
+<view class="toast" wx:if="{{showToast}}">
+  <image src="../../images/success.png"></image>
+  <text>提交成功</text>
+</view>
+
+

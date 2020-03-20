@@ -140,6 +140,74 @@ page {
     display: flex;
     align-items: center;
     justify-content: stretch; }
+    .circle > .item  .likesavatar {
+      display: flex;
+      align-items: center;
+      margin-top: 20rpx;
+    }
+    .circle > .item  .likesavatar .likesLeft {
+      display: flex;
+      align-items: center;
+    }
+    .circle > .item  .likesavatar .likesLeft image {
+      width: 40rpx;
+      height: 40rpx;
+      border-radius: 50%;
+      position: relative;
+      left: -10rpx;
+      border:2rpx solid #fff; 
+    }
+    .circle > .item  .likesavatar .likesLeft image:nth-child(1) {
+      left: 0;
+    }
+    .circle > .item  .likesavatar .likesLeft .likeTxt {
+      margin-left: 5rpx;
+      font-size:28rpx;
+      font-family:PingFangSC-Regular,PingFang SC;
+      font-weight:400;
+      color:rgba(126,126,126,1);
+    }
+    .circle > .item  .lastComment {
+      height: 188rpx;
+      border-top: 1rpx solid #E8E8E8;
+    }
+    .circle > .item  .lastComment .lastContet {
+      display: flex;
+      align-items: center;
+      margin: 30rpx 0 10rpx 0;
+    }
+    .circle > .item  .lastComment .lastContet text {
+      font-size:36rpx;
+      font-family:PingFangSC-Medium,PingFang SC;
+      font-weight:500;
+      color:rgba(58,58,58,1);
+    }
+    .circle > .item  .lastComment .lastContet rich-text {
+      flex: 1;
+      width: 0;
+      font-size:36rpx;
+      font-family:PingFangSC-Regular,PingFang SC;
+      font-weight:400;
+      color:rgba(126,126,126,1);
+      margin-left: 20rpx;
+    } 
+    .circle > .item  .lastComment .more {
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+    }
+    .circle > .item  .lastComment .more text {
+      font-size:36rpx;
+      font-family:PingFangSC-Regular,PingFang SC;
+      font-weight:400;
+      color:rgba(179,179,179,1);
+    }
+    .circle > .item  .lastComment .more image {
+      width: 14rpx;
+      height: 25rpx;
+      margin-left: 10rpx;
+      margin-top: 4rpx;
+    }
     .circle .btn > .item {
       flex: 1;
       display: flex;

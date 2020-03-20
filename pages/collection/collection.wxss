@@ -267,6 +267,74 @@ page .right {
     background:#f5f6f8;
     border-radius: 8rpx;
   }
+  .wrap > .item  .likesavatar {
+    display: flex;
+    align-items: center;
+    margin-top: 20rpx;
+  }
+  .wrap > .item  .likesavatar .likesLeft {
+    display: flex;
+    align-items: center;
+  }
+  .wrap > .item  .likesavatar .likesLeft image {
+    width: 40rpx;
+    height: 40rpx;
+    border-radius: 50%;
+    position: relative;
+    left: -10rpx;
+    border:2rpx solid #fff; 
+  }
+  .wrap > .item  .likesavatar .likesLeft image:nth-child(1) {
+    left: 0;
+  }
+  .wrap > .item  .likesavatar .likesLeft .likeTxt {
+    margin-left: 5rpx;
+    font-size:28rpx;
+    font-family:PingFangSC-Regular,PingFang SC;
+    font-weight:400;
+    color:rgba(126,126,126,1);
+  }
+  .wrap > .item  .lastComment {
+    height: 188rpx;
+    border-top: 1rpx solid #E8E8E8;
+  }
+  .wrap > .item  .lastComment .lastContet {
+    display: flex;
+    align-items: center;
+    margin: 30rpx 0 10rpx 0;
+  }
+  .wrap > .item  .lastComment .lastContet text {
+    font-size:36rpx;
+    font-family:PingFangSC-Medium,PingFang SC;
+    font-weight:500;
+    color:rgba(58,58,58,1);
+  }
+  .wrap > .item  .lastComment .lastContet rich-text {
+    flex: 1;
+    width: 0;
+    font-size:36rpx;
+    font-family:PingFangSC-Regular,PingFang SC;
+    font-weight:400;
+    color:rgba(126,126,126,1);
+    margin-left: 20rpx;
+  } 
+  .wrap > .item  .lastComment .more {
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+  }
+  .wrap > .item  .lastComment .more text {
+    font-size:36rpx;
+    font-family:PingFangSC-Regular,PingFang SC;
+    font-weight:400;
+    color:rgba(179,179,179,1);
+  }
+  .wrap > .item  .lastComment .more image {
+    width: 14rpx;
+    height: 25rpx;
+    margin-left: 10rpx;
+    margin-top: 4rpx;
+  }
   .btn > .item {
     flex: 1;
     display: flex;

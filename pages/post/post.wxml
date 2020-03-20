@@ -159,6 +159,16 @@
 							<text class="text">{{ item.forward != 0 ? item.fw || item.forward : '分享' }}</text>
 						</button>
 					</view>
+					<view class="lastComment" wx:if="{{item.last_comment.nickname}}" catchtap="navigate" data-id="{{ item.id }}">
+						<view class="lastContet">
+							<text>{{item.last_comment.nickname}}: </text>
+							<rich-text nodes="<div style='overflow:hidden;white-space:nowrap;text-overflow:ellipsis;'>{{ item.last_comment.content }} </div>"></rich-text>
+						</view>
+						<view class="more">
+							<text>更多评论</text>
+							<image src="../../images/stickright.png"></image>
+						</view>
+					</view>
 				</view>
 			</view>
 			<mp-loading type="circle" wx:if="{{ showLoading }}"></mp-loading>
@@ -266,6 +276,16 @@
 							<icon class="iconfont icon-fenxiang"></icon>
 							<text class="text">{{ item.forward != 0 ? item.fw || item.forward : '分享' }}</text>
 						</button>
+					</view>
+					<view class="lastComment" wx:if="{{item.last_comment.nickname}}" catchtap="navigate" data-id="{{ item.id }}">
+						<view class="lastContet">
+							<text>{{item.last_comment.nickname}}: </text>
+							<rich-text nodes="<div style='overflow:hidden;white-space:nowrap;text-overflow:ellipsis;'>{{ item.last_comment.content }} </div>"></rich-text>
+						</view>
+						<view class="more">
+							<text>更多评论</text>
+							<image src="../../images/stickright.png"></image>
+						</view>
 					</view>
 				</view>
 			</view>
@@ -379,6 +399,16 @@
 							<icon class="iconfont icon-fenxiang"></icon>
 							<text class="text">{{ item.forward != 0 ? item.fw || item.forward : '分享' }}</text>
 						</button>
+					</view>
+					<view class="lastComment" wx:if="{{item.last_comment.nickname}}" catchtap="navigate" data-id="{{ item.id }}">
+						<view class="lastContet">
+							<text>{{item.last_comment.nickname}}: </text>
+							<rich-text nodes="<div style='overflow:hidden;white-space:nowrap;text-overflow:ellipsis;'>{{ item.last_comment.content }} </div>"></rich-text>
+						</view>
+						<view class="more">
+							<text>更多评论</text>
+							<image src="../../images/stickright.png"></image>
+						</view>
 					</view>
 				</view>
 			</view>

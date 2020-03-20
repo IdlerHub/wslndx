@@ -5,12 +5,12 @@
  */
 import Store from "wxministore";
 const app = getApp();
-let env = "production";
+let env = "develop";
 let imgHost;
 let activityUrl;
 let API_URL;
 let socket_host;
-let mpVersion = "v20"; /* 版本管理 */
+let mpVersion = "v21"; /* 版本管理 */
 if (env == "develop") {
   /* 测试环境 */
   imgHost =

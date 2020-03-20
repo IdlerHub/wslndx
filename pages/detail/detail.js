@@ -79,18 +79,12 @@ Page({
       that.setData({
         vistor: options.type == "share", //游客从分享卡片过来
         height: scrollViewHeight,
-        currentTab: 1,
+        currentTab: 0,
         navScrollLeft: 0,
         id: options.id,
         curid: options.curid || null,
         cur: {}
       });
-
-      setTimeout( () => {
-        wx.pageScrollTo({
-          scrollTop: 211
-        });
-      }, 1000)
       if (that.data.$state.newGuide) {
         that.data.$state.newGuide.lesson == 0
           ? this.setData({
@@ -1545,7 +1539,7 @@ Page({
       "plathParam.shool": this.school[index]
     })
   },
-  tipOrder() {
+  tipOrder(type) {
     if (this.data.plathParam.plath.length == 0) {
       wx.showToast({
         title: "请先选择地区",
@@ -1553,14 +1547,14 @@ Page({
         duration: 1500,
         mask: false
       })
-    } else if(this.data.plathParam.shool.length == 0 && this.data.plathParam.plath != '暂无') {
+    } else if(this.data.plathParam.shool.length == 0 && this.data.plathParam.plath != '暂无' && type == 1) {
       wx.showToast({
         title: "请先选择学校",
         icon: "none",
         duration: 1500,
         mask: false
       })
-    } else {
+    } else if(type == 1){
       wx.showToast({
         title: '提交成功',
         image: '../../images/success.png',
@@ -1570,7 +1564,7 @@ Page({
   },
   submit() {
     if(this.data.plathParam.plath.length == 0 || this.data.plathParam.shool.length == 0) {
-      this.tipOrder()
+      this.tipOrder(1)
     } else {
       let param = {
         university: this.data.plathParam.shool,

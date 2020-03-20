@@ -65,6 +65,74 @@ page {
       background: #FFF6E6;
       text-align: center;
     }
+     .item  .likesavatar {
+      display: flex;
+      align-items: center;
+      margin-top: 20rpx;
+    }
+     .item  .likesavatar .likesLeft {
+      display: flex;
+      align-items: center;
+    }
+    .item  .likesavatar .likesLeft image {
+      width: 40rpx;
+      height: 40rpx;
+      border-radius: 50%;
+      position: relative;
+      left: -10rpx;
+      border:2rpx solid #fff; 
+    }
+     .item  .likesavatar .likesLeft image:nth-child(1) {
+      left: 0;
+    }
+    .item  .likesavatar .likesLeft .likeTxt {
+      margin-left: 5rpx;
+      font-size:28rpx;
+      font-family:PingFangSC-Regular,PingFang SC;
+      font-weight:400;
+      color:rgba(126,126,126,1);
+    }
+    .wrap > .item  .lastComment {
+      height: 188rpx;
+      border-top: 1rpx solid #E8E8E8;
+    }
+     .item  .lastComment .lastContet {
+      display: flex;
+      align-items: center;
+      margin: 30rpx 0 10rpx 0;
+    }
+    .item  .lastComment .lastContet text {
+      font-size:36rpx;
+      font-family:PingFangSC-Medium,PingFang SC;
+      font-weight:500;
+      color:rgba(58,58,58,1);
+    }
+     .item  .lastComment .lastContet rich-text {
+      flex: 1;
+      width: 0;
+      font-size:36rpx;
+      font-family:PingFangSC-Regular,PingFang SC;
+      font-weight:400;
+      color:rgba(126,126,126,1);
+      margin-left: 20rpx;
+    } 
+     .item  .lastComment .more {
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+    }
+     .item  .lastComment .more text {
+      font-size:36rpx;
+      font-family:PingFangSC-Regular,PingFang SC;
+      font-weight:400;
+      color:rgba(179,179,179,1);
+    }
+    .item  .lastComment .more image {
+      width: 14rpx;
+      height: 25rpx;
+      margin-left: 10rpx;
+      margin-top: 4rpx;
+    }
     .btn > .item {
       display: flex;
       align-items: center;
