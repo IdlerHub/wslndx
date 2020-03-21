@@ -241,59 +241,45 @@ Component({
       };
       console.log(param)
       that.putGoodsaddress().then(()=>{
-        if (that.data.giftInfo.from == "winPrize") {  //从抽奖来的
-          console.log("抽奖兑换奖品", that.data.giftInfo)
-          param['id'] = that.data.giftInfo.id
-          console.log(param)
-          that.triggerEvent('change', param.id)
-          app.lottery.finishGetPrize(param).then(()=>{
-            wx.showModal({
-              title: '兑换成功',
-              content: '您的兑换申请已提交，请耐心等候哦！',
-              showCancel: false,
-              confirmColor: "#DF2020",
-              success(res) {
-                if (res.confirm) {
-                  that.setData({
-                    showCard: false
-                  })
-                }
+        wx.showModal({
+          title: '兑换成功',
+          content: '您的兑换申请已提交，请耐心等候哦！',
+          showCancel: false,
+          confirmColor: "#DF2020",
+          success(res) {
+            if (res.confirm) {
+              that.setData({
+                showCard: false
+              })
+              if(that.data.giftInfo.from == "winPrize"){  //从抽奖来的
+                console.log("抽奖兑换奖品", that.data.giftInfo)
+                param['id'] = that.data.giftInfo.id
+                console.log(param)
+                that.triggerEvent('change', param.id)
+                app.lottery.finishGetPrize(param)
+              }else{  //积分兑换
+                console.log("积分兑换奖品", that.data.giftInfo)
+                param['gift_id'] = that.data.giftInfo.id
+                app.user.exchange(param).then(() => {
+                  // wx.navigateTo({
+                  //   url:
+                  //     "/pages/gift/gift?name=" +
+                  //     that.data.giftInfo.title +
+                  //     "&image=" +
+                  //     that.data.giftInfo.image
+                  // });
+                }).catch(err=>{
+                  wx.showToast({
+                    title: res.msg,
+                    icon: "none",
+                    duration: 2000
+                  });
+                });
               }
-            })
-          })
-        } else {  //积分兑换
-          console.log("积分兑换奖品", that.data.giftInfo)
-          param['gift_id'] = that.data.giftInfo.id
-          app.user.exchange(param).then(() => {
-            wx.showModal({
-              title: '兑换成功',
-              content: '您的兑换申请已提交，请耐心等候哦！',
-              showCancel: false,
-              confirmColor: "#DF2020",
-              success(res) {
-                if (res.confirm) {
-                  that.setData({
-                    showCard: false
-                  })
-                }
-              }
-            })
-            // wx.navigateTo({
-            //   url:
-            //     "/pages/gift/gift?name=" +
-            //     that.data.giftInfo.title +
-            //     "&image=" +
-            //     that.data.giftInfo.image
-            // });
-          }).catch(err => {
-            wx.showToast({
-              title: res.msg,
-              icon: "none",
-              duration: 2000
-            });
-          });
-        }
-        
+              
+            }
+          }
+        })
       });
       
     }
