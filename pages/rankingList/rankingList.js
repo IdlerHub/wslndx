@@ -4,41 +4,41 @@ Page({
   data: {
     mode: 0,
     time: 0,
-    rankType: 1,
+    rankType: 'day',
     list:[],
     showRule: false,
     rule: '我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规',
     shoolList: {
-      1:[],
-      2:[],
-      3:[]
+      day:[],
+      week:[],
+      month:[]
     },
     userList: {
-      1:[],
-      2:[],
-      3:[]
+      day:[],
+      week:[],
+      month:[]
     }
   },
   onLoad: function (options) {
     this.shoolPage = {
-      1: {
+      day: {
         page:1, pageSize: 10, type: 'day'
       },
-      2: {
+      week: {
         page:1, pageSize: 10, type: 'week'
       },
-      3: {
+      month: {
         page:1, pageSize: 10, type: 'month'
       },
     }
     this.userPage = {
-      1: {
+      day: {
         page:1, pageSize: 10, type: 'day'
       },
-      2: {
+      week: {
         page:1, pageSize: 10, type: 'week'
       },
-      3: {
+      month: {
         page:1, pageSize: 10, type: 'month'
       },
     }
@@ -85,7 +85,12 @@ Page({
     this.setData({
       rankType: e.currentTarget.dataset.type
     })
-    this.getShoollist()
+    if(this.data.mode) {
+
+    } else {
+      if(this.data.shoolList[this.data.rankType][0]) return
+      this.getShoollist()
+    }
   },
   openRule(e) {
     console.log(e)
@@ -100,9 +105,9 @@ Page({
   },
   getShoollist() {
     app.user.getSchoolLessonTime(this.shoolPage[this.data.rankType]).then(res => {
-      // this.setData({
-      //   [`shoolList${this.data.rankType}`]
-      // })
+      this.setData({
+        [`shoolList[${this.data.rankType}]`]: res.data
+      })
     })
   }
 })
