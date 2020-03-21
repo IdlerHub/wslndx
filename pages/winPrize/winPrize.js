@@ -70,8 +70,8 @@ Page({
           prizeList.forEach(item => {
             // item.id == e.currentTarget.dataset.id ? (item.is_finish = 1) : "";
             if (item.id == e.currentTarget.dataset.id) {
-              item.is_finish = 2;
-              item.show = "兑换中"
+              item.is_finish = 1;
+              item.show = "已领取"
             }
           });
           this.setData({
