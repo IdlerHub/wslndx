@@ -4,7 +4,6 @@
  * @LastEditTime: 2019-08-12 15:15:34
  -->
 <view class="container">
-  <view class="title">完善资料</view>
   <view class="box">
     <!-- 姓名 -->
     <view class="nameInput">
@@ -73,5 +72,6 @@
     </view>
   </view>
 </view>
+
 <!-- 学分动画 -->
 <integralAnimation integral="+65 学分" integralContent="完成完善资料" wx:if="{{showintegral}}"></integralAnimation>
