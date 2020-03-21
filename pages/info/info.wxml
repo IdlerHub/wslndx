@@ -63,6 +63,17 @@
         </view>
       </picker>
     </view>
+<<<<<<< HEAD
+=======
+    <!-- 收货地址 -->
+    <view class="section">
+      <view class="section__title">收货地址</view>
+      <view class="placeholder" catchtap="fill">
+        <text>{{userAddress.goods_address_id ? '修改' : '请补充'}}</text>
+        <image class="icon" mode="aspectFill" src="{{ $state.imgHost }}/Return-black.png"></image>
+      </view>
+    </view>
+>>>>>>> 6815fb5a62835a14eee263a4b2938bad9144d3e6
   </view>
 </view>
 <!-- 学分动画 -->

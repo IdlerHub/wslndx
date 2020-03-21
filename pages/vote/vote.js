@@ -11,6 +11,7 @@ Page({
     type: 0, //分类的id
     newProduction: [],
     productionList: [],
+    infoFlag: {}, //活动时间以及弹窗提示信息
     page: 1
     // supportFlag: 1 //今日点赞权限 0=无, 1=有
   },
@@ -42,8 +43,13 @@ Page({
     });
   },
   setLikeData(index) {
+    wx.showToast({
+      title: "今日已点赞成功",
+      icon: "none",
+      duration: 2500
+    });
     let work = this.data.productionList[index];
-    work.prise_numbers += 1;
+    if (work.prise_numbers < 10000) work.prise_numbers += 1;
     work.is_praise = 1;
     let key = "productionList[" + index + "]";
     this.setData({
@@ -56,9 +62,9 @@ Page({
     //step 活动是否过期
     // step1 判断今天是否点赞过
     // step2  作品点赞数添加 （修改data中数据），不刷新页面
-    if (this.data.overTime == 1) {
+    if (this.data.infoFlag.flag == 0) {
       wx.showToast({
-        title: "活动已过期,无法点赞",
+        title: this.data.infoFlag.msg,
         icon: "none",
         duration: 1500
       });
@@ -75,12 +81,12 @@ Page({
       } else {
         // let index = e.currentTarget.dataset.index;
         // let work = this.data.productionList[index];
-        this.setLikeData(index);
+        
         let params = {
           id: e.currentTarget.dataset.id,
           type: work.hoc_id //需要作品带的type
         };
-        this.praiseOpus(params);
+        this.praiseOpus(params,index);
       }
     }
   },
@@ -134,7 +140,7 @@ Page({
         productionList: data,
         page: page,
         // supportFlag: res.data.have_praise,
-        overTime: res.data.over_time
+        infoFlag: res.data.info
       });
     });
     //xhr (selectedIndex , page)
@@ -144,24 +150,25 @@ Page({
     //获取分类数据
     let data = [{ id: "0", name: "全部" }];
     app.vote.getCategory().then(res => {
-      data = data.concat(res.data);
+      data = data.concat(res.data.data);
       this.setData({
         classifyList: data
       });
     });
   },
-  praiseOpus(params) {
+  praiseOpus(params,index) {
     app.vote
       .praiseOpus(params)
       .then(res => {
+        
+        this.setLikeData(index);
+      })
+      .catch(err => {
         wx.showToast({
-          title: "今日已点赞成功",
+          title: err.msg,
           icon: "none",
           duration: 2500
         });
-      })
-      .catch(err => {
-        console.log(err);
       });
   },
   changeData(index, type) {

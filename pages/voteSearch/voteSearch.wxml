@@ -3,7 +3,7 @@
     <view class="search">
         <view class="search-left">
             <image src="{{$state.imgHost}}/searchp.png" style="width: 44rpx;height: 44rpx;" alt="" />
-            <input type="text"  confirm-type="search" placeholder="请输入作品名称或作者名" maxlength="15" value="{{inputcontent}}" bindinput="changeSearch" bindconfirm="toSearch" focus/>
+            <input type="text"  confirm-type="search" placeholder="请输入关键字搜索" maxlength="15" value="{{inputcontent}}" bindinput="changeSearch" bindconfirm="toSearch" focus/>
             <icon hidden="{{clearhidden}}" type="clear" size="36rpx" bindtap="clearInput" />
         </view>
         <view class="search-right" catchtap="goBack">取消</view>

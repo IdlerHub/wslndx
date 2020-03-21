@@ -35,7 +35,8 @@ Page({
   getCategory() {
     let data = [{ id: "0", name: "全部" }];
     app.vote.getCategory().then(res => {
-      data = data.concat(res.data);
+      data = data.concat(res.data.data);
+      console.log(data)
       this.setData({
         classifyList: data
       });

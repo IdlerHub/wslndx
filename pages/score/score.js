@@ -7,6 +7,8 @@ const app = getApp();
 //Page Object
 Page({
   data: {
+    getAddress: false,
+    giftInfo: {}, //兑换礼品信息
     currentTab: 1,
     scrollStatus: false,
     paylist: [],
@@ -23,7 +25,11 @@ Page({
         img: "https://hwcdn.jinlingkeji.cn/images/pro/withdrawBanner2.png",
         clickUrl: "/pages/makeMoney/makeMoney"
       }
+<<<<<<< HEAD
     ]
+=======
+    ],
+>>>>>>> 6815fb5a62835a14eee263a4b2938bad9144d3e6
   },
   pageName: "学分兑换页",
   common: {
@@ -421,7 +427,9 @@ Page({
     } else {
       if (this.data.totalPoints >= e.currentTarget.dataset.score) {
         let param = {
-          gift_id: e.currentTarget.dataset.id
+          id: e.currentTarget.dataset.id,
+          title: e.currentTarget.dataset.title,
+          image: e.currentTarget.dataset.image
         };
         if (e.currentTarget.dataset.type == 1) {
           wx.showModal({
@@ -433,15 +441,19 @@ Page({
             confirmColor: "#df2020",
             success: res => {
               if (res.confirm) {
-                app.user.exchange(param).then(res => {
-                  wx.navigateTo({
-                    url:
-                      "/pages/gift/gift?name=" +
-                      e.currentTarget.dataset.title +
-                      "&image=" +
-                      e.currentTarget.dataset.image
-                  });
-                });
+                this.setData({
+                  getAddress: true,
+                  giftInfo: param
+                })
+                // app.user.exchange(param).then(res => {
+                //   wx.navigateTo({
+                //     url:
+                //       "/pages/gift/gift?name=" +
+                //       e.currentTarget.dataset.title +
+                //       "&image=" +
+                //       e.currentTarget.dataset.image
+                //   });
+                // });
               }
             }
           });
@@ -456,15 +468,19 @@ Page({
             confirmColor: "#df2020",
             success: res => {
               if (res.confirm) {
-                app.user.exchange(param).then(res => {
-                  wx.navigateTo({
-                    url:
-                      "/pages/gift/gift?name=" +
-                      e.currentTarget.dataset.title +
-                      "&image=" +
-                      e.currentTarget.dataset.image
-                  });
-                });
+                this.setData({
+                  getAddress: true,
+                  giftInfo: param
+                })
+                // app.user.exchange(param).then(res => {
+                //   wx.navigateTo({
+                //     url:
+                //       "/pages/gift/gift?name=" +
+                //       e.currentTarget.dataset.title +
+                //       "&image=" +
+                //       e.currentTarget.dataset.image
+                //   });
+                // });
               }
             }
           });

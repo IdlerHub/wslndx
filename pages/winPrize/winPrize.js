@@ -10,6 +10,8 @@ Page({
    * 页面的初始数据
    */
   data: {
+    giftInfo: {},
+    getAddress: false,
     prizeList: [],
     duijiang: "兑奖",
     lingqu: "领取"
@@ -38,34 +40,62 @@ Page({
       });
     });
   },
-  // 领取学分
+  changeItem(e){
+    console.log("触发事件 ",e)
+    let prizeList = this.data.prizeList;
+    prizeList.forEach(item => {
+      if (item.id == e.detail){
+        item.is_finish = 2;
+        item.show = "兑换中"
+      }
+    });
+    this.setData({
+      prizeList
+    });
+  },
+  // 领取奖品
   conversion(e) {
-    if (e.currentTarget.dataset.finish == 1) return;
+    //get_type == 1 实物品  || 2 积分,无需填写地址
+    if (e.currentTarget.dataset.finish !== 0) return;
     let param = {
-      id: e.currentTarget.dataset.id
+      id: e.currentTarget.dataset.id,
+      get_type: e.currentTarget.dataset.type
     };
-    app.lottery
-      .finishGetPrize(param)
-      .then(res => {
-        let prizeList = this.data.prizeList;
-        prizeList.forEach(item => {
-          item.id == e.currentTarget.dataset.id ? (item.is_finish = 1) : "";
+    if (param.get_type == 2){
+      console.log("我是积分呀")
+      app.lottery
+        .finishGetPrize(param)
+        .then(res => {
+          let prizeList = this.data.prizeList;
+          prizeList.forEach(item => {
+            // item.id == e.currentTarget.dataset.id ? (item.is_finish = 1) : "";
+            if (item.id == e.currentTarget.dataset.id) {
+              item.is_finish = 2;
+              item.show = "兑换中"
+            }
+          });
+          this.setData({
+            prizeList
+          });
+          wx.showToast({
+            title: "领取成功",
+            icon: "none",
+            duration: 2000
+          });
+        })
+        .catch(res => {
+          wx.showToast({
+            title: res.msg,
+            icon: "none",
+            duration: 2000
+          });
         });
-        this.setData({
-          prizeList
-        });
-        wx.showToast({
-          title: "领取成功",
-          icon: "none",
-          duration: 2000
-        });
+    }else if(param.get_type == 1){
+      param['from'] = "winPrize";
+      this.setData({
+        getAddress: true,
+        giftInfo: param
       })
-      .then(res => {
-        wx.showToast({
-          title: res.msg,
-          icon: "none",
-          duration: 2000
-        });
-      });
+    }
   }
 });

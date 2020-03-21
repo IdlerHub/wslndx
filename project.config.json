@@ -162,9 +162,29 @@
 					"scene": null
 				},
 				{
+<<<<<<< HEAD
 					"id": 10,
 					"name": "pages/rankingList/rankingList",
 					"pathName": "pages/rankingList/rankingList",
+=======
+					"id": -1,
+					"name": "pages/sign/sign",
+					"pathName": "/pages/loading/loading",
+					"query": "uid=12661&type=invite",
+					"scene": null
+				},
+				{
+					"id": 11,
+					"name": "pages/infoAddress/infoAddress",
+					"pathName": "pages/info/info",
+					"query": "uid=12661&type=invite",
+					"scene": null
+				},
+				{
+					"id": 12,
+					"name": "pages/addressCard/addressCard",
+					"pathName": "pages/score/score",
+>>>>>>> 6815fb5a62835a14eee263a4b2938bad9144d3e6
 					"query": "uid=12661&type=invite",
 					"scene": null
 				}

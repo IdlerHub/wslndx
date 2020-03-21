@@ -3,6 +3,7 @@ const app = getApp();
 let videoCtx = null;
 Page({
   data: {
+    infoFlag: {}, //活动时间以及弹窗提示
     hocIndex: Number,
     current: 0,
     pause: false,
@@ -60,9 +61,9 @@ Page({
     //step  活动是否过期
     // step1 判断今天是否点赞过
     // step2  作品点赞数添加 （修改data中数据），不刷新页面
-    if (this.data.overTime == 1) {
+    if (this.data.infoFlag.flag == 0) {
       wx.showToast({
-        title: "活动已过期,无法点赞",
+        title: this.data.infoFlag.msg,
         icon: "none",
         duration: 1500
       });
@@ -75,14 +76,6 @@ Page({
           duration: 1500
         });
       } else {
-        let work = this.data.item;
-        work.prise_numbers += 1;
-        work.is_praise = 1;
-        this.setData({
-          item: work,
-          // supportFlag: 0,
-          zanFlag: true
-        });
         let params = {
           id: e.currentTarget.dataset.id,
           type: this.data.item.hoc_id
@@ -96,6 +89,14 @@ Page({
     app.vote
       .praiseOpus(params)
       .then(res => {
+        let work = that.data.item;
+        if (work.prise_numbers<10000) work.prise_numbers += 1;
+        work.is_praise = 1;
+        that.setData({
+          item: work,
+          // supportFlag: 0,
+          zanFlag: true
+        });
         let list = getCurrentPages();
         const page = list[list.length - 2];
         if (page.route == "pages/vote/vote") {
@@ -104,7 +105,7 @@ Page({
       })
       .catch(err => {
         wx.showToast({
-          title: "网络波动过大",
+          title: err.msg,
           icon: "none",
           duration: 2500
         });
@@ -180,7 +181,7 @@ Page({
         item: res.data,
         // supportFlag: res.data.have_praise,
         guideFlag: [!temp, 0, 0],
-        overTime: res.data.over_time
+        infoFlag: res.data.info
       });
       let title = this.data.item.name;
       if (title.length > 10) {

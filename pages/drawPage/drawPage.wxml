@@ -100,7 +100,8 @@
     </view>
     <view class="drawRuleBox-p">
       <view class="drawRuleBox-pnum">3</view>
-      <view class="drawRuleBox-pcon">用户获得的奖品后联系客服领取，商品将在3-5个工作日内发货</view>
+      <!-- <view class="drawRuleBox-pcon">用户获得的奖品后联系客服领取商品将在3-5个工作日内发货</view> -->
+      <view class="drawRuleBox-pcon">用户获得奖品以后，如有疑问，可以联系客服</view>
     </view>
     <image src="{{ $state.imgHost }}/drawRulebg.png"></image>
     <icon type="cancel" size="46" color="white" data-id="0" catchtap="closerule" class="drawRuleBox-cancel"></icon>
@@ -113,13 +114,14 @@
     <view class="prizrbox-title">恭喜获得</view>
     <image src="{{lotteryres.image}}"></image>
     <text class="prizrbox-gifttitle"> {{lotteryres.title}}</text>
-    <button class="prizrbox-button" open-type="contact" bindcontact="handleContact" show-message-card
+    <!-- <button class="prizrbox-button" open-type="contact" bindcontact="handleContact" show-message-card
       send-message-title="{{ lotteryres.title  +  '奖品序号' + lotteryres.record_id}}"
       send-message-img="{{lotteryres.image}}" wx:if="{{lotteryres.get_type == 1}}" catchtap="closeToast"
       session-from='{"name": "{{$state.userInfo.nickname}}","avatarUrl":"{{$state.userInfo.avatar}},"nickName":"{{$state.userInfo.nickname}}""}'>联系客服兑换
     </button>
     <view class="prizrbox-button" style="width:200px;margin-left:-100px" catchtap="toWinprize"
-      wx:if="{{lotteryres.get_type == 2}}">立即领取</view>
+      wx:if="{{lotteryres.get_type == 2}}">立即领取</view> -->
+    <view class="prizrbox-button" style="width:200px;margin-left:-100px" catchtap="toWinprize">立即领取</view>
     <icon type="cancel" size="46" color="white" data-id="0" catchtap="closeprizr" class="drawRuleBox-cancel"></icon>
   </view>
 </view>
