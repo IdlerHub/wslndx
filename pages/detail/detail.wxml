@@ -1,6 +1,6 @@
 <view class="container">
   <video id="myVideo" src="{{ cur.url }}" controls page-gesture enable-play-gesture bindended="ended"
-    bindtimeupdate="timeupdate" bindplay="played" bindpause="videoPause" wx:if="{{$state.userInfo.school.length > 0}}">
+    bindtimeupdate="timeupdate" bindplay="played" bindpause="videoPause" wx:if="{{$state.userInfo.school.length > 0 || detail.school_dialog}}">
     <cover-view wx:if="{{ vistor && tip }}" class="vistor-head">
       <cover-view>点击“</cover-view>
       <cover-image src="/images/xiaochengxu.png" class="iconfont"></cover-image>
@@ -291,7 +291,7 @@
 <integralAnimation integral="{{integral}}" integralContent="{{integralContent}}" wx:if="{{showintegral}}">
 </integralAnimation>
 <!-- 学校选择 -->
- <view class="chancesh" wx:if="{{showplece}}">
+ <view class="chancesh" wx:if="{{showplece && detail.school_dialog}}">
   <view class="chanBox">
     <view class="top">请选择您的学校 <image src="../../images/icon-del.png" bindtap="closeShool"></image> </view>
     <view class="plath">

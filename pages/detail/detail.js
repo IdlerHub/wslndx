@@ -134,7 +134,7 @@ Page({
       } else if (that.data.$state.userInfo.mobile) {
         that.getDetail();
       }
-      if(that.data.$state.userInfo && that.data.$state.userInfo.university.length == 0 ) {
+      if(that.data.$state.userInfo && that.data.$state.userInfo.university.length == 0) {
         let plathParam = {
           plath: '',
           shool:'',
@@ -1587,6 +1587,13 @@ Page({
         mask: false
       })
     } else if(type == 1){
+      app.user.schoolWrite().then(() => {
+        this.setData({
+          showplece: false,
+          showToast: true
+        })
+        this.closeToast()
+      })
     }
   },
   submit() {
@@ -1602,12 +1609,13 @@ Page({
           showplece: false,
           showToast: true
         })
+        this.closeToast()
       })
     }
   },
   closeToast() {
    this.Toastimer = setTimeout(() => {
-      this.setState({
+      this.setData({
         showToast: false
       })
       clearTimeout(this.Toastimer)
