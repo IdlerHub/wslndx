@@ -464,6 +464,10 @@ Page({
   // 写帖成功动效
   rlSuc() {
     /* 重新到第一页 */
+
+    this.setData({
+      nowList: []
+    })
     this.param[this.data.currentTab].page = 1;
     this.getList([]);
     this.setData({

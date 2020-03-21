@@ -171,7 +171,7 @@
 	</swiper-item>
 	<swiper-item class="container">
 		<scroll-view class="containerWrap" scroll-y lower-threshold="65" bindscrolltolower="scrolltolower"
-			bindtouchstart='touchStart' bindtouchmove="itemtouch" bindscroll="scrollinfo">
+			bindtouchstart='touchStart' bindtouchmove="itemtouch" bindscroll="scrollinfo" scroll-top="{{scrollviewTop}}">
 			<!-- 下拉刷新 -->
 			<view wx:if="{{ isRefreshing }}" class="weui-loadmore">
 				<view class="weui-loading"></view>

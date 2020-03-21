@@ -38,15 +38,17 @@ Page({
       app.globalData.postShow = false;
     }
     /* 从circle-->发帖 */
-    if (app.globalData.rlSuc) {
-      this.setData({ rlSucFlag: true });
-    }
-    if (this.data.rlSucFlag) {
-      this.rlSuc();
-      /* 确保动画只执行一次 */
-      this.setData({ rlSucFlag: false });
-      app.globalData.rlSuc = false;
-    }
+    setTimeout(() => {
+      if (app.globalData.rlSuc) {
+        this.setData({ rlSucFlag: true });
+      }
+      if (this.data.rlSucFlag) {
+        this.rlSuc();
+        /* 确保动画只执行一次 */
+        this.setData({ rlSucFlag: false });
+        app.globalData.rlSuc = false;
+      }
+    }, 800)
     let list = this.data.list
     list.forEach(item => {
       if (item.id == app.globalData.detail.id) {
