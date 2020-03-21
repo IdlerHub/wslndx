@@ -180,6 +180,8 @@ Page({
       padding: true
     })
   },
+<<<<<<< HEAD
+=======
   fill(){
     this.getGoodsAddress().then(()=>{
       wx.navigateTo({
@@ -187,6 +189,7 @@ Page({
       })
     });
   },
+>>>>>>> 6815fb5a62835a14eee263a4b2938bad9144d3e6
   //用于数据统计
   onHide() {
   }

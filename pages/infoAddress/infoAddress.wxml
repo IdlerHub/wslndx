@@ -1,4 +1,7 @@
 <!--pages/infoAddress/infoAddress.wxml-->
+<<<<<<< HEAD
+<text>pages/infoAddress/infoAddress.wxml</text>
+=======
 <view class="infoAddress">
     <view class="info-page">
         <view class="info">
@@ -40,3 +43,4 @@
     <view class="tip">注意：虚拟物品(话费卡)将充值到填写的手机号码上</view>
     <view class="save-btn" catchtap="confirm">确认</view>
 </view>
+>>>>>>> 6815fb5a62835a14eee263a4b2938bad9144d3e6

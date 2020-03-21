@@ -20,6 +20,10 @@ page {
       font-weight:500;
       color:rgba(51,51,51,1);
       position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 60rpx;
     }
     .tabnav-item .heng {
       width: 40rpx;
@@ -39,9 +43,6 @@ page {
       position: absolute;
       top: 0;
       right: -20rpx;
-    }
-    .tabnav .tabnav-item:nth-child(1) {
-      margin-right: 60rpx;
     }
     .tabnav .lose {
       font-size:18px;
@@ -268,12 +269,14 @@ page {
         overflow: hidden; }
         .wrap > .item .content .img.one image {
           width: 400rpx;
-          background: #e9e9e9; }
+          background: #e9e9e9;
+          border-radius:6rpx; }
       .wrap > .item .content .img.three image {
         width: 216rpx;
         height: 216rpx;
         margin-right: 20rpx;
-        background: #e9e9e9; }
+        background: #e9e9e9;
+        border-radius:6rpx;}
         .wrap > .item .content .img.three image:nth-of-type(3n) {
           margin-right: 0; }
     .wrap > .item .content video {
@@ -302,10 +305,10 @@ page {
       right: 0;
       margin: auto; }
     .wrap > .item .label {
+      display: inline-block;
       background: #FFF6E6;
-      margin: 20rpx 0;
-      display: block;
-      width: 230rpx;
+      margin-top: 20rpx;
+      padding: 0 20rpx;
       line-height: 44rpx;
       border-radius: 6rpx;
       color: #DB9200;
@@ -313,12 +316,12 @@ page {
       text-align: center; }
   .wrap .btn {
     height: 125rpx;
-    margin-top: 30rpx;
+    margin-top: 10rpx;
     position: relative;
-    border-top: 2rpx solid #e8e8e8;
     display: flex;
     align-items: center;
-    justify-content: stretch; }
+    justify-content: space-between;
+    padding: 0 30rpx 0  10rpx; }
     .wrap .btn .division {
       width: 2rpx;
       height: 40rpx;
@@ -347,11 +350,92 @@ page {
     background:#f5f6f8;
     border-radius: 8rpx;
   }
+  .wrap > .item  .likesavatar {
+    display: flex;
+    align-items: center;
+    margin-top: 20rpx;
+  }
+  .wrap > .item  .likesavatar .likesLeft {
+    display: flex;
+    align-items: center;
+  }
+  .wrap > .item  .likesavatar .likesLeft image {
+    width: 40rpx;
+    height: 40rpx;
+    border-radius: 50%;
+    position: relative;
+    left: -10rpx;
+    border:2rpx solid #fff; 
+  }
+  .wrap > .item  .likesavatar .likesLeft image:nth-child(1) {
+    left: 0;
+  }
+  .wrap > .item  .likesavatar .likesLeft .likeTxt {
+    margin-left: 5rpx;
+    font-size:28rpx;
+    font-family:PingFangSC-Regular,PingFang SC;
+    font-weight:400;
+    color:rgba(126,126,126,1);
+  }
+  .wrap > .item  .lastComment {
+    height: 120rpx;
+    border-top: 1rpx solid #E8E8E8;
+  }
+  .wrap > .item  .lastComment .lastContet {
+    display: flex;
+    align-items: center;
+    margin: 30rpx 0 10rpx 0;
+  }
+  .wrap > .item  .lastComment .lastContet text {
+    font-size:36rpx;
+    font-family:PingFangSC-Medium,PingFang SC;
+    font-weight:500;
+    color:rgba(58,58,58,1);
+  }
+  .wrap > .item  .lastComment .lastContet rich-text {
+    flex: 1;
+    width: 0;
+    font-size:36rpx;
+    font-family:PingFangSC-Regular,PingFang SC;
+    font-weight:400;
+    color:rgba(126,126,126,1);
+    margin-left: 20rpx;
+  } 
+  .wrap > .item  .lastComment .more {
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+  }
+  .wrap > .item  .lastComment .more text {
+    font-size:36rpx;
+    font-family:PingFangSC-Regular,PingFang SC;
+    font-weight:400;
+    color:rgba(179,179,179,1);
+  }
+  .wrap > .item  .lastComment .more image {
+    width: 14rpx;
+    height: 25rpx;
+    margin-left: 10rpx;
+    margin-top: 4rpx;
+  }
 .btn > .item {
-  flex: 1;
+  /* flex: 1; */
   display: flex;
   align-items: center;
-  justify-content: center; }
+  padding-left: 20px;
+  box-sizing: border-box;
+}
+.btn > .item:nth-child(1) {
+  padding-left: 0;
+  justify-content: center;
+}
+.btn > .item:nth-child(2) {
+  padding-left: 30px;
+  justify-content: center;
+}
+.btn > .item:nth-child(3) {
+  justify-content: center;
+}
   .btn > .item .iconfont {
     font-size: 58rpx;
     color: #bdbdbd;

@@ -941,3 +941,113 @@ rich-text {
   height: 74rpx;
   margin-top: 38rpx;
 }
+.chancesh {
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0,0,0,0.6);
+  position: fixed;
+  top: 0;
+  z-index: 99;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.chancesh .chanBox {
+  width:600rpx;
+  height:780rpx;
+  background:rgba(255,255,255,1);
+  border-radius:20rpx;
+  margin-top: -120rpx;
+}
+.chancesh .chanBox .top {
+  height: 128rpx;
+  border-bottom: 1rpx solid rgba(237,237,237,1);
+  text-align: center;
+  line-height: 120rpx;
+  font-size:40rpx;
+  font-family:PingFangSC-Medium,PingFang SC;
+  font-weight:500;
+  color:rgba(58,58,58,1); 
+  position: relative; 
+}
+.chancesh .chanBox .top image {
+  width: 32rpx;
+  height: 32rpx;
+  position: absolute;
+  top: 30rpx;
+  right: 30rpx;
+}
+.chancesh .chanBox .plath {
+  margin-top: 52rpx;
+  padding: 0 40rpx;
+}
+.chancesh .chanBox .plath text {
+  font-size:36rpx;
+  font-family:PingFangSC-Medium,PingFang SC;
+  font-weight:500;
+  color:rgba(58,58,58,1);
+}
+.chancesh .chanBox .plath .plahtPicker {
+  margin-top: 21rpx;
+  height: 88rpx;
+  background:rgba(247,247,247,1);
+  border-radius:8rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 30rpx;
+}
+.chancesh .chanBox .plath .plahtPicker .plathoer {
+  font-size:36rpx;
+  font-family:PingFangSC-Regular,PingFang SC;
+  font-weight:400;
+  color:rgba(204,204,204,1);
+}
+.chancesh .chanBox .plath .plahtPicker .adress {
+  font-size:36rpx;
+  font-family:PingFangSC-Regular,PingFang SC;
+  font-weight:400;
+  color:rgba(51,51,51,1);
+}
+.chancesh .chanBox .plath .plahtPicker image {
+  width: 18rpx;
+  height: 33rpx;
+}
+.chancesh .chanBox .subPlath {
+  width:340rpx;
+  height:88rpx;
+  background:rgba(223,32,32,1);
+  border-radius:8rpx;
+  margin:80rpx auto 0 auto;
+  text-align: center;
+  line-height: 88rpx;
+  font-size:40rpx;
+  font-family:PingFangSC-Medium,PingFang SC;
+  font-weight:500;
+  color:rgba(255,255,255,1);
+}
+.toast {
+  width:280rpx;
+  height:177rpx;
+  background:rgba(0,0,0,0.74);
+  border-radius:10rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 446rpx;
+  left: 50%;
+  margin-left: -140rpx;
+}
+.toast image {
+  width: 64rpx;
+  height: 64rpx;
+  margin-bottom: 7rpx;
+}
+.toast text {
+  font-size:40rpx;
+  font-family:PingFangSC-Regular,PingFang SC;
+  font-weight:400;
+  color:rgba(255,255,255,1);
+}
