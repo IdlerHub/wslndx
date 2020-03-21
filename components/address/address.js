@@ -233,7 +233,7 @@ Component({
       let address = that.data.address;  //拼接省市区地址
       
       let param = {
-        type: 1,
+        type: 2,
         get_type: 1,
         goods_user: userInfo.username,
         goods_mobile: userInfo.mobile,
