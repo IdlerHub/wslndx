@@ -12,12 +12,12 @@
   </view>
   <view class="centerBox" wx:if="{{mode == 0}}">
     <view class="centerTop">
-      <view class="title {{rankType == 1 ? 'active' : ''}}" bindtap="checkTop" data-type="1">日榜</view>
-      <view class="title {{rankType == 2 ? 'active' : ''}}" bindtap="checkTop" data-type="2">周榜</view>
-      <view class="title {{rankType == 3 ? 'active' : ''}}" bindtap="checkTop" data-type="3">月榜</view>
-      <image class="one" src="../../images/rankingPink1.png" wx:if="{{rankType == 1}}"></image>
-      <image class="tow" src="../../images/rankingPink2.png" wx:if="{{rankType == 2}}"></image>
-      <image class="three" src="../../images/rankingPink3.png" wx:if="{{rankType == 3}}"></image>
+      <view class="title {{rankType == 'day' ? 'active' : ''}}" bindtap="checkTop" data-type="day">日榜</view>
+      <view class="title {{rankType == 'week' ? 'active' : ''}}" bindtap="checkTop" data-type="week">周榜</view>
+      <view class="title {{rankType == 'month' ? 'active' : ''}}" bindtap="checkTop" data-type="month">月榜</view>
+      <image class="one" src="../../images/rankingPink1.png" wx:if="{{rankType == 'day'}}"></image>
+      <image class="tow" src="../../images/rankingPink2.png" wx:if="{{rankType == 'week'}}"></image>
+      <image class="three" src="../../images/rankingPink3.png" wx:if="{{rankType == 'month'}}"></image>
     </view>
     <view class="center">
       <text>截止 {{time}} 00:00</text> 

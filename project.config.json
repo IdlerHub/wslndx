@@ -181,6 +181,13 @@
 					"pathName": "pages/score/score",
 					"query": "uid=12661&type=invite",
 					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "时长排行榜",
+					"pathName": "pages/rankingList/rankingList",
+					"query": "uid=12661&type=invite",
+					"scene": null
 				}
 			]
 		}
