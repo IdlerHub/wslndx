@@ -7,14 +7,47 @@ Page({
     rankType: 1,
     list:[],
     showRule: false,
-    rule: '我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规'
+    rule: '我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规',
+    shoolList: {
+      1:[],
+      2:[],
+      3:[]
+    },
+    userList: {
+      1:[],
+      2:[],
+      3:[]
+    }
   },
   onLoad: function (options) {
+    this.shoolPage = {
+      1: {
+        page:1, pageSize: 10, type: 'day'
+      },
+      2: {
+        page:1, pageSize: 10, type: 'week'
+      },
+      3: {
+        page:1, pageSize: 10, type: 'month'
+      },
+    }
+    this.userPage = {
+      1: {
+        page:1, pageSize: 10, type: 'day'
+      },
+      2: {
+        page:1, pageSize: 10, type: 'week'
+      },
+      3: {
+        page:1, pageSize: 10, type: 'month'
+      },
+    }
     let time = new Date()
     time =  app.util.formatTime(time).slice(0,10)
     this.setData({
       time
     })
+    this.getShoollist()
     let list = [
       {id: 1 , name: '饭卡里说的就会发生挂号费快乐就好' , time: '26556.66W'},
       {id: 2 , name: '花开花落花满天' , time: '18623.58W'},
@@ -37,8 +70,6 @@ Page({
   },
   onHide: function () {
   },
-  onUnload: function () {
-  },
   onPullDownRefresh: function () {
   },
   onReachBottom: function () {
@@ -54,6 +85,7 @@ Page({
     this.setData({
       rankType: e.currentTarget.dataset.type
     })
+    this.getShoollist()
   },
   openRule(e) {
     console.log(e)
@@ -66,4 +98,11 @@ Page({
   },
   onShareAppMessage: function(ops, b) {
   },
+  getShoollist() {
+    app.user.getSchoolLessonTime(this.shoolPage[this.data.rankType]).then(res => {
+      // this.setData({
+      //   [`shoolList${this.data.rankType}`]
+      // })
+    })
+  }
 })
