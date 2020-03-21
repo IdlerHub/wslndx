@@ -423,7 +423,7 @@ Page({
     } else {
       if (this.data.totalPoints >= e.currentTarget.dataset.score) {
         let param = {
-          gift_id: e.currentTarget.dataset.id,
+          id: e.currentTarget.dataset.id,
           title: e.currentTarget.dataset.title,
           image: e.currentTarget.dataset.image
         };

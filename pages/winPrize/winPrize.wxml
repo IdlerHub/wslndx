@@ -7,14 +7,20 @@
         <view class="giftBox-title">{{item.title}}</view>
         <view class="giftBox-data">{{item.createtime}}</view>
       </view>
-      <button open-type="contact" bindcontact="handleContact" class="giftBox-button" wx:if="{{item.get_type == 1}}"
+      <!-- <button open-type="contact" bindcontact="handleContact" class="giftBox-button" wx:if="{{item.get_type == 1}}"
         style="background:{{ item.is_finish == 1 ? '#ccc' : '' }}" show-message-card
         send-message-title="{{ item.title  +  '奖品序号' + item.id}}" send-message-img="{{item.image}}"
         catchtap="button" session-from='{"name": "{{$state.userInfo.nickname}}","avatarUrl":"{{$state.userInfo.avatar}}","nickName":"{{$state.userInfo.nickname}}"}'>{{ item.is_finish  ? '已兑换' : item.show }}</button>
       <view class="giftBox-button" style="background:{{ item.is_finish == 1 ? '#ccc' : '' }}" bindtap="conversion"
-        data-id="{{item.id}}" data-finish="{{item.is_finish}}" wx:else>{{ item.is_finish  ? '已领取' : item.show }}</view>
+        data-id="{{item.id}}" data-finish="{{item.is_finish}}" wx:else>{{ item.is_finish  ? '已领取' : item.show }}</view> -->
+      <view class="giftBox-button" style="background:{{ item.is_finish == 1 ? '#ccc' : '' }}" bindtap="conversion"
+       data-id="{{item.id}}" data-type="{{item.get_type}}" data-finish="{{item.is_finish}}">
+        {{ item.show }}
+      </view>
+      
     </view>
   </view>
+  <address giftInfo="{{giftInfo}}" show-card="{{getAddress}}" bind:change="changeItem"></address>
   <view class="qstBox" wx:if="{{prizeList.length == 0}}">
     <image src="{{$state.imgHost}}/drawqs.png"></image>
     <view class="qst-txt">暂无中奖记录</view>

@@ -28,10 +28,10 @@ Page({
           let index3 = cascade[2] ? this.areaId.indexOf(cascade[2]) : 0;
           this.setData({
             userInfo: userInfo,
-            newFlag: userInfo.id || 0,
             multiAddress: [this.province, this.city, this.area],
             multiIndex: [index1, index2, index3],
-            address: cascade[0] ? [this.province[index1], this.city[index2], this.area[index3]] : []
+            address: cascade[0] ? [this.province[index1], this.city[index2], this.area[index3]] : [],
+            addressId: cascade
           })
         })
       })
@@ -133,8 +133,9 @@ Page({
   },
   putGoodsaddress() {
     let userInfo = this.data.userInfo;
+    console.log("chengshi9",this.data.addressId)
     let param = {
-      goods_address_id: this.data.newFlag,
+      goods_address_id: userInfo.goods_address_id,
       username: userInfo.username,
       mobile: userInfo.mobile,
       province_id: this.data.addressId[0] || 0,

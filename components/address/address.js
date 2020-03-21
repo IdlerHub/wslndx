@@ -34,8 +34,7 @@ Component({
   data: {
     userInfo:{},
     address: [],
-    addressId: [],
-    newFlag: 0, //是否首次填写
+    addressId: []
   },
 
   methods: {
@@ -98,16 +97,17 @@ Component({
     },
     getGoodsAddress() {  //获取收货地址信息 传uid
       return app.user.getGoodsAddress().then(res => {
+        let addressId = [res.data.province_id, res.data.city_id, res.data.area_id]
         this.setData({
           userInfo: res.data,
-          newFlag: res.data.id || 0
+          addressId: addressId
         })
       })
     },
     putGoodsaddress(){
       let userInfo = this.data.userInfo;
       let param = {
-        goods_address_id: this.data.newFlag,
+        goods_address_id: userInfo.goods_address_id,
         username: userInfo.username,
         mobile: userInfo.mobile,
         province_id: this.data.addressId[0] || 0,
@@ -231,8 +231,8 @@ Component({
         return
       }
       let address = that.data.address;  //拼接省市区地址
+      
       let param = {
-        gift_id: that.data.giftInfo.gift_id,
         type: 1,
         goods_user: userInfo.username,
         goods_mobile: userInfo.mobile,
@@ -247,19 +247,41 @@ Component({
           confirmColor: "#DF2020",
           success(res) {
             if (res.confirm) {
-              console.log('用户点击确定')
-              app.user.exchange(param).then(res => {
-                that.setData({
-                  showCard: false
-                })
-                wx.navigateTo({
-                  url:
-                    "/pages/gift/gift?name=" +
-                    that.data.giftInfo.title +
-                    "&image=" +
-                    that.data.giftInfo.image
+              that.setData({
+                showCard: false
+              })
+              if(that.data.giftInfo.from == "winPrize"){  //从抽奖来的
+                console.log("抽奖兑换奖品", that.data.giftInfo)
+                param['id'] = that.data.giftInfo.id
+                console.log(param)
+                app.lottery.finishGetPrize(param).then(res=>{
+                  taht.triggerEvent('change', param.id, myEventOption)
+                  wx.showToast({
+                    title: res.msg,
+                    icon: "none",
+                    duration: 2000
+                  });
+                }) 
+              }else{  //积分兑换
+                console.log("积分兑换奖品", that.data.giftInfo)
+                param['gift_id'] = that.data.giftInfo.id
+                app.user.exchange(param).then(() => {
+                  // wx.navigateTo({
+                  //   url:
+                  //     "/pages/gift/gift?name=" +
+                  //     that.data.giftInfo.title +
+                  //     "&image=" +
+                  //     that.data.giftInfo.image
+                  // });
+                }).catch(err=>{
+                  wx.showToast({
+                    title: res.msg,
+                    icon: "none",
+                    duration: 2000
+                  });
                 });
-              });
+              }
+              
             }
           }
         })

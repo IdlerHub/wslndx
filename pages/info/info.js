@@ -66,7 +66,8 @@ Page({
     })
   },
   getGoodsAddress() {  //获取收货地址信息
-    app.user.getGoodsAddress().then(res => {
+    return app.user.getGoodsAddress().then(res => {
+      wx.setStorageSync("userAddress", JSON.stringify(res.data))
       this.setData({
         userAddress: res.data
       })
@@ -179,12 +180,12 @@ Page({
       padding: true
     })
   },
-  fill(e){
-    console.log("填充")
-    wx.setStorageSync("userAddress", JSON.stringify(e.currentTarget.dataset.useraddress))
-    wx.navigateTo({
-      url: "/pages/infoAddress/infoAddress"
-    })
+  fill(){
+    this.getGoodsAddress().then(()=>{
+      wx.navigateTo({
+        url: "/pages/infoAddress/infoAddress"
+      })
+    });
   },
   //用于数据统计
   onHide() {

@@ -65,8 +65,8 @@
     <!-- 收货地址 -->
     <view class="section">
       <view class="section__title">收货地址</view>
-      <view class="placeholder" data-useraddress="{{userAddress}}" catchtap="fill">
-        <text>{{userAddress.id ? '修改' : '请补充'}}</text>
+      <view class="placeholder" catchtap="fill">
+        <text>{{userAddress.goods_address_id ? '修改' : '请补充'}}</text>
         <image class="icon" mode="aspectFill" src="{{ $state.imgHost }}/Return-black.png"></image>
       </view>
     </view>

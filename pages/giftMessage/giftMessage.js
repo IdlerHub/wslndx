@@ -38,7 +38,7 @@ Page({
     } else {
       if (this.data.totalPoints >= this.data.gift.need_points) {
         // let param = { gift_id: this.data.gift.id }
-        let param = gift
+        let param = this.data.gift
         if (this.data.gift.is_new == 1) {
           wx.showModal({
             title: "兑换提示",
