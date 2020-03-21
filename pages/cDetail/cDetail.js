@@ -33,8 +33,22 @@ Page({
       item.route == 'pages/personPage/personPage' ? this.personPage = item : ''
     })
   },
-  onUnload() { },
   onShow() {
+    if (app.globalData.postShow) {
+      app.globalData.postShow = false;
+    }
+    /* 从circle-->发帖 */
+    setTimeout(() => {
+      if (app.globalData.rlSuc) {
+        this.setData({ rlSucFlag: true });
+      }
+      if (this.data.rlSucFlag) {
+        this.rlSuc();
+        /* 确保动画只执行一次 */
+        this.setData({ rlSucFlag: false });
+        app.globalData.rlSuc = false;
+      }
+    }, 800)
     let list = this.data.list
     list.forEach(item => {
       if (item.id == app.globalData.detail.id) {
@@ -274,9 +288,6 @@ Page({
       }
     })
   },
-  //用于数据统计
-  onHide() {
-  },
   //收藏风采
   collect(e) {
     let blog_id = e.currentTarget.dataset.id, status = e.currentTarget.dataset.status, blog_index = e.currentTarget.dataset.index, flowId = e.currentTarget.dataset.userid, is_follow = e.currentTarget.dataset.follow, follownickname = e.currentTarget.dataset.name
@@ -410,5 +421,24 @@ Page({
         list: this.data.list
       })
     }
+  },
+  // 写帖成功动效
+  rlSuc() {
+    /* 重新到第一页 */
+    this.setData({
+      list: []
+    });
+    this.param = { fs_id: this.id, page: 1, pageSize: 10 }
+    this.getList([]);
+    this.setData({
+      rlAni: true,
+      scrollTop: 0
+    });
+    let timer = setTimeout(() => {
+      this.setData({
+        rlAni: false
+      });
+      clearTimeout(timer);
+    }, 2000);
   },
 })

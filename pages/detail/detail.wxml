@@ -1,6 +1,6 @@
 <view class="container">
   <video id="myVideo" src="{{ cur.url }}" controls page-gesture enable-play-gesture bindended="ended"
-    bindtimeupdate="timeupdate" bindloadedmetadata="played">
+    bindtimeupdate="timeupdate" bindplay="played" bindpause="videoPause" wx:if="{{$state.userInfo.school.length > 0 || detail.school_dialog}}">
     <cover-view wx:if="{{ vistor && tip }}" class="vistor-head">
       <cover-view>点击“</cover-view>
       <cover-image src="/images/xiaochengxu.png" class="iconfont"></cover-image>
@@ -13,6 +13,17 @@
       bindtap="recordAdd"></cover-image>
     <cover-view class="videomask" wx:if="{{showintegral}}"></cover-view>
   </video>
+  <view id="myVideo" style="overflow: hidden;" wx:else>
+    <cover-view wx:if="{{ vistor && tip }}" class="vistor-head">
+      <cover-view>点击“</cover-view>
+      <cover-image src="/images/xiaochengxu.png" class="iconfont"></cover-image>
+      <cover-view>”添加到我的小程序 </cover-view>
+    </cover-view>
+     <image wx:if="{{ !playing }}" mode="widthFix" src="{{ detail.image }}" class="poster">
+    </image>
+    <image wx:if="{{ !playing }}" mode="aspectFill" src="{{ $state.imgHost }}/play.png" class="play"
+    ></image>
+  </view>
   <view class="info">
     <view class="top">
       <view>
@@ -279,3 +290,36 @@
 <!-- 学分动画 -->
 <integralAnimation integral="{{integral}}" integralContent="{{integralContent}}" wx:if="{{showintegral}}">
 </integralAnimation>
+<!-- 学校选择 -->
+ <view class="chancesh" wx:if="{{showplece && detail.school_dialog}}">
+  <view class="chanBox">
+    <view class="top">请选择您的学校 <image src="../../images/icon-del.png" bindtap="closeShool"></image> </view>
+    <view class="plath">
+      <text>地区</text>
+      <picker mode="multiSelector" bindchange="bindMultiPickerChange" bindcolumnchange="bindMultiPickerColumnChange" value="{{multiIndex}}" range="{{ multiAddress }}">
+        <view class="plahtPicker">
+          <text wx:if="{{plathParam.plath.length == 0}}" class="plathoer">请选择地区</text>
+          <text wx:else class="adress"> {{ plathParam.plath }} </text>
+          <image src="../../images/stickright.png"></image>
+        </view>
+      </picker>
+    </view>
+    <view class="plath" bindtap="tipOrder">
+      <text>学校</text>
+      <picker mode="selector" bindchange="bindSchool" value="{{singleIndex}}" range="{{ singleSchool }}" disabled="{{ plathParam.plath.length == 0 }}">
+        <view class="plahtPicker">
+          <text class="plathoer" wx:if="{{plathParam.shool.length == 0}}">请选择地区</text>
+          <text wx:else class="adress"> {{ plathParam.shool }} </text>
+          <image src="../../images/stickright.png"></image>
+        </view>
+      </picker>
+    </view>
+    <view class="subPlath" bindtap="submit">确定提交</view>
+  </view>
+</view>
+<view class="toast" wx:if="{{showToast}}">
+  <image src="../../images/success.png"></image>
+  <text>提交成功</text>
+</view>
+
+

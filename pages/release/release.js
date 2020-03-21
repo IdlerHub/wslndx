@@ -16,6 +16,7 @@ Page({
   },
   pageName: "发帖页",
   onLoad(ops) {
+    ops.type ? this.circle = true : ''
     if (ops.title) {
       this.getCircleList().then(() => {
         let allCircle = this.data.allCircle;
@@ -27,7 +28,8 @@ Page({
         this.setData({
           allCircle: allCircle,
           selId: ops.id,
-          showFlag: false
+          showFlag: false,
+          circleId: ops.id
         })
       });
     } else {
@@ -280,7 +282,6 @@ Page({
         selId: '',
         showFlag: true
       })
-      console.log("我太难了,我没有圈子啊",this.data.selId);
     }else{
       allCircle[e.currentTarget.dataset.index].isSel = true;
       this.setData({
@@ -288,7 +289,6 @@ Page({
         selId: e.currentTarget.dataset.fsid,
         showFlag: false
       });
-      console.log("这是有圈子的人了",this.data.selId)
     }
   },
   // 发布帖子
@@ -355,10 +355,26 @@ Page({
             app.globalData.rlSuc = true;
             if (integral == "first" || integral == "day") {
               setTimeout(() => {
-                wx.switchTab({ url: "/pages/post/post" });
+                if(this.circle && this.data.selId == this.data.circleId) {
+                  wx.navigateBack()
+                } else if(this.circle && this.data.selId != this.data.circleId && this.data.selId> 0){
+                  wx.redirectTo({
+                    url: '/pages/cDetail/cDetail?id=' + this.data.selId,
+                  })
+                } else {  
+                  wx.switchTab({ url: "/pages/post/post" });
+                }
               }, 2000);
             } else {
-              wx.switchTab({ url: "/pages/post/post" });
+              if(this.circle && this.data.selId == this.data.circleId) {
+                wx.navigateBack()
+              } else if(this.circle && this.data.selId != this.data.circleId && this.data.selId> 0){
+                wx.redirectTo({
+                  url: '/pages/cDetail/cDetail?id=' + this.data.selId,
+                })
+              } else {  
+                wx.switchTab({ url: "/pages/post/post" });
+              }
             }
           })
           .catch(msg => {

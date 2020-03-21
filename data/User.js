@@ -212,6 +212,16 @@ function putGoodsaddress(params) {
   return httpService.post("user/putGoodsaddress",params)
 }
 
+//POST /user/schoolWrite 提交用户地址暂无
+function schoolWrite() {
+  return httpService.post("user/schoolWrite")
+}
+
+//POST /user/getSchoolLessonTime 学校学习时间排名
+function getSchoolLessonTime(params) {
+  return httpService.post("user/getSchoolLessonTime", params)
+}
+
 module.exports = {
   wxLoginCode,
   getAuthCode,
@@ -248,5 +258,7 @@ module.exports = {
   addLotteryInvite,
   getAreainfo,
   getGoodsAddress,
-  putGoodsaddress
+  putGoodsaddress,
+  schoolWrite,
+  getSchoolLessonTime
 }

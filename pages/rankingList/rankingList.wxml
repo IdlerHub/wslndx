@@ -1,0 +1,89 @@
+<!--pages/rankingList/rankingList.wxml-->
+<view class="container">
+  <view class="buttons">
+    <text data-type="0" catchtap="check" class="{{ mode == 0 ? 'active' : ''}}">
+      学校排行榜单
+      <text class="redRow" wx:if="{{ mode == 0 }}"></text>
+    </text>
+    <text data-type="1" catchtap="check" class="{{ mode == 1 ? 'active' : ''}}">
+      个人排行榜单
+      <text class="redRow" wx:if="{{ mode == 1}}"></text>
+    </text>
+  </view>
+  <view class="centerBox" wx:if="{{mode == 0}}">
+    <view class="centerTop">
+      <view class="title {{rankType == 1 ? 'active' : ''}}" bindtap="checkTop" data-type="1">日榜</view>
+      <view class="title {{rankType == 2 ? 'active' : ''}}" bindtap="checkTop" data-type="2">周榜</view>
+      <view class="title {{rankType == 3 ? 'active' : ''}}" bindtap="checkTop" data-type="3">月榜</view>
+      <image class="one" src="../../images/rankingPink1.png" wx:if="{{rankType == 1}}"></image>
+      <image class="tow" src="../../images/rankingPink2.png" wx:if="{{rankType == 2}}"></image>
+      <image class="three" src="../../images/rankingPink3.png" wx:if="{{rankType == 3}}"></image>
+    </view>
+    <view class="center">
+      <text>截止 {{time}} 00:00</text> 
+      <view class="right" bindtap="openRule" data-type="type">
+        <text>?</text>
+        统计说明
+      </view>
+    </view>
+    <view class="content">
+      <view class="contentTop">
+        <text>排名</text>
+        <text>学校名称</text>
+        <text>学习时长(分钟)</text>
+      </view>
+      <view wx:for="{{list}}" wx:key="index"class="contentList" style="padding-top: {{index == 0 ? 0 : ''}};">
+          <view class="number" wx:if="{{index > 2}}">
+            {{index + 1}}
+          </view>
+          <image class="img" src="{{$state.imgHost}}/ranking{{index}}.png" wx:else></image>
+          <view class="name">{{item.name}}</view>
+          <view class="time">{{item.time}}</view>
+      </view>
+    </view>
+  </view>
+  <view class="centerBox" wx:else>
+    <view class="centerTop">
+      <view class="title {{rankType == 1 ? 'active' : ''}}" bindtap="checkTop" data-type="1">日榜</view>
+      <view class="title {{rankType == 2 ? 'active' : ''}}" bindtap="checkTop" data-type="2">周榜</view>
+      <view class="title {{rankType == 3 ? 'active' : ''}}" bindtap="checkTop" data-type="3">月榜</view>
+      <image class="one" src="../../images/rankingPink1.png" wx:if="{{rankType == 1}}"></image>
+      <image class="tow" src="../../images/rankingPink2.png" wx:if="{{rankType == 2}}"></image>
+      <image class="three" src="../../images/rankingPink3.png" wx:if="{{rankType == 3}}"></image>
+    </view>
+    <view class="center">
+      <text>截止 {{time}} 00:00</text> 
+      <view class="right">
+        <text>?</text>
+        统计说明
+      </view>
+    </view>
+    <view class="content">
+      <view class="contentTop">
+        <text>排名</text>
+        <text>昵称</text>
+        <text>学习时长(分钟)</text>
+      </view>
+      <view wx:for="{{list}}" wx:key="index"class="contentList" style="padding-top: {{index == 0 ? 0 : ''}};">
+          <view class="number" wx:if="{{index > 2}}">
+            {{index + 1}}
+          </view>
+          <image class="img" src="{{$state.imgHost}}/ranking{{index}}.png" wx:else></image>
+          <view class="name">{{item.name}}</view>
+          <view class="time">{{item.time}}</view>
+      </view>
+    </view>
+  </view>
+</view>
+<view class="contentList userRank">
+  <view class="number fontColor">04</view>
+  <view class="name fontColor">一条咸鱼</view>
+  <view class="time fontColor">30</view>
+</view>
+<button class="share" open-type="share" data-id="{{ $state.userInfo.id }}" hover-class="btn-hover"> 分享给朋友 </button>
+<view class="rules" wx:if="{{showRule}}">
+  <view class="relesBox">
+    <rich-text nodes="{{rule}}" class="text"></rich-text>
+  </view>
+  <icon type="cancel" size="56" color="white" catchtap="openRule" class="cancel"></icon>
+</view>
