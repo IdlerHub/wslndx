@@ -10,16 +10,12 @@ Page({
   },
 
   onLoad: function () {
-    
     this.init()
   },
   init() {
     let userInfo = JSON.parse(wx.getStorageSync("userAddress"))
-    console.log(userInfo)
     //获取省市区,如果不是第一次进来的话,需要定位,否则默认即可
     let cascade = [userInfo.province_id, userInfo.city_id, userInfo.area_id] || ["", "", ""]
-    console.log("data的userInfo", this.data.userInfo)
-    console.log('城市列表', cascade)
     this.getProvince().then(() => {
       this.getCity(cascade[0]).then(() => {
         this.getArea(cascade[1]).then(() => {
@@ -92,10 +88,8 @@ Page({
     })
   },
   changeColumn(e) {
-    console.log("列改变", e)
     let multiAddress = this.data.multiAddress;
     let multiIndex = this.data.multiIndex;
-    //下面id无用,就用这个注释
     // let multiAddressId = this.data.multiAddressId;
     let index = e.detail.value; //改变至某个下标
     let column = e.detail.column; //哪一列改变
@@ -123,9 +117,7 @@ Page({
     }
   },
   changeArea(e) {
-    console.log("确定选择", e)
     let value = e.detail.value;
-    // this.provinceId[index[0]]  省级id
     this.setData({
       address: [this.province[value[0]], this.city[value[1]], this.area[value[2]]],
       addressId: [this.provinceId[value[0]], this.cityId[value[1]], this.areaId[value[2]]]
@@ -133,7 +125,6 @@ Page({
   },
   putGoodsaddress() {
     let userInfo = this.data.userInfo;
-    console.log("chengshi9",this.data.addressId)
     let param = {
       goods_address_id: userInfo.goods_address_id,
       username: userInfo.username,
@@ -151,7 +142,6 @@ Page({
   confirm(){
     let errTip = '';
     let that = this;
-    console.log(this.data.userInfo.username)
     if (!this.data.userInfo.username) {
       errTip = '收货人不能为空';
     } else if (!this.data.userInfo.mobile) {
