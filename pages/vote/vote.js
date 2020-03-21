@@ -43,8 +43,13 @@ Page({
     });
   },
   setLikeData(index) {
+    wx.showToast({
+      title: "今日已点赞成功",
+      icon: "none",
+      duration: 2500
+    });
     let work = this.data.productionList[index];
-    work.prise_numbers += 1;
+    if (work.prise_numbers < 10000) work.prise_numbers += 1;
     work.is_praise = 1;
     let key = "productionList[" + index + "]";
     this.setData({
@@ -76,12 +81,12 @@ Page({
       } else {
         // let index = e.currentTarget.dataset.index;
         // let work = this.data.productionList[index];
-        this.setLikeData(index);
+        
         let params = {
           id: e.currentTarget.dataset.id,
           type: work.hoc_id //需要作品带的type
         };
-        this.praiseOpus(params);
+        this.praiseOpus(params,index);
       }
     }
   },
@@ -145,24 +150,25 @@ Page({
     //获取分类数据
     let data = [{ id: "0", name: "全部" }];
     app.vote.getCategory().then(res => {
-      data = data.concat(res.data);
+      data = data.concat(res.data.data);
       this.setData({
         classifyList: data
       });
     });
   },
-  praiseOpus(params) {
+  praiseOpus(params,index) {
     app.vote
       .praiseOpus(params)
       .then(res => {
+        
+        this.setLikeData(index);
+      })
+      .catch(err => {
         wx.showToast({
-          title: "今日已点赞成功",
+          title: err.msg,
           icon: "none",
           duration: 2500
         });
-      })
-      .catch(err => {
-        console.log(err);
       });
   },
   changeData(index, type) {

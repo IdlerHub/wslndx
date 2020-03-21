@@ -13,11 +13,10 @@
         catchtap="button" session-from='{"name": "{{$state.userInfo.nickname}}","avatarUrl":"{{$state.userInfo.avatar}}","nickName":"{{$state.userInfo.nickname}}"}'>{{ item.is_finish  ? '已兑换' : item.show }}</button>
       <view class="giftBox-button" style="background:{{ item.is_finish == 1 ? '#ccc' : '' }}" bindtap="conversion"
         data-id="{{item.id}}" data-finish="{{item.is_finish}}" wx:else>{{ item.is_finish  ? '已领取' : item.show }}</view> -->
-      <view class="giftBox-button" style="background:{{ item.is_finish == 1 ? '#ccc' : '' }}" bindtap="conversion"
+      <view class="giftBox-button" style="background:{{ item.is_finish == 0 ? '' : '#ccc' }}" bindtap="conversion"
        data-id="{{item.id}}" data-type="{{item.get_type}}" data-finish="{{item.is_finish}}">
         {{ item.show }}
       </view>
-      
     </view>
   </view>
   <address giftInfo="{{giftInfo}}" show-card="{{getAddress}}" bind:change="changeItem"></address>

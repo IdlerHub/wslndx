@@ -76,14 +76,6 @@ Page({
           duration: 1500
         });
       } else {
-        let work = this.data.item;
-        work.prise_numbers += 1;
-        work.is_praise = 1;
-        this.setData({
-          item: work,
-          // supportFlag: 0,
-          zanFlag: true
-        });
         let params = {
           id: e.currentTarget.dataset.id,
           type: this.data.item.hoc_id
@@ -97,6 +89,14 @@ Page({
     app.vote
       .praiseOpus(params)
       .then(res => {
+        let work = that.data.item;
+        if (work.prise_numbers<10000) work.prise_numbers += 1;
+        work.is_praise = 1;
+        that.setData({
+          item: work,
+          // supportFlag: 0,
+          zanFlag: true
+        });
         let list = getCurrentPages();
         const page = list[list.length - 2];
         if (page.route == "pages/vote/vote") {
@@ -105,7 +105,7 @@ Page({
       })
       .catch(err => {
         wx.showToast({
-          title: "网络波动过大",
+          title: err.msg,
           icon: "none",
           duration: 2500
         });

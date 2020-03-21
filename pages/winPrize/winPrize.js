@@ -44,7 +44,10 @@ Page({
     console.log("触发事件 ",e)
     let prizeList = this.data.prizeList;
     prizeList.forEach(item => {
-      item.id == e.detail.id ? (item.is_finish = 1) : "";
+      if (item.id == e.detail){
+        item.is_finish = 2;
+        item.show = "兑换中"
+      }
     });
     this.setData({
       prizeList
@@ -54,7 +57,6 @@ Page({
   conversion(e) {
     //get_type == 1 实物品  || 2 积分,无需填写地址
     if (e.currentTarget.dataset.finish !== 0) return;
-    console.log("meicuo", e.currentTarget.dataset)
     let param = {
       id: e.currentTarget.dataset.id,
       get_type: e.currentTarget.dataset.type
@@ -66,7 +68,11 @@ Page({
         .then(res => {
           let prizeList = this.data.prizeList;
           prizeList.forEach(item => {
-            item.id == e.currentTarget.dataset.id ? (item.is_finish = 1) : "";
+            // item.id == e.currentTarget.dataset.id ? (item.is_finish = 1) : "";
+            if (item.id == e.currentTarget.dataset.id) {
+              item.is_finish = 2;
+              item.show = "兑换中"
+            }
           });
           this.setData({
             prizeList

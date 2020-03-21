@@ -234,6 +234,7 @@ Component({
       
       let param = {
         type: 1,
+        get_type: 1,
         goods_user: userInfo.username,
         goods_mobile: userInfo.mobile,
         goods_address: address[0] + address[1] + address[2] + userInfo.address
@@ -254,14 +255,8 @@ Component({
                 console.log("抽奖兑换奖品", that.data.giftInfo)
                 param['id'] = that.data.giftInfo.id
                 console.log(param)
-                app.lottery.finishGetPrize(param).then(res=>{
-                  taht.triggerEvent('change', param.id, myEventOption)
-                  wx.showToast({
-                    title: res.msg,
-                    icon: "none",
-                    duration: 2000
-                  });
-                }) 
+                that.triggerEvent('change', param.id)
+                app.lottery.finishGetPrize(param)
               }else{  //积分兑换
                 console.log("积分兑换奖品", that.data.giftInfo)
                 param['gift_id'] = that.data.giftInfo.id

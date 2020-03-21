@@ -192,8 +192,11 @@
 .share text{
     display: inline-block;
     width: 100%;
+    max-width: 108rpx;
     text-align: center;
-
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
     font-size:30rpx;
     font-family:HelveticaNeue-Medium,HelveticaNeue;
     font-weight:500;
