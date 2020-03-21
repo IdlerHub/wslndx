@@ -50,6 +50,7 @@ Page({
     /* rect: wx.getMenuButtonBoundingClientRect() */
   },
   pageName: "视频页（视频详情页）",
+  videoInterval:'',
   turnOff: {
     guide: 0,
     collect: 0
@@ -256,7 +257,14 @@ Page({
     }, 2000);
   },
   played() {
-    this.vedioRecordAdd()
+    setTimeout(() => {
+      this.vedioRecordAdd()
+      this.videoTime = 0
+      this.videoInterval = setInterval(() => {
+        this.videoTime ++  
+        console.log(this.videoTime)
+      },1000)
+    }, 800)
     wx.uma.trackEvent("lessonsPlay", {
       lessonsName: this.data.detail.title
     });
@@ -302,6 +310,18 @@ Page({
         }
       });
     });
+  },
+  videoPause() {
+    clearInterval(this.videoInterval)
+    if(this.videoTime == 0) return
+    let param = {
+      lesson_id: this.data.detail.id,
+      sublesson_id: this.data.cur.id,
+      progress: this.videoTime,
+    }
+    app.classroom.updateProgress(param).then(res => {
+      console.log(res.msg)
+    })
   },
   manage() {
     let detail = this.data.detail;
@@ -1554,11 +1574,6 @@ Page({
         mask: false
       })
     } else if(type == 1){
-      wx.showToast({
-        title: '提交成功',
-        image: '../../images/success.png',
-        duration: 2000
-      })
     }
   },
   submit() {
@@ -1570,6 +1585,10 @@ Page({
       } 
       app.user.profile(param).then(msg => {
         app.setUser(msg.data.userInfo)
+        this.setData({
+          showplece: false,
+          showToast: true
+        })
       })
     }
   },
