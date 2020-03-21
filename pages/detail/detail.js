@@ -50,6 +50,7 @@ Page({
     /* rect: wx.getMenuButtonBoundingClientRect() */
   },
   pageName: "视频页（视频详情页）",
+  videoTime: 0,
   videoInterval:'',
   turnOff: {
     guide: 0,
@@ -189,6 +190,18 @@ Page({
     if (this.data.$state.newGuide) {
       this.data.$state.newGuide.lesson == 0 ? this.closeGuide() : "";
     }
+    if(this.videoTime > 0) {
+      clearInterval(this.videoInterval)
+      let param = {
+        lesson_id: this.data.detail.id,
+        sublesson_id: this.data.cur.id,
+        progress: this.videoTime,
+      }
+      app.classroom.updateProgress(param).then(res => {
+        this.videoTime = 0
+        console.log(res.msg)
+      })
+    }
   },
   onHide() { },
   onGotUserInfo: function (e) {
@@ -259,7 +272,6 @@ Page({
   played() {
     setTimeout(() => {
       this.vedioRecordAdd()
-      this.videoTime = 0
       this.videoInterval = setInterval(() => {
         this.videoTime ++  
         console.log(this.videoTime)
@@ -320,6 +332,7 @@ Page({
       progress: this.videoTime,
     }
     app.classroom.updateProgress(param).then(res => {
+      this.videoTime = 0
       console.log(res.msg)
     })
   },
