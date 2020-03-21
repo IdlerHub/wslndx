@@ -19,7 +19,7 @@
       </view>
     </view>
   </view>
-  <address giftInfo="{{giftInfo}}" show-card="{{getAddress}}" bind:change="changeItem"></address>
+  <address style="position: fixed;" giftInfo="{{giftInfo}}" show-card="{{getAddress}}" bind:change="changeItem"></address>
   <view class="qstBox" wx:if="{{prizeList.length == 0}}">
     <image src="{{$state.imgHost}}/drawqs.png"></image>
     <view class="qst-txt">暂无中奖记录</view>
