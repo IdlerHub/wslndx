@@ -32,111 +32,111 @@ Page({
     scrollTop: 175
   },
   //options(Object)
-  onLoad: function (options) {
+  onLoad: function(options) {
     options.type !== "index"
       ? this.setData({
-        showHome: true
-      })
+          showHome: true
+        })
       : this.setData({
-        showHome: false
-      });
+          showHome: false
+        });
     options.curren
       ? this.setData({
-        currentTab: options.curren
-      })
+          currentTab: options.curren
+        })
       : "";
   },
-  onShow: function () {
+  onShow: function() {
     let sources = [
-      {
-        title: "邀请好友注册",
-        score: 25,
-        status: false,
-        page: "/pages/invitation/invitation",
-        authorization: false,
-        showStatus: {
-          name: "",
-          status: false
+        {
+          title: "邀请好友注册",
+          score: 25,
+          status: false,
+          page: "/pages/invitation/invitation",
+          authorization: false,
+          showStatus: {
+            name: "",
+            status: false
+          }
+        },
+        {
+          title: "学完一门新课程",
+          score: 20,
+          status: false,
+          page: "/pages/index/index?tabs=1",
+          authorization: false,
+          total: 3,
+          showStatus: {
+            name: "",
+            status: false
+          }
+        },
+        {
+          title: "每日短视频首次点赞",
+          score: 20,
+          status: false,
+          page: "/pages/video/video",
+          authorization: false,
+          showStatus: {
+            name: "day_shortvideo_praise_status",
+            status: false
+          }
+        },
+        {
+          title: "每日看完十个短视频",
+          score: 100,
+          status: false,
+          page: "/pages/video/video",
+          authorization: true,
+          showStatus: {
+            name: "day_shortvideo_read_10_status",
+            status: false
+          }
+        },
+        {
+          title: "每日秀风采首次发帖",
+          score: 20,
+          status: false,
+          page: "/pages/post/post",
+          authorization: true,
+          showStatus: {
+            name: "day_add_boke_status",
+            status: false
+          }
+        },
+        {
+          title: "每日秀风采首次评论",
+          score: 20,
+          status: false,
+          page: "/pages/post/post",
+          authorization: true,
+          showStatus: {
+            name: "day_boke_comment_status",
+            status: false
+          }
+        },
+        {
+          title: "每日课程首次讨论",
+          score: 10,
+          status: false,
+          page: "/pages/index/index",
+          authorization: true,
+          showStatus: {
+            name: "day_lesson_comment_status",
+            status: false
+          }
+        },
+        {
+          title: "每日签到",
+          score: 20,
+          status: false,
+          authorization: false,
+          showStatus: {
+            name: "shortvideo_guide_status",
+            status: false
+          }
         }
-      },
-      {
-        title: "学完一门新课程",
-        score: 20,
-        status: false,
-        page: "/pages/index/index?tabs=1",
-        authorization: false,
-        total: 3,
-        showStatus: {
-          name: "",
-          status: false
-        }
-      },
-      {
-        title: "每日短视频首次点赞",
-        score: 20,
-        status: false,
-        page: "/pages/video/video",
-        authorization: false,
-        showStatus: {
-          name: "day_shortvideo_praise_status",
-          status: false
-        }
-      },
-      {
-        title: "每日看完十个短视频",
-        score: 100,
-        status: false,
-        page: "/pages/video/video",
-        authorization: true,
-        showStatus: {
-          name: "day_shortvideo_read_10_status",
-          status: false
-        }
-      },
-      {
-        title: "每日秀风采首次发帖",
-        score: 20,
-        status: false,
-        page: "/pages/post/post",
-        authorization: true,
-        showStatus: {
-          name: "day_add_boke_status",
-          status: false
-        }
-      },
-      {
-        title: "每日秀风采首次评论",
-        score: 20,
-        status: false,
-        page: "/pages/post/post",
-        authorization: true,
-        showStatus: {
-          name: "day_boke_comment_status",
-          status: false
-        }
-      },
-      {
-        title: "每日课程首次讨论",
-        score: 10,
-        status: false,
-        page: "/pages/index/index",
-        authorization: true,
-        showStatus: {
-          name: "day_lesson_comment_status",
-          status: false
-        }
-      },
-      {
-        title: "每日签到",
-        score: 20,
-        status: false,
-        authorization: false,
-        showStatus: {
-          name: "shortvideo_guide_status",
-          status: false
-        }
-      }
-    ],
+      ],
       newbie = [
         {
           title: "完善资料",
@@ -359,8 +359,8 @@ Page({
       });
     });
   },
-  onHide: function () { },
-  onPullDownRefresh: function () {
+  onHide: function() {},
+  onPullDownRefresh: function() {
     this.setData({
       isRefreshing: true
     });
@@ -375,13 +375,13 @@ Page({
       });
     });
   },
-  onReachBottom: function () {
+  onReachBottom: function() {
     this.setData({
       scrollStatus: true,
       paddingAdd: true
     });
   },
-  onPageScroll: function (e) {
+  onPageScroll: function(e) {
     if (e.scrollTop < this.common.scrollTop) {
       this.data.scrollStatus &&
         this.setData({
@@ -586,7 +586,7 @@ Page({
     wx.navigateTo({
       url:
         "/pages/giftMessage/giftMessage?totalPoints=" + this.data.totalPoints,
-      success: function (res) {
+      success: function(res) {
         // 通过eventChannel向被打开页面传送数据
         res.eventChannel.emit("acceptDataFromOpenerPage", { data: item });
       }
