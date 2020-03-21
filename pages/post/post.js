@@ -188,13 +188,16 @@ Page({
     if (ops.from === "button") {
       console.log("ShareAppMessage  button");
       let i = ops.target.dataset.index;
-      let article = this.data.list[i];
+      let article = this.data.currentTab == 0 ? this.data.list[i] : this.data.currentTab == 1 ? this.data.nowList[i] : this.data.flowList[i];
       let bkid = article.id;
       app.circle.addForward({ blog_id: bkid }).then(res => {
-        let list = this.data.list;
-        list[i].forward += 1;
-        this.setData({
-          list: list
+        article.forward += 1;
+          this.data.currentTab == 0 ? this.setData({
+            [`list[${i}]`]: article
+          }) : this.data.currentTab == 1 ? this.setData({
+            [`nowList[${i}]`]: article
+          }) : this.setData({
+            [`flowList[${i}]`]: article
         });
       });
       return {
