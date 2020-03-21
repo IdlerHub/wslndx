@@ -16,6 +16,7 @@ Page({
   },
   pageName: "发帖页",
   onLoad(ops) {
+    ops.type ? console.log(234234324324) : ''
     if (ops.title) {
       this.getCircleList().then(() => {
         this.data.allCircle.forEach(item => {

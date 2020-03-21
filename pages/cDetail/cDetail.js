@@ -274,9 +274,6 @@ Page({
       }
     })
   },
-  //用于数据统计
-  onHide() {
-  },
   //收藏风采
   collect(e) {
     let blog_id = e.currentTarget.dataset.id, status = e.currentTarget.dataset.status, blog_index = e.currentTarget.dataset.index, flowId = e.currentTarget.dataset.userid, is_follow = e.currentTarget.dataset.follow, follownickname = e.currentTarget.dataset.name
