@@ -90,6 +90,9 @@
 		</view>
 	</view>
 </view>
+<view wx:if="{{ rlAni }}" class="popup">
+	<view class="publishAni"></view>
+</view>
 <view class="footer">
 	<navigator url="../release/release?title={{circle.title}}&id={{circle.id}}&type=circle" hover-class="none" open-type="navigate" class="write">
 		<text class="text">写帖</text>
