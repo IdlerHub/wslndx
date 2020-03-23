@@ -12,12 +12,12 @@
   </view>
   <view class="centerBox" wx:if="{{mode == 0}}">
     <view class="centerTop">
-      <view class="title {{rankType == 'day' ? 'active' : ''}}" bindtap="checkTop" data-type="day">日榜</view>
-      <view class="title {{rankType == 'week' ? 'active' : ''}}" bindtap="checkTop" data-type="week">周榜</view>
-      <view class="title {{rankType == 'month' ? 'active' : ''}}" bindtap="checkTop" data-type="month">月榜</view>
-      <image class="one" src="../../images/rankingPink1.png" wx:if="{{rankType == 'day'}}"></image>
-      <image class="tow" src="../../images/rankingPink2.png" wx:if="{{rankType == 'week'}}"></image>
-      <image class="three" src="../../images/rankingPink3.png" wx:if="{{rankType == 'month'}}"></image>
+      <view class="title {{rankType == '0' ? 'active' : ''}}" bindtap="checkTop" data-type="0">日榜</view>
+      <view class="title {{rankType == '1' ? 'active' : ''}}" bindtap="checkTop" data-type="1">周榜</view>
+      <view class="title {{rankType == '2' ? 'active' : ''}}" bindtap="checkTop" data-type="2">月榜</view>
+      <image class="one" src="../../images/rankingPink1.png" wx:if="{{rankType == '0'}}"></image>
+      <image class="tow" src="../../images/rankingPink2.png" wx:if="{{rankType == '1'}}"></image>
+      <image class="three" src="../../images/rankingPink3.png" wx:if="{{rankType == '2'}}"></image>
     </view>
     <view class="center">
       <text>截止 {{time}} 00:00</text> 
@@ -37,23 +37,23 @@
             {{index + 1}}
           </view>
           <image class="img" src="{{$state.imgHost}}/ranking{{index}}.png" wx:else></image>
-          <view class="name">{{item.name}}</view>
-          <view class="time">{{item.time}}</view>
+          <view class="name">{{item.nickname}}</view>
+          <view class="time">{{ item.times || item.lesson_time}}</view>
       </view>
     </view>
   </view>
   <view class="centerBox" wx:else>
     <view class="centerTop">
-      <view class="title {{rankType == 1 ? 'active' : ''}}" bindtap="checkTop" data-type="1">日榜</view>
-      <view class="title {{rankType == 2 ? 'active' : ''}}" bindtap="checkTop" data-type="2">周榜</view>
-      <view class="title {{rankType == 3 ? 'active' : ''}}" bindtap="checkTop" data-type="3">月榜</view>
-      <image class="one" src="../../images/rankingPink1.png" wx:if="{{rankType == 1}}"></image>
-      <image class="tow" src="../../images/rankingPink2.png" wx:if="{{rankType == 2}}"></image>
-      <image class="three" src="../../images/rankingPink3.png" wx:if="{{rankType == 3}}"></image>
+      <view class="title {{rankType == 0 ? 'active' : ''}}" bindtap="checkTop" data-type="0">日榜</view>
+      <view class="title {{rankType == 1 ? 'active' : ''}}" bindtap="checkTop" data-type="1">周榜</view>
+      <view class="title {{rankType == 3 ? 'active' : ''}}" bindtap="checkTop" data-type="2">月榜</view>
+      <image class="one" src="../../images/rankingPink1.png" wx:if="{{rankType == 0}}"></image>
+      <image class="tow" src="../../images/rankingPink2.png" wx:if="{{rankType == 1}}"></image>
+      <image class="three" src="../../images/rankingPink3.png" wx:if="{{rankType == 2}}"></image>
     </view>
     <view class="center">
       <text>截止 {{time}} 00:00</text> 
-      <view class="right">
+      <view class="right" bindtap="openRule" data-type="type">
         <text>?</text>
         统计说明
       </view>
@@ -69,14 +69,14 @@
             {{index + 1}}
           </view>
           <image class="img" src="{{$state.imgHost}}/ranking{{index}}.png" wx:else></image>
-          <view class="name">{{item.name}}</view>
-          <view class="time">{{item.time}}</view>
+          <view class="name">{{item.nickname}}</view>
+          <view class="time">{{ item.times || item.lesson_time}}</view>
       </view>
     </view>
   </view>
 </view>
 <view class="contentList userRank">
-  <view class="number fontColor">04</view>
+  <view class="number fontColor">50000</view>
   <view class="name fontColor">一条咸鱼</view>
   <view class="time fontColor">30</view>
 </view>

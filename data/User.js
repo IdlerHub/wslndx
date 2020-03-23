@@ -222,6 +222,11 @@ function getSchoolLessonTime(params) {
   return httpService.post("user/getSchoolLessonTime", params)
 }
 
+//POST /user/getSchoolLessonTime 学校学习时间排名
+function getUserLessonTime(params) {
+  return httpService.post("user/getUserLessonTime", params)
+}
+
 module.exports = {
   wxLoginCode,
   getAuthCode,
@@ -260,5 +265,6 @@ module.exports = {
   getGoodsAddress,
   putGoodsaddress,
   schoolWrite,
-  getSchoolLessonTime
+  getSchoolLessonTime,
+  getUserLessonTime
 }
