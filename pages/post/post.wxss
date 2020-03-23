@@ -170,7 +170,6 @@ page {
   box-sizing: border-box; }
   .wrap > .item {
     background: #fff;
-    padding: 0 30rpx;
     margin-bottom: 20rpx; }
     .wrap > .item:last-of-type {
       border-bottom: none; }
@@ -178,7 +177,7 @@ page {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 30rpx 0 20rpx; }
+      padding: 30rpx 30rpx 20rpx; }
       .wrap > .item .top .date {
         font-size: 26rpx;
         color: #bdbdbd; }
@@ -255,8 +254,12 @@ page {
       -webkit-box-orient: vertical;
       -webkit-line-clamp: 5;
       overflow: hidden; 
+      margin: 0 30rpx;
       /* text-align: justify; */
       }
+    .wrap > .item .content {
+      padding: 0 30rpx;
+    } 
     .wrap > .item .content .img {
       display: flex;
       flex-wrap: wrap;
@@ -307,13 +310,14 @@ page {
     .wrap > .item .label {
       display: inline-block;
       background: #FFF6E6;
-      margin-top: 20rpx;
+      margin: 0 30rpx 20rpx 30rpx;
       padding: 0 20rpx;
       line-height: 44rpx;
       border-radius: 6rpx;
       color: #DB9200;
       font-size: 28rpx;
-      text-align: center; }
+      text-align: center;
+       }
   .wrap .btn {
     height: 125rpx;
     margin-top: 10rpx;
@@ -321,7 +325,9 @@ page {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 30rpx 0  10rpx; }
+    padding: 0 60rpx 0  40rpx;
+    border-top: 1rpx solid #E9E9E9;
+    }
     .wrap .btn .division {
       width: 2rpx;
       height: 40rpx;
@@ -350,6 +356,13 @@ page {
     background:#f5f6f8;
     border-radius: 8rpx;
   }
+  .wrap > .item .likeComment {
+    background: #F8F8F8;
+    border-radius: 8rpx;
+    padding-left:19rpx;
+    overflow: hidden;
+    margin: 20rpx 30rpx 20rpx 30rpx;
+  }
   .wrap > .item  .likesavatar {
     display: flex;
     align-items: center;
@@ -360,15 +373,11 @@ page {
     align-items: center;
   }
   .wrap > .item  .likesavatar .likesLeft image {
-    width: 40rpx;
-    height: 40rpx;
+    width: 44rpx;
+    height: 44rpx;
     border-radius: 50%;
-    position: relative;
-    left: -10rpx;
+    margin-right:10rpx;
     border:2rpx solid #fff; 
-  }
-  .wrap > .item  .likesavatar .likesLeft image:nth-child(1) {
-    left: 0;
   }
   .wrap > .item  .likesavatar .likesLeft .likeTxt {
     margin-left: 5rpx;
@@ -378,19 +387,17 @@ page {
     color:rgba(126,126,126,1);
   }
   .wrap > .item  .lastComment {
-    height: 120rpx;
-    border-top: 1rpx solid #E8E8E8;
+    padding: 10rpx 0 20rpx 0;
   }
   .wrap > .item  .lastComment .lastContet {
     display: flex;
     align-items: center;
-    margin: 30rpx 0 10rpx 0;
   }
   .wrap > .item  .lastComment .lastContet text {
     font-size:36rpx;
     font-family:PingFangSC-Medium,PingFang SC;
     font-weight:500;
-    color:rgba(58,58,58,1);
+    color:rgba(126,126,126,1);
   }
   .wrap > .item  .lastComment .lastContet rich-text {
     flex: 1;
@@ -422,7 +429,7 @@ page {
   /* flex: 1; */
   display: flex;
   align-items: center;
-  padding-left: 20px;
+  /* padding-left: 20px; */
   box-sizing: border-box;
 }
 .btn > .item:nth-child(1) {

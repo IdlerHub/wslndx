@@ -135,11 +135,11 @@
           </block>
         </swiper>
         <!-- 农场和电台 -->
-        <scroll-view class="jumpout" scroll-x enable-flex>
-          <!-- <view class="jumpoutBox" catchtap="jumpmini">
+        <!-- <scroll-view class="jumpout" scroll-x enable-flex>
+          <view class="jumpoutBox" catchtap="jumpmini">
             <image class="img" mode="widthFix" src="{{  !recommend ? '' : $state.imgHost + '/jumpoutImg_1.png' }}">
             </image>
-          </view> -->
+          </view>
           <navigator class="jumpoutBox" url="/pages/education/education?type=farm">
             <image class="img" mode="widthFix" src="{{  !recommend ? '' : $state.imgHost + '/jumpoutImg_2.png' }}">
             </image>
@@ -151,7 +151,17 @@
           <view style="width: 30rpx;height: 100%;display: block;color: white;">
             孙菲菲结果来看g
           </view>
-        </scroll-view>
+        </scroll-view> -->
+        <view class="jumpout">
+          <navigator class="jumpoutBox" url="/pages/education/education?type=farm">
+            <image class="img" mode="widthFix" src="{{  !recommend ? '' : $state.imgHost + '/jumpoutImg_2.png' }}">
+            </image>
+          </navigator>
+          <navigator class="jumpoutBox" url="/pages/education/education?type=station">
+            <image class="img" mode="widthFix" src="{{  !recommend ? '' : $state.imgHost + '/jumpoutImg_3.png'}}">
+            </image>
+          </navigator>
+        </view>
         <view class="item" bindtap="jumpPeper" data-peper="{{paperMsg.url}}" wx:if="{{paperMsg.image}}">
           <view class="content">
             <view class="left">
