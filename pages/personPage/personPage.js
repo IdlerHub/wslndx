@@ -77,7 +77,7 @@ Page({
         });
       });
       return {
-        title: article.content,
+        title: app.util.delHtmlTag(article.content),
         imageUrl:
           article.image || article.images[0] || "../../images/sharemessage.jpg",
         path:

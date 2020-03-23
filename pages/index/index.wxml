@@ -136,10 +136,10 @@
         </swiper>
         <!-- 农场和电台 -->
         <scroll-view class="jumpout" scroll-x enable-flex>
-          <view class="jumpoutBox" catchtap="jumpmini">
+          <!-- <view class="jumpoutBox" catchtap="jumpmini">
             <image class="img" mode="widthFix" src="{{  !recommend ? '' : $state.imgHost + '/jumpoutImg_1.png' }}">
             </image>
-          </view>
+          </view> -->
           <navigator class="jumpoutBox" url="/pages/education/education?type=farm">
             <image class="img" mode="widthFix" src="{{  !recommend ? '' : $state.imgHost + '/jumpoutImg_2.png' }}">
             </image>

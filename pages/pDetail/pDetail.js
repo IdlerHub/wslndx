@@ -128,6 +128,7 @@ Page({
         detail.images.forEach(function(i) {
           brr.push(i.image_compress);
         });
+        detail.content = app.util.delHtmlTag(detail.content)
         this.detailContent = detail.content;
         detail.images = arr;
         detail.image_compress = brr;

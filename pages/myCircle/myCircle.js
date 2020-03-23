@@ -173,7 +173,7 @@ Page({
         })
       })
       return {
-        title: article.content,
+        title: app.util.delHtmlTag(article.content),
         imageUrl: article.image || article.images[0] || "../../images/sharemessage.jpg",
         path: "/pages/pDetail/pDetail?id=" + bkid + "&type=share&uid=" + this.data.$state.userInfo.id
       }
