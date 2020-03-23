@@ -137,7 +137,7 @@ textarea {
 .cBox {
   width: 100%;
   background: #fff;
-  margin-bottom: 170rpx;
+  margin-bottom: 20rpx;
 }
 
 .cBox .hd {
