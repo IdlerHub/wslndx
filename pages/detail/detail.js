@@ -52,6 +52,10 @@ Page({
   pageName: "视频页（视频详情页）",
   videoTime: 0,
   videoInterval:'',
+  videoParam:{
+    id:'',
+    suId:''
+  },
   turnOff: {
     guide: 0,
     collect: 0
@@ -275,6 +279,10 @@ Page({
   played() {
     setTimeout(() => {
       this.vedioRecordAdd()
+      this.videoParam = {
+        id: this.data.detail.id,
+        suId: this.data.cur.id
+      }
       this.videoInterval = setInterval(() => {
         this.videoTime ++  
       },1000)
@@ -329,8 +337,8 @@ Page({
     clearInterval(this.videoInterval)
     if(this.videoTime == 0) return
     let param = {
-      lesson_id: this.data.detail.id,
-      sublesson_id: this.data.cur.id,
+      lesson_id: this.videoParam.id,
+      sublesson_id: this.videoParam.suId,
       progress: this.videoTime,
     }
     app.classroom.updateProgress(param).then(res => {
