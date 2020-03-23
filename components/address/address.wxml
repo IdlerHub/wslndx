@@ -39,7 +39,7 @@
                 <!-- 详细地址 -->
                 <view class="card-info">
                     <view class="info-address">详细地址</view>
-                    <textarea class="info-area" value="{{userInfo.address}}" bindblur="changeAddress"
+                    <textarea class="info-area" value="{{userInfo.address}}" bindblur="changeAddress" bindinput="changeAddress"
                      placeholder="请输入详细地址" placeholder-class="input-placeholder"></textarea>
                 </view>
             </view>

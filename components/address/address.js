@@ -11,16 +11,6 @@ Component({
       value: false
     }
   },
-  pageLifetimes:{
-    show(){
-      console.log("页面展示", this.data.giftInfo)
-      // if(this.data.showCard){
-      //   this.getGoodsAddress().then(() => {
-      //     this.init()
-      //   })
-      // }
-    }
-  },
   observers:{
     showCard(){
       console.log(this.data.showCard)
@@ -45,8 +35,6 @@ Component({
       //获取省市区,如果不是第一次进来的话,需要定位,否则默认即可
       let userInfo = this.data.userInfo;
       let cascade = [userInfo.province_id, userInfo.city_id, userInfo.area_id] || ["", "", ""]
-      console.log("data的userInfo", this.data.userInfo)
-      console.log('城市列表', cascade)
       this.getProvince().then(() => {
         this.getCity(cascade[0]).then(() => {
           this.getArea(cascade[1]).then(() => {
@@ -116,7 +104,7 @@ Component({
         address: userInfo.address || ''
       }
       return app.user.putGoodsaddress(param).then(res=>{
-        console.log("提交成功",param,res)
+        console.log("提交成功",res)
       })
     },
     changeName(e){
@@ -133,6 +121,9 @@ Component({
         userInfo: userInfo
       })
     },
+    // changeInput(e){
+    //   console.log("输入改变",e)用下面的一样
+    // },
     changeAddress(e){
       let userInfo = this.data.userInfo;
       userInfo['address'] = e.detail.value;
@@ -141,7 +132,6 @@ Component({
       })
     },
     changeColumn(e){
-      console.log("列改变",e)
       let multiAddress = this.data.multiAddress;
       let multiIndex = this.data.multiIndex;
       //下面id无用,就用这个注释
@@ -172,9 +162,7 @@ Component({
       }
     },
     changeArea(e){
-      console.log("确定选择",e)
       let value = e.detail.value;
-      // this.provinceId[index[0]]  省级id
       this.setData({
         address: [this.province[value[0]], this.city[value[1]], this.area[value[2]]],
         addressId: [this.provinceId[value[0]], this.cityId[value[1]], this.areaId[value[2]]]
@@ -189,7 +177,6 @@ Component({
         confirmColor: "#DF2020",
         success(res) {
           if (res.confirm) {
-            console.log('用户点击继续')
           } else if (res.cancel) {
             wx.showModal({
               title: '兑换失败',
@@ -212,7 +199,6 @@ Component({
       let errTip = '';
       let that = this;
       let userInfo = this.data.userInfo;
-      console.log(userInfo.username)
       if(!userInfo.username){
         errTip = '收货人不能为空';
       }else if(!userInfo.mobile){
@@ -239,7 +225,6 @@ Component({
         goods_mobile: userInfo.mobile,
         goods_address: address[0] + address[1] + address[2] + userInfo.address
       };
-      console.log(param)
       that.putGoodsaddress().then(()=>{
         wx.showModal({
           title: '兑换成功',
@@ -252,13 +237,10 @@ Component({
                 showCard: false
               })
               if(that.data.giftInfo.from == "winPrize"){  //从抽奖来的
-                console.log("抽奖兑换奖品", that.data.giftInfo)
                 param['id'] = that.data.giftInfo.id
-                console.log(param)
                 that.triggerEvent('change', param.id)
                 app.lottery.finishGetPrize(param)
               }else{  //积分兑换
-                console.log("积分兑换奖品", that.data.giftInfo)
                 param['gift_id'] = that.data.giftInfo.id
                 app.user.exchange(param).then(() => {
                   // wx.navigateTo({

@@ -41,7 +41,6 @@ Page({
     });
   },
   changeItem(e){
-    console.log("触发事件 ",e)
     let prizeList = this.data.prizeList;
     prizeList.forEach(item => {
       if (item.id == e.detail){
@@ -62,7 +61,6 @@ Page({
       get_type: e.currentTarget.dataset.type
     };
     if (param.get_type == 2){
-      console.log("我是积分呀")
       app.lottery
         .finishGetPrize(param)
         .then(res => {
@@ -70,8 +68,8 @@ Page({
           prizeList.forEach(item => {
             // item.id == e.currentTarget.dataset.id ? (item.is_finish = 1) : "";
             if (item.id == e.currentTarget.dataset.id) {
-              item.is_finish = 2;
-              item.show = "兑换中"
+              item.is_finish = 1;
+              item.show = "已领取"
             }
           });
           this.setData({
