@@ -146,7 +146,7 @@ Page({
       errTip = '收货人不能为空';
     } else if (!this.data.userInfo.mobile) {
       errTip = '手机号不能为空';
-    } else if (!/^[\u4e00-\u9fa5_a-zA-Z0-9]+$/.test(this.data.userInfo.username)) {
+    } else if (!/^[\u4e00-\u9fa5_a-zA-Z0-9·\s]+$/.test(this.data.userInfo.username)) {
       errTip = "请输入合法的姓名(仅支持数字/汉字/字母)"
     } else if (!/^1[3|4|5|6|7|8|9]\d{9}$/.test(this.data.userInfo.mobile)) {
       errTip = "手机号格式错误"
