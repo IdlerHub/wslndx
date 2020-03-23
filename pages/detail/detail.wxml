@@ -1,6 +1,7 @@
 <view class="container">
+  <!-- wx:if="{{$state.userInfo.school.length > 0 || detail.school_dialog}}" -->
   <video id="myVideo" src="{{ cur.url }}" controls page-gesture enable-play-gesture bindended="ended"
-    bindtimeupdate="timeupdate" bindplay="played" bindpause="videoPause" wx:if="{{$state.userInfo.school.length > 0 || detail.school_dialog}}">
+    bindtimeupdate="timeupdate" bindplay="played" bindpause="videoPause" >
     <cover-view wx:if="{{ vistor && tip }}" class="vistor-head">
       <cover-view>点击“</cover-view>
       <cover-image src="/images/xiaochengxu.png" class="iconfont"></cover-image>
@@ -13,7 +14,7 @@
       bindtap="recordAdd"></cover-image>
     <cover-view class="videomask" wx:if="{{showintegral}}"></cover-view>
   </video>
-  <view id="myVideo" style="overflow: hidden;" wx:else>
+  <!-- <view id="myVideo" style="overflow: hidden;" wx:else>
     <cover-view wx:if="{{ vistor && tip }}" class="vistor-head">
       <cover-view>点击“</cover-view>
       <cover-image src="/images/xiaochengxu.png" class="iconfont"></cover-image>
@@ -23,7 +24,7 @@
     </image>
     <image wx:if="{{ !playing }}" mode="aspectFill" src="{{ $state.imgHost }}/play.png" class="play"
     ></image>
-  </view>
+  </view> -->
   <view class="info">
     <view class="top">
       <view>
@@ -291,7 +292,7 @@
 <integralAnimation integral="{{integral}}" integralContent="{{integralContent}}" wx:if="{{showintegral}}">
 </integralAnimation>
 <!-- 学校选择 -->
- <view class="chancesh" wx:if="{{showplece && detail.school_dialog}}">
+ <!-- <view class="chancesh" wx:if="{{showplece && detail.school_dialog}}">
   <view class="chanBox">
     <view class="top">请选择您的学校 <image src="../../images/icon-del.png" bindtap="closeShool"></image> </view>
     <view class="plath">
@@ -320,6 +321,6 @@
 <view class="toast" wx:if="{{showToast}}">
   <image src="../../images/success.png"></image>
   <text>提交成功</text>
-</view>
+</view> -->
 
 

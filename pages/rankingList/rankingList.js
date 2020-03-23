@@ -65,9 +65,9 @@ Page({
     list.forEach(item => {
       item.times = app.util.towTwice(item.lesson_time)
     })
-    this.setData({
-      list
-    })
+    // this.setData({
+    //   list
+    // })
   },
   onShow: function () {
   },

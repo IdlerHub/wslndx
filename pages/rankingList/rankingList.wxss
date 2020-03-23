@@ -233,3 +233,14 @@ page {
 .rules .cancel {
   margin-top: 38rpx;
 }
+.qst {
+  width: 100%;
+  height: calc(100vh - 580rpx);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.qst image{
+  width: 640rpx;
+  height: 480rpx;
+}

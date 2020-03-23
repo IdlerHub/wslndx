@@ -134,18 +134,7 @@ Page({
       } else if (that.data.$state.userInfo.mobile) {
         that.getDetail();
       }
-      if(that.data.$state.userInfo && that.data.$state.userInfo.university.length == 0) {
-        let plathParam = {
-          plath: '',
-          shool:'',
-        }
-        this.setData({
-          plathParam,
-          showplece:true,
-          showToast: false
-        })
-        this.getPlath()
-      }
+      // that.showPlath(that)
     });
     this.sublessParam = {
       id: options.id || this.data.detail.id,
@@ -204,6 +193,20 @@ Page({
     }
   },
   onHide() { },
+  showPlath(that) {
+    if(that.data.$state.userInfo && that.data.$state.userInfo.university.length == 0 && that.data.$state.newGuide.lesson) {
+      let plathParam = {
+        plath: '',
+        shool:'',
+      }
+      this.setData({
+        plathParam,
+        showplece:true,
+        showToast: false
+      })
+      this.getPlath()
+    }
+  },
   onGotUserInfo: function (e) {
     if (e.detail.errMsg == "getUserInfo:ok") {
       app.updateBase(e)
@@ -1143,6 +1146,7 @@ Page({
     app.user.guideRecordAdd(param).then(res => {
       app.getGuide();
       this.setIntegral("+45 学分", "完成[云课堂]新手指引");
+      // this.showPlath(this)
     }).catch(() => {
       this.turnOff.guide = 0
     });

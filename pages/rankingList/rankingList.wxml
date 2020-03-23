@@ -40,6 +40,9 @@
           <view class="name">{{item.nickname}}</view>
           <view class="time">{{ item.times || item.lesson_time}}</view>
       </view>
+      <view class="qst">
+        <image class="ast-img" src="{{$state.imgHost}}/no-com.png"></image>
+      </view>
     </view>
   </view>
   <view class="centerBox" wx:else>
@@ -71,6 +74,9 @@
           <image class="img" src="{{$state.imgHost}}/ranking{{index}}.png" wx:else></image>
           <view class="name">{{item.nickname}}</view>
           <view class="time">{{ item.times || item.lesson_time}}</view>
+      </view>
+      <view class="qst">
+        <image class="ast-img" src="{{$state.imgHost}}/no-com.png"></image>
       </view>
     </view>
   </view>
