@@ -36,6 +36,7 @@
             </view>
         </view>
     </view>
+    <view style="height: 150rpx; width: 100%;"></view>
     <!-- <view class="cBox" wx:if="{{circleTitle}}">
         <view class="hd">
             <text>同步到{{circleTitle}} </text>
