@@ -109,7 +109,7 @@ page .right {
   background: #eee; }
   .wrap > .item {
     background: #fff;
-    padding: 0 30rpx;
+    padding: 0;
     margin-bottom: 20rpx; }
     .wrap > .item:last-of-type {
       border-bottom: none; }
@@ -117,7 +117,7 @@ page .right {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 30rpx 0 20rpx; }
+      padding: 30rpx 30rpx 20rpx 30rpx; }
       .wrap > .item .top .date {
         font-size: 26rpx;
         color: #bdbdbd; }
@@ -176,7 +176,11 @@ page .right {
       display: -webkit-box;
       -webkit-box-orient: vertical;
       -webkit-line-clamp: 5;
-      overflow: hidden;}
+      overflow: hidden;
+      margin: 0 30rpx;}
+    .wrap > .item .content {
+      margin:0 30rpx;
+    }
     .wrap > .item .content .img {
       display: flex;
       flex-wrap: wrap;
@@ -236,6 +240,7 @@ page .right {
       font-size: 28rpx;
       text-align: center; }
   .wrap .btn {
+    border-top: 1rpx solid #E9E9E9;
     height: 125rpx;
     margin-top: 10rpx;
     position: relative;
@@ -243,6 +248,10 @@ page .right {
     align-items: center;
     justify-content: stretch;
     overflow: hidden; }
+    .wrap .btn .division {
+      width: 2rpx;
+      height: 40rpx;
+      background: #dbdbdb; }
   .wrap > .item .top .left .loadingTxt {
     width: 240rpx;
     height: 42rpx;
@@ -267,6 +276,22 @@ page .right {
     background:#f5f6f8;
     border-radius: 8rpx;
   }
+  .wrap > .item .likeComment {
+    background: #FBFBFB;
+    border-radius: 8rpx;
+    padding-left:19rpx;
+    overflow: hidden;
+    margin: 20rpx 30rpx 20rpx 30rpx;
+  }
+   .item  .likesavatar {
+    display: flex;
+    align-items: center;
+    margin-top: 20rpx;
+  }
+   .item  .likesavatar .likesLeft {
+    display: flex;
+    align-items: center;
+  }
   .wrap > .item  .likesavatar {
     display: flex;
     align-items: center;
@@ -277,15 +302,11 @@ page .right {
     align-items: center;
   }
   .wrap > .item  .likesavatar .likesLeft image {
-    width: 40rpx;
-    height: 40rpx;
+    width: 44rpx;
+    height: 44rpx;
     border-radius: 50%;
-    position: relative;
-    left: -10rpx;
+    margin-right:10rpx;
     border:2rpx solid #fff; 
-  }
-  .wrap > .item  .likesavatar .likesLeft image:nth-child(1) {
-    left: 0;
   }
   .wrap > .item  .likesavatar .likesLeft .likeTxt {
     margin-left: 5rpx;
@@ -295,19 +316,17 @@ page .right {
     color:rgba(126,126,126,1);
   }
   .wrap > .item  .lastComment {
-    height: 120rpx;
-    border-top: 1rpx solid #E8E8E8;
+    padding: 10rpx 0 20rpx 0;
   }
   .wrap > .item  .lastComment .lastContet {
     display: flex;
     align-items: center;
-    margin: 30rpx 0 10rpx 0;
   }
   .wrap > .item  .lastComment .lastContet text {
     font-size:36rpx;
     font-family:PingFangSC-Medium,PingFang SC;
     font-weight:500;
-    color:rgba(58,58,58,1);
+    color:rgba(126,126,126,1);
   }
   .wrap > .item  .lastComment .lastContet rich-text {
     flex: 1;
@@ -341,6 +360,7 @@ page .right {
     align-items: center;
     padding-left: 20px;
     box-sizing: border-box;
+    justify-content: center;
   }
    .btn > .item:nth-child(1) {
     padding-left: 0;

@@ -145,13 +145,24 @@
 .jumpout .jumpoutBox {
   flex: 1;
   position: relative;
-  height: 136rpx;
+  height: 120rpx;
   margin-left: 30rpx;
+  display: flex;
+  align-items: center;
+}
+.jumpout .jumpoutBox text {
+  font-size:40rpx;
+  font-family:PingFangSC-Medium,PingFang SC;
+  font-weight:500;
+  color:rgba(255,255,255,1);
 }
 .jumpout .img {
   width: 100%;
   height: 100% !important;
   background: #f5f6f8;
+  position: absolute;
+  top: 0;
+  z-index: 0;
 }
 
 .jumpout text {

@@ -58,34 +58,39 @@
 						<image mode="aspectFill" src="{{ $state.imgHost }}/play-hl.png" class="play"></image>
 					</view>
 				</view>
-				<view wx:if="{{ item.fs_title }}" class="label">#{{ item.fs_title }}精选</view>
 			</view>
-			<view class="likesavatar"  wx:if="{{item.like_avatar_list[0] && item.likes!= 0 }}">
-				<view class="likesLeft">
-					<image wx:for="{{item.like_avatar_list}}" wx:for-item="linkeItem" wx:for-index="likeIndex" wx:key="likeIndex" src="{{linkeItem}}" style="left: -{{likeIndex * 10}}rpx;"></image>
+			<view class="likeComment" wx:if="{{ item.like_avatar_list[0] || item.last_comment.nickname}}">
+				<view class="likesavatar"  wx:if="{{item.like_avatar_list[0] && item.likes!= 0 }}" style="margin-bottom: {{ item.last_comment.nickname ? '' : '20rpx'}};">
+					<view class="likesLeft">
+						<image wx:for="{{item.like_avatar_list}}" wx:for-item="linkeItem" wx:for-index="likeIndex" wx:key="likeIndex" src="{{linkeItem}}"></image>
+					</view>
+				</view>
+				<view class="lastComment" wx:if="{{item.last_comment.nickname}}" catchtap="navigate" data-id="{{ item.id }}">
+					<view class="lastContet">
+						<text>{{item.last_comment.nickname}}: </text>
+						<rich-text nodes="<div style='overflow:hidden;white-space:nowrap;text-overflow:ellipsis;'>{{ item.last_comment.content }} </div>"></rich-text>
+					</view>
 				</view>
 			</view>
-			<view class="btn">
+			<navigator wx:if="{{ item.fs_title }}" url="../cDetail/cDetail?id={{ item.fs_id }}"
+			hover-class="none" open-type="navigate" class="label" style="margin: {{ !item.like_avatar_list[0] && !item.last_comment.nickname ? '30rpx 30rpx 0 30rpx' : '0 30rpx 20rpx 30rpx'}};"> #{{ item.fs_title }}精选</navigator>
+			<view class="btn" style="margin-top:{{!item.like_avatar_list[0] && !item.last_comment.nickname ? '30rpx' : ''}}">
 				<!-- 点赞 -->
 				<view class="item" bindtap="praise" data-index="{{ index }}">
 					<view class="praise  {{ item.likestatus ? 'end' : '' }} {{ item.praising ? 'ani' : '' }}" data-index="{{ index }}" bindanimationend="aniend"></view>
 					<text class="text">{{ item.likes != 0 ? item.lw || item.likes : '点赞' }} </text>
 				</view>
+				<text class="division"></text>
 				<!-- 评论 -->
 				<navigator url="../pDetail/pDetail?id={{ item.id }}&comment" hover-class="none" open-type="navigate" class="item">
 					<icon class="iconfont icon-comment"></icon>
 					<text class="text">{{ item.comments != 0 ?  item.cw || item.comments : '评论' }}</text>
 				</navigator>
+				<text class="division"></text>
 				<button class="share item" open-type="share" data-index="{{ index }}" hover-class="btn-hover">
 					<icon class="iconfont icon-fenxiang"></icon>
 					<text class="text">{{ item.forward != 0 ? item.fw || item.forward : '分享' }}</text>
 				</button>
-			</view>
-			<view class="lastComment" wx:if="{{item.last_comment.nickname}}" catchtap="navigate" data-id="{{ item.id }}">
-				<view class="lastContet">
-					<text>{{item.last_comment.nickname}}: </text>
-					<rich-text nodes="<div style='overflow:hidden;white-space:nowrap;text-overflow:ellipsis;'>{{ item.last_comment.content }} </div>"></rich-text>
-				</view>
 			</view>
 		</view>
 	</view>

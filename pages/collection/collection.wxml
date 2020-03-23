@@ -85,12 +85,21 @@
 							</view>
 						</view>
 					</view>
-					<navigator wx:if="{{ item.fs_title }}" url="../cDetail/cDetail?id={{ item.fs_id }}" hover-class="none" open-type="navigate" class="label"> #{{ item.fs_title }}精选</navigator>
-					<view class="likesavatar" wx:if="{{item.like_avatar_list[0] && item.likes!= 0}}">
-						<view class="likesLeft">
-							<image wx:for="{{item.like_avatar_list}}" wx:for-item="linkeItem" wx:for-index="likeIndex" wx:key="likeIndex" src="{{linkeItem}}" style="left: -{{likeIndex * 10}}rpx;"></image>
+					<view class="likeComment" wx:if="{{ item.like_avatar_list[0] || item.last_comment.nickname}}">
+						<view class="likesavatar"  wx:if="{{item.like_avatar_list[0] && item.likes!= 0 }}" style="margin-bottom: {{ item.last_comment.nickname ? '' : '20rpx'}};">
+							<view class="likesLeft">
+								<image wx:for="{{item.like_avatar_list}}" wx:for-item="linkeItem" wx:for-index="likeIndex" wx:key="likeIndex" src="{{linkeItem}}"></image>
+							</view>
+						</view>
+						<view class="lastComment" wx:if="{{item.last_comment.nickname}}" catchtap="navigate" data-id="{{ item.id }}">
+							<view class="lastContet">
+								<text>{{item.last_comment.nickname}}: </text>
+								<rich-text nodes="<div style='overflow:hidden;white-space:nowrap;text-overflow:ellipsis;'>{{ item.last_comment.content }} </div>"></rich-text>
+							</view>
 						</view>
 					</view>
+					<navigator wx:if="{{ item.fs_title }}" url="../cDetail/cDetail?id={{ item.fs_id }}"
+					hover-class="none" open-type="navigate" class="label" style="margin: {{ !item.like_avatar_list[0] && !item.last_comment.nickname ? '30rpx 30rpx 0 30rpx' : '0 30rpx 20rpx 30rpx'}};"> #{{ item.fs_title }}精选</navigator>
 					<view class="btn">
 						<!-- 点赞 -->
 						<formCode bind:handler="praise" class="item" data-index="{{ index }}">
@@ -99,6 +108,7 @@
 								<text class="text">{{ item.likes != 0 ? item.lw || item.likes : '点赞' }} </text>
 							</view>
 						</formCode>
+						<text class="division"></text>
 						<!-- 评论 -->
 						<view hover-class="none" class="item" bindtap="handleRelse" data-status="{{ $state.userInfo.status }}" data-id="{{ item.id }}" data-type="reply">
 							<formCode>
@@ -108,6 +118,7 @@
 								</view>
 							</formCode>
 						</view>
+						<text class="division"></text>
 						<button class="share item" open-type="share" data-index="{{ index }}" hover-class="btn-hover" wx:if="{{ item.check_status != 0 && item.check_status != 2}}">
 							<icon class="iconfont icon-fenxiang"></icon>
 							<text class="text">{{ item.forward != 0 ? item.fw || item.forward : '分享' }}</text>
@@ -116,12 +127,6 @@
 							<icon class="iconfont icon-fenxiang"></icon>
 							<text class="text">{{ item.forward != 0 ? item.fw || item.forward : '分享' }}</text>
 						</button>
-					</view>
-					<view class="lastComment" wx:if="{{item.last_comment.nickname}}" catchtap="navigate" data-id="{{ item.id }}">
-						<view class="lastContet">
-							<text>{{item.last_comment.nickname}}: </text>
-							<rich-text nodes="<div style='overflow:hidden;white-space:nowrap;text-overflow:ellipsis;'>{{ item.last_comment.content }} </div>"></rich-text>
-						</view>
 					</view>
 				</view>
 			</view>

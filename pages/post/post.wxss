@@ -357,7 +357,7 @@ page {
     border-radius: 8rpx;
   }
   .wrap > .item .likeComment {
-    background: #F8F8F8;
+    background: #FBFBFB;
     border-radius: 8rpx;
     padding-left:19rpx;
     overflow: hidden;

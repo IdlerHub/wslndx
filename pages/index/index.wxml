@@ -154,12 +154,14 @@
         </scroll-view> -->
         <view class="jumpout">
           <navigator class="jumpoutBox" url="/pages/education/education?type=farm">
-            <image class="img" mode="widthFix" src="{{  !recommend ? '' : $state.imgHost + '/jumpoutImg_2.png' }}">
+            <image class="img" mode="widthFix" src="{{  !recommend ? '' : $state.imgHost + '/nongchang.png' }}">
             </image>
+            <text>开心农场</text>
           </navigator>
           <navigator class="jumpoutBox" url="/pages/education/education?type=station">
-            <image class="img" mode="widthFix" src="{{  !recommend ? '' : $state.imgHost + '/jumpoutImg_3.png'}}">
+            <image class="img" mode="widthFix" src="{{  !recommend ? '' : $state.imgHost + '/diantai.png'}}">
             </image>
+            <text>老年电台</text>
           </navigator>
         </view>
         <view class="item" bindtap="jumpPeper" data-peper="{{paperMsg.url}}" wx:if="{{paperMsg.image}}">

@@ -8,7 +8,6 @@ page {
   padding-bottom: 120rpx; }
   .wrap > .item {
     background: #fff;
-    padding: 0 30rpx;
     margin-bottom: 20rpx; }
     .wrap > .item:last-of-type {
       border-bottom: none; }
@@ -16,10 +15,13 @@ page {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 30rpx 0 20rpx; }
+    padding: 30rpx 30rpx 20rpx 30rpx; }
     .wrap .top .date {
       font-size: 28rpx;
       color: #bdbdbd; }
+    .wrap  .content {
+      margin: 0 30rpx;
+    }
   .wrap .name {
     text-justify: newspaper;
     word-break: break-all;
@@ -33,6 +35,7 @@ page {
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 5;
     overflow: hidden; 
+    margin: 0 30rpx;
     /* text-align: justify; */ }
   .wrap .img {
     display: flex;
@@ -47,13 +50,14 @@ page {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 30rpx 0  10rpx; }
+    border-top: 1rpx solid #E9E9E9;
+    padding: 0 60rpx 0  40rpx; }
     .wrap .btn .division {
       width: 2rpx;
       height: 40rpx;
       background: #dbdbdb; }
     .label {
-      margin: 20rpx 0 0 0;
+      margin: 0 30rpx;
       padding: 0 20rpx;
       display: inline-block;
       height: 44rpx;
@@ -65,6 +69,13 @@ page {
       background: #FFF6E6;
       text-align: center;
     }
+    .wrap > .item .likeComment {
+      background: #FBFBFB;
+      border-radius: 8rpx;
+      padding-left:19rpx;
+      overflow: hidden;
+      margin: 20rpx 30rpx 20rpx 30rpx;
+    }
      .item  .likesavatar {
       display: flex;
       align-items: center;
@@ -74,18 +85,23 @@ page {
       display: flex;
       align-items: center;
     }
-    .item  .likesavatar .likesLeft image {
-      width: 40rpx;
-      height: 40rpx;
+    .wrap > .item  .likesavatar {
+      display: flex;
+      align-items: center;
+      margin-top: 20rpx;
+    }
+    .wrap > .item  .likesavatar .likesLeft {
+      display: flex;
+      align-items: center;
+    }
+    .wrap > .item  .likesavatar .likesLeft image {
+      width: 44rpx;
+      height: 44rpx;
       border-radius: 50%;
-      position: relative;
-      left: -10rpx;
+      margin-right:10rpx;
       border:2rpx solid #fff; 
     }
-     .item  .likesavatar .likesLeft image:nth-child(1) {
-      left: 0;
-    }
-    .item  .likesavatar .likesLeft .likeTxt {
+    .wrap > .item  .likesavatar .likesLeft .likeTxt {
       margin-left: 5rpx;
       font-size:28rpx;
       font-family:PingFangSC-Regular,PingFang SC;
@@ -93,21 +109,19 @@ page {
       color:rgba(126,126,126,1);
     }
     .wrap > .item  .lastComment {
-      height: 120rpx;
-      border-top: 1rpx solid #E8E8E8;
+      padding: 10rpx 0 20rpx 0;
     }
-     .item  .lastComment .lastContet {
+    .wrap > .item  .lastComment .lastContet {
       display: flex;
       align-items: center;
-      margin: 30rpx 0 10rpx 0;
     }
-    .item  .lastComment .lastContet text {
+    .wrap > .item  .lastComment .lastContet text {
       font-size:36rpx;
       font-family:PingFangSC-Medium,PingFang SC;
       font-weight:500;
-      color:rgba(58,58,58,1);
+      color:rgba(126,126,126,1);
     }
-     .item  .lastComment .lastContet rich-text {
+    .wrap > .item  .lastComment .lastContet rich-text {
       flex: 1;
       width: 0;
       font-size:36rpx;
@@ -116,18 +130,18 @@ page {
       color:rgba(126,126,126,1);
       margin-left: 20rpx;
     } 
-     .item  .lastComment .more {
+    .wrap > .item  .lastComment .more {
       display: flex;
       align-items: center;
       overflow: hidden;
     }
-     .item  .lastComment .more text {
+    .wrap > .item  .lastComment .more text {
       font-size:36rpx;
       font-family:PingFangSC-Regular,PingFang SC;
       font-weight:400;
       color:rgba(179,179,179,1);
     }
-    .item  .lastComment .more image {
+    .wrap > .item  .lastComment .more image {
       width: 14rpx;
       height: 25rpx;
       margin-left: 10rpx;
@@ -136,7 +150,6 @@ page {
     .btn > .item {
       display: flex;
       align-items: center;
-      padding-left: 20px;
       box-sizing: border-box;
     }
     .btn > .item:nth-child(1) {
