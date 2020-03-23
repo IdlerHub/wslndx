@@ -4,41 +4,41 @@ Page({
   data: {
     mode: 0,
     time: 0,
-    rankType: 'day',
+    rankType: '0',
     list:[],
     showRule: false,
     rule: '我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规',
     shoolList: {
-      day:[],
-      week:[],
-      month:[]
+      0:[],
+      1:[],
+      2:[]
     },
     userList: {
-      day:[],
-      week:[],
-      month:[]
+      0:[],
+      1:[],
+      2:[]
     }
   },
   onLoad: function (options) {
     this.shoolPage = {
-      day: {
+      0: {
         page:1, pageSize: 10, type: 'day'
       },
-      week: {
+      1: {
         page:1, pageSize: 10, type: 'week'
       },
-      month: {
+      2: {
         page:1, pageSize: 10, type: 'month'
       },
     }
     this.userPage = {
-      day: {
+      0: {
         page:1, pageSize: 10, type: 'day'
       },
-      week: {
+      1: {
         page:1, pageSize: 10, type: 'week'
       },
-      month: {
+      2: {
         page:1, pageSize: 10, type: 'month'
       },
     }
@@ -49,19 +49,22 @@ Page({
     })
     this.getShoollist()
     let list = [
-      {id: 1 , name: '饭卡里说的就会发生挂号费快乐就好' , time: '26556.66W'},
-      {id: 2 , name: '花开花落花满天' , time: '18623.58W'},
-      {id: 3 , name: '花开花落花满天' , time: '150.98W'},
-      {id: 4 , name: '很多咸鱼' , time: '30'},
-      {id: 5 , name: '很多咸鱼' , time: '30'},
-      {id: 6 , name: '很多咸鱼' , time: '30'},
-      {id: 7 , name: '很多咸鱼' , time: '30'},
-      {id: 8 , name: '很多咸鱼' , time: '30'},
-      {id: 9 , name: '很多咸鱼' , time: '30'},
-      {id: 10 , name: '很多咸鱼' , time: '30'},
-      {id: 11 , name: '很多咸鱼' , time: '30'},
-      {id: 12 , name: '很多咸鱼' , time: '30'},
+      {id: 1 , nickname: '饭卡里说的就会发生挂号费快乐就好' , lesson_time: '256222451'},
+      {id: 2 , nickname: '花开花落花满天' , lesson_time: '5123522224'},
+      {id: 3 , nickname: '花开花落花满天' , lesson_time: '411122545'},
+      {id: 4 , nickname: '很多咸鱼' , lesson_time: '30'},
+      {id: 5 , nickname: '很多咸鱼' , lesson_time: '30'},
+      {id: 6 , nickname: '很多咸鱼' , lesson_time: '30'},
+      {id: 7 , nickname: '很多咸鱼' , lesson_time: '30'},
+      {id: 8 , nickname: '很多咸鱼' , lesson_time: '30'},
+      {id: 9 , nickname: '很多咸鱼' , lesson_time: '30'},
+      {id: 10 , nickname: '很多咸鱼' , lesson_time: '30'},
+      {id: 11 , nickname: '很多咸鱼' , lesson_time: '30'},
+      {id: 12 , nickname: '很多咸鱼' , lesson_time: '30'},
     ]
+    list.forEach(item => {
+      item.times = app.util.towTwice(item.lesson_time)
+    })
     this.setData({
       list
     })
@@ -73,22 +76,50 @@ Page({
   onPullDownRefresh: function () {
   },
   onReachBottom: function () {
+    if(this.data.mode) {
+      this.userPage[this.data.rankType].page ++ 
+      let list = this.data.userList[this.data.rankType]
+      app.user.getUserLessonTime(this.userPage[this.data.rankType]).then(res => {
+        list = list.concat(res.data)
+        this.setData({
+          [`userList[${this.data.rankType}]`]: list
+        })
+      })
+    } else {
+      this.shoolPage[this.data.rankType].page ++ 
+      let list = this.data.shoolList[this.data.rankType]
+      app.user.getSchoolLessonTime(this.shoolPage[this.data.rankType]).then(res => {
+        list = list.concat(res.data)
+        this.setData({
+          [`shoolList[${this.data.rankType}]`]: list
+        })
+      })
+    }
   },
   onShareAppMessage: function () {
   },
   check(e) {
     this.setData({
-      mode: e.currentTarget.dataset.type
+      mode: e.currentTarget.dataset.type,
+      rankType:0
     })
+    if(e.currentTarget.dataset.type == 1) {
+      if(this.data.userList[this.data.rankType][0]) return
+      this.getUserList()
+    } else {
+      if(this.data.shoolList[this.data.rankType][0]) return
+      this.getShoollist()
+    }
   },
   checkTop(e) {
     this.setData({
       rankType: e.currentTarget.dataset.type
     })
     if(this.data.mode) {
-
+      if(this.data.userList[this.data.rankType]) return
+      this.getUserList()
     } else {
-      if(this.data.shoolList[this.data.rankType][0]) return
+      if(this.data.shoolList[this.data.rankType]) return
       this.getShoollist()
     }
   },
@@ -104,9 +135,17 @@ Page({
   onShareAppMessage: function(ops, b) {
   },
   getShoollist() {
+    let txt = this.data.rankType
     app.user.getSchoolLessonTime(this.shoolPage[this.data.rankType]).then(res => {
       this.setData({
-        [`shoolList[${this.data.rankType}]`]: res.data
+        [`shoolList[${txt}]`]: res.data
+      })
+    })
+  },
+  getUserList() {
+    app.user.getUserLessonTime(this.userPage[this.data.rankType]).then(res => {
+      this.setData({
+        [`userList[${this.data.rankType}]`]: res.data
       })
     })
   }

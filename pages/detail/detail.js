@@ -274,7 +274,6 @@ Page({
       this.vedioRecordAdd()
       this.videoInterval = setInterval(() => {
         this.videoTime ++  
-        console.log(this.videoTime)
       },1000)
     }, 800)
     wx.uma.trackEvent("lessonsPlay", {
