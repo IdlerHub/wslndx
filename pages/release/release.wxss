@@ -1,7 +1,6 @@
 page {
   background: #f4f4f4;
 }
-
 .wrap {
   background: #fff;
   overflow: hidden;
