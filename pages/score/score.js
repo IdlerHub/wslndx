@@ -458,7 +458,7 @@ Page({
             title: "兑换提示",
             content: "确定要兑换该物品吗?",
             showCancel: true,
-            cancelText: "暂时不换",
+            cancelText: "取消",
             cancelColor: "#000000",
             confirmText: "确定兑换",
             confirmColor: "#df2020",
