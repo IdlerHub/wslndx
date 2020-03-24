@@ -285,6 +285,7 @@ Page({
   },
   gettop() {
     app.circle.bokeblogTop().then(res => {
+      res.data.content = app.util.delHtmlTag(res.data.content)
       this.setData({
         bokeTop: res.data
       });

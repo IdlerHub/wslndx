@@ -153,11 +153,13 @@ page {
 }
 .stick .stickText {
   flex: 1;
-  display: -webkit-box;
+  width: 0;
+  /* display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 1;
-  overflow: hidden;
+  overflow: hidden; */
   font-size:40rpx;
+  /* height: 54rpx; */
   font-weight:400;
   color:#3a3a3a;
 }

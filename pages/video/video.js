@@ -178,7 +178,7 @@ Page({
     setTimeout(() => {
       let param = { shortvideo_id: this.data.cur.id }
       app.video.recordAdd(param);
-    }, 1000) 
+    }, 2000) 
   },
   copywechat() {
     app.copythat(this.data.wechatnum);

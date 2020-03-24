@@ -58,7 +58,7 @@
 			</view>
 			<view class="stick" catchtap="navigate" data-id="{{ bokeTop.id }}" wx:if="{{bokeTop.content}}">
 				<image src="/images/Stick.png"></image>
-				<rich-text class="stickText" nodes="{{ bokeTop.content }}"></rich-text>
+				<rich-text class="stickText" nodes="<div style='overflow:hidden;white-space:nowrap;text-overflow:ellipsis;'>{{ bokeTop.content }} </div>"></rich-text>
 				<image src="/images/stickright.png"></image>
 			</view>
 			<view class="wrap">
