@@ -1158,7 +1158,7 @@ Page({
       app.getGuide().then(() => {
         this.showPlath(this)
       });
-      this.setIntegral("+45 学分", "完成[云课堂]新手指引");
+      // this.setIntegral("+45 学分", "完成[云课堂]新手指引");
     }).catch(() => {
       this.turnOff.guide = 0
     });

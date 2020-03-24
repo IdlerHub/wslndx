@@ -232,6 +232,16 @@ function rankRule(params) {
   return httpService.post("user/rankRule", params)
 }
 
+//POST /user/getSchoolLearnTimeRank 获取学校学习时间排名
+function getSchoolLearnTimeRank(params) {
+  return httpService.post("user/getSchoolLearnTimeRank", params)
+}
+
+//POST /user/getUserLearnTimeRank 获取学校学习时间排名
+function getUserLearnTimeRank(params) {
+  return httpService.post("user/getUserLearnTimeRank", params)
+}
+
 module.exports = {
   wxLoginCode,
   getAuthCode,
@@ -272,5 +282,7 @@ module.exports = {
   schoolWrite,
   getSchoolLessonTime,
   getUserLessonTime,
-  rankRule
+  rankRule,
+  getSchoolLearnTimeRank,
+  getUserLearnTimeRank
 }

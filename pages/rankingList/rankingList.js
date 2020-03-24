@@ -49,6 +49,7 @@ Page({
     })
     this.getShoollist()
     this.getRankRule()
+    this.getLearnTimeRank()
   },
   onShow: function () {
     this.data.showToast ? this.closeToast() : ''
@@ -152,5 +153,9 @@ Page({
        })
        clearTimeout(this.Toastimer)
      }, 1500)
-   }
+   },
+  getLearnTimeRank() {
+    app.user.getUserLearnTimeRank()
+    app.user.getSchoolLearnTimeRank()
+  }
 })
