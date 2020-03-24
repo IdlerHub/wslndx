@@ -20,15 +20,19 @@ Page({
     if (ops.title) {
       this.getCircleList().then(() => {
         let allCircle = this.data.allCircle;
+        let showFlag = true;
+        let id = "";
         allCircle.forEach(item => {
           if (item.title == ops.title){
             item.isSel = true;
+            showFlag = false;
+            id = ops.id
           }
         });
         this.setData({
           allCircle: allCircle,
-          selId: ops.id,
-          showFlag: false,
+          selId: id,
+          showFlag: showFlag,
           circleId: ops.id
         })
       });
@@ -316,7 +320,6 @@ Page({
           title: "发布中",
           mask: true
         });
-        console.log("看看是啥",param)
         app.circle
           .add(param)
           .then(msg => {
