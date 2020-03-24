@@ -947,7 +947,7 @@ rich-text {
   background: rgba(0,0,0,0.6);
   position: fixed;
   top: 0;
-  z-index: 99;
+  z-index: 555555;
   display: flex;
   justify-content: center;
   align-items: center;
