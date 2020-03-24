@@ -1633,6 +1633,7 @@ Page({
       this.setData({
         showToast: false
       })
+      this.recordAdd()
       clearTimeout(this.Toastimer)
     }, 1500)
   }
