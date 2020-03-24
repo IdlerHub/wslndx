@@ -138,7 +138,6 @@ Page({
       } else if (that.data.$state.userInfo.mobile) {
         that.getDetail();
       }
-      that.showPlath(that)
     });
     this.sublessParam = {
       id: options.id || this.data.detail.id,
@@ -172,7 +171,11 @@ Page({
     });
   },
   onShow() {
-    app.getGuide();
+    if(this.data.$state.userInfo.mobile) {
+      app.getGuide().then(() => {
+        this.showPlath()
+      });
+    }
     this.initRecord();
     this.getRecordAuth();
     wx.onNetworkStatusChange(res => {
@@ -198,7 +201,7 @@ Page({
   },
   onHide() { },
   showPlath(that) {
-    if(that.data.$state.userInfo && that.data.$state.userInfo.university.length == 0 && that.data.$state.newGuide.lesson) {
+    if(this.data.$state.userInfo && this.data.$state.userInfo.university.length == 0 && this.data.$state.newGuide.lesson) {
       let plathParam = {
         plath: '',
         shool:'',
@@ -1152,9 +1155,10 @@ Page({
       guide_name: "lesson"
     };
     app.user.guideRecordAdd(param).then(res => {
-      app.getGuide();
+      app.getGuide().then(() => {
+        this.showPlath(this)
+      });
       this.setIntegral("+45 学分", "完成[云课堂]新手指引");
-      this.showPlath(this)
     }).catch(() => {
       this.turnOff.guide = 0
     });
