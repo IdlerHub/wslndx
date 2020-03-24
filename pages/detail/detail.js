@@ -1538,7 +1538,10 @@ Page({
         if(this.province[val] == '暂无') {
           this.setData({
             "multiAddress[1]": ['暂无'],
+            singleSchool: ['暂无'],
+            singleIndex: 0
           })
+          this.school = ['暂无']
         } else {
           this.getCity(this.province[val]).then(() => {
             this.getSchool().then(() => {
@@ -1605,7 +1608,8 @@ Page({
       app.user.schoolWrite().then(() => {
         this.setData({
           showplece: false,
-          showToast: true
+          showToast: true,
+          "detail.school_dialog": 0
         })
         this.closeToast()
       })
@@ -1622,7 +1626,8 @@ Page({
         app.setUser(msg.data.userInfo)
         this.setData({
           showplece: false,
-          showToast: true
+          showToast: true,
+          "detail.school_dialog": 0
         })
         this.closeToast()
       })
