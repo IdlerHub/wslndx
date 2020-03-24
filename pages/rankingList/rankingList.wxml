@@ -20,7 +20,7 @@
       <image class="three" src="../../images/rankingPink3.png" wx:if="{{rankType == '2'}}"></image>
     </view>
     <view class="center">
-      <text>截止 {{time}} 00:00</text> 
+      <text>截止 {{time}} 00:00</text>
       <view class="right" bindtap="openRule" data-type="type">
         <text>?</text>
         统计说明
@@ -32,15 +32,16 @@
         <text>学校名称</text>
         <text>学习时长(分钟)</text>
       </view>
-      <view wx:for="{{list}}" wx:key="index"class="contentList" style="padding-top: {{index == 0 ? 0 : ''}};">
-          <view class="number" wx:if="{{index > 2}}">
-            {{index + 1}}
-          </view>
-          <image class="img" src="{{$state.imgHost}}/ranking{{index}}.png" wx:else></image>
-          <view class="name">{{item.nickname}}</view>
-          <view class="time">{{ item.times || item.lesson_time}}</view>
+      <view wx:for="{{shoolList[rankType]}}" wx:key="index" class="contentList"
+        style="padding-top: {{index == 0 ? 0 : ''}};">
+        <view class="number" wx:if="{{index > 2}}">
+          {{index <= 9 ? 0 : ''}}{{index + 1}}
+        </view>
+        <image class="img" src="{{$state.imgHost}}/ranking{{index}}.png" wx:else></image>
+        <view class="name">{{item.name}}</view>
+        <view class="time">{{ item.times || item.lesson_time}}</view>
       </view>
-      <view class="qst">
+      <view class="qst" wx:if="{{!shoolList[rankType][0]}}">
         <image class="ast-img" src="{{$state.imgHost}}/no-com.png"></image>
       </view>
     </view>
@@ -55,7 +56,7 @@
       <image class="three" src="../../images/rankingPink3.png" wx:if="{{rankType == 2}}"></image>
     </view>
     <view class="center">
-      <text>截止 {{time}} 00:00</text> 
+      <text>截止 {{time}} 00:00</text>
       <view class="right" bindtap="openRule" data-type="type">
         <text>?</text>
         统计说明
@@ -67,15 +68,16 @@
         <text>昵称</text>
         <text>学习时长(分钟)</text>
       </view>
-      <view wx:for="{{list}}" wx:key="index"class="contentList" style="padding-top: {{index == 0 ? 0 : ''}};">
-          <view class="number" wx:if="{{index > 2}}">
-            {{index + 1}}
-          </view>
-          <image class="img" src="{{$state.imgHost}}/ranking{{index}}.png" wx:else></image>
-          <view class="name">{{item.nickname}}</view>
-          <view class="time">{{ item.times || item.lesson_time}}</view>
+      <view wx:for="{{userList[rankType]}}" wx:key="index" class="contentList"
+        style="padding-top: {{index == 0 ? 0 : ''}};">
+        <view class="number" wx:if="{{index > 2}}">
+          {{index <= 9 ? 0 : ''}}{{index + 1}}
+        </view>
+        <image class="img" src="{{$state.imgHost}}/ranking{{index}}.png" wx:else></image>
+        <view class="name">{{item.nickname}}</view>
+        <view class="time">{{ item.times || item.lesson_time}}</view>
       </view>
-      <view class="qst">
+      <view class="qst" wx:if="{{!userList[rankType][0]}}">
         <image class="ast-img" src="{{$state.imgHost}}/no-com.png"></image>
       </view>
     </view>
@@ -89,7 +91,12 @@
 <button class="share" open-type="share" data-id="{{ $state.userInfo.id }}" hover-class="btn-hover"> 分享给朋友 </button>
 <view class="rules" wx:if="{{showRule}}">
   <view class="relesBox">
-    <rich-text nodes="{{rule}}" class="text"></rich-text>
+    <rich-text nodes="{{rankRule.rule}}" class="text"></rich-text>
   </view>
   <icon type="cancel" size="56" color="white" catchtap="openRule" class="cancel"></icon>
+</view>
+
+<view class="toast" wx:if="{{showToast}}">
+  <image src="../../images/success.png"></image>
+  <text>分享成功</text>
 </view>

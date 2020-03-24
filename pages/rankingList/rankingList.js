@@ -7,7 +7,6 @@ Page({
     rankType: '0',
     list:[],
     showRule: false,
-    rule: '我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规则我是用户规',
     shoolList: {
       0:[],
       1:[],
@@ -17,7 +16,8 @@ Page({
       0:[],
       1:[],
       2:[]
-    }
+    },
+    showToast: false
   },
   onLoad: function (options) {
     this.shoolPage = {
@@ -48,28 +48,10 @@ Page({
       time
     })
     this.getShoollist()
-    let list = [
-      {id: 1 , nickname: '饭卡里说的就会发生挂号费快乐就好' , lesson_time: '256222451'},
-      {id: 2 , nickname: '花开花落花满天' , lesson_time: '5123522224'},
-      {id: 3 , nickname: '花开花落花满天' , lesson_time: '411122545'},
-      {id: 4 , nickname: '很多咸鱼' , lesson_time: '30'},
-      {id: 5 , nickname: '很多咸鱼' , lesson_time: '30'},
-      {id: 6 , nickname: '很多咸鱼' , lesson_time: '30'},
-      {id: 7 , nickname: '很多咸鱼' , lesson_time: '30'},
-      {id: 8 , nickname: '很多咸鱼' , lesson_time: '30'},
-      {id: 9 , nickname: '很多咸鱼' , lesson_time: '30'},
-      {id: 10 , nickname: '很多咸鱼' , lesson_time: '30'},
-      {id: 11 , nickname: '很多咸鱼' , lesson_time: '30'},
-      {id: 12 , nickname: '很多咸鱼' , lesson_time: '30'},
-    ]
-    list.forEach(item => {
-      item.times = app.util.towTwice(item.lesson_time)
-    })
-    // this.setData({
-    //   list
-    // })
+    this.getRankRule()
   },
   onShow: function () {
+    this.data.showToast ? this.closeToast() : ''
   },
   onHide: function () {
   },
@@ -96,7 +78,23 @@ Page({
       })
     }
   },
-  onShareAppMessage: function () {
+  onShareAppMessage: function(ops) {
+    if (ops.from === "menu") {
+      return this.menuAppShare();
+    } else if (ops.from === "button") {
+      setTimeout(() => {
+        this.setData({
+          showToast: true
+        })
+      }, 1000)
+    }
+  },
+  getRankRule(){
+    app.user.rankRule().then(res => {
+      this.setData({
+        rankRule: res.data
+      })
+    })
   },
   check(e) {
     this.setData({
@@ -132,8 +130,6 @@ Page({
       showRule: false
     })
   },
-  onShareAppMessage: function(ops, b) {
-  },
   getShoollist() {
     let txt = this.data.rankType
     app.user.getSchoolLessonTime(this.shoolPage[this.data.rankType]).then(res => {
@@ -148,5 +144,13 @@ Page({
         [`userList[${this.data.rankType}]`]: res.data
       })
     })
-  }
+  },
+  closeToast() {
+    this.Toastimer = setTimeout(() => {
+       this.setData({
+         showToast: false
+       })
+       clearTimeout(this.Toastimer)
+     }, 1500)
+   }
 })

@@ -81,6 +81,7 @@ Page({
       media_type: null
     });
     this.judge();
+    wx.navigateBack()
   },
   addImg() {
     let image = this.data.param.image;

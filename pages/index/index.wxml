@@ -135,24 +135,24 @@
           </block>
         </swiper>
         <!-- 农场和电台 -->
-        <!-- <scroll-view class="jumpout" scroll-x enable-flex>
-          <view class="jumpoutBox" catchtap="jumpmini">
-            <image class="img" mode="widthFix" src="{{  !recommend ? '' : $state.imgHost + '/jumpoutImg_1.png' }}">
+        <scroll-view class="jumpout" scroll-x enable-flex>
+          <navigator class="jumpoutBox" url="/pages/rankingList/rankingList" hover-class="none">
+            <image class="img" mode="widthFix" src="{{  !recommend ? '' : $state.imgHost + '/rankingDoor.png' }}">
             </image>
-          </view>
-          <navigator class="jumpoutBox" url="/pages/education/education?type=farm">
+          </navigator>
+          <navigator class="jumpoutBox" url="/pages/education/education?type=farm" hover-class="none">
             <image class="img" mode="widthFix" src="{{  !recommend ? '' : $state.imgHost + '/jumpoutImg_2.png' }}">
             </image>
           </navigator>
-          <navigator class="jumpoutBox" url="/pages/education/education?type=station">
+          <navigator class="jumpoutBox" url="/pages/education/education?type=station" hover-class="none">
             <image class="img" mode="widthFix" src="{{  !recommend ? '' : $state.imgHost + '/jumpoutImg_3.png'}}">
             </image>
           </navigator>
           <view style="width: 30rpx;height: 100%;display: block;color: white;">
             孙菲菲结果来看g
           </view>
-        </scroll-view> -->
-        <view class="jumpout">
+        </scroll-view>
+        <!-- <view class="jumpout">
           <navigator class="jumpoutBox" url="/pages/education/education?type=farm">
             <image class="img" mode="widthFix" src="{{  !recommend ? '' : $state.imgHost + '/nongchang.png' }}">
             </image>
@@ -163,7 +163,7 @@
             </image>
             <text>老年电台</text>
           </navigator>
-        </view>
+        </view> -->
         <view class="item" bindtap="jumpPeper" data-peper="{{paperMsg.url}}" wx:if="{{paperMsg.image}}">
           <view class="content">
             <view class="left">

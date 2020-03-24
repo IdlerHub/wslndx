@@ -35,7 +35,8 @@ page {
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 5;
     overflow: hidden; 
-    margin: 0 30rpx;
+    padding: 0 30rpx;
+    box-sizing: border-box;
     /* text-align: justify; */ }
   .wrap .img {
     display: flex;

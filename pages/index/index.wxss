@@ -135,6 +135,7 @@
   padding: 30rpx 30rpx 0 0;
   display: flex;
   flex-direction: row;
+  height: 120rpx;
 }
 .left .left-btn {
   position: absolute;
@@ -143,7 +144,6 @@
   opacity: 0;
 }
 .jumpout .jumpoutBox {
-  flex: 1;
   position: relative;
   height: 120rpx;
   margin-left: 30rpx;
@@ -157,12 +157,9 @@
   color:rgba(255,255,255,1);
 }
 .jumpout .img {
-  width: 100%;
+  width: 260rpx;
   height: 100% !important;
   background: #f5f6f8;
-  position: absolute;
-  top: 0;
-  z-index: 0;
 }
 
 .jumpout text {

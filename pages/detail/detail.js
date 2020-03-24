@@ -138,7 +138,7 @@ Page({
       } else if (that.data.$state.userInfo.mobile) {
         that.getDetail();
       }
-      // that.showPlath(that)
+      that.showPlath(that)
     });
     this.sublessParam = {
       id: options.id || this.data.detail.id,
@@ -1154,7 +1154,7 @@ Page({
     app.user.guideRecordAdd(param).then(res => {
       app.getGuide();
       this.setIntegral("+45 学分", "完成[云课堂]新手指引");
-      // this.showPlath(this)
+      this.showPlath(this)
     }).catch(() => {
       this.turnOff.guide = 0
     });
