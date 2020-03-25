@@ -59,7 +59,7 @@ Page({
   onPullDownRefresh: function () {
   },
   onReachBottom: function () {
-    if(this.data.mode) {
+    if(this.data.mode == 1) {
       this.userPage[this.data.rankType].page ++ 
       let list = this.data.userList[this.data.rankType]
       app.user.getUserLessonTime(this.userPage[this.data.rankType]).then(res => {
