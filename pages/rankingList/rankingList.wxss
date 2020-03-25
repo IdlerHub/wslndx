@@ -136,6 +136,10 @@ page {
   font-weight:400;
   color:rgba(153,153,153,1);
 }
+.centerBox .content .list {
+  height: calc(100vh - 600rpx);
+}
+
 .contentList {
   background: #fff;
   display: flex;

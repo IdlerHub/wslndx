@@ -17,7 +17,8 @@ Page({
       1:[],
       2:[]
     },
-    showToast: false
+    showToast: false,
+    scollTop: 0
   },
   onLoad: function (options) {
     this.shoolPage = {
@@ -59,6 +60,8 @@ Page({
   onPullDownRefresh: function () {
   },
   onReachBottom: function () {
+  },
+  pageMore() {
     if(this.data.mode == 1) {
       this.userPage[this.data.rankType].page ++ 
       let list = this.data.userList[this.data.rankType]
@@ -100,7 +103,8 @@ Page({
   check(e) {
     this.setData({
       mode: e.currentTarget.dataset.type,
-      rankType: '1'
+      rankType: '1',
+      scollTop: 0
     })
     this.getLearnTimeRank()
     if(e.currentTarget.dataset.type == 1) {
@@ -113,7 +117,8 @@ Page({
   },
   checkTop(e) {
     this.setData({
-      rankType: e.currentTarget.dataset.type
+      rankType: e.currentTarget.dataset.type,
+      scollTop: 0
     })
     this.getLearnTimeRank()
     if(this.data.mode == '1') {
@@ -136,6 +141,9 @@ Page({
   getShoollist() {
     let txt = this.data.rankType
     app.user.getSchoolLessonTime(this.shoolPage[this.data.rankType]).then(res => {
+      res.data.forEach(item => {
+        item.times = app.util.qian(item.lesson_time)
+      });
       this.setData({
         [`shoolList[${txt}]`]: res.data
       })
@@ -143,6 +151,9 @@ Page({
   },
   getUserList() {
     app.user.getUserLessonTime(this.userPage[this.data.rankType]).then(res => {
+      res.data.forEach(item => {
+        item.times = app.util.qian(item.lesson_time)
+      });
       this.setData({
         [`userList[${this.data.rankType}]`]: res.data
       })
