@@ -144,6 +144,7 @@
   opacity: 0;
 }
 .jumpout .jumpoutBox {
+  flex: 1;
   position: relative;
   height: 120rpx;
   margin-left: 30rpx;
@@ -157,7 +158,7 @@
   color:rgba(255,255,255,1);
 }
 .jumpout .img {
-  width: 260rpx;
+  width: 100%;
   height: 100% !important;
   background: #f5f6f8;
 }

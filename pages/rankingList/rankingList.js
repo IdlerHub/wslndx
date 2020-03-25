@@ -155,7 +155,15 @@ Page({
      }, 1500)
    },
   getLearnTimeRank() {
-    app.user.getUserLearnTimeRank()
-    app.user.getSchoolLearnTimeRank()
+    app.user.getUserLearnTimeRank().then(res => {
+      this.setData({
+        userRank: res.data.rank
+      })
+    })
+    app.user.getSchoolLearnTimeRank().then(res => {
+      this.setData({
+        shoolRank: res.data.rank
+      })
+    })
   }
 })
