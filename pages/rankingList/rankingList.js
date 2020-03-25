@@ -100,11 +100,12 @@ Page({
   check(e) {
     this.setData({
       mode: e.currentTarget.dataset.type,
-      rankType:0
+      rankType: '0'
     })
     if(e.currentTarget.dataset.type == 1) {
       if(this.data.userList[this.data.rankType][0]) return
       this.getUserList()
+      this.getLearnTimeRank()
     } else {
       if(this.data.shoolList[this.data.rankType][0]) return
       this.getShoollist()
@@ -178,7 +179,7 @@ Page({
     } else {
       app.user.getUserLearnTimeRank(param).then(res => {
         this.setData({
-          userRank: res.data.rank
+          userRank: res.data
         })
       })
     }

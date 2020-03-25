@@ -84,14 +84,14 @@
   </view>
 </view>
 <view class="contentList userRank" wx:if="{{ mode == 0 && shoolRank.name }}">
-  <view class="number fontColor">{{ shoolRank.number }}</view>
+  <view class="number fontColor">{{ shoolRank.rank }}</view>
   <view class="name fontColor">{{ shoolRank.name }}</view>
-  <view class="time fontColor">{{ shoolRank.lesson_time }}</view>
+  <view class="time fontColor">{{ shoolRank.score }}</view>
 </view>
-<view class="contentList userRank" wx:if="{{ mode == 1 && userRank.name }}">
-  <view class="number fontColor">{{ userRank.number }}</view>
-  <view class="name fontColor">{{ userRank.name }}</view>
-  <view class="time fontColor">{{ userRank.lesson_time }}</view>
+<view class="contentList userRank" wx:if="{{ mode == 1 && userRank.nickname }}">
+  <view class="number fontColor">{{ userRank.rank }}</view>
+  <view class="name fontColor">{{ userRank.nickname }}</view>
+  <view class="time fontColor">{{ userRank.score }}</view>
 </view>
 <button class="share" open-type="share" data-id="{{ $state.userInfo.id }}" hover-class="btn-hover"> 分享给朋友 </button>
 <view class="rules" wx:if="{{showRule}}">
