@@ -173,7 +173,7 @@ Page({
   onShow() {
     if(this.data.$state.userInfo.mobile) {
       app.getGuide().then(() => {
-        // this.showPlath()
+        this.showPlath()
       });
     }
     this.initRecord();
@@ -1156,7 +1156,7 @@ Page({
     };
     app.user.guideRecordAdd(param).then(res => {
       app.getGuide().then(() => {
-        // this.showPlath(this)
+        this.showPlath(this)
       });
       this.setIntegral("+45 学分", "完成[云课堂]新手指引");
     }).catch(() => {

@@ -72,7 +72,7 @@
   flex: 1;
   display: flex;
   align-items: center;
-  overflow: hidden;
+  width: 0;
 }
 
 .box .left .img {
@@ -97,6 +97,8 @@
 .info .line {
   text-align: left;
   line-height: 62rpx;
+  display: flex;
+  align-items: center;
 }
 
 .info .name {
@@ -128,6 +130,11 @@
   border-radius: 4rpx;
   background: #b1adac;
   padding: 0 15rpx;
+  box-sizing: border-box;
+  max-width: 378rpx;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .jumpout {
@@ -158,7 +165,7 @@
   color:rgba(255,255,255,1);
 }
 .jumpout .img {
-  width: 100%;
+  width: 260rpx;
   height: 100% !important;
   background: #f5f6f8;
 }

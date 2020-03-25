@@ -114,6 +114,7 @@ Page({
     this.setData({
       rankType: e.currentTarget.dataset.type
     })
+    this.getLearnTimeRank()
     if(this.data.mode) {
       if(this.data.userList[this.data.rankType]) return
       this.getUserList()
@@ -155,15 +156,31 @@ Page({
      }, 1500)
    },
   getLearnTimeRank() {
-    app.user.getUserLearnTimeRank().then(res => {
-      this.setData({
-        userRank: res.data.rank
+    let param  = { type: ''}, n = this.data.rankType
+    switch(n) {
+      case '0':
+        param.type = "day"
+        break;
+      case '1':
+        param.type = "week"
+        break;
+      case '2': 
+        param.type = "month"
+        break;
+    }
+     console.log(param)
+    if( !this.data.mode ) {
+      app.user.getSchoolLearnTimeRank(param).then(res => {
+        this.setData({
+          shoolRank: res.data.rank
+        })
       })
-    })
-    app.user.getSchoolLearnTimeRank().then(res => {
-      this.setData({
-        shoolRank: res.data.rank
+    } else {
+      app.user.getUserLearnTimeRank(param).then(res => {
+        this.setData({
+          userRank: res.data.rank
+        })
       })
-    })
+    }
   }
 })
