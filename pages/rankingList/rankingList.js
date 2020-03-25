@@ -4,7 +4,7 @@ Page({
   data: {
     mode: 0,
     time: 0,
-    rankType: '0',
+    rankType: '1',
     list:[],
     showRule: false,
     shoolList: {
@@ -100,12 +100,12 @@ Page({
   check(e) {
     this.setData({
       mode: e.currentTarget.dataset.type,
-      rankType: '0'
+      rankType: '1'
     })
+    this.getLearnTimeRank()
     if(e.currentTarget.dataset.type == 1) {
       if(this.data.userList[this.data.rankType][0]) return
       this.getUserList()
-      this.getLearnTimeRank()
     } else {
       if(this.data.shoolList[this.data.rankType][0]) return
       this.getShoollist()
