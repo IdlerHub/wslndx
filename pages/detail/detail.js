@@ -277,6 +277,7 @@ Page({
       this.setData({
         showintegral: false
       });
+      this.showPlath(this)
     }, 2000);
   },
   played() {
@@ -1155,9 +1156,7 @@ Page({
       guide_name: "lesson"
     };
     app.user.guideRecordAdd(param).then(res => {
-      app.getGuide().then(() => {
-        this.showPlath(this)
-      });
+      app.getGuide()
       this.setIntegral("+45 学分", "完成[云课堂]新手指引");
     }).catch(() => {
       this.turnOff.guide = 0

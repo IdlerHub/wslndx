@@ -75,6 +75,7 @@ page{
   /* opacity: 0.7; */
   line-height: 45rpx;
   /* margin-right: 15rpx; */
+  text-align: right;
   margin-right: 23rpx;
   font-size:36rpx;
   font-family:PingFangSC-Regular,PingFang SC;
