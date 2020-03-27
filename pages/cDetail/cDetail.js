@@ -106,6 +106,7 @@ Page({
           return i.image
         })
         item.auditing = new Date().getTime() - new Date(item.createtime * 1000) < 7000
+        item.content = app.util.delHtmlTag(item.content)
       })
       this.setData({
         list: temp.concat(msg.data)

@@ -66,6 +66,7 @@ Page({
       media_type: this.data.media_type,
       showRelease: true
     });
+    console.log('onUnload')
   },
   input(e) {
     this.setData({
@@ -73,18 +74,18 @@ Page({
     });
   },
   cancel() {
-    this.setData({
-      param: {
-        image: [],
-        content: null,
-        video: null,
-        cover: null,
-        fs_id: "",
-        num: 0
-      },
-      media_type: null
-    });
-    this.judge();
+    // this.setData({
+    //   param: {
+    //     image: [],
+    //     content: null,
+    //     video: null,
+    //     cover: null,
+    //     fs_id: "",
+    //     num: 0
+    //   },
+    //   media_type: null
+    // });
+    // this.judge();
     wx.navigateBack()
   },
   addImg() {

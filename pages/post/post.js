@@ -227,12 +227,18 @@ Page({
     }
       if(currentTab == 0) {
         return app.circle.news(this.param[currentTab]).then(msg => {
+          msg.data.forEach(item => {
+            item.content = app.util.delHtmlTag(item.content)
+          })
           if (msg.data) {
             this.upList(currentTab, temp, msg)
           }
         });
       } else {
         return app.circle.myNews(this.param[currentTab]).then(msg => {
+          msg.data.forEach(item => {
+            item.content = app.util.delHtmlTag(item.content)
+          })
           if (msg.data) {
             this.upList(currentTab, temp, msg)
           }

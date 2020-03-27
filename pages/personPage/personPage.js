@@ -108,6 +108,7 @@ Page({
             return i.image;
           });
           item.auditing = item.check_status;
+          item.content = app.util.delHtmlTag(item.content)
         });
         temp.push(...arr);
         temp[0].university_name == "null"

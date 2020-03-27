@@ -37,7 +37,7 @@
 		]
 	},
 	"setting": {
-		"urlCheck": false,
+		"urlCheck": true,
 		"es6": true,
 		"enhance": true,
 		"postcss": true,
@@ -156,16 +156,16 @@
 				},
 				{
 					"id": 9,
-					"name": "pages/vote/vote",
-					"pathName": "pages/loading/loading",
+					"name": "pages/post/post",
+					"pathName": "pages/post/post",
 					"query": "",
 					"scene": null
 				},
 				{
 					"id": 10,
 					"name": "pages/sign/sign",
-					"pathName": "pages/loading/loading",
-					"query": "uid=12661&type=invite",
+					"pathName": "pages/cDetail/cDetail",
+					"query": "id=21&type=invite",
 					"scene": null
 				},
 				{
@@ -178,13 +178,6 @@
 						"appId": "wx21038783a46791dd",
 						"extraData": "{}"
 					}
-				},
-				{
-					"id": 12,
-					"name": "pages/addressCard/addressCard",
-					"pathName": "pages/score/score",
-					"query": "uid=12661&type=invite",
-					"scene": null
 				},
 				{
 					"id": 13,

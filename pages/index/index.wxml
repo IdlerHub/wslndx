@@ -137,15 +137,15 @@
         <!-- 农场和电台 -->
         <scroll-view class="jumpout" scroll-x enable-flex>
           <navigator class="jumpoutBox" url="/pages/rankingList/rankingList" hover-class="none">
-            <image class="img" mode="widthFix" src="{{  !recommend ? '' : $state.imgHost + '/rankingDoor.png' }}">
+            <image class="img" mode="widthFix" src="{{  !recommend ? '' : $state.imgHost + '/rankingDoor1.png' }}">
             </image>
           </navigator>
           <navigator class="jumpoutBox" url="/pages/education/education?type=farm" hover-class="none">
-            <image class="img" mode="widthFix" src="{{  !recommend ? '' : $state.imgHost + '/jumpoutImg_2.png' }}">
+            <image class="img" mode="widthFix" src="{{  !recommend ? '' : $state.imgHost + '/nonghcangDoor.png' }}">
             </image>
           </navigator>
           <navigator class="jumpoutBox" url="/pages/education/education?type=station" hover-class="none">
-            <image class="img" mode="widthFix" src="{{  !recommend ? '' : $state.imgHost + '/jumpoutImg_3.png'}}">
+            <image class="img" mode="widthFix" src="{{  !recommend ? '' : $state.imgHost + '/diantaiDoor.png'}}">
             </image>
           </navigator>
           <view style="width: 30rpx;height: 100%;display: block;color: white;">

@@ -66,6 +66,7 @@ Page({
       this.userPage[this.data.rankType].page ++ 
       let list = this.data.userList[this.data.rankType]
       app.user.getUserLessonTime(this.userPage[this.data.rankType]).then(res => {
+        !res.data[0] ? this.userPage[this.data.rankType].page -- : ''
         list = list.concat(res.data)
         this.setData({
           [`userList[${this.data.rankType}]`]: list
@@ -75,6 +76,7 @@ Page({
       this.shoolPage[this.data.rankType].page ++ 
       let list = this.data.shoolList[this.data.rankType]
       app.user.getSchoolLessonTime(this.shoolPage[this.data.rankType]).then(res => {
+        !res.data[0] ? this.shoolPage[this.data.rankType].page -- : ''
         list = list.concat(res.data)
         this.setData({
           [`shoolList[${this.data.rankType}]`]: list
@@ -181,12 +183,14 @@ Page({
     }
     if( this.data.mode == 0 ) {
       app.user.getSchoolLearnTimeRank(param).then(res => {
+        res.time = app.util.qian(res.score)
         this.setData({
           shoolRank: res.data
         })
       })
     } else {
       app.user.getUserLearnTimeRank(param).then(res => {
+        res.time = app.util.qian(res.score)
         this.setData({
           userRank: res.data
         })
