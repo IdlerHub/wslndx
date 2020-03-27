@@ -183,14 +183,14 @@ Page({
     }
     if( this.data.mode == 0 ) {
       app.user.getSchoolLearnTimeRank(param).then(res => {
-        res.time = app.util.qian(res.score)
+        res.data.time = app.util.qian(res.data.score)
         this.setData({
           shoolRank: res.data
         })
       })
     } else {
       app.user.getUserLearnTimeRank(param).then(res => {
-        res.time = app.util.qian(res.score)
+        res.data.time = app.util.qian(res.data.score)
         this.setData({
           userRank: res.data
         })
