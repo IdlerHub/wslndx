@@ -130,7 +130,6 @@ Page({
     }
   },
   openRule(e) {
-    console.log(e)
     e.currentTarget.dataset.type ? this.setData({
       showRule: true
     }) :
@@ -180,7 +179,6 @@ Page({
         param.type = "month"
         break;
     }
-     console.log(param)
     if( this.data.mode == 0 ) {
       app.user.getSchoolLearnTimeRank(param).then(res => {
         this.setData({
