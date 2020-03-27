@@ -171,9 +171,13 @@
 				{
 					"id": 11,
 					"name": "pages/infoAddress/infoAddress",
-					"pathName": "pages/info/info",
-					"query": "uid=12661&type=invite",
-					"scene": null
+					"pathName": "pages/index/index",
+					"query": "com=youzan",
+					"scene": 1037,
+					"referrerInfo": {
+						"appId": "wx21038783a46791dd",
+						"extraData": "{}"
+					}
 				},
 				{
 					"id": 12,

@@ -26,15 +26,15 @@
         统计说明
       </view>
     </view>
+    <view class="contentTop">
+      <text>排名</text>
+      <text>学校名称</text>
+      <text>时长(分钟)</text>
+      <view class="heng"></view>
+    </view>
     <view class="content">
-      <view class="contentTop">
-        <text>排名</text>
-        <text>学校名称</text>
-        <text>学习时长(分钟)</text>
-      </view>
       <scroll-view class="list" scroll-y bindscrolltolower="pageMore" scroll-top="{{scollTop}}">
-        <view wx:for="{{shoolList[rankType]}}" wx:key="index" class="contentList"
-          style="padding-top: {{index == 0 ? 0 : ''}};">
+        <view wx:for="{{shoolList[rankType]}}" wx:key="index" class="contentList" >
           <view class="number" wx:if="{{index > 2}}">
             {{index < 9 ? 0 : ''}}{{index + 1}}
           </view>
@@ -42,11 +42,11 @@
           <view class="name">{{item.name}}</view>
           <view class="time">{{ item.times || item.lesson_time}}</view>
         </view>
-        <view style="width: 100%;height: 110rpx;"></view>
+        <view style="width: 100%;height: 200rpx;"></view>
+        <view class="qst" wx:if="{{!shoolList[rankType][0]}}">
+          <image class="ast-img" src="{{$state.imgHost}}/no-com.png"></image>
+        </view>
       </scroll-view>
-      <view class="qst" wx:if="{{!shoolList[rankType][0]}}">
-        <image class="ast-img" src="{{$state.imgHost}}/no-com.png"></image>
-      </view>
     </view>
   </view>
   <view class="centerBox" wx:else>
@@ -65,15 +65,15 @@
         统计说明
       </view>
     </view>
+    <view class="contentTop">
+      <text>排名</text>
+      <text>昵称</text>
+      <text>时长(分钟)</text>
+      <view class="heng"></view>
+    </view>
     <view class="content">
-      <view class="contentTop">
-        <text>排名</text>
-        <text>昵称</text>
-        <text>学习时长(分钟)</text>
-      </view>
       <scroll-view class="list" scroll-y bindscrolltolower="pageMore" scroll-top="{{scollTop}}">
-        <view wx:for="{{userList[rankType]}}" wx:key="index" class="contentList"
-          style="padding-top: {{index == 0 ? 0 : ''}};">
+        <view wx:for="{{userList[rankType]}}" wx:key="index" class="contentList">
           <view class="number" wx:if="{{index > 2}}">
             {{index < 9 ? 0 : ''}}{{index + 1}}
           </view>
@@ -81,11 +81,11 @@
           <view class="name">{{item.nickname}}</view>
           <view class="time">{{ item.times || item.lesson_time}}</view>
         </view>
-        <view style="width: 100%;height: 110rpx;"></view>
+        <view style="width: 100%;height: 200rpx;"></view>
+        <view class="qst" wx:if="{{!userList[rankType][0]}}">
+          <image class="ast-img" src="{{$state.imgHost}}/no-com.png"></image>
+        </view>
       </scroll-view>
-      <view class="qst" wx:if="{{!userList[rankType][0]}}">
-        <image class="ast-img" src="{{$state.imgHost}}/no-com.png"></image>
-      </view>
     </view>
   </view>
 </view>

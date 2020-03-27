@@ -90,7 +90,9 @@ page {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-bottom: 1rpx solid rgba(237,237,237,1);
+}
+.centerBox .center text {
+  color: rgba(102,102,102,1);
 }
 .centerBox text {
   font-size:28rpx;
@@ -117,27 +119,41 @@ page {
   height: 32rpx;
   font-size: 22rpx;
   text-align: center;
-  border: 2rpx solid #666;
+  border: 2rpx solid rgba(102,102,102,1);
   border-radius: 50%;
   margin-right: 11rpx;
+  color: rgba(102,102,102,1);
 }
 .centerBox .content {
   padding: 0 30rpx;
 } 
-.centerBox .content .contentTop {
+.centerBox .contentTop {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding:23rpx 0;
+  padding:15rpx 30rpx 30rpx 30rpx;
+  position: relative;
 }
-.centerBox .content .contentTop text {
-  font-size:28rpx;
-  font-family:PingFangSC-Regular,PingFang SC;
-  font-weight:400;
-  color:rgba(153,153,153,1);
+.centerBox .contentTop text {
+  font-size:32rpx;
+  font-weight:500;
+  color:rgba(51,51,51,1);
+  font-family: Arial, Helvetica, sans-serif;
 }
+.centerBox .contentTop text:nth-child(2) {
+  margin-left: 48rpx;
+}
+.centerBox .contentTop .heng {
+  width: 100%;
+  height: 1rpx;
+  background: rgba(237,237,237,1);
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
+
 .centerBox .content .list {
-  height: calc(100vh - 600rpx);
+  height: calc(100vh - 550rpx);
 }
 
 .contentList {
@@ -152,6 +168,7 @@ page {
   border: 0;
 }
  .contentList .number {
+   font-size: 36rpx;
   width: 60rpx;
   text-align: center;
 }
@@ -162,14 +179,13 @@ page {
   overflow: hidden;
   text-overflow:ellipsis;
   white-space: nowrap;
-  padding-left: 25rpx;
+  padding-left: 80rpx;
   font-size:36rpx;
-  font-family:PingFangSC-Regular,PingFang SC;
   font-weight:400;
   color:rgba(51,51,51,1);
 }
  .contentList .time {
-  width: 194rpx;
+  width: 162rpx;
   text-align: center;
   font-size:36rpx;
   font-family:PingFangSC-Regular,PingFang SC;
@@ -245,7 +261,6 @@ page {
 }
 .qst {
   width: 100%;
-  height: calc(100vh - 580rpx);
   display: flex;
   align-items: center;
   justify-content: center;

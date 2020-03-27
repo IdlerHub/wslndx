@@ -71,6 +71,7 @@ Page({
         mobileiv: e.detail.iv,
         tempCode: app.globalData.tempCode,
         // [app.globalData.query.activity || app.globalData.shareObj.t == 4 ? 'master_uid' : 'invite_uid']: wx.getStorageSync("invite")
+        [app.globalData.query.com ? 'source' : '']: app.globalData.query.com ? app.globalData.query.com : '',
         master_uid: wx.getStorageSync("invite") /* 邀请码 */
       }
       this.login(param)
@@ -160,6 +161,7 @@ Page({
         mobile: this.params.tel,
         captcha: this.params.authCode,
         // [app.globalData.query.activity || app.globalData.shareObj.t == 4 ? 'master_uid' : 'invite_uid']: wx.getStorageSync("invite")
+        [app.globalData.query.com ? 'source' : '']: app.globalData.query.com ? app.globalData.query.com : '',
         master_uid: wx.getStorageSync("invite") /* 邀请码 */
       }
       this.login(params)
