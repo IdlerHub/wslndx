@@ -312,7 +312,8 @@ Page({
         if(this.data.param.content.trim() || image || this.data.param.video) {
             wx.showModal({
             content: `是否发布并加入【${this.data.circleTitle}】圈子`,
-            confirmColor: "#DF2020",
+            confirmColor: '#DF2020',
+            cancelColor: '#999999',
             success (res) {
               if (res.confirm) {
                 let param = { fs_id: that.data.circleId}

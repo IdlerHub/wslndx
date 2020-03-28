@@ -51,6 +51,7 @@ Page({
   },
   pageName: "视频页（视频详情页）",
   videoTime: 0,
+  videoTime2:0,
   videoInterval:'',
   videoParam:{
     id:'',
@@ -188,14 +189,17 @@ Page({
     }
     if(this.videoTime > 0) {
       clearInterval(this.videoInterval)
+      this.videoTime2 = this.videoTime
+      this.videoTime = 0
       let param = {
         lesson_id: this.data.detail.id,
         sublesson_id: this.data.cur.id,
-        progress: this.videoTime,
+        progress: this.videoTime2,
       }
       app.classroom.updateProgress(param).then(res => {
-        this.videoTime = 0
         console.log(res.msg)
+      }).catch(() => {
+        this.videoTime = this.videoTime2
       })
     }
   },
@@ -340,14 +344,17 @@ Page({
   videoPause() {
     clearInterval(this.videoInterval)
     if(this.videoTime == 0) return
+    this.videoTime2 = this.videoTime
+    this.videoTime = 0
     let param = {
       lesson_id: this.videoParam.id,
       sublesson_id: this.videoParam.suId,
-      progress: this.videoTime,
+      progress: this.videoTime2,
     }
     app.classroom.updateProgress(param).then(res => {
-      this.videoTime = 0
       console.log(res.msg)
+    }).catch(() => {
+      this.videoTime = this.videoTime2
     })
   },
   manage() {

@@ -90,12 +90,12 @@
   </view>
 </view>
 <view class="contentList userRank" wx:if="{{ mode == 0 && shoolRank.rank != '' && shoolRank.rank}}">
-  <view class="number fontColor">{{ shoolRank.rank }}</view>
+  <view class="number fontColor">{{ shoolRank.rank > 9 ? shoolRank.rank : '0' + shoolRank.rank }}</view>
   <view class="name fontColor">{{ shoolRank.name }}</view>
   <view class="time fontColor">{{ shoolRank.time || shoolRank.score }}</view>
 </view>
 <view class="contentList userRank" wx:if="{{ mode == 1 && userRank.rank != '' && userRank.rank}}">
-  <view class="number fontColor">{{ userRank.rank }}</view>
+  <view class="number fontColor">{{ userRank.rank  > 9 ? userRank.rank : '0' + userRank.rank}}</view>
   <view class="name fontColor">{{ userRank.nickname }}</view>
   <view class="time fontColor">{{ userRank.time || userRank.score }}</view>
 </view>
