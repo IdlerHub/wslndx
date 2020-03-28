@@ -4,7 +4,7 @@ Page({
   data: {
     param: {
       image: [],
-      content: null,
+      content: '',
       video: null,
       cover: null,
       fs_id: "",
@@ -301,32 +301,43 @@ Page({
   // 未加圈子判断
   judgeCircle() {
     if(this.circle && !(this.data.selId > 0)) {
-      let type = 0, that = this
+      let type = 0, that = this, image =
+      this.data.media_type == 1
+        ? this.data.param.image.join(",")
+        : this.data.param.cover
       this.data.allCircle.forEach(item => {
-        item == this.data.circleId ? type = 1 : ''
+        item.id == this.data.circleId ? type = 1 : ''
       })
       if(!type) {
-        wx.showModal({
-          content: `是否发布并加入${this.data.circleTitle}圈子`,
-          confirmColor: "#DF2020",
-          success (res) {
-            if (res.confirm) {
-              let param = { fs_id: that.data.circleId}
-              app.circle.addOne(param).then(msg => {
-                that.setData({
-                  selId: that.data.circleId
+        if(this.data.param.content.trim() || image || this.data.param.video) {
+            wx.showModal({
+            content: `是否发布并加入${this.data.circleTitle}圈子`,
+            confirmColor: "#DF2020",
+            success (res) {
+              if (res.confirm) {
+                let param = { fs_id: that.data.circleId}
+                app.circle.addOne(param).then(msg => {
+                  that.setData({
+                    selId: that.data.circleId
+                  })
+                  wx.nextTick(
+                    () => {
+                      that.result()
+                    }
+                  )
                 })
-                wx.nextTick(
-                  () => {
-                    that.result()
-                  }
-                )
-              })
-            } else if (res.cancel) {
-              that.result()
+              } else if (res.cancel) {
+                that.result()
+              }
             }
-          }
-        })
+          })
+        } else {
+          wx.showToast({
+            title: "内容不能为空！",
+            icon: "none",
+            duration: 1500
+          });
+        }
       } else {
         this.result()
       }

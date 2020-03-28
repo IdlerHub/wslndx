@@ -31,10 +31,6 @@ function handle(req, res) {
       });
       break;
     default:
-      wx.showToast({
-        title: '网络超时请退出小程序重试',
-        icon: "none"
-      })
   }
   switch (res.data.code) {
     case -1:
@@ -81,6 +77,12 @@ function xhr(path, method, param = {}, noToken) {
         }
       },
       fail(err) {
+        if(!err.statusCode) {
+          wx.showToast({
+            title: '网络错误请退出小程序重试',
+            icon: "none"
+          })
+        }
         handle(req, err);
         reject(err);
       },
