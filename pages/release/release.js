@@ -33,7 +33,8 @@ Page({
           allCircle: allCircle,
           selId: id,
           showFlag: showFlag,
-          circleId: ops.id
+          circleId: ops.id,
+          circleTitle: ops.title
         })
       });
     } else {
@@ -295,6 +296,42 @@ Page({
         selId: e.currentTarget.dataset.fsid,
         showFlag: false
       });
+    }
+  },
+  // 未加圈子判断
+  judgeCircle() {
+    if(this.circle && !(this.data.selId > 0)) {
+      let type = 0, that = this
+      this.data.allCircle.forEach(item => {
+        item == this.data.circleId ? type = 1 : ''
+      })
+      if(!type) {
+        wx.showModal({
+          content: `是否发布并加入${this.data.circleTitle}圈子`,
+          confirmColor: "#DF2020",
+          success (res) {
+            if (res.confirm) {
+              let param = { fs_id: that.data.circleId}
+              app.circle.addOne(param).then(msg => {
+                that.setData({
+                  selId: that.data.circleId
+                })
+                wx.nextTick(
+                  () => {
+                    that.result()
+                  }
+                )
+              })
+            } else if (res.cancel) {
+              that.result()
+            }
+          }
+        })
+      } else {
+        this.result()
+      }
+    } else {
+      this.result()
     }
   },
   // 发布帖子

@@ -431,6 +431,7 @@ Page({
     });
     this.param = { fs_id: this.id, page: 1, pageSize: 10 }
     this.getList([]);
+    this.getCircleInfo()
     this.setData({
       rlAni: true,
       scrollTop: 0

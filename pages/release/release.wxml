@@ -48,7 +48,7 @@
             <!-- <button class='item' disabled="{{!param.content&&!param.video&&param.image.length<1}}">取消</button> -->
             <button class='item'>取消</button>
         </formCode>
-        <formCode  bind:handler='result'>
+        <formCode  bind:handler='judgeCircle'>
             <!-- <button class='item ensure' disabled="{{!param.content&&!param.video&&param.image.length<1}}">发布</button> -->
             <button class='item ensure'>发布</button>
         </formCode>
