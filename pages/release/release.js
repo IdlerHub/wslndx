@@ -311,7 +311,7 @@ Page({
       if(!type) {
         if(this.data.param.content.trim() || image || this.data.param.video) {
             wx.showModal({
-            content: `是否发布并加入${this.data.circleTitle}圈子`,
+            content: `是否发布并加入【${this.data.circleTitle}】圈子`,
             confirmColor: "#DF2020",
             success (res) {
               if (res.confirm) {
