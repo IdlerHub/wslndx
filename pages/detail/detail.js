@@ -1499,9 +1499,7 @@ Page({
     })
   },
   closeShool() {
-    wx.switchTab({
-      url: '/pages/index/index'
-    })
+    wx.navigateBack()
   },
   getPlath() {
     this.getProvince().then(() => {
