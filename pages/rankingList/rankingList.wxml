@@ -53,7 +53,7 @@
     <view class="centerTop">
       <view class="title {{rankType == 0 ? 'active' : ''}}" bindtap="checkTop" data-type="0">日榜</view>
       <view class="title {{rankType == 1 ? 'active' : ''}}" bindtap="checkTop" data-type="1">周榜</view>
-      <view class="title {{rankType == 3 ? 'active' : ''}}" bindtap="checkTop" data-type="2">月榜</view>
+      <view class="title {{rankType == 2 ? 'active' : ''}}" bindtap="checkTop" data-type="2">月榜</view>
       <image class="one" src="../../images/rankingPink1.png" wx:if="{{rankType == 0}}"></image>
       <image class="tow" src="../../images/rankingPink2.png" wx:if="{{rankType == 1}}"></image>
       <image class="three" src="../../images/rankingPink3.png" wx:if="{{rankType == 2}}"></image>
