@@ -203,7 +203,8 @@ Page({
       })
     }
   },
-  onHide() { },
+  onHide() {
+   },
   showPlath(that) {
     if(this.data.$state.userInfo && this.data.$state.userInfo.university.length == 0 && this.data.$state.newGuide.lesson) {
       let plathParam = {
@@ -285,6 +286,8 @@ Page({
     }, 2000);
   },
   played() {
+    clearInterval(this.videoInterval)
+    this.videoTime = 0
     setTimeout(() => {
       this.vedioRecordAdd()
       this.videoParam = {
