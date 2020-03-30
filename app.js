@@ -452,6 +452,7 @@ App({
     });
   },
   withdrawShare(ops) {
+    wx.uma.trackEvent('totalShare', { 'shareName': '我的邀请' });
     return {
       title:
         this.store.$state.shareTitle || "福利！老年大学十万集免费课程在线学习",

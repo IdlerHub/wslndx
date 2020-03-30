@@ -76,6 +76,7 @@ Page({
           list: list
         });
       });
+      wx.uma.trackEvent('totalShare', { 'shareName': '秀风采分享' });
       return {
         title: app.util.delHtmlTag(article.content),
         imageUrl:

@@ -701,6 +701,7 @@ Page({
         lesson_id: this.data.id,
         sublesson_id: this.data.cur.id
       });
+      wx.uma.trackEvent('totalShare', { 'shareName': '云课堂邀请学员' });
       return {
         title: this.data.detail.title,
         path:

@@ -82,6 +82,7 @@ let store = new Store({
   },
   methods: {
     menuAppShare() {
+      wx.uma.trackEvent('totalShare', { 'shareName': 'tab三个点' });
       return {
         title:
           this.data.$state.shareTitle || "福利！老年大学十万集免费课程在线学习",
