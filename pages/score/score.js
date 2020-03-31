@@ -611,7 +611,7 @@ Page({
               'swiperHeight[1]': height
             })
           })
-        },400)
+        },500)
         break;
       case '2': 
         query.select('.scroll_containertwo').boundingClientRect()
