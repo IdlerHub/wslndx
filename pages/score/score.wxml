@@ -9,7 +9,7 @@
   <image src="{{$state.imgHost}}/scoreTodrawtwo.png" catchtap="toDraw"></image>
 </view>
 <!-- tabs菜单列表 -->
-<view class="tabs" hover-stop-propagation="true" catchtouchmove="return">
+<view class="tabs" hover-stop-propagation="true" catchtouchmove="return" >
   <view class="tab {{ currentTab == 1 ? 'active' : '' }}" data-index="1" catchtap="switchTap">
     <!-- <image class="icon" src="/images/score/score_source.png" mode="aspectFill"></image> -->
     <text class="dsc">学分获取</text>
@@ -29,9 +29,9 @@
   </view>
 </view>
 <!-- 滚动区域--单个列表详情 -->
-<swiper class="swiper" current="{{ currentTab - 1 }}" bindchange="swiperChange">
+<swiper class="swiper" current="{{ currentTab - 1 }}" bindchange="swiperChange" style="height: {{swiperHeight[currentTab]}}px;">
   <swiper-item item-id="1">
-    <scroll-view class="scroll_container" scroll-y="{{ scrollStatus }}">
+    <view class="scroll_container scroll_containerOne">
       <view class="source_content" style="padding-top:{{paddingAdd ? '25' : ''}}px">
         <swiper class="scoreSwiper" wx:if="{{bannerList.length > 1}}">
           <swiper-item wx:for="{{bannerList}}" wx:key="index">
@@ -76,13 +76,15 @@
               class="status {{ item.status ? 'finish' : '' }}" data-index="{{ index }}" data-title="{{item.title}}"
               disabled="{{ item.status }}"
               wx:if="{{item.authorization && item.title != '每日签到'}}">{{item.status ? "已完成" : "去完成" }}</button>
+              
           </view>
+          <view class="item" style="opacity: 0;"></view>
         </view>
       </view>
-    </scroll-view>
+    </view>
   </swiper-item>
   <swiper-item item-id="2">
-    <scroll-view class="scroll_container" scroll-y="{{ scrollStatus }}">
+    <view class="scroll_container scroll_containertwo">
       <view class="pay_content">
         <view class="item" wx:for="{{ paylist }}" wx:key="index" bindtap="toMessage" data-item="{{item}}">
           <image class="bg" src="{{ item.image }}" mode="aspectFill" lazy-load="true"> </image>
@@ -95,10 +97,10 @@
           <image class="newperson" src="{{$state.imgHost}}/newperson.png" wx:if="{{item.is_new == 1}}"></image>
         </view>
       </view>
-    </scroll-view>
+    </view>
   </swiper-item>
   <swiper-item item-id="3">
-    <scroll-view class="scroll_container" scroll-y="{{ scrollStatus }}" bindscrolltolower="lower">
+    <view class="scroll_container scroll_containerThree">
       <view class="details_content">
         <view class="scroll_con">
           <view class="item" wx:for="{{ details }}" wx:key="index">
@@ -109,7 +111,7 @@
           </view>
         </view>
       </view>
-    </scroll-view>
+    </view>
   </swiper-item>
 </swiper>
 <view class="footer" wx:if="{{showHome}}">

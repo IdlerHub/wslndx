@@ -9,7 +9,7 @@ Page({
   data: {
     getAddress: false,
     giftInfo: {}, //兑换礼品信息
-    currentTab: 1,
+    currentTab: '1',
     scrollStatus: false,
     paylist: [],
     details: [],
@@ -26,6 +26,7 @@ Page({
         clickUrl: "/pages/makeMoney/makeMoney"
       }
     ],
+    swiperHeight: {}
   },
   pageName: "学分兑换页",
   common: {
@@ -45,6 +46,7 @@ Page({
           currentTab: options.curren
         })
       : "";
+    this.setHeight()
   },
   onShow: function() {
     let sources = [
@@ -283,6 +285,7 @@ Page({
         newbie: brr
       });
     });
+    this.setHeight()
   },
   init() {
     if (this.params.end) return Promise.resolve();
@@ -380,6 +383,7 @@ Page({
       scrollStatus: true,
       paddingAdd: true
     });
+    this.data.currentTab == 3 ? this.lower() : ''
   },
   onPageScroll: function(e) {
     if (e.scrollTop < this.common.scrollTop) {
@@ -393,6 +397,7 @@ Page({
   lower() {
     this.params.page += 1;
     this.init();
+    this.setHeight()
   },
   switchTap(e) {
     let id = e.currentTarget.dataset.index;
@@ -412,6 +417,7 @@ Page({
     id == 2
       ? wx.uma.trackEvent("integral_btnClick", { btnName: "学分兑换" })
       : "";
+    this.setHeight()
   },
   gift(e) {
     if (!e.currentTarget.dataset.stock) {
@@ -591,5 +597,39 @@ Page({
         res.eventChannel.emit("acceptDataFromOpenerPage", { data: item });
       }
     });
+  },
+  setHeight() {
+    let query = wx.createSelectorQuery().in(this)
+    let that = this, height = 0
+    switch(this.data.currentTab) {
+      case '1': 
+        query.select('.scroll_containerOne').boundingClientRect()
+        query.exec(res => {
+          height = res[0].height
+          that.setData({
+            'swiperHeight[1]': 1316
+          })
+        })
+        break;
+      case '2': 
+        query.select('.scroll_containertwo').boundingClientRect()
+        query.exec(res => {
+          height = res[0].height
+          that.setData({
+            'swiperHeight[2]': height
+          })
+          console.log(height)
+        })
+        break;
+      case '3': 
+        query.select('.scroll_containerThree').boundingClientRect()
+        query.exec(res => {
+          height = res[0].height
+          that.setData({
+            'swiperHeight[3]': height
+          })
+        })
+        break;
+    }
   }
 });
