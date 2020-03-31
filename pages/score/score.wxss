@@ -1,5 +1,6 @@
 page {
   /* height: calc(100% + 150rpx);  */
+  background: #f4f4f4;
 }
   page .bg {
     position: relative;

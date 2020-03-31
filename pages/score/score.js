@@ -603,13 +603,15 @@ Page({
     let that = this, height = 0
     switch(this.data.currentTab) {
       case '1': 
-        query.select('.scroll_containerOne').boundingClientRect()
-        query.exec(res => {
-          height = res[0].height
-          that.setData({
-            'swiperHeight[1]': 1316
+        setTimeout(()=> {
+          query.select('.scroll_containerOne').boundingClientRect()
+          query.exec(res => {
+            height = res[0].height
+            that.setData({
+              'swiperHeight[1]': height
+            })
           })
-        })
+        },400)
         break;
       case '2': 
         query.select('.scroll_containertwo').boundingClientRect()
