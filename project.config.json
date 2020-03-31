@@ -156,8 +156,8 @@
 				},
 				{
 					"id": 9,
-					"name": "pages/post/post",
-					"pathName": "pages/post/post",
+					"name": "pages/postTwo/postTwo",
+					"pathName": "pages/postTwo/postTwo",
 					"query": "",
 					"scene": null
 				},

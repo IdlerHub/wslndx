@@ -189,6 +189,7 @@ Page({
     }
     if(this.videoTime > 0) {
       clearInterval(this.videoInterval)
+      this.videoTime > this.data.cur.minute * 60 ? this.videoTime = this.data.cur.minute * 60 : ''
       this.videoTime2 = this.videoTime
       this.videoTime = 0
       let param = {
@@ -220,6 +221,7 @@ Page({
         key: 'plathStatus',
         success (res) {
           if(res) {
+            console.log(res.data)
             if(res.data.status) return
             let timeType = that.compareDate(app.util.formatTime(new Date()).slice(0,10), res.data.time)
             timeType ?  that.setData({
@@ -310,14 +312,14 @@ Page({
     }, 2000);
   },
   played() {
-    clearInterval(this.videoInterval)
-    this.videoTime = 0
     setTimeout(() => {
       this.vedioRecordAdd()
       this.videoParam = {
         id: this.data.detail.id,
         suId: this.data.cur.id
       }
+      clearInterval(this.videoInterval)
+      this.videoTime = 0
       this.videoInterval = setInterval(() => {
         this.videoTime ++  
       },1000)
@@ -371,6 +373,7 @@ Page({
   videoPause() {
     clearInterval(this.videoInterval)
     if(this.videoTime == 0) return
+    this.videoTime > this.data.cur.minute * 60 ? this.videoTime = this.data.cur.minute * 60 : ''
     this.videoTime2 = this.videoTime
     this.videoTime = 0
     let param = {
