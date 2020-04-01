@@ -10,11 +10,13 @@ page {
   color: rgba(153,153,153,1);
   height: 118rpx;
   line-height: 40rpx;
+  display: flex;
   }
   .container .buttons text {
+    display: block;
     position: relative;
     display: inline-block;
-    width: 50%;
+    flex: 1;
     height: 100%;
     text-align: center;
     font-size: 36rpx;
@@ -34,9 +36,10 @@ page {
   border-bottom: 2px solid #df2020;
 }
 .centerBox {
-  margin: 30rpx 30rpx 148rpx 30rpx;
-  background:rgba(255,255,255,1);
-  border-radius: 0 0 10rpx 10rpx;
+  margin: 0 30rpx 148rpx 30rpx;
+  /* background:rgba(255,255,255,1); */
+  /* border-radius: 0 0 10rpx 10rpx; */
+  /* border-radius:10rpx; */
 }
 .centerBox .centerTop {
   height:98rpx;
@@ -86,10 +89,10 @@ page {
 }
 .centerBox .center {
   height: 108rpx;
-  margin: 0 30rpx;
   display: flex;
   align-items: center;
   justify-content: space-between;
+  background:rgba(247,247,247,1);
 }
 .centerBox .center text {
   color: rgba(102,102,102,1);
@@ -102,7 +105,7 @@ page {
 }
 .centerBox .right {
   height:64rpx;
-  background:rgba(247,247,247,1);
+  background:rgba(255,255,255,1);
   border-radius:32rpx;
   display: flex;
   align-items: center;
@@ -110,8 +113,8 @@ page {
   font-family:PingFangSC-Regular,PingFang SC;
   font-weight:400;
   color:rgba(102,102,102,1);
-  padding: 0 24rpx;
   box-sizing: border-box;
+  padding: 0 21rpx 0 24rpx;
 }
 .centerBox .right text {
   display: block;
@@ -128,11 +131,13 @@ page {
   padding: 0 30rpx;
 } 
 .centerBox .contentTop {
+  border-radius:10rpx 10rpx 0 0;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding:15rpx 30rpx 30rpx 30rpx;
+  padding:44rpx 30rpx 30rpx 30rpx;
   position: relative;
+  background:rgba(255,255,255,1);
 }
 .centerBox .contentTop text {
   font-size:32rpx;
@@ -151,9 +156,12 @@ page {
   bottom: 0;
   right: 0;
 }
-
+.centerBox .content {
+  background:rgba(255,255,255,1);
+}
 .centerBox .content .list {
-  height: calc(100vh - 550rpx);
+  height: calc(100vh - 420rpx);
+  
 }
 
 .contentList {

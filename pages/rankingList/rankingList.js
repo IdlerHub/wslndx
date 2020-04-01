@@ -20,6 +20,7 @@ Page({
     showToast: false,
     scollTop: 0
   },
+  page: false,
   onLoad: function (options) {
     this.shoolPage = {
       0: {
@@ -64,7 +65,10 @@ Page({
   onReachBottom: function () {
   },
   pageMore() {
+    console.log(this.page)
+    if(this.page) return
     if(this.data.mode == 1) {
+      this.page = true
       this.userPage[this.data.rankType].page ++ 
       let list = this.data.userList[this.data.rankType]
       app.user.getUserLessonTime(this.userPage[this.data.rankType]).then(res => {
@@ -77,8 +81,10 @@ Page({
         this.setData({
           [`userList[${this.data.rankType}]`]: list
         })
+        this.page = false
       })
     } else {
+      this.page = true
       this.shoolPage[this.data.rankType].page ++ 
       let list = this.data.shoolList[this.data.rankType]
       app.user.getSchoolLessonTime(this.shoolPage[this.data.rankType]).then(res => {
@@ -92,6 +98,7 @@ Page({
           [`shoolList[${this.data.rankType}]`]: list
         })
       })
+      this.page = false
     }
   },
   onShareAppMessage: function(ops) {
