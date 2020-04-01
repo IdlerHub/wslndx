@@ -65,7 +65,6 @@ Page({
   onReachBottom: function () {
   },
   pageMore() {
-    console.log(this.page)
     if(this.page) return
     if(this.data.mode == 1) {
       this.page = true
