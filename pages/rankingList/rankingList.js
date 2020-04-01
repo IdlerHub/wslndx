@@ -70,6 +70,7 @@ Page({
       app.user.getUserLessonTime(this.userPage[this.data.rankType]).then(res => {
         !res.data[0] ? this.userPage[this.data.rankType].page -- : ''
         res.data.forEach(item => {
+          item.lesson_time = (item.lesson_time * this.data.proportion).toFixed(0)
           item.times = app.util.qian(item.lesson_time)
         });
         list = list.concat(res.data)
@@ -83,6 +84,7 @@ Page({
       app.user.getSchoolLessonTime(this.shoolPage[this.data.rankType]).then(res => {
         !res.data[0] ? this.shoolPage[this.data.rankType].page -- : ''
         res.data.forEach(item => {
+          item.lesson_time = (item.lesson_time * this.data.proportion).toFixed(0)
           item.times = app.util.qian(item.lesson_time)
         });
         list = list.concat(res.data)
@@ -162,6 +164,7 @@ Page({
   getUserList() {
     app.user.getUserLessonTime(this.userPage[this.data.rankType]).then(res => {
       res.data.forEach(item => {
+        item.lesson_time = (item.lesson_time * this.data.proportion).toFixed(0)
         item.times = app.util.qian(item.lesson_time)
       });
       this.setData({
