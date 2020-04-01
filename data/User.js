@@ -242,6 +242,11 @@ function getUserLearnTimeRank(params) {
   return httpService.post("user/getUserLearnTimeRank", params)
 }
 
+//POST /user/getLearnTimeProportion 获取用户学习时间比例
+function getLearnTimeProportion(params) {
+  return httpService.post("user/getLearnTimeProportion", params)
+}
+
 module.exports = {
   wxLoginCode,
   getAuthCode,
@@ -284,5 +289,6 @@ module.exports = {
   getUserLessonTime,
   rankRule,
   getSchoolLearnTimeRank,
-  getUserLearnTimeRank
+  getUserLearnTimeRank,
+  getLearnTimeProportion
 }

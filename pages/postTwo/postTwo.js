@@ -29,7 +29,7 @@ Page({
     top: 26,
     currentTab: 0,
     scrolltop: 0,
-    showBottom: false,
+    showBottom: {},
     pageFrame:{
       0: [],
       1: [],
@@ -219,19 +219,20 @@ Page({
     ]
     this.setData({
       list: [],
-        nowList: [],
-        flowList: [],
-        showBottom: false,
-        pageFrame:{
-          0: [],
-          1: [],
-          2:[]
-        },
-        currentPage:this.param
+      nowList: [],
+      flowList: [],
+      showBottom: {},
+      pageFrame:{
+        0: [],
+        1: [],
+        2:[]
+      },
+      currentPage:this.param
     })
   },
   getList(list) {
     this.setData({
+      [`showBottom[${this.data.currentTab}]`]: false,
       showLoading: true
     });
     let temp = [],
@@ -264,20 +265,18 @@ Page({
       }
   },
   upList(currentTab, temp, msg) {
-      msg.data[0]
-        ? ""
-        : this.setData({
-            showBottom: true
-          });
       let arr = msg.data;
       if(!arr[0]) {
         this.param[currentTab].page--
         this.setData({
           [`currentPage${currentTab}.page`]:  this.param[currentTab].page
         })
-        this.setData({
-          showLoading: false
-        });
+        setTimeout(() => {
+          this.setData({
+            showLoading: false,
+            [`showBottom[${this.data.currentTab}]`]: true
+          });
+        }, 800)       
         return
       }
       arr.forEach(function(item) {
@@ -598,7 +597,14 @@ Page({
       } else {
         this.param[this.data.currentTab].page = 1;
         this.setData({
-          isRefreshing: true
+          isRefreshing: true,
+          showBottom: {},
+          pageFrame:{
+            0: [],
+            1: [],
+            2:[]
+          },
+          currentPage:this.param
         });
         this.getList([]).then(() => {
           wx.stopPullDownRefresh();
@@ -615,7 +621,7 @@ Page({
   },
   //上拉加载
   scrolltolower() {
-    if (this.data.currentTab == 1 && this.data.showBottom) return;
+    if (this.data.currentTab == 1 && this.data.showBottom[this.data.currentTab]) return;
     if (this.data.showLoading) return;
     let list = []
       switch(this.data.currentTab) {

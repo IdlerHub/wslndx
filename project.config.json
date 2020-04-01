@@ -172,7 +172,7 @@
 					"id": 11,
 					"name": "pages/infoAddress/infoAddress",
 					"pathName": "pages/index/index",
-					"query": "com=youzan",
+					"query": "channel=laonianapp/banner&_um_campaign=5e6a0e29dbc2ec076bd611fc&_um_channel=5e6a0e29dbc2ec076bd611fd&com=kimdot",
 					"scene": 1037,
 					"referrerInfo": {
 						"appId": "wx21038783a46791dd",

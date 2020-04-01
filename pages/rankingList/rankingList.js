@@ -48,9 +48,11 @@ Page({
     this.setData({
       time
     })
-    this.getShoollist()
+    this.getLearnTimeProportion().then(() => {
+      this.getShoollist()
+      this.getLearnTimeRank()
+    })
     this.getRankRule()
-    this.getLearnTimeRank()
   },
   onShow: function () {
     this.data.showToast ? this.closeToast() : ''
@@ -149,6 +151,7 @@ Page({
     let txt = this.data.rankType
     app.user.getSchoolLessonTime(this.shoolPage[this.data.rankType]).then(res => {
       res.data.forEach(item => {
+        item.lesson_time = (item.lesson_time * this.data.proportion).toFixed(0)
         item.times = app.util.qian(item.lesson_time)
       });
       this.setData({
@@ -189,6 +192,7 @@ Page({
     }
     if( this.data.mode == 0 ) {
       app.user.getSchoolLearnTimeRank(param).then(res => {
+        res.data.score = (res.data.score * this.data.proportion).toFixed(0)
         res.data.time = app.util.qian(res.data.score)
         this.setData({
           shoolRank: res.data
@@ -196,11 +200,19 @@ Page({
       })
     } else {
       app.user.getUserLearnTimeRank(param).then(res => {
+        res.data.score = (res.data.score * this.data.proportion).toFixed(0)
         res.data.time = app.util.qian(res.data.score)
         this.setData({
           userRank: res.data
         })
       })
     }
+  },
+  getLearnTimeProportion() {
+    return app.user.getLearnTimeProportion().then(res => {
+      this.setData({
+        proportion: res.data.proportion
+      })
+    })
   }
 })

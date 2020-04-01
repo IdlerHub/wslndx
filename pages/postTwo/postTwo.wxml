@@ -170,6 +170,7 @@
           <view wx:else style='height:{{pageFrame[currentTab][page + 1].height}}px;' ></view>
 				</view>
 			<mp-loading type="circle" wx:if="{{ showLoading }}"></mp-loading>
+			<view class="upbottom" wx:if="{{showBottom[currentTab]}}">已经到底咯~</view>
 		</scroll-view>
 	</swiper-item>
 	<swiper-item class="container">
@@ -186,7 +187,7 @@
         <view wx:else style='height:{{pageFrame[currentTab][page + 1].height}}px;' ></view>
       </view>
 			<mp-loading type="circle" wx:if="{{ showLoading }}"></mp-loading>
-			<view class="upbottom" wx:if="{{showBottom && flowList[0].content}}">已经到底咯~</view>
+			<view class="upbottom" wx:if="{{showBottom[currentTab]}}">已经到底咯~</view>
 		</scroll-view>
 	</swiper-item>
 	<swiper-item class="container">
@@ -210,7 +211,7 @@
         </view>
 			</view>
 			<mp-loading type="circle" wx:if="{{ showLoading }}"></mp-loading>
-			<view class="upbottom" wx:if="{{showBottom && flowList[0].content}}">已经到底咯~</view>
+			<view class="upbottom" wx:if="{{showBottom[currentTab] && flowList[0][0] }}">已经到底咯~</view>
 		</scroll-view>
 	</swiper-item>
 </swiper>
