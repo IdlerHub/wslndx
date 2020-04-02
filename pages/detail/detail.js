@@ -210,11 +210,35 @@ Page({
       let plathParam = {
         plath: '',
         shool:'',
-      }
+      }, that = this
       this.setData({
         plathParam,
         showplece:true,
         showToast: false
+      })
+      wx.getStorage({
+        key: 'plathStatus',
+        success (res) {
+          if(res) {
+            if(res.data.status) return
+            let timeType = that.compareDate(app.util.formatTime(new Date()).slice(0,10), res.data.time)
+            timeType ?  that.setData({
+              showplece: false
+            }): wx.setStorageSync(
+              'plathStatus',
+              {
+                time:  app.util.formatTime(new Date()).slice(0,10),
+                status: 1
+              })
+          } else {
+            wx.setStorageSync(
+            'plathStatus',
+            {
+              time:  app.util.formatTime(new Date()).slice(0,10),
+              status: 1
+            })
+          }
+        }
       })
       this.getPlath()
     }
@@ -1499,7 +1523,17 @@ Page({
     })
   },
   closeShool() {
-    wx.navigateBack()
+    wx.setStorageSync(
+      'plathStatus',
+      {
+        time:  app.util.formatTime(new Date()).slice(0,10),
+        status: 0
+      }
+    )
+    this.setData({
+      showplece: false
+    })
+    this.recordAdd()
   },
   getPlath() {
     this.getProvince().then(() => {
@@ -1649,5 +1683,16 @@ Page({
       this.recordAdd()
       clearTimeout(this.Toastimer)
     }, 1500)
+  },
+  compareDate (dateTime1, dateTime2) {
+    let formatDate1 = new Date(dateTime1), formatDate2 = new Date(dateTime2)
+    if(formatDate1 > formatDate2)
+    {
+        return false
+    }
+    else
+    {
+        return true
+    }
   }
 });

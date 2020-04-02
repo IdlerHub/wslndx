@@ -95,7 +95,7 @@
 					"id": 0,
 					"name": "微课堂分享卡片",
 					"pathName": "pages/detail/detail",
-					"query": "id=95&type=share",
+					"query": "id=115&type=share",
 					"scene": 1007
 				},
 				{
