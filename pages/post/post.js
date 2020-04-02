@@ -865,6 +865,7 @@ Page({
         })
         .catch(() => {
           this.stopTap.guide = 0;
+          err.msg == '记录已增加' ? app.setState({ 'newGuide.blog': 1 }) : ''
         });
     }
   },

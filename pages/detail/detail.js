@@ -1196,8 +1196,9 @@ Page({
     app.user.guideRecordAdd(param).then(res => {
       app.getGuide()
       this.setIntegral("+45 学分", "完成[云课堂]新手指引");
-    }).catch(() => {
+    }).catch(err => {
       this.turnOff.guide = 0
+      err.msg == '记录已增加' ? app.setState({ 'newGuide.lesson': 1 }) : ''
     });
   },
   // 语音

@@ -532,6 +532,7 @@ Page({
         })
         .catch(() => {
           this.guide = 0;
+          err.msg == '记录已增加' ? app.setState({ 'newGuide.shortvideo': 1 }) : ''
         });
     }
   },
