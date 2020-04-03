@@ -101,15 +101,11 @@ Page({
     }
   },
   onShareAppMessage: function(ops) {
-    if (ops.from === "menu") {
-      return this.menuAppShare();
-    } else if (ops.from === "button") {
-      setTimeout(() => {
-        this.setData({
-          showToast: true
-        })
-      }, 1000)
-    }
+    return {
+      title: '学习光荣榜',
+      path: "pages/rankingList/rankingList?type=share&uid=" + this.data.$state.userInfo.id,
+      imageUrl: this.data.$state.imgHost + '/rankingShareimg.png'
+    };
   },
   getRankRule(){
     app.user.rankRule().then(res => {
