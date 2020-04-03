@@ -102,7 +102,7 @@ Page({
   },
   onShareAppMessage: function(ops) {
     return {
-      title: '学习光荣榜',
+      title: '老年大学PK学习榜，快来看看您的学校排第几!',
       path: "pages/rankingList/rankingList?type=share&uid=" + this.data.$state.userInfo.id,
       imageUrl: this.data.$state.imgHost + '/rankingShareimg.png'
     };
