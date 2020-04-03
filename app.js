@@ -27,7 +27,7 @@ fundebug.init({
       }
     },
     {
-      error: /getHistory/
+      error: /getHistory\request:fail/
     }
   ],
   metaData: {
