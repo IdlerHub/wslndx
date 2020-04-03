@@ -1,7 +1,7 @@
 <wxs module="fn">
 	module.exports = {
 	search: function(str) {
-	return str.search('gif');
+		return str.search('gif');
 	}
 	}
 </wxs>
