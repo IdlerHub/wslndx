@@ -27,7 +27,7 @@ fundebug.init({
       }
     },
     {
-      error: /getHistory\request:fail/
+      error: /getHistory | request:fail timeout | uploadFile:ok/
     }
   ],
   metaData: {

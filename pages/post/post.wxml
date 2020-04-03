@@ -2,7 +2,7 @@
 	module.exports = {
 	search: function(str) {
 		return str.search('gif');
-	}
+		}
 	}
 </wxs>
 <template name="listitem">
