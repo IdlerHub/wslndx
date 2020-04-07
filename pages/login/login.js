@@ -108,6 +108,7 @@ Page({
           duration: 1500,
           mask: false
         })
+        this.countDown()
       })
     } else {
       wx.showToast({

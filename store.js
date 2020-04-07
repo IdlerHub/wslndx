@@ -57,7 +57,15 @@ let store = new Store({
     playVedio: false,
     lessDiscussion: {},
     blogcomment: {},
-    security: {}
+    security: {},
+    newGuide: {
+      index: 1,
+      blog: 1,
+      lesson: 1,
+      shortvideo: 1,
+      user: 1,
+      lesson_category: 1
+    }
   },
   pageLisener: {
     onLoad(opts) {

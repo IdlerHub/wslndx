@@ -789,7 +789,7 @@
 /* 环境变量 */
 page {
   background: #fff;
-  box-sizing: border-box; }
+  box-sizing: border-box;}
 
 .popup {
   position: fixed;
