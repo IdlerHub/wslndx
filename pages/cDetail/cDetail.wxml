@@ -1,3 +1,10 @@
+<wxs module="fn">
+	module.exports = {
+	search: function(str) {
+		return str.search('gif');
+		}
+	}
+</wxs>
 <view class="container">
 	<!-- 下拉刷新 -->
 	<view wx:if="{{ isRefreshing }}" class="weui-loadmore">
@@ -46,10 +53,10 @@
 				<rich-text wx:if="{{ item.content }}" class="name" nodes="{{ item.content }}"></rich-text>
 				<view class="content" wx:if="{{ item.images.length > 0 }}">
 					<view class="img one" wx:if="{{ item.images.length == 1 }}">
-						<image mode="widthFix" wx:for="{{ item.images }}" wx:for-item="items" wx:key="index" src="{{ item.image_compress }}" data-urls="{{ item.images }}" data-current="{{ items }}" catchtap="previewImage"></image>
+						<image mode="widthFix" wx:for="{{ item.images }}" wx:for-item="items" wx:key="index" src="{{ fn.search(item.images[0]) > 0 ?  item.images : item.image_compress + '/resize,p_50' }}" data-urls="{{ item.images }}" data-current="{{ items }}" catchtap="previewImage"></image>
 					</view>
 					<view class="img three" wx:else>
-						<image mode="aspectFill" wx:for="{{ item.images }}" wx:for-item="items" wx:key="index" src="{{ item.image_compress[index] }}" data-urls="{{ item.images }}" data-current="{{ items }}" catchtap="previewImage"></image>
+						<image mode="aspectFill" wx:for="{{ item.images }}" wx:for-item="items" wx:key="index" src="{{ fn.search(item.images[index]) > 0 ? item.images[index] : item.image_compress[index] + '/resize,m_fixed,w_216,h_216' }}" data-urls="{{ item.images }}" data-current="{{ items }}" catchtap="previewImage"></image>
 					</view>
 				</view>
 				<view class="content" wx:if="{{ item.url }}">

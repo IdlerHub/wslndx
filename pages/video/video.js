@@ -24,8 +24,9 @@ Page({
     /*  rect: wx.getMenuButtonBoundingClientRect() */
   },
   pageName: "短视频页",
-  recordVideo_id: "-1",
   guide: 0,
+  recordfinish: 0,
+  vediorecordAdd: 0,
   onLoad(options) {
     let systemInfo = wx.getSystemInfoSync();
     this.wifi = false;
@@ -143,8 +144,9 @@ Page({
   },
   //获取红包奖励内容
   recordFinish() {
+    if(this.recordfinish || !this.vediorecordAdd) return
+    this.recordfinish = 1
     let param = { shortvideo_id: this.data.cur.id };
-    if (this.data.cur.id == this.recordVideo_id) return;
     app.video.recordFinish(param).then(res => {
       if (res.data.day_read == 1) {
         this.setData({
@@ -164,7 +166,14 @@ Page({
         wechatnum: res.data.wechat_num
       });
       this.videoContext.play();
-      this.recordVideo_id = this.data.cur.id;
+      this.vediorecordAdd = 0
+      wx.nextTick(() => {
+        this.vediorecordAdd = 0
+        this.recordfinish = 0
+      })
+    }).catch(() => {
+      this.recordfinish = 0
+      this.vediorecordAdd = 0
     });
   },
   closeRed() {
@@ -174,10 +183,11 @@ Page({
     });
   },
   vedioRecordAdd() {
-    if (this.recordVideo_id == this.data.cur.id) return;
     setTimeout(() => {
       let param = { shortvideo_id: this.data.cur.id }
-      app.video.recordAdd(param);
+      app.video.recordAdd(param).then(() => {
+        this.vediorecordAdd = 1
+      })
     }, 2000) 
   },
   copywechat() {

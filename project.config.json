@@ -156,8 +156,8 @@
 				},
 				{
 					"id": 9,
-					"name": "pages/certificate/certificate",
-					"pathName": "pages/certificate/certificate",
+					"name": "pages/post/post",
+					"pathName": "pages/post/post",
 					"query": "",
 					"scene": null
 				},

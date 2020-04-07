@@ -299,15 +299,15 @@ Page({
         if (this.data.currentTab != currentTab) return;
         if(this.data.currentTab == 0) {
           this.setData({
-            list: temp
+            [`list[${this.param[currentTab].page - 1}]`]: arr
           })
         } else if(this.data.currentTab == 1) {
           this.setData({
-            nowList: temp
+            [`nowList[${this.param[currentTab].page - 1}]`]: arr
           })
         } else {
           this.setData({
-            flowList: temp
+            [`flowList[${this.param[currentTab].page - 1}]`]: arr
           })
         }
       }, 800);
@@ -659,7 +659,7 @@ Page({
     }
   },
   scrollinfo(e) {
-    this.setData({
+    e.detail.scrollTop > 100 ? '' : this.setData({
       scrolltop: e.detail.scrollTop
     });
     if (this.inPageUpdate || this.data.isRefreshing) {
@@ -715,17 +715,7 @@ Page({
       currentTab: cur
     })
     this.pageInit()
-    switch(event.detail.current) {
-      case 0:
-        this.getList([])
-        break;
-      case 1: 
-        this.getList([])
-        break;
-      case 2:
-        this.getList([])
-        break;
-    }
+    this.getList([])
   },
   switchNav(event) {
     let cur = event.currentTarget.dataset.current;
