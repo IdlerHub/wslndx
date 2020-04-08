@@ -27,6 +27,12 @@ fundebug.init({
       }
     },
     {
+      req: {
+        url: /recordFinish/,
+        method: /^POST$/
+      }
+    },
+    {
       error: /getHistory | request:fail timeout | uploadFile:ok | request:fail/
     }
   ],
