@@ -55,7 +55,7 @@
           <image src="{{ $state.imgHost }}/class-addTeacher3.png"></image>
         </view>
         <button class="addTe" open-type="share" hover-class="btn-hover">
-          <image src="{{ $state.imgHost }}/class-invite2.png"></image>
+          <image src="{{ $state.imgHost }}/class-invite3.png"></image>
         </button>
       </view>
       <view class="right">
