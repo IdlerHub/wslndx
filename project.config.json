@@ -180,10 +180,10 @@
 					}
 				},
 				{
-					"id": 13,
+					"id": 12,
 					"name": "学习排行榜",
 					"pathName": "pages/rankingList/rankingList",
-					"query": "uid=12661&type=invite",
+					"query": "uid=12661&type=invite&mode=0",
 					"scene": null
 				}
 			]

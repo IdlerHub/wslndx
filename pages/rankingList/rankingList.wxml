@@ -1,28 +1,24 @@
 <!--pages/rankingList/rankingList.wxml-->
 <view class="container">
   <view class="buttons">
-    <text data-type="0" catchtap="checkTop" class="{{ rankType == 0 ? 'active' : ''}}">
-      日榜
-      <text class="redRow" wx:if="{{ rankType == 0 }}"></text>
+    <text data-type="0" catchtap="check" class="{{ mode == 0 ? 'active' : ''}}">
+      学校排行榜单
+      <text class="redRow" wx:if="{{ mode == 0 }}"></text>
     </text>
-    <text data-type="1" catchtap="checkTop" class="{{ rankType == 1 ? 'active' : ''}}">
-      周榜
-      <text class="redRow" wx:if="{{ rankType == 1 }}"></text>
-    </text>
-    <text data-type="2" catchtap="checkTop" class="{{ rankType == 2 ? 'active' : ''}}">
-      月榜
-      <text class="redRow" wx:if="{{ rankType == 2 }}"></text>
+    <text data-type="1" catchtap="check" class="{{ mode == 1 ? 'active' : ''}}">
+      个人排行榜单
+      <text class="redRow" wx:if="{{ mode == 1 }}"></text>
     </text>
   </view>
   <view class="centerBox" wx:if="{{mode == 0}}">
-    <!-- <view class="centerTop">
+    <view class="centerTop">
       <view class="title {{rankType == '0' ? 'active' : ''}}" bindtap="checkTop" data-type="0">日榜</view>
       <view class="title {{rankType == '1' ? 'active' : ''}}" bindtap="checkTop" data-type="1">周榜</view>
       <view class="title {{rankType == '2' ? 'active' : ''}}" bindtap="checkTop" data-type="2">月榜</view>
       <image class="one" src="../../images/rankingPink1.png" wx:if="{{rankType == '0'}}"></image>
       <image class="tow" src="../../images/rankingPink2.png" wx:if="{{rankType == '1'}}"></image>
       <image class="three" src="../../images/rankingPink3.png" wx:if="{{rankType == '2'}}"></image>
-    </view> -->
+    </view>
     <view class="center">
       <text>截止 {{time}} 00:00</text>
       <view class="right" bindtap="openRule" data-type="type">

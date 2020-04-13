@@ -21,7 +21,10 @@ Page({
     scollTop: 0
   },
   page: false,
-  onLoad: function (options) {
+  onLoad: function (ops) {
+    ops.mode ? this.setData({
+      mode: ops.mode
+    }): ''
     this.shoolPage = {
       0: {
         page:1, pageSize: 10, type: 'day'
@@ -50,7 +53,7 @@ Page({
       time
     })
     this.getLearnTimeProportion().then(() => {
-      this.getShoollist()
+      ops.mode == 1 ? this.getUserList() : this.getShoollist() 
       this.getLearnTimeRank()
     })
     this.getRankRule()
@@ -101,11 +104,19 @@ Page({
     }
   },
   onShareAppMessage: function(ops) {
-    return {
-      title: '老年大学PK学习榜，快来看看您的学校排第几!',
-      path: "pages/rankingList/rankingList?type=share&uid=" + this.data.$state.userInfo.id,
-      imageUrl: this.data.$state.imgHost + '/rankingShareimg2.png'
-    };
+    if(this.data.mode){
+      return {
+        title: '老年大学学员PK学习榜，快来看看您的学习排第几！',
+        path: `pages/rankingList/rankingList?type=share&uid=${this.data.$state.userInfo.id}&mode=1`,
+        imageUrl: this.data.$state.imgHost + '/rankingShareimg3.png'
+      };
+    } else {
+      return {
+        title: '老年大学PK学习榜，快来看看您的学校排第几!',
+        path: `pages/rankingList/rankingList?type=share&uid=${this.data.$state.userInfo.id}&mode=0`,
+        imageUrl: this.data.$state.imgHost + '/rankingShareimg2.png'
+      };
+    }
   },
   getRankRule(){
     app.user.rankRule().then(res => {
