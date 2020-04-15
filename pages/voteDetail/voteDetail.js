@@ -3,6 +3,7 @@ const app = getApp();
 let videoCtx = null;
 Page({
   data: {
+    shareTitle: '',
     infoFlag: {}, //活动时间以及弹窗提示
     hocIndex: Number,
     current: 0,
@@ -179,6 +180,7 @@ Page({
       let temp = res.data.is_guide;
       this.setData({
         item: res.data,
+        shareTitle: res.data.share_title || '同心抗疫 老年大学在行动',
         // supportFlag: res.data.have_praise,
         guideFlag: [!temp, 0, 0],
         infoFlag: res.data.info
@@ -473,13 +475,14 @@ Page({
     let id = item.id;
     let uid = wx.getStorageSync("userInfo").id;
     let imgUrl = this.data.imgs;
+    let title = this.data.shareTitle;
     if (item.type == 2) {
       imgUrl = item.banner_image;
     } else if (item.type == 1) {
       imgUrl = item.url[0];
     }
     return {
-      title: '抗击疫情,"艺"起加油',
+      title: title,
       path:
         "/pages/voteDetail/voteDetail?voteid=" +
         id +
