@@ -232,6 +232,7 @@ page{
     font-family:PingFangSC-Medium,PingFang SC;
     font-weight:500;
     border: none;
+    z-index: 998;
 }
 
 .hid{
