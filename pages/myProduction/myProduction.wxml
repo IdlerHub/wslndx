@@ -10,10 +10,10 @@
             <view class="production-item" bindtap="toVoteFail" data-flag="{{type==0}}" data-id="{{item.id}}">
                 <view class="item-left">
                     <view class="item-img">
-                        <image src="{{item.url[0] || item.banner_image}}" alt="" mode="aspectFit" />
-                        <!-- <image wx:if="{{item.type==2}}" src="{{item.banner_image || '/images/vote-wei.png'}}" alt="" mode="aspectFit" /> -->
+                        <image wx:if="{{item.type==1}}" src="{{item.url[0] || '/images/vote-wei.png'}}" alt="" mode="aspectFit" />
+                        <image wx:if="{{item.type==2}}" src="{{item.banner_image || '/images/vote-wei.png'}}" alt="" mode="aspectFit" />
                     </view>
-                    <view class="serial">编号: {{item.id}}</view>
+                    <view class="serial">编号: {{item.id-63}}</view>
                 </view>
                 <view class="item-right">
                     <view>
