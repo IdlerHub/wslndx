@@ -52,11 +52,11 @@ Page({
     this.setData({
       zanFlag: false
     });
-    wx.showToast({
-      title: "今日点赞成功",
-      icon: "none",
-      duration: 2500
-    });
+    // wx.showToast({
+    //   title: "今日点赞成功",
+    //   icon: "none",
+    //   duration: 2500
+    // });
   },
   giveLike(e) {
     //step  活动是否过期

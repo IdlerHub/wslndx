@@ -12,7 +12,8 @@ Page({
     newProduction: [],
     productionList: [],
     infoFlag: {}, //活动时间以及弹窗提示信息
-    page: 1
+    page: 1,
+    total_page: 1
     // supportFlag: 1 //今日点赞权限 0=无, 1=有
   },
   toRule() {
@@ -44,7 +45,7 @@ Page({
   },
   setLikeData(index) {
     wx.showToast({
-      title: "今日已点赞成功",
+      title: "点赞成功",
       icon: "none",
       duration: 2500
     });
@@ -129,6 +130,7 @@ Page({
       page: page
     };
     let data = [];
+    let total_page = 1;
     app.vote.getOpusList(params).then(res => {
       if (page == 1) {
         data = res.data.data;
@@ -136,11 +138,13 @@ Page({
         var oldData = this.data.productionList;
         data = oldData.concat(res.data.data);
       }
+      total_page = res.data.total_page;
       this.setData({
         productionList: data,
         page: page,
         // supportFlag: res.data.have_praise,
-        infoFlag: res.data.info
+        infoFlag: res.data.info,
+        total_page: total_page
       });
     });
     //xhr (selectedIndex , page)
@@ -194,6 +198,15 @@ Page({
     });
   },
   onReachBottom() {
-    this.getdata(this.data.page + 1);
+    let page = this.data.page;
+    if(page < this.data.total_page){
+      this.getdata(page + 1);
+    }else{
+      wx.showToast({
+        icon: "none",
+        title: "已经没有数据了哦",
+        duration: 1000
+      });
+    }
   }
 });
