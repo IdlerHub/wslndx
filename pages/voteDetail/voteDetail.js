@@ -223,7 +223,7 @@ Page({
             that.drawPoster(v);
           }
         });
-      }, 500);
+      }, 1000);
     });
   },
   shareMode() {
@@ -300,7 +300,7 @@ Page({
           }
         }
       });
-    }, 1000);
+    }, 500);
   },
   shareOff() {
     //取消分享
@@ -359,7 +359,7 @@ Page({
     ctx.fillText(this.data.shareInfo.nickname, 150 / v, 65 / v);
     ctx.setFontSize(28 / v);
     ctx.setFillStyle("white");
-    ctx.fillText("正在参赛......", 150 / v, 115 / v);
+    ctx.fillText("作品编号: " + (this.data.item.id - 63), 150 / v, 115 / v);
     ctx.restore(); //恢复限制
     //分享图片
     ctx.rect(30 / v, 157 / v, 570 / v, 380 / v);
@@ -425,10 +425,16 @@ Page({
           {
             x: 0,
             y: 0,
-            width: 315,
-            height: 470,
-            destWidth: (315 * 750) / windowWidth,
-            destHeight: (470 * 750) / windowWidth,
+            width: 375,
+            height: 600,
+            destWidth: 375 * 750 / windowWidth,
+            destHeight: 600 * 750 / windowWidth,
+
+            // width: 315,
+            // height: 470,
+            // destWidth: (315 * 750) / windowWidth,
+            // destHeight: (470 * 750) / windowWidth,
+
             canvasId: "poster",
             // fileType: 'jpg',  //如果png的话，图片存到手机可能有黑色背景部分
             success(res) {
