@@ -30,7 +30,7 @@
                 <image src="{{item.avatar}}" alt="" />
                 <view class="info-name">
                     <view>作者: {{item.author || item.nickname}}</view>
-                    <view>编号: {{item.id}}</view>
+                    <view>编号: {{item.id - 63}}</view>
                     <view>{{item.school}}</view>
                 </view>
             </view>
