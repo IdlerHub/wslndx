@@ -34,10 +34,8 @@
                     <view>{{item.school}}</view>
                 </view>
             </view>
-            <!-- <view class="info-title">{{item.name}}</view> -->
-            <view class="info-title">这是一个很无聊的作品不要看了吧,没啥好玩的,啊</view>
-            <!-- <view class="info-content">{{item.content}}</view> -->
-            <view class="info-content">这是一个很无聊的作品不要看了吧,没啥好玩的,啊,无聊啊这是一个很无聊的作品不要看了吧,没啥好玩的,啊,无聊啊这是一个很无聊的作品不要看了吧,没啥好玩的,啊,无聊啊</view>
+            <view class="info-title">{{item.name}}</view>
+            <view class="info-content">{{item.content}}</view>
         </view>
         <!-- 如果是未审核的,就不显示点赞等功能 -->
         <block wx:if="{{!waitingFlag}}">
@@ -109,7 +107,7 @@
                     <image class="user-img" src="{{shareInfo.avatar}}" alt=""></image>
                     <view class="canvas-info">
                         <view class="user-name">{{item.author || item.nickname}}</view>
-                        <view class="tip">作品编号: {{item.id}}</view>
+                        <view class="tip">作品编号: {{item.id - 63}}</view>
                     </view>
                 </view>
                 <view class="canvas-works">
