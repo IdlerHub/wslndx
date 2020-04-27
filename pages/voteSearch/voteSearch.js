@@ -20,17 +20,18 @@ Page({
   },
   clickSearch(e) {
     //选中历史记录搜索
-    this.setData({
-      searchWord: e.currentTarget.dataset.word,
-      inputcontent: e.currentTarget.dataset.word,
-      clearhidden: false
-    });
-    this.searchOpus(1);
+      this.setData({
+        searchWord: e.currentTarget.dataset.word,
+        inputcontent: e.currentTarget.dataset.word,
+        clearhidden: false
+      });
+      this.searchOpus(1);
   },
   toSearch(e) {
     //输入结束后的关键词
     this.setData({
-      searchWord: e.detail.value
+      searchWord: e.detail.value,
+      inputcontent: e.detail.value
     });
     this.searchOpus(1);
   },
