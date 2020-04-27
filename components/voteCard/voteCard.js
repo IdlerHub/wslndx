@@ -18,35 +18,98 @@ Component({
    * 组件的初始数据
    */
   data: {
-    bgColor: '#0071B3'
+    bgColor: '#0071B3',
+    height: 0, //卡片高度，用来做外部懒加载的占位
+    showSlot: true, //控制是否显示当前的slot内容
+    skeletonId: ''
   },
   lifetimes:{
-    created(){
-      console.log("created");
-      wx.createIntersectionObserver().relativeToViewport({ bottom: 50 }).observe('.vote-item', (res) => {
-        this.data.bgColor = "red"
-        console.log("可视区100px", this.data.bgColor)
-        // res.intersectionRatio // 相交区域占目标节点的布局区域的比例
-        // res.intersectionRect // 相交区域
-        // res.intersectionRect.left // 相交区域的左边界坐标
-        // res.intersectionRect.top // 相交区域的上边界坐标
-        // res.intersectionRect.width // 相交区域的宽度
-        // res.intersectionRect.height // 相交区域的高度
+    ready() {
+      this.setData({
+        skeletonId: this.randomString(8) //设置唯一标识
       })
+      wx.nextTick(() => {
+        // 修改了监听是否显示内容的方法，改为前后showNum屏高度渲染
+        // 监听进入屏幕的范围relativeToViewport({top: xxx, bottom: xxx})
+        // let info = SystemInfo.getInfo()
+        let info = wx.getStorageSync('SystemInfo')
+        if (!info) {
+          info = this.fetchAllInfo()
+        }
+        let { windowHeight = 667 } = info.source.system
+        let showNum = 3 //超过屏幕的数量，目前这个设置是上下3屏
+        try {
+          this.extData.listItemContainer = this.createIntersectionObserver()
+          this.extData.listItemContainer.relativeToViewport({ top: showNum * windowHeight, bottom: showNum * windowHeight })
+            .observe(`#list-item-${this.data.skeletonId}`, (res) => {
+              console.log("进入或者卸载",res)
+              let { intersectionRatio } = res
+              if (intersectionRatio === 0) {
+                console.log('【卸载】', this.data.skeletonId, '超过预定范围，从页面卸载')
+                this.setData({
+                  showSlot: false
+                })
+              } else {
+                console.log('【进入】', this.data.skeletonId, '达到预定范围，渲染进页面')
+                this.setData({
+                  showSlot: true,
+                  height: res.boundingClientRect.height
+                })
+              }
+            })
+        } catch (error) {
+          console.log(error)
+        }
+      })
+    },
+    created(){
+      //设置一个走setData的数据池
+      this.extData = {
+        listItemContainer: null,
+      }
+    },
+    detached() {
+      try {
+        this.extData.listItemContainer.disconnect()
+      } catch (error) {
+        console.log(error)
+      }
+      this.extData = null
     }
   },
+ 
   /**
    * 组件的方法列表
    */
   methods: {
+    fetchAllInfo() {  //没有获取到系统信息的话
+      const menuButton = wx.getMenuButtonBoundingClientRect()
+      const systemInfo = wx.getSystemInfoSync()
+
+      const statusBarHeight = systemInfo.statusBarHeight
+      const headerHeight = (menuButton.top - systemInfo.statusBarHeight) * 2 + menuButton.height
+
+      let data = {
+        source: {
+          menu: menuButton,
+          system: systemInfo
+        },
+        statusBarHeight: statusBarHeight,
+        headerHeight: headerHeight,
+        headerRight: systemInfo.windowWidth - menuButton.left
+      }
+
+      wx.setStorageSync('SystemInfo', data)
+      return data
+    },
     toDetail(e) {
-      let id = this.data.voteItem;
+      let item = this.data.voteItem;
       let index = this.data.voteIndex;
-      console.log("详情",id,index)
+      console.log("详情", item,index)
       //作品详情页
       wx.navigateTo({
         url:
-          "/pages/voteDetail/voteDetail?voteid=" + id +
+          "/pages/voteDetail/voteDetail?voteid=" + item.id +
           "&index=" + index
       });
     },
@@ -56,5 +119,15 @@ Component({
       // console.log("对象", item)
       this.triggerEvent('giveLike', index)
     },
+    randomString(len) {
+      len = len || 32;
+      var $chars = 'abcdefhijkmnprstwxyz2345678'; /****默认去掉了容易混淆的字符oOLl,9gq,Vv,Uu,I1****/
+      var maxPos = $chars.length;
+      var pwd = '';
+      for (var i = 0; i < len; i++) {
+        pwd += $chars.charAt(Math.floor(Math.random() * maxPos));
+      }
+      return pwd;
+    }
   }
 })

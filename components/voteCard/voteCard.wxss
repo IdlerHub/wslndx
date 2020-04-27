@@ -1,7 +1,7 @@
 /* components/voteCard/voteCard.wxss */
 /* .vote-item:nth-child(2n){
   margin-right: 0;
-}
+}*/
 .vote-item{
   width: 330rpx;
   height: 428rpx;
@@ -9,7 +9,7 @@
   margin-bottom: 30rpx;
   overflow: hidden;
   border-radius:10rpx;
-} */
+} 
 
 .item-up{
   height: 220rpx;

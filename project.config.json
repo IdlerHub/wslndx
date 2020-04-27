@@ -185,6 +185,12 @@
 					"pathName": "pages/rankingList/rankingList",
 					"query": "uid=12661&type=invite&mode=0",
 					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/vote/vote",
+					"pathName": "pages/vote/vote",
+					"scene": null
 				}
 			]
 		}
