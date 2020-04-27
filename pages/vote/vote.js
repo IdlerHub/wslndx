@@ -70,8 +70,10 @@ Page({
         duration: 1500
       });
     } else {
-      let index = e.currentTarget.dataset.index;
+      // let index = e.currentTarget.dataset.index;
+      let index = e.detail;
       let work = this.data.productionList[index];
+      console.log("点赞",index)
       if (work.is_praise == 1) {
         //提示
         wx.showToast({
@@ -82,9 +84,8 @@ Page({
       } else {
         // let index = e.currentTarget.dataset.index;
         // let work = this.data.productionList[index];
-        
         let params = {
-          id: e.currentTarget.dataset.id,
+          id: work.id,
           type: work.hoc_id //需要作品带的type
         };
         this.praiseOpus(params,index);
@@ -146,6 +147,15 @@ Page({
         infoFlag: res.data.info,
         total_page: total_page
       });
+      wx.createIntersectionObserver().relativeToViewport({ bottom: 100 }).observe('.vote-item', (res) => {
+        console.log("可视区", res)
+        // res.intersectionRatio // 相交区域占目标节点的布局区域的比例
+        // res.intersectionRect // 相交区域
+        // res.intersectionRect.left // 相交区域的左边界坐标
+        // res.intersectionRect.top // 相交区域的上边界坐标
+        // res.intersectionRect.width // 相交区域的宽度
+        // res.intersectionRect.height // 相交区域的高度
+      })
     });
     //xhr (selectedIndex , page)
     //  setData ({  selectedIndex , page  })
@@ -164,7 +174,7 @@ Page({
     app.vote
       .praiseOpus(params)
       .then(res => {
-        
+        console.log("点赞",res)
         this.setLikeData(index);
       })
       .catch(err => {
@@ -191,6 +201,7 @@ Page({
   },
   onLoad() {
     this.init();
+    
   },
   onPullDownRefresh() {
     this.init().then(() => {

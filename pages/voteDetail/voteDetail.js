@@ -194,6 +194,13 @@ Page({
         title: title
       });
       //如果是视频就自动播放
+    })
+    .catch(err=>{
+      wx.showToast({
+        title: err.msg,
+        icon: "none",
+        duration: 2000
+      });
     });
   },
   getPosterInfo(ho_id) {
@@ -220,7 +227,9 @@ Page({
         wx.getSystemInfo({
           success: function(res) {
             var v = 750 / res.windowWidth; //获取手机比例
-            that.drawPoster(v);
+            console.log("手机信息",res)
+            let system = res.system
+            that.drawPoster(v, system);
           }
         });
       }, 1000);
@@ -338,7 +347,8 @@ Page({
       }
     });
   },
-  drawPoster(v) {
+  drawPoster(v, system) {
+    
     let that = this;
     let ratio = 0.5;
     let ctx = wx.createCanvasContext("poster", this);
@@ -419,22 +429,23 @@ Page({
     // ctx.draw();
     ctx.restore();
     let windowWidth = wx.getSystemInfoSync().windowWidth;
+    let width = 375;
+    let height = 600;
+    // if (system.indexOf("Android") > -1 || system.indexOf("Linux") > -1) {
+    //   width = 315;
+    //   height = 470;
+    //   console.log("安卓机子",width,height)
+    // }
     ctx.draw(true, () => {
       let timer = setTimeout(() => {
         wx.canvasToTempFilePath(
           {
             x: 0,
             y: 0,
-            width: 375,
-            height: 600,
-            destWidth: 375 * 750 / windowWidth,
-            destHeight: 600 * 750 / windowWidth,
-
-            // width: 315,
-            // height: 470,
-            // destWidth: (315 * 750) / windowWidth,
-            // destHeight: (470 * 750) / windowWidth,
-
+            width: width,
+            height: height,
+            destWidth: width * 750 / windowWidth,
+            destHeight: height * 750 / windowWidth,
             canvasId: "poster",
             // fileType: 'jpg',  //如果png的话，图片存到手机可能有黑色背景部分
             success(res) {

@@ -45,6 +45,9 @@
             <view class="vote-list">
                 <block wx:for="{{productionList}}" wx:key="index">
                     <view class="vote-item">
+                        <voteCard bind:giveLike="giveLike" voteItem="{{item}}" voteIndex="{{index}}"></voteCard>
+                    </view>
+                    <!-- <view class="vote-item">
                         <view class="item-up" bindtap="toDetail" data-id="{{item.id}}" data-index="{{index}}">
                             <view class="item-rank">
                                 <view class="rank-text">
@@ -72,7 +75,7 @@
                                 </view>
                             </view>
                         </view>
-                    </view>
+                    </view> -->
                 </block>
             </view>
         </block>
