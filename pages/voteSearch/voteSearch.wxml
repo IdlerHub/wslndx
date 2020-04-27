@@ -45,8 +45,8 @@
     </block>
     <block wx:else>
         <view class="history-list">
-            <view class="history-item" wx:for="{{history}}" wx:key="index">
-                <view class="history-left" data-word="{{item.word}}" catchtap="clickSearch">
+            <view class="history-item" wx:for="{{history}}" wx:key="index" data-word="{{item.word}}" catchtap="clickSearch">
+                <view class="history-left">
                     <image src="/images/vote-history.png" alt="" />
                     <text>{{item.word}}</text>
                 </view>
