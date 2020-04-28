@@ -132,7 +132,12 @@ Page({
     };
     let data = [];
     let total_page = 1;
+    wx.showLoading({
+      title: '加载中',
+      mask: true
+    })
     app.vote.getOpusList(params).then(res => {
+      wx.hideLoading()
       if (page == 1) {
         data = res.data.data;
       } else {
@@ -147,6 +152,9 @@ Page({
         infoFlag: res.data.info,
         total_page: total_page
       });
+    })
+    .catch(err=>{
+      console.log(err)
     });
     //xhr (selectedIndex , page)
     //  setData ({  selectedIndex , page  })

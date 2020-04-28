@@ -175,8 +175,13 @@ Page({
     });
   },
   getOpusInfo(id) {
+    wx.showLoading({
+      title: '加载中',
+      mask: true
+    })
     let params = { id: id };
     app.vote.getOpusInfo(params).then(res => {
+      wx.hideLoading();
       let temp = res.data.is_guide;
       this.setData({
         item: res.data,
@@ -196,6 +201,7 @@ Page({
       //如果是视频就自动播放
     })
     .catch(err=>{
+      wx.hideLoading();
       wx.showToast({
         title: err.msg,
         icon: "none",
