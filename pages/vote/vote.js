@@ -6,6 +6,8 @@ Page({
    * 页面的初始数据
    */
   data: {
+    showJump: false, //展示跳转卡片
+    jumpUrl: {},
     classifyList: [{ id: "0", name: "全部" }],
     selectedIndex: 0,
     type: 0, //分类的id
@@ -63,32 +65,36 @@ Page({
     //step 活动是否过期
     // step1 判断今天是否点赞过
     // step2  作品点赞数添加 （修改data中数据），不刷新页面
-    if (this.data.infoFlag.flag == 0) {
+    let infoFlag = this.data.infoFlag;
+    let index = e.detail;
+    let work = this.data.productionList[index];
+    if (work.is_praise == 1){  //此处展示优先级和下面不同
+      //提示
       wx.showToast({
-        title: this.data.infoFlag.msg,
+        title: "您今日已点赞,去看看其他作品~",
         icon: "none",
         duration: 1500
       });
-    } else {
-      // let index = e.currentTarget.dataset.index;
-      let index = e.detail;
-      let work = this.data.productionList[index];
-      console.log("点赞",index)
-      if (work.is_praise == 1) {
-        //提示
+    }else{
+      if (infoFlag.flag == 0) {
+        if (infoFlag.is_over_praise_numbers) { //是否达到20次点赞,选择展示卡片还是弹窗提示
+          this.setData({
+            jumpUrl: infoFlag.jump_url,
+            showJump: true
+          })
+          return
+        }
         wx.showToast({
-          title: "您今日已点赞,去看看其他作品~",
+          title: infoFlag.msg,
           icon: "none",
           duration: 1500
         });
-      } else {
-        // let index = e.currentTarget.dataset.index;
-        // let work = this.data.productionList[index];
+      }else{
         let params = {
           id: work.id,
           type: work.hoc_id //需要作品带的type
         };
-        this.praiseOpus(params,index);
+        this.praiseOpus(params, index);
       }
     }
   },
@@ -105,7 +111,27 @@ Page({
       this.getdata(1);
     }
   },
-
+  jumpPeper(e) {  //活动弹窗
+    let item = e.currentTarget.dataset.jumpurl;
+    this.closeJump(); //关闭卡片,跳转
+    if (item.jump_type == 1) {  //外连接
+      wx.navigateTo({
+        url: `../education/education?type=0&url=${item.clickurl}`
+      });
+    } else if (item.jump_type == 2) { //小程序的tab页
+      wx.switchTab({
+        url: item.clickurl,
+      })
+    }
+    // wx.navigateTo({
+    //   url: `../education/education?url=${e.currentTarget.dataset.peper}&type=0}`
+    // })
+  },
+  closeJump(){
+    this.setData({
+      showJump:false
+    })
+  },
   join() {
     wx.navigateTo({
       url: "/pages/voteProduction/voteProduction"
@@ -133,8 +159,7 @@ Page({
     let data = [];
     let total_page = 1;
     wx.showLoading({
-      title: '加载中',
-      mask: true
+      title: '加载中'
     })
     app.vote.getOpusList(params).then(res => {
       wx.hideLoading()
@@ -177,6 +202,13 @@ Page({
         this.setLikeData(index);
       })
       .catch(err => {
+        if (err.data.is_over_parise_numbers) { //是否达到20次点赞,选择展示卡片还是弹窗提示
+          this.setData({
+            jumpUrl: err.data.data,
+            showJump: true
+          })
+          return
+        }
         wx.showToast({
           title: err.msg,
           icon: "none",
@@ -195,7 +227,8 @@ Page({
     return Promise.all([
       this.getCategory(),
       this.getdata(1),
-      this.getNewestOpus()
+      this.getNewestOpus(),
+      // this.getDialog()
     ]);
   },
   onLoad() {

@@ -99,4 +99,11 @@
             <text>我的作品</text>
         </view>
     </view>
+    <!-- 活动弹窗 -->
+    <view class="integration" wx:if="{{showJump}}" catchtouchmove="return">
+        <view class="dialog">
+            <view class="bg" style="background: url('{{jumpUrl.image}}') no-repeat center; background-size: 100% 100%;border-radius:10px" mode="aspectFill" catchtap="jumpPeper" data-jumpurl="{{jumpUrl}}"></view>
+            <icon type="cancel" size="37" color="white" data-id="0" catchtap="closeJump"></icon>
+        </view>
+    </view>
 </view>

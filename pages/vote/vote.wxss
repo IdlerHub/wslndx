@@ -412,3 +412,34 @@ page{
     height: 50rpx;
     margin-right: 16rpx;
 }
+
+.integration {
+  position: fixed;
+  z-index: 100;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.integration .dialog {
+  position: absolute;
+  width: 556rpx;
+  height: 742rpx;
+  border-radius: 10rpx;
+  left: calc((100% - 556rpx) / 2);
+  top: calc((100% - 742rpx) / 2);
+  text-align: center;
+}
+
+.integration .dialog .bg {
+  width: 100%;
+  height: 100%;
+  border-top-left-radius: 10rpx;
+  border-top-right-radius: 10rpx;
+}
+
+.integration .dialog icon {
+  margin-top: 48rpx;
+}

@@ -3,6 +3,8 @@ const app = getApp();
 let videoCtx = null;
 Page({
   data: {
+    showJump: false, //展示跳转卡片
+    jumpUrl: {},
     shareTitle: '',
     infoFlag: {}, //活动时间以及弹窗提示
     hocIndex: Number,
@@ -62,17 +64,25 @@ Page({
     //step  活动是否过期
     // step1 判断今天是否点赞过
     // step2  作品点赞数添加 （修改data中数据），不刷新页面
-    if (this.data.infoFlag.flag == 0) {
+    let infoFlag = this.data.infoFlag;
+    if (this.data.item.is_praise == 1) {  //此处展示优先级和下面不同
+      //提示
       wx.showToast({
-        title: this.data.infoFlag.msg,
+        title: "您今日已点赞,去看看其他作品~",
         icon: "none",
         duration: 1500
       });
     } else {
-      if (this.data.item.is_praise == 1) {
-        //提示
+      if (infoFlag.flag == 0) {
+        if (infoFlag.is_over_praise_numbers) { //是否达到20次点赞,选择展示卡片还是弹窗提示
+          this.setData({
+            jumpUrl: infoFlag.jump_url,
+            showJump: true
+          })
+          return
+        }
         wx.showToast({
-          title: "您今日已点赞,去看看其他作品~",
+          title: infoFlag.msg,
           icon: "none",
           duration: 1500
         });
@@ -84,6 +94,26 @@ Page({
         this.praiseOpus(params);
       }
     }
+  },
+  jumpPeper(e) {  //活动弹窗
+    console.log(e)
+    let item = e.currentTarget.dataset.jumpurl;
+    console.log(item)
+    this.closeJump(); //关闭卡片,跳转
+    if (item.jump_type == 1) {  //外连接
+      wx.navigateTo({
+        url: `../education/education?type=0&url=${item.clickurl}`
+      });
+    } else if (item.jump_type == 2) { //小程序的tab页
+      wx.switchTab({
+        url: item.clickurl,
+      })
+    }
+  },
+  closeJump() {
+    this.setData({
+      showJump: false
+    })
   },
   praiseOpus(params) {
     let that = this;
@@ -105,6 +135,13 @@ Page({
         }
       })
       .catch(err => {
+        if (err.data.is_over_parise_numbers) { //是否达到20次点赞,选择展示卡片还是弹窗提示
+          this.setData({
+            jumpUrl: err.data.data,
+            showJump: true
+          })
+          return
+        }
         wx.showToast({
           title: err.msg,
           icon: "none",
