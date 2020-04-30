@@ -96,9 +96,7 @@ Page({
     }
   },
   jumpPeper(e) {  //活动弹窗
-    console.log(e)
     let item = e.currentTarget.dataset.jumpurl;
-    console.log(item)
     this.closeJump(); //关闭卡片,跳转
     if (item.jump_type == 1) {  //外连接
       wx.navigateTo({
@@ -270,7 +268,6 @@ Page({
         wx.getSystemInfo({
           success: function(res) {
             var v = 750 / res.windowWidth; //获取手机比例
-            console.log("手机信息",res)
             let system = res.system
             that.drawPoster(v, system);
           }

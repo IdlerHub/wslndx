@@ -131,6 +131,11 @@ function getPosterInfo(params) {
   return httpService.post("h5opus/getPosterInfo", params);
 }
 
+// POST h5opus/getSchoolSortList 活动学校排行
+function getSchoolSortList() {
+  return httpService.post("h5opus/getSchoolSortList");
+}
+
 module.exports = {
   getAllProvince,
   getCity,
@@ -149,5 +154,6 @@ module.exports = {
   getPosterInfo,
   getNewestOpus,
   delSearchWord,
-  noteGuide
+  noteGuide,
+  getSchoolSortList
 };

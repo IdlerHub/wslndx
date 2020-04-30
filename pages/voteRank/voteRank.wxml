@@ -1,0 +1,38 @@
+<!--pages/voteRank/voteRank.wxml-->
+<view class="container">
+    <view class="center">
+        <text>数据更新时间: {{time}}</text>
+    </view>
+    <view class="centerBox">
+        <view class="contentTop">
+            <text>排名</text>
+            <text>学校</text>
+            <text>投票总数</text>
+            <view class="heng"></view>
+        </view>
+        <view class="content">
+            <scroll-view class="list" scroll-y bindscrolltolower="pageMore" scroll-top="{{scollTop}}">
+                <view wx:for="{{rankList}}" wx:key="index" class="contentList">
+                    <view class="number" wx:if="{{index > 2}}">
+                        {{index < 9 ? 0 : ''}}{{index + 1}}
+                    </view>
+                    <image class="img" src="{{$state.imgHost}}/ranking{{index}}.png" wx:else></image>
+                    <view class="name">{{item.school}}</view>
+                    <view class="time">{{ item.numbers}}</view>
+                </view>
+                <!-- <view style="width: 100%;height: 200rpx;"></view> -->
+                <view class="qst" wx:if="{{!rankList}}">
+                    <image class="ast-img" src="{{$state.imgHost}}/no-com.png"></image>
+                </view>
+            </scroll-view>
+        </view>
+    </view>
+</view>
+
+<button class="share" open-type="share" data-id="{{ $state.userInfo.id }}" hover-class="btn-hover">
+    分享给朋友
+</button>
+<view class="toast" wx:if="{{showToast}}">
+    <image src="../../images/success.png"></image>
+    <text>分享成功</text>
+</view>

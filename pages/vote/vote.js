@@ -18,10 +18,14 @@ Page({
     total_page: 1
     // supportFlag: 1 //今日点赞权限 0=无, 1=有
   },
-  toRule() {
-    //跳转到活动规则
+  toRule() {  //跳转到活动规则
     wx.navigateTo({
       url: "/pages/voteRule/voteRule"
+    });
+  },
+  toRank(){ //排名页面
+    wx.navigateTo({
+      url: "/pages/voteRank/voteRank"
     });
   },
   toClassify() {
@@ -198,7 +202,6 @@ Page({
     app.vote
       .praiseOpus(params)
       .then(res => {
-        console.log("点赞",res)
         this.setLikeData(index);
       })
       .catch(err => {
