@@ -42,7 +42,7 @@ Page({
       app.vote.noteGuide();
     }
   },
-  preview(e){
+  preview(e) {
     let url = e.currentTarget.dataset.url;
     wx.previewImage({
       current: url,
@@ -119,7 +119,7 @@ Page({
       .praiseOpus(params)
       .then(res => {
         let work = that.data.item;
-        if (work.prise_numbers<10000) work.prise_numbers += 1;
+        if (work.prise_numbers < 10000) work.prise_numbers += 1;
         work.is_praise = 1;
         that.setData({
           item: work,
@@ -236,14 +236,14 @@ Page({
       });
       //如果是视频就自动播放
     })
-    .catch(err=>{
-      wx.hideLoading();
-      wx.showToast({
-        title: err.msg,
-        icon: "none",
-        duration: 2000
+      .catch(err => {
+        wx.hideLoading();
+        wx.showToast({
+          title: err.msg,
+          icon: "none",
+          duration: 2000
+        });
       });
-    });
   },
   getPosterInfo(ho_id) {
     let params = { ho_id: ho_id };
@@ -267,7 +267,7 @@ Page({
       this.downloadImg(this.data.shareInfo.qrcode_url, "code"); //二维码下载
       setTimeout(() => {
         wx.getSystemInfo({
-          success: function(res) {
+          success: function (res) {
             var v = 750 / res.windowWidth; //获取手机比例
             let system = res.system
             that.drawPoster(v, system);
@@ -362,9 +362,9 @@ Page({
     let that = this;
     wx.downloadFile({
       url: url,
-      success: function(res) {
+      success: function (res) {
         switch (
-          data //临时路径
+        data //临时路径
         ) {
           case "code":
             that.setData({
@@ -389,7 +389,7 @@ Page({
     });
   },
   drawPoster(v, system) {
-    
+
     let that = this;
     let ratio = 0.5;
     let ctx = wx.createCanvasContext("poster", this);
@@ -508,6 +508,17 @@ Page({
   },
   onLoad(options) {
     // this.store.$state.userInfo
+    console.log("加载详情 ", options.voteid)
+    if (!options.voteid || options.voteid == ''){
+      wx.showToast({
+        title: '参数有误',
+        icon: 'none'
+      })
+      wx.navigateTo({
+        url: '/pages/vote/vote'
+      })
+      return 
+    }
     let userInfo = wx.getStorageSync("userInfo");
     if (userInfo) {
       if (options.flag == "true") {
@@ -542,18 +553,14 @@ Page({
     return {
       title: title,
       path:
-        "/pages/voteDetail/voteDetail?voteid=" +
-        encodeURIComponent(id) +
-        // id + 
-        "&type=share&vote=0&uid=" +
-        encodeURIComponent(uid), // 路径，传递参数到指定页面。
-        // uid,
+        "/pages/voteDetail/voteDetail?voteid=" + id +
+        "&type=share&vote=0&uid=" + uid, // 路径，传递参数到指定页面。
       imageUrl: imgUrl,
-      success: function(res) {
+      success: function (res) {
         // 转发成功
         console.log("转发成功");
       },
-      fail: function(res) {
+      fail: function (res) {
         // 转发失败
         console.log("转发失败");
       }
