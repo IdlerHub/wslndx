@@ -23,12 +23,20 @@ Page({
     })
     .catch(err=>{
       wx.showToast({
-        title: '错误',
+        title: '网络波动过大',
         icon: 'none'
       })
     })
   },
-
+  onPullDownRefresh(){
+    wx.showLoading({
+      title: '加载中'
+    })
+    return Promise.all([this.getSchoolSortList()])
+    .then(res=>{
+      wx.stopPullDownRefresh()
+    })
+  },
   onShareAppMessage: function () {
     let title = this.data.title;
     return {
