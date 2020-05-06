@@ -33,7 +33,15 @@ fundebug.init({
       }
     },
     {
-      error: /getHistory | request:fail timeout | uploadFile:ok | request:fail/
+      req: {
+        url: /lists/,
+        method: /^POST$/
+      }
+    },
+    {
+      error: /getHistory/
+    }, {
+      errMsg: / request:fail timeout | uploadFile:ok | request:fail | request:ok /
     }
   ],
   metaData: {
