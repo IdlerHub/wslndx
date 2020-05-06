@@ -214,18 +214,19 @@ Page({
       title: '加载中',
       mask: true
     })
+    let that = this;
     let params = { id: id };
     app.vote.getOpusInfo(params).then(res => {
       wx.hideLoading();
       let temp = res.data.is_guide;
-      this.setData({
+      let title = res.data.name;
+      that.setData({
         item: res.data,
         shareTitle: res.data.share_title || '同心抗疫 老年大学在行动',
         // supportFlag: res.data.have_praise,
         guideFlag: [!temp, 0, 0],
         infoFlag: res.data.info
       });
-      let title = this.data.item.name;
       if (title.length > 10) {
         //标题过长
         title = title.substr(0, 10) + "...";
@@ -542,9 +543,11 @@ Page({
       title: title,
       path:
         "/pages/voteDetail/voteDetail?voteid=" +
-        id +
+        encodeURIComponent(id) +
+        // id + 
         "&type=share&vote=0&uid=" +
-        uid, // 路径，传递参数到指定页面。
+        encodeURIComponent(uid), // 路径，传递参数到指定页面。
+        // uid,
       imageUrl: imgUrl,
       success: function(res) {
         // 转发成功

@@ -235,7 +235,12 @@ Page({
     ]);
   },
   onLoad() {
-    this.init();
+    wx.showLoading({
+      title: '加载中'
+    });
+    this.init().then(res=>{
+      wx.hideLoading();
+    });
     
   },
   onPullDownRefresh() {
