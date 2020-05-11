@@ -119,7 +119,7 @@ Page({
       .praiseOpus(params)
       .then(res => {
         let work = that.data.item;
-        if (work.prise_numbers < 10000) work.prise_numbers += 1;
+        work.prise_numbers += 1;
         work.is_praise = 1;
         that.setData({
           item: work,
