@@ -9,6 +9,10 @@ Component({
     showCard: {
       type: Boolean,
       value: false
+    },
+    type: {
+      type: Number,
+      value: 2
     }
   },
   observers:{
