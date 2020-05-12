@@ -7,43 +7,46 @@
                 <!-- 收货人 -->
                 <view class="card-info">
                     <view class="info-title">收货人</view>
-                    <input type="text" placeholder="请填写收货人" maxlength="8"
-                     value="{{userInfo.username}}" placeholder-class="input-placeholder"
-                     bindblur="changeName" />
+                    <input type="text" placeholder="请填写收货人" maxlength="8" value="{{userInfo.username}}"
+                        placeholder-class="input-placeholder" bindblur="changeName" />
                 </view>
                 <!-- 手机号 -->
                 <view class="card-info">
                     <view class="info-title">手机号码</view>
-                    <input type="number" placeholder="请填写手机号" maxlength="11"
-                     value="{{userInfo.mobile}}" placeholder-class="input-placeholder" 
-                     bindblur="changeMobile" />
+                    <input type="number" placeholder="请填写手机号" maxlength="11" value="{{userInfo.mobile}}"
+                        placeholder-class="input-placeholder" bindblur="changeMobile" />
                 </view>
-                <!-- 所在地区 -->
-                <view class="card-info">
-                    <view class="info-title">所在地区</view>
-                    <!-- <input type="text" placeholder="请填写所在地区" placeholder-class="input-placeholder" /> -->
-                    <picker mode="multiSelector" bindchange="changeArea" bindcolumnchange="changeColumn"
-                     value="{{ multiIndex }}" range="{{ multiAddress }}">
-                        <view class="placeholder">
-                            <text wx:if="{{ !address[1] }}">请选择</text>
-                            <view class="picker" wx:if="{{ address[1] }}">
-                                {{ address[0] }} {{ address[1] }} {{ address[2] }}
+                <view wx:if="{{giftInfo.type == 2}}">
+                    <!-- 所在地区 -->
+                    <view class="card-info">
+                        <view class="info-title">所在地区</view>
+                        <!-- <input type="text" placeholder="请填写所在地区" placeholder-class="input-placeholder" /> -->
+                        <picker mode="multiSelector" bindchange="changeArea" bindcolumnchange="changeColumn"
+                            value="{{ multiIndex }}" range="{{ multiAddress }}">
+                            <view class="placeholder">
+                                <text wx:if="{{ !address[1] }}">请选择</text>
+                                <view class="picker" wx:if="{{ address[1] }}">
+                                    {{ address[0] }} {{ address[1] }} {{ address[2] }}
+                                </view>
+                                <view class="change">
+                                    <text>修改</text>
+                                    <image class="icon" mode="aspectFill" src="{{ $state.imgHost }}/Return-black.png">
+                                    </image>
+                                </view>
                             </view>
-                            <view class="change">
-                                <text>修改</text>
-                                <image class="icon" mode="aspectFill" src="{{ $state.imgHost }}/Return-black.png"></image>
-                            </view>
-                        </view>
-                    </picker>
-                </view>
-                <!-- 详细地址 -->
-                <view class="card-info">
-                    <view class="info-address">详细地址</view>
-                    <textarea show-confirm-bar="{{false}}" adjust-position="{{false}}" class="info-area" value="{{userInfo.address}}" bindblur="changeAddress" bindinput="changeAddress"
-                     placeholder="请输入详细地址" placeholder-class="input-placeholder"></textarea>
+                        </picker>
+                    </view>
+                    <!-- 详细地址 -->
+                    <view class="card-info">
+                        <view class="info-address">详细地址</view>
+                        <textarea show-confirm-bar="{{false}}" adjust-position="{{false}}" class="info-area"
+                            value="{{userInfo.address}}" bindblur="changeAddress" bindinput="changeAddress"
+                            placeholder="请输入详细地址" placeholder-class="input-placeholder"></textarea>
+                    </view>
                 </view>
             </view>
-            <view class="card-footer">注意：虚拟物品(话费卡\油卡\会员卡等)将充值到填写的手机号码上</view>
+            <view class="card-footer" wx:if="{{type == 'winPrize'}}">注意：虚拟物品(话费卡\油卡\会员卡等)将充值到填写的手机号码上</view>
+            <view class="card-footer" wx:if="{{giftInfo.type == 1}}">注意：虚拟物品(话费卡\油卡\会员卡等)将充值到填写的手机号码上，请仔细核对，充值完成后概不退换。</view>
             <view class="crad-btn">
                 <view class="cancel-btn" catchtap="cancel">取消</view>
                 <view class="confirm-btn" catchtap="confirm">确认</view>
