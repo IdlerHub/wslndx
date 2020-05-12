@@ -3,7 +3,8 @@
     <view class="center">
         <text>数据更新时间: {{time}}</text>
     </view>
-    <view class="centerBox">
+    <rankList topTitle="{{topTitle}}" rankList="{{rankList}}"></rankList>
+    <!-- <view class="centerBox">
         <view class="contentTop">
             <text>排名</text>
             <text>学校</text>
@@ -20,13 +21,12 @@
                     <view class="name">{{item.school}}</view>
                     <view class="time">{{ item.numbers}}</view>
                 </view>
-                <!-- <view style="width: 100%;height: 200rpx;"></view> -->
                 <view class="qst" wx:if="{{!rankList}}">
                     <image class="ast-img" src="{{$state.imgHost}}/no-com.png"></image>
                 </view>
             </scroll-view>
         </view>
-    </view>
+    </view> -->
 </view>
 
 <button class="share" open-type="share" data-id="{{ $state.userInfo.id }}" hover-class="btn-hover">

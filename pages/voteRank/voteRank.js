@@ -2,6 +2,7 @@
 const app = getApp();
 Page({
   data: {
+    topTitle: ["排名","学校","投票总数"],
     time: '00:00:00',
     rankList: [],
     title: ''
