@@ -1,4 +1,4 @@
- /*
+  /*
  * @Date: 2019-05-28 09:50:08
  * @LastEditors: hxz
  * @LastEditTime: 2020-03-06 11:22:49
@@ -432,7 +432,7 @@ Page({
           id: e.currentTarget.dataset.id,
           title: e.currentTarget.dataset.title,
           image: e.currentTarget.dataset.image,
-          type: e.currentTarget.dataset.scoretype
+          receive_type: e.currentTarget.dataset.receive_type
         };
         if (e.currentTarget.dataset.type == 1) {
           wx.showModal({

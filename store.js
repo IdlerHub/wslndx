@@ -10,7 +10,7 @@ let imgHost;
 let activityUrl;
 let API_URL;
 let socket_host;
-let mpVersion = "v21"; /* 版本管理 */
+let mpVersion = "v22"; /* 版本管理 */
 if (env == "develop") {
   /* 测试环境 */
   imgHost =

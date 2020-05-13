@@ -9,15 +9,10 @@ Component({
     showCard: {
       type: Boolean,
       value: false
-    },
-    type: {
-      type: String,
-      value:''
     }
   },
   observers:{
     showCard(){
-      console.log(this.data.showCard)
       if (this.data.showCard) {
         this.getGoodsAddress().then(() => {
           this.init()
@@ -28,7 +23,8 @@ Component({
   data: {
     userInfo:{},
     address: [],
-    addressId: []
+    addressId: [],
+    is_email: false
   },
 
   methods: {
@@ -92,8 +88,10 @@ Component({
         let addressId = [res.data.province_id, res.data.city_id, res.data.area_id]
         this.setData({
           userInfo: res.data,
-          addressId: addressId
+          addressId: addressId,
+          is_email: res.data.email.length > 0 ? false : true
         })
+        console.log(this.data.is_email)
       })
     },
     putGoodsaddress(){
@@ -114,6 +112,13 @@ Component({
     changeName(e){
       let userInfo = this.data.userInfo;
       userInfo['username'] = e.detail.value.trim();
+      this.setData({
+        userInfo: userInfo
+      })
+    },
+    changeEmail(e) {
+      let userInfo = this.data.userInfo;
+      userInfo['email'] = e.detail.value.trim();
       this.setData({
         userInfo: userInfo
       })
@@ -202,7 +207,7 @@ Component({
     confirm(){
       let errTip = '';
       let that = this;
-      let userInfo = this.data.userInfo;
+      let userInfo = this.data.userInfo, giftInfo = this.data.giftInfo;
       if(!userInfo.username){
         errTip = '收货人不能为空';
       }else if(!userInfo.mobile){
@@ -211,6 +216,10 @@ Component({
         errTip = "请输入合法的姓名(仅支持数字/汉字/字母)"
       } else if (!/^1[3|4|5|6|7|8|9]\d{9}$/.test(userInfo.mobile)){
         errTip="手机号格式错误"
+      } else if(!userInfo.email && giftInfo.receive_type == 1) {
+        errTip = '电子邮箱不能为空';
+      } else if(!/^[a-zA-Z0-9_-]+@([a-zA-Z0-9]+\.)+(com|cn|net|org)$/.test(userInfo.email) && giftInfo.receive_type == 1) {
+        errTip = '电子邮箱格式不正确';
       }
       if(errTip){
         wx.showToast({
@@ -223,13 +232,15 @@ Component({
       let address = that.data.address;  //拼接省市区地址
       
       let param = {
-        type: 2,
+        receive_type: giftInfo.receive_type,
         get_type: 1,
         goods_user: userInfo.username,
         goods_mobile: userInfo.mobile,
-        goods_address: address[0] + address[1] + address[2] + userInfo.address
+        goods_address: address[0] + address[1] + address[2] + userInfo.address,
+        goods_email: userInfo.email
       };
       that.putGoodsaddress().then(()=>{
+        this.data.is_email ? app.user.putEmail({ email:userInfo.email }) : ''
         wx.showModal({
           title: '兑换成功',
           content: '您的兑换申请已提交，请耐心等候哦！',
@@ -247,13 +258,6 @@ Component({
               }else{  //积分兑换
                 param['gift_id'] = that.data.giftInfo.id
                 app.user.exchange(param).then(() => {
-                  // wx.navigateTo({
-                  //   url:
-                  //     "/pages/gift/gift?name=" +
-                  //     that.data.giftInfo.title +
-                  //     "&image=" +
-                  //     that.data.giftInfo.image
-                  // });
                 }).catch(err=>{
                   wx.showToast({
                     title: res.msg,
