@@ -98,5 +98,10 @@ Page({
       }
     }
   },
-
+  stockChange() {
+    this.data.gift.stock --
+    this.setData({
+      'gift.stock': this.data.gift.stock
+    })
+  }
 })

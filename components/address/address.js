@@ -258,6 +258,7 @@ Component({
               }else{  //积分兑换
                 param['gift_id'] = that.data.giftInfo.id
                 app.user.exchange(param).then(() => {
+                  that.triggerEvent('change', that.data.giftInfo.id)
                 }).catch(err=>{
                   wx.showToast({
                     title: res.msg,

@@ -634,5 +634,13 @@ Page({
         })
         break;
     }
+  },
+  stockChange(e) {
+    console.log(e)
+    this.data.paylist.forEach((item,index) => {
+      item.id == e.detail ? [item.stock --, this.setData({
+        [`paylist[${index}].stock`]: this.data.paylist[index].stock
+      })] : ''
+    })
   }
 });
