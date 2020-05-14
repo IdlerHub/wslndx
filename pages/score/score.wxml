@@ -93,7 +93,7 @@
           <text class="unit">学分</text>
           <button class="bt {{ item.stock ? '' : 'out' }}" size="mini" data-stock="{{ item.stock }}"
             data-score="{{ item.need_points }}" data-id="{{ item.id }}" data-title="{{item.title}}"
-            data-image="{{item.image}}" catchtap="gift" data-type="{{item.is_new}}">兑换</button>
+            data-image="{{item.image}}" data-receive_type="{{item.receive_type}}" catchtap="gift" data-type="{{item.is_new}}">兑换</button>
           <image class="newperson" src="{{$state.imgHost}}/newperson.png" wx:if="{{item.is_new == 1}}"></image>
         </view>
       </view>
@@ -145,4 +145,4 @@
     <icon type="cancel" size="46" color="white" data-id="0" catchtap="closesignBox" class="signBox-cancel"></icon>
   </view>
 </view>
-<address style="position: fixed;z-index: 99;" giftInfo="{{giftInfo}}" show-card="{{getAddress}}"></address>
+<address style="position: fixed;z-index: 99;" giftInfo="{{giftInfo}}" show-card="{{getAddress}}" bind:change="stockChange"></address>

@@ -1,6 +1,6 @@
 <!--pages/winPrize/winPrize.wxml-->
 <view class="container">
-  <view wx:for="{{ prizeList }}" wx:key="{{item.id}}" class="giftBox">
+  <view wx:for="{{ prizeList }}" wx:key="index" class="giftBox">
     <image class="giftImg" src="{{item.image}}"></image>
     <view class="giftBox-right">
       <view class="giftBox-txt">

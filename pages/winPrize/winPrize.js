@@ -58,7 +58,8 @@ Page({
     if (e.currentTarget.dataset.finish !== 0) return;
     let param = {
       id: e.currentTarget.dataset.id,
-      get_type: e.currentTarget.dataset.type
+      get_type: e.currentTarget.dataset.type,
+      type: 2
     };
     if (param.get_type == 2){
       app.lottery

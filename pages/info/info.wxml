@@ -10,7 +10,7 @@
       <view class="nameInput__title">真实姓名</view>
       <input placeholder="{{ userInfo.name == '' ? '请填写(非必填)' : userInfo.name }}" class="nameInput__name"
         placeholder-style="color:#B6B5B5" value="{{userName}}" bindblur="upUsername" bindfocus="focus"
-        style="padding-right:{{padding || param.school != '' ? '24' : '38'}}px"></input>
+        style="padding-right:{{padding || param.school != '' ? '24' : '24'}}px"></input>
     </view>
     <!-- 地区 -->
     <view class="section" wx:if="areaList">
@@ -69,6 +69,13 @@
         <text>{{userAddress.goods_address_id ? '修改' : '请补充'}}</text>
         <image class="icon" mode="aspectFill" src="{{ $state.imgHost }}/Return-black.png"></image>
       </view>
+    </view>
+     <!-- 电子邮箱 -->
+     <view class="nameInput" style="border: 0;">
+      <view class="nameInput__title">电子邮箱</view>
+      <input placeholder="{{ userInfo.name == '' ? '请填写' : userInfo.name }}" class="nameInput__name"
+        placeholder-style="color:#B6B5B5" value="{{userAddress.email}}" bindblur="upEmail" bindfocus="focus"
+        style="padding-right:{{padding || param.school != '' ? '24' : '24'}}px"></input>
     </view>
   </view>
 </view>

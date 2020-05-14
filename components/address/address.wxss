@@ -17,7 +17,6 @@
 }
 .address-card{
     width:680rpx;
-    height:969rpx;
     background:rgba(255,255,255,1);
     border-radius:10rpx;
     position: relative;
@@ -116,15 +115,12 @@
     color:rgba(102,102,102,1);
 }
 .address-card .crad-btn{
-    position: absolute;
     bottom: 41rpx;
-    left: 0;
-    right: 0;
     height: 91rpx;
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    margin: 0 40rpx;
+    margin:40rpx;
 }
 .address-card .crad-btn view{
     height: 100%;

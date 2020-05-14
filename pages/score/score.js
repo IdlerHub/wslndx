@@ -1,4 +1,4 @@
-/*
+  /*
  * @Date: 2019-05-28 09:50:08
  * @LastEditors: hxz
  * @LastEditTime: 2020-03-06 11:22:49
@@ -431,7 +431,8 @@ Page({
         let param = {
           id: e.currentTarget.dataset.id,
           title: e.currentTarget.dataset.title,
-          image: e.currentTarget.dataset.image
+          image: e.currentTarget.dataset.image,
+          receive_type: e.currentTarget.dataset.receive_type
         };
         if (e.currentTarget.dataset.type == 1) {
           wx.showModal({
@@ -633,5 +634,13 @@ Page({
         })
         break;
     }
+  },
+  stockChange(e) {
+    console.log(e)
+    this.data.paylist.forEach((item,index) => {
+      item.id == e.detail ? [item.stock --, this.setData({
+        [`paylist[${index}].stock`]: this.data.paylist[index].stock
+      })] : ''
+    })
   }
 });
