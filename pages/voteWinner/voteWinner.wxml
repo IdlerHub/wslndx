@@ -1,0 +1,57 @@
+<!-- pages/voteWinner/voteWinner.wxml -->
+<view class="winner">
+    <view class="centerBox">
+        <view class="centerTop">
+            <view class="title" bindtap="checkTop" data-type="0">
+                <text class="{{rankType == 0 ? 'active' : ''}}">优秀组织奖</text>
+            </view>
+            <view class="title" bindtap="checkTop" data-type="1">
+                <text class="{{rankType == 1 ? 'active' : ''}}">个人作品奖</text>
+            </view>
+        </view>
+        <view class="center">
+            <text wx:if="{{rankType == 0}}">截止时间：{{time|| '2020年5月26日'}}</text>
+            <view class="category"wx:if="{{rankType == 1}}">
+                    <view class="section__title">分类</view>
+                    <picker class="picker" bindchange="classifyChange" value="{{categoryIndex}}" range="{{category}}" range-key='name'>
+                        <view class="catename">{{category[categoryIndex].name}}</view>
+                        <!-- <image src="../../images/classify-right.png" alt="" /> -->
+                    </picker>
+            </view>
+            <view class="right" bindtap="openRule" data-type="type">
+                <text>?</text>
+                获奖规则
+            </view>
+        </view>
+        <view class="showrank" wx:if="{{rankType == 0}}">
+            <rankList setHeight="{{'none'}}" topTitle="{{topTitle1}}" rankList="{{rankLeft1}}"></rankList>
+            <rankList setHeight="{{'none'}}" topTitle="{{topTitle2}}" rankList="{{rankLeft2}}"></rankList>
+        </view>
+        <view class="showrank" wx:if="{{rankType == 1}}">
+            <view class="centerBox1">
+                <view class="contentTop1">
+                    <view class="tableTitle">奖项</view>
+                    <view class="tableTitle">作品编号/作者名</view>
+                    <view class="tableTitle">总票数</view>
+                    <view class="heng"></view>
+                </view>
+                <view class="content1">
+                    <scroll-view class="list" scroll-y bindscrolltolower="pageMore">
+                        <view wx:for="{{rankRight}}" wx:key="index" class="contentList">
+                            <view class="number">{{item.prize}}</view>
+                            <view class="name">{{item.opus_id+'/'+item.name}}</view>
+                            <view class="time">{{ item.numbers}}</view>
+                        </view>
+                    </scroll-view>
+                </view>
+            </view>
+        </view>
+    </view>
+    <button class="share" open-type="share" data-id="{{ $state.userInfo.id }}" hover-class="btn-hover">
+        分享给朋友
+    </button>
+    <view class="toast" wx:if="{{showToast}}">
+        <image src="../../images/success.png"></image>
+        <text>分享成功</text>
+    </view>
+</view>

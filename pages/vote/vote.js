@@ -6,6 +6,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    activityFlag: false,  //活动是否结束(获取公告那边传入)
     showJump: false, //展示跳转卡片
     jumpUrl: {},
     classifyList: [{ id: "0", name: "全部" }],
@@ -26,6 +27,11 @@ Page({
   toRank(){ //排名页面
     wx.navigateTo({
       url: "/pages/voteRank/voteRank"
+    });
+  },
+  toWinner(){//获奖页面
+    wx.navigateTo({
+      url: "/pages/voteWinner/voteWinner"
     });
   },
   toClassify() {
@@ -150,7 +156,8 @@ Page({
     //获取最新作品
     app.vote.getNewestOpus().then(res => {
       this.setData({
-        newProduction: res.data
+        newProduction: res.data,
+        activityFlag: true
       });
     });
   },

@@ -62,12 +62,18 @@
             </view>
         </block>
     </view>
-    <view class="vote-footer">
+    <view class="vote-footer" >
         <image src="/images/vote-btn.png" alt="" />
-        <view class="footer-left" catchtap="join">
+        <!-- 活动是否结束 -->
+        <view class="footer-left" catchtap="toWinner" wx:if="{{activityFlag}}">
+            <image src="../../images/vote-join.png" alt="" />
+            <text>查看获奖</text>
+        </view>
+        <view class="footer-left" catchtap="join" wx:else>
             <image src="../../images/vote-join.png" alt="" />
             <text>我要参赛</text>
         </view>
+
         <view class="footer-right" catchtap="works">
             <image src="../../images/vote-myproduction.png" alt="" />
             <text>我的作品</text>

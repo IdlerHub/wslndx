@@ -6,7 +6,7 @@
     </view>
     <!-- <rankList rankList="{{rankList}}"></rankList> -->
     <view class="content">
-        <scroll-view class="list" scroll-y bindscrolltolower="pageMore" scroll-top="{{scollTop}}">
+        <scroll-view class="{{setHeight}}" scroll-y bindscrolltolower="pageMore" scroll-top="{{scollTop}}">
             <view wx:for="{{rankList}}" wx:key="index" class="contentList">
                 <view class="number" wx:if="{{index > 2}}">
                     {{index < 9 ? 0 : ''}}{{index + 1}}

@@ -392,6 +392,7 @@ page{
     display: flex;
     justify-content: center;
     z-index: 100;
+    height: 98rpx;
 }
 .vote-footer>image{
     width: 100%;

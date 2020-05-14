@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "rankList": "/components/rankList/rankList"
+  },
+  "navigationBarTitleText": "获奖排行榜"
+}
