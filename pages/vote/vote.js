@@ -6,7 +6,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    // activityFlag: false,  //活动是否结束(获取公告那边传入)
+    activityFlag: false,  //活动是否结束(获取最新作品那边传入)
     showJump: false, //展示跳转卡片
     jumpUrl: {},
     classifyList: [{ id: "0", name: "全部" }],
@@ -122,7 +122,7 @@ Page({
     }
   },
   jumpPeper(e) {  //活动弹窗
-    let item = e.currentTarget.dataset.jumpurl;
+    let item = this.data.jumpUrl;
     this.closeJump(); //关闭卡片,跳转
     if (item.jump_type == 1) {  //外连接
       wx.navigateTo({
@@ -132,6 +132,10 @@ Page({
       wx.switchTab({
         url: item.clickurl,
       })
+    }else if(item.jump_type == 4){  //小程序内的页面
+      wx.navigateTo({
+        url: item.clickurl
+      });
     }
     // wx.navigateTo({
     //   url: `../education/education?url=${e.currentTarget.dataset.peper}&type=0}`
@@ -154,16 +158,24 @@ Page({
   },
   getNewestOpus() {
     let flag = false;
+    let showCard = {};
+    let activityFlag = false;
     //获取最新作品顶部轮播
     app.vote.getNewestOpus().then(res => {
-      if(res.data){
-        console.log(111111,res.data.countdown)
-        console.log(res.data.overinfo)
-
+      if(res.data.countdown.jump_type){ //倒计时
+        flag = true;
+        showCard = res.data.countdown
+      }
+      if(res.data.overinfo.jump_type){  //活动结束
+        flag = true;
+        showCard = res.data.overinfo;
+        activityFlag = true;
       }
       this.setData({
         newProduction: res.data.opus,
-        showJump:flag
+        jumpUrl: showCard,
+        showJump:flag,
+        activityFlag
       });
     });
   },

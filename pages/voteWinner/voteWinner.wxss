@@ -123,11 +123,15 @@
   line-height: 72rpx;
   text-align: center;
 }
-.centerBox .center .category .picker{ width: 150rpx; padding-left: 30rpx; text-align: left; }
+.centerBox .center .category .picker{ width: 150rpx; padding-left: 30rpx; text-align: left; position: relative; }
 .centerBox .center .category .picker input{ height: 100%; }
 .centerBox .center .category .picker image{ width:24px; height:16px; }
 .centerBox .center .category .picker .catename{
-  position: relative;
+  max-width: 105rpx;
+  /* padding-right: 26rpx; */
+  overflow: hidden;  
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 .centerBox .center .category .picker .catename::after{
   content: '';

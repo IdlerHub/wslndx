@@ -66,7 +66,7 @@
         <image src="/images/vote-btn.png" alt="" />
         <!-- 活动是否结束 -->
         <view class="footer-left" catchtap="toWinner" wx:if="{{activityFlag}}">
-            <image src="../../images/vote-join.png" alt="" />
+            <image src="../../images/vote-winner.png" alt="" />
             <text>查看获奖</text>
         </view>
         <view class="footer-left" catchtap="join" wx:else>
@@ -82,7 +82,7 @@
     <!-- 活动弹窗 -->
     <view class="integration" wx:if="{{showJump}}" catchtouchmove="return">
         <view class="dialog">
-            <view class="bg" style="background: url('{{jumpUrl.image}}') no-repeat center; background-size: 100% 100%;border-radius:10px" mode="aspectFill" catchtap="jumpPeper" data-jumpurl="{{jumpUrl}}"></view>
+            <view class="bg" style="background: url('{{jumpUrl.image}}') no-repeat center; background-size: 100% 100%;border-radius:10px" mode="aspectFill" catchtap="jumpPeper"></view>
             <icon type="cancel" size="37" color="white" data-id="0" catchtap="closeJump"></icon>
         </view>
     </view>

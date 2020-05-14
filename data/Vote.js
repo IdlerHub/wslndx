@@ -136,6 +136,12 @@ function getSchoolSortList() {
   return httpService.post("h5opus/getSchoolSortList");
 }
 
+// POST h5opus/getPrize 活动排行榜type:1=优秀组织奖,2=个人作品奖,个人作品的话要多传一个hoc_id
+function getPrize(params) {
+  return httpService.post("h5opus/getPrize",params);
+}
+
+
 module.exports = {
   getAllProvince,
   getCity,
@@ -155,5 +161,6 @@ module.exports = {
   getNewestOpus,
   delSearchWord,
   noteGuide,
-  getSchoolSortList
+  getSchoolSortList,
+  getPrize
 };
