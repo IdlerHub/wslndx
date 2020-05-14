@@ -6,7 +6,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    activityFlag: false,  //活动是否结束(获取公告那边传入)
+    // activityFlag: false,  //活动是否结束(获取公告那边传入)
     showJump: false, //展示跳转卡片
     jumpUrl: {},
     classifyList: [{ id: "0", name: "全部" }],
@@ -153,11 +153,17 @@ Page({
     });
   },
   getNewestOpus() {
-    //获取最新作品
+    let flag = false;
+    //获取最新作品顶部轮播
     app.vote.getNewestOpus().then(res => {
+      if(res.data){
+        console.log(111111,res.data.countdown)
+        console.log(res.data.overinfo)
+
+      }
       this.setData({
-        newProduction: res.data,
-        activityFlag: true
+        newProduction: res.data.opus,
+        showJump:flag
       });
     });
   },
