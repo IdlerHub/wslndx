@@ -185,20 +185,14 @@ Component({
         confirmText: "继续填写",
         confirmColor: "#DF2020",
         success(res) {
-          if (res.confirm) {
-          } else if (res.cancel) {
-            wx.showModal({
-              title: '兑换失败',
-              content: '您未填写收货地址信息，请兑换后进行填写。',
-              showCancel: false,
-              confirmColor: "#DF2020",
-              success(res) {
-                if (res.confirm) {  //隐藏卡片
-                  that.setData({
-                    showCard: false
-                  })
-                }
-              }
+          if (res.cancel) {
+            wx.showToast({
+              title: '您已取消兑换',
+              icon: "none",
+              duration: 1500
+            })
+            that.setData({
+              showCard: false
             })
           }
         }
@@ -240,7 +234,10 @@ Component({
         goods_email: userInfo.email
       };
       that.putGoodsaddress().then(()=>{
-        this.data.is_email ? app.user.putEmail({ email:userInfo.email }) : ''
+        this.data.is_email ? app.user.putEmail({ email:userInfo.email }) : '';
+        that.setData({
+          showCard: false
+        })
         wx.showModal({
           title: '兑换成功',
           content: '您的兑换申请已提交，请耐心等候哦！',
@@ -248,9 +245,7 @@ Component({
           confirmColor: "#DF2020",
           success(res) {
             if (res.confirm) {
-              that.setData({
-                showCard: false
-              })
+              
               if(that.data.giftInfo.from == "winPrize"){  //从抽奖来的
                 param['id'] = that.data.giftInfo.id
                 that.triggerEvent('change', param.id)
