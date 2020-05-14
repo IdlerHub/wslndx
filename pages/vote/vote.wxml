@@ -66,7 +66,7 @@
         <image src="/images/vote-btn.png" alt="" />
         <!-- 活动是否结束 -->
         <view class="footer-left" catchtap="toWinner" wx:if="{{activityFlag}}">
-            <image src="../../images/vote-winner.png" alt="" />
+            <image class="winner" src="../../images/vote-winner.png" alt="" />
             <text>查看获奖</text>
         </view>
         <view class="footer-left" catchtap="join" wx:else>

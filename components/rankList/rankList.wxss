@@ -77,13 +77,13 @@
   overflow: hidden;
   text-overflow:ellipsis;
   white-space: nowrap;
-  padding-left: 80rpx;
+  padding-left: 40rpx;
   font-size:36rpx;
   font-weight:400;
   color:rgba(51,51,51,1);
 }
  .contentList .time {
-  width: 162rpx;
+  min-width: 108rpx;
   text-align: center;
   font-size:36rpx;
   font-family:PingFangSC-Regular,PingFang SC;

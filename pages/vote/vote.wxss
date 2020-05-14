@@ -434,6 +434,11 @@ page{
     height: 55rpx;
     margin-right: 16rpx;
 }
+.footer-left .winner{
+    width: 50rpx;
+    height: 48rpx;
+    margin-right: 16rpx;
+}
 .footer-right image{
     width: 50rpx;
     height: 50rpx;

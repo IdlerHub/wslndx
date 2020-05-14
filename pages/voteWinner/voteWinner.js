@@ -9,8 +9,8 @@ Page({
     rankType: 0, //默认显示的标签
     topTitle1: ["排名","学校","投票总数"],  //表头
     topTitle2: ["排名","学校","作品数"],
-    rankLeft1: [{ "school": "青岛市老年大学", "numbers": 374017 }, { "school": "青岛市老年大学", "numbers": 374017 }, { "school": "青岛市老年大学", "numbers": 374017 }, { "school": "海淀老龄大学", "numbers": 218127 }, { "school": "大庆油田老年大学", "numbers": 212028 }], //排名列表
-    rankLeft2: [{ "school": "青岛市老年大学", "numbers": 374017 }, { "school": "青岛市老年大学", "numbers": 374017 }, { "school": "青岛市老年大学", "numbers": 374017 }, { "school": "海淀老龄大学", "numbers": 218127 }, { "school": "大庆油田老年大学", "numbers": 212028 }], //排名列表
+    rankLeft1: [], //排名列表1
+    rankLeft2: [], //排名列表2
     rankRight: [],  //个人奖
     categoryIndex: 0,
     category:[],  //分类
@@ -89,7 +89,7 @@ Page({
   onShareAppMessage: function () {
     // let title = this.data.title;
     return {
-      title:"获奖排行榜",
+      title:"“同心抗疫”活动获奖名单出炉了，大家快来看看！",
       path: `pages/voteWinner/voteWinner`,
     };
   }

@@ -14,8 +14,10 @@
             <view class="category"wx:if="{{rankType == 1}}">
                     <view class="section__title">分类</view>
                     <picker class="picker" bindchange="classifyChange" value="{{categoryIndex}}" range="{{category}}" range-key='name'>
-                        <view class="catename">{{category[categoryIndex].name}}</view>
-                        <!-- <image src="../../images/classify-right.png" alt="" /> -->
+                        <view class="tag">
+                            <view class="catename">{{category[categoryIndex].name}}</view>
+                            <view class="triangle"></view>
+                        </view>
                     </picker>
             </view>
             <view class="right" bindtap="openRule" data-type="type">
