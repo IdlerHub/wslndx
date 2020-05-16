@@ -6,7 +6,7 @@
 <!--pages/vote/vote.wxml-->
 <view class="vote">
     <view class="vote-header">
-        <image class="vote-img" src="../../images/vote-bg.png" alt=""/>
+        <image class="vote-img" src="{{$state.imgHost}}/vote-bg.png" alt=""/>
         <view class="header-left">
             <image src="../../images/vote-talk.png" alt="" hidden="{{!newProduction.length}}" />
             <swiper autoplay interval="2000" vertical circular class="text">
@@ -16,16 +16,19 @@
             </swiper>
             <!-- <view class="text">用户158****2804发布了#书法与绘sdasdasdsds画</view> -->
         </view>
-        <view class="header-right" bindtap="toRule">
-            <!-- <text>活动</text>
-            <text>规则</text> -->
-            <view>活动规则</view>
+        <view class="header-right">
+            <view class="rule" bindtap="toRule">
+                <view>活动规则</view>
+            </view>
+            <view class="rank" bindtap="toRank">
+                <view>学校排名</view>
+            </view>
         </view>
     </view>
     <!-- <view class="header-none" style="{{styleNone}}"></view> -->
     <view class="vote-search" catchtap="toSearch">
         <image src="../../images/vote-search.png" alt="" />
-        <input type="text" placeholder="请输入关键字搜索" placeholder-class="search-ipt" disabled />
+        <input type="text" placeholder="请输入编号或关键字搜索" placeholder-class="search-ipt" disabled />
         <view class="search-btn">搜索</view>
     </view>
     <view class="vote-body">
@@ -45,32 +48,7 @@
             <view class="vote-list">
                 <block wx:for="{{productionList}}" wx:key="index">
                     <view class="vote-item">
-                        <view class="item-up" bindtap="toDetail" data-id="{{item.id}}" data-index="{{index}}">
-                            <view class="item-rank">
-                                <view class="rank-text">
-                                    <view>当前排名</view>
-                                </view>
-                                <view class="num">{{index+1}}</view>
-                            </view>
-                            <view class="item-img">
-                                <image wx:if="{{item.type==1}}" src="{{item.url[0] || '/images/vote-wei.png'}}" alt=""  mode="aspectFit"  lazy-load/>
-                                <image wx:if="{{item.type==2}}" src="{{item.banner_image || '/images/vote-wei.png'}}" alt=""  mode="aspectFit" lazy-load/>
-                            </view>
-                        </view>
-                        <view class="item-down">
-                            <view class="item-name" bindtap="toDetail" data-id="{{item.id}}" data-index="{{index}}">
-                                {{item.name}}
-                            </view>
-                            <view class="item-school" bindtap="toDetail" data-id="{{item.id}}" data-index="{{index}}">
-                                {{item.school || '网上老年大学'}}
-                            </view>
-                            <view class="item-footer">
-                                <view class="item-zan">{{item.prise_numbers}}赞</view>
-                                <view class="zan-btn" data-id="{{item.id}}" data-index='{{index}}' catchtap="giveLike">
-                                    点赞加油
-                                </view>
-                            </view>
-                        </view>
+                        <voteCard bind:giveLike="giveLike" voteItem="{{item}}" voteIndex="{{index}}"></voteCard>
                     </view>
                 </block>
             </view>
@@ -84,15 +62,28 @@
             </view>
         </block>
     </view>
-    <view class="vote-footer">
+    <view class="vote-footer" >
         <image src="/images/vote-btn.png" alt="" />
-        <view class="footer-left" catchtap="join">
+        <!-- 活动是否结束 -->
+        <view class="footer-left" catchtap="toWinner" wx:if="{{activityFlag}}">
+            <image class="winner" src="../../images/vote-winner.png" alt="" />
+            <text>查看获奖</text>
+        </view>
+        <view class="footer-left" catchtap="join" wx:else>
             <image src="../../images/vote-join.png" alt="" />
             <text>我要参赛</text>
         </view>
+
         <view class="footer-right" catchtap="works">
             <image src="../../images/vote-myproduction.png" alt="" />
             <text>我的作品</text>
+        </view>
+    </view>
+    <!-- 活动弹窗 -->
+    <view class="integration" wx:if="{{showJump}}" catchtouchmove="return">
+        <view class="dialog">
+            <view class="bg" style="background: url('{{jumpUrl.image}}') no-repeat center; background-size: 100% 100%;border-radius:10px" mode="aspectFill" catchtap="jumpPeper"></view>
+            <icon type="cancel" size="37" color="white" data-id="0" catchtap="closeJump"></icon>
         </view>
     </view>
 </view>

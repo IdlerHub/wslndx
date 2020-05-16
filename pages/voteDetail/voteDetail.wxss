@@ -60,9 +60,13 @@
     z-index: 99;
 }
 .footer-info{
-    /* height: 504rpx; */
     position: fixed;
+    /* bottom: 0rpx; */
+    
     bottom: 43rpx;
+    /* padding-bottom: constant(safe-area-inset-bottom); */
+    /* bottom: calc(43rpx + constant(safe-area-inset-bottom)); */
+    /* bottom: calc(43rpx +  env(safe-area-inset-bottom)); */
     right: 30rpx;
     left: 30rpx;
     z-index: 100;
@@ -79,13 +83,7 @@
     width: 100%;
     background:linear-gradient(181deg,rgba(0,0,0,0) 0%,rgba(0,0,0,0.84) 100%);
 }
-.info-left{
-    /* position: absolute;
-    bottom: 0; */
-    max-width: 551rpx;
-    height: 296rpx;
-    color: white;
-}
+
 .user-info{
     display: flex;
     margin-bottom: 23rpx;
@@ -98,31 +96,40 @@
 .info-left{
     max-width: 551rpx;
     /* margin-top: 204rpx; */
+    height: 351rpx;
+    color: white;
+    padding-bottom: constant(safe-area-inset-bottom);
+    padding-bottom: env(safe-area-inset-bottom);
 }
 .info-left .user-info{
     display: flex;
-    align-items: center;
+    /* align-items: center; */
 }
 .info-left .user-info>image{
-    width: 90rpx;
-    height: 90rpx;
+    width: 120rpx;
+    height: 120rpx;
     border-radius: 100%;
     border: 1px solid #EDEDED;
 }
 .info-name{
-    margin-left: 23rpx;
-    font-size:32rpx;
+    margin-left: 29rpx;
+    font-size:30rpx;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
     display: flex;
     flex-direction: column;
+    color: white;
+    text-shadow:0px 2px 4px rgba(0,0,0,0.5);
 }
 .info-name view:first-child{
-    margin-bottom: 4rpx;
+    margin-bottom: 14rpx;
+    font-size:36rpx;
 }
 .info-title{
-    margin: 14rpx 0;
+    /* margin: 14rpx 0; */
+    margin-bottom: 14rpx;
+    margin-top: 24rpx;
     font-size:36rpx;
     overflow: hidden;
     white-space: nowrap;
@@ -133,6 +140,11 @@
     font-size:32rpx;
     font-family:PingFangSC-Regular,PingFang SC;
     font-weight:400;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    text-overflow: ellipsis;
+    -webkit-box-orient: vertical;
 }
 .info-right{
     position: absolute;
@@ -192,13 +204,17 @@
 .share text{
     display: inline-block;
     width: 100%;
+    max-width: 108rpx;
     text-align: center;
-
-    font-size:30rpx;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    font-size:28rpx;
     font-family:HelveticaNeue-Medium,HelveticaNeue;
     font-weight:500;
     color:rgba(249,249,249,1);
     text-shadow:0rpx 2rpx 6rpx rgba(0,0,0,0.35);
+    margin-top: 12rpx;
 }
 
 .share-container{
@@ -549,7 +565,7 @@ right: 0;
     height: 100%;
     position: absolute;
     right: 0;
-    bottom: -40rpx;
+    bottom: 0rpx;
 }
 .guide-btn>image{
     width: 136rpx;
@@ -577,7 +593,7 @@ right: 0;
     height: 367rpx;
     position: absolute;
     right: 14rpx;
-    bottom: 56rpx;
+    bottom: 100rpx;
 }
 .guide-second image{
     width: 564rpx;
@@ -612,4 +628,36 @@ right: 0;
     height: 130rpx;
     position: absolute;
     bottom: 0;
+}
+
+
+.integration {
+  position: fixed;
+  z-index: 100;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.integration .dialog {
+  position: absolute;
+  width: 556rpx;
+  height: 742rpx;
+  border-radius: 10rpx;
+  left: calc((100% - 556rpx) / 2);
+  top: calc((100% - 742rpx) / 2);
+  text-align: center;
+}
+
+.integration .dialog .bg {
+  width: 100%;
+  height: 100%;
+  border-top-left-radius: 10rpx;
+  border-top-right-radius: 10rpx;
+}
+
+.integration .dialog icon {
+  margin-top: 48rpx;
 }

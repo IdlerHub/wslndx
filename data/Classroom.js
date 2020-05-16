@@ -99,6 +99,11 @@ function lessSearch(param) {
   return httpService.post("Classroom/search", param)
 }
 
+//POST Classroom/updateProgress 更新课程播放进度
+function updateProgress(param) {
+  return httpService.post("Classroom/updateProgress", param)
+}
+
 module.exports = {
   recommend,
   detail,
@@ -118,5 +123,6 @@ module.exports = {
   replyList,
   sublessonfinish,
   sublessons,
-  lessSearch
+  lessSearch,
+  updateProgress
 }

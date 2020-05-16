@@ -34,7 +34,7 @@
             <image class="img" mode="aspectFill" src="{{ $state.userInfo.avatar }}" catchtap="toUser"></image>
             <view class="info">
               <text class="line name">{{  $state.userInfo.nickname }}的老年大学</text>
-              <view class="line" wx:if="{{ guideNum != 1 }}">
+              <view class="line" wx:if="{{ guideNum != 1 }}" style="margin-top: 10rpx;">
                 <view class="city" catchtap="toInfo">{{ $state.userInfo.addressCity || "暂无" }}</view>
                 <view class="school" catchtap="toInfo">
                   {{ $state.userInfo.school || $state.userInfo.university || "+添加学校标签" }}</view>
@@ -136,22 +136,34 @@
         </swiper>
         <!-- 农场和电台 -->
         <scroll-view class="jumpout" scroll-x enable-flex>
-          <view class="jumpoutBox" catchtap="jumpmini">
-            <image class="img" mode="widthFix" src="{{  !recommend ? '' : $state.imgHost + '/jumpoutImg_1.png' }}">
-            </image>
-          </view>
-          <navigator class="jumpoutBox" url="/pages/education/education?type=farm">
-            <image class="img" mode="widthFix" src="{{  !recommend ? '' : $state.imgHost + '/jumpoutImg_2.png' }}">
+          <navigator class="jumpoutBox" url="/pages/rankingList/rankingList" hover-class="none">
+            <image class="img" mode="widthFix" src="{{  !recommend ? '' : $state.imgHost + '/rankingDoor2.png' }}">
             </image>
           </navigator>
-          <navigator class="jumpoutBox" url="/pages/education/education?type=station">
-            <image class="img" mode="widthFix" src="{{  !recommend ? '' : $state.imgHost + '/jumpoutImg_3.png'}}">
+          <navigator class="jumpoutBox" url="/pages/education/education?type=farm" hover-class="none">
+            <image class="img" mode="widthFix" src="{{  !recommend ? '' : $state.imgHost + '/nonghcangDoor.png' }}">
+            </image>
+          </navigator>
+          <navigator class="jumpoutBox" url="/pages/education/education?type=station" hover-class="none">
+            <image class="img" mode="widthFix" src="{{  !recommend ? '' : $state.imgHost + '/diantaiDoor.png'}}">
             </image>
           </navigator>
           <view style="width: 30rpx;height: 100%;display: block;color: white;">
             孙菲菲结果来看g
           </view>
         </scroll-view>
+        <!-- <view class="jumpout">
+          <navigator class="jumpoutBox" url="/pages/education/education?type=farm">
+            <image class="img" mode="widthFix" src="{{  !recommend ? '' : $state.imgHost + '/nongchang.png' }}">
+            </image>
+            <text>开心农场</text>
+          </navigator>
+          <navigator class="jumpoutBox" url="/pages/education/education?type=station">
+            <image class="img" mode="widthFix" src="{{  !recommend ? '' : $state.imgHost + '/diantai.png'}}">
+            </image>
+            <text>老年电台</text>
+          </navigator>
+        </view> -->
         <view class="item" bindtap="jumpPeper" data-peper="{{paperMsg.url}}" wx:if="{{paperMsg.image}}">
           <view class="content">
             <view class="left">
@@ -215,7 +227,7 @@
               <text class="line actor" wx:else>{{ item.name }}-{{ item.honor }}</text>
               <text class="line info">
                 <text class="dramaNum"><text class="key">剧集</text>{{ item.lesson_count }}集</text>
-                <text class="playNum"><text class="key">播放</text>{{ item.bw || item.browse }}</text>
+                <text class="playNum"><text class="key">播放</text>{{ item.thousand || item.browse }}</text>
               </text>
             </view>
           </view>

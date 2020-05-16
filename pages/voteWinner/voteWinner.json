@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "rankList": "/components/rankList/rankList"
+  },
+  "navigationBarTitleText": "同心抗疫 老年大学在行动"
+}

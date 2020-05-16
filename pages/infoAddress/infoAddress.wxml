@@ -1,0 +1,39 @@
+<!--pages/infoAddress/infoAddress.wxml-->
+<view class="infoAddress">
+    <view class="info-page">
+        <view class="info">
+            <view class="info-title">收 货 人</view>
+            <input type="text" class="info-content" maxlength="8" placeholder="请填写收货人" placeholder-style="color:#B6B5B5"
+                value="{{userInfo.username}}" bindblur="changeName"></input>
+        </view>
+        <view class="info">
+            <view class="info-title">手机号码</view>
+            <input type="number" class="info-content" maxlength="11" placeholder="请填写手机号"
+                placeholder-style="color:#B6B5B5" value="{{userInfo.mobile}}" bindblur="changeMobile"></input>
+        </view>
+        <!-- 地区 -->
+        <view class="info">
+            <view class="info-title">所在地区</view>
+            <picker mode="multiSelector" bindchange="changeArea" bindcolumnchange="changeColumn"
+                value="{{ multiIndex }}" range="{{ multiAddress }}">
+                <view class="placeholder">
+                    <text wx:if="{{ !address[1] }}">请选择</text>
+                    <view class="picker" wx:if="{{ address[1] }}">
+                        {{ address[0] }} {{ address[1] }} {{ address[2] }}
+                    </view>
+                    <view class="change">
+                        <text>修改</text>
+                        <image class="icon" mode="aspectFill" src="{{ $state.imgHost }}/Return-black.png"></image>
+                    </view>
+                </view>
+            </picker>
+        </view>
+        <view class="info-address">
+            <view class="info-title">详细地址</view>
+            <textarea class="info-area" value="{{userInfo.address}}" bindblur="changeAddress" placeholder="请输入详细地址"
+                placeholder-style="color:#B6B5B5"></textarea>
+        </view>
+    </view>
+    <view class="tip">注意：虚拟物品(话费卡)将充值到填写的手机号码上</view>
+    <view class="save-btn" catchtap="confirm">确认</view>
+</view>

@@ -4,6 +4,8 @@ var http = require("../../data/Vote.js");
 import OBS from "../../OBS/OBSUploadFile.js";
 Page({
   data: {
+    uploadShow: '',
+    disabled: false,  //禁止点击
     productionName: "",  //作品名称
     introduction: "",   //作品介绍
     select: false,
@@ -283,13 +285,27 @@ Page({
       url: selectType == 2 ? [] : imgList,
       object_key: video || ""
     };
-
-    http.uploadOpus(params).then(res => {
-      //上传状态
-      wx.redirectTo({
-        url: "/pages/voteSuccess/voteSuccess"
+    this.setData({
+      disabled: true
+    })
+    setTimeout(()=>{
+      http.uploadOpus(params).then(res => {
+        //上传状态
+        wx.redirectTo({
+          url: "/pages/voteSuccess/voteSuccess"
+        });
+        this.setData({
+          disabled: false
+        })
       });
-    });
+    },1000)
+  },
+  unload(){
+    wx.showToast({
+      title: this.data.uploadShow,
+      icon: "none",
+      duration: 1500
+    })
   },
   /**
    * 生命周期函数--监听页面加载
@@ -298,10 +314,18 @@ Page({
     //上传作品需要加分类
     let params = { type: "classify" };
     http.getCategory(params).then(res => {
-      this.setData({
-        classifyArray: res.data,
-        selectType: res.data[0].type
-      });
+      if (res.data.is_upload){ //可以上传
+        this.setData({
+          uploadShow: '',
+          classifyArray: res.data.data,
+          selectType: res.data.data[0].type
+        });
+      }else{  //不能上传
+        this.setData({
+          uploadShow: res.data.msg
+        })
+      }
+      
     });
     this.getAllProvince();
   },

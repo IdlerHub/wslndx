@@ -43,6 +43,7 @@ function handle(req, res) {
         });
       break;
   }
+
 }
 
 function xhr(path, method, param = {}, noToken) {
@@ -76,6 +77,13 @@ function xhr(path, method, param = {}, noToken) {
         }
       },
       fail(err) {
+        if(!err.statusCode) {
+          wx.showToast({
+            title: '网络错误请退出小程序重试',
+            icon: "none"
+          })
+          return
+        }
         handle(req, err);
         reject(err);
       },

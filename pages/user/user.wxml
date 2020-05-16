@@ -15,7 +15,7 @@
         <image class="img" mode="widthFix" src="{{ $state.userInfo.avatar }}"></image>
         <view class="info">
           <text class="line name">{{ $state.userInfo.nickname }}</text>
-          <view class="line">
+          <view class="line" style="margin-top: 10rpx;">
             <text class="city">{{ $state.userInfo.addressCity || "暂无" }}</text>
             <text class="school">{{ $state.userInfo.school || $state.userInfo.university || "+添加学校标签" }}</text>
           </view>

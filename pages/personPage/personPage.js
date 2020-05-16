@@ -76,8 +76,9 @@ Page({
           list: list
         });
       });
+      wx.uma.trackEvent('totalShare', { 'shareName': '秀风采分享' });
       return {
-        title: article.content,
+        title: app.util.delHtmlTag(article.content),
         imageUrl:
           article.image || article.images[0] || "../../images/sharemessage.jpg",
         path:
@@ -108,6 +109,7 @@ Page({
             return i.image;
           });
           item.auditing = item.check_status;
+          item.content = app.util.delHtmlTag(item.content)
         });
         temp.push(...arr);
         temp[0].university_name == "null"

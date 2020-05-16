@@ -65,7 +65,7 @@ Component({
 	},
 	methods: {
 		itemClick(e) {
-			let {index} = e.currentTarget.dataset, id = e.currentTarget.dataset.id
+			let { index } = e.currentTarget.dataset, id = e.currentTarget.dataset.id
 			let item = this.data.list[index];
 			this.triggerEvent('click', {
 				oldKey: index,
@@ -87,11 +87,11 @@ Component({
 			if (this.isFixed(index)) return;
 			// 防止多指触发 drag 动作, 如果已经在 drag 中则返回, touchstart 事件中有效果
 			if (this.data.dragging) return;
-			this.setData({dragging: true});
+			this.setData({ dragging: true });
 			let {
-					pageX: startPageX,
-					pageY: startPageY
-				} = startTouch,
+				pageX: startPageX,
+				pageY: startPageY
+			} = startTouch,
 				{
 					itemDom,
 					itemWrapDom
@@ -121,15 +121,15 @@ Component({
 			if (!currentTouch) return;
 			if (!this.data.dragging) return;
 			let {
-					windowHeight,
-					realTopSize,
-					realBottomSize,
-					itemDom,
-					startTouch,
-					startTranX,
-					startTranY,
-					preOriginKey
-				} = this.data,
+				windowHeight,
+				realTopSize,
+				realBottomSize,
+				itemDom,
+				startTouch,
+				startTranX,
+				startTranY,
+				preOriginKey
+			} = this.data,
 				{
 					pageX: startPageX,
 					pageY: startPageY,
@@ -176,33 +176,33 @@ Component({
 			if (this.isFixed(endKey)) return;
 			// 防止拖拽过程中发生乱序问题
 			if (originKey === endKey || preOriginKey === originKey) return;
-			this.setData({preOriginKey: originKey});
+			this.setData({ preOriginKey: originKey });
 			// 触发排序
 			this.insert(originKey, endKey);
 		},
 		touchEnd() {
 			if (!this.data.dragging) return;
-			let arr = JSON.parse(JSON.stringify(this.data.list)) , brr = [], param = {} , num = ''
-				arr.sort((a, b) => {
-          return a.key - b.key
-				})
-				arr.forEach(item => {
-					brr[item.key] = item.data
-				})
-				this.setData({
-					listData: brr
-				})
-				this.data.listData.forEach((i, index) => {
-          num = `${num},${i.id}`
-        })
-        param = {
-          fs_id: num.substring(1)
-				}
-				app.circle.join(param).then(res => {})
+			let arr = JSON.parse(JSON.stringify(this.data.list)), brr = [], param = {}, num = ''
+			arr.sort((a, b) => {
+				return a.key - b.key
+			})
+			arr.forEach(item => {
+				brr[item.key] = item.data
+			})
+			this.setData({
+				listData: brr
+			})
+			this.data.listData.forEach((i, index) => {
+				num = `${num},${i.id}`
+			})
+			param = {
+				fs_id: num.substring(1)
+			}
+			app.circle.join(param).then(res => { })
 			this.clearData();
 		},
 		calculateMoving(tranX, tranY) {
-			let {itemDom} = this.data;
+			let { itemDom } = this.data;
 			let rows = Math.ceil(this.data.list.length / this.data.columns) - 1,
 				i = Math.round(tranX / itemDom.width),
 				j = Math.round(tranY / itemDom.height);
@@ -215,7 +215,7 @@ Component({
 			return endKey
 		},
 		insert(origin, end) {
-			this.setData({itemTransition: true});
+			this.setData({ itemTransition: true });
 			let list;
 			if (origin < end) { // 正序拖动
 				list = this.data.list.map((item) => {
@@ -258,20 +258,20 @@ Component({
 			}
 		},
 		getPosition(data, vibrate = true) {
-			let {platform} = this.data;
+			let { platform } = this.data;
 			let list = data.map((item, index) => {
 				item.x = item.key % this.data.columns;
 				item.y = Math.floor(item.key / this.data.columns);
 				return item;
 			});
-			this.setData({list: list});
+			this.setData({ list: list });
 			if (!vibrate) return;
 			// if (platform !== "devtools") wx.vibrateShort();
 			let listData = [];
 			list.forEach((item) => {
 				listData[item.key] = item.data
 			});
-			this.triggerEvent('change', {listData: listData});
+			this.triggerEvent('change', { listData: listData });
 		},
 		isFixed(key) {
 			let list = this.data.list;
@@ -297,8 +297,8 @@ Component({
 			this.init();
 		},
 		initDom() {
-			wx.pageScrollTo({scrollTop: 0, duration: 0});
-			let {windowWidth, windowHeight, platform} = wx.getSystemInfoSync();
+			wx.pageScrollTo({ scrollTop: 0, duration: 0 });
+			let { windowWidth, windowHeight, platform } = wx.getSystemInfoSync();
 			let remScale = (windowWidth || 375) / 375,
 				realTopSize = this.data.topSize * remScale / 2,
 				realBottomSize = this.data.bottomSize * remScale / 2;
@@ -326,10 +326,10 @@ Component({
 		},
 		init() {
 			this.clearData();
-			this.setData({itemTransition: false});
+			this.setData({ itemTransition: false });
 			// 避免获取不到节点信息报错问题
 			if (this.data.listData.length === 0) {
-				this.setData({list: [], itemWrapHeight: 0});
+				this.setData({ list: [], itemWrapHeight: 0 });
 				return;
 			}
 			// 遍历数据源增加扩展项, 以用作排序使用
@@ -347,17 +347,15 @@ Component({
 			setTimeout(() => this.initDom(), 10);
 		},
 		getList() {
-    //获取没有加入的圈子list
+			//获取没有加入的圈子list
 			app.circle.noJoinCircles().then(msg => {
-				if (msg.code === 1) {
-					this.setData({
-						noJoinList: msg.data
-					})
-				}
+				this.setData({
+					noJoinList: msg.data
+				})
 			})
 		},
 		edit() {
-			if(this.data.isEdit) {
+			if (this.data.isEdit) {
 				this.setData({
 					isEdit: false
 				})
@@ -369,43 +367,43 @@ Component({
 		},
 		//加入加圈
 		fnJoin(e) {
-			if(this.addaction) return
+			if (this.addaction) return
 			this.addaction = true
-			let curItem = e.currentTarget.dataset.item, index = e.currentTarget.dataset.index, num1 = '', num2 = '',arr = JSON.parse(JSON.stringify(this.data.list)) ,  brr = []
+			let curItem = e.currentTarget.dataset.item, index = e.currentTarget.dataset.index, num1 = '', num2 = '', arr = JSON.parse(JSON.stringify(this.data.list)), brr = []
 			this.setData({
 				addItem: curItem,
 				addIndex: index,
 				addaction: true
 			})
-				this.data.listData.splice(0,0,curItem)
-				this.init()
-				this.settiome = setTimeout(() => {
-					this.data.listData.forEach((i, index) => {
-						num2 = `${num2},${i.id}`
+			this.data.listData.splice(0, 0, curItem)
+			this.init()
+			this.settiome = setTimeout(() => {
+				this.data.listData.forEach((i, index) => {
+					num2 = `${num2},${i.id}`
+				})
+				let param = {
+					fs_id: num2.substring(1)
+				}
+				app.circle.join(param).then(res => {
+					wx.showToast({
+						title: "您已成功加入\r\n【" + curItem.title + "】学友圈",
+						icon: "none",
+						duration: 1500
 					})
-					let param = {
-						fs_id: num2.substring(1)
-					}
-					app.circle.join(param).then(res => {
-						wx.showToast({
-							title: "您已成功加入\r\n【" + curItem.title + "】学友圈",
-							icon: "none",
-							duration: 1500
-						})
-							this.data.noJoinList.splice(index,1)
-							this.setData({
-								noJoinList: this.data.noJoinList,
-								addaction: false,
-								addItem:{}
-							})
-							this.addaction = false
-							this.init()
+					this.data.noJoinList.splice(index, 1)
+					this.setData({
+						noJoinList: this.data.noJoinList,
+						addaction: false,
+						addItem: {}
 					})
-				}, 150);
+					this.addaction = false
+					this.init()
+				})
+			}, 150);
 		},
 		//取消加圈
 		fnCancelJoin(e) {
-			if(this.delaction) return
+			if (this.delaction) return
 			this.delaction = true
 			let curItem = e.currentTarget.dataset.item, index = e.currentTarget.dataset.index, arr = JSON.parse(JSON.stringify(this.data.list)), brr = [], num = ''
 			this.setData({
@@ -413,14 +411,14 @@ Component({
 				delIndex: index,
 				delaction: true
 			})
-			this.data.noJoinList.splice(0,0,curItem)
+			this.data.noJoinList.splice(0, 0, curItem)
 			arr.sort((a, b) => {
 				return a.key - b.key
 			})
 			arr.forEach(item => {
 				brr[item.key] = item.data
 			})
-			brr.splice(index,1)
+			brr.splice(index, 1)
 			// this.data.listData.splice(index,1)
 			this.setData({
 				noJoinList: this.data.noJoinList,
@@ -443,14 +441,14 @@ Component({
 					this.delaction = false
 				})
 				this.setData({
-					delItem:{},
-					delaction:false
+					delItem: {},
+					delaction: false
 				})
 			}, 150);
 		},
-},
+	},
 	ready() {
 		this.init();
 		this.getList()
-	},  
+	},
 });

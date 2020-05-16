@@ -72,7 +72,7 @@
   flex: 1;
   display: flex;
   align-items: center;
-  overflow: hidden;
+  width: 0;
 }
 
 .box .left .img {
@@ -97,6 +97,8 @@
 .info .line {
   text-align: left;
   line-height: 62rpx;
+  display: flex;
+  align-items: center;
 }
 
 .info .name {
@@ -128,14 +130,19 @@
   border-radius: 4rpx;
   background: #b1adac;
   padding: 0 15rpx;
+  box-sizing: border-box;
+  max-width: 378rpx;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .jumpout {
   background: #fff;
-  height: 120rpx;
   padding: 30rpx 30rpx 0 0;
   display: flex;
   flex-direction: row;
+  height: 120rpx;
 }
 .left .left-btn {
   position: absolute;
@@ -144,13 +151,22 @@
   opacity: 0;
 }
 .jumpout .jumpoutBox {
+  flex: 1;
   position: relative;
   height: 120rpx;
   margin-left: 30rpx;
+  display: flex;
+  align-items: center;
+}
+.jumpout .jumpoutBox text {
+  font-size:40rpx;
+  font-family:PingFangSC-Medium,PingFang SC;
+  font-weight:500;
+  color:rgba(255,255,255,1);
 }
 .jumpout .img {
   width: 260rpx;
-  height: 120rpx;
+  height: 100% !important;
   background: #f5f6f8;
 }
 

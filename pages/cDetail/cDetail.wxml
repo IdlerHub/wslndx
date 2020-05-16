@@ -1,3 +1,10 @@
+<wxs module="fn">
+	module.exports = {
+	search: function(str) {
+		return str.search('gif');
+		}
+	}
+</wxs>
 <view class="container">
 	<!-- 下拉刷新 -->
 	<view wx:if="{{ isRefreshing }}" class="weui-loadmore">
@@ -46,10 +53,10 @@
 				<rich-text wx:if="{{ item.content }}" class="name" nodes="{{ item.content }}"></rich-text>
 				<view class="content" wx:if="{{ item.images.length > 0 }}">
 					<view class="img one" wx:if="{{ item.images.length == 1 }}">
-						<image mode="widthFix" wx:for="{{ item.images }}" wx:for-item="items" wx:key="index" src="{{ item.image_compress }}" data-urls="{{ item.images }}" data-current="{{ items }}" catchtap="previewImage"></image>
+						<image mode="widthFix" wx:for="{{ item.images }}" wx:for-item="items" wx:key="index" src="{{ fn.search(item.images[0]) > 0 ?  item.images : item.image_compress + '/resize,p_50' }}" data-urls="{{ item.images }}" data-current="{{ items }}" catchtap="previewImage"></image>
 					</view>
 					<view class="img three" wx:else>
-						<image mode="aspectFill" wx:for="{{ item.images }}" wx:for-item="items" wx:key="index" src="{{ item.image_compress[index] }}" data-urls="{{ item.images }}" data-current="{{ items }}" catchtap="previewImage"></image>
+						<image mode="aspectFill" wx:for="{{ item.images }}" wx:for-item="items" wx:key="index" src="{{ fn.search(item.images[index]) > 0 ? item.images[index] : item.image_compress[index] + '/resize,m_fixed,w_216,h_216' }}" data-urls="{{ item.images }}" data-current="{{ items }}" catchtap="previewImage"></image>
 					</view>
 				</view>
 				<view class="content" wx:if="{{ item.url }}">
@@ -58,31 +65,48 @@
 						<image mode="aspectFill" src="{{ $state.imgHost }}/play-hl.png" class="play"></image>
 					</view>
 				</view>
-				<view wx:if="{{ item.fs_title }}" class="label">#{{ item.fs_title }}精选</view>
 			</view>
-			<view class="btn">
-				<button class="share item" open-type="share" data-index="{{ index }}" hover-class="btn-hover">
-					<icon class="iconfont icon-fenxiang"></icon>
-					<text class="text">{{ item.fw || item.forward }}</text>
-				</button>
+			<view class="likeComment" wx:if="{{ item.like_avatar_list[0] || item.last_comment.nickname}}">
+				<view class="likesavatar"  wx:if="{{item.like_avatar_list[0] && item.likes!= 0 }}" style="margin-bottom: {{ item.last_comment.nickname ? '' : '20rpx'}};">
+					<view class="likesLeft">
+						<image wx:for="{{item.like_avatar_list}}" wx:for-item="linkeItem" wx:for-index="likeIndex" wx:key="likeIndex" src="{{linkeItem}}"></image>
+					</view>
+				</view>
+				<view class="lastComment" wx:if="{{item.last_comment.nickname}}" catchtap="navigate" data-id="{{ item.id }}">
+					<view class="lastContet">
+						<text>{{item.last_comment.nickname}}: </text>
+						<rich-text nodes="<div style='overflow:hidden;white-space:nowrap;text-overflow:ellipsis;'>{{ item.last_comment.content }} </div>"></rich-text>
+					</view>
+				</view>
+			</view>
+			<navigator wx:if="{{ item.fs_title }}" url="../cDetail/cDetail?id={{ item.fs_id }}"
+			hover-class="none" open-type="navigate" class="label" style="margin: {{ !item.like_avatar_list[0] && !item.last_comment.nickname ? '30rpx 30rpx 0 30rpx' : '0 30rpx 20rpx 30rpx'}};"> #{{ item.fs_title }}精选</navigator>
+			<view class="btn" style="margin-top:{{!item.like_avatar_list[0] && !item.last_comment.nickname ? '30rpx' : ''}}">
+				<!-- 点赞 -->
+				<view class="item" bindtap="praise" data-index="{{ index }}">
+					<view class="praise  {{ item.likestatus ? 'end' : '' }} {{ item.praising ? 'ani' : '' }}" data-index="{{ index }}" bindanimationend="aniend"></view>
+					<text class="text">{{ item.likes != 0 ? item.lw || item.likes : '点赞' }} </text>
+				</view>
 				<text class="division"></text>
 				<!-- 评论 -->
 				<navigator url="../pDetail/pDetail?id={{ item.id }}&comment" hover-class="none" open-type="navigate" class="item">
 					<icon class="iconfont icon-comment"></icon>
-					<text class="text">{{ item.cw || item.comments }}</text>
+					<text class="text">{{ item.comments != 0 ?  item.cw || item.comments : '评论' }}</text>
 				</navigator>
 				<text class="division"></text>
-				<!-- 点赞 -->
-				<view class="item" bindtap="praise" data-index="{{ index }}">
-					<view class="praise  {{ item.likestatus ? 'end' : '' }} {{ item.praising ? 'ani' : '' }}" data-index="{{ index }}" bindanimationend="aniend"></view>
-					<text class="text">{{ item.lw || item.likes }} </text>
-				</view>
+				<button class="share item" open-type="share" data-index="{{ index }}" hover-class="btn-hover">
+					<icon class="iconfont icon-fenxiang"></icon>
+					<text class="text">{{ item.forward != 0 ? item.fw || item.forward : '分享' }}</text>
+				</button>
 			</view>
 		</view>
 	</view>
 </view>
+<view wx:if="{{ rlAni }}" class="popup">
+	<view class="publishAni"></view>
+</view>
 <view class="footer">
-	<navigator url="../release/release?title={{circle.title}}&id={{circle.id}}" hover-class="none" open-type="navigate" class="write">
+	<navigator url="../release/release?title={{circle.title}}&id={{circle.id}}&type=circle" hover-class="none" open-type="navigate" class="write">
 		<text class="text">写帖</text>
 	</navigator>
 </view>

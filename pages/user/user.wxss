@@ -52,6 +52,8 @@ page .container > .top .box .left .info {
 page .container > .top .box .left .info .line {
   text-align: left;
   line-height: 62rpx;
+  display: flex;
+  align-items: center;
 }
 
 page .container > .top .box .left .info .name {
@@ -83,6 +85,10 @@ page .container > .top .box .left .info .school {
   border-radius: 4rpx;
   background: #999594;
   padding: 0 15rpx;
+  max-width: 330rpx;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 page .container > .top .box .iconfont {

@@ -27,7 +27,21 @@ fundebug.init({
       }
     },
     {
+      req: {
+        url: /recordFinish/,
+        method: /^POST$/
+      }
+    },
+    {
+      req: {
+        url: /lists/,
+        method: /^POST$/
+      }
+    },
+    {
       error: /getHistory/
+    }, {
+      errMsg: / request:fail timeout | uploadFile:ok | request:fail | request:ok /
     }
   ],
   metaData: {
@@ -71,13 +85,13 @@ App({
   },
   /*埋点统计*/
   onLaunch: async function(opts) {
+    console.log(opts)
     this.getSecureToken();
     let optsStr = decodeURIComponent(opts.query.scene).split("&");
     let opstObj = {};
     optsStr.forEach((item, index) => {
       opstObj[item.split("=")[0]] = item.split("=")[1];
     });
-    console.log(optsStr)
     this.checkVersion();
     /* 检查用户从分享卡片启动 */
     if (this.globalData.scenes.indexOf(opts.scene) >= 0) {
@@ -452,6 +466,7 @@ App({
     });
   },
   withdrawShare(ops) {
+    wx.uma.trackEvent('totalShare', { 'shareName': '我的邀请' });
     return {
       title:
         this.store.$state.shareTitle || "福利！老年大学十万集免费课程在线学习",
@@ -481,7 +496,7 @@ App({
     /* 卡片参数 */
     query: {},
     /* 卡片进入的场景值 */
-    scenes: [1001, 1007, 1008, 1047, 1048, 1049],
+    scenes: [1001, 1007, 1008, 1047, 1048, 1049, 1037],
     /* 后台模式*/
     backstage: false,
     rlSuc: false,

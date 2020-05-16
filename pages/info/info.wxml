@@ -4,14 +4,13 @@
  * @LastEditTime: 2019-08-12 15:15:34
  -->
 <view class="container">
-  <view class="title">完善资料</view>
   <view class="box">
     <!-- 姓名 -->
     <view class="nameInput">
       <view class="nameInput__title">真实姓名</view>
       <input placeholder="{{ userInfo.name == '' ? '请填写(非必填)' : userInfo.name }}" class="nameInput__name"
         placeholder-style="color:#B6B5B5" value="{{userName}}" bindblur="upUsername" bindfocus="focus"
-        style="padding-right:{{padding || param.school != '' ? '24' : '38'}}px"></input>
+        style="padding-right:{{padding || param.school != '' ? '24' : '24'}}px"></input>
     </view>
     <!-- 地区 -->
     <view class="section" wx:if="areaList">
@@ -63,7 +62,23 @@
         </view>
       </picker>
     </view>
+    <!-- 收货地址 -->
+    <view class="section">
+      <view class="section__title">收货地址</view>
+      <view class="placeholder" catchtap="fill">
+        <text>{{userAddress.goods_address_id ? '修改' : '请补充'}}</text>
+        <image class="icon" mode="aspectFill" src="{{ $state.imgHost }}/Return-black.png"></image>
+      </view>
+    </view>
+     <!-- 电子邮箱 -->
+     <view class="nameInput" style="border: 0;">
+      <view class="nameInput__title">电子邮箱</view>
+      <input placeholder="{{ userInfo.name == '' ? '请填写' : userInfo.name }}" class="nameInput__name"
+        placeholder-style="color:#B6B5B5" value="{{userAddress.email}}" bindblur="upEmail" bindfocus="focus"
+        style="padding-right:{{padding || param.school != '' ? '24' : '24'}}px"></input>
+    </view>
   </view>
 </view>
+
 <!-- 学分动画 -->
 <integralAnimation integral="+65 学分" integralContent="完成完善资料" wx:if="{{showintegral}}"></integralAnimation>

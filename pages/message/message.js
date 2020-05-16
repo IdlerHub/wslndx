@@ -21,6 +21,7 @@ Page({
     app.circle.getMessage().then(res => {
       res.data.forEach(item => {
         item.msg = item.msg.replace(/\↵/g, '').replace(/\n/g, '')
+        item.msg = app.util.delHtmlTag(item.msg)
       })
       this.setData({
         messages: res.data

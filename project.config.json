@@ -95,7 +95,7 @@
 					"id": 0,
 					"name": "微课堂分享卡片",
 					"pathName": "pages/detail/detail",
-					"query": "id=88&curid=279&type=share",
+					"query": "id=559&name=跟我轻松学古筝&type=share",
 					"scene": 1007
 				},
 				{
@@ -155,17 +155,49 @@
 					"scene": null
 				},
 				{
+					"id": 9,
+					"name": "pages/login/login",
+					"pathName": "pages/login/login",
+					"query": "",
+					"scene": null
+				},
+				{
 					"id": 10,
+					"name": "pages/score/score",
+					"pathName": "pages/score/score",
+					"query": "id=21&type=invite",
+					"scene": null
+				},
+				{
+					"id": 11,
+					"name": "pages/infoAddress/infoAddress",
+					"pathName": "pages/index/index",
+					"query": "channel=laonianapp/banner&_um_campaign=5e6a0e29dbc2ec076bd611fc&_um_channel=5e6a0e29dbc2ec076bd611fd&com=kimdot",
+					"scene": 1037,
+					"referrerInfo": {
+						"appId": "wx21038783a46791dd",
+						"extraData": "{}"
+					}
+				},
+				{
+					"id": 12,
+					"name": "学习排行榜",
+					"pathName": "pages/rankingList/rankingList",
+					"query": "uid=12661&type=invite&mode=0",
+					"scene": null
+				},
+				{
+					"id": -1,
 					"name": "pages/vote/vote",
 					"pathName": "pages/vote/vote",
 					"query": "",
 					"scene": null
 				},
 				{
-					"id": -1,
-					"name": "pages/sign/sign",
-					"pathName": "/pages/loading/loading",
-					"query": "uid=12661&type=invite",
+					"id": 14,
+					"name": "pages/voteDetail/voteDetail",
+					"pathName": "pages/voteDetail/voteDetail",
+					"query": "type=share&vote=0&uid=915",
 					"scene": null
 				}
 			]

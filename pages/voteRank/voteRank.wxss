@@ -1,0 +1,88 @@
+/* pages/voteRank/voteRank.wxss */
+page {
+  background:rgba(247,247,247,1);
+  padding-bottom: 118rpx;
+}
+.container .buttons {
+  width: 100%;
+  font-size: 36rpx;
+  background: #fff;
+  color: rgba(153,153,153,1);
+  height: 118rpx;
+  line-height: 118rpx;
+  text-align: center;
+  }
+ 
+  .active {
+    color:rgba(226,30,30,1);
+    font-weight: 500;
+    font-size: 38rpx;
+  }
+.container .buttons .redRow {
+  position: absolute;
+  display: inline-block;
+  bottom: 0;
+  width:74rpx;
+  left: 50%;
+  margin-left: -37rpx;
+  border-bottom: 2px solid #df2020;
+}
+
+.container .center {
+    height: 98rpx;
+    line-height: 98rpx;
+    margin: 0 30rpx;
+    font-size:28rpx;
+    font-family:PingFangSC-Regular,PingFang SC;
+    font-weight:400;
+    color:rgba(102,102,102,1);
+}
+
+.share {
+  width: 100%;
+  height: 118rpx;
+  background:rgba(223,32,32,1);
+  position: fixed;
+  bottom: 0;
+  font-size:40rpx;
+  font-family:PingFangSC-Medium,PingFang SC;
+  font-weight:500;
+  color:rgba(255,255,255,1);
+}
+
+.qst {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.qst image{
+  width: 640rpx;
+  height: 480rpx;
+}
+
+.toast {
+  width:280rpx;
+  height:177rpx;
+  background:rgba(0,0,0,0.74);
+  border-radius:10rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 446rpx;
+  left: 50%;
+  margin-left: -140rpx;
+}
+.toast image {
+  width: 64rpx;
+  height: 64rpx;
+  margin-bottom: 7rpx;
+}
+.toast text {
+  font-size:40rpx;
+  font-family:PingFangSC-Regular,PingFang SC;
+  font-weight:400;
+  color:rgba(255,255,255,1);
+}

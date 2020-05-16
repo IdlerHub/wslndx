@@ -7,7 +7,7 @@ page {
   box-sizing: content-box; }
   .circle > .item {
     background: #fff;
-    padding: 30rpx 30rpx 0;
+    padding: 30rpx 0 0;
     margin-bottom: 20rpx; }
     .circle > .item:last-of-type {
       margin-bottom: 0; }
@@ -15,7 +15,7 @@ page {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin: 30rpx 0 20rpx; }
+    margin: 30rpx 30rpx 20rpx 30rpx; }
     .circle .top .left {
       display: flex;
       align-items: center;
@@ -67,10 +67,10 @@ page {
         height: 30rpx;
         margin-right: 5rpx; }
   .circle .label {
+    display: inline-block;
     background: #FFF6E6;
     margin-top: 30rpx;
-    display: block;
-    width: 230rpx;
+    padding: 0 20rpx;
     line-height: 44rpx;
     border-radius: 6rpx;
     color: #DB9200;
@@ -88,9 +88,12 @@ page {
     display: -webkit-box;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 5;
-    overflow: hidden;}
+    overflow: hidden;
+    padding: 0 30rpx;
+    box-sizing: border-box;}
   .circle .content {
-    overflow: hidden; }
+    overflow: hidden;
+    margin: 0 30rpx; }
     .circle .content video {
       margin-top: 20rpx;
       width: 100%;
@@ -120,32 +123,127 @@ page {
     flex-wrap: wrap;
     align-content: flex-start; }
     .circle .img image {
-      margin-top: 20rpx; }
+      margin-top: 20rpx;
+      border-radius: 6rpx;
+       }
     .circle .img.one image {
-      width: 400rpx; }
+      width: 400rpx;
+      border-radius: 6rpx; }
     .circle .img.three image {
       width: 216rpx;
       height: 216rpx;
-      margin-right: 20rpx; }
+      margin-right: 20rpx;
+      border-radius: 6rpx; }
       .circle .img.three image:nth-of-type(3n) {
         margin-right: 0; }
   .circle .btn {
     height: 125rpx;
-    margin-top: 30rpx;
+    margin-top: 10rpx;
     position: relative;
-    border-top: 2rpx solid #e8e8e8;
     display: flex;
     align-items: center;
-    justify-content: stretch; }
-    .circle .btn .division {
-      width: 2rpx;
-      height: 40rpx;
-      background: #dbdbdb; }
+    justify-content: stretch;
+    border-top: 1rpx solid #E9E9E9; }
+    .circle > .item .likeComment {
+      background: #FBFBFB;
+      border-radius: 8rpx;
+      padding-left:19rpx;
+      overflow: hidden;
+      margin: 20rpx 30rpx 20rpx 30rpx;
+    }
+     .circle  .likesavatar {
+      display: flex;
+      align-items: center;
+      margin-top: 20rpx;
+    }
+     .circle  .likesavatar .likesLeft {
+      display: flex;
+      align-items: center;
+    }
+    .circle > .item  .likesavatar {
+      display: flex;
+      align-items: center;
+      margin-top: 20rpx;
+    }
+    .circle > .item  .likesavatar .likesLeft {
+      display: flex;
+      align-items: center;
+    }
+    .circle > .item  .likesavatar .likesLeft image {
+      width: 44rpx;
+      height: 44rpx;
+      border-radius: 50%;
+      margin-right:10rpx;
+      border:2rpx solid #fff; 
+    }
+    .circle > .item  .likesavatar .likesLeft .likeTxt {
+      margin-left: 5rpx;
+      font-size:28rpx;
+      font-family:PingFangSC-Regular,PingFang SC;
+      font-weight:400;
+      color:rgba(126,126,126,1);
+    }
+    .circle > .item  .lastComment {
+      padding: 10rpx 0 20rpx 0;
+    }
+    .circle > .item  .lastComment .lastContet {
+      display: flex;
+      align-items: center;
+    }
+    .circle > .item  .lastComment .lastContet text {
+      font-size:36rpx;
+      font-family:PingFangSC-Medium,PingFang SC;
+      font-weight:500;
+      color:rgba(126,126,126,1);
+    }
+    .circle > .item  .lastComment .lastContet rich-text {
+      flex: 1;
+      width: 0;
+      font-size:36rpx;
+      font-family:PingFangSC-Regular,PingFang SC;
+      font-weight:400;
+      color:rgba(126,126,126,1);
+      margin-left: 20rpx;
+    } 
+    .circle > .item  .lastComment .more {
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+    }
+    .circle > .item  .lastComment .more text {
+      font-size:36rpx;
+      font-family:PingFangSC-Regular,PingFang SC;
+      font-weight:400;
+      color:rgba(179,179,179,1);
+    }
+    .circle > .item  .lastComment .more image {
+      width: 14rpx;
+      height: 25rpx;
+      margin-left: 10rpx;
+      margin-top: 4rpx;
+    }
     .circle .btn > .item {
       flex: 1;
       display: flex;
       align-items: center;
-      justify-content: center; }
+      box-sizing: border-box;
+      justify-content: center;
+    }
+    .circle .btn .division {
+      width: 2rpx;
+      height: 40rpx;
+      background: #dbdbdb; }
+    .circle .btn > .item:nth-child(1) {
+      padding-left: 0;
+      justify-content: center;
+    }
+    .circle .btn > .item:nth-child(2) {
+      padding-left: 30px;
+      justify-content: center;
+    }
+    .circle .btn > .item:nth-child(3) {
+      justify-content: center;
+    } 
       .circle .btn > .item .iconfont {
         font-size: 58rpx;
         color: #bdbdbd;

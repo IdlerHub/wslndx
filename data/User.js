@@ -197,6 +197,60 @@ function addLotteryInvite(param) {
   return httpService.post("User/addLotteryInvite", param)
 }
 
+//POST /user/getAreainfo 获取省市区
+function getAreainfo(param) {
+  return httpService.post("user/getAreainfo", param)
+}
+
+//POST /user/getGoodsAddress 获取收货地址信息
+function getGoodsAddress() {
+  return httpService.post("user/getGoodsAddress")
+}
+
+//POST /user/putGoodsaddress 提交信息
+function putGoodsaddress(params) {
+  return httpService.post("user/putGoodsaddress",params)
+}
+
+//POST /user/schoolWrite 提交用户地址暂无
+function schoolWrite() {
+  return httpService.post("user/schoolWrite")
+}
+
+//POST /user/getSchoolLessonTime 学校学习时间排名
+function getSchoolLessonTime(params) {
+  return httpService.post("user/getSchoolLessonTime", params)
+}
+
+//POST /user/getSchoolLessonTime 学校学习时间排名
+function getUserLessonTime(params) {
+  return httpService.post("user/getUserLessonTime", params)
+}
+
+//POST /user/getSchoolLessonTime 学校学习时间排名
+function rankRule(params) {
+  return httpService.post("user/rankRule", params)
+}
+
+//POST /user/getSchoolLearnTimeRank 获取学校学习时间排名
+function getSchoolLearnTimeRank(params) {
+  return httpService.post("user/getSchoolLearnTimeRank", params)
+}
+
+//POST /user/getUserLearnTimeRank 获取学校学习时间排名
+function getUserLearnTimeRank(params) {
+  return httpService.post("user/getUserLearnTimeRank", params)
+}
+
+//POST /user/getLearnTimeProportion 获取用户学习时间比例
+function getLearnTimeProportion(params) {
+  return httpService.post("user/getLearnTimeProportion", params)
+}
+
+//POST /User/putEmail 更新邮箱
+function putEmail(params) {
+  return httpService.post("user/putEmail", params)
+}
 
 module.exports = {
   wxLoginCode,
@@ -231,5 +285,16 @@ module.exports = {
   userFollowing,
   lessonFinishStatus,
   unreadNum,
-  addLotteryInvite
+  addLotteryInvite,
+  getAreainfo,
+  getGoodsAddress,
+  putGoodsaddress,
+  schoolWrite,
+  getSchoolLessonTime,
+  getUserLessonTime,
+  rankRule,
+  getSchoolLearnTimeRank,
+  getUserLearnTimeRank,
+  getLearnTimeProportion,
+  putEmail
 }

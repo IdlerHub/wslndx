@@ -11,7 +11,8 @@ Page({
     gender: ["女", "男"],
     age: ["50以下", "50-60", "60-70", "70以上"],
     padding: false,
-    showintegral: false
+    showintegral: false,
+    userAddress: {},
   },
   pageName: '修改资料（完善资料）',
   onLoad() {
@@ -29,6 +30,7 @@ Page({
   },
   init() {
     let cascade = this.data.userInfo.university.split(",") || ["", "", ""]
+    this.getGoodsAddress()
     this.getProvince().then(() => {
       this.getCity(cascade[0]).then(() => {
         this.getSchool(cascade[1]).then(() => {
@@ -52,8 +54,6 @@ Page({
     })
   },
   getCity(val) {
-    console.log(this.province)
-
     let param = { level: 2, name: val || this.province[0] }
     return app.user.search(param).then(msg => {
       this.city = msg.data
@@ -63,6 +63,15 @@ Page({
     let param = { level: 3, name: val || this.city[0] }
     return app.user.search(param).then(msg => {
       this.school = msg.data
+    })
+  },
+  getGoodsAddress() {  //获取收货地址信息
+    return app.user.getGoodsAddress().then(res => {
+      wx.setStorageSync("userAddress", JSON.stringify(res.data))
+      res.data.email.length > 0 ? this.is_show = true : ''
+      this.setData({
+        userAddress: res.data
+      })
     })
   },
   bindMultiPickerColumnChange(e) {
@@ -167,12 +176,35 @@ Page({
       this.setUserinfo(param)
     }
   },
+  upEmail(e) {
+    if (e.detail.value.trim() != '') {
+      let param = {
+        email: e.detail.value
+      }
+      if(!/^[a-zA-Z0-9_-]+@([a-zA-Z0-9]+\.)+(com|cn|net|org)$/.test(e.detail.value)) {
+        wx.showToast({
+          title: '电子邮箱格式不正确',
+          icon: "none",
+          duration: 1500
+        })
+        return
+      }
+      app.user.putEmail(param)
+    }
+  },
   focus() {
     this.setData({
       padding: true
     })
   },
+  fill(){
+    this.getGoodsAddress().then(()=>{
+      wx.navigateTo({
+        url: "/pages/infoAddress/infoAddress"
+      })
+    });
+  },
   //用于数据统计
   onHide() {
-  }
+  },
 })

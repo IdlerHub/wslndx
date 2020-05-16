@@ -1,4 +1,4 @@
-/*
+  /*
  * @Date: 2019-05-28 09:50:08
  * @LastEditors: hxz
  * @LastEditTime: 2020-03-06 11:22:49
@@ -7,7 +7,9 @@ const app = getApp();
 //Page Object
 Page({
   data: {
-    currentTab: 1,
+    getAddress: false,
+    giftInfo: {}, //兑换礼品信息
+    currentTab: '1',
     scrollStatus: false,
     paylist: [],
     details: [],
@@ -23,7 +25,8 @@ Page({
         img: "https://hwcdn.jinlingkeji.cn/images/pro/withdrawBanner2.png",
         clickUrl: "/pages/makeMoney/makeMoney"
       }
-    ]
+    ],
+    swiperHeight: {}
   },
   pageName: "学分兑换页",
   common: {
@@ -43,6 +46,7 @@ Page({
           currentTab: options.curren
         })
       : "";
+    this.setHeight()
   },
   onShow: function() {
     let sources = [
@@ -281,6 +285,7 @@ Page({
         newbie: brr
       });
     });
+    this.setHeight()
   },
   init() {
     if (this.params.end) return Promise.resolve();
@@ -378,6 +383,7 @@ Page({
       scrollStatus: true,
       paddingAdd: true
     });
+    this.data.currentTab == 3 ? this.lower() : ''
   },
   onPageScroll: function(e) {
     if (e.scrollTop < this.common.scrollTop) {
@@ -391,6 +397,7 @@ Page({
   lower() {
     this.params.page += 1;
     this.init();
+    this.setHeight()
   },
   switchTap(e) {
     let id = e.currentTarget.dataset.index;
@@ -410,6 +417,7 @@ Page({
     id == 2
       ? wx.uma.trackEvent("integral_btnClick", { btnName: "学分兑换" })
       : "";
+    this.setHeight()
   },
   gift(e) {
     if (!e.currentTarget.dataset.stock) {
@@ -421,7 +429,10 @@ Page({
     } else {
       if (this.data.totalPoints >= e.currentTarget.dataset.score) {
         let param = {
-          gift_id: e.currentTarget.dataset.id
+          id: e.currentTarget.dataset.id,
+          title: e.currentTarget.dataset.title,
+          image: e.currentTarget.dataset.image,
+          receive_type: e.currentTarget.dataset.receive_type
         };
         if (e.currentTarget.dataset.type == 1) {
           wx.showModal({
@@ -433,15 +444,19 @@ Page({
             confirmColor: "#df2020",
             success: res => {
               if (res.confirm) {
-                app.user.exchange(param).then(res => {
-                  wx.navigateTo({
-                    url:
-                      "/pages/gift/gift?name=" +
-                      e.currentTarget.dataset.title +
-                      "&image=" +
-                      e.currentTarget.dataset.image
-                  });
-                });
+                this.setData({
+                  getAddress: true,
+                  giftInfo: param
+                })
+                // app.user.exchange(param).then(res => {
+                //   wx.navigateTo({
+                //     url:
+                //       "/pages/gift/gift?name=" +
+                //       e.currentTarget.dataset.title +
+                //       "&image=" +
+                //       e.currentTarget.dataset.image
+                //   });
+                // });
               }
             }
           });
@@ -450,21 +465,25 @@ Page({
             title: "兑换提示",
             content: "确定要兑换该物品吗?",
             showCancel: true,
-            cancelText: "暂时不换",
+            cancelText: "取消",
             cancelColor: "#000000",
             confirmText: "确定兑换",
             confirmColor: "#df2020",
             success: res => {
               if (res.confirm) {
-                app.user.exchange(param).then(res => {
-                  wx.navigateTo({
-                    url:
-                      "/pages/gift/gift?name=" +
-                      e.currentTarget.dataset.title +
-                      "&image=" +
-                      e.currentTarget.dataset.image
-                  });
-                });
+                this.setData({
+                  getAddress: true,
+                  giftInfo: param
+                })
+                // app.user.exchange(param).then(res => {
+                //   wx.navigateTo({
+                //     url:
+                //       "/pages/gift/gift?name=" +
+                //       e.currentTarget.dataset.title +
+                //       "&image=" +
+                //       e.currentTarget.dataset.image
+                //   });
+                // });
               }
             }
           });
@@ -579,5 +598,49 @@ Page({
         res.eventChannel.emit("acceptDataFromOpenerPage", { data: item });
       }
     });
+  },
+  setHeight() {
+    let query = wx.createSelectorQuery().in(this)
+    let that = this, height = 0
+    switch(this.data.currentTab) {
+      case '1': 
+        setTimeout(()=> {
+          query.select('.scroll_containerOne').boundingClientRect()
+          query.exec(res => {
+            height = res[0].height
+            that.setData({
+              'swiperHeight[1]': height
+            })
+          })
+        },500)
+        break;
+      case '2': 
+        query.select('.scroll_containertwo').boundingClientRect()
+        query.exec(res => {
+          height = res[0].height
+          that.setData({
+            'swiperHeight[2]': height
+          })
+          console.log(height)
+        })
+        break;
+      case '3': 
+        query.select('.scroll_containerThree').boundingClientRect()
+        query.exec(res => {
+          height = res[0].height
+          that.setData({
+            'swiperHeight[3]': height
+          })
+        })
+        break;
+    }
+  },
+  stockChange(e) {
+    console.log(e)
+    this.data.paylist.forEach((item,index) => {
+      item.id == e.detail ? [item.stock --, this.setData({
+        [`paylist[${index}].stock`]: this.data.paylist[index].stock
+      })] : ''
+    })
   }
 });

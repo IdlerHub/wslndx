@@ -5,18 +5,18 @@
  */
 import Store from "wxministore";
 const app = getApp();
-let env = "develop";
+let env = "production";
 let imgHost;
 let activityUrl;
 let API_URL;
 let socket_host;
-let mpVersion = "v20"; /* 版本管理 */
+let mpVersion = "v22"; /* 版本管理 */
 if (env == "develop") {
   /* 测试环境 */
   imgHost =
     "https://hwcdn.jinlingkeji.cn/images/dev"; /* 图片等静态资源服务器 */
   activityUrl = "https://gqjydev.jinlingkeji.cn/?"; /* 国情教育链接 */
-  API_URL = `https://develop.jinlingkeji.cn/api/${mpVersion}/`; /* 数据服务器 */
+  API_URL = `https://lndxtest.jinlingkeji.cn/api/${mpVersion}/`; /* 数据服务器 */
   socket_host = "develop.jinlingkeji.cn:8182";
 } else if (env == "production") {
   /* 发布环境 */
@@ -57,7 +57,15 @@ let store = new Store({
     playVedio: false,
     lessDiscussion: {},
     blogcomment: {},
-    security: {}
+    security: {},
+    newGuide: {
+      index: 1,
+      blog: 1,
+      lesson: 1,
+      shortvideo: 1,
+      user: 1,
+      lesson_category: 1
+    }
   },
   pageLisener: {
     onLoad(opts) {
@@ -82,6 +90,7 @@ let store = new Store({
   },
   methods: {
     menuAppShare() {
+      wx.uma.trackEvent('totalShare', { 'shareName': 'tab三个点' });
       return {
         title:
           this.data.$state.shareTitle || "福利！老年大学十万集免费课程在线学习",

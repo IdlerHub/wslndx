@@ -7,6 +7,7 @@ Page({
     searchWord: "", //搜索关键词
     productionList: [], //作品列表
     page: 1,
+    total_page: 1,
     history: []
   },
   goBack() {
@@ -19,17 +20,18 @@ Page({
   },
   clickSearch(e) {
     //选中历史记录搜索
-    this.setData({
-      searchWord: e.currentTarget.dataset.word,
-      inputcontent: e.currentTarget.dataset.word,
-      clearhidden: false
-    });
-    this.searchOpus(1);
+      this.setData({
+        searchWord: e.currentTarget.dataset.word,
+        inputcontent: e.currentTarget.dataset.word,
+        clearhidden: false
+      });
+      this.searchOpus(1);
   },
   toSearch(e) {
     //输入结束后的关键词
     this.setData({
-      searchWord: e.detail.value
+      searchWord: e.detail.value,
+      inputcontent: e.detail.value
     });
     this.searchOpus(1);
   },
@@ -83,6 +85,7 @@ Page({
       page: page
     };
     let data = [];
+    let total_page = 1;
     app.vote.searchOpus(params).then(res => {
       if (page == 1) {
         data = res.data.data;
@@ -90,9 +93,11 @@ Page({
         var oldData = this.data.productionList;
         data = oldData.concat(res.data.data);
       }
+      total_page = res.data.total_page;
       this.setData({
         productionList: data,
-        page: page
+        page: page,
+        total_page: total_page
       });
     });
   },
@@ -101,6 +106,15 @@ Page({
     // this.searchOpus(1);
   },
   onReachBottom() {
-    this.searchOpus(this.data.page + 1);
+    let page = this.data.page;
+    if(page < this.data.total_page){
+      this.searchOpus(page + 1);
+    }else{
+      wx.showToast({
+        icon: "none",
+        title: "已经没有数据了哦",
+        duration: 1000
+      });
+    }
   }
 });

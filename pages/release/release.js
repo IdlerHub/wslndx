@@ -4,29 +4,38 @@ Page({
   data: {
     param: {
       image: [],
-      content: null,
+      content: '',
       video: null,
       cover: null,
       fs_id: "",
       num: 0
     },
     media_type: null,
-    showFlag: false,
+    showFlag: true,
     showintegral: false
   },
   pageName: "发帖页",
   onLoad(ops) {
+    ops.type ? this.circle = true : ''
     if (ops.title) {
       this.getCircleList().then(() => {
-        this.data.allCircle.forEach(item => {
-          item.title == ops.title
-            ? this.setData({
-                circleTitle: ops.title,
-                selId: ops.id,
-                showFlag: true
-              })
-            : "";
+        let allCircle = this.data.allCircle;
+        let showFlag = true;
+        let id = "";
+        allCircle.forEach(item => {
+          if (item.title == ops.title){
+            item.isSel = true;
+            showFlag = false;
+            id = ops.id
+          }
         });
+        this.setData({
+          allCircle: allCircle,
+          selId: id,
+          showFlag: showFlag,
+          circleId: ops.id,
+          circleTitle: ops.title
+        })
       });
     } else {
       this.getCircleList();
@@ -46,15 +55,19 @@ Page({
     pages.forEach(item => {
       if (item.route == "pages/myCircle/myCircle") {
         prePage = item;
-      } else if (item.route == "pages/post/post") {
+      } else if (item.route == "pages/cDetail/cDetail") {
+        prePage = item;
+      } else if (item.route == "pages/post/post"){
         prePage = item;
       }
     });
+    if(prePage == []) return
     prePage.setData({
       releaseParam: this.data.param,
       media_type: this.data.media_type,
       showRelease: true
     });
+    console.log('onUnload')
   },
   input(e) {
     this.setData({
@@ -62,18 +75,19 @@ Page({
     });
   },
   cancel() {
-    this.setData({
-      param: {
-        image: [],
-        content: null,
-        video: null,
-        cover: null,
-        fs_id: "",
-        num: 0
-      },
-      media_type: null
-    });
-    this.judge();
+    // this.setData({
+    //   param: {
+    //     image: [],
+    //     content: null,
+    //     video: null,
+    //     cover: null,
+    //     fs_id: "",
+    //     num: 0
+    //   },
+    //   media_type: null
+    // });
+    // this.judge();
+    wx.navigateBack()
   },
   addImg() {
     let image = this.data.param.image;
@@ -250,11 +264,11 @@ Page({
     });
   },
   //是否同步到圈子
-  switchChange: function(e) {
-    this.setData({
-      showFlag: e.detail.value
-    });
-  },
+  // switchChange: function(e) {
+  //   this.setData({
+  //     showFlag: e.detail.value
+  //   });
+  // },
   // 获取所有圈子信息
   getCircleList() {
     return app.circle.joinedCircles().then(msg => {
@@ -269,11 +283,68 @@ Page({
     allCircle.forEach(item => {
       item.isSel = false;
     });
-    allCircle[e.currentTarget.dataset.index].isSel = true;
-    this.setData({
-      allCircle: allCircle,
-      selId: e.currentTarget.dataset.fsid
-    });
+    if (e.currentTarget.dataset.other){
+      this.setData({
+        allCircle: allCircle,
+        selId: '',
+        showFlag: true
+      })
+    }else{
+      allCircle[e.currentTarget.dataset.index].isSel = true;
+      this.setData({
+        allCircle: allCircle,
+        selId: e.currentTarget.dataset.fsid,
+        showFlag: false
+      });
+    }
+  },
+  // 未加圈子判断
+  judgeCircle() {
+    if(this.circle && !(this.data.selId > 0)) {
+      let type = 0, that = this, image =
+      this.data.media_type == 1
+        ? this.data.param.image.join(",")
+        : this.data.param.cover
+      this.data.allCircle.forEach(item => {
+        item.id == this.data.circleId ? type = 1 : ''
+      })
+      if(!type) {
+        if(this.data.param.content.trim() || image || this.data.param.video) {
+            wx.showModal({
+            content: `是否发布并加入【${this.data.circleTitle}】圈子`,
+            confirmColor: '#DF2020',
+            cancelColor: '#999999',
+            success (res) {
+              if (res.confirm) {
+                let param = { fs_id: that.data.circleId}
+                app.circle.addOne(param).then(msg => {
+                  that.setData({
+                    selId: that.data.circleId
+                  })
+                  wx.nextTick(
+                    () => {
+                      that.result()
+                    }
+                  )
+                })
+              } else if (res.cancel) {
+                that.result()
+              }
+            }
+          })
+        } else {
+          wx.showToast({
+            title: "内容不能为空！",
+            icon: "none",
+            duration: 1500
+          });
+        }
+      } else {
+        this.result()
+      }
+    } else {
+      this.result()
+    }
   },
   // 发布帖子
   result() {
@@ -284,7 +355,9 @@ Page({
           : this.data.param.cover,
       content: this.data.param.content || "",
       video: this.data.param.video,
-      fs_id: this.data.showFlag && (this.data.selId || ""),
+      //选择展示到圈子,并且选中或者是为空
+      // fs_id: this.data.showFlag && (this.data.selId || ""),
+      fs_id: this.data.selId || "",
       asset_id: this.data.param.asset_id || ""
     };
     let num = this.data.param.num;
@@ -336,10 +409,26 @@ Page({
             app.globalData.rlSuc = true;
             if (integral == "first" || integral == "day") {
               setTimeout(() => {
-                wx.switchTab({ url: "/pages/post/post" });
+                if(this.circle && this.data.selId == this.data.circleId) {
+                  wx.navigateBack()
+                } else if(this.circle && this.data.selId != this.data.circleId && this.data.selId> 0){
+                  wx.redirectTo({
+                    url: '/pages/cDetail/cDetail?id=' + this.data.selId,
+                  })
+                } else {  
+                  wx.switchTab({ url: "/pages/post/post" });
+                }
               }, 2000);
             } else {
-              wx.switchTab({ url: "/pages/post/post" });
+              if(this.circle && this.data.selId == this.data.circleId) {
+                wx.navigateBack()
+              } else if(this.circle && this.data.selId != this.data.circleId && this.data.selId> 0){
+                wx.redirectTo({
+                  url: '/pages/cDetail/cDetail?id=' + this.data.selId,
+                })
+              } else {  
+                wx.switchTab({ url: "/pages/post/post" });
+              }
             }
           })
           .catch(msg => {

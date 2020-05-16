@@ -18,10 +18,7 @@
             <image mode="aspectFill" src="/images/play-hl.png"/>
         </view>
     </block>
-    <!-- 点赞动画 右下角的 -->
-    <!-- <view class="praising-orange">
-        <view class="ani-orange" style="background-image: url('/images/zan-orange.png')"></view>
-    </view> -->
+    
     <!-- 点赞动画 中间的 -->
     <view class="praising-red" wx:if="{{zanFlag}}">
         <view class="ani-red" data-id="{{item.id}}" bindanimationend="aniend" style="background-image: url('{{$state.imgHost}}/zan-red.png')"></view>
@@ -33,6 +30,7 @@
                 <image src="{{item.avatar}}" alt="" />
                 <view class="info-name">
                     <view>作者: {{item.author || item.nickname}}</view>
+                    <view>编号: {{item.id - 63}}</view>
                     <view>{{item.school}}</view>
                 </view>
             </view>
@@ -46,14 +44,13 @@
                     <view class="circle">
                         <image src="{{item.is_praise ? '/images/heart-orange.png': '/images/heart.png'}}" alt="" />
                     </view>
-                    <text>{{item.prise_numbers}}</text>
+                    <text>{{item.prise_numbers || '点赞'}}</text>
                 </view>
                 <view class="share">
-                    <!-- <button class="share-btn" open-type="share"></button> -->
                     <view class="circle" catchtap="shareMode">
                         <image src="/images/share.png" alt="" />
                     </view>
-                    <text>{{item.share_numbers}}</text>
+                    <text>{{item.share_numbers || '转发'}}</text>
                 </view>
                 <view class="join" catchtap="toJoin">
                     <view class="circle">参赛</view>
@@ -66,7 +63,6 @@
                             <image src="/images/guide-zan.png" alt="" />
                             <image src="/images/guide-share.png" alt="" />
                         </view>
-                        <!-- <image src="/images/guide-first.png" alt="" mode="bottom" /> -->
                         <view class="first-btn" catchtap="nextGuide" data-guide="first"></view>
                     </view>
                     <view class="guide-second" wx:if="{{guideFlag[1]&&!guideFlag[2]}}">
@@ -83,7 +79,6 @@
     </view>
     
     <view class="back-vote" catchtap="toVote">
-        <!-- <text>返回</text><text>主页</text> -->
         <view>返回主页</view>
     </view>
     <view wx:if="{{shareFlag}}" class="share-container">
@@ -104,7 +99,6 @@
 
     <canvas class="sharePoster" canvas-id="poster"></canvas>
     <view class="show-img" wx:if="{{sharePoster}}">
-    <!-- <view class="show-img"> -->
         <view class="show-con">
             <image class="share-del" src="/images/unshare.png" alt="" catchtap="unshare" />
             <view class="canvas-img">
@@ -112,8 +106,8 @@
                 <view class="canvas-user">
                     <image class="user-img" src="{{shareInfo.avatar}}" alt=""></image>
                     <view class="canvas-info">
-                        <view class="user-name">{{shareInfo.nickname}}</view>
-                        <view class="tip">正在参赛...</view>
+                        <view class="user-name">{{item.author || item.nickname}}</view>
+                        <view class="tip">作品编号: {{item.id - 63}}</view>
                     </view>
                 </view>
                 <view class="canvas-works">
@@ -134,5 +128,11 @@
         </view>
         <view class="sava-img" catchtap='savePoster'>保存到本地</view>
     </view>
-
+    <!-- 活动弹窗 -->
+    <view class="integration" wx:if="{{showJump}}" catchtouchmove="return">
+        <view class="dialog">
+            <view class="bg" style="background: url('{{jumpUrl.image}}') no-repeat center; background-size: 100% 100%;border-radius:10px" mode="aspectFill" catchtap="jumpPeper" data-jumpurl="{{jumpUrl}}"></view>
+            <icon type="cancel" size="37" color="white" data-id="0" catchtap="closeJump"></icon>
+        </view>
+    </view>
 </view>

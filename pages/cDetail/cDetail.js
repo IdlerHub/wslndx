@@ -7,7 +7,15 @@ Page({
     circle: null,
     isRefreshing: false,
     showT: false,
-    showSheet: false
+    showSheet: false,
+    releaseParam: {
+      image: [],
+      content: null,
+      video: null,
+      cover: null,
+      fs_id: "",
+      num: 0
+    },
   },
   pageName: '圈内帖子列表',
   onLoad(options) {
@@ -25,8 +33,22 @@ Page({
       item.route == 'pages/personPage/personPage' ? this.personPage = item : ''
     })
   },
-  onUnload() { },
   onShow() {
+    if (app.globalData.postShow) {
+      app.globalData.postShow = false;
+    }
+    /* 从circle-->发帖 */
+    setTimeout(() => {
+      if (app.globalData.rlSuc) {
+        this.setData({ rlSucFlag: true });
+      }
+      if (this.data.rlSucFlag) {
+        this.rlSuc();
+        /* 确保动画只执行一次 */
+        this.setData({ rlSucFlag: false });
+        app.globalData.rlSuc = false;
+      }
+    }, 800)
     let list = this.data.list
     list.forEach(item => {
       if (item.id == app.globalData.detail.id) {
@@ -42,6 +64,34 @@ Page({
         list
       })
     })
+    if (((this.data.releaseParam.content != null && this.data.releaseParam.content != "") || this.data.releaseParam.image[0] || this.data.releaseParam.video != null) && this.data.showRelease) {
+      let that = this
+      wx.showModal({
+        content: '保留本次编辑',
+        confirmColor: '#df2020',
+        cancelText: "不保留",
+        confirmText: '保留',
+        success(res) {
+          if (res.confirm) {
+            that.setData({
+              showRelease: false
+            })
+            app.store.setState({
+              releaseParam: that.data.releaseParam,
+              media_type: that.data.media_type
+            })
+          } else if (res.cancel) {
+            that.setData({
+              releaseParam: null
+            })
+            app.store.setState({
+              releaseParam: null,
+              media_type: null
+            })
+          }
+        }
+      })
+    }
   },
   getList: function (list) {
     let temp = list || this.data.list
@@ -56,6 +106,7 @@ Page({
           return i.image
         })
         item.auditing = new Date().getTime() - new Date(item.createtime * 1000) < 7000
+        item.content = app.util.delHtmlTag(item.content)
       })
       this.setData({
         list: temp.concat(msg.data)
@@ -171,8 +222,9 @@ Page({
           list: list
         })
       })
+      wx.uma.trackEvent('totalShare', { 'shareName': '秀风采分享' });
       return {
-        title: article.content,
+        title: app.util.delHtmlTag(article.content),
         imageUrl: article.image || article.images[0] || "../../images/sharemessage.jpg",
         path: "/pages/pDetail/pDetail?id=" + bkid + "&type=share&uid=" + this.data.$state.userInfo.id
       }
@@ -237,9 +289,6 @@ Page({
         })
       }
     })
-  },
-  //用于数据统计
-  onHide() {
   },
   //收藏风采
   collect(e) {
@@ -374,5 +423,25 @@ Page({
         list: this.data.list
       })
     }
+  },
+  // 写帖成功动效
+  rlSuc() {
+    /* 重新到第一页 */
+    this.setData({
+      list: []
+    });
+    this.param = { fs_id: this.id, page: 1, pageSize: 10 }
+    this.getList([]);
+    this.getCircleInfo()
+    this.setData({
+      rlAni: true,
+      scrollTop: 0
+    });
+    let timer = setTimeout(() => {
+      this.setData({
+        rlAni: false
+      });
+      clearTimeout(timer);
+    }, 2000);
   },
 })

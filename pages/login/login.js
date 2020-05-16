@@ -71,6 +71,7 @@ Page({
         mobileiv: e.detail.iv,
         tempCode: app.globalData.tempCode,
         // [app.globalData.query.activity || app.globalData.shareObj.t == 4 ? 'master_uid' : 'invite_uid']: wx.getStorageSync("invite")
+        [app.globalData.query.com ? 'source' : '']: app.globalData.query.com ? app.globalData.query.com : '',
         master_uid: wx.getStorageSync("invite") /* 邀请码 */
       }
       this.login(param)
@@ -107,6 +108,7 @@ Page({
           duration: 1500,
           mask: false
         })
+        this.countDown()
       })
     } else {
       wx.showToast({
@@ -160,6 +162,7 @@ Page({
         mobile: this.params.tel,
         captcha: this.params.authCode,
         // [app.globalData.query.activity || app.globalData.shareObj.t == 4 ? 'master_uid' : 'invite_uid']: wx.getStorageSync("invite")
+        [app.globalData.query.com ? 'source' : '']: app.globalData.query.com ? app.globalData.query.com : '',
         master_uid: wx.getStorageSync("invite") /* 邀请码 */
       }
       this.login(params)
@@ -213,6 +216,11 @@ Page({
       }
     }).catch(err => {
       if(err.msg == '您已经注册过') {
+        wx.setStorageSync("token", err.data.token)
+        wx.setStorageSync("uid", err.data.uid)
+        wx.setStorageSync("authKey", err.data.authKey)
+        app.setUser(err.data.userInfo)
+        app.setAuthKey(err.data.authKey)
         wx.reLaunch({ url: "/pages/index/index?type=login" })
       } else {
         wx.showToast({

@@ -15,7 +15,7 @@ Page({
   // 绘制证书
   draw() {
     let userInfo = JSON.parse(JSON.stringify(this.data.$state.userInfo))
-    userInfo.nickname = userInfo.nickname || "如此优秀的你"
+    userInfo.nickname = userInfo.name || userInfo.nickname || "如此优秀的你"
     let course = this.data.course
     this.context = wx.createCanvasContext("myCanvas", this)
     let r = wx.getSystemInfoSync().windowWidth / 750

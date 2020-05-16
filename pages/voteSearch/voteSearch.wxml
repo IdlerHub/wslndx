@@ -3,7 +3,7 @@
     <view class="search">
         <view class="search-left">
             <image src="{{$state.imgHost}}/searchp.png" style="width: 44rpx;height: 44rpx;" alt="" />
-            <input type="text"  confirm-type="search" placeholder="请输入作品名称或作者名" maxlength="15" value="{{inputcontent}}" bindinput="changeSearch" bindconfirm="toSearch" focus/>
+            <input type="text"  confirm-type="search" placeholder="请输入编号或关键字搜索" maxlength="15" value="{{inputcontent}}" bindinput="changeSearch" bindconfirm="toSearch"/>
             <icon hidden="{{clearhidden}}" type="clear" size="36rpx" bindtap="clearInput" />
         </view>
         <view class="search-right" catchtap="goBack">取消</view>
@@ -25,12 +25,10 @@
                         </view>
                     </view>
                     <view class="item-right">
-                        <view>
-                            <rich-text class="item-title" nodes="{{ item.name }}"></rich-text>
-                            <rich-text class="item-author" nodes="{{ item.author || item.nickname }}"></rich-text>
-                            <rich-text class="item-author" nodes="{{ item.school }}"></rich-text>
-                        </view>
-                        <view class="perfect">{{item.prise_numbers}}赞</view>
+                        <rich-text class="item-title" nodes="{{ item.name }}"></rich-text>
+                        <rich-text class="item-id" nodes="{{ item.serial }}"></rich-text>
+                        <rich-text class="item-author" nodes="{{ item.author || item.nickname }}"></rich-text>
+                        <rich-text class="item-author" nodes="{{ item.school }}"></rich-text>
                     </view>
                 </view>
             </block>
@@ -47,7 +45,7 @@
     </block>
     <block wx:else>
         <view class="history-list">
-            <view class="history-item" wx:for="{{history}}" wx:key="index" data-word="{{item.word}}" bindtap="clickSearch">
+            <view class="history-item" wx:for="{{history}}" wx:key="index" data-word="{{item.word}}" catchtap="clickSearch">
                 <view class="history-left">
                     <image src="/images/vote-history.png" alt="" />
                     <text>{{item.word}}</text>

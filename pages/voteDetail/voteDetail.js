@@ -3,6 +3,10 @@ const app = getApp();
 let videoCtx = null;
 Page({
   data: {
+    showJump: false, //展示跳转卡片
+    jumpUrl: {},
+    shareTitle: '',
+    infoFlag: {}, //活动时间以及弹窗提示
     hocIndex: Number,
     current: 0,
     pause: false,
@@ -38,7 +42,7 @@ Page({
       app.vote.noteGuide();
     }
   },
-  preview(e){
+  preview(e) {
     let url = e.currentTarget.dataset.url;
     wx.previewImage({
       current: url,
@@ -50,39 +54,39 @@ Page({
     this.setData({
       zanFlag: false
     });
-    wx.showToast({
-      title: "今日点赞成功",
-      icon: "none",
-      duration: 2500
-    });
+    // wx.showToast({
+    //   title: "今日点赞成功",
+    //   icon: "none",
+    //   duration: 2500
+    // });
   },
   giveLike(e) {
     //step  活动是否过期
     // step1 判断今天是否点赞过
     // step2  作品点赞数添加 （修改data中数据），不刷新页面
-    if (this.data.overTime == 1) {
+    let infoFlag = this.data.infoFlag;
+    if (this.data.item.is_praise == 1) {  //此处展示优先级和下面不同
+      //提示
       wx.showToast({
-        title: "活动已过期,无法点赞",
+        title: "您今日已点赞,去看看其他作品~",
         icon: "none",
         duration: 1500
       });
     } else {
-      if (this.data.item.is_praise == 1) {
-        //提示
+      if (infoFlag.flag == 0) {
+        if (infoFlag.is_over_praise_numbers) { //是否达到20次点赞,选择展示卡片还是弹窗提示
+          this.setData({
+            jumpUrl: infoFlag.jump_url,
+            showJump: true
+          })
+          return
+        }
         wx.showToast({
-          title: "您今日已点赞,去看看其他作品~",
+          title: infoFlag.msg,
           icon: "none",
           duration: 1500
         });
       } else {
-        let work = this.data.item;
-        work.prise_numbers += 1;
-        work.is_praise = 1;
-        this.setData({
-          item: work,
-          // supportFlag: 0,
-          zanFlag: true
-        });
         let params = {
           id: e.currentTarget.dataset.id,
           type: this.data.item.hoc_id
@@ -91,11 +95,37 @@ Page({
       }
     }
   },
+  jumpPeper(e) {  //活动弹窗
+    let item = e.currentTarget.dataset.jumpurl;
+    this.closeJump(); //关闭卡片,跳转
+    if (item.jump_type == 1) {  //外连接
+      wx.navigateTo({
+        url: `../education/education?type=0&url=${item.clickurl}`
+      });
+    } else if (item.jump_type == 2) { //小程序的tab页
+      wx.switchTab({
+        url: item.clickurl,
+      })
+    }
+  },
+  closeJump() {
+    this.setData({
+      showJump: false
+    })
+  },
   praiseOpus(params) {
     let that = this;
     app.vote
       .praiseOpus(params)
       .then(res => {
+        let work = that.data.item;
+        work.prise_numbers += 1;
+        work.is_praise = 1;
+        that.setData({
+          item: work,
+          // supportFlag: 0,
+          zanFlag: true
+        });
         let list = getCurrentPages();
         const page = list[list.length - 2];
         if (page.route == "pages/vote/vote") {
@@ -103,8 +133,15 @@ Page({
         }
       })
       .catch(err => {
+        if (err.data.is_over_parise_numbers) { //是否达到20次点赞,选择展示卡片还是弹窗提示
+          this.setData({
+            jumpUrl: err.data.data,
+            showJump: true
+          })
+          return
+        }
         wx.showToast({
-          title: "网络波动过大",
+          title: err.msg,
           icon: "none",
           duration: 2500
         });
@@ -173,16 +210,23 @@ Page({
     });
   },
   getOpusInfo(id) {
+    wx.showLoading({
+      title: '加载中',
+      mask: true
+    })
+    let that = this;
     let params = { id: id };
     app.vote.getOpusInfo(params).then(res => {
+      wx.hideLoading();
       let temp = res.data.is_guide;
-      this.setData({
+      let title = res.data.name;
+      that.setData({
         item: res.data,
+        shareTitle: res.data.share_title || '同心抗疫 老年大学在行动',
         // supportFlag: res.data.have_praise,
         guideFlag: [!temp, 0, 0],
-        overTime: res.data.over_time
+        infoFlag: res.data.info
       });
-      let title = this.data.item.name;
       if (title.length > 10) {
         //标题过长
         title = title.substr(0, 10) + "...";
@@ -191,7 +235,15 @@ Page({
         title: title
       });
       //如果是视频就自动播放
-    });
+    })
+      .catch(err => {
+        wx.hideLoading();
+        wx.showToast({
+          title: err.msg,
+          icon: "none",
+          duration: 2000
+        });
+      });
   },
   getPosterInfo(ho_id) {
     let params = { ho_id: ho_id };
@@ -215,12 +267,13 @@ Page({
       this.downloadImg(this.data.shareInfo.qrcode_url, "code"); //二维码下载
       setTimeout(() => {
         wx.getSystemInfo({
-          success: function(res) {
+          success: function (res) {
             var v = 750 / res.windowWidth; //获取手机比例
-            that.drawPoster(v);
+            let system = res.system
+            that.drawPoster(v, system);
           }
         });
-      }, 500);
+      }, 1000);
     });
   },
   shareMode() {
@@ -297,7 +350,7 @@ Page({
           }
         }
       });
-    }, 1000);
+    }, 500);
   },
   shareOff() {
     //取消分享
@@ -309,9 +362,9 @@ Page({
     let that = this;
     wx.downloadFile({
       url: url,
-      success: function(res) {
+      success: function (res) {
         switch (
-          data //临时路径
+        data //临时路径
         ) {
           case "code":
             that.setData({
@@ -335,7 +388,8 @@ Page({
       }
     });
   },
-  drawPoster(v) {
+  drawPoster(v, system) {
+
     let that = this;
     let ratio = 0.5;
     let ctx = wx.createCanvasContext("poster", this);
@@ -356,7 +410,7 @@ Page({
     ctx.fillText(this.data.shareInfo.nickname, 150 / v, 65 / v);
     ctx.setFontSize(28 / v);
     ctx.setFillStyle("white");
-    ctx.fillText("正在参赛......", 150 / v, 115 / v);
+    ctx.fillText("作品编号: " + (this.data.item.id - 63), 150 / v, 115 / v);
     ctx.restore(); //恢复限制
     //分享图片
     ctx.rect(30 / v, 157 / v, 570 / v, 380 / v);
@@ -416,16 +470,23 @@ Page({
     // ctx.draw();
     ctx.restore();
     let windowWidth = wx.getSystemInfoSync().windowWidth;
+    let width = 375;
+    let height = 600;
+    // if (system.indexOf("Android") > -1 || system.indexOf("Linux") > -1) {
+    //   width = 315;
+    //   height = 470;
+    //   console.log("安卓机子",width,height)
+    // }
     ctx.draw(true, () => {
       let timer = setTimeout(() => {
         wx.canvasToTempFilePath(
           {
             x: 0,
             y: 0,
-            width: 315,
-            height: 470,
-            destWidth: (315 * 750) / windowWidth,
-            destHeight: (470 * 750) / windowWidth,
+            width: width,
+            height: height,
+            destWidth: width * 750 / windowWidth,
+            destHeight: height * 750 / windowWidth,
             canvasId: "poster",
             // fileType: 'jpg',  //如果png的话，图片存到手机可能有黑色背景部分
             success(res) {
@@ -447,6 +508,17 @@ Page({
   },
   onLoad(options) {
     // this.store.$state.userInfo
+    console.log("加载详情 ", options.voteid)
+    if (!options.voteid || options.voteid == ''){
+      wx.showToast({
+        title: '参数有误',
+        icon: 'none'
+      })
+      wx.navigateTo({
+        url: '/pages/vote/vote'
+      })
+      return 
+    }
     let userInfo = wx.getStorageSync("userInfo");
     if (userInfo) {
       if (options.flag == "true") {
@@ -472,24 +544,23 @@ Page({
     let id = item.id;
     let uid = wx.getStorageSync("userInfo").id;
     let imgUrl = this.data.imgs;
+    let title = this.data.shareTitle;
     if (item.type == 2) {
       imgUrl = item.banner_image;
     } else if (item.type == 1) {
       imgUrl = item.url[0];
     }
     return {
-      title: '抗击疫情,"艺"起加油',
+      title: title,
       path:
-        "/pages/voteDetail/voteDetail?voteid=" +
-        id +
-        "&type=share&vote=0&uid=" +
-        uid, // 路径，传递参数到指定页面。
+        "/pages/voteDetail/voteDetail?voteid=" + id +
+        "&type=share&vote=0&uid=" + uid, // 路径，传递参数到指定页面。
       imageUrl: imgUrl,
-      success: function(res) {
+      success: function (res) {
         // 转发成功
         console.log("转发成功");
       },
-      fail: function(res) {
+      fail: function (res) {
         // 转发失败
         console.log("转发失败");
       }

@@ -141,8 +141,7 @@ Page({
       })
     }
   },
-  getFeatureCode(e) {
-  },
+
   switchTab(event) {
     let cur = event.detail.current, that = this, currren = this.data.currentTab
     this.timer ? clearTimeout(this.timer) : ''
@@ -180,8 +179,6 @@ Page({
         this.geteCatrcommend(event, this.data.currentTab)
       }
     }
-  },
-  getSomthin() {
   },
   getRecommend() {
     let param = { page: 1, pageSize: 10, province: this.data.$state.userInfo.university.split(',')[0] }
@@ -403,11 +400,6 @@ Page({
       })
     }
   },
-  toEducation() {
-    wx.navigateTo({
-      url: "/pages/education/education"
-    })
-  },
   onPullDownRefresh() {
     wx.stopPullDownRefresh()
     this.setData({
@@ -564,6 +556,7 @@ Page({
         })
       }).catch(() => {
         this.guide = 0
+        err.msg == '记录已增加' ? app.setState({ 'newGuide.index': 1 }) : ''
       })
     }
   },

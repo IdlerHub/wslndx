@@ -231,8 +231,18 @@ page{
     font-size:40rpx;
     font-family:PingFangSC-Medium,PingFang SC;
     font-weight:500;
+    border: none;
+    z-index: 998;
 }
 
 .hid{
     display: none !important;
+}
+.unload{
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    z-index: 999;
 }

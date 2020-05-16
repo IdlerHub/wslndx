@@ -1,0 +1,63 @@
+<!--components/address/address.wxml-->
+<view class="address" wx:if="{{showCard}}" catchtouchmove="unMove">
+    <view class="address-bg">
+        <view class="address-card">
+            <view class="card-title">兑换中</view>
+            <view class="card-body">
+                <!-- 收货人 -->
+                <view class="card-info">
+                    <view class="info-title">收货人</view>
+                    <input type="text" placeholder="请填写收货人" maxlength="8" value="{{userInfo.username}}"
+                        placeholder-class="input-placeholder" bindblur="changeName" />
+                </view>
+                <!-- 手机号 -->
+                <view class="card-info">
+                    <view class="info-title">手机号码</view>
+                    <input type="number" placeholder="请填写手机号" maxlength="11" value="{{userInfo.mobile}}"
+                        placeholder-class="input-placeholder" bindblur="changeMobile" />
+                </view>
+                <view wx:if="{{giftInfo.receive_type == 0 || giftInfo.from == 'winPrize'}}">
+                    <!-- 所在地区 -->
+                    <view class="card-info">
+                        <view class="info-title">所在地区</view>
+                        <!-- <input type="text" placeholder="请填写所在地区" placeholder-class="input-placeholder" /> -->
+                        <picker mode="multiSelector" bindchange="changeArea" bindcolumnchange="changeColumn"
+                            value="{{ multiIndex }}" range="{{ multiAddress }}">
+                            <view class="placeholder">
+                                <text wx:if="{{ !address[1] }}">请选择</text>
+                                <view class="picker" wx:if="{{ address[1] }}">
+                                    {{ address[0] }} {{ address[1] }} {{ address[2] }}
+                                </view>
+                                <view class="change">
+                                    <text>修改</text>
+                                    <image class="icon" mode="aspectFill" src="{{ $state.imgHost }}/Return-black.png">
+                                    </image>
+                                </view>
+                            </view>
+                        </picker>
+                    </view>
+                    <!-- 详细地址 -->
+                    <view class="card-info">
+                        <view class="info-address">详细地址</view>
+                        <textarea show-confirm-bar="{{false}}" adjust-position="{{false}}" class="info-area"
+                            value="{{userInfo.address}}" bindblur="changeAddress" bindinput="changeAddress"
+                            placeholder="请输入详细地址" placeholder-class="input-placeholder"></textarea>
+                    </view>
+                </view>
+                 <!-- 电子邮箱 -->
+                 <view class="card-info" wx:if="{{giftInfo.receive_type == 1}}">
+                    <view class="info-title">电子邮箱</view>
+                    <input type="text" placeholder="请输入接收电子邮箱" value="{{userInfo.email}}"
+                        placeholder-class="input-placeholder" bindblur="changeEmail" />
+                </view>
+            </view>
+            <view class="card-footer" wx:if="{{giftInfo.from == 'winPrize'}}">注意：虚拟物品(话费卡\油卡\会员卡等)将充值到填写的手机号码上</view>
+            <view class="card-footer" wx:if="{{giftInfo.receive_type == 2}}">注意：虚拟物品(话费卡\油卡\会员卡等)将充值到填写的手机号码上，请仔细核对，充值完成后概不退换。</view>
+            <view class="card-footer" wx:if="{{giftInfo.receive_type == 1}}">注意：虚拟物品(电子书\课程视频\音频等)将发送到填写的电子邮箱里，请关注邮箱邮件，注意查收。</view>
+            <view class="crad-btn">
+                <view class="cancel-btn" catchtap="cancel">取消</view>
+                <view class="confirm-btn" catchtap="confirm">确认</view>
+            </view>
+        </view>
+    </view>
+</view>

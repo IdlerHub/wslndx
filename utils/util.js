@@ -49,11 +49,22 @@ function towTwice(num) {
   return num / 10000 > 1 ? (num / 10000).toFixed(2) + "W" : null
 }
 
+function qian(num) {
+  return num / 1000 > 1 ? (num / 1000).toFixed(1) + "k" : null
+}
+
+//去掉所有的html标记
+function delHtmlTag(str) {
+  return str.replace(/<[^>]+>/g,"");
+} 
+
 module.exports = {
   formatTime,
   isPoneAvailable,
   getQueryStringByName,
   tow,
   towTwice,
-  dateUnit
+  dateUnit,
+  delHtmlTag,
+  qian
 }
