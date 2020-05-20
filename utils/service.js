@@ -5,6 +5,7 @@
  */
 import { promisifyAll } from "miniprogram-api-promise";
 const wxp = {};
+import store from "../store";
 promisifyAll(wx, wxp);
 
 import md5 from "./md5.js";
@@ -71,7 +72,12 @@ function xhr(path, method, param = {}, noToken) {
       success(res) {
         if (res.statusCode == 200 && res.data && res.data.code == 1) {
           resolve(res.data);
-        } else {
+        } else if(res.data.code == 110) {
+          store.setState({
+            blackShow: true
+          })
+          return
+        }else {
           handle(req, res);
           reject(res.data);
         }

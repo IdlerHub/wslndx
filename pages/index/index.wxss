@@ -989,3 +989,53 @@ page .getGuideBox .nextBtn {
   left: 0;
   z-index: 5000;
 }
+
+.blackBox {
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.3);
+  position: fixed;
+  top: 0;
+  z-index: 99999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.blackBox .blackToast {
+  width: 560rpx;
+  height: 300rpx;
+  background: #fff;
+  border-radius: 20rpx;
+  box-sizing: border-box;
+}
+.blackBox .blackToast .blackTxt {
+  width: 100%;
+  padding: 30rpx;
+  font-size: 36rpx;
+  font-weight: bold;
+  box-sizing: border-box;
+  white-space: pre-wrap;
+  text-align: center;
+  line-height: 65rpx;
+}
+.blackBox .blackToast .btnBox {
+  border-top: 1rpx solid #EDEDED;
+  display: flex;
+  height: 107rpx;
+}
+.blackBox .blackToast .btnBox .blackBtn {
+  width: 50%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 38rpx;
+}
+
+.blackBox .blackToast .btnBox .blackBtn:nth-child(1) {
+  color: #999999;
+  border-right: 1rpx solid  #EDEDED;
+}
+.blackBox .blackToast .btnBox .blackBtn:nth-child(2) {
+  color: #DF2020;
+}
