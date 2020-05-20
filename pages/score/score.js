@@ -625,13 +625,15 @@ Page({
         })
         break;
       case '3': 
-        query.select('.scroll_containerThree').boundingClientRect()
-        query.exec(res => {
-          height = res[0].height
-          that.setData({
-            'swiperHeight[3]': height
+        setTimeout(() => {
+          query.select('.scroll_containerThree').boundingClientRect()
+          query.exec(res => {
+            height = res[0].height
+            that.setData({
+              'swiperHeight[3]': height
+            })
           })
-        })
+        }, 500);
         break;
     }
   },
