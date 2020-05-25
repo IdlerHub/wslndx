@@ -1,0 +1,78 @@
+<view class="container">
+  <swiper 
+    class="video-swiper" 
+    circular="{{circular}}" 
+    easing-function="{{easingFunction}}" 
+    vertical 
+    current="0"
+    duration="{{duration}}" 
+    bindanimationfinish="animationfinish">
+    <!-- curQueue 循环会导致video重新插入，objectFit 不可变更 -->
+    <swiper-item wx:for="{{curQueue}}" wx:key="index">
+      <video 
+        id="video_{{index}}" 
+        class="video_item" 
+        loop="{{loop}}" 
+        enable-play-gesture 
+        enable-progress-gesture 
+        show-center-play-btn="{{false}}"
+        controls="{{false}}"
+        src="{{item.url}}" 
+        data-id="{{item.id}}"
+        object-fit="{{item.objectFit || 'cover'}}"
+        data-index="{{index}}"
+        bindplay="onPlay"
+        bindended="onEnded"
+        binderror="onError"
+      >
+        <!-- 功能  滑动及视频播/停监听 -->
+        <view  class="dropback">
+          <view hover-class="none" catchtap="tap" wx:if="{{ !$state.baseInfo }}" class="tapbg">
+            <!-- 视频停止 -->
+            <image wx:if="{{ pause }}" mode="aspectFill" src="{{ $state.imgHost }}/play-hl.png" class="pause"></image>
+            <view class="vedioAll">
+              <!-- 点赞 -->
+              <view class="praise" catchtap="praise" wx:if="{{nextRtight != 4}}" data-index="{{index}}">
+                <view wx:if="!item.praising">
+                  <image class="heart" wx:if="{{ item.praised == 0 }}" mode="aspectFill" src="/images/heart.png"></image>
+                  <image class="heart" wx:else mode="aspectFill" src="{{ $state.imgHost }}/heart-red.png"></image>
+                </view>
+                <view wx:if="{{ item.pw }}" class="text">{{ item.pw }}</view>
+                <view wx:else class="text">{{ item.praise }}</view>
+              </view>
+              <!-- 底部视频描述 -->
+              <view class="info">
+                <view class="vedioAllTop">
+                  <!-- 加群 -->
+                  <image wx:if="{{ item.image }}" mode="aspectFill" src="{{ item.image }}" catchtap="navigate"
+                    class="cimg" wx:show="{{nextRtight != 3}}" wx:if="{{nextRtight != 3}}"></image>
+                  <!-- 视频标题 -->
+                  <view class="vedioTitle" wx:if="{{nextRtight != 3}}">
+                    <view class="vedioTitle-p">{{ item.category_name }}</view>
+                    <view class="viewMore" catchtap="navigate">
+                      <view>查看更多</view>
+                      <image src="/images/vedioRight.png" class="viewMoreimg"></image>
+                    </view>
+                  </view>
+                </view>
+                <image class="icon" src="/images/mask.png"></image>
+                <view class="synopsis" wx:if="{{nextRtight != 3}}">{{ item.intro_content }}</view>
+              </view>
+              <!-- 分享 -->
+              <button wx:if="{{ !$state.baseInfo && nextRtight != 4 }}" class="share" open-type="share"
+                hover-class="btn-hover" catchtap="share">
+                <image mode="aspectFill" src="/images/share.png" class="icon"></image>
+                <view wx:if="{{ item.fw }}" class="text">{{ item.fw }}</view>
+                <view wx:else class="text">{{ item.forward }}</view>
+              </button>
+              <view class="redPacket" catchtap="showred" wx:if="{{isshowRed}}"></view>
+              <navigator class="moneyPackt" hover-class="none" url="/pages/makeMoney/makeMoney" wx:if="{{$state.authUserInfo}}"></navigator>
+              <button open-type="getUserInfo" bindgetuserinfo="onGotUserInfo" class="moneyPackt" data-type="money" wx:else></button>
+            </view>
+          </view>
+        </view>
+      </video>
+    </swiper-item>
+  </swiper>
+</view>
+

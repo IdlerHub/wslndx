@@ -261,6 +261,20 @@ Page({
       this.videoContext.play();
     }
   },
+  getMorelist() {
+    this.param.page += 1;
+    this.param.id = "";
+    app.video.list(this.param).then(msg => {
+      msg.data.lists.forEach(function(item) {
+        item.pw = app.util.tow(item.praise);
+        item.fw = app.util.tow(item.forward);
+      });
+      this.setData({
+        list: msg.data.lists
+      })
+      this.param.last_id = msg.data.last_id;
+    });
+  },
   getList(list) {
     let temp = list || this.data.list;
     if (this.data.limit) {
