@@ -183,12 +183,21 @@ Page({
     });
   },
   vedioRecordAdd() {
+    wx.hideLoading()
     setTimeout(() => {
       let param = { shortvideo_id: this.data.cur.id }
       app.video.recordAdd(param).then(() => {
         this.vediorecordAdd = 1
       })
     }, 2000) 
+  },
+  videoError() {
+    wx.showToast({
+      title: '视频加载出错',
+    })
+  },
+  videoDmetadata() {
+    wx.hideLoading()
   },
   copywechat() {
     app.copythat(this.data.wechatnum);
@@ -318,6 +327,9 @@ Page({
             if (data.data.lists.length == 0) {
               /*  已经是第一个了  */
             } else if (data.data.lists.length > 0) {
+              wx.showLoading({
+                title: '努力加载中',
+              })
               this.setData({
                 cur: this.data.list[data.data.lists.length - 1],
                 index: data.data.lists.length - 1,
@@ -327,6 +339,9 @@ Page({
           }
         });
       } else {
+        wx.showLoading({
+          title: '努力加载中',
+        })
         this.setData({
           cur: index <= 0 ? list[0] : list[index - 1],
           index: index <= 0 ? 0 : index - 1,
@@ -341,6 +356,9 @@ Page({
             ? 0
             : index
           : index + 1;
+          wx.showLoading({
+            title: '努力加载中',
+          })
       this.setData({
         cur: list[temp],
         index: temp,
@@ -427,8 +445,6 @@ Page({
       cur: list[index]
     });
   },
-  // 转发
-  share() {},
   onShareAppMessage: function(ops) {
     if (ops.from === "menu") {
       return this.menuAppShare();
@@ -557,7 +573,6 @@ Page({
         : "";
     }
   },
-  onUnload() {},
   switchNav(event) {
     let cur = event.currentTarget.dataset.current;
     if (this.data.currentTab === cur) {
