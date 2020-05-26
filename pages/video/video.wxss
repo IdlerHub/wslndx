@@ -45,19 +45,22 @@ page {
   }
 .myVideo {
   height: calc(100vh - 128rpx);
-  width: 100%; }
-
+  width: 100%;
+}
 /* 背景幕 */
 .dropback {
-  position: absolute;
+  position: fixed;
   height: calc(100vh - 128rpx);
   width: 100%;
   background-color: rgba(0, 0, 0, 0.15);
   visibility: visible; 
-  overflow: visible;}
+  overflow: visible;
+  z-index: 999999;
+  top: 0;
+  }
 
 .dropback .frontdrop {
-  z-index: 10; }
+   z-index: 1000; }
 
   /* 视频暂停 */
 .pause {

@@ -29,7 +29,7 @@
           <cover-view class="text">完整视频</cover-view>
         </cover-view> -->
         <!-- 授权 -->
-        <!-- <cover-view wx:if="{{ cur && $state.baseInfo }}" class="dropback  frontdrop">
+        <cover-view wx:if="{{ cur && $state.baseInfo }}" class="dropback  frontdrop">
           <cover-view class="userInfo-mask">
             <cover-view class="userInfo-box">
               <cover-view class="text">完善微信授权</cover-view>
@@ -37,8 +37,7 @@
               <button open-type="getUserInfo" bindgetuserinfo="onGotUserInfo">允许授权</button>
             </cover-view>
           </cover-view>
-        </cover-view> -->
-        
+        </cover-view>
       <!-- </video> -->
       <mp-video-swiper 
         id="videoSwiper"
@@ -55,6 +54,7 @@
         bindmorelist="getMorelist"
         bindgetCur="getCur"
         bindnavigate="navigate"
+        bindshowIntegral="showIntegral"
       ></mp-video-swiper>
     </swiper-item>
     <swiper-item style="background:#181818" class="classify">

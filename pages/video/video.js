@@ -30,14 +30,14 @@ Page({
   onLoad(options) {
     let systemInfo = wx.getSystemInfoSync();
     this.wifi = false;
-    systemInfo.statusBarHeight < 30
-      ? this.setData({
-          topT: 118
-        })
-      : this.setData({
-          top: 48,
-          topT: 168
-        });
+    systemInfo.statusBarHeight < 30 ?
+      this.setData({
+        topT: 118
+      }) :
+      this.setData({
+        top: 48,
+        topT: 168
+      });
     this.videoContext = wx.createVideoContext(this.data.vid);
     let pages = getCurrentPages();
     let prePage = pages[pages.length - 2];
@@ -87,11 +87,15 @@ Page({
         });
         this.shortvideoAward();
         app.addVisitedNum(`v${this.data.cur.id}`);
-        wx.uma.trackEvent("sortVideo_play", { videoName: this.data.cur.title });
+        wx.uma.trackEvent("sortVideo_play", {
+          videoName: this.data.cur.title
+        });
       });
       this.getCategory();
     }
-    wx.uma.trackEvent("menu", { pageName: "短视频" });
+    wx.uma.trackEvent("menu", {
+      pageName: "短视频"
+    });
     let share = options.type == "share";
     if (!share) {
       this.setData({
@@ -111,11 +115,11 @@ Page({
     if (this.data.$state.userInfo.mobile) {
       this.shortvideoAward();
       if (this.data.$state.newGuide) {
-        this.data.$state.newGuide.shortvideo != 0
-          ? this.judgeWifi()
-          : this.setData({
-              showGuide: true
-            });
+        this.data.$state.newGuide.shortvideo != 0 ?
+          this.judgeWifi() :
+          this.setData({
+            showGuide: true
+          });
       } else {
         app.getGuide().then(res => {
           if (this.data.$state.newGuide.shortvideo != 0) {
@@ -135,18 +139,20 @@ Page({
       this.setData({
         isshowRed: res.data.today_first
       });
-      res.data.today_first
-        ? ""
-        : this.setData({
-            loop: true
-          });
+      res.data.today_first ?
+        "" :
+        this.setData({
+          loop: true
+        });
     });
   },
   //获取红包奖励内容
   recordFinish() {
-    if(this.recordfinish || !this.vediorecordAdd) return
+    if (this.recordfinish || !this.vediorecordAdd) return
     this.recordfinish = 1
-    let param = { shortvideo_id: this.data.cur.id };
+    let param = {
+      shortvideo_id: this.data.cur.id
+    };
     app.video.recordFinish(param).then(res => {
       if (res.data.day_read == 1) {
         this.setData({
@@ -185,11 +191,13 @@ Page({
   vedioRecordAdd() {
     wx.hideLoading()
     setTimeout(() => {
-      let param = { shortvideo_id: this.data.cur.id }
+      let param = {
+        shortvideo_id: this.data.cur.id
+      }
       app.video.recordAdd(param).then(() => {
         this.vediorecordAdd = 1
       })
-    }, 2000) 
+    }, 2000)
   },
   videoError() {
     wx.showToast({
@@ -223,8 +231,7 @@ Page({
             });
             that.wifi = false;
             wx.showModal({
-              content:
-                "您当前不在Wi-Fi环境，继续播放将会产生流量，是否选择继续播放?",
+              content: "您当前不在Wi-Fi环境，继续播放将会产生流量，是否选择继续播放?",
               confirmText: "是",
               cancelText: "否",
               confirmColor: "#DF2020",
@@ -262,7 +269,7 @@ Page({
     this.param.page += 1;
     this.param.id = "";
     app.video.list(this.param).then(msg => {
-      msg.data.lists.forEach(function(item) {
+      msg.data.lists.forEach(function (item) {
         item.pw = app.util.tow(item.praise);
         item.fw = app.util.tow(item.forward);
       });
@@ -294,15 +301,14 @@ Page({
   },
   callback(msg, temp) {
     if (msg.code === 1 && msg.data && msg.data.lists) {
-      msg.data.lists.forEach(function(item) {
+      msg.data.lists.forEach(function (item) {
         item.pw = app.util.tow(item.praise);
         item.fw = app.util.tow(item.forward);
       });
       this.setData({
-        list:
-          this.param.position == "end"
-            ? (msg.data.lists || []).concat(temp)
-            : temp.concat(msg.data.lists || [])
+        list: this.param.position == "end" ?
+          (msg.data.lists || []).concat(temp) :
+          temp.concat(msg.data.lists || [])
       });
       this.param.last_id = msg.data.last_id;
     }
@@ -321,11 +327,12 @@ Page({
     }
   },
   getCur(e) {
+    app.addVisitedNum(`v${e.detail.id}`);
     this.setData({
       cur: e.detail
     })
   },
-  onShareAppMessage: function(ops) {
+  onShareAppMessage: function (ops) {
     if (ops.from === "menu") {
       return this.menuAppShare();
     }
@@ -338,12 +345,13 @@ Page({
         wx.uma.trackEvent("sortVideo_share", {
           videoName: this.data.cur.title
         });
-        wx.uma.trackEvent('totalShare', { 'shareName': '短视频转发' });
+        wx.uma.trackEvent('totalShare', {
+          'shareName': '短视频转发'
+        });
       });
       return {
         title: this.data.cur.title,
-        path:
-          "/pages/video/video?id=" +
+        path: "/pages/video/video?id=" +
           this.data.cur.id +
           "&type=share&uid=" +
           this.data.$state.userInfo.id
@@ -352,15 +360,16 @@ Page({
   },
   // 首页
   tohome() {
-    wx.reLaunch({ url: "/pages/index/index" });
+    wx.reLaunch({
+      url: "/pages/index/index"
+    });
   },
   // 短视频分类
   navigate() {
     /* 只能迭代一层 */
     if (this.data.limit) return;
     wx.navigateTo({
-      url:
-        "/pages/videoItemize/videoItemize?categoryId=" +
+      url: "/pages/videoItemize/videoItemize?categoryId=" +
         this.data.cur.category_id +
         "&share=" +
         this.data.vistor
@@ -369,8 +378,7 @@ Page({
   navgateto(e) {
     let id = e.currentTarget.dataset.id;
     wx.navigateTo({
-      url:
-        "/pages/videoItemize/videoItemize?categoryId=" +
+      url: "/pages/videoItemize/videoItemize?categoryId=" +
         id +
         "&share=" +
         this.data.vistor
@@ -387,8 +395,7 @@ Page({
     });
   },
   // 用于数据统计
-  onHide() {
-  },
+  onHide() {},
   //指引
   nextGuide(e) {
     if (this.data.nextRtight == 1) {
@@ -429,19 +436,21 @@ Page({
         })
         .catch(() => {
           this.guide = 0;
-          err.msg == '记录已增加' ? app.setState({ 'newGuide.shortvideo': 1 }) : ''
+          err.msg == '记录已增加' ? app.setState({
+            'newGuide.shortvideo': 1
+          }) : ''
         });
     }
   },
   // 获取用户的微信昵称头像
-  onGotUserInfo: function(e) {
+  onGotUserInfo: function (e) {
     if (e.detail.errMsg == "getUserInfo:ok") {
       app.updateBase(e);
-      e.currentTarget.dataset.type
-        ? wx.navigateTo({
-            url: "/pages/makeMoney/makeMoney"
-          })
-        : "";
+      e.currentTarget.dataset.type ?
+        wx.navigateTo({
+          url: "/pages/makeMoney/makeMoney"
+        }) :
+        "";
     }
   },
   switchNav(event) {
@@ -474,5 +483,17 @@ Page({
         this.data.$state.flow || this.wifi ? this.videoContext.play() : "";
       }
     });
+  },
+  showIntegral(e) {
+    this.setData({
+      integral: `+${e.detail.num} 学分`,
+      integralContent: e.detail.txt,
+      showintegral: true
+    });
+    setTimeout(() => {
+      this.setData({
+        showintegral: false
+      });
+    }, 2000);
   }
 });

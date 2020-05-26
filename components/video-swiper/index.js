@@ -203,7 +203,8 @@ module.exports =
                 _change: -2,
                 _invalidUp: 0,
                 _invalidDown: 0,
-                _videoContexts: []
+                _videoContexts: [],
+                index: 0
             },
             param: {
                 page: 1,
@@ -351,32 +352,23 @@ module.exports =
                         // 点赞
                         app.video.praise(param1).then(msg => {
                             if (msg.data.is_first == "first") {
-                                //   this.setData({
-                                //     integral: "+50 学分",
-                                //     integralContent: "完成[短视频]首次点赞",
-                                //     showintegral: true
-                                //   });
-                                //   setTimeout(() => {
-                                //     this.setData({
-                                //       showintegral: false
-                                //     });
-                                //   }, 2000);
+                                let param = {
+                                    num: 50,
+                                    txt: "完成[短视频]首次点赞"
+                                }
+                                this.triggerEvent('showIntegral', param)
                             } else if (msg.data.is_first == "day") {
-                                //   this.setData({
-                                //     integral: "+20 学分",
-                                //     integralContent: "完成每日[短视频]首赞",
-                                //     showintegral: true
-                                //   });
-                                //   setTimeout(() => {
-                                //     this.setData({
-                                //       showintegral: false
-                                //     });
-                                //   }, 2000);
+                                let param = {
+                                    num: 20,
+                                    txt: "完成每日[短视频]首赞"
+                                }
+                                this.triggerEvent('showIntegral', param)
                             }
                             list[index].praised = 1;
                             list[index].praise++;
                             list[index].praising = true;
                             this.setData({
+                                index,
                                 [`curQueue[${index}]`]: list[index]
                             });
                         });
@@ -387,7 +379,7 @@ module.exports =
                 },
                 aniend(e) {
                     let list = this.data.curQueue;
-                    let index = e.currentTarget.dataset.index;
+                    let index = this.data.index;
                     list[index].praising = false;
                     this.setData({
                         [`curQueue[${index}]`]: list[index]
@@ -398,7 +390,7 @@ module.exports =
                 },
                 addShare(id) {
                     this.data.curQueue.forEach((item, index) => {
-                        if(item.id == id) {
+                        if (item.id == id) {
                             this.setData({
                                 [`curQueue[${index}].forward`]: item.forward += 1
                             })
@@ -407,7 +399,18 @@ module.exports =
                 },
                 navigate() {
                     this.triggerEvent('navigate', 1)
-                }
+                },
+                // 获取用户的微信昵称头像
+                onGotUserInfo: function (e) {
+                    if (e.detail.errMsg == "getUserInfo:ok") {
+                        app.updateBase(e);
+                        e.currentTarget.dataset.type ?
+                            wx.navigateTo({
+                                url: "/pages/makeMoney/makeMoney"
+                            }) :
+                            "";
+                    }
+                },
             }
         });
 
