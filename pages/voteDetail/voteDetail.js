@@ -26,6 +26,7 @@ Page({
     item: {}, //作品详情
     shareInfo: {} //海报信息
   },
+  pageName: '赛事活动详情页',
   nextGuide(e) {
     if (e.currentTarget.dataset.guide == "first") {
       this.setData({

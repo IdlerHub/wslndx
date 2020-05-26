@@ -8,7 +8,7 @@ Page({
     address: [],
     addressId: []
   },
-
+  pageName: '地址信息页',
   onLoad: function () {
     this.init()
   },

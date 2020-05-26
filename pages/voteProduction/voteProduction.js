@@ -20,6 +20,7 @@ Page({
     imgList: [],
     video: ""
   },
+  pageName: '赛事活动作品上传页',
   changeName(e) {
     this.setData({
       productionName: e.detail.value.trim()

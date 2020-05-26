@@ -10,6 +10,7 @@ Page({
     total_page: 1,
     history: []
   },
+  pageName: '赛事活动搜索页',
   goBack() {
     wx.navigateBack(); //返回
   },

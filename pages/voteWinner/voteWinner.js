@@ -3,7 +3,7 @@
  * @Author: zxk
  * @Date: 2020-05-13 12:42:53
  * @LastEditors: zxk
- * @LastEditTime: 2020-05-26 17:56:15
+ * @LastEditTime: 2020-05-26 18:05:13
  */ 
 // pages/voteWinner/voteWinner.js
 const app = getApp()
@@ -22,6 +22,7 @@ Page({
     categoryIndex: 0,
     category:[],  //分类
   },
+  pageName: '赛事活动获奖排行',
   getCategory() {
     //获取分类数据
     app.vote.getCategory().then(res => {

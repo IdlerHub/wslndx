@@ -1,3 +1,10 @@
+/*
+ * @Github: https://github.com/IdlerHub
+ * @Author: zxk
+ * @Date: 2020-05-26 17:43:06
+ * @LastEditors: zxk
+ * @LastEditTime: 2020-05-26 17:59:30
+ */ 
 // pages/voteCertificate/voteCertificate.js
 Page({
 
@@ -7,7 +14,7 @@ Page({
   data: {
 
   },
-
+  pageName: '赛事活动电子证书',
   /**
    * 生命周期函数--监听页面加载
    */
