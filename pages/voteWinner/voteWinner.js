@@ -1,3 +1,10 @@
+/*
+ * @Github: https://github.com/IdlerHub
+ * @Author: zxk
+ * @Date: 2020-05-13 12:42:53
+ * @LastEditors: zxk
+ * @LastEditTime: 2020-05-26 17:56:15
+ */ 
 // pages/voteWinner/voteWinner.js
 const app = getApp()
 Page({
@@ -60,6 +67,12 @@ Page({
       categoryIndex: index
     })
     this.getPrize(id)
+  },
+  searCertificate(){
+    console.log("查询证书")
+    wx.navigateTo({
+      url: '/pages/voteCertificate/voteCertificate'
+    })
   },
   /**
    * 生命周期函数--监听页面加载

@@ -59,7 +59,8 @@
     "pages/rankingList/rankingList",
     "pages/infoAddress/infoAddress",
     "pages/voteRank/voteRank",
-    "pages/voteWinner/voteWinner"
+    "pages/voteWinner/voteWinner",
+    "pages/voteCertificate/voteCertificate"
   ],
   "permission": {
     "scope.userLocation": {
