@@ -159,15 +159,15 @@
 				},
 				{
 					"id": 9,
-					"name": "pages/login/login",
-					"pathName": "pages/login/login",
+					"name": "个人中心",
+					"pathName": "pages/user/user",
 					"query": "",
 					"scene": null
 				},
 				{
 					"id": 10,
-					"name": "pages/score/score",
-					"pathName": "pages/score/score",
+					"name": "pages/timetable/timetable",
+					"pathName": "pages/timetable/timetable",
 					"query": "id=21&type=invite",
 					"scene": null
 				},

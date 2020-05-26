@@ -1,0 +1,5 @@
+<!--pages/timetable/timetable.wxml-->
+<mp-video-swiper id="videoSwiper" class="myVideo" video-list="{{list}}" nextRtight="{{nextRtight}}" pause="{{pause}}"
+bindplay="vedioRecordAdd" bindpause="onPause" bindtimeupdate="onTimeUpdate" bindended="recordFinish"
+binderror="videoError" bindwaiting="onWaiting" bindprogress="onProgress" bindmorelist="getMorelist"
+bindgetCur="getCur" bindnavigate="navigate" bindshowIntegral="showIntegral" bindtap="tap"></mp-video-swiper>

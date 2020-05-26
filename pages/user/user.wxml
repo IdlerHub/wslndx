@@ -82,6 +82,11 @@
       <image src="{{ $state.imgHost }}/attentionicon.png" class="iconfont"></image>
       <text>我的关注</text>
     </navigator>
+    <!-- <navigator hover-class="none" class="nav" url="/pages/timetable/timetable" open-type="navigate"
+      bindtap="drawPage">
+      <image src="{{ $state.imgHost }}/timetable.png" class="iconfont"></image>
+      <text>课程表</text>
+    </navigator> -->
   </view>
   <navBar path="user" />
   <!-- wx:if="{{$state.newGuide.user == 0}}" -->

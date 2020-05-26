@@ -1,7 +1,12 @@
 @charset "UTF-8";
-.myVideo {
+.container {
+  width: 100vw;
   height: 100vh;
-  width: 100%; }
+}
+.myVideo {
+  height: 100%;
+  width: 100%;
+}
 
 /* 背景幕 */
 .dropback {
@@ -55,116 +60,12 @@
   color: #fff;
   margin-top: 30rpx; }
 
-/* 底部视频描述 */
-.info {
-  width: 750rpx;
-  box-sizing: border-box;
-  height: 365rpx; 
-  position: absolute;
-  bottom: 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  align-content: flex-end;  
-  overflow: visible;
+  .vedioAll {
+    width: 100%;
+    position: absolute;
+    bottom: 38rpx;
   }
-
-.info .icon {
-  width: 100%;
-  height: 100%;
-  z-index: -1;
-  position: absolute; }
-
-.synopsis {
-  left: 30rpx;
-  /* width: calc(100% - 60rpx); */
-  margin: 35rpx 0 65rpx 30rpx;
-  width: 568rpx;
-  bottom: 146rpx;
-  font-size: 34rpx;
-  color: #ffffff;
-  line-height: 48rpx;
-  word-break: break-all;
-  text-overflow: ellipsis;
-  white-space: normal;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 3;
-  overflow: visible; }
-
-.vedioAllTop {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  overflow: visible;
-}
-/* 视频标题 */
-.vedioTitle-p {
-  z-index: 5;
-  bottom: 330rpx;
-  left: 169rpx;
-  margin-left: 26rpx;
-}
- .vedioTitle-p {
-  font-size:40rpx;
-  font-weight:500;
-  color:#fff;
-  width: 435rpx;
-  margin-top: 11rpx;
-  height: 40rpx;
-  overflow: hidden;
-  line-height: 40rpx;
-  text-overflow:ellipsis;
-  white-space: nowrap;
-}
-/* 加群 */
-.cimg {
-  left: 26rpx;
-  margin-left: 30rpx;
-  /* bottom: calc(50% - 345rpx); */
-  bottom: 328rpx;
-  width: 110rpx;
-  height: 110rpx;
-  border-radius: 50%;
-  border: 2rpx solid rgba(255, 255, 255, 0.5); }
-
-.join {
-  position: absolute;
-  left: 650rpx;
-  top: calc(50% - 235rpx);
-  width: 44rpx;
-  height: 44rpx;
-  border-radius: 50%;
-  background: #ed3030;
-  line-height: 40rpx;
-  text-align: center;
-  color: #fff;
-  font-size: 45rpx; }
-
-
-/* 点赞 */
-.praise {
-  position: absolute;
-  width: 120rpx;
-  left: 610rpx;
-  bottom: 215rpx;
-  text-align: center;
-  overflow: visible;
-  z-index: 200; }
-
-.praise .heart {
-  margin: 0 auto;
-  width: 80rpx;
-  height: 80rpx; }
-
-.praising {
-  position: fixed;
-  bottom: 208rpx;
-  z-index: 5;
-  margin-top: -224rpx;
-  right: -9rpx; }
-
-.redPacket {
+  .vedioAll .redPacket {
     position: absolute;
     width: 110px;
     height: 107px;
@@ -174,43 +75,179 @@
     background-size: cover;
     animation: ani 2s steps(23, end) infinite;
   }
-
-/* 点赞动画 */
-.ani {
-  width: 180rpx;
-  height: 180rpx;
-  background-size: cover;
-  animation: ani steps(20) 0.8s both; }
-
-.praise .text {
-  font-family: "黑体";
-  font-size: 36rpx;
-  color: #ffffff;
-  text-shadow: 0 2rpx 4rpx rgba(0, 0, 0, 0.5);
-  line-height: 43rpx; }
-
-/* 分享 */
-.share {
-  position: fixed;
-  left: 610rpx;
-  bottom:58rpx;
-  width: 120rpx;
-  margin-top: -10rpx;
-  text-align: center;
-  line-height: normal;
-  z-index: 5; }
-
-.share .icon {
-  margin: 0 auto;
-  width: 72rpx;
-  height: 72rpx; }
-
-.share .text {
-  font-family: "黑体";
-  font-size: 36rpx;
-  color: #ffffff;
-  text-shadow: 0 2rpx 4rpx rgba(0, 0, 0, 0.5);
-  line-height: 43rpx; }
+  .vedioAll .moneyPackt {
+    position: absolute;
+    width: 88rpx;
+    height: 88rpx;
+    top: -118rpx;
+    right: 17rpx;
+    background: url('https://hwcdn.jinlingkeji.cn/images/pro/moneyActive.png');
+    background-size: cover;
+    animation: ani 1s steps(23, end) infinite;
+  }
+  .vedioAll .vedioAllTop {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding-left: 30rpx;
+    overflow: visible;
+  }
+  /* 底部视频描述 */
+  .info {
+    width: 750rpx;
+    box-sizing: border-box;
+    height: 313rpx; 
+    position: relative;
+    top: 38rpx;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-content: flex-end;  
+    }
+  
+  .info .icon {
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    position: absolute; }
+  
+  .synopsis {
+    left: 30rpx;
+    /* width: calc(100% - 60rpx); */
+    margin: 35rpx 0 51rpx 30rpx;
+    width: 568rpx;
+    bottom: 146rpx;
+    font-size: 34rpx;
+    color: #ffffff;
+    line-height: 48rpx;
+    word-break: break-all;
+    text-overflow: ellipsis;
+    white-space: normal;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3; }
+  
+  /* 加群 */
+  .cimg {
+    left: 26rpx;
+    /* bottom: calc(50% - 345rpx); */
+    bottom: 328rpx;
+    width: 110rpx;
+    height: 110rpx;
+    border-radius: 50%;
+    border: 2rpx solid rgba(255, 255, 255, 0.5); }
+  
+  .join {
+    position: absolute;
+    left: 650rpx;
+    top: calc(50% - 235rpx);
+    width: 44rpx;
+    height: 44rpx;
+    border-radius: 50%;
+    background: #ed3030;
+    line-height: 40rpx;
+    text-align: center;
+    color: #fff;
+    font-size: 45rpx; }
+  
+  /* 点赞 */
+  .praise {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 120rpx;
+    height: 120rpx;
+    z-index: 20;
+    /* top: calc(50% - 175rpx); */
+    text-align: center;
+    overflow: visible;}
+  
+  .praise .heart {
+    margin: 0 auto;
+    width: 80rpx;
+    height: 80rpx; }
+  
+  .praising {
+    position: fixed;
+    right: -30rpx;
+    bottom: 222rpx;
+    z-index: 1000;
+    margin-top: -224rpx; }
+  
+  /* 视频标题 */
+  .vedioTitle {
+    z-index: 5;
+    bottom: 330rpx;
+    left: 169rpx;
+    margin-left: 26rpx;
+  }
+  .vedioTitle .vedioTitle-p {
+    font-size:40rpx;
+    font-weight:500;
+    color:#fff;
+    width: 435rpx;
+    margin-top: 11rpx;
+    height: 40rpx;
+    overflow: hidden;
+    line-height: 40rpx;
+    text-overflow:ellipsis;
+    white-space: nowrap;
+  }
+  .viewMore {
+    width: 164rpx;
+    height:50rpx;
+    background:rgba(250,249,250,0.8);
+    border-radius:25rpx;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    line-height: 50rpx;
+    padding-left: 10rpx;
+    font-size:28rpx;
+    font-weight:500;
+    color:rgba(51,51,51,1);
+    margin-top: 19rpx;
+  } .viewMore .viewMoreimg {
+    width: 11rpx;
+    height: 22rpx;
+    margin-left: 10rpx;
+  }
+  /* 点赞动画 */
+  .ani {
+    width: 180rpx;
+    height: 180rpx;
+    background-size: cover;
+    animation: ani steps(20) 1s both; }
+  
+  .praise .text {
+    font-family: "黑体";
+    font-size: 36rpx;
+    color: #ffffff;
+    text-shadow: 0 2rpx 4rpx rgba(0, 0, 0, 0.5);
+    line-height: 43rpx; }
+  
+  /* 分享 */
+  .share {
+    position: absolute;
+    top: 176rpx;
+    right: 0;
+    width: 120rpx;
+    text-align: center;
+    line-height: normal;
+    z-index: 5; }
+  
+  .share .icon {
+    margin: 0 auto;
+    width: 72rpx;
+    height: 72rpx; }
+  
+  .share .text {
+    font-family: "黑体";
+    font-size: 36rpx;
+    color: #ffffff;
+    text-shadow: 0 2rpx 4rpx rgba(0, 0, 0, 0.5);
+    line-height: 43rpx; }
 
 /* 完整视频 */
 .complete {
