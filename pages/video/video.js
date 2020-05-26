@@ -215,6 +215,7 @@ Page({
       let that = this;
       wx.getNetworkType({
         success: res => {
+          console.log(res.networkType)
           if (res.networkType == "wifi") {
             that.wifi = true;
             app.playVedio("wifi");
@@ -314,6 +315,7 @@ Page({
     }
   },
   tap() {
+    // console.log(this.selectComponent('#videoSwiper'))
     if (this.data.pause) {
       this.judgeWifi();
       this.setData({
@@ -468,7 +470,9 @@ Page({
     this.setData({
       currentTab: cur
     });
-    cur == 0 ? this.judgeWifi() : this.videoContext.stop();
+    cur == 0 ? this.judgeWifi() : this.setData({
+      pause: true
+    });
   },
   showred() {
     this.videoContext.stop();

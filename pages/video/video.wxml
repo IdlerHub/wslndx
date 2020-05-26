@@ -19,10 +19,6 @@
   </view>
   <swiper class="swiper" current="{{ currentTab }}" duration="300" bindchange="switchTab">
     <swiper-item>
-      <!-- <video class="myVideo" id="{{ vid }}" src="{{ cur.url }}" controls="{{ false }}"
-        show-center-play-btn="{{ false }}"  object-fit="fill" autoplay="{{ autoplay }}" loop="{{loop}}"
-        bindended="recordFinish" bindplay="vedioRecordAdd" bindwaiting="videoWaitng" binderror="videoError" bindloadedmetadata="videoDmetadata"> -->
-        
         <!-- 完整视频 -->
         <!-- <cover-view class="complete" catchtap="complete" wx:if="{{ cur.target_id }}">
           <cover-image mode="aspectFill" src="/images/video-white.png" class="icon"></cover-image>
@@ -44,6 +40,7 @@
         class="myVideo" 
         video-list="{{list}}" 
         nextRtight="{{nextRtight}}"
+        pause="{{pause}}"
         bindplay="vedioRecordAdd"
         bindpause="onPause"
         bindtimeupdate="onTimeUpdate"
@@ -55,6 +52,7 @@
         bindgetCur="getCur"
         bindnavigate="navigate"
         bindshowIntegral="showIntegral"
+        bindtap="tap"
       ></mp-video-swiper>
     </swiper-item>
     <swiper-item style="background:#181818" class="classify">

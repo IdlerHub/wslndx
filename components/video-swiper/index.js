@@ -12,20 +12,14 @@ module.exports =
             /******/ // Check if module is in cache
             /******/
             if (installedModules[moduleId]) {
-                /******/
                 return installedModules[moduleId].exports;
-                /******/
             }
             /******/ // Create a new module (and put it into the cache)
             /******/
             var module = installedModules[moduleId] = {
-                /******/
                 i: moduleId,
-                /******/
                 l: false,
-                /******/
                 exports: {}
-                /******/
             };
             /******/
             /******/ // Execute the module function
@@ -39,9 +33,7 @@ module.exports =
             /******/ // Return the exports of the module
             /******/
             return module.exports;
-            /******/
         }
-        /******/
         /******/
         /******/ // expose the modules object (__webpack_modules__)
         /******/
@@ -54,34 +46,25 @@ module.exports =
         /******/ // define getter function for harmony exports
         /******/
         __webpack_require__.d = function (exports, name, getter) {
-            /******/
             if (!__webpack_require__.o(exports, name)) {
-                /******/
                 Object.defineProperty(exports, name, {
                     enumerable: true,
                     get: getter
                 });
-                /******/
             }
-            /******/
         };
         /******/
         /******/ // define __esModule on exports
         /******/
         __webpack_require__.r = function (exports) {
-            /******/
             if (typeof Symbol !== 'undefined' && Symbol.toStringTag) {
-                /******/
                 Object.defineProperty(exports, Symbol.toStringTag, {
                     value: 'Module'
                 });
-                /******/
             }
-            /******/
             Object.defineProperty(exports, '__esModule', {
                 value: true
             });
-            /******/
         };
         /******/
         /******/ // create a fake namespace object
@@ -91,49 +74,34 @@ module.exports =
         /******/ // mode & 8|1: behave like require
         /******/
         __webpack_require__.t = function (value, mode) {
-            /******/
             if (mode & 1) value = __webpack_require__(value);
-            /******/
             if (mode & 8) return value;
-            /******/
             if ((mode & 4) && typeof value === 'object' && value && value.__esModule) return value;
-            /******/
             var ns = Object.create(null);
-            /******/
             __webpack_require__.r(ns);
-            /******/
             Object.defineProperty(ns, 'default', {
                 enumerable: true,
                 value: value
             });
-            /******/
             if (mode & 2 && typeof value != 'string')
                 for (var key in value) __webpack_require__.d(ns, key, function (key) {
                     return value[key];
                 }.bind(null, key));
-            /******/
             return ns;
-            /******/
         };
         /******/
         /******/ // getDefaultExport function for compatibility with non-harmony modules
         /******/
         __webpack_require__.n = function (module) {
-            /******/
             var getter = module && module.__esModule ?
-                /******/
                 function getDefault() {
                     return module['default'];
                 } :
-                /******/
                 function getModuleExports() {
                     return module;
                 };
-            /******/
             __webpack_require__.d(getter, 'a', getter);
-            /******/
             return getter;
-            /******/
         };
         /******/
         /******/ // Object.prototype.hasOwnProperty.call
@@ -152,17 +120,10 @@ module.exports =
         return __webpack_require__(__webpack_require__.s = 0);
         /******/
     })
-/************************************************************************/
-/******/
 ([
-    /* 0 */
-    /***/
     (function (module, exports, __webpack_require__) {
-
         "use strict";
-
         const app = getApp()
-
         Component({
             options: {
                 addGlobalClass: true,
@@ -192,6 +153,13 @@ module.exports =
                         var newVal = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
                         this._videoListChanged(newVal);
                     }
+                },
+                pause: {
+                    type: Boolean,
+                    value: false,
+                   observer: function observer(){
+                        this.videoPause(arguments[0])
+                   }
                 }
             },
             data: {
@@ -204,7 +172,8 @@ module.exports =
                 _invalidUp: 0,
                 _invalidDown: 0,
                 _videoContexts: [],
-                index: 0
+                index: 0,
+                current: 0
             },
             param: {
                 page: 1,
@@ -228,7 +197,7 @@ module.exports =
                         this.setData({
                             curQueue: data.nextQueue.splice(0, 3)
                         }, function () {
-                            _this.playCurrent(0);
+                            _this.playCurrent(0, data);
                         });
                     }
                 },
@@ -243,7 +212,7 @@ module.exports =
                     var diff = current - _last;
                     if (diff === 0) return;
                     this.data._last = current;
-                    this.playCurrent(current);
+                    this.playCurrent(current, _data);
                     this.triggerEvent('change', {
                         activeId: curQueue[current].id
                     });
@@ -292,14 +261,17 @@ module.exports =
                     }
                     this.setData({
                         curQueue: curQueue,
-                        circular: circular
+                        circular: circular,
+                        current
                     });
                     this.triggerEvent('getCur', curQueue[current])
                 },
-                playCurrent: function playCurrent(current) {
+                playCurrent: function playCurrent(current, data) {
                     this.data._videoContexts.forEach(function (ctx, index) {
-                        index !== current ? ctx.pause() : ctx.play();
+                        console.log(ctx)
+                        index !== current ? ctx.pause() : data.pause ?  ctx.pause() : ctx.play();
                     });
+                    
                 },
                 onPlay: function onPlay(e) {
                     this.trigger(e, 'play');
@@ -411,10 +383,14 @@ module.exports =
                             "";
                     }
                 },
+                videoPause(pause) {
+                    if(!this.data._videoContexts[0]) return
+                    pause ? this.data._videoContexts[this.data.current].pause() : this.data._videoContexts[this.data.current].play()
+                },
+                tap() {
+                    this.triggerEvent('tap', 1)
+                }
             }
         });
-
-        /***/
     })
-    /******/
 ]);
