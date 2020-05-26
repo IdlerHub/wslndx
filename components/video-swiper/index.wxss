@@ -13,27 +13,4 @@
   width: 100%
 }
 
-/* 背景幕 */
-.dropback {
-  position: fixed;
-  height: calc(100vh - 128rpx);
-  width: 100%;
-  background-color: rgba(0, 0, 0, 0.15);
-  visibility: visible; 
-  overflow: visible;}
-
-.dropback .frontdrop {
-  z-index: 10; }
-
-  /* 视频暂停 */
-.pause {
-  position: fixed;
-  z-index: 3;
-  width: 146rpx;
-  height: 146rpx;
-  left: 0;
-  right: 0;
-  top: -28rpx;
-  bottom: 0;
-  margin: auto; }
 

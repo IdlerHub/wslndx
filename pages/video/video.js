@@ -196,9 +196,6 @@ Page({
       title: '视频加载出错',
     })
   },
-  videoDmetadata() {
-    wx.hideLoading()
-  },
   copywechat() {
     app.copythat(this.data.wechatnum);
   },
@@ -323,168 +320,31 @@ Page({
       });
     }
   },
-  scrollTouchStart(e) {
-    this.sy = e.touches[0].pageY;
-  },
-  scrollTouchEnd(e) {
-    let list = this.data.list;
-    let index = this.data.index;
-    this.ey = e.changedTouches[0].pageY;
-    if (this.ey - this.sy > 30) {
-      // 下拉
-      if (this.param.type == "category" && index == 0) {
-        this.param.id = list[0].id;
-        this.param.position = "end";
-        this.param.include = "no";
-        this.getList().then(data => {
-          if (data.data && data.data.lists) {
-            if (data.data.lists.length == 0) {
-              /*  已经是第一个了  */
-            } else if (data.data.lists.length > 0) {
-              wx.showLoading({
-                title: '努力加载中',
-              })
-              this.setData({
-                cur: this.data.list[data.data.lists.length - 1],
-                index: data.data.lists.length - 1,
-                pause: false
-              });
-            }
-          }
-        });
-      } else {
-        wx.showLoading({
-          title: '努力加载中',
-        })
-        this.setData({
-          cur: index <= 0 ? list[0] : list[index - 1],
-          index: index <= 0 ? 0 : index - 1,
-          pause: false
-        });
-      }
-    } else if (this.ey - this.sy < -30) {
-      // 上拉
-      let temp =
-        index >= list.length - 1
-          ? this.param.type == "recommend"
-            ? 0
-            : index
-          : index + 1;
-          wx.showLoading({
-            title: '努力加载中',
-          })
-      this.setData({
-        cur: list[temp],
-        index: temp,
-        pause: false
-      });
-      if (temp == list.length - 2) {
-        //还剩下一个视频时,加载新数据
-        if (this.param.type == "recommend") {
-          this.param.page += 1;
-          this.param.id = "";
-        } else {
-          this.param.id = list[list.length - 1].id;
-          this.param.position = "first";
-          this.param.include = "no";
-        }
-        this.getList();
-      }
-    }
-    // setTimeout(() => {
-    //   this.vedioRecordAdd()
-    // }, 200);
-    app.addVisitedNum(`v${this.data.cur.id}`);
-    wx.uma.trackEvent("sortVideo_play", { videoName: this.data.cur.title });
-  },
-  praise() {
-    let list = this.data.list;
-    let index = this.data.index;
-    let param1 = {
-      id: list[index].id
-    };
-    if (list[index].praised == 1) {
-      // 取消点赞
-      app.video.delPraise(param1).then(msg => {
-        list[index].praised = 0;
-        list[index].praise--;
-        this.setData({
-          list: list,
-          cur: list[index]
-        });
-      });
-    } else {
-      // 点赞
-      app.video.praise(param1).then(msg => {
-        if (msg.data.is_first == "first") {
-          this.setData({
-            integral: "+50 学分",
-            integralContent: "完成[短视频]首次点赞",
-            showintegral: true
-          });
-          setTimeout(() => {
-            this.setData({
-              showintegral: false
-            });
-          }, 2000);
-        } else if (msg.data.is_first == "day") {
-          this.setData({
-            integral: "+20 学分",
-            integralContent: "完成每日[短视频]首赞",
-            showintegral: true
-          });
-          setTimeout(() => {
-            this.setData({
-              showintegral: false
-            });
-          }, 2000);
-        }
-        list[index].praised = 1;
-        list[index].praise++;
-        list[index].praising = true;
-        this.setData({
-          list: list,
-          cur: list[index]
-        });
-      });
-      wx.uma.trackEvent("sortVideo_praise", { videoName: this.data.cur.title });
-    }
-  },
-  aniend(e) {
-    let list = this.data.list;
-    let index = this.data.index;
-    list[index].praising = false;
+  getCur(e) {
     this.setData({
-      list: list,
-      cur: list[index]
-    });
+      cur: e.detail
+    })
   },
   onShareAppMessage: function(ops) {
     if (ops.from === "menu") {
       return this.menuAppShare();
     }
     if (ops.from === "button") {
-      let list = this.data.list;
-      let index = this.data.index;
       let param2 = {
-        id: list[index].id
+        id: this.data.cur.id
       };
       app.video.share(param2).then(msg => {
-        list[index].forward += 1;
-        this.setData({
-          list: list,
-          cur: list[index]
-        });
+        this.selectComponent('#videoSwiper').addShare(this.data.cur.id)
         wx.uma.trackEvent("sortVideo_share", {
           videoName: this.data.cur.title
         });
         wx.uma.trackEvent('totalShare', { 'shareName': '短视频转发' });
       });
       return {
-        title: list[index].title,
+        title: this.data.cur.title,
         path:
           "/pages/video/video?id=" +
-          list[index].id +
+          this.data.cur.id +
           "&type=share&uid=" +
           this.data.$state.userInfo.id
       };
@@ -528,9 +388,6 @@ Page({
   },
   // 用于数据统计
   onHide() {
-    setTimeout(() => {
-      this.videoContext.stop();
-    }, 500);
   },
   //指引
   nextGuide(e) {

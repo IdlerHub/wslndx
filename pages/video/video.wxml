@@ -41,6 +41,7 @@
         
       <!-- </video> -->
       <mp-video-swiper 
+        id="videoSwiper"
         class="myVideo" 
         video-list="{{list}}" 
         nextRtight="{{nextRtight}}"
@@ -52,6 +53,8 @@
         bindwaiting="onWaiting"
         bindprogress="onProgress"
         bindmorelist="getMorelist"
+        bindgetCur="getCur"
+        bindnavigate="navigate"
       ></mp-video-swiper>
     </swiper-item>
     <swiper-item style="background:#181818" class="classify">
@@ -65,13 +68,6 @@
       </view>
     </swiper-item>
   </swiper>
-  <!-- 点赞动画 -->
-  <!-- wx:if="{{ cur.praising }}" -->
-  <view wx:if="{{ cur.praising }}" class="praising">
-    <!-- prettier-ignore -->
-    <view class="ani" bindanimationend="aniend" data-index="{{ index }}"
-      style="background-image: url({{$state.imgHost}}/heart-ani.png)"></view>
-  </view>
   <!-- 视频指引 -->
   <!-- wx:if="{{ $state.newGuide.shortvideo == 0 && showGuide}}" -->
   <cover-view class="vedioGuide" data-type="all" wx:if="{{ $state.newGuide.shortvideo == 0 && showGuide}}">
