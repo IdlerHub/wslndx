@@ -1,7 +1,6 @@
 {
   "navigationBarTitleText": "课程表",
   "usingComponents": {
-    "integralAnimation": "/components/integralAni/integralAni",
-    "mp-video-swiper": "../../components/video-swiper/index"
+    "formCode": "/components/formCode/formCode"
   }
 }

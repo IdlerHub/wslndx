@@ -1,5 +1,26 @@
 <!--pages/timetable/timetable.wxml-->
-<mp-video-swiper id="videoSwiper" class="myVideo" video-list="{{list}}" nextRtight="{{nextRtight}}" pause="{{pause}}"
-bindplay="vedioRecordAdd" bindpause="onPause" bindtimeupdate="onTimeUpdate" bindended="recordFinish"
-binderror="videoError" bindwaiting="onWaiting" bindprogress="onProgress" bindmorelist="getMorelist"
-bindgetCur="getCur" bindnavigate="navigate" bindshowIntegral="showIntegral" bindtap="tap"></mp-video-swiper>
+<view class="search-box">
+  <navigator class="search-left" url="/pages/search/search" hover-class="none">
+    <image src="{{$state.imgHost}}/searchp.png"></image>
+    <text>搜索课程名称</text>
+  </navigator>
+  <navigator hover-class="none" class="search-right" url="/pages/attentionPage/attentionPage" open-type="navigate"
+    bindtap="drawPage">
+    <image src="{{ $state.imgHost }}/timetebleIcon.png" class="iconfont"></image>
+    <text>我的课表</text>
+  </navigator>
+</view>
+<view class="nav">
+  <scroll-view class="nav" style="display:flex;padding-right: 20px" scroll-x="true" scroll-left="{{ navScrollLeft }}"
+    scroll-with-animation="true" enable-flex scroll-into-view="item{{currentTab < 4 ? 0 : currentTab - 3}}">
+    <block wx:for="{{ nav }}" wx:for-index="id" wx:for-item="item" wx:key="index">
+      <formCode bind:handler="switchNav" data-current="{{ id }}" data-id="{{item.id}}">
+        <view class="item {{ [currentTab == id ? 'active' : '',id == 0 ? 'itemone' : ''] }}"
+          style="margin-right:{{id + 1 == nav.length ? '40rpx' : ''}}" id="item{{id}}">{{ item.name }}</view>
+      </formCode>
+    </block>
+  </scroll-view>
+  <navigator class="tabclassify" url="/pages/drag/drag?index={{currentTab}}">
+    <image src="{{$state.imgHost}}/tabclassify.png"></image>
+  </navigator>
+</view>
