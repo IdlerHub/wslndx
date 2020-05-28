@@ -140,6 +140,10 @@
             <image class="img" mode="widthFix" src="{{  !recommend ? '' : $state.imgHost + '/rankingDoor2.png' }}">
             </image>
           </navigator>
+          <navigator class="jumpoutBox" url="/pages/education/education?type=doudizhu" hover-class="none">
+            <image class="img" mode="widthFix" src="{{  !recommend ? '' : $state.imgHost + '/diantaiDoor.png'}}">
+            </image>
+          </navigator>
           <navigator class="jumpoutBox" url="/pages/education/education?type=farm" hover-class="none">
             <image class="img" mode="widthFix" src="{{  !recommend ? '' : $state.imgHost + '/nonghcangDoor.png' }}">
             </image>

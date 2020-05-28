@@ -167,7 +167,7 @@
 				{
 					"id": 10,
 					"name": "pages/timetable/timetable",
-					"pathName": "pages/timetable/timetable",
+					"pathName": "pages/tableDetail/tableDetail",
 					"query": "id=21&type=invite",
 					"scene": null
 				},

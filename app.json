@@ -60,7 +60,8 @@
     "pages/infoAddress/infoAddress",
     "pages/voteRank/voteRank",
     "pages/voteWinner/voteWinner",
-    "pages/timetable/timetable"
+    "pages/timetable/timetable",
+    "pages/tableDetail/tableDetail"
   ],
   "permission": {
     "scope.userLocation": {
