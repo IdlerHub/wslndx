@@ -18,6 +18,14 @@ Page({
       } else if (options.type === 'station') {
         this.junmpOut('https://open.ximalaya.com/site/index/174/ca5492cf55806b41713dada77a1d2ed5')
         wx.uma.trackEvent('index_btnClick', { 'btnName': '老年电台' });
+      } else if(options.type === 'doudizhu') {
+        let openID = ''
+        wx.getStorage({
+          key: 'openId',
+          success: res => {
+            this.junmpOut(`https://lnddz.293k.com/?openid=${res.data}`)
+          }
+        })
       } else if(options.type === 'lottery') {
         this.setData({
           url: 'https://gqjydev.jinlingkeji.cn/' + "?uid=" + encodeURIComponent(this.data.$state.userInfo.id) + "&id=" + encodeURIComponent(options.id)
