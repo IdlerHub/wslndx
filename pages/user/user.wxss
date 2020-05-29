@@ -348,6 +348,7 @@ page .list .nav:nth-child(7) {
   align-items: center;
   overflow: visible;
   border-right: 1px solid rgba(237, 237, 237, 1);
+  /* border-bottom: 1px solid rgba(237, 237, 237, 1); */
   border-radius: 0;
   padding-left: 4rpx;
 }
@@ -372,6 +373,7 @@ page .list .nav:nth-child(8) {
   align-items: center;
   overflow: visible;
   border-right: 1px solid rgba(237, 237, 237, 1);
+  /* border-bottom: 1px solid rgba(237, 237, 237, 1); */
   border-radius: 0;
   padding-left: 4rpx;
 }
@@ -407,6 +409,7 @@ page .list .nav:nth-child(9) {
   align-items: center;
   overflow: visible;
   border-radius: 0;
+  /* border-bottom: 1px solid rgba(237, 237, 237, 1); */
   padding-left: 4rpx;
 }
 page .list .nav:nth-child(9) .iconfont {
@@ -415,6 +418,29 @@ page .list .nav:nth-child(9) .iconfont {
 }
 
 page .list .nav:nth-child(9) text {
+  margin-top: 20rpx;
+  font-family: PingFangSC-Regular;
+  font-size: 36rpx;
+  color: rgba(102, 102, 102, 1);
+  line-height: 36rpx;
+}
+page .list .nav:nth-child(10) {
+  width: 231rpx;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: visible;
+  border-radius: 0;
+  border-right: 1px solid rgba(237, 237, 237, 1);
+  padding-left: 10rpx;
+}
+page .list .nav:nth-child(10) .iconfont {
+  width: 60rpx;
+  height: 60rpx;
+}
+
+page .list .nav:nth-child(10) text {
   margin-top: 20rpx;
   font-family: PingFangSC-Regular;
   font-size: 36rpx;

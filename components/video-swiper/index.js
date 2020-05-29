@@ -267,8 +267,8 @@ module.exports =
                     this.triggerEvent('getCur', curQueue[current])
                 },
                 playCurrent: function playCurrent(current, data) {
+                    console.log(data)
                     this.data._videoContexts.forEach(function (ctx, index) {
-                        console.log(ctx)
                         index !== current ? ctx.pause() : data.pause ?  ctx.pause() : ctx.play();
                     });
                     

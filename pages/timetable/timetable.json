@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "课程表",
+  "usingComponents": {
+    "formCode": "/components/formCode/formCode"
+  }
+}

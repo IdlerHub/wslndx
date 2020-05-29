@@ -5,6 +5,7 @@
   "enablePullDownRefresh": false,
   "disableScroll": true,
   "usingComponents": {
-    "integralAnimation": "/components/integralAni/integralAni"
+    "integralAnimation": "/components/integralAni/integralAni",
+    "mp-video-swiper": "../../components/video-swiper/index"
   }
 }

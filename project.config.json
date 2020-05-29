@@ -151,36 +151,18 @@
 					"scene": 1008
 				},
 				{
-					"id": 8,
-					"name": "收徒赚钱",
-					"pathName": "pages/makeMoney/makeMoney",
-					"query": "uid=1016&type=invite&activity=1",
-					"scene": null
-				},
-				{
 					"id": 9,
-					"name": "pages/login/login",
-					"pathName": "pages/login/login",
+					"name": "个人中心",
+					"pathName": "pages/user/user",
 					"query": "",
 					"scene": null
 				},
 				{
 					"id": 10,
-					"name": "pages/score/score",
-					"pathName": "pages/score/score",
+					"name": "pages/timetable/timetable",
+					"pathName": "pages/tableDetail/tableDetail",
 					"query": "id=21&type=invite",
 					"scene": null
-				},
-				{
-					"id": 11,
-					"name": "pages/infoAddress/infoAddress",
-					"pathName": "pages/index/index",
-					"query": "channel=laonianapp/banner&_um_campaign=5e6a0e29dbc2ec076bd611fc&_um_channel=5e6a0e29dbc2ec076bd611fd&com=kimdot",
-					"scene": 1037,
-					"referrerInfo": {
-						"appId": "wx21038783a46791dd",
-						"extraData": "{}"
-					}
 				},
 				{
 					"id": 12,

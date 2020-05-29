@@ -315,7 +315,6 @@ Page({
     }
   },
   tap() {
-    // console.log(this.selectComponent('#videoSwiper'))
     if (this.data.pause) {
       this.judgeWifi();
       this.setData({
