@@ -10,6 +10,7 @@ Page({
     classifyList: [{ id: "0", name: "全部" }],
     selectedIndex: 0
   },
+  pageName: '赛事活动分类页',
   toVote(e) {
     let list = getCurrentPages();
     const page = list[list.length - 2];
