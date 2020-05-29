@@ -350,6 +350,7 @@ App({
       this.setUser(msg.data.userInfo);
     });
   },
+
   playVedio(type) {
     type == "wifi"
       ? ""
@@ -373,6 +374,18 @@ App({
           count: data.count
         }
       });
+  },
+   // 获取用户openid
+  getUserOpenData() {
+    this.user.getUserOpenData().then(res => {
+      this.store.setState({
+        openId: res.data.openid
+      })
+      wx.setStorage({
+        data: res.data.openid,
+        key: 'openId',
+      })
+    })
   },
   /* 版本检测 */
   checkVersion: function() {

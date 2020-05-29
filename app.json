@@ -61,7 +61,9 @@
     "pages/voteRank/voteRank",
     "pages/voteWinner/voteWinner",
     "pages/timetable/timetable",
-    "pages/tableDetail/tableDetail"
+    "pages/tableDetail/tableDetail",
+    "pages/gamePage/gamePage",
+    "pages/timetableList/timetableList"
   ],
   "permission": {
     "scope.userLocation": {
