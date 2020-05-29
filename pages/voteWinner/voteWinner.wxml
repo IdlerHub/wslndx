@@ -9,11 +9,12 @@
                 <text class="{{rankType == 1 ? 'active' : ''}}">个人作品奖</text>
             </view>
             <view class="title" bindtap="checkTop" data-type="2">
-                <text class="{{rankType == 2 ? 'active' : ''}}">电子证书查询</text>
+                <text class="{{rankType == 2 ? 'active' : ''}}">证书查询</text>
             </view>
         </view>
         <view class="center">
-            <text wx:if="{{rankType == 0 ||  rankType == 2}}">截止时间：{{time|| '2020年5月26日'}}</text>
+            <text wx:if="{{rankType == 0}}">截止时间：{{time|| '2020年5月26日'}}</text>
+            <text wx:if="{{rankType == 2}}">查询截止时间：2020年6月3日</text>
             <view class="category"wx:if="{{rankType == 1}}">
                     <view class="section__title">分类</view>
                     <picker class="picker" bindchange="classifyChange" value="{{categoryIndex}}" range="{{category}}" range-key='name'>
@@ -52,7 +53,15 @@
             </view>
         </view>
         <view class="showrank" wx:if="{{rankType == 2}}">
-            <button style="margin-top: 100px" bindtap="searCertificate">查询证书</button>
+            <view class="search-box">
+                <view class="name">姓名</view>
+                <input class="ipt-name" type="text" value="{{author}}" bindinput="changeAuthor" placeholder-class="ipt-palceholder" placeholder="请输入姓名" />
+                <view class="name">作品编号</view>
+                <input class="ipt-name" value="{{opus}}" bindinput="changeOpus" placeholder-class="ipt-palceholder" type="text" placeholder="请输入作品编号" />
+                <view class="search-footer">
+                    <view class="search-btn" bindtap="searchCertificate">查询证书</view>
+                </view>
+            </view>
         </view>
     </view>
     <button class="share" open-type="share" data-id="{{ $state.userInfo.id }}" hover-class="btn-hover">
@@ -62,4 +71,27 @@
         <image src="../../images/success.png"></image>
         <text>分享成功</text>
     </view>
+
+    <!-- 电子证书 -->
+    <canvas class="certificate-can" canvas-id="certificate"></canvas>
+    <view class="certificate-card" wx:if="{{showCertificate}}">
+        <view class="card-content">
+            <image class="certificate-del" src="/images/unshare.png" alt="" bindtap="closeCertificate" />
+            <image class="card-bg" src="{{$state.imgHost}}/diploma.png" alt />
+            <view class="card-author">{{userInfo.author}}</view>
+            <view class="card-opus">{{userInfo.opus}}</view>
+            <view class="card-nick">{{userInfo.honor}}</view>
+        </view>
+        <view class="card-share">
+            <view class="left" bindtap="saveCertificate">
+                <image class="" src="/images/vote-save.png" />
+                <view class="text">保存到本地</view>
+            </view>
+            <button class="right" open-type="share" catchtap="shareOff">
+                <image src="/images/vote-share.png" alt="" />
+                <text class="text">分享好友</text>
+            </button>
+        </view>
+    </view>
+        
 </view>

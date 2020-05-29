@@ -270,8 +270,8 @@ Page({
         wx.getSystemInfo({
           success: function (res) {
             var v = 750 / res.windowWidth; //获取手机比例
-            let system = res.system
-            that.drawPoster(v, system);
+            // let system = res.system
+            that.drawPoster(v);
           }
         });
       }, 1000);
@@ -389,7 +389,7 @@ Page({
       }
     });
   },
-  drawPoster(v, system) {
+  drawPoster(v) {
 
     let that = this;
     let ratio = 0.5;
