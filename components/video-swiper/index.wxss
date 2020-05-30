@@ -1,0 +1,30 @@
+.container {
+  width: 100%;
+  height: 100%
+}
+
+.video-swiper {
+  width: 100%;
+  height: 100%
+}
+
+.video_item {
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  top: 0;
+}
+
+.praising {
+  position: fixed;
+  right: -30rpx;
+  bottom: 222rpx;
+  z-index: 1000;
+  margin-top: -224rpx; }
+
+  .ani {
+    width: 180rpx;
+    height: 180rpx;
+    background-size: cover;
+    animation: ani steps(20) 1s both; }
+

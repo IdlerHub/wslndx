@@ -19,6 +19,7 @@ Page({
     total_page: 1
     // supportFlag: 1 //今日点赞权限 0=无, 1=有
   },
+  pageName: '赛事活动首页',
   toRule() {  //跳转到活动规则
     wx.navigateTo({
       url: "/pages/voteRule/voteRule"

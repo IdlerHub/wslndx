@@ -72,8 +72,7 @@ Page({
     }) : ''
     app.globalData.currentTab = ''
     /* 更新用户的视频浏览历史 */
-    if (app.store.$state.userInfo.mobile) this.getHistory()
-
+    if (app.store.$state.userInfo.mobile) [this.getHistory(),  app.getUserOpenData()]
     setTimeout(wx.hideLoading, 500)
   },
   init() {

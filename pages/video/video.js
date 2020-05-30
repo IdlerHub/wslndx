@@ -30,14 +30,14 @@ Page({
   onLoad(options) {
     let systemInfo = wx.getSystemInfoSync();
     this.wifi = false;
-    systemInfo.statusBarHeight < 30
-      ? this.setData({
-          topT: 118
-        })
-      : this.setData({
-          top: 48,
-          topT: 168
-        });
+    systemInfo.statusBarHeight < 30 ?
+      this.setData({
+        topT: 118
+      }) :
+      this.setData({
+        top: 48,
+        topT: 168
+      });
     this.videoContext = wx.createVideoContext(this.data.vid);
     let pages = getCurrentPages();
     let prePage = pages[pages.length - 2];
@@ -87,11 +87,15 @@ Page({
         });
         this.shortvideoAward();
         app.addVisitedNum(`v${this.data.cur.id}`);
-        wx.uma.trackEvent("sortVideo_play", { videoName: this.data.cur.title });
+        wx.uma.trackEvent("sortVideo_play", {
+          videoName: this.data.cur.title
+        });
       });
       this.getCategory();
     }
-    wx.uma.trackEvent("menu", { pageName: "短视频" });
+    wx.uma.trackEvent("menu", {
+      pageName: "短视频"
+    });
     let share = options.type == "share";
     if (!share) {
       this.setData({
@@ -111,11 +115,11 @@ Page({
     if (this.data.$state.userInfo.mobile) {
       this.shortvideoAward();
       if (this.data.$state.newGuide) {
-        this.data.$state.newGuide.shortvideo != 0
-          ? this.judgeWifi()
-          : this.setData({
-              showGuide: true
-            });
+        this.data.$state.newGuide.shortvideo != 0 ?
+          this.judgeWifi() :
+          this.setData({
+            showGuide: true
+          });
       } else {
         app.getGuide().then(res => {
           if (this.data.$state.newGuide.shortvideo != 0) {
@@ -135,18 +139,20 @@ Page({
       this.setData({
         isshowRed: res.data.today_first
       });
-      res.data.today_first
-        ? ""
-        : this.setData({
-            loop: true
-          });
+      res.data.today_first ?
+        "" :
+        this.setData({
+          loop: true
+        });
     });
   },
   //获取红包奖励内容
   recordFinish() {
-    if(this.recordfinish || !this.vediorecordAdd) return
+    if (this.recordfinish || !this.vediorecordAdd) return
     this.recordfinish = 1
-    let param = { shortvideo_id: this.data.cur.id };
+    let param = {
+      shortvideo_id: this.data.cur.id
+    };
     app.video.recordFinish(param).then(res => {
       if (res.data.day_read == 1) {
         this.setData({
@@ -183,12 +189,20 @@ Page({
     });
   },
   vedioRecordAdd() {
+    wx.hideLoading()
     setTimeout(() => {
-      let param = { shortvideo_id: this.data.cur.id }
+      let param = {
+        shortvideo_id: this.data.cur.id
+      }
       app.video.recordAdd(param).then(() => {
         this.vediorecordAdd = 1
       })
-    }, 2000) 
+    }, 2000)
+  },
+  videoError() {
+    wx.showToast({
+      title: '视频加载出错',
+    })
   },
   copywechat() {
     app.copythat(this.data.wechatnum);
@@ -201,6 +215,7 @@ Page({
       let that = this;
       wx.getNetworkType({
         success: res => {
+          console.log(res.networkType)
           if (res.networkType == "wifi") {
             that.wifi = true;
             app.playVedio("wifi");
@@ -217,8 +232,7 @@ Page({
             });
             that.wifi = false;
             wx.showModal({
-              content:
-                "您当前不在Wi-Fi环境，继续播放将会产生流量，是否选择继续播放?",
+              content: "您当前不在Wi-Fi环境，继续播放将会产生流量，是否选择继续播放?",
               confirmText: "是",
               cancelText: "否",
               confirmColor: "#DF2020",
@@ -252,6 +266,20 @@ Page({
       this.videoContext.play();
     }
   },
+  getMorelist() {
+    this.param.page += 1;
+    this.param.id = "";
+    app.video.list(this.param).then(msg => {
+      msg.data.lists.forEach(function (item) {
+        item.pw = app.util.tow(item.praise);
+        item.fw = app.util.tow(item.forward);
+      });
+      this.setData({
+        list: msg.data.lists
+      })
+      this.param.last_id = msg.data.last_id;
+    });
+  },
   getList(list) {
     let temp = list || this.data.list;
     if (this.data.limit) {
@@ -274,15 +302,14 @@ Page({
   },
   callback(msg, temp) {
     if (msg.code === 1 && msg.data && msg.data.lists) {
-      msg.data.lists.forEach(function(item) {
+      msg.data.lists.forEach(function (item) {
         item.pw = app.util.tow(item.praise);
         item.fw = app.util.tow(item.forward);
       });
       this.setData({
-        list:
-          this.param.position == "end"
-            ? (msg.data.lists || []).concat(temp)
-            : temp.concat(msg.data.lists || [])
+        list: this.param.position == "end" ?
+          (msg.data.lists || []).concat(temp) :
+          temp.concat(msg.data.lists || [])
       });
       this.param.last_id = msg.data.last_id;
     }
@@ -300,161 +327,33 @@ Page({
       });
     }
   },
-  scrollTouchStart(e) {
-    this.sy = e.touches[0].pageY;
-  },
-  scrollTouchEnd(e) {
-    let list = this.data.list;
-    let index = this.data.index;
-    this.ey = e.changedTouches[0].pageY;
-    if (this.ey - this.sy > 30) {
-      // 下拉
-      if (this.param.type == "category" && index == 0) {
-        this.param.id = list[0].id;
-        this.param.position = "end";
-        this.param.include = "no";
-        this.getList().then(data => {
-          if (data.data && data.data.lists) {
-            if (data.data.lists.length == 0) {
-              /*  已经是第一个了  */
-            } else if (data.data.lists.length > 0) {
-              this.setData({
-                cur: this.data.list[data.data.lists.length - 1],
-                index: data.data.lists.length - 1,
-                pause: false
-              });
-            }
-          }
-        });
-      } else {
-        this.setData({
-          cur: index <= 0 ? list[0] : list[index - 1],
-          index: index <= 0 ? 0 : index - 1,
-          pause: false
-        });
-      }
-    } else if (this.ey - this.sy < -30) {
-      // 上拉
-      let temp =
-        index >= list.length - 1
-          ? this.param.type == "recommend"
-            ? 0
-            : index
-          : index + 1;
-      this.setData({
-        cur: list[temp],
-        index: temp,
-        pause: false
-      });
-      if (temp == list.length - 2) {
-        //还剩下一个视频时,加载新数据
-        if (this.param.type == "recommend") {
-          this.param.page += 1;
-          this.param.id = "";
-        } else {
-          this.param.id = list[list.length - 1].id;
-          this.param.position = "first";
-          this.param.include = "no";
-        }
-        this.getList();
-      }
-    }
-    // setTimeout(() => {
-    //   this.vedioRecordAdd()
-    // }, 200);
-    app.addVisitedNum(`v${this.data.cur.id}`);
-    wx.uma.trackEvent("sortVideo_play", { videoName: this.data.cur.title });
-  },
-  praise() {
-    let list = this.data.list;
-    let index = this.data.index;
-    let param1 = {
-      id: list[index].id
-    };
-    if (list[index].praised == 1) {
-      // 取消点赞
-      app.video.delPraise(param1).then(msg => {
-        list[index].praised = 0;
-        list[index].praise--;
-        this.setData({
-          list: list,
-          cur: list[index]
-        });
-      });
-    } else {
-      // 点赞
-      app.video.praise(param1).then(msg => {
-        if (msg.data.is_first == "first") {
-          this.setData({
-            integral: "+50 学分",
-            integralContent: "完成[短视频]首次点赞",
-            showintegral: true
-          });
-          setTimeout(() => {
-            this.setData({
-              showintegral: false
-            });
-          }, 2000);
-        } else if (msg.data.is_first == "day") {
-          this.setData({
-            integral: "+20 学分",
-            integralContent: "完成每日[短视频]首赞",
-            showintegral: true
-          });
-          setTimeout(() => {
-            this.setData({
-              showintegral: false
-            });
-          }, 2000);
-        }
-        list[index].praised = 1;
-        list[index].praise++;
-        list[index].praising = true;
-        this.setData({
-          list: list,
-          cur: list[index]
-        });
-      });
-      wx.uma.trackEvent("sortVideo_praise", { videoName: this.data.cur.title });
-    }
-  },
-  aniend(e) {
-    let list = this.data.list;
-    let index = this.data.index;
-    list[index].praising = false;
+  getCur(e) {
+    app.addVisitedNum(`v${e.detail.id}`);
     this.setData({
-      list: list,
-      cur: list[index]
-    });
+      cur: e.detail
+    })
   },
-  // 转发
-  share() {},
-  onShareAppMessage: function(ops) {
+  onShareAppMessage: function (ops) {
     if (ops.from === "menu") {
       return this.menuAppShare();
     }
     if (ops.from === "button") {
-      let list = this.data.list;
-      let index = this.data.index;
       let param2 = {
-        id: list[index].id
+        id: this.data.cur.id
       };
       app.video.share(param2).then(msg => {
-        list[index].forward += 1;
-        this.setData({
-          list: list,
-          cur: list[index]
-        });
+        this.selectComponent('#videoSwiper').addShare(this.data.cur.id)
         wx.uma.trackEvent("sortVideo_share", {
           videoName: this.data.cur.title
         });
-        wx.uma.trackEvent('totalShare', { 'shareName': '短视频转发' });
+        wx.uma.trackEvent('totalShare', {
+          'shareName': '短视频转发'
+        });
       });
       return {
-        title: list[index].title,
-        path:
-          "/pages/video/video?id=" +
-          list[index].id +
+        title: this.data.cur.title,
+        path: "/pages/video/video?id=" +
+          this.data.cur.id +
           "&type=share&uid=" +
           this.data.$state.userInfo.id
       };
@@ -462,15 +361,16 @@ Page({
   },
   // 首页
   tohome() {
-    wx.reLaunch({ url: "/pages/index/index" });
+    wx.reLaunch({
+      url: "/pages/index/index"
+    });
   },
   // 短视频分类
   navigate() {
     /* 只能迭代一层 */
     if (this.data.limit) return;
     wx.navigateTo({
-      url:
-        "/pages/videoItemize/videoItemize?categoryId=" +
+      url: "/pages/videoItemize/videoItemize?categoryId=" +
         this.data.cur.category_id +
         "&share=" +
         this.data.vistor
@@ -479,8 +379,7 @@ Page({
   navgateto(e) {
     let id = e.currentTarget.dataset.id;
     wx.navigateTo({
-      url:
-        "/pages/videoItemize/videoItemize?categoryId=" +
+      url: "/pages/videoItemize/videoItemize?categoryId=" +
         id +
         "&share=" +
         this.data.vistor
@@ -497,11 +396,7 @@ Page({
     });
   },
   // 用于数据统计
-  onHide() {
-    setTimeout(() => {
-      this.videoContext.stop();
-    }, 500);
-  },
+  onHide() {},
   //指引
   nextGuide(e) {
     if (this.data.nextRtight == 1) {
@@ -542,22 +437,23 @@ Page({
         })
         .catch(() => {
           this.guide = 0;
-          err.msg == '记录已增加' ? app.setState({ 'newGuide.shortvideo': 1 }) : ''
+          err.msg == '记录已增加' ? app.setState({
+            'newGuide.shortvideo': 1
+          }) : ''
         });
     }
   },
   // 获取用户的微信昵称头像
-  onGotUserInfo: function(e) {
+  onGotUserInfo: function (e) {
     if (e.detail.errMsg == "getUserInfo:ok") {
       app.updateBase(e);
-      e.currentTarget.dataset.type
-        ? wx.navigateTo({
-            url: "/pages/makeMoney/makeMoney"
-          })
-        : "";
+      e.currentTarget.dataset.type ?
+        wx.navigateTo({
+          url: "/pages/makeMoney/makeMoney"
+        }) :
+        "";
     }
   },
-  onUnload() {},
   switchNav(event) {
     let cur = event.currentTarget.dataset.current;
     if (this.data.currentTab === cur) {
@@ -573,7 +469,9 @@ Page({
     this.setData({
       currentTab: cur
     });
-    cur == 0 ? this.judgeWifi() : this.videoContext.stop();
+    cur == 0 ? this.judgeWifi() : this.setData({
+      pause: true
+    });
   },
   showred() {
     this.videoContext.stop();
@@ -588,5 +486,17 @@ Page({
         this.data.$state.flow || this.wifi ? this.videoContext.play() : "";
       }
     });
+  },
+  showIntegral(e) {
+    this.setData({
+      integral: `+${e.detail.num} 学分`,
+      integralContent: e.detail.txt,
+      showintegral: true
+    });
+    setTimeout(() => {
+      this.setData({
+        showintegral: false
+      });
+    }, 2000);
   }
 });

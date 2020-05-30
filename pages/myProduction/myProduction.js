@@ -1,3 +1,10 @@
+/*
+ * @Github: https://github.com/IdlerHub
+ * @Author: zxk
+ * @Date: 2020-05-13 12:42:53
+ * @LastEditors: zxk
+ * @LastEditTime: 2020-05-26 18:06:07
+ */ 
 // pages/myProduction/myProduction.js
 const app = getApp()
 Page({
@@ -12,6 +19,7 @@ Page({
     stateNum: [1,2,3],
     productionList: [],    //作品列表
   },
+  pageName: '赛事活动我的作品页',
   toWorks(){
     wx.redirectTo({ 
       url: '/pages/voteProduction/voteProduction'

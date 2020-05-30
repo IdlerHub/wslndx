@@ -18,61 +18,12 @@
     <!--  <cover-image src="/images/shouzhi.png" class="iconfont" style="left:{{ rect.left + 10 }}px"></cover-image> -->
   </view>
   <swiper class="swiper" current="{{ currentTab }}" duration="300" bindchange="switchTab">
-    <swiper-item bindtouchstart="scrollTouchStart" bindtouchend="scrollTouchEnd">
-      <video class="myVideo" id="{{ vid }}" src="{{ cur.url }}" controls="{{ false }}"
-        show-center-play-btn="{{ false }}" object-fit="fill" autoplay="{{ autoplay }}" loop="{{loop}}"
-        bindended="recordFinish" bindplay="vedioRecordAdd">
-        <!-- 功能  滑动及视频播/停监听-->
-        <view wx:if="{{ cur && !$state.baseInfo }}" class="dropback">
-          <view hover-class="none" catchtap="tap" wx:if="{{ !$state.baseInfo }}" class="tapbg">
-            <!-- 视频停止 -->
-            <image wx:if="{{ pause }}" mode="aspectFill" src="{{ $state.imgHost }}/play-hl.png" class="pause"></image>
-            <view class="vedioAll">
-              <!-- 点赞 -->
-              <view class="praise" catchtap="praise" wx:if="{{nextRtight != 4}}">
-                <view wx:if="!cur.praising">
-                  <image class="heart" wx:if="{{ cur.praised == 0 }}" mode="aspectFill" src="/images/heart.png"></image>
-                  <image class="heart" wx:else mode="aspectFill" src="{{ $state.imgHost }}/heart-red.png"></image>
-                </view>
-                <view wx:if="{{ cur.pw }}" class="text">{{ cur.pw }}</view>
-                <view wx:else class="text">{{ cur.praise }}</view>
-              </view>
-              <!--底部视频描述-->
-              <view class="info">
-                <view class="vedioAllTop">
-                  <!-- 加群 -->
-                  <image wx:if="{{ cur.image }}" mode="aspectFill" src="{{ cur.image }}" catchtap="navigate"
-                    class="cimg" wx:show="{{nextRtight != 3}}" wx:if="{{nextRtight != 3}}"></image>
-                  <!-- 视频标题 -->
-                  <view class="vedioTitle" wx:if="{{nextRtight != 3}}">
-                    <view class="vedioTitle-p">{{ cur.category_name }}</view>
-                    <view class="viewMore" catchtap="navigate">
-                      <view>查看更多</view>
-                      <image src="/images/vedioRight.png" class="viewMoreimg"></image>
-                    </view>
-                  </view>
-                </view>
-                <image class="icon" src="/images/mask.png"></image>
-                <view class="synopsis" wx:if="{{nextRtight != 3}}">{{ cur.intro_content }}</view>
-              </view>
-              <!-- 分享 -->
-              <button wx:if="{{ cur && !$state.baseInfo && nextRtight != 4 }}" class="share" open-type="share"
-                hover-class="btn-hover" catchtap="share">
-                <image mode="aspectFill" src="/images/share.png" class="icon"></image>
-                <view wx:if="{{ cur.fw }}" class="text">{{ cur.fw }}</view>
-                <view wx:else class="text">{{ cur.forward }}</view>
-              </button>
-              <view class="redPacket" catchtap="showred" wx:if="{{isshowRed}}"></view>
-              <navigator class="moneyPackt" hover-class="none" url="/pages/makeMoney/makeMoney" wx:if="{{$state.authUserInfo}}"></navigator>
-              <button open-type="getUserInfo" bindgetuserinfo="onGotUserInfo" class="moneyPackt" data-type="money" wx:else></button>
-            </view>
-          </view>
-        </view>
+    <swiper-item>
         <!-- 完整视频 -->
-        <cover-view class="complete" catchtap="complete" wx:if="{{ cur.target_id }}">
+        <!-- <cover-view class="complete" catchtap="complete" wx:if="{{ cur.target_id }}">
           <cover-image mode="aspectFill" src="/images/video-white.png" class="icon"></cover-image>
           <cover-view class="text">完整视频</cover-view>
-        </cover-view>
+        </cover-view> -->
         <!-- 授权 -->
         <cover-view wx:if="{{ cur && $state.baseInfo }}" class="dropback  frontdrop">
           <cover-view class="userInfo-mask">
@@ -83,8 +34,26 @@
             </cover-view>
           </cover-view>
         </cover-view>
-      </video>
-
+      <!-- </video> -->
+      <mp-video-swiper 
+        id="videoSwiper"
+        class="myVideo" 
+        video-list="{{list}}" 
+        nextRtight="{{nextRtight}}"
+        pause="{{pause}}"
+        bindplay="vedioRecordAdd"
+        bindpause="onPause"
+        bindtimeupdate="onTimeUpdate"
+        bindended="recordFinish"
+        binderror="videoError"
+        bindwaiting="onWaiting"
+        bindprogress="onProgress"
+        bindmorelist="getMorelist"
+        bindgetCur="getCur"
+        bindnavigate="navigate"
+        bindshowIntegral="showIntegral"
+        bindtap="tap"
+      ></mp-video-swiper>
     </swiper-item>
     <swiper-item style="background:#181818" class="classify">
       <view style="padding-top:{{ topT }}rpx">
@@ -97,13 +66,6 @@
       </view>
     </swiper-item>
   </swiper>
-  <!-- 点赞动画 -->
-  <!-- wx:if="{{ cur.praising }}" -->
-  <view wx:if="{{ cur.praising }}" class="praising">
-    <!-- prettier-ignore -->
-    <view class="ani" bindanimationend="aniend" data-index="{{ index }}"
-      style="background-image: url({{$state.imgHost}}/heart-ani.png)"></view>
-  </view>
   <!-- 视频指引 -->
   <!-- wx:if="{{ $state.newGuide.shortvideo == 0 && showGuide}}" -->
   <cover-view class="vedioGuide" data-type="all" wx:if="{{ $state.newGuide.shortvideo == 0 && showGuide}}">

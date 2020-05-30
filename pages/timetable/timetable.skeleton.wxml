@@ -1,0 +1,19 @@
+<!--
+此文件为开发者工具生成，生成时间: 2020/5/27 上午9:58:41 
+使用方法：
+1. 在"pages\timetable\timetable.wxml"中使用`include`指令引入此模板，
+2. 在"pages\timetable\timetable.wxss"中使用`import`指令引入"pages\timetable\timetable.skeleton.wxss"
+3. 书写对应的逻辑，来控制骨架屏的显示与隐藏
+
+更多详细信息可以参考文档：https://developers.weixin.qq.com/miniprogram/dev/devtools/skeleton.html
+-->
+<view class="sk-container">
+  <view class="contrainer">
+    <view class="search-box">
+      <navigator class="search-left">
+        <image class="sk-image"></image><text class="sk-transparent sk-text-14-2857-42 sk-text" style="background-size: 100% 1.575rem;">搜索课程名称</text></navigator>
+      <navigator class="nav" hover-class="none" open-type="navigate">
+        <image class="iconfont sk-image"></image><text class="sk-transparent sk-text-14-2857-927 sk-text" style="background-size: 100% 1.225rem;">我的课表</text></navigator>
+    </view>
+  </view>
+</view>

@@ -1,80 +1,8 @@
 <view class="container">
-  <video class="myVideo" id="{{ vid }}" src="{{ cur.url }}" controls="{{ false }}" show-center-play-btn="{{ false }}"
-    object-fit="fill" autoplay="{{autoplay}}" loop="{{loop}}" bindended="recordFinish" bindloadedmetadata="vedioRecordAdd">
-    <!-- 功能  滑动及视频播/停监听-->
-    <view wx:if="{{ cur && !$state.baseInfo }}" class="dropback">
-      <view hover-class="none" bindtap="tap" bindtouchstart="scrollTouchStart" bindtouchend="scrollTouchEnd"
-        wx:if="{{ !$state.baseInfo }}" class="tapbg">
-        <!-- 我的小程序 -->
-        <view wx:if="{{ vistor && tip }}" class="vistor-head">
-          <view>点击“</view>
-          <image src="/images/xiaochengxu.png" class="iconfont"></image>
-          <view>”添加到我的小程序 </view>
-          <!--  <image src="/images/shouzhi.png" class="iconfont" style="left:{{ rect.left + 10 }}px"></image> -->
-        </view>
-        <!-- 视频停止 -->
-        <image wx:if="{{ pause }}" mode="aspectFill" src="{{ $state.imgHost }}/play-hl.png" class="pause"></image>
-        <!-- 加群 -->
-        <!-- <image wx:if="{{ cur.image }}" mode="aspectFill" src="{{ cur.image }}" catchtap="navigate" class="cimg"></image> -->
-        <!-- 点赞 -->
-        <view class="praise" catchtap="praise">
-          <view wx:if="!cur.praising">
-            <image class="heart" wx:if="{{ cur.praised == 0 }}" mode="aspectFill" src="/images/heart.png"></image>
-            <image class="heart" wx:else mode="aspectFill" src="{{ $state.imgHost }}/heart-red.png"></image>
-          </view>
-          <view wx:if="{{ cur.pw }}" class="text">{{ cur.pw }}</view>
-          <view wx:else class="text">{{ cur.praise }}</view>
-        </view>
-        <!-- 完整视频 -->
-        <view class="complete" catchtap="complete" wx:if="{{ cur.target_id }}">
-          <image mode="aspectFill" src="/images/video-white.png" class="icon"></image>
-          <view class="text">完整视频</view>
-        </view>
-        <!--底部视频描述-->
-        <view class="info">
-          <view class="vedioAllTop">
-            <!-- 加群 -->
-            <image wx:if="{{ cur.image }}" mode="aspectFill" src="{{ cur.image }}" catchtap="navigate" class="cimg"
-              wx:show="{{nextRtight != 3}}" wx:if="{{nextRtight != 3}}" catchtap="navigate"></image>
-            <!-- 视频标题 -->
-            <view class="vedioTitle-p">{{ cur.category_name }}</view>
-          </view>
-          <image class="icon" src="/images/mask.png"></image>
-          <view class="synopsis" wx:if="{{nextRtight != 3}}">{{ cur.intro_content }}</view>
-          <view class="redPacket" catchtap="showred" wx:if="{{isshowRed}}"></view>
-          <navigator class="moneyPackt" hover-class="none" url="/pages/makeMoney/makeMoney" wx:if="{{$state.authUserInfo}}"></navigator>
-          <button open-type="getUserInfo" bindgetuserinfo="onGotUserInfo" class="moneyPackt" data-type="money" wx:else></button>
-        </view>
-        <!-- 返回首页 -->
-        <!-- <view wx:if="{{ vistor || home }}" class="vistor-home" catchtap="tohome">
-          <image src="/images/shouye.png" class="iconfont"></image>
-          <view>首页</view>
-        </view> -->
-      </view>
-      <!-- 分享 -->
-      <button wx:if="{{ cur && !$state.baseInfo }}" class="share" open-type="share" hover-class="btn-hover">
-        <image mode="aspectFill" src="/images/share.png" class="icon"></image>
-        <view wx:if="{{ cur.fw }}" class="text">{{ cur.fw }}</view>
-        <view wx:else class="text">{{ cur.forward }}</view>
-      </button>
-    </view>
-    <!-- 授权 -->
-    <view wx:if="{{ cur && $state.baseInfo }}" class="dropback  frontdrop">
-      <view class="userInfo-mask">
-        <view class="userInfo-box">
-          <view class="text">完善微信授权</view>
-          <view class="text">获得更多免费内容</view>
-          <button open-type="getUserInfo" bindgetuserinfo="onGotUserInfo">允许授权</button>
-        </view>
-      </view>
-    </view>
-  </video>
-  <!-- 点赞动画 -->
-  <view wx:if="{{ cur.praising }}" class="praising">
-    <!-- prettier-ignore -->
-    <view class="ani" bindanimationend="aniend" data-index="{{ index }}"
-      style="background-image: url({{$state.imgHost}}/heart-ani.png)"></view>
-  </view>
+  <mp-video-swiper id="videoSwiper" class="myVideo" video-list="{{list}}" prevideoList="{{prevideoList}}" nextRtight="{{nextRtight}}" pause="{{pause}}" videoTwo="{{videoTwo}}"
+    bindplay="vedioRecordAdd" bindpause="onPause" bindtimeupdate="onTimeUpdate" bindended="recordFinish"
+    binderror="videoError" bindwaiting="onWaiting" bindprogress="onProgress" bindmorelist="getMorelist"
+    bindgetpreList="getpreList" bindgetCur="getCur" bindnavigate="navigate" bindshowIntegral="showIntegral" bindtap="tap" bindvideoTwochange="videoTwochange"></mp-video-swiper>
 </view>
 <!-- 学分动画 -->
 <integralAnimation integral="{{integral}}" integralContent="{{integralContent}}" wx:if="{{showintegral}}">

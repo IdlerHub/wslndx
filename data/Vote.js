@@ -1,6 +1,6 @@
 /*
  * @Date: 2020-02-26 10:33:14
- * @LastEditors: hxz
+ * @LastEditors: zxk
  */
 var httpService = require("../utils/service.js");
 
@@ -141,6 +141,9 @@ function getPrize(params) {
   return httpService.post("h5opus/getPrize",params);
 }
 
+function searchCertificate(params){
+  return httpService.post("h5opus/searchCertificate", params);
+}
 
 module.exports = {
   getAllProvince,
@@ -162,5 +165,6 @@ module.exports = {
   delSearchWord,
   noteGuide,
   getSchoolSortList,
-  getPrize
+  getPrize,
+  searchCertificate
 };

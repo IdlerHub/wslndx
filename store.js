@@ -65,7 +65,9 @@ let store = new Store({
       shortvideo: 1,
       user: 1,
       lesson_category: 1
-    }
+    },
+    blackShow: false,
+    openId: ''
   },
   pageLisener: {
     onLoad(opts) {

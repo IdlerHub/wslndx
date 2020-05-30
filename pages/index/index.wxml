@@ -140,6 +140,10 @@
             <image class="img" mode="widthFix" src="{{  !recommend ? '' : $state.imgHost + '/rankingDoor2.png' }}">
             </image>
           </navigator>
+          <navigator class="jumpoutBox" url="/pages/gamePage/gamePage?type=doudizhu" hover-class="none">
+            <image class="img" mode="widthFix" src="{{  !recommend ? '' : $state.imgHost + '/doudizhu.png'}}">
+            </image>
+          </navigator>
           <navigator class="jumpoutBox" url="/pages/education/education?type=farm" hover-class="none">
             <image class="img" mode="widthFix" src="{{  !recommend ? '' : $state.imgHost + '/nonghcangDoor.png' }}">
             </image>
@@ -292,3 +296,14 @@
     </cover-view>
   </cover-view>
 </cover-view>
+
+<!-- 黑名单提示框 -->
+<view class="blackBox" wx:if="{{$state.blackShow}}">
+  <view class="blackToast">
+    <view class="blackTxt">您的账号存在异常！如有疑问，请联系客服！</view>
+    <view class="btnBox">
+      <navigator class="blackBtn" target="miniProgram" open-type="exit" hover-class="none">退出</navigator>
+      <button class="blackBtn" open-type="contact">联系客服</button>
+    </view>
+  </view>
+</view>

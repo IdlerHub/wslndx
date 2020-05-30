@@ -1,0 +1,44 @@
+<!--pages/timetable/timetable.wxml-->
+<view class="search-box">
+  <navigator class="search-left" url="/pages/search/search" hover-class="none">
+    <image src="{{$state.imgHost}}/searchp.png"></image>
+    <text>搜索课程名称</text>
+  </navigator>
+  <navigator hover-class="none" class="search-right" url="/pages/timetableList/timetableList" open-type="navigate">
+    <image src="{{ $state.imgHost }}/timetebleIcon.png" class="iconfont"></image>
+    <text>我的课表</text>
+  </navigator>
+</view>
+<view class="nav" style="padding-right:15px;overflow: hidden;" >
+  <scroll-view class="nav" style="display:flex;padding-right: 20px" scroll-x="true" scroll-left="{{ navScrollLeft }}"
+    scroll-with-animation="true" enable-flex scroll-into-view="item{{currentTab < 4 ? 0 : currentTab - 3}}">
+    <block wx:for="{{ nav }}" wx:for-index="id" wx:for-item="item" wx:key="index">
+      <formCode bind:handler="switchNav" data-current="{{ id }}" data-id="{{item.id}}">
+        <view class="item {{ [currentTab == id ? 'active' : '',id == 0 ? 'itemone' : ''] }}"
+          style="margin-right:{{id + 1 == nav.length ? '40rpx' : ''}}" id="item{{id}}">{{ item.name }}</view>
+      </formCode>
+    </block>
+  </scroll-view>
+  <navigator class="tabclassify" url="/pages/drag/drag?index={{currentTab}}">
+    <image src="{{$state.imgHost}}/tabclassify.png"></image>
+  </navigator>
+</view>
+<view class="contariner">
+  <view class="item" wx:for="{{10}}" wx:key="index" >
+    <view class="imgBox">
+      <image src="https://jinling-xcx-dev.obs.cn-north-1.myhuaweicloud.com:443/uploads/images/36c5713053c4b623b5ee321908a139aa.jpg" class="img"></image>
+      <image class="icon" mode="aspectFill" src="{{ $state.imgHost }}/play.png"></image>
+    </view>
+    <view class="txtBox">
+      <text class="title">不出国也要学习英语学习时间管理</text>
+      <text class="time">每周一  16:00-18:00</text>
+      <view class="textBottom">
+        <view class="teacher">
+          <image src="../../images/peosonIcon.png"></image>
+          <text>蓝成森</text>
+        </view>
+        <navigator class="btn" hover-class="none" url="/pages/tableDetail/tableDetail" open-type="navigate">预约报名</navigator>
+      </view>
+    </view>
+  </view>
+</view>

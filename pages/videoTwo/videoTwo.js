@@ -4,6 +4,7 @@ const app = getApp();
 Page({
   data: {
     list: [],
+    prevideoList: [],
     cur: {},
     tip: true,
     vid: "short-video" + Date.now(),
@@ -11,11 +12,16 @@ Page({
     showintegral: false,
     isshowRed: false,
     loop: false,
-    isshowRedbig: false
+    isshowRedbig: false,
+    pause: true,
+    nextRtight: 6,
+    videoTwo: true
     /*  rect: wx.getMenuButtonBoundingClientRect() */
   },
   pageName: "单用户短视频全部展示页",
   recordVideo_id: -1,
+  end: false,
+  pre: false,
   onLoad(options) {
     this.videoContext = wx.createVideoContext(this.data.vid);
     wx.setNavigationBarTitle({
@@ -65,7 +71,7 @@ Page({
       /* 已登录 */
       this.getList([]).then(() => {
         this.setData({
-          cur: this.data.list[0],
+          cur: this.data.list[1],
           index: 0
         });
         app.addVisitedNum(`v${this.data.cur.id}`);
@@ -73,8 +79,16 @@ Page({
         this.judgeWifi();
       });
     }
+    
   },
   onShow() {
+    if (this.data.list.length == 0) {
+        wx.showLoading({
+          title: '正在努力加载中'
+        })
+    } else if (this.data.list.length > 0) {
+      this.judgeWifi()
+    }
     this.shortvideoAward();
     wx.onNetworkStatusChange(res => {
       res.networkType == "wifi" ? app.playVedio("wifi") : "";
@@ -195,10 +209,12 @@ Page({
     }
   },
   getList(list) {
-    let temp = list || this.data.list;
+    let temp = this.data.list;
     if (this.data.limit) {
       return app.video.category(this.param).then(msg => {
-        this.callback(msg, temp);
+        // return this.getpreList(msg.data.lists).then(res => {
+          this.callback(msg, []);
+        // })
         return msg;
       });
     } else {
@@ -216,10 +232,7 @@ Page({
       });
 
       this.setData({
-        list:
-          this.param.position == "end"
-            ? (msg.data.lists || []).concat(temp)
-            : temp.concat(msg.data.lists || [])
+        list: temp.concat(msg.data.lists || [])
       });
       this.param.last_id = msg.data.last_id;
     }
@@ -237,130 +250,11 @@ Page({
       });
     }
   },
-  scrollTouchStart(e) {
-    this.sy = e.touches[0].pageY;
-  },
-  scrollTouchEnd(e) {
-    let list = this.data.list;
-    let index = this.data.index;
-    this.ey = e.changedTouches[0].pageY;
-    if (this.ey - this.sy > 30) {
-      // 下拉
-
-      if (this.param.type == "category" && index == 0) {
-        this.param.id = list[0].id;
-        this.param.position = "end";
-        this.param.include = "no";
-        this.getList().then(data => {
-          if (data.data && data.data.lists) {
-            if (data.data.lists.length == 0) {
-              /*  已经是第一个了  */
-            } else if (data.data.lists.length > 0) {
-              this.setData({
-                cur: this.data.list[data.data.lists.length - 1],
-                index: data.data.lists.length - 1,
-                pause: false
-              });
-            }
-          }
-        });
-      } else {
-        this.setData({
-          cur: index <= 0 ? list[0] : list[index - 1],
-          index: index <= 0 ? 0 : index - 1,
-          pause: false
-        });
-      }
-    } else if (this.ey - this.sy < -30) {
-      // 上拉
-      let temp =
-        index >= list.length - 1
-          ? this.param.type == "recommend"
-            ? 0
-            : index
-          : index + 1;
-      this.setData({
-        cur: list[temp],
-        index: temp,
-        pause: false
-      });
-      if (temp == list.length - 2) {
-        //还剩下一个视频时,加载新数据
-        if (this.param.type == "recommend") {
-          this.param.page += 1;
-          this.param.id = "";
-        } else {
-          this.param.id = list[list.length - 1].id;
-          this.param.position = "first";
-          this.param.include = "no";
-        }
-        this.getList();
-      }
-    }
-    app.addVisitedNum(`v${this.data.cur.id}`);
-    wx.uma.trackEvent("sortVideo_play", { videoName: this.data.cur.title });
-  },
-  praise() {
-    let list = this.data.list;
-    let index = this.data.index;
-    let param1 = {
-      id: list[index].id
-    };
-    if (list[index].praised == 1) {
-      // 取消点赞
-      app.video.delPraise(param1).then(msg => {
-        list[index].praised = 0;
-        list[index].praise--;
-        this.setData({
-          list: list,
-          cur: list[index]
-        });
-      });
-    } else {
-      // 点赞
-      app.video.praise(param1).then(msg => {
-        if (msg.data.is_first == "first") {
-          this.setData({
-            integral: "+50 学分",
-            integralContent: "完成[短视频]首次点赞",
-            showintegral: true
-          });
-          setTimeout(() => {
-            this.setData({
-              showintegral: false
-            });
-          }, 2000);
-        } else if (msg.data.is_first == "day") {
-          this.setData({
-            integral: "+20 学分",
-            integralContent: "完成每日[短视频]首赞",
-            showintegral: true
-          });
-          setTimeout(() => {
-            this.setData({
-              showintegral: false
-            });
-          }, 2000);
-        }
-        list[index].praised = 1;
-        list[index].praise++;
-        list[index].praising = true;
-        this.setData({
-          list: list,
-          cur: list[index]
-        });
-      });
-      wx.uma.trackEvent("sortVideo_play", { videoName: this.data.cur.title });
-    }
-  },
-  aniend(e) {
-    let list = this.data.list;
-    let index = this.data.index;
-    list[index].praising = false;
+  getCur(e) {
+    app.addVisitedNum(`v${e.detail.id}`);
     this.setData({
-      list: list,
-      cur: list[index]
-    });
+      cur: e.detail
+    })
   },
   // 转发
   onShareAppMessage: function(ops) {
@@ -369,27 +263,20 @@ Page({
     }
     if (ops.from === "button") {
       console.log("ShareAppMessage  button");
-      let list = this.data.list;
-      let index = this.data.index;
       let param2 = {
-        id: list[index].id
+        id: this.data.cur.id
       };
       app.video.share(param2).then(msg => {
-        list[index].forward += 1;
-        this.setData({
-          list: list,
-          cur: list[index]
-        });
+        this.selectComponent('#videoSwiper').addShare(this.data.cur.id)
         wx.uma.trackEvent("sortVideo_play", {
           videoName: this.data.cur.title
         });
         wx.uma.trackEvent('totalShare', { 'shareName': '短视频转发' });
       });
       return {
-        title: list[index].title,
-        path:
-          "/pages/video/video?id=" +
-          list[index].id +
+        title: this.data.cur.title,
+        path: "/pages/video/video?id=" +
+          this.data.cur.id +
           "&type=share&uid=" +
           this.data.$state.userInfo.id
       };
@@ -431,5 +318,59 @@ Page({
   onUnload() {},
   copywechat() {
     app.copythat(this.data.wechatnum);
+  },
+  videoError() {
+    wx.showToast({
+      title: '视频加载出错',
+    })
+  },
+  getMorelist() {
+    if(this.end) return 
+    let list = this.data.list
+    this.param.page += 1;
+    this.param.position = "first";
+    this.param.include = "no";
+    this.param.id = list[list.length - 1].id;
+    this.setData({
+      videoTwo: false
+    })
+    app.video.category(this.param).then(msg => {
+      // msg.data.lists.shift() 
+      msg.data.lists.forEach(function (item) {
+        item.pw = app.util.tow(item.praise);
+        item.fw = app.util.tow(item.forward);
+      });
+      this.setData({
+        list: msg.data.lists
+      })
+      msg.data.lists.length < 10 ? this.end = true : ''
+      this.param.last_id = msg.data.last_id;
+    });
+  },
+  getpreList(list) {
+    if(this.pre) return
+    this.param.id = list.length > 0 ? list[0].id : this.data.list[0].id;
+    this.param.position = "end";
+    this.param.include = "no";
+    return app.video.category(this.param).then(msg => {
+      msg.data.lists.forEach(function (item) {
+        item.pw = app.util.tow(item.praise);
+        item.fw = app.util.tow(item.forward);
+      });
+       if(this.data.videoTwo ) {
+         return [msg.data.lists[msg.data.lists.length - 1]]
+       }  else {
+         this.setData({
+            prevideoList: msg.data.lists
+          })
+       }
+      msg.data.lists.length < 10 ? this.pre = true : ''
+      this.param.last_id = msg.data.last_id;
+    });
+  },
+  videoTwochange() {
+    this.setData({
+      videoTwo: false
+    })
   }
 });

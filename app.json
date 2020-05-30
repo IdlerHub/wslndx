@@ -59,7 +59,11 @@
     "pages/rankingList/rankingList",
     "pages/infoAddress/infoAddress",
     "pages/voteRank/voteRank",
-    "pages/voteWinner/voteWinner"
+    "pages/voteWinner/voteWinner",
+    "pages/timetable/timetable",
+    "pages/tableDetail/tableDetail",
+    "pages/gamePage/gamePage",
+    "pages/timetableList/timetableList"
   ],
   "permission": {
     "scope.userLocation": {
@@ -107,7 +111,7 @@
   ],
   "plugins": {
     "WechatSI": {
-      "version": "0.3.3",
+      "version": "0.3.4",
       "provider": "wx069ba97219f66d99"
     }
   }
