@@ -4,6 +4,7 @@ const app = getApp();
 Page({
   data: {
     list: [],
+    prevideoList: [],
     cur: {},
     tip: true,
     vid: "short-video" + Date.now(),
@@ -13,11 +14,14 @@ Page({
     loop: false,
     isshowRedbig: false,
     pause: true,
-    nextRtight: 6
+    nextRtight: 6,
+    videoTwo: true
     /*  rect: wx.getMenuButtonBoundingClientRect() */
   },
   pageName: "单用户短视频全部展示页",
   recordVideo_id: -1,
+  end: false,
+  pre: false,
   onLoad(options) {
     this.videoContext = wx.createVideoContext(this.data.vid);
     wx.setNavigationBarTitle({
@@ -67,7 +71,7 @@ Page({
       /* 已登录 */
       this.getList([]).then(() => {
         this.setData({
-          cur: this.data.list[0],
+          cur: this.data.list[1],
           index: 0
         });
         app.addVisitedNum(`v${this.data.cur.id}`);
@@ -75,8 +79,16 @@ Page({
         this.judgeWifi();
       });
     }
+    
   },
   onShow() {
+    if (this.data.list.length == 0) {
+        wx.showLoading({
+          title: '正在努力加载中'
+        })
+    } else if (this.data.list.length > 0) {
+      this.judgeWifi()
+    }
     this.shortvideoAward();
     wx.onNetworkStatusChange(res => {
       res.networkType == "wifi" ? app.playVedio("wifi") : "";
@@ -197,10 +209,12 @@ Page({
     }
   },
   getList(list) {
-    let temp = list || this.data.list;
+    let temp = this.data.list;
     if (this.data.limit) {
       return app.video.category(this.param).then(msg => {
-        this.callback(msg, temp);
+        // return this.getpreList(msg.data.lists).then(res => {
+          this.callback(msg, []);
+        // })
         return msg;
       });
     } else {
@@ -218,10 +232,7 @@ Page({
       });
 
       this.setData({
-        list:
-          this.param.position == "end"
-            ? (msg.data.lists || []).concat(temp)
-            : temp.concat(msg.data.lists || [])
+        list: temp.concat(msg.data.lists || [])
       });
       this.param.last_id = msg.data.last_id;
     }
@@ -314,17 +325,52 @@ Page({
     })
   },
   getMorelist() {
-    // this.param.page += 1;
-    // this.param.id = "";
-    // app.video.list(this.param).then(msg => {
-    //   msg.data.lists.forEach(function (item) {
-    //     item.pw = app.util.tow(item.praise);
-    //     item.fw = app.util.tow(item.forward);
-    //   });
-    //   this.setData({
-    //     list: msg.data.lists
-    //   })
-    //   this.param.last_id = msg.data.last_id;
-    // });
+    if(this.end) return 
+    let list = this.data.list
+    this.param.page += 1;
+    this.param.position = "first";
+    this.param.include = "no";
+    this.param.id = list[list.length - 1].id;
+    this.setData({
+      videoTwo: false
+    })
+    app.video.category(this.param).then(msg => {
+      // msg.data.lists.shift() 
+      msg.data.lists.forEach(function (item) {
+        item.pw = app.util.tow(item.praise);
+        item.fw = app.util.tow(item.forward);
+      });
+      this.setData({
+        list: msg.data.lists
+      })
+      msg.data.lists.length < 10 ? this.end = true : ''
+      this.param.last_id = msg.data.last_id;
+    });
   },
+  getpreList(list) {
+    if(this.pre) return
+    this.param.id = list.length > 0 ? list[0].id : this.data.list[0].id;
+    this.param.position = "end";
+    this.param.include = "no";
+    return app.video.category(this.param).then(msg => {
+      msg.data.lists.forEach(function (item) {
+        item.pw = app.util.tow(item.praise);
+        item.fw = app.util.tow(item.forward);
+      });
+       if(this.data.videoTwo ) {
+         return [msg.data.lists[msg.data.lists.length - 1]]
+       }  else {
+         this.setData({
+            prevideoList: msg.data.lists
+          })
+       }
+      msg.data.lists.length < 10 ? this.pre = true : ''
+      this.param.last_id = msg.data.last_id;
+    });
+  },
+  videoTwochange() {
+    this.setData({
+      videoTwo: false
+    })
+  }
 });

@@ -72,12 +72,11 @@ Page({
     }) : ''
     app.globalData.currentTab = ''
     /* 更新用户的视频浏览历史 */
-    if (app.store.$state.userInfo.mobile) this.getHistory()
-
+    if (app.store.$state.userInfo.mobile) [this.getHistory(),  app.getUserOpenData()]
     setTimeout(wx.hideLoading, 500)
   },
   init() {
-    return Promise.all([this.getactivite(), this.getRecommend(), this.getCategory(), this.getBanner(), this.getPaper(), this.getDialog(), this.getGuide(), this.getUserOpenData()]).then(values => {
+    return Promise.all([this.getactivite(), this.getRecommend(), this.getCategory(), this.getBanner(), this.getPaper(), this.getDialog(), this.getGuide()]).then(values => {
       // this.setData({
       //   activity: values[0].data
       // })
@@ -115,15 +114,6 @@ Page({
     } else {
       this.getheight(nav, currentTab)
     }
-  },
-   // 获取用户openid
-   getUserOpenData() {
-    app.user.getUserOpenData().then(res => {
-      wx.setStorage({
-        data: res.data.openid,
-        key: 'openId',
-      })
-    })
   },
   getheight(nav, currentTab) {
     let query = wx.createSelectorQuery().in(this)

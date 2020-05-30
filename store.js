@@ -66,7 +66,8 @@ let store = new Store({
       user: 1,
       lesson_category: 1
     },
-    blackShow: false
+    blackShow: false,
+    openId: ''
   },
   pageLisener: {
     onLoad(opts) {

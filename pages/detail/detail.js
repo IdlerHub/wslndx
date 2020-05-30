@@ -63,7 +63,6 @@ Page({
     collect: 0
   },
   onLoad(options) {
-    console.log(options)
     /*todo:考虑去掉that*/
     let that = this;
     this.videoContext = wx.createVideoContext("myVideo");

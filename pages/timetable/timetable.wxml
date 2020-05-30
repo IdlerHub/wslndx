@@ -4,8 +4,7 @@
     <image src="{{$state.imgHost}}/searchp.png"></image>
     <text>搜索课程名称</text>
   </navigator>
-  <navigator hover-class="none" class="search-right" url="/pages/attentionPage/attentionPage" open-type="navigate"
-    bindtap="drawPage">
+  <navigator hover-class="none" class="search-right" url="/pages/timetableList/timetableList" open-type="navigate">
     <image src="{{ $state.imgHost }}/timetebleIcon.png" class="iconfont"></image>
     <text>我的课表</text>
   </navigator>
