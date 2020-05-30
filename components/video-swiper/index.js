@@ -151,19 +151,18 @@ module.exports =
                     value: [],
                     observer: function observer() {
                         var newVal = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
-                        this.data.videoTwo ? this.setData({ current: 1, _last: 1 }) :''
+                        // this.data.videoTwo ? this.setData({ current: 1, _last: 1 }) :''
                         this._videoListChanged(newVal);
                     }
                 },
-                prevideoList: {
-                    type: Array,
-                    value: [],
-                    observer: function observer() {
-                        var newVal = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
-                        if(newVal.length == 0) return
-                        this._prevideoListChanged(newVal);
-                    }
-                },
+                // prevideoList: {
+                //     type: Array,
+                //     value: [],
+                //     observer: function observer() {
+                //         var newVal = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+                //         this._prevideoListChanged(newVal);
+                //     }
+                // },
                 pause: {
                     type: Boolean,
                     value: false,
@@ -200,18 +199,18 @@ module.exports =
                 }
             },
             methods: {
-                _prevideoListChanged: function _videoListChanged(newVal) {
-                    var _this = this;
-                    var data = this.data;
-                    newVal.forEach(function (item) {
-                        data.prevQueue.push(item);
-                    });
-                    if (data.prevQueue.length === 0) {
-                        this.setData({
-                            prevQueue: data.prevQueue.splice(0, 3)
-                        })
-                    }
-                },
+                // _prevideoListChanged: function _videoListChanged(newVal) {
+                //     var _this = this;
+                //     var data = this.data;
+                //     newVal.forEach(function (item) {
+                //         data.prevQueue.push(item);
+                //     });
+                //     if (data.prevQueue.length === 0) {
+                //         this.setData({
+                //             prevQueue: data.prevQueue.splice(0, 3)
+                //         })
+                //     }
+                // },
                 _videoListChanged: function _videoListChanged(newVal) {
                     var _this = this;
 
@@ -223,11 +222,11 @@ module.exports =
                         this.setData({
                             curQueue: data.nextQueue.splice(0, 3)
                         }, function () {
-                            _this.data.videoTwo ? _this.playCurrent(1, data, true) :
+                            // _this.data.videoTwo ? _this.playCurrent(1, data, true) :
                             _this.playCurrent(0, data);
                         });
                     }  
-                    this.triggerEvent('getpreList', 1)
+                    // this.triggerEvent('getpreList', 1)
                 },
                 animationfinish: function animationfinish(e) {
                     var _data = this.data,
@@ -276,7 +275,6 @@ module.exports =
                         } else {
                             this.data._invalidUp -= 1;
                         }
-                        this.data.videoTwo ? this.triggerEvent('getpreList', 1) : ''
                     }
                     var circular = true;
                     if (nextQueue.length <= 2) {
@@ -288,12 +286,13 @@ module.exports =
                     if (prevQueue.length === 0 && current !== 2) {
                         circular = false;
                     }
+                    console.log(nextQueue, prevQueue)
                     this.setData({
                         curQueue: curQueue,
                         circular: circular,
                         current
                     });
-                    this.data.videoTwo ? [this.triggerEvent('videoTwochange', curQueue[current]), this.setData({ _last: 0 })] : ''
+                    // this.data.videoTwo ? [this.triggerEvent('videoTwochange', curQueue[current]), this.setData({ _last: 0 })] : ''
                     this.triggerEvent('getCur', curQueue[current])
                 },
                 playCurrent: function playCurrent(current, data, type) {

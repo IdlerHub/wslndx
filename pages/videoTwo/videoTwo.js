@@ -212,9 +212,9 @@ Page({
     let temp = this.data.list;
     if (this.data.limit) {
       return app.video.category(this.param).then(msg => {
-        return this.getpreList(msg.data.lists).then(res => {
-          this.callback(msg, res);
-        })
+        // return this.getpreList(msg.data.lists).then(res => {
+          this.callback(msg, []);
+        // })
         return msg;
       });
     } else {
@@ -357,7 +357,7 @@ Page({
         item.pw = app.util.tow(item.praise);
         item.fw = app.util.tow(item.forward);
       });
-       if(list) {
+       if(this.data.videoTwo ) {
          return [msg.data.lists[msg.data.lists.length - 1]]
        }  else {
          this.setData({
