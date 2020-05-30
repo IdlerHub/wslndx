@@ -349,7 +349,7 @@ Page({
   },
   getpreList(list) {
     if(this.pre) return
-    this.param.id = list ? list[0].id : this.data.list[0].id;
+    this.param.id = list.length > 0 ? list[0].id : this.data.list[0].id;
     this.param.position = "end";
     this.param.include = "no";
     return app.video.category(this.param).then(msg => {
