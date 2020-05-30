@@ -3,7 +3,7 @@
  * @Author: zxk
  * @Date: 2020-05-13 12:42:53
  * @LastEditors: zxk
- * @LastEditTime: 2020-05-30 11:33:29
+ * @LastEditTime: 2020-05-30 14:44:07
  */ 
 // pages/voteWinner/voteWinner.js
 const app = getApp()
@@ -25,7 +25,7 @@ Page({
     author: '', //搜索用户名
     opus: '',   //搜索作品编号
     userInfo: {}, //作品获奖信息，微信分享的图片
-    imgs: '/images/certificate-vote.png',   //奖状背景图
+    imgs: '',   //奖状背景图
     tempImg: '' //临时路径
   },
   pageName: '赛事活动获奖排行',
@@ -107,9 +107,8 @@ Page({
     })
     app.vote.searchCertificate(params)
     .then(res=>{
-      console.log("请求回来的",res)
       let userInfo = res.data
-      if (userInfo.author.length>5){
+      if (userInfo.author.length>6){
         userInfo['author'] = userInfo.author.substr(0,5)
       }
       wx.hideLoading()
@@ -128,7 +127,6 @@ Page({
     })
   },
   drawCertificate(v,info) {  //绘制奖状
-    console.log(this.data.imgs)
     let that = this;
     const ctx = wx.createCanvasContext("certificate", this);
     //背景图
@@ -138,7 +136,7 @@ Page({
     ctx.setFontSize(18);
     ctx.setFillStyle("#333333");
     ctx.setTextAlign('center')
-    ctx.fillText(info.author, 182/v, 355/v, 200 / v);
+    ctx.fillText(info.author, 215/v, 355/v, 255 / v);
     ctx.setFontSize(18);
     ctx.setTextAlign('center')
     ctx.fillText(info.opus, 288 / v, 458 / v);
@@ -182,12 +180,11 @@ Page({
   downloadImg(){  //先下载背景图，下载成功后开始绘画
     let that = this;
     wx.downloadFile({
-      url: that.data.$state.imgHost +'/diploma.png',
+      url: that.data.$state.imgHost +'/diploma2.png',
       success:res=>{
         this.setData({
           imgs: res.tempFilePath
         })
-        console.log(that.data.$state.imgHost + '/diploma.png')
         wx.getSystemInfo({
           success: function (res) {
             var v = 750 / res.windowWidth; //获取手机比例
@@ -270,7 +267,6 @@ Page({
     }) 
     this.getCategory();
     if (options.rankType == 2){
-      console.log(options)
       //展示证书
       this.setData({
         rankType: 2,

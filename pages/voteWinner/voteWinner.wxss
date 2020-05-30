@@ -404,7 +404,7 @@
   font-weight:500;
 }
 .card-author{
-  width: 200rpx;
+  width: 255rpx;
   position: absolute;
   top: 325rpx;
   left: 86rpx;
