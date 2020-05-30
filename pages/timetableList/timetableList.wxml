@@ -1,2 +1,7 @@
 <!--pages/timetableList/timetableList.wxml-->
-
+<view class="qstBox" wx:if="{{courseListL.length == 0}}">
+  <image src="{{$state.imgHost}}/courseqs.png"></image>
+  <text>您还没有课程，<br/>
+    快去课程表选课吧~</text>
+  <navigator open-type="navigateBack" hover-class="none" class="choose">去选课</navigator>
+</view>
