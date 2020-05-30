@@ -3,7 +3,7 @@
  * @Author: zxk
  * @Date: 2020-05-13 12:42:53
  * @LastEditors: zxk
- * @LastEditTime: 2020-05-29 11:15:36
+ * @LastEditTime: 2020-05-30 11:33:29
  */ 
 // pages/voteWinner/voteWinner.js
 const app = getApp()
@@ -91,7 +91,6 @@ Page({
     })
   },
   searchCertificate(){
-    console.log(111)
     let params = {
       author: this.data.author,
       opus: this.data.opus
@@ -108,9 +107,14 @@ Page({
     })
     app.vote.searchCertificate(params)
     .then(res=>{
+      console.log("请求回来的",res)
+      let userInfo = res.data
+      if (userInfo.author.length>5){
+        userInfo['author'] = userInfo.author.substr(0,5)
+      }
       wx.hideLoading()
       this.setData({
-        userInfo: res.data,
+        userInfo: userInfo,
         showCertificate: true
       })
       this.downloadImg()
@@ -134,10 +138,6 @@ Page({
     ctx.setFontSize(18);
     ctx.setFillStyle("#333333");
     ctx.setTextAlign('center')
-    //TODO: 截取，最长四个字
-    if(info.author.length > 5){
-      info.author = info.author.substr(0,5)
-    }
     ctx.fillText(info.author, 182/v, 355/v, 200 / v);
     ctx.setFontSize(18);
     ctx.setTextAlign('center')
@@ -270,6 +270,7 @@ Page({
     }) 
     this.getCategory();
     if (options.rankType == 2){
+      console.log(options)
       //展示证书
       this.setData({
         rankType: 2,
@@ -286,10 +287,9 @@ Page({
   onShareAppMessage: function () {
     // let title = this.data.title;
     if(this.data.rankType == 2 && this.data.showCertificate){
-      console.log()
       return {
         title: "抗疫在线，荣誉有你",
-        path: `pages/voteWinner/voteWinner?rankType=2&author=${this.data.userInfo.author}&opus=${this.data.userInfo.opus}`,
+        path: `pages/voteWinner/voteWinner?rankType=2&author=${this.data.author}&opus=${this.data.opus}`,
         imageUrl: this.data.userInfo.share_image,
       }
     }else{
