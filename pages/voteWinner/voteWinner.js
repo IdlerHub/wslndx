@@ -3,7 +3,7 @@
  * @Author: zxk
  * @Date: 2020-05-13 12:42:53
  * @LastEditors: zxk
- * @LastEditTime: 2020-05-30 14:44:07
+ * @LastEditTime: 2020-05-30 16:08:03
  */ 
 // pages/voteWinner/voteWinner.js
 const app = getApp()
@@ -109,7 +109,7 @@ Page({
     .then(res=>{
       let userInfo = res.data
       if (userInfo.author.length>6){
-        userInfo['author'] = userInfo.author.substr(0,5)
+        userInfo['author'] = userInfo.author.substr(0,6)
       }
       wx.hideLoading()
       this.setData({
