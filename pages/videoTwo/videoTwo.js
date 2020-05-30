@@ -226,11 +226,13 @@ Page({
   },
   callback(msg, temp) {
     if (msg.code === 1 && msg.data && msg.data.lists) {
+      console.log(msg.data.lists.length)
+      msg.data.lists.length == 5 ? [msg.data.lists.push(msg.data.lists[3]),msg.data.lists.push(msg.data.lists[4]) ] :  msg.data.lists.length == 4 ? [msg.data.lists.push(msg.data.lists[3]),msg.data.lists.push(msg.data.lists[0])]: ''
       msg.data.lists.forEach(function(item) {
         item.pw = app.util.tow(item.praise);
         item.fw = app.util.tow(item.forward);
       });
-
+      msg.data.lists.length < 10 ? this.end = true : ''
       this.setData({
         list: temp.concat(msg.data.lists || [])
       });
