@@ -1,4 +1,5 @@
 /* pages/timetable/timetable.wxss */
+@import '/pages/timetable/timetable.skeleton.wxss';
 .search-box {
   padding: 30rpx;
   box-sizing: border-box;

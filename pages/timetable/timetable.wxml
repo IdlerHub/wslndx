@@ -1,4 +1,5 @@
 <!--pages/timetable/timetable.wxml-->
+<import src='timetable.skeleton.wxml'></import>
 <view class="search-box">
   <navigator class="search-left" url="/pages/search/search" hover-class="none">
     <image src="{{$state.imgHost}}/searchp.png"></image>
@@ -23,8 +24,9 @@
     <image src="{{$state.imgHost}}/tabclassify.png"></image>
   </navigator>
 </view>
-<view class="contariner">
-  <view class="item" wx:for="{{10}}" wx:key="index" >
+
+<view class="contariner" wx:if="{{list.length > 0}}">
+  <navigator class="item" wx:for="{{10}}" wx:key="index" hover-class="none" url="/pages/tableDetail/tableDetail" open-type="navigate">
     <view class="imgBox">
       <image src="https://jinling-xcx-dev.obs.cn-north-1.myhuaweicloud.com:443/uploads/images/36c5713053c4b623b5ee321908a139aa.jpg" class="img"></image>
       <image class="icon" mode="aspectFill" src="{{ $state.imgHost }}/play.png"></image>
@@ -37,8 +39,10 @@
           <image src="../../images/peosonIcon.png"></image>
           <text>蓝成森</text>
         </view>
-        <navigator class="btn" hover-class="none" url="/pages/tableDetail/tableDetail" open-type="navigate">预约报名</navigator>
+        <view class="btn">预约报名</view>
       </view>
     </view>
-  </view>
+  </navigator>
 </view>
+<template is="item" wx:eles></template>
+
