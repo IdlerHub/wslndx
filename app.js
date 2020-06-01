@@ -487,7 +487,7 @@ App({
         "/pages/index/index?uid=" +
         this.store.$state.userInfo.id +
         "&type=invite&activity=1",
-      imageUrl: "https://hwcdn.jinlingkeji.cn/images/dev/withdrawShareImg.jpg"
+      imageUrl: "https://hwcdn.jinlingkeji.cn/images/dev/withdrawShareImg2.png"
     };
   },
   getSecureToken() {

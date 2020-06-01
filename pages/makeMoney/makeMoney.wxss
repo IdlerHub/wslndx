@@ -2,6 +2,13 @@
 page {
   background:rgba(244,244,244,1);
 }
+.topBox {
+  padding: 30rpx;
+}
+.topBox .image {
+  width: 100%;
+  height: 250rpx;
+}
 .container .top{
   width: 730rpx;
   height: 378rpx;

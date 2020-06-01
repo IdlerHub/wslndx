@@ -1,6 +1,6 @@
 <!--pages/makeMoney/makeMoney.wxml-->
 <view class="container">
-  <view class="top">
+  <!-- <view class="top">
     <view class="topBox">
       <view class="title">我的收益</view>
       <navigator class="moneyBox" hover-class="none" url="/pages/myEarnings/myEarnings" open-type="navigate">
@@ -37,17 +37,20 @@
         <view class="bottomBox-txt">学员进贡(学分)</view>
       </navigator>
     </view>
+  </view> -->
+  <view class="topBox">
+    <navigator class="image" hover-class="none" url="/pages/strategy/strategy" style="background: url({{$state.imgHost}}/withdrawBanner3.png); background-size: 100% 100%;"></navigator>
   </view>
   <view class="rankin_list">
-    <view class="rankin_listTop">
+    <!-- <view class="rankin_listTop">
       <view class="title">排行榜</view>
       <navigator class="strategy" hover-class="none" url="/pages/strategy/strategy">收学员攻略></navigator>
-    </view>
+    </view> -->
     <view class="rankin_listTitle">
       <text>排名</text>
       <text>导师昵称</text>
       <text>学员人数</text>
-      <text>累计学分</text>
+      <!-- <text>累计学分</text> -->
     </view>
     <view class="list" wx:if="{{list.length > 0}}">
       <view class="item" wx:for="{{list}}" wx:key="index">
@@ -57,7 +60,7 @@
           <image src="{{item.avatar || '/images/apprenticeAva.png'}}"></image>
           <text>{{item.nickname}}</text>
           <text>{{item.number2 || item.prentice_count}}</text>
-          <text>+{{item.money2 || item.total_amount}}</text>
+          <!-- <text>+{{item.money2 || item.total_amount}}</text> -->
         </view>
       </view>
     </view>

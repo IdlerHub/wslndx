@@ -11,9 +11,10 @@ page {
     padding-bottom: 300rpx; }
     page .scroll .theme {
       position: relative;
-      height: 797rpx; }
+      height: 797rpx;
+      overflow: hidden; }
       page .scroll .theme .bg {
-        height: 797rpx;
+        height: 840rpx;
         width: 100%; }
       page .scroll .theme .user {
         position: absolute;
