@@ -3,7 +3,7 @@
  * @Author: zxk
  * @Date: 2020-05-13 12:42:53
  * @LastEditors: zxk
- * @LastEditTime: 2020-05-30 16:08:03
+ * @LastEditTime: 2020-06-02 17:08:45
  */ 
 // pages/voteWinner/voteWinner.js
 const app = getApp()
@@ -136,14 +136,14 @@ Page({
     ctx.setFontSize(18);
     ctx.setFillStyle("#333333");
     ctx.setTextAlign('center')
-    ctx.fillText(info.author, 215/v, 355/v, 255 / v);
+    ctx.fillText(info.author, 215/v, 358/v, 255 / v);
     ctx.setFontSize(18);
     ctx.setTextAlign('center')
-    ctx.fillText(info.opus, 288 / v, 458 / v);
+    ctx.fillText(info.opus, 304 / v, 458 / v);
     ctx.setFontSize(18);
     ctx.setFillStyle("#FF0000");
     ctx.setTextAlign('center')
-    ctx.fillText(info.honor, 408 / v, 638 / v);
+    ctx.fillText(info.honor, 426 / v, 638 / v);
     // let windowWidth = wx.getSystemInfoSync().windowWidth;
     let width = 630/v;
     let height = 1000/v;
@@ -180,7 +180,7 @@ Page({
   downloadImg(){  //先下载背景图，下载成功后开始绘画
     let that = this;
     wx.downloadFile({
-      url: that.data.$state.imgHost +'/diploma2.png',
+      url: that.data.$state.imgHost +'/diploma3.png',
       success:res=>{
         this.setData({
           imgs: res.tempFilePath
@@ -290,7 +290,7 @@ Page({
       }
     }else{
       return {
-        title: "“同心抗疫”活动获奖名单出炉了，大家快来看看！",
+        title: "抗疫在线，荣誉有你",
         path: `pages/voteWinner/voteWinner`,
       }
     }
