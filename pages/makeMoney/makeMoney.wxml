@@ -39,7 +39,7 @@
     </view>
   </view> -->
   <view class="topBox">
-    <navigator class="image" hover-class="none" url="/pages/strategy/strategy" style="background: url({{$state.imgHost}}/withdrawBanner3.png); background-size: 100% 100%;"></navigator>
+    <navigator class="image" hover-class="none" url="/pages/strategy/strategy" style="background: url({{$state.imgHost}}/withdrawtopBanner.png); background-size: 100% 100%;"></navigator>
   </view>
   <view class="rankin_list">
     <!-- <view class="rankin_listTop">

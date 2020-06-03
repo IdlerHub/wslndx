@@ -14,7 +14,7 @@
         </view>
         <view class="center">
             <text wx:if="{{rankType == 0}}">截止时间：{{time|| '2020年5月26日'}}</text>
-            <text wx:if="{{rankType == 2}}">查询截止时间：2020年6月3日</text>
+            <text wx:if="{{rankType == 2}}">查询截止时间：2020年6月8日</text>
             <view class="category"wx:if="{{rankType == 1}}">
                     <view class="section__title">分类</view>
                     <picker class="picker" bindchange="classifyChange" value="{{categoryIndex}}" range="{{category}}" range-key='name'>

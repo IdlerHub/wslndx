@@ -481,8 +481,7 @@ App({
   withdrawShare(ops) {
     wx.uma.trackEvent('totalShare', { 'shareName': '我的邀请' });
     return {
-      title:
-        this.store.$state.shareTitle || "福利！老年大学十万集免费课程在线学习",
+      title: '一起来网上老年大学学习',
       path:
         "/pages/index/index?uid=" +
         this.store.$state.userInfo.id +
