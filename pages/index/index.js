@@ -485,8 +485,8 @@ Page({
   },
   // 跳友方小程序
   jumpmini() {
-    this.minigo('{"appid":"wx92d650b253f8f2e3","url":"/pages/index/index?zbid=1826546606"}')
-    wx.uma.trackEvent('index_btnClick', { 'btnName': '课程直播' });
+    this.minigo('{"appid":"wxefc543d1ca554b3b","url":"/pages/index/index"}')
+    wx.uma.trackEvent('index_btnClick', { 'btnName': '七号狗场' });
   },
   minigo(url) {
     let system = JSON.parse(url)

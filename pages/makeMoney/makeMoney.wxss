@@ -175,7 +175,7 @@ page {
   padding-left:10rpx ;
 } */
 .container .rankin_list .qst {
-  margin-top: 50rpx;
+  margin-top: 110rpx;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -213,7 +213,7 @@ page {
   color:rgba(255,255,255,1);
 }
 .container .rankin_list .list .item {
-  margin: 0 30rpx 0 38rpx;
+  margin: 0 30rpx 0 30rpx;
   padding-left: 27rpx;
   height: 140rpx;
   display: flex;
@@ -221,8 +221,8 @@ page {
   border-bottom:1rpx solid #E9E9E9;
 }
 .container .rankin_list .list .item .ranking{
-  width:40rpx;
-  height: 38rpx;
+  width:48rpx;
+  height: 42rpx;
   margin-right: 87rpx;
   text-align: center;
   font-size:36rpx;
@@ -245,7 +245,7 @@ page {
 .container .rankin_list .list .item .itemMsg text:nth-child(2) {
   display: block;
   width:320rpx;
-  font-size:32rpx;
+  font-size:38rpx;
   text-align: center;
   font-weight:400;
   color:rgba(58,58,58,1);
