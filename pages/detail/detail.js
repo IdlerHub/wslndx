@@ -319,6 +319,8 @@ Page({
         id: this.data.detail.id,
         suId: this.data.cur.id
       }
+      this.timeTemplate = parseInt(new Date().getTime() / 1000 + "")
+      console.log(this.timeTemplate)
       clearInterval(this.videoInterval)
       this.videoTime = 0
       this.videoInterval = setInterval(() => {
@@ -372,6 +374,7 @@ Page({
     });
   },
   videoPause() {
+    console.log( parseInt(new Date().getTime() / 1000 + "") - this.timeTemplate)
     clearInterval(this.videoInterval)
     if(this.videoTime == 0) return
     this.videoTime > this.data.cur.minute * 60 ? this.videoTime = this.data.cur.minute * 60 : ''

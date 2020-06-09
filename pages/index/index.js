@@ -1,4 +1,7 @@
 //index.js
+
+const Tutor = require("../../data/Tutor")
+
 //获取应用实例
 const app = getApp()
 Page({
@@ -14,7 +17,8 @@ Page({
     guideNum: 1,
     shownow: true,
     shownowt: true,
-    showdialog: true
+    showdialog: true,
+    showLoading: false
   },
   navHeightList: [],
   pageName: '首页',
@@ -224,6 +228,7 @@ Page({
           pageSize: 10
         }
         i['class'] = '#recommend' + i.id
+        i['showBtoom'] = false
         arr.push(i)
       })
       this.setData({
@@ -414,11 +419,14 @@ Page({
     })
   },
   onReachBottom() {
-    if (this.data.currentTab != 0) {
+    if (this.data.currentTab != 0 && !this.data.nav[this.data.currentTab].showBtoom) {
       let id = this.data.nav[this.data.currentTab].id
       let temp = this.data.catrecommend[id]
       this.categoryParams[id].page++
-      return app.classroom.lessons(this.categoryParams[id]).then(msg => {
+      this.setData({
+        showLoading: true
+      })
+      app.classroom.lessons(this.categoryParams[id]).then(msg => {
         let next = true
         msg.data.forEach(function (item) {
           item.thousand = app.util.tow(item.browse)
@@ -427,6 +435,12 @@ Page({
           })
         })
         if (!next) return
+        if(msg.data.length == 0) {
+          this.setData({
+            showLoading: false,
+            [`nav[${this.data.currentTab}].showBtoom`]: true
+          })
+        }
         this.data.catrecommend[id] = temp.concat(msg.data)
         this.setData({
           [`catrecommend[${id}]`]: temp.concat(msg.data)
@@ -438,7 +452,8 @@ Page({
           let height = res[0].height
           that.navHeightList[currentTab] = height
           that.setData({
-            height: height
+            height: height,
+            showLoading: false
           })
         })
       })
