@@ -9,7 +9,6 @@ Page({
     nav: [{ id: 1, name: "推荐", class: "#recommend1", unMove: true }],
     height: 0,
     isRefreshing: false,
-    activity: "",
     currentTab: 0,
     showReco: false,
     guideNum: 0,
@@ -81,9 +80,6 @@ Page({
   },
   init() {
     return Promise.all([this.getactivite(), this.getRecommend(), this.getCategory(), this.getBanner(), this.getPaper(), this.getDialog(), this.getGuide()]).then(values => {
-      // this.setData({
-      //   activity: values[0].data
-      // })
       if (this.data.$state.newGuide.index == 0) {
         this.setData({
           guideNum: 1,
@@ -150,12 +146,12 @@ Page({
     this.timer ? clearTimeout(this.timer) : ''
     this.timer = setTimeout(() => {
       this.data.currentTab != cur ? cur == that.setData({
-        currentTab: cur
+        currentTab: cur,
       }) : ''
+      wx.hideLoading()
     }, 300)
-
     if (cur != 0) {
-      let id = this.data.nav[cur].id
+      let id = this.data.nav[cur] .id
       this.geteCatrcommend(id, cur)
       wx.uma.trackEvent('classify_btnClick', { 'name': this.data.nav[cur].name });
     }
@@ -293,13 +289,11 @@ Page({
         })
     }
     if (e.scrollTop < 0) return
-    let scrollTop = this.data.scrollTop
-    this.setData({
-      scrollTop: e.scrollTop
-    })
-    e.scrollTop - scrollTop > 0 ? this.setData({
+    let scrollTop = this.scrollTop
+    this.scrollTop = e.scrollTop
+    e.scrollTop - scrollTop > 0 ? this.data.shownow && this.setData({
       shownow: false
-    }) : this.shownow && this.setData({
+    }) : !this.data.shownow && this.shownow && this.setData({
       shownow: true
     })
   },
@@ -423,8 +417,11 @@ Page({
       let id = this.data.nav[this.data.currentTab].id
       let temp = this.data.catrecommend[id]
       this.categoryParams[id].page++
-      this.setData({
-        showLoading: true
+      // this.setData({
+      //   showLoading: true
+      // })
+      wx.showLoading({
+        title:'加载中'
       })
       app.classroom.lessons(this.categoryParams[id]).then(msg => {
         let next = true
@@ -455,6 +452,7 @@ Page({
             height: height,
             showLoading: false
           })
+          wx.hideLoading()
         })
       })
     }
