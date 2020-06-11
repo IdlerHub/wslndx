@@ -228,7 +228,6 @@
             </view>
           </view>
         </view>
-        <mp-loading type="circle" wx:if="{{ showLoading }}"></mp-loading>
         <view class="upbottom" wx:if="{{nav[currentTab].showBtoom}}">已经到底咯~</view>
       </view>
     </swiper-item>

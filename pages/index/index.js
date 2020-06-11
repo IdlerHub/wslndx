@@ -17,7 +17,6 @@ Page({
     shownow: true,
     shownowt: true,
     showdialog: true,
-    showLoading: false
   },
   navHeightList: [],
   pageName: '首页',
@@ -417,9 +416,6 @@ Page({
       let id = this.data.nav[this.data.currentTab].id
       let temp = this.data.catrecommend[id]
       this.categoryParams[id].page++
-      // this.setData({
-      //   showLoading: true
-      // })
       wx.showLoading({
         title:'加载中'
       })
@@ -434,7 +430,6 @@ Page({
         if (!next) return
         if(msg.data.length == 0) {
           this.setData({
-            showLoading: false,
             [`nav[${this.data.currentTab}].showBtoom`]: true
           })
         }

@@ -8,7 +8,6 @@
   "usingComponents": {
     "navigationBar": "/components/navigationBar/navigationBar",
     "formCode": "/components/formCode/formCode",
-    "navBar": "/components/navBar/navBar",
-    "mp-loading": "/components/loading/loading"
+    "navBar": "/components/navBar/navBar"
   }
 }
