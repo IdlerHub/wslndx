@@ -60,11 +60,12 @@
 			"outputPath": ""
 		},
 		"bundle": true,
+		"useIsolateContext": true,
 		"useCompilerModule": true,
 		"userConfirmedUseCompilerModuleSwitch": false
 	},
 	"compileType": "miniprogram",
-	"libVersion": "2.11.0",
+	"libVersion": "2.11.1",
 	"appid": "wx756d04f5d669cef0",
 	"projectname": "%E4%B8%AD%E5%9B%BD%E7%BD%91%E4%B8%8A%E8%80%81%E5%B9%B4%E5%A4%A7%E5%AD%A6",
 	"isGameTourist": false,
@@ -159,8 +160,8 @@
 				},
 				{
 					"id": 9,
-					"name": "pages//tableDetail",
-					"pathName": "pages/makeMoney/makeMoney",
+					"name": "pages/gameMore/gameMore",
+					"pathName": "pages/gameMore/gameMore",
 					"query": "id=21&type=invite",
 					"scene": null
 				},

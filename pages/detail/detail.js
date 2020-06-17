@@ -50,6 +50,7 @@ Page({
     /* rect: wx.getMenuButtonBoundingClientRect() */
   },
   pageName: "视频页（视频详情页）",
+  timeTemplate: '',
   videoTime: 0,
   videoTime2: 0,
   vRecordAdd: false,

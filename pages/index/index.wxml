@@ -148,10 +148,10 @@
             <image class="img" mode="widthFix" src="{{  !recommend ? '' : $state.imgHost + '/nonghcangDoor.png' }}">
             </image>
           </navigator>
-          <view class="jumpoutBox" bindtap="jumpmini">
+          <!-- <view class="jumpoutBox" bindtap="jumpmini">
             <image class="img" mode="widthFix" src="{{  !recommend ? '' : $state.imgHost + '/minigame.png'}}">
             </image>
-          </view>
+          </view> -->
           <!-- <navigator class="jumpoutBox" url="/pages/education/education?type=station" hover-class="none">
             <image class="img" mode="widthFix" src="{{  !recommend ? '' : $state.imgHost + '/diantaiDoor.png'}}">
             </image>
