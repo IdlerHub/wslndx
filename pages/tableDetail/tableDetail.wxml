@@ -37,6 +37,10 @@
       <text>授课老师</text> <text>蓝老师 </text>
     </view>
   </view>
+  <view class="content">
+    <view class="title">课程简介</view>
+    <rich-text nodes="{{text}}"></rich-text>
+  </view>
 </view>
 <view class="bottomBox">
   <view class="left">
@@ -50,7 +54,19 @@
       <text>{{colleted ? '已收藏' : '收藏'}}</text>
     </view>
   </view>
-  <view class="right">
+  <view class="right" bindtap="rightNow">
     立即学习
   </view>
 </view>
+
+
+<!-- 消息盒子 -->
+<cover-view class="servise" wx:if="{{showServise}}">
+  <cover-view class="serviseBox">
+    <cover-view class="text">进入客服消息后，点击右下角</cover-view>
+    <cover-view class="text">快捷图片，扫码进入班群上课</cover-view>
+    <cover-image src="{{$state.imgHost}}/serviseImg.png" class="image"></cover-image>
+    <button open-type="contact" hover-class="none" show-message-card send-message-img="{{$state.imgHost}}/serviceIMG.jpg" send-message-title="添加老师" catchtap="showServise" session-from='{"name": "{{$state.userInfo.nickname}}","avatarUrl":"{{$state.userInfo.avatar}}","nickName":"{{$state.userInfo.nickname}}"}'>去客服页面添加</button>
+  </cover-view>
+  <cover-image src="{{$state.imgHost}}/cancel.png" class="cancel" catchtap="showServise"></cover-image>
+</cover-view>

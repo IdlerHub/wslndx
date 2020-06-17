@@ -1,4 +1,7 @@
 //index.js
+
+const Tutor = require("../../data/Tutor")
+
 //获取应用实例
 const app = getApp()
 Page({
@@ -6,7 +9,6 @@ Page({
     nav: [{ id: 1, name: "推荐", class: "#recommend1", unMove: true }],
     height: 0,
     isRefreshing: false,
-    activity: "",
     currentTab: 0,
     showReco: false,
     guideNum: 0,
@@ -14,7 +16,7 @@ Page({
     guideNum: 1,
     shownow: true,
     shownowt: true,
-    showdialog: true
+    showdialog: true,
   },
   navHeightList: [],
   pageName: '首页',
@@ -77,9 +79,6 @@ Page({
   },
   init() {
     return Promise.all([this.getactivite(), this.getRecommend(), this.getCategory(), this.getBanner(), this.getPaper(), this.getDialog(), this.getGuide()]).then(values => {
-      // this.setData({
-      //   activity: values[0].data
-      // })
       if (this.data.$state.newGuide.index == 0) {
         this.setData({
           guideNum: 1,
@@ -146,12 +145,12 @@ Page({
     this.timer ? clearTimeout(this.timer) : ''
     this.timer = setTimeout(() => {
       this.data.currentTab != cur ? cur == that.setData({
-        currentTab: cur
+        currentTab: cur,
       }) : ''
+      wx.hideLoading()
     }, 300)
-
     if (cur != 0) {
-      let id = this.data.nav[cur].id
+      let id = this.data.nav[cur] .id
       this.geteCatrcommend(id, cur)
       wx.uma.trackEvent('classify_btnClick', { 'name': this.data.nav[cur].name });
     }
@@ -224,6 +223,7 @@ Page({
           pageSize: 10
         }
         i['class'] = '#recommend' + i.id
+        i['showBtoom'] = false
         arr.push(i)
       })
       this.setData({
@@ -288,13 +288,11 @@ Page({
         })
     }
     if (e.scrollTop < 0) return
-    let scrollTop = this.data.scrollTop
-    this.setData({
-      scrollTop: e.scrollTop
-    })
-    e.scrollTop - scrollTop > 0 ? this.setData({
+    let scrollTop = this.scrollTop
+    this.scrollTop = e.scrollTop
+    e.scrollTop - scrollTop > 0 ? this.data.shownow && this.setData({
       shownow: false
-    }) : this.shownow && this.setData({
+    }) : !this.data.shownow && this.shownow && this.setData({
       shownow: true
     })
   },
@@ -414,11 +412,14 @@ Page({
     })
   },
   onReachBottom() {
-    if (this.data.currentTab != 0) {
+    if (this.data.currentTab != 0 && !this.data.nav[this.data.currentTab].showBtoom) {
       let id = this.data.nav[this.data.currentTab].id
       let temp = this.data.catrecommend[id]
       this.categoryParams[id].page++
-      return app.classroom.lessons(this.categoryParams[id]).then(msg => {
+      wx.showLoading({
+        title:'加载中'
+      })
+      app.classroom.lessons(this.categoryParams[id]).then(msg => {
         let next = true
         msg.data.forEach(function (item) {
           item.thousand = app.util.tow(item.browse)
@@ -427,6 +428,11 @@ Page({
           })
         })
         if (!next) return
+        if(msg.data.length == 0) {
+          this.setData({
+            [`nav[${this.data.currentTab}].showBtoom`]: true
+          })
+        }
         this.data.catrecommend[id] = temp.concat(msg.data)
         this.setData({
           [`catrecommend[${id}]`]: temp.concat(msg.data)
@@ -438,8 +444,10 @@ Page({
           let height = res[0].height
           that.navHeightList[currentTab] = height
           that.setData({
-            height: height
+            height: height,
+            showLoading: false
           })
+          wx.hideLoading()
         })
       })
     }
@@ -485,8 +493,8 @@ Page({
   },
   // 跳友方小程序
   jumpmini() {
-    this.minigo('{"appid":"wx92d650b253f8f2e3","url":"/pages/index/index?zbid=1826546606"}')
-    wx.uma.trackEvent('index_btnClick', { 'btnName': '课程直播' });
+    this.minigo('{"appid":"wxefc543d1ca554b3b","url":"/pages/index/index"}')
+    wx.uma.trackEvent('index_btnClick', { 'btnName': '七号狗场' });
   },
   minigo(url) {
     let system = JSON.parse(url)

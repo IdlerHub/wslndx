@@ -49,9 +49,9 @@
               <view wx:if="{{ item.fw }}" class="text">{{ item.fw }}</view>
               <view wx:else class="text">{{ item.forward }}</view>
             </button>
-            <view class="redPacket" catchtap="showred" wx:if="{{isshowRed}}"></view>
-            <navigator class="moneyPackt" hover-class="none" url="/pages/makeMoney/makeMoney"
-              wx:if="{{$state.authUserInfo}}"></navigator>
+            <!-- <view class="redPacket" catchtap="showred" wx:if="{{isshowRed}}"></view> -->
+            <!-- <navigator class="moneyPackt" hover-class="none" url="/pages/makeMoney/makeMoney"
+              wx:if="{{$state.authUserInfo}}"></navigator> -->
             <button open-type="getUserInfo" bindgetuserinfo="onGotUserInfo" class="moneyPackt" data-type="money"
               wx:else></button>
           </view>

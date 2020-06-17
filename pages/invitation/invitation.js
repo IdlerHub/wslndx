@@ -96,8 +96,10 @@ Page({
       this.data.small ? 380 * ratio : 444 * ratio
     );
     ctx.setFontSize(40 * ratio);
-    ctx.fillText("十万个免费老年课程", 140 * ratio, this.data.small ? 450 * ratio : 510 * ratio);
-    ctx.fillText("打造新时代“三有老人”", 140 * ratio, this.data.small ? 510 * ratio : 564 * ratio);
+    // ctx.fillText("十万个免费老年课程", 140 * ratio, this.data.small ? 450 * ratio : 510 * ratio);
+    // ctx.fillText("打造新时代“三有老人”", 140 * ratio, this.data.small ? 510 * ratio : 564 * ratio);
+    ctx.fillText("老有所学，老有所乐，", 140 * ratio, this.data.small ? 450 * ratio : 510 * ratio);
+    ctx.fillText("邀请你一起学习交友。", 140 * ratio, this.data.small ? 510 * ratio : 564 * ratio);
     ctx.fillRect(
       0,
       this.param.container.height - 210 * ratio,

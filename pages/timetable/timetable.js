@@ -15,7 +15,8 @@ Page({
       {id:10, name: '全部'},
       {id:11, name: '全部'},
     ],
-    currentTab: 0
+    currentTab: 0,
+    list: []
   },
   onLoad: function (options) {
 

@@ -12,7 +12,7 @@ Page({
         })
       }
     })
-    
+    wx.uma.trackEvent('index_btnClick', { 'btnName': '斗地主' });
   },
   onReady: function () {
 

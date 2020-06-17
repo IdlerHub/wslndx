@@ -1,5 +1,5 @@
 <!--
-此文件为开发者工具生成，生成时间: 2020/5/27 上午9:58:41 
+此文件为开发者工具生成，生成时间: 2020/6/1 上午9:08:28 
 使用方法：
 1. 在"pages\timetable\timetable.wxml"中使用`include`指令引入此模板，
 2. 在"pages\timetable\timetable.wxss"中使用`import`指令引入"pages\timetable\timetable.skeleton.wxss"
@@ -7,13 +7,21 @@
 
 更多详细信息可以参考文档：https://developers.weixin.qq.com/miniprogram/dev/devtools/skeleton.html
 -->
-<view class="sk-container">
-  <view class="contrainer">
-    <view class="search-box">
-      <navigator class="search-left">
-        <image class="sk-image"></image><text class="sk-transparent sk-text-14-2857-42 sk-text" style="background-size: 100% 1.575rem;">搜索课程名称</text></navigator>
-      <navigator class="nav" hover-class="none" open-type="navigate">
-        <image class="iconfont sk-image"></image><text class="sk-transparent sk-text-14-2857-927 sk-text" style="background-size: 100% 1.225rem;">我的课表</text></navigator>
+<template class="sk-container" name="item">
+  <view class="contariner">
+    <view class="item" style="border: none;" wx:for="{{8}}" wx:key="index">
+      <view class="imgBox">
+        <image class="img sk-image"></image>
+        <image class="icon sk-image" mode="aspectFill"></image>
+      </view>
+      <view class="txtBox"><text class="title sk-transparent sk-text-14-2857-640 sk-text" style="background-size: 100% 1.75rem;">不出国也要学习英语学习时间管理</text><text class="time sk-transparent sk-text-15-0000-61 sk-text" style="background-size: 99.9875% 1.25rem;">每周一  16:00-18:00</text>
+        <view
+          class="textBottom">
+          <view class="teacher">
+            <image class="sk-image"></image><text class="sk-transparent sk-text-14-2857-873 sk-text" style="background-size: 100% 1.225rem;">蓝成森</text></view>
+          <navigator class="btn sk-transparent sk-text-14-2857-238 sk-text" hover-class="none" open-type="navigate" style="background-size: 100% 1.3125rem;">预约报名</navigator>
+      </view>
     </view>
   </view>
 </view>
+</template>
