@@ -1039,3 +1039,10 @@ page .getGuideBox .nextBtn {
 .blackBox .blackToast .btnBox .blackBtn:nth-child(2) {
   color: #DF2020;
 }
+
+.upbottom {
+  width: 100%;
+  padding:44rpx 0  30rpx 0;
+  text-align: center;
+  font-size: 28rpx;
+}

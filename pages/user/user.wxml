@@ -36,7 +36,7 @@
     <view class="navgationBox" bindtap="toInvite">
       <image src="{{ $state.imgHost }}/invitebg.png"></image>
       <text class="navTitle">邀请新学员</text>
-      <text class="num">收新学员赚钱</text>
+      <text class="num">一起来学习</text>
       <view class="toInvite">
         <image src="{{ $state.imgHost }}/Return.png"></image>
       </view>

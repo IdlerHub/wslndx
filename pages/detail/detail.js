@@ -50,9 +50,9 @@ Page({
     /* rect: wx.getMenuButtonBoundingClientRect() */
   },
   pageName: "视频页（视频详情页）",
+  timeTemplate: '',
   videoTime: 0,
-  videoTime2:0,
-  videoInterval:'',
+  videoTime2: 0,
   vRecordAdd: false,
   videoParam:{
     id:'',
@@ -188,21 +188,8 @@ Page({
     if (this.data.$state.newGuide) {
       this.data.$state.newGuide.lesson == 0 ? this.closeGuide() : "";
     }
-    if(this.videoTime > 0) {
-      clearInterval(this.videoInterval)
-      this.videoTime > this.data.cur.minute * 60 ? this.videoTime = this.data.cur.minute * 60 : ''
-      this.videoTime2 = this.videoTime
-      this.videoTime = 0
-      let param = {
-        lesson_id: this.data.detail.id,
-        sublesson_id: this.data.cur.id,
-        progress: this.videoTime2,
-      }
-      app.classroom.updateProgress(param).then(res => {
-        console.log(res.msg)
-      }).catch(() => {
-        this.videoTime = this.videoTime2
-      })
+    if(this.timeTemplate.length > 0) {
+      this.updateProgress()
     }
   },
   onHide() {
@@ -319,11 +306,7 @@ Page({
         id: this.data.detail.id,
         suId: this.data.cur.id
       }
-      clearInterval(this.videoInterval)
-      this.videoTime = 0
-      this.videoInterval = setInterval(() => {
-        this.videoTime ++  
-      },1000)
+      this.timeTemplate = parseInt(new Date().getTime() / 1000 + "")
     }, 800)
     wx.uma.trackEvent("lessonsPlay", {
       lessonsName: this.data.detail.title
@@ -372,20 +355,23 @@ Page({
     });
   },
   videoPause() {
-    clearInterval(this.videoInterval)
-    if(this.videoTime == 0) return
-    this.videoTime > this.data.cur.minute * 60 ? this.videoTime = this.data.cur.minute * 60 : ''
-    this.videoTime2 = this.videoTime
-    this.videoTime = 0
+    this.updateProgress()
+  },
+  updateProgress() {
+    let videoTime = parseInt(new Date().getTime() / 1000 + "") - this.timeTemplate
+    videoTime > this.data.cur.minute * 60 ? videoTime = this.data.cur.minute * 60 : ''
+    this.videoTime = videoTime
     let param = {
       lesson_id: this.videoParam.id,
       sublesson_id: this.videoParam.suId,
-      progress: this.videoTime2,
+      progress: this.videoTime,
     }
     app.classroom.updateProgress(param).then(res => {
+      this.timeTemplate = 0
+      this.videoTime2 = 0
       console.log(res.msg)
     }).catch(() => {
-      this.videoTime = this.videoTime2
+      this.videoTime2 = this.videoTime
     })
   },
   manage() {

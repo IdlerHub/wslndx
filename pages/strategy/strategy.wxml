@@ -2,7 +2,7 @@
 <view class="container">
   <view class="top">
     <view class="titleBox" bindtap="check">
-      <text class="{{current == 1 ? 'texthover' : ''}}">如何收学员</text>
+      <text class="{{current == 1 ? 'texthover' : ''}}">如何邀请</text>
       <view class="border" wx:if="{{current == 1}}"></view>
     </view>
     <view class="titleBox" bindtap="check" data-type="2">

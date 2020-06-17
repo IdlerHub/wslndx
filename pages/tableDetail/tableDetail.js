@@ -5,7 +5,9 @@ Page({
     hours: 0,
     minutes: 0,
     seconds: 0,
-    colleted: false
+    colleted: false,
+    avatarList:[1,2,3,4,5],
+    showServise: false
   },
   timer:'',
   onLoad: function (options) {
@@ -50,8 +52,41 @@ Page({
     return i;
   },
   collect() {
+    if(this.data.colleted) {
+      wx.showToast({
+        icon:'none',
+        title: '已取消收藏',
+      })
+      this.setData({
+        colleted: false
+      })
+    } else {
+      wx.showToast({
+        icon:'none',
+        title: '收藏成功',
+      })
+      this.setData({
+        colleted: true
+      })
+    }
+    
+  },
+  rightNow() {
+    if(this.data.avatarList.length < 5) {
+      wx.showModal({
+        content: `再邀请${ 5 - this.data.avatarList.length}位好友就可以上课啦`,
+        confirmColor: '#DF2020',
+        cancelColor: '#999999',
+      })
+    } else {
+      this.setData({
+        showServise: true
+      })
+    }
+  },
+  showServise() {
     this.setData({
-      colleted: true
+      showServise: false
     })
   }
 })

@@ -22,7 +22,7 @@ Page({
     paddingAdd: false,
     bannerList: [
       {
-        img: "https://hwcdn.jinlingkeji.cn/images/pro/withdrawBanner2.png",
+        img: "https://hwcdn.jinlingkeji.cn/images/pro/withdrawBanner3.png",
         clickUrl: "/pages/makeMoney/makeMoney"
       }
     ],

@@ -2,6 +2,13 @@
 page {
   background:rgba(244,244,244,1);
 }
+.topBox {
+  padding: 30rpx;
+}
+.topBox .image {
+  width: 100%;
+  height: 250rpx;
+}
 .container .top{
   width: 730rpx;
   height: 378rpx;
@@ -142,33 +149,33 @@ page {
   line-height: 113rpx;
 }
 .container .rankin_list  .rankin_listTitle {
-  margin-top: 30rpx;
-  height: 44rpx;
+  padding: 30rpx 40rpx 27rpx 40rpx;
   display: flex;
+  border-bottom: 1rpx solid #E9E9E9;
 }
 .container .rankin_list  .rankin_listTitle text {
   display: block;
-  font-size:28rpx;
+  font-size:40rpx;
   font-family:PingFangSC-Regular,PingFang SC;
   font-weight:400;
   color:rgba(126,126,126,1);
   text-align: center;
 }
 .container .rankin_list  .rankin_listTitle text:nth-child(1){
-  width: 113rpx;
+  margin-right: 70rpx;
 }
 .container .rankin_list  .rankin_listTitle text:nth-child(2){
-  width: 267rpx;
+  margin-right: 190rpx;
 }
-.container .rankin_list  .rankin_listTitle text:nth-child(3){
+/* .container .rankin_list  .rankin_listTitle text:nth-child(3){
   width: 165rpx;
-}
-.container .rankin_list  .rankin_listTitle text:nth-child(4){
+} */
+/* .container .rankin_list  .rankin_listTitle text:nth-child(4){
   display: flex;
   padding-left:10rpx ;
-}
+} */
 .container .rankin_list .qst {
-  margin-top: 50rpx;
+  margin-top: 110rpx;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -206,15 +213,17 @@ page {
   color:rgba(255,255,255,1);
 }
 .container .rankin_list .list .item {
-  padding: 0 30rpx 0 38rpx;
+  margin: 0 30rpx 0 30rpx;
+  padding-left: 27rpx;
   height: 140rpx;
   display: flex;
   align-items: center;
+  border-bottom:1rpx solid #E9E9E9;
 }
 .container .rankin_list .list .item .ranking{
-  width:40rpx;
-  height: 38rpx;
-  margin-right: 38rpx;
+  width:48rpx;
+  height: 42rpx;
+  margin-right: 87rpx;
   text-align: center;
   font-size:36rpx;
   font-family:PingFangSC-Medium,PingFang SC;
@@ -224,7 +233,6 @@ page {
 .container .rankin_list .list .item .itemMsg {
   flex:1;
   height: 100%;
-  border-bottom:1rpx solid #E9E9E9;
   display: flex;
   align-items: center;
 }
@@ -236,15 +244,15 @@ page {
 }
 .container .rankin_list .list .item .itemMsg text:nth-child(2) {
   display: block;
-  width:160rpx;
-  font-size:32rpx;
-  font-family:PingFangSC-Regular,PingFang SC;
+  width:320rpx;
+  font-size:38rpx;
+  text-align: center;
   font-weight:400;
   color:rgba(58,58,58,1);
   overflow: hidden;
   text-overflow:ellipsis;
   white-space: nowrap;
-  margin-left: 20rpx;
+  margin-left: 70rpx;
 }
 .container .rankin_list .list .item .itemMsg text:nth-child(3) {
   display: block;

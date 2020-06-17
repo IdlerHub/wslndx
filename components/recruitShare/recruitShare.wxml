@@ -1,6 +1,6 @@
 <!--components/recruitShare/recruitShare.wxml-->
 <view class="shareBox" style="{{!type ? 'padding-top:0' : ''}}"> 
-  <view class="txt" wx:if="{{!type}}">赶紧去邀请新学员赚钱</view>
+  <view class="txt" wx:if="{{!type}}">邀请新学员一起学习</view>
   <view class="shareBox-content">
     <button class="shareBtn" open-type="share" data-id="{{ $state.userInfo.id }}" hover-class="btn-hover">
       <image src="{{$state.imgHost}}/makeMoneywx.png"></image>

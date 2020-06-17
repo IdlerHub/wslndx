@@ -404,7 +404,7 @@
   font-weight:500;
 }
 .card-author{
-  width: 200rpx;
+  width: 255rpx;
   position: absolute;
   top: 325rpx;
   left: 86rpx;
@@ -412,15 +412,15 @@
   color: #333;
 }
 .card-opus{
-  width: 120rpx;
+  width: 182rpx;
   position: absolute;
   top: 418rpx;
-  left: 230rpx;
+  left: 214rpx;
   text-align: center;
   color: #333;
 }
 .card-nick{
-  width: 190rpx;
+  width: 220rpx;
   position: absolute;
   top: 598rpx;
   left: 318rpx;

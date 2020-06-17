@@ -14,7 +14,7 @@
         </view>
         <view class="center">
             <text wx:if="{{rankType == 0}}">截止时间：{{time|| '2020年5月26日'}}</text>
-            <text wx:if="{{rankType == 2}}">查询截止时间：2020年6月3日</text>
+            <text wx:if="{{rankType == 2}}">查询截止时间：2020年6月8日</text>
             <view class="category"wx:if="{{rankType == 1}}">
                     <view class="section__title">分类</view>
                     <picker class="picker" bindchange="classifyChange" value="{{categoryIndex}}" range="{{category}}" range-key='name'>
@@ -77,7 +77,7 @@
     <view class="certificate-card" wx:if="{{showCertificate}}">
         <view class="card-content">
             <image class="certificate-del" src="/images/unshare.png" alt="" bindtap="closeCertificate" />
-            <image class="card-bg" src="{{$state.imgHost}}/diploma.png" alt />
+            <image class="card-bg" src="{{$state.imgHost}}/diploma3.png" alt />
             <view class="card-author">{{userInfo.author}}</view>
             <view class="card-opus">{{userInfo.opus}}</view>
             <view class="card-nick">{{userInfo.honor}}</view>
