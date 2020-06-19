@@ -493,8 +493,8 @@ Page({
   },
   // 跳友方小程序
   jumpmini() {
-    this.minigo('{"appid":"wxefc543d1ca554b3b","url":"/pages/index/index"}')
-    wx.uma.trackEvent('index_btnClick', { 'btnName': '七号狗场' });
+    this.minigo('{"appid":"wx90b2476e31f2bf9e","url":"/pages/index/index"}')
+    wx.uma.trackEvent('index_btnClick', { 'btnName': '斗地主' });
   },
   minigo(url) {
     let system = JSON.parse(url)
