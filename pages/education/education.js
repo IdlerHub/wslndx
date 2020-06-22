@@ -5,7 +5,8 @@ Page({
   data: {
     url: "",
     payStatus: "",
-    classId: '',  //招生的课程ID
+    classId: '', //招生的课程ID
+    pay: false
   },
   pageName: "外链页（开心农场&amp;老年电台&amp;早报）",
   onLoad: function (options) {
@@ -27,12 +28,16 @@ Page({
     } else {
       if (options.type === "farm") {
         this.junmpOut("https://h5xyx.jinlingkeji.cn");
-        wx.uma.trackEvent("index_btnClick", { btnName: "开心农场" });
+        wx.uma.trackEvent("index_btnClick", {
+          btnName: "开心农场"
+        });
       } else if (options.type === "station") {
         this.junmpOut(
           "https://open.ximalaya.com/site/index/174/ca5492cf55806b41713dada77a1d2ed5"
         );
-        wx.uma.trackEvent("index_btnClick", { btnName: "老年电台" });
+        wx.uma.trackEvent("index_btnClick", {
+          btnName: "老年电台"
+        });
       } else if (options.type === "doudizhu") {
         let openID = "";
         wx.getStorage({
@@ -77,8 +82,7 @@ Page({
       "uid=" + uid + "&token=" + token + "&timestamp=" + timestamp
     );
     this.setData({
-      url:
-        webURL +
+      url: webURL +
         "?openId=" +
         this.data.$state.openId +
         "&uid=" +
@@ -87,6 +91,18 @@ Page({
         sign +
         "&timestamp=" +
         timestamp,
+      pay: true
     });
   },
+  onShareAppMessage(ops) {
+    if (this.data.pay) {
+      return {
+        title: '我已入学【网上老年大学】,你也快来一起学习吧',
+        path: "/pages/education/education?type=0&login=1",
+        imageUrl: "https://hwcdn.jinlingkeji.cn/app/zsxtshare.jpg"
+      }
+    } else {
+        return this.menuAppShare();
+    }
+  }
 });
