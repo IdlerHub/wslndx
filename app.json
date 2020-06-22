@@ -63,7 +63,8 @@
     "pages/timetable/timetable",
     "pages/tableDetail/tableDetail",
     "pages/gamePage/gamePage",
-    "pages/timetableList/timetableList"
+    "pages/timetableList/timetableList",
+    "pages/webPay/webPay"
   ],
   "permission": {
     "scope.userLocation": {
@@ -108,7 +109,7 @@
     "wx92d650b253f8f2e3",
     "wxb92e40c1a0520a27",
     "wx21038783a46791dd",
-    "wxefc543d1ca554b3b"
+    "wx90b2476e31f2bf9e"
   ],
   "plugins": {
     "WechatSI": {
