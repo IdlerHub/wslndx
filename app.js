@@ -86,7 +86,7 @@ App({
   /*埋点统计*/
   onLaunch: async function(opts) {
     console.log(opts)
-    this.getSecureToken();
+    // this.getSecureToken();
     let optsStr = decodeURIComponent(opts.query.scene).split("&");
     let opstObj = {};
     optsStr.forEach((item, index) => {
@@ -325,6 +325,7 @@ App({
   },
   /* 更新store中的用户免费查看的视频数目 */
   addVisitedNum: function(id) {
+    if(!id) return
     let arr = this.store.$state.visitedNum;
     if (!this.store.$state.authUserInfo && arr.indexOf(id) == -1) {
       arr.push(id);

@@ -493,7 +493,7 @@ Page({
   },
   // 跳友方小程序
   jumpmini() {
-    this.minigo('{"appid":"wx90b2476e31f2bf9e","url":"/pages/index/index"}')
+    this.minigo('{"appid":"wx90b2476e31f2bf9e","url":"/pages/index/index?Ads=jinling&AdsPos=lnrdx"}')
     wx.uma.trackEvent('index_btnClick', { 'btnName': '斗地主' });
   },
   minigo(url) {

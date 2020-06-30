@@ -15,8 +15,9 @@ function formatTime(date) {
 }
 
 function formatNumber(n) {
-  n = n.toString()
-  return n.padStart(2, "0")
+  return n < 10 ? '0' + n : n;
+  // n = n.toString()
+  // return n.padStart(2, "0")
 }
 
 function dateUnit() {

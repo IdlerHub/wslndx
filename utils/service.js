@@ -70,16 +70,16 @@ function xhr(path, method, param = {}, noToken) {
     wx.request({
       ...req,
       success(res) {
-        if (res.statusCode == 200 && res.data && res.data.code == 1) {
+        if (res.statusCode == 200 && res['data'] && res['data']['code'] == 1) {
           resolve(res.data);
-        } else if(res.data.code == 110) {
+        } else if(res['data']['code'] == 110) {
           store.setState({
             blackShow: true
           })
           return
         }else {
           handle(req, res);
-          reject(res.data);
+          reject(res['data']);
         }
       },
       fail(err) {
