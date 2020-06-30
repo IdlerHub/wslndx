@@ -37,7 +37,7 @@
 		]
 	},
 	"setting": {
-		"urlCheck": true,
+		"urlCheck": false,
 		"es6": true,
 		"enhance": true,
 		"postcss": true,
@@ -160,8 +160,8 @@
 				},
 				{
 					"id": 9,
-					"name": "pages/gameMore/gameMore",
-					"pathName": "pages/gameMore/gameMore",
+					"name": "pages/tableDetail/tableDetail",
+					"pathName": "pages/tableDetail/tableDetail",
 					"query": "id=21&type=invite",
 					"scene": null
 				},

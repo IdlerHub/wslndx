@@ -161,16 +161,12 @@ Page({
         success: res => {
           if (res.networkType == "wifi") {
             app.playVedio("wifi");
-            that.videoContext.play();
             that.wifi = true;
             that.setData({
-              autoplay: true,
               pause: false
             });
           } else {
-            that.videoContext.pause();
             that.setData({
-              autoplay: false,
               pause: true
             });
             wx.showModal({
@@ -183,16 +179,12 @@ Page({
                 if (res.confirm) {
                   app.playVedio("flow");
                   that.setData({
-                    autoplay: true,
                     pause: false
                   });
-                  that.videoContext.play();
                   wx.offNetworkStatusChange();
                 } else if (res.cancel) {
-                  that.videoContext.pause();
                   that.setData({
                     pause: true,
-                    autoplay: false
                   });
                 }
               }
@@ -242,11 +234,7 @@ Page({
   tap() {
     if (this.data.pause) {
       this.judgeWifi();
-      this.setData({
-        pause: false
-      });
     } else {
-      this.videoContext.pause();
       this.setData({
         pause: true
       });
