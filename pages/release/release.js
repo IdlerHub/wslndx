@@ -67,7 +67,6 @@ Page({
       media_type: this.data.media_type,
       showRelease: true
     });
-    console.log('onUnload')
   },
   input(e) {
     this.setData({

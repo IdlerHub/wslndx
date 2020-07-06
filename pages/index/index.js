@@ -493,7 +493,7 @@ Page({
   },
   // 跳友方小程序
   jumpmini() {
-    this.minigo('{"appid":"wx90b2476e31f2bf9e","url":"/pages/index/index?Ads=jinling&AdsPos=lnrdx"}')
+    this.minigo('{"appid":"wxfcf6e6c86efc87c0","url":"?wxgamecid=CCBgAAoXkpQY91a5G-iUtT&from=jinling_lndx"}')
     wx.uma.trackEvent('index_btnClick', { 'btnName': '斗地主' });
   },
   minigo(url) {
@@ -501,7 +501,7 @@ Page({
     wx.navigateToMiniProgram({
       appId: system.appid,
       path: system.url,
-      // envVersion: 'develop',
+      // envVersion: 'trial',
       success() {
         // 打开成功
       },

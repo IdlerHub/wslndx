@@ -209,7 +209,6 @@ Page({
         key: 'plathStatus',
         success (res) {
           if(res) {
-            console.log(res.data)
             if(res.data.status) return
             let timeType = that.compareDate(app.util.formatTime(new Date()).slice(0,10), res.data.time)
             timeType ?  that.setData({
@@ -369,7 +368,6 @@ Page({
     app.classroom.updateProgress(param).then(res => {
       this.timeTemplate = 0
       this.videoTime2 = 0
-      console.log(res.msg)
     }).catch(() => {
       this.videoTime2 = this.videoTime
     })

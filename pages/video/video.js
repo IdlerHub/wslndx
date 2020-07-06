@@ -215,7 +215,6 @@ Page({
       let that = this;
       wx.getNetworkType({
         success: res => {
-          console.log(res.networkType)
           if (res.networkType == "wifi") {
             that.wifi = true;
             app.playVedio("wifi");

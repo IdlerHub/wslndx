@@ -141,7 +141,7 @@
             </image>
           </navigator>
           <view class="jumpoutBox" bindtap="jumpmini">
-            <image class="img" mode="widthFix" src="{{  !recommend ? '' : $state.imgHost + '/doudizhu.png'}}">
+            <image class="img" mode="widthFix" src="{{  !recommend ? '' : $state.imgHost + '/pastureImg.png'}}">
             </image>
           </view>
           <navigator class="jumpoutBox" url="/pages/education/education?type=farm" hover-class="none">
