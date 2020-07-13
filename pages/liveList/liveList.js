@@ -28,7 +28,7 @@ Page({
   },
   getLiveList(list) {
     if (this.data.bottomOver) return
-    let arr = list ? list : []
+    let arr = list ? list : [], n = 0
     app.classroom.getLiveInfo(this.param).then(res => {
       res.data.room_info.sort((a, b) => {
         return a.start_time - b.start_time
@@ -36,8 +36,9 @@ Page({
       res.data.room_info.forEach(item => {
         item.startTime = app.util.formatTime(new Date(item.start_time * 1000), 1)
         item.endTime = app.util.formatTime(new Date(item.start_time * 1000)).slice(11) + '-' + app.util.formatTime(new Date(item.end_time * 1000)).slice(11)
-        list && this.data.backLive ? '' : item.status == 103 ? '' : this.setData({ backLive : 1 })
+        list && this.data.backLive ? '' : item.status == 103 ? '' : n += 1
       })
+      n > 0 ? '' : this.setData({ backLive: 1 })
       arr = arr.concat(res.data.room_info)
       this.setData({
         roomList: arr
