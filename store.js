@@ -38,15 +38,15 @@ Store.prototype.socket_host = socket_host;
 
 let store = new Store({
   state: {
-    userInfo: {} /* 用户信息 */,
-    authUserInfo: false /* （微信用户信息）授权状态 */,
-    authRecord: false /* （微信用户录音）授权状态 */,
-    authRecordfail: false /* （微信用户录音）授权拒绝状态 */,
-    visitedNum: [] /* 最多10个未授权视频 */,
-    baseInfo: false /* 提示已超过10个视频，要求授权 */,
-    authKey: "" /* 小程序进入h5的身份标识 */,
+    userInfo: {} /* 用户信息 */ ,
+    authUserInfo: false /* （微信用户信息）授权状态 */ ,
+    authRecord: false /* （微信用户录音）授权状态 */ ,
+    authRecordfail: false /* （微信用户录音）授权拒绝状态 */ ,
+    visitedNum: [] /* 最多10个未授权视频 */ ,
+    baseInfo: false /* 提示已超过10个视频，要求授权 */ ,
+    authKey: "" /* 小程序进入h5的身份标识 */ ,
     activityUrl: activityUrl,
-    signStatus: {} /* 签到状态及弹窗 */,
+    signStatus: {} /* 签到状态及弹窗 */ ,
     imgHost: imgHost,
     title: "",
     path: "",
@@ -76,32 +76,47 @@ let store = new Store({
       };
       if (!this.onShareAppMessage) {
         wx.showShareMenu();
-        this.onShareAppMessage = function(ops) {
+        this.onShareAppMessage = function (ops) {
           if (ops.from === "menu") {
             return this.menuAppShare();
           }
         };
       }
+      if (this.pageName == '首页') {
+        this.timer = setTimeout(() => {
+          if (!this.data.$state.userInfo.mobile) {
+            wx.reLaunch({
+              url: "/pages/sign/sign"
+            });
+          }
+        }, 2500)
+      }
     },
     onShow() {
-      wx.uma.trackEvent("join_page", { pageName: this.pageName });
+      wx.uma.trackEvent("join_page", {
+        pageName: this.pageName
+      });
     },
     onHide() {
-      wx.uma.trackEvent("move", { pageName: this.pageName });
+      wx.uma.trackEvent("move", {
+        pageName: this.pageName
+      });
+    },
+    onUnload() {
+      this.pageName == '首页' ? clearInterval(this.timer) : ''
     }
   },
   methods: {
     menuAppShare() {
-      wx.uma.trackEvent('totalShare', { 'shareName': 'tab三个点' });
+      wx.uma.trackEvent('totalShare', {
+        'shareName': 'tab三个点'
+      });
       return {
-        title:
-          this.data.$state.shareTitle || "福利！老年大学十万集免费课程在线学习",
-        path:
-          "/pages/index/index?uid=" +
+        title: this.data.$state.shareTitle || "福利！老年大学十万集免费课程在线学习",
+        path: "/pages/index/index?uid=" +
           this.data.$state.userInfo.id +
           "&type=invite",
-        imageUrl:
-          this.data.$state.shareImgurl || "../../images/sharemessage.jpg"
+        imageUrl: this.data.$state.shareImgurl || "../../images/sharemessage.jpg"
       };
     }
   }

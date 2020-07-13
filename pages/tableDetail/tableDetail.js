@@ -6,12 +6,20 @@ Page({
     minutes: 0,
     seconds: 0,
     colleted: false,
-    avatarList:[1,2,3,4,5],
+    avatarList: [1, 2, 3, 4, 5],
     showServise: false
   },
-  timer:'',
+  timer: '',
   onLoad: function (options) {
-
+    this.getLiveroom()
+    let customParams = encodeURIComponent(JSON.stringify({
+      path: 'pages/index/index',
+      pid: 2
+    }))
+    this.setData({
+      roomId: 2,
+      customParams
+    })
   },
   onShow: function () {
     this.leftTimer(1590650413)
@@ -30,20 +38,20 @@ Page({
   },
   leftTimer(timer) {
     var leftTime = (new Date(1593328939 * 1000)) - (new Date()); //计算剩余的毫秒数 
-      var days = parseInt(leftTime / 1000 / 60 / 60 / 24, 10); //计算剩余的天数 
-      var hours = parseInt(leftTime / 1000 / 60 / 60 % 24, 10); //计算剩余的小时 
-      var minutes = parseInt(leftTime / 1000 / 60 % 60, 10);//计算剩余的分钟 
-      var seconds = parseInt(leftTime / 1000 % 60, 10);//计算剩余的秒数 
-      days = days;
-      hours = this.checkTime(hours);
-      minutes = this.checkTime(minutes);
-      seconds = this.checkTime(seconds);
-      this.setData({
-        days,
-        hours,
-        minutes,
-        seconds
-      })
+    var days = parseInt(leftTime / 1000 / 60 / 60 / 24, 10); //计算剩余的天数 
+    var hours = parseInt(leftTime / 1000 / 60 / 60 % 24, 10); //计算剩余的小时 
+    var minutes = parseInt(leftTime / 1000 / 60 % 60, 10); //计算剩余的分钟 
+    var seconds = parseInt(leftTime / 1000 % 60, 10); //计算剩余的秒数 
+    days = days;
+    hours = this.checkTime(hours);
+    minutes = this.checkTime(minutes);
+    seconds = this.checkTime(seconds);
+    this.setData({
+      days,
+      hours,
+      minutes,
+      seconds
+    })
   },
   checkTime(i) {
     if (i < 10) {
@@ -52,9 +60,9 @@ Page({
     return i;
   },
   collect() {
-    if(this.data.colleted) {
+    if (this.data.colleted) {
       wx.showToast({
-        icon:'none',
+        icon: 'none',
         title: '已取消收藏',
       })
       this.setData({
@@ -62,17 +70,17 @@ Page({
       })
     } else {
       wx.showToast({
-        icon:'none',
+        icon: 'none',
         title: '收藏成功',
       })
       this.setData({
         colleted: true
       })
     }
-    
+
   },
   rightNow() {
-    if(this.data.avatarList.length < 5) {
+    if (this.data.avatarList.length < 5) {
       wx.showModal({
         content: `再邀请${ 5 - this.data.avatarList.length}位好友就可以上课啦`,
         confirmColor: '#DF2020',
@@ -88,5 +96,27 @@ Page({
     this.setData({
       showServise: false
     })
+  },
+  getLiveroom() {
+    wx.getStorage({
+      key: 'authKey',
+      success: res => {
+        console.log(res)
+        wx.request({
+          url: `https://api.weixin.qq.com/wxa/business/getliveinfo?access_token=${res.data}`, 
+          data: {
+            start: 0,
+            limit: 10
+          },
+          header: {
+            'content-type': 'application/json'
+          },
+          success(res) {
+            console.log(res.data)
+          }
+        })
+      }
+    })
+
   }
 })

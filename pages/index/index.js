@@ -6,7 +6,12 @@ const Tutor = require("../../data/Tutor")
 const app = getApp()
 Page({
   data: {
-    nav: [{ id: 1, name: "推荐", class: "#recommend1", unMove: true }],
+    nav: [{
+      id: 1,
+      name: "推荐",
+      class: "#recommend1",
+      unMove: true
+    }],
     height: 0,
     isRefreshing: false,
     currentTab: 0,
@@ -34,6 +39,7 @@ Page({
     this.setData({
       top: pt + h
     })
+    let roomId = 1
     let windowHeight = systemInfo.windowHeight
     let that = this
     let query = wx.createSelectorQuery().in(this)
@@ -57,7 +63,10 @@ Page({
         app.store.setState({
           signdays: res.data.sign_days
         })
-        app.setSignIn({ status: sign, count: sign ? 1 : this.data.$state.signStatus.count }, true)
+        app.setSignIn({
+          status: sign,
+          count: sign ? 1 : this.data.$state.signStatus.count
+        }, true)
       })
       await app.user.share({}).then(res => {
         app.setShare(res)
@@ -66,15 +75,14 @@ Page({
       this.integrationTime()
     }
   },
-  onReady: function () {
-  },
+  onReady: function () {},
   onShow() {
     app.globalData.currentTab == 1 ? this.setData({
       currentTab: 1
     }) : ''
     app.globalData.currentTab = ''
     /* 更新用户的视频浏览历史 */
-    if (app.store.$state.userInfo.mobile) [this.getHistory(),  app.getUserOpenData()]
+    if (app.store.$state.userInfo.mobile)[this.getHistory(), app.getUserOpenData()]
     setTimeout(wx.hideLoading, 500)
   },
   init() {
@@ -84,7 +92,10 @@ Page({
           guideNum: 1,
           showdialog: false
         })
-        app.setSignIn({ status: false, count: 1 }, true)
+        app.setSignIn({
+          status: false,
+          count: 1
+        }, true)
       } else {
         this.setData({
           guideNum: 5
@@ -127,7 +138,8 @@ Page({
     })
   },
   switchNav(event) {
-    let cur = event.currentTarget.dataset.current, id = event.currentTarget.dataset.id
+    let cur = event.currentTarget.dataset.current,
+      id = event.currentTarget.dataset.id
     if (this.data.currentTab != cur) {
       this.setData({
         currentTab: cur
@@ -139,9 +151,10 @@ Page({
       })
     }
   },
-
   switchTab(event) {
-    let cur = event.detail.current, that = this, currren = this.data.currentTab
+    let cur = event.detail.current,
+      that = this,
+      currren = this.data.currentTab
     this.timer ? clearTimeout(this.timer) : ''
     this.timer = setTimeout(() => {
       this.data.currentTab != cur ? cur == that.setData({
@@ -150,9 +163,11 @@ Page({
       wx.hideLoading()
     }, 300)
     if (cur != 0) {
-      let id = this.data.nav[cur] .id
+      let id = this.data.nav[cur].id
       this.geteCatrcommend(id, cur)
-      wx.uma.trackEvent('classify_btnClick', { 'name': this.data.nav[cur].name });
+      wx.uma.trackEvent('classify_btnClick', {
+        'name': this.data.nav[cur].name
+      });
     }
     setTimeout(() => {
       this.setHeight()
@@ -164,7 +179,8 @@ Page({
         currentTab: 0
       })
     } else {
-      let arr = this.data.nav, num = 0
+      let arr = this.data.nav,
+        num = 0
       arr.forEach((i, index) => {
         i.id == event ? num = index : 0
       })
@@ -179,7 +195,11 @@ Page({
     }
   },
   getRecommend() {
-    let param = { page: 1, pageSize: 10, province: this.data.$state.userInfo.university.split(',')[0] }
+    let param = {
+      page: 1,
+      pageSize: 10,
+      province: this.data.$state.userInfo.university.split(',')[0]
+    }
     return app.classroom.recommend(param).then(msg => {
       msg.data.forEach(function (item) {
         item.bw = app.util.tow(item.browse)
@@ -245,7 +265,10 @@ Page({
     })
   },
   getHistory() {
-    let historyParam = { page: 1, pageSize: 10 }
+    let historyParam = {
+      page: 1,
+      pageSize: 10
+    }
     return app.user.history(historyParam).then(msg => {
       this.setData({
         "history.last_lesson": msg.data.last_lesson || ""
@@ -267,7 +290,9 @@ Page({
       url: "/pages/makeMoney/makeMoney"
       // url: "/pages/score/score?type=index"
     })
-    wx.uma.trackEvent('index_btnClick', { 'btnName': '邀请学员' });
+    wx.uma.trackEvent('index_btnClick', {
+      'btnName': '邀请学员'
+    });
   },
   touchstart() {
     this.shownow = true
@@ -301,7 +326,9 @@ Page({
     wx.navigateTo({
       url: `../detail/detail?id=${e.currentTarget.dataset.id}&name=${e.currentTarget.dataset.title}&play=true`
     })
-    wx.uma.trackEvent('video_historyPlay', { 'lessonsName': e.currentTarget.dataset.title });
+    wx.uma.trackEvent('video_historyPlay', {
+      'lessonsName': e.currentTarget.dataset.title
+    });
   },
   closenow() {
     this.setData({
@@ -315,14 +342,17 @@ Page({
     })
     //用于数据统计
     if (e.currentTarget.dataset.type) {
-      wx.uma.trackEvent('classify_lessonsClick', { ['classifyID_' + this.data.nav[this.data.currentTab].id]: e.currentTarget.dataset.item.title });
+      wx.uma.trackEvent('classify_lessonsClick', {
+        ['classifyID_' + this.data.nav[this.data.currentTab].id]: e.currentTarget.dataset.item.title
+      });
     } else {
-      wx.uma.trackEvent('index_recommendLessons', { 'lessonsName': e.currentTarget.dataset.item.title });
+      wx.uma.trackEvent('index_recommendLessons', {
+        'lessonsName': e.currentTarget.dataset.item.title
+      });
     }
   },
   //用于数据统计
-  onHide() {
-  },
+  onHide() {},
   // 用户昵称等信息授权
   onGotUserInfo(e) {
     if (e.detail.errMsg === "getUserInfo:ok") {
@@ -346,7 +376,9 @@ Page({
             })
           }, 500);
         }
-        wx.uma.trackEvent('index_bannerClick', { 'bannerTencent': item.title });
+        wx.uma.trackEvent('index_bannerClick', {
+          'bannerTencent': item.title
+        });
       }
     }
   },
@@ -357,18 +389,26 @@ Page({
   },
   /* 签到 */
   closeSignIn() {
-    app.setSignIn({ status: 0, count: 1 }, true)
+    app.setSignIn({
+      status: 0,
+      count: 1
+    }, true)
     this.setData({
       showdialog: false
     })
   },
   signIn(data) {
     let sign = data.currentTarget.dataset.id == 1
-    app.setSignIn({ status: true, count: 1 }, true)
+    app.setSignIn({
+      status: true,
+      count: 1
+    }, true)
     if (sign) {
       app.user.sign().then(res => {
         /* 前往学分页面 */
-        wx.navigateTo({ url: "/pages/score/score?type=index" })
+        wx.navigateTo({
+          url: "/pages/score/score?type=index"
+        })
         app.store.setState({
           signdays: res.data.sign_days
         })
@@ -382,7 +422,9 @@ Page({
         let timer = setTimeout(() => {
           wx.hideToast({
             success: () => {
-              wx.navigateTo({ url: "/pages/score/score" })
+              wx.navigateTo({
+                url: "/pages/score/score"
+              })
             }
           })
           clearTimeout(timer)
@@ -417,7 +459,7 @@ Page({
       let temp = this.data.catrecommend[id]
       this.categoryParams[id].page++
       wx.showLoading({
-        title:'加载中'
+        title: '加载中'
       })
       app.classroom.lessons(this.categoryParams[id]).then(msg => {
         let next = true
@@ -428,7 +470,7 @@ Page({
           })
         })
         if (!next) return
-        if(msg.data.length == 0) {
+        if (msg.data.length == 0) {
           this.setData({
             [`nav[${this.data.currentTab}].showBtoom`]: true
           })
@@ -438,7 +480,9 @@ Page({
           [`catrecommend[${id}]`]: temp.concat(msg.data)
         })
         let query = wx.createSelectorQuery().in(this)
-        let that = this, nav = this.data.nav, currentTab = this.data.currentTab
+        let that = this,
+          nav = this.data.nav,
+          currentTab = this.data.currentTab
         query.select(nav[currentTab].class).boundingClientRect()
         query.exec(res => {
           let height = res[0].height
@@ -468,33 +512,47 @@ Page({
       wx.navigateTo({
         url: `../education/education?type=0&url=${item.clickurl}&login=${item.is_login}`
       })
-      wx.uma.trackEvent('index_bannerClick', { 'bannerTencent': item.title });
+      wx.uma.trackEvent('index_bannerClick', {
+        'bannerTencent': item.title
+      });
     } else if (item.jump_type == 2) {
       /* 视频 */
       wx.navigateTo({
         url: `../detail/detail?id=${item.video_id}&name=${item.title}`
       })
-      wx.uma.trackEvent('index_bannerClick', { 'bannerVideo': item.title });
+      wx.uma.trackEvent('index_bannerClick', {
+        'bannerVideo': item.title
+      });
     } else if (item.jump_type == 4) {
       this.minigo(item.clickurl)
-      wx.uma.trackEvent('index_bannerClick', { 'bannerMini': item.title });
+      wx.uma.trackEvent('index_bannerClick', {
+        'bannerMini': item.title
+      });
     } else if (item.jump_type == 5) {
       wx.navigateTo({
         url: item.clickurl,
       })
-      wx.uma.trackEvent('index_bannerClick', { 'bannerActivity': item.title });
+      wx.uma.trackEvent('index_bannerClick', {
+        'bannerActivity': item.title
+      });
+    } else if (item.jump_type == 6) {
+      this.toLive(item.clickurl)
     } else {
       /* 文章 */
       wx.navigateTo({
         url: "../pDetail/pDetail?id=" + item.article_id
       })
-      wx.uma.trackEvent('index_bannerClick', { 'bannerBlog': item.title });
+      wx.uma.trackEvent('index_bannerClick', {
+        'bannerBlog': item.title
+      });
     }
   },
   // 跳友方小程序
   jumpmini() {
     this.minigo('{"appid":"wxfcf6e6c86efc87c0","url":"?wxgamecid=CCBgAAoXkpQY91a5G-iUtT&from=jinling_lndx"}')
-    wx.uma.trackEvent('index_btnClick', { 'btnName': '斗地主' });
+    wx.uma.trackEvent('index_btnClick', {
+      'btnName': '斗地主'
+    });
   },
   minigo(url) {
     let system = JSON.parse(url)
@@ -502,12 +560,6 @@ Page({
       appId: system.appid,
       path: system.url,
       // envVersion: 'trial',
-      success() {
-        // 打开成功
-      },
-      fail() {
-
-      }
     })
   },
   getPaper() {
@@ -530,13 +582,29 @@ Page({
   },
   jumpPeper(e) {
     if (e.currentTarget.dataset.type == 'dialog') {
+      let dialog = e.currentTarget.dataset.peper
+      dialog.jump_type == 1 ? wx.navigateTo({
+        url: `../education/education?url=${dialog.url}&type=0}`
+      }) : this.toLive(dialog.extra.room_id)
       this.closeSignIn()
       wx.uma.trackEvent('index_activityClick');
     } else {
-      wx.uma.trackEvent('index_bannerClick', { 'bannerTencent': this.data.paperMsg.title });
+      wx.uma.trackEvent('index_bannerClick', {
+        'bannerTencent': this.data.paperMsg.title
+      });
+      wx.navigateTo({
+        url: `../education/education?url=${e.currentTarget.dataset.peper}&type=0}`
+      })
     }
+  },
+  toLive(id) {
+    let customParams = encodeURIComponent(JSON.stringify({
+      path: 'pages/index/index',
+      uid: this.data.$state.userInfo.id,
+      type: 'invite'
+    }))
     wx.navigateTo({
-      url: `../education/education?url=${e.currentTarget.dataset.peper}&type=0}`
+      url: `plugin-private://wx2b03c6e691cd7370/pages/live-player-plugin?room_id=${id}&custom_params=${customParams}`
     })
   },
   /* 指引联动 */
@@ -563,7 +631,9 @@ Page({
         })
       }).catch(() => {
         this.guide = 0
-        err.msg == '记录已增加' ? app.setState({ 'newGuide.index': 1 }) : ''
+        err.msg == '记录已增加' ? app.setState({
+          'newGuide.index': 1
+        }) : ''
       })
     }
   },

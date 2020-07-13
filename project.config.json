@@ -62,7 +62,9 @@
 		"bundle": true,
 		"useIsolateContext": true,
 		"useCompilerModule": true,
-		"userConfirmedUseCompilerModuleSwitch": false
+		"userConfirmedUseCompilerModuleSwitch": false,
+		"packNpmManually": false,
+		"packNpmRelationList": []
 	},
 	"compileType": "miniprogram",
 	"libVersion": "2.11.1",
@@ -160,8 +162,8 @@
 				},
 				{
 					"id": 9,
-					"name": "pages/tableDetail/tableDetail",
-					"pathName": "pages/tableDetail/tableDetail",
+					"name": "pages/liveList/liveList",
+					"pathName": "pages/liveList/liveList",
 					"query": "id=21&type=invite",
 					"scene": null
 				},

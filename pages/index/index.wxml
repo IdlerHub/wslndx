@@ -136,6 +136,10 @@
         </swiper>
         <!-- 农场和电台 -->
         <scroll-view class="jumpout" scroll-x enable-flex>
+          <navigator class="jumpoutBox" url="/pages/liveList/liveList" hover-class="none">
+            <image class="img" mode="widthFix" src="{{  !recommend ? '' : $state.imgHost + '/liveBtn.png' }}">
+            </image>
+          </navigator>
           <navigator class="jumpoutBox" url="/pages/rankingList/rankingList" hover-class="none">
             <image class="img" mode="widthFix" src="{{  !recommend ? '' : $state.imgHost + '/rankingDoor2.png' }}">
             </image>
@@ -257,7 +261,7 @@
     <view class="dialog">
       <view class="bg"
         style="background: url('{{dialog[0].image}}') no-repeat center; background-size: 100% 100%;border-radius:10px"
-        src="{{dialog[0].image}}" mode="aspectFill" catchtap="jumpPeper" data-peper="{{dialog[0].url}}"
+        src="{{dialog[0].image}}" mode="aspectFill" catchtap="jumpPeper" data-peper="{{dialog[0]}}"
         data-type="dialog"></view>
       <!-- <button catchtap="signIn" data-id="1">签到领学分</button> -->
       <icon type="cancel" size="37" color="white" data-id="0" catchtap="closeSignIn"></icon>
@@ -300,3 +304,5 @@
     </view>
   </view>
 </view>
+
+   
