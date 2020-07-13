@@ -7,7 +7,8 @@ Page({
     unStatus: [103, 104, 105, 106, 107],
     active: 0,
     bottomOver: 0,
-    height: 0
+    height: 0,
+    backLive: 0
   },
   onLoad: function (options) {
 
@@ -35,6 +36,7 @@ Page({
       res.data.room_info.forEach(item => {
         item.startTime = app.util.formatTime(new Date(item.start_time * 1000), 1)
         item.endTime = app.util.formatTime(new Date(item.start_time * 1000)).slice(11) + '-' + app.util.formatTime(new Date(item.end_time * 1000)).slice(11)
+        list && this.data.backLive ? '' : item.status == 103 ? '' : this.setData({ backLive : 1 })
       })
       arr = arr.concat(res.data.room_info)
       this.setData({

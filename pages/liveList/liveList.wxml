@@ -48,8 +48,8 @@
         <text class="title">{{item.name}}</text>
         <text class="time">{{item.startTime}} {{item.endTime}}</text>
       </view>
-      <template is="listitem" wx:if="{{bottomOver}}"></template>
-      <template is="qst" wx:if="{{roomList.length == 0}}" data="{{$state}}"></template>
+      <template is="listitem" wx:if="{{bottomOver && !backLive}}"></template>
+      <template is="qst" wx:if="{{roomList.length == 0 || backLive}}" data="{{$state}}"></template>
     </view>
   </swiper-item>
 </swiper>
