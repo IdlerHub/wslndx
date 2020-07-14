@@ -24,10 +24,10 @@
     <text wx:if="{{active == 1}}"></text>
   </view>
 </view>
-<swiper current="{{active}}" duration="100" style="height: {{ height < 500 ? 'calc(100vh - 50px)' : height + 'px' }};"
+<swiper current="{{active}}" duration="100" style="height:calc(100vh - 50px);"
   bindchange="changeCurrent">
   <swiper-item>
-    <view id="listImgBox">
+    <scroll-view class="scollView"  scroll-y="{{roomList.length == 0 || living ? 0 : 1}}" refresher-enabled bindrefresherrefresh="upLivelist" refresher-triggered="{{refresher}}" bindscrolltolower="nextLivelist">
       <view wx:for="{{roomList}}" wx:key="index" class="liveBox"
         wx:if="{{fn.search(normalSatuts,item.live_status) != -1}}" bindtap="toLive" data-item="{{item}}">
         <image src="../../images/{{ item.live_status == 101 ? 'livimg' : 'liveStepby' }}.png" class="statusImg"></image>
@@ -35,12 +35,12 @@
         <text class="title">{{item.name}}</text>
         <text class="time">{{item.startTime}} {{item.endTime}}</text>
       </view>
-      <template is="listitem" wx:if="{{bottomOver}}"></template>
-      <template is="qst" wx:if="{{roomList.length == 0}}" data="{{$state}}"></template>
-    </view>
+      <template is="listitem" wx:if="{{bottomOver && !living}}"></template>
+      <template is="qst" wx:if="{{roomList.length == 0 || living}}" data="{{$state}}"></template>
+    </scroll-view>
   </swiper-item>
   <swiper-item>
-    <view id="listBackBox">
+    <scroll-view class="scollView" scroll-y="{{ roomList.length == 0 || backLive ? 0 : 1}}" style="height:calc(100vh - 50px);" refresher-enabled bindrefresherrefresh="upLivelist" refresher-triggered="{{refresher}}" bindscrolltolower="nextLivelist">
       <view wx:for="{{roomList}}" wx:key="index" class="liveBox" wx:if="{{item.live_status == 103}}" bindtap="toLive"
         data-item="{{item}}">
         <image src="../../images/banckLive.png" class="statusImg"></image>
@@ -50,6 +50,6 @@
       </view>
       <template is="listitem" wx:if="{{bottomOver && !backLive}}"></template>
       <template is="qst" wx:if="{{roomList.length == 0 || backLive}}" data="{{$state}}"></template>
-    </view>
+    </scroll-view>
   </swiper-item>
 </swiper>

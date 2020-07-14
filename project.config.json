@@ -162,8 +162,8 @@
 				},
 				{
 					"id": 9,
-					"name": "pages/timetableList/timetableList",
-					"pathName": "pages/timetableList/timetableList",
+					"name": "pages/liveList/liveList",
+					"pathName": "pages/liveList/liveList",
 					"query": "id=21&type=invite",
 					"scene": null
 				},

@@ -70,6 +70,3 @@
   </cover-view>
   <cover-image src="{{$state.imgHost}}/cancel.png" class="cancel" catchtap="showServise"></cover-image>
 </cover-view>
-
-<navigator url="plugin-private://wx2b03c6e691cd7370/pages/live-player-plugin?room_id={{roomId}}&custom_params={{customParams}}" class="livibtn">
-</navigator>

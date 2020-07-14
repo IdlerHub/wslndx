@@ -11,20 +11,12 @@ Page({
   },
   timer: '',
   onLoad: function (options) {
-    this.getLiveroom()
-    let customParams = encodeURIComponent(JSON.stringify({
-      path: 'pages/index/index',
-      pid: 2
-    }))
-    this.setData({
-      roomId: 2,
-      customParams
-    })
+
   },
   onShow: function () {
-    this.leftTimer(1590650413)
+    this.leftTimer(1596094296)
     this.timer = setInterval(() => {
-      this.leftTimer(1590650413)
+      this.leftTimer(1596094296)
     }, 1000);
   },
   onUnload() {
@@ -37,7 +29,7 @@ Page({
 
   },
   leftTimer(timer) {
-    var leftTime = (new Date(1593328939 * 1000)) - (new Date()); //计算剩余的毫秒数 
+    var leftTime = (new Date(timer * 1000)) - (new Date()); //计算剩余的毫秒数 
     var days = parseInt(leftTime / 1000 / 60 / 60 / 24, 10); //计算剩余的天数 
     var hours = parseInt(leftTime / 1000 / 60 / 60 % 24, 10); //计算剩余的小时 
     var minutes = parseInt(leftTime / 1000 / 60 % 60, 10); //计算剩余的分钟 
@@ -96,27 +88,5 @@ Page({
     this.setData({
       showServise: false
     })
-  },
-  getLiveroom() {
-    wx.getStorage({
-      key: 'authKey',
-      success: res => {
-        console.log(res)
-        wx.request({
-          url: `https://api.weixin.qq.com/wxa/business/getliveinfo?access_token=${res.data}`, 
-          data: {
-            start: 0,
-            limit: 10
-          },
-          header: {
-            'content-type': 'application/json'
-          },
-          success(res) {
-            console.log(res.data)
-          }
-        })
-      }
-    })
-
   }
 })

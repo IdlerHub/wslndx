@@ -40,6 +40,10 @@ page {
   margin-right: -20rpx;
 }
 
+.scollView {
+  height: 100%;
+}
+
 .liveBox {
   margin: 30rpx;
   width: 690rpx;
@@ -91,6 +95,7 @@ page {
   color:rgba(153,153,153,1);
   line-height:42rpx;
   text-align: center;
+  margin-bottom: 40rpx;
 }
 
 .qstBox {
