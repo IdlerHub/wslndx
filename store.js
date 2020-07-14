@@ -4,7 +4,6 @@
  * @LastEditTime: 2020-02-27 15:30:09
  */
 import Store from "wxministore";
-const app = getApp();
 let env = "develop";
 let imgHost;
 let activityUrl;
@@ -81,15 +80,6 @@ let store = new Store({
             return this.menuAppShare();
           }
         };
-      }
-      if (this.pageName == '首页') {
-        this.timer = setTimeout(() => {
-          if (!this.data.$state.userInfo.mobile) {
-            wx.reLaunch({
-              url: "/pages/sign/sign"
-            });
-          }
-        }, 2500)
       }
     },
     onShow() {

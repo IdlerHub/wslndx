@@ -27,6 +27,9 @@ Page({
   pageName: '首页',
   guide: 0,
   onLoad: async function (e) {
+    !getApp().globalData.tempCode ? '' :  wx.reLaunch({
+      url: "/pages/sign/sign"
+    });
     e.type != undefined ? this.pageType = e.type : ''
     let reg = /ios/i
     let pt = 20 //导航状态栏上内边距

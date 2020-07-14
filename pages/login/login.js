@@ -195,6 +195,7 @@ Page({
         this.setData({
           showintegral: true
         })
+        app.globalData.tempCode = null
         if (app.globalData.query.type == "share" || app.globalData.query.type == 'lottery') {
           let params = []
           for (let attr in app.globalData.query) {
@@ -221,6 +222,7 @@ Page({
         wx.setStorageSync("authKey", err.data.authKey)
         app.setUser(err.data.userInfo)
         app.setAuthKey(err.data.authKey)
+        app.globalData.tempCode = null
         wx.reLaunch({ url: "/pages/index/index?type=login" })
       } else {
         wx.showToast({
