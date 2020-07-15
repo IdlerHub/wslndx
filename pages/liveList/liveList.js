@@ -1,5 +1,6 @@
 // pages/liveList/liveLIst.js
 const app = getApp()
+const livePlayer = requirePlugin('live-player-plugin')
 Page({
   data: {
     roomList: [],
@@ -12,15 +13,19 @@ Page({
     living: 0,
     refresher: false
   },
+  timer: null,
   onLoad: function (options) {
-
+    this.getLiveList()
   },
   onShow: function () {
     this.param = {
       start: 0,
       limit: 20
     }
-    this.getLiveList()
+    this.data.roomList.length > 0 ? this.getRoomstatus() : ''
+  },
+  onUnload:function () {
+    clearInterval(this.timer)
   },
   nextLivelist() {
     if (this.data.bottomOver) return
@@ -37,15 +42,15 @@ Page({
       res.data.room_info.forEach(item => {
         item.startTime = app.util.formatTime(new Date(item.start_time * 1000), 1)
         item.endTime = app.util.formatTime(new Date(item.start_time * 1000)).slice(11) + '-' + app.util.formatTime(new Date(item.end_time * 1000)).slice(11)
-        list && this.data.backLive ? '' : item.status == 103 ? '' : n += 1
-        list && this.data.living ? '' : this.data.normalSatuts.indexOf(item.status) == -1 ? '' : n2 += 1
+        list && this.data.backLive ? '' : item.live_status == 103 ? '' : n += 1
+        list && this.data.living ? '' : this.data.normalSatuts.indexOf(item.live_status) == -1 ? '' : n2 += 1
       })
       n > 0 ? '' : this.setData({
         backLive: 1
       })
       n2 > 0 ? '' : this.setData({
         living: 1
-      })
+      }) 
       arr = arr.concat(res.data.room_info)
       this.setData({
         roomList: arr,
@@ -54,6 +59,9 @@ Page({
         this.data.roomList.length >= 10 ? this.param.start = this.param.start + 20 : this.setData({
           bottomOver: 1
         })
+        setInterval(() => {
+           this.getRoomstatus()
+        }, 60000);
       })
     })
   },
@@ -63,6 +71,22 @@ Page({
       limit: 20
     }
     this.getLiveList()
+  },
+  getRoomstatus() {
+    this.data.roomList.forEach((item, index) => {
+      livePlayer.getLiveStatus({
+          room_id: item.roomid
+        })
+        .then(res => {
+          // 101: 直播中, 102: 未开始, 103: 已结束, 104: 禁播, 105: 暂停中, 106: 异常，107：已过期 
+          this.setData({
+            [`roomList[${index}].live_status`]: res.liveStatus
+          })
+        })
+        .catch(err => {
+          console.log('get live status', err)
+        })
+    })
   },
   changeActive(e) {
     this.setData({
