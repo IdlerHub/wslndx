@@ -552,7 +552,7 @@ Page({
   },
   // 跳友方小程序
   jumpmini() {
-    this.minigo('{"appid":"wxfcf6e6c86efc87c0","url":"?wxgamecid=CCBgAAoXkpQY91a5G-iUtT&from=jinling_lndx"}')
+    this.minigo('{"appid":"wx1433e92dcf1d0343","url":"?wxgamecid=CCBgAAoXkpQY8X-4JNwfG3&form=jinling_lndx"}')
     wx.uma.trackEvent('index_btnClick', {
       'btnName': '斗地主'
     });

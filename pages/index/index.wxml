@@ -136,16 +136,16 @@
         </swiper>
         <!-- 农场和电台 -->
         <scroll-view class="jumpout" scroll-x enable-flex>
-          <navigator class="jumpoutBox" url="/pages/liveList/liveList" hover-class="none">
+          <!-- <navigator class="jumpoutBox" url="/pages/liveList/liveList" hover-class="none">
             <image class="img" mode="widthFix" src="{{  !recommend ? '' : $state.imgHost + '/liveBtn.png' }}">
             </image>
-          </navigator>
+          </navigator> -->
           <navigator class="jumpoutBox" url="/pages/rankingList/rankingList" hover-class="none">
             <image class="img" mode="widthFix" src="{{  !recommend ? '' : $state.imgHost + '/rankingDoor2.png' }}">
             </image>
           </navigator>
           <view class="jumpoutBox" bindtap="jumpmini">
-            <image class="img" mode="widthFix" src="{{  !recommend ? '' : $state.imgHost + '/pastureImg.png'}}">
+            <image class="img" mode="widthFix" src="{{  !recommend ? '' : $state.imgHost + '/pastureImg2.png'}}">
             </image>
           </view>
           <navigator class="jumpoutBox" url="/pages/education/education?type=farm" hover-class="none">
