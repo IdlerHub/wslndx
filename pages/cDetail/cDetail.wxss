@@ -353,9 +353,8 @@ page {
   .header .text {
     margin-left: 20rpx;
     width: 400rpx;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap; }
+    margin-right: 15rpx;
+   }
     .header .text .textBox {
       display: flex;
       align-items: center;
@@ -367,7 +366,11 @@ page {
   .header .name {
     font-size: 50rpx;
     line-height: 50rpx;
-    color: #fff; }
+    color: #fff;
+    width: 390rpx;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap; }
   .header .member {
     margin-top: 15rpx;
     font-size: 28rpx;

@@ -162,9 +162,9 @@
 				},
 				{
 					"id": 9,
-					"name": "pages/tableDetail/tableDetail",
-					"pathName": "pages/tableDetail/tableDetail",
-					"query": "id=21&type=invite",
+					"name": "pages/cDetail/cDetail",
+					"pathName": "pages/cDetail/cDetail",
+					"query": "id=102",
 					"scene": null
 				},
 				{
