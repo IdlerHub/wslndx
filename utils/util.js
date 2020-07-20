@@ -3,7 +3,7 @@
  * @LastEditors: hxz
  * @LastEditTime: 2019-08-13 17:26:55
  */
-function formatTime(date) {
+function formatTime(date, type) {
   date = date ? date : new Date()
   const year = date.getFullYear()
   const month = date.getMonth() + 1
@@ -11,7 +11,11 @@ function formatTime(date) {
   const hour = date.getHours()
   const minute = date.getMinutes()
   const second = date.getSeconds()
-  return [year, month, day].map(formatNumber).join("-") + " " + [hour, minute].map(formatNumber).join(":")
+  if(type) {
+    return date.getFullYear() + "年" + (date.getMonth() + 1) + "月" + date.getDate() + "日"
+  } else {
+    return [year, month, day].map(formatNumber).join("-") + " " + [hour, minute].map(formatNumber).join(":")
+  }
 }
 
 function formatNumber(n) {

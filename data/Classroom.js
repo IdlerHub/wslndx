@@ -104,6 +104,11 @@ function updateProgress(param) {
   return httpService.post("Classroom/updateProgress", param)
 }
 
+//POST live/getLiveInfo 直播课程列表
+function getLiveInfo(param) {
+  return httpService.post("live/getLiveInfo", param)
+}
+
 module.exports = {
   recommend,
   detail,
@@ -124,5 +129,6 @@ module.exports = {
   sublessonfinish,
   sublessons,
   lessSearch,
-  updateProgress
+  updateProgress,
+  getLiveInfo
 }

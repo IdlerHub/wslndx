@@ -55,6 +55,7 @@
   border-radius:16rpx;
   margin-top:30rpx;
   position: relative;
+  overflow: hidden;
 }
 .infoitem image {
   width: 100%;

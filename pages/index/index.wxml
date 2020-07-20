@@ -3,6 +3,40 @@
  * @LastEditors: hxz
  * @LastEditTime: 2019-08-13 12:01:10
  -->
+<template name="skeleton">
+  <view class="skeleton" wx:for="{{5}}" wx:key="index">
+    <view class="skeletonBox">
+      <view class="skeletonImg"></view>
+      <view class="skeletonTitle"></view>
+      <view class="skeletonContent"></view>
+      <view class="skeletonDaram"></view>
+      <view class="skeletonDaram"></view>
+    </view>
+  </view>
+</template>
+<template name="recommend">
+  <view catchtap="detailTap" wx:for="{{ recommend }}" wx:key="index" class="item" data-item="{{ item }}">
+    <view class="content {{ type ? '': item.show_big ? 'big' : '' }}">
+      <view class="left">
+        <image class="poster" mode="aspectFill"
+          src="{{ item.show_big ? item.big_image + '?x-image-process=image/resize,m_fixed,w_690,h_360/quality,Q_80' : item.image + '?x-image-process=image/resize,m_fixed,w_260,h_160/quality,Q_80'  }}"
+          lazy-load="true"></image>
+        <image class="icon" mode="aspectFill" src="{{ $state.imgHost }}/play.png"></image>
+        <image src="/images/coursestautes.png" class="status" wx:if="{{item.is_finish}}"
+          style="{{item.show_big ? 'width:130rpx;height:72rpx' : ''}}"></image>
+      </view>
+      <view class="right">
+        <text class="line name">{{ item.title }}</text>
+        <text class="line actor" wx:if="{{ item.teacher_id == 0 }}">{{ item.subtitle }}</text>
+        <text class="line actor" wx:else>{{ item.name }}-{{ item.honor }}</text>
+        <text class="line info">
+          <text class="dramaNum"><text class="key">剧集</text>{{ item.lesson_count }}集</text>
+          <text class="playNum"><text class="key">播放</text>{{ item.bw || item.browse }}</text>
+        </text>
+      </view>
+    </view>
+  </view>
+</template>
 <view class="container">
   <!-- 下拉刷新 -->
   <view wx:if="{{ isRefreshing }}" class="weui-loadmore indexdrop">
@@ -105,15 +139,7 @@
       <image src="{{$state.imgHost}}/tabclassify.png"></image>
     </navigator>
   </view>
-  <view class="skeleton" wx:for="{{5}}" wx:if="{{ !recommend[0]}}" wx:key="index">
-    <view class="skeletonBox">
-      <view class="skeletonImg"></view>
-      <view class="skeletonTitle"></view>
-      <view class="skeletonContent"></view>
-      <view class="skeletonDaram"></view>
-      <view class="skeletonDaram"></view>
-    </view>
-  </view>
+  <template is="skeleton" wx:if="{{ !recommend[0]}}"></template>
   <swiper class="tab" style="height:{{ height }}px" current="{{ currentTab }}" duration="300" bindchange="switchTab"
     bindtouchstart="touchstart" bindtouchend="touchend">
     <swiper-item class="tab-item">
@@ -136,12 +162,16 @@
         </swiper>
         <!-- 农场和电台 -->
         <scroll-view class="jumpout" scroll-x enable-flex>
+          <!-- <navigator class="jumpoutBox" url="/pages/liveList/liveList" hover-class="none">
+            <image class="img" mode="widthFix" src="{{  !recommend ? '' : $state.imgHost + '/liveBtn.png' }}">
+            </image>
+          </navigator> -->
           <navigator class="jumpoutBox" url="/pages/rankingList/rankingList" hover-class="none">
             <image class="img" mode="widthFix" src="{{  !recommend ? '' : $state.imgHost + '/rankingDoor2.png' }}">
             </image>
           </navigator>
           <view class="jumpoutBox" bindtap="jumpmini">
-            <image class="img" mode="widthFix" src="{{  !recommend ? '' : $state.imgHost + '/pastureImg.png'}}">
+            <image class="img" mode="widthFix" src="{{  !recommend ? '' : $state.imgHost + '/pastureImg2.png'}}">
             </image>
           </view>
           <navigator class="jumpoutBox" url="/pages/education/education?type=farm" hover-class="none">
@@ -173,61 +203,13 @@
             </view>
           </view>
         </view>
-        <view catchtap="detailTap" wx:for="{{ recommend }}" wx:key="index" class="item" data-item="{{ item }}">
-          <view class="content {{ item.show_big ? 'big' : '' }}">
-            <view class="left">
-              <image class="poster" mode="aspectFill"
-                src="{{ item.show_big ? item.big_image + '?x-image-process=image/resize,m_fixed,w_690,h_360/quality,Q_80' : item.image + '?x-image-process=image/resize,m_fixed,w_260,h_160/quality,Q_80'  }}"
-                lazy-load="true"></image>
-              <image class="icon" mode="aspectFill" src="{{ $state.imgHost }}/play.png"></image>
-              <image src="/images/coursestautes.png" class="status" wx:if="{{item.is_finish}}"
-                style="{{item.show_big ? 'width:130rpx;height:72rpx' : ''}}"></image>
-            </view>
-            <view class="right">
-              <text class="line name">{{ item.title }}</text>
-              <text class="line actor" wx:if="{{ item.teacher_id == 0 }}">{{ item.subtitle }}</text>
-              <text class="line actor" wx:else>{{ item.name }}-{{ item.honor }}</text>
-              <text class="line info">
-                <text class="dramaNum"><text class="key">剧集</text>{{ item.lesson_count }}集</text>
-                <text class="playNum"><text class="key">播放</text>{{ item.bw || item.browse }}</text>
-              </text>
-            </view>
-          </view>
-        </view>
+        <template is="recommend" data="{{recommend, $state}}"></template>
       </view>
     </swiper-item>
     <swiper-item class="tab-item" wx:for="{{nav}}" wx:key="index" wx:if="{{!index == 0}}" item-id="{{item.name}}">
       <view class="wrap recommend" id="recommend{{item.id}}">
-        <view class="skeleton" wx:for="{{5}}" wx:for-item="iten" wx:if="{{ !catrecommend[item.id][0] }}" wx:key="index">
-          <view class="skeletonBox">
-            <view class="skeletonImg"></view>
-            <view class="skeletonTitle"></view>
-            <view class="skeletonContent"></view>
-            <view class="skeletonDaram"></view>
-            <view class="skeletonDaram"></view>
-          </view>
-        </view>
-        <view catchtap="detailTap" wx:for="{{ catrecommend[item.id] }}" wx:key="index" class="item"
-          data-item="{{ item }}" data-type="tabvideo">
-          <view class="content">
-            <view class="left">
-              <image class="poster" mode="aspectFill"
-                src="{{ item.image }}?x-image-process=image/resize,m_fixed,w_260,h_160/quality,Q_80" lazy-load="true">
-              </image>
-              <image class="icon" mode="aspectFill" src="{{ $state.imgHost }}/play.png"></image>
-              <image src="/images/coursestautes.png" class="status" wx:if="{{item.is_finish}}"></image>
-            </view>
-            <view class="right">
-              <text class="line name">{{ item.title }}</text>
-              <text class="line actor" wx:if="{{ item.teacher_id == 0 }}">{{ item.subtitle }}</text>
-              <text class="line actor" wx:else>{{ item.name }}-{{ item.honor }}</text>
-              <text class="line info">
-                <text class="dramaNum"><text class="key">剧集</text>{{ item.lesson_count }}集</text>
-                <text class="playNum"><text class="key">播放</text>{{ item.thousand || item.browse }}</text>
-              </text>
-            </view>
-          </view>
-        </view>
+        <template is="skeleton" wx:if="{{ !catrecommend[item.id][0] }}"></template>
+        <template is="recommend" data="{{ recommend:catrecommend[item.id], $state, type: 1}}"></template>
         <view class="upbottom" wx:if="{{nav[currentTab].showBtoom}}">已经到底咯~</view>
       </view>
     </swiper-item>
@@ -257,8 +239,8 @@
     <view class="dialog">
       <view class="bg"
         style="background: url('{{dialog[0].image}}') no-repeat center; background-size: 100% 100%;border-radius:10px"
-        src="{{dialog[0].image}}" mode="aspectFill" catchtap="jumpPeper" data-peper="{{dialog[0].url}}"
-        data-type="dialog"></view>
+        src="{{dialog[0].image}}" mode="aspectFill" catchtap="jumpPeper" data-peper="{{dialog[0]}}" data-type="dialog">
+      </view>
       <!-- <button catchtap="signIn" data-id="1">签到领学分</button> -->
       <icon type="cancel" size="37" color="white" data-id="0" catchtap="closeSignIn"></icon>
     </view>

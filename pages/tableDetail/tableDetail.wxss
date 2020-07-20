@@ -262,3 +262,15 @@ page {
   height: 74rpx;
   margin-top: 38rpx;
 }
+
+.livibtn {
+  width: 250rpx;
+  height: 250rpx;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  margin-left: -125rpx;
+  margin-right: -125rpx;
+  z-index: 999;
+  background: pink;
+}
