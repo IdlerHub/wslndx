@@ -163,7 +163,7 @@
 				{
 					"id": 9,
 					"name": "pages/cDetail/cDetail",
-					"pathName": "pages/cDetail/cDetail",
+					"pathName": "pages/timetable/timetable",
 					"query": "id=102",
 					"scene": null
 				},

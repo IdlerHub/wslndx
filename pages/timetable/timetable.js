@@ -3,20 +3,14 @@ Page({
   data: {
     navScrollLeft:0,
     nav: [
-      {id:1, name: '全部'},
-      {id:2, name: '直播'},
-      {id:3, name: '科学'},
-      {id:4, name: '种植'},
-      {id:5, name: '舞蹈'},
-      {id:6, name: '交易'},
-      {id:7, name: '绘画'},
-      {id:8, name: '书法'},
-      {id:9, name: '全部'},
-      {id:10, name: '全部'},
-      {id:11, name: '全部'},
+      {id:1, name: '周一'},
+      {id:2, name: '周二'},
+      {id:3, name: '周三'},
+      {id:4, name: '周四'},
+      {id:5, name: '周五'}
     ],
     currentTab: 0,
-    list: []
+    list: [1]
   },
   onLoad: function (options) {
 
