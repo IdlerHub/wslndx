@@ -11,6 +11,7 @@ import {
 } from "umtrack-wx";
 /* 全局状态管理 */
 import store from "./store";
+// const vodwxsdk = require('vod-wx-sdk-v2')
 /* sse */
 const socket = require("data/socket.js");
 /* 小程序直播组件 */
@@ -90,7 +91,7 @@ App({
   },
   /*埋点统计*/
   onLaunch: async function (opts) {
-    // this.getSecureToken();
+    this.getSecureToken();
     let optsStr = decodeURIComponent(opts.query.scene).split("&");
     let opstObj = {};
     optsStr.forEach((item, index) => {

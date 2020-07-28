@@ -1,5 +1,12 @@
 //获取应用实例
-// const VodUploader = require('../../lib/vod-wx-sdk-v2.js');
+// const VodUploader = require('../../vod/vodsdk.js');
+// 获取**全局唯一**的语音识别管理器**recordRecoManager**
+// const recorderManager = wx.getRecorderManager()
+const plugin = requirePlugin("WechatSI");
+// 获取**全局唯一**的语音识别管理器**recordRecoManager**
+const manager = plugin.getRecordRecognitionManager();
+const innerAudioContext = wx.createInnerAudioContext();
+import OBS from "../../OBS/OBSUploadFile.js";
 const app = getApp();
 Page({
   data: {
@@ -9,13 +16,27 @@ Page({
       video: null,
       cover: null,
       fs_id: "",
-      num: 0
+      num: 0,
     },
     media_type: null,
     showFlag: true,
-    showintegral: false
+    showintegral: false,
+    showVoiceBox: 1,
+    recordAction: 0,
+    recordStatus: 1,
+    playRecord: 0,
+    timer: {
+      second: 0,
+      minute: 0
+    },
+    playTiemr: {
+      second: 0,
+      minute: 0
+    }
   },
   pageName: "发帖页",
+  timer: '',
+  playTiemr: '',
   onLoad(ops) {
     ops.type ? this.circle = true : ''
     if (ops.title) {
@@ -43,6 +64,8 @@ Page({
     }
   },
   onShow() {
+    this.getRecordAuth();
+    this.initRecord();
     if (this.data.$state.releaseParam != null) {
       this.setData({
         param: this.data.$state.releaseParam,
@@ -127,24 +150,21 @@ Page({
         wx.showLoading({
           title: "上传中"
         });
-        console.log(res.tempFilePaths)
-        // this.obsUpload(res.tempFilePaths)
-        // this.next(, 1, i, up);
+        // console.log(res.tempFilePaths)
+        this.obsUpload(res.tempFilePaths)
+        // this.next(res.tempFilePaths, 1, i, up);
       }
     });
   },
   obsUpload(medias) {
     let reqs = [];
-    medias.forEach(media => {
-      reqs.push(OBS("ballot/img", media, "image"));
-    });
-    Promise.all(reqs)
+    OBS("ballot/audio", medias, "audio")
       .then(res => {
-        if (res[0]) {
-          console.log(res)
-          // this.setData({
-          //   imgList: this.data.imgList.concat(res)
-          // });
+        console.log(res)
+        if (res) {
+          this.setData({
+            video: res
+          });
           wx.hideLoading();
         } else {
           wx.showToast({
@@ -154,6 +174,7 @@ Page({
         }
       })
       .catch(err => {
+        console.log(err)
         if (err != "type") {
           wx.showToast({
             icon: "none",
@@ -242,7 +263,7 @@ Page({
   },
   //上传视频
   getSignature(callback) {
-    callback('DHy3HUBq8yp+ASG0oeqdANi0LTRzZWNyZXRJZD1BS0lEQlBsc2xOTjk2dWE2T1Znd2ZNSTBzakpnVDFJSXhvak8mY3VycmVudFRpbWVTdGFtcD0xNTk1ODE3NjIzJmV4cGlyZVRpbWU9MTU5NTk5MDQyMyZyYW5kb209NTE1MjYwODU0JnByb2NlZHVyZT1qbGtqX3ZvZF90YXNrJnRhc2tOb3RpZnlNb2RlPUZpbmlzaCZzZXNzaW9uQ29udGV4dD1odHRwczovL2dhdGV3YXkuamlubGluZ2tlamkuY24vbWFqb3IvdGVuY2VudC9ub3RpZmljYXRpb24vdm9kQ2hlY2smY2xhc3NJZD02Njc4MjEmdm9kU3ViQXBwSWQ9MTUwMDAwMTE2Ng==') 
+    callback('Z6VhD2NJwSgvVbj4HcUJ7dXhPI1zZWNyZXRJZD1BS0lEQlBsc2xOTjk2dWE2T1Znd2ZNSTBzakpnVDFJSXhvak8mY3VycmVudFRpbWVTdGFtcD0xNTk1OTAyMjE1JmV4cGlyZVRpbWU9MTYwMzY3ODIxNSZyYW5kb209MTE0NjkyMDE5OSZwcm9jZWR1cmU9amxral92b2RfdGFzayZ0YXNrTm90aWZ5TW9kZT1GaW5pc2gmdm9kU3ViQXBwSWQ9MTUwMDAwMTE5Nw==')
   },
   uploadVideo() {
     wx.chooseVideo({
@@ -258,47 +279,46 @@ Page({
           return;
         }
         console.log(res)
-        // let that = this
-        // VodUploader.start({
-        //   // 必填，把 wx.chooseVideo 回调的参数(file)传进来
-        //   mediaFile: res,
-        //   // 必填，获取签名的函数
-        //   getSignature: that.getSignature,
-        //   // 选填，视频名称，强烈推荐填写(如果不填，则默认为“来自小程序”)
-        //   mediaName: '视频',
-        //   // 选填，视频封面，把 wx.chooseImage 回调的参数(file)传进来
-        //   coverFile: res.coverFile,
-        //   // 上传中回调，获取上传进度等信息
-        //   progress: function (result) {
-        //     console.log('progress');
-        //     console.log(result);
-        //   },
-        //   // 上传完成回调，获取上传后的视频 URL 等信息
-        //   finish: (result) => {
-        //     console.log('finish');
-        //     console.log(result);
-        //     wx.showModal({
-        //       title: '上传成功',
-        //       content: 'fileId:' + result.fileId + '\nvideoName:' + result.videoName,
-        //       showCancel: false
-        //     });
-        //   },
-        //   // 上传错误回调，处理异常
-        //   error: function (result) {
-        //     console.log('error');
-        //     console.log(result);
-        //     wx.showModal({
-        //       title: '上传失败',
-        //       content: JSON.stringify(result),
-        //       showCancel: false
-        //     });
-        //   },
-        // });
+        let that = this
+        VodUploader.start({
+          // 必填，把 wx.chooseVideo 回调的参数(file)传进来
+          mediaFile: res,
+          // 必填，获取签名的函数
+          getSignature: that.getSignature,
+          // 选填，视频名称，强烈推荐填写(如果不填，则默认为“来自小程序”)
+          mediaName: '视频',
+          // 选填，视频封面，把 wx.chooseImage 回调的参数(file)传进来
+          coverFile: res.coverFile,
+          // 上传中回调，获取上传进度等信息
+          progress: function (result) {
+            console.log('progress');
+            console.log(result);
+          },
+          // 上传完成回调，获取上传后的视频 URL 等信息
+          finish: (result) => {
+            console.log('finish');
+            console.log(result);
+            wx.showModal({
+              title: '上传成功',
+              content: 'fileId:' + result.fileId + '\nvideoName:' + result.videoName,
+              showCancel: false
+            });
+          },
+          // 上传错误回调，处理异常
+          error: function (result) {
+            console.log('error');
+            console.log(result);
+            wx.showModal({
+              title: '上传失败',
+              content: JSON.stringify(result),
+              showCancel: false
+            });
+          },
+        });
         // this.next2(res, 2);
       }
     });
   },
-
   judge() {
     this.setData({
       hide: false
@@ -335,12 +355,6 @@ Page({
       num: (this.data.param.num -= 1)
     });
   },
-  //是否同步到圈子
-  // switchChange: function(e) {
-  //   this.setData({
-  //     showFlag: e.detail.value
-  //   });
-  // },
   // 获取所有圈子信息
   getCircleList() {
     return app.circle.joinedCircles().then(msg => {
@@ -426,8 +440,7 @@ Page({
   result() {
     let param = {
       image: this.data.media_type == 1 ?
-        this.data.param.image.join(",") :
-        this.data.param.cover,
+        this.data.param.image.join(",") : this.data.param.cover,
       content: this.data.param.content || "",
       video: this.data.param.video,
       //选择展示到圈子,并且选中或者是为空
@@ -532,6 +545,155 @@ Page({
         duration: 1500
       });
     }
+  },
+  // 权限询问
+  authrecord() {
+    this.setData({
+      focus: false
+    });
+    if (this.data.$state.authRecordfail) {
+      wx.showModal({
+        content: "您已拒绝授权使用麦克风录音权限，请打开获取麦克风授权！否则无法使用小程序部分功能",
+        confirmText: "去授权",
+        confirmColor: "#df2020",
+        success: res => {
+          if (res.confirm) {
+            wx.openSetting({});
+          }
+        }
+      });
+    }
+    if (!this.data.$state.authRecord) {
+      wx.authorize({
+        scope: "scope.record",
+        success() {
+          // 用户已经同意小程序使用录音功能，后续调用 wx.startRecord 接口不会弹窗询问
+          app.store.setState({
+            authRecord: true
+          });
+        },
+        fail() {
+          app.store.setState({
+            authRecordfail: true
+          });
+        }
+      });
+    }
+  },
+  getRecordAuth() {
+    wx.getSetting({
+      success(res) {
+        let record = res.authSetting["scope.record"];
+        app.store.setState({
+          authRecord: record || false
+        });
+      },
+      fail(res) {}
+    });
+  },
+  /**
+   * 初始化语音识别回调 && 语音播放
+   */
+  initRecord() {
+    //有新的识别内容返回，则会调用此事件
+    manager.onRecognize = res => {};
+    // 识别结束事件
+    manager.onStop = res => {
+      // 获取音频文件临时地址
+      this.filePath = res.tempFilePath;
+      let duration = res.duration;
+      // this.obsUpload(filePath);
+    };
+    // 识别错误事件
+    manager.onError = res => {};
+
+    innerAudioContext.onPlay(() => {
+      this.setData({
+        'playTiemr.minute': 0,
+        'playTiemr.second': 0
+      })
+      this.playTiemr ? clearInterval(this.playTiemr) : ''
+      this.playTiemr = setInterval(() => {
+        if(this.data.playTiemr.minute == this.data.timer.minute && this.data.playTiemr.second == this.data.timer.second) {
+          innerAudioContext.stop()
+          return
+        }
+        let num = this.data.playTiemr.second
+          num += 1
+          num > 60 ? this.setData({
+            'playTiemr.minute': this.data.playTiemr.minute += 1,
+            'playTiemr.second': 0
+          }): this.setData({
+            'playTiemr.second': num
+          })
+        }, 1000)
+    })
+
+    innerAudioContext.onStop(() => {
+      this.playTiemr ? clearInterval(this.playTiemr) : ''
+      this.setData({
+        playRecord: 0
+      })
+    })
+  },
+  showRecorBox() {
+    this.setData({
+      showVoiceBox: 1
+    })
+  },
+  recordStart(e) {
+    let type = e.currentTarget.dataset.starus
+    switch (type) {
+      case '2':
+        manager.start({
+          lang: "zh_CN"
+        });
+        this.setData({
+          'timer.minute': 0,
+          'timer.second': 0
+        })
+        this.timer ? clearInterval(this.timer) : ''
+        this.timer = setInterval(() =>{
+          let num = this.data.timer.second
+          num += 1
+          num > 60 ? this.setData({
+            'timer.minute': this.data.timer.minute += 1,
+            'timer.second': 0
+          }): this.setData({
+            'timer.second': num
+          })
+          if(this.data.timer.minute >= 5) {
+            clearInterval(this.timer)
+            this.setData({
+              recordStatus: 3
+            })
+          }
+        }, 1000)
+        break;
+      case '3': 
+        manager.stop();
+        this.timer ? clearInterval(this.timer) : ''
+        break;
+    }
+    this.setData({
+      // recordAction: 1
+      recordStatus: type
+    })
+  },
+  playVoice() {
+    if(!this.data.playRecord) {
+      this.setData({
+        playRecord: 1
+      })
+      innerAudioContext.src = this.filePath;
+      innerAudioContext.play();
+    } else {
+      this.setData({
+        playRecord: 0
+      })
+      innerAudioContext.stop();
+    }
+    
   },
   //用于数据统计
   onHide() {}
