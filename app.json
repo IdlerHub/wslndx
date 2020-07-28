@@ -105,20 +105,13 @@
       }
     ]
   },
-  "navigateToMiniProgramAppIdList": [
-    "wxa61ccf86d0ba437e",
-    "wx92d650b253f8f2e3",
-    "wxb92e40c1a0520a27",
-    "wx21038783a46791dd",
-    "wx90b2476e31f2bf9e"
-  ],
   "plugins": {
     "WechatSI": {
       "version": "0.3.4",
       "provider": "wx069ba97219f66d99"
     },
     "live-player-plugin": {
-      "version": "1.1.2",
+      "version": "1.1.3",
       "provider": "wx2b03c6e691cd7370"
     }                        
   }

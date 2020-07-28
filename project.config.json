@@ -162,7 +162,7 @@
 				},
 				{
 					"id": 9,
-					"name": "pages/cDetail/cDetail",
+					"name": "pages/timetable/timetable",
 					"pathName": "pages/timetable/timetable",
 					"query": "id=102",
 					"scene": null

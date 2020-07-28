@@ -42,7 +42,7 @@ Page({
       res.data.room_info.forEach(item => {
         item.startTime = app.util.formatTime(new Date(item.start_time * 1000), 1)
         item.endTime = app.util.formatTime(new Date(item.start_time * 1000)).slice(11) + '-' + app.util.formatTime(new Date(item.end_time * 1000)).slice(11)
-        list && this.data.backLive ? '' : item.live_status == 103 ? '' : n += 1
+        list && this.data.backLive ? '' : item.live_status == 103 ? n += 1 : ''
         list && this.data.living ? '' : this.data.normalSatuts.indexOf(item.live_status) == -1 ? '' : n2 += 1
       })
       n > 0 ? '' : this.setData({
@@ -59,7 +59,9 @@ Page({
         this.data.roomList.length >= 10 ? this.param.start = this.param.start + 20 : this.setData({
           bottomOver: 1
         })
-        setInterval(() => {
+        this.getRoomstatus()
+        this.timer ? clearInterval(this.timer) : ''
+        this.timer = setInterval(() => {
            this.getRoomstatus()
         }, 60000);
       })

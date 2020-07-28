@@ -1,4 +1,5 @@
 //获取应用实例
+// const VodUploader = require('../../lib/vod-wx-sdk-v2.js');
 const app = getApp();
 Page({
   data: {
@@ -23,7 +24,7 @@ Page({
         let showFlag = true;
         let id = "";
         allCircle.forEach(item => {
-          if (item.title == ops.title){
+          if (item.title == ops.title) {
             item.isSel = true;
             showFlag = false;
             id = ops.id
@@ -57,11 +58,11 @@ Page({
         prePage = item;
       } else if (item.route == "pages/cDetail/cDetail") {
         prePage = item;
-      } else if (item.route == "pages/post/post"){
+      } else if (item.route == "pages/post/post") {
         prePage = item;
       }
     });
-    if(prePage == []) return
+    if (prePage == []) return
     prePage.setData({
       releaseParam: this.data.param,
       media_type: this.data.media_type,
@@ -126,9 +127,40 @@ Page({
         wx.showLoading({
           title: "上传中"
         });
-        this.next(res.tempFilePaths, 1, i, up);
+        console.log(res.tempFilePaths)
+        // this.obsUpload(res.tempFilePaths)
+        // this.next(, 1, i, up);
       }
     });
+  },
+  obsUpload(medias) {
+    let reqs = [];
+    medias.forEach(media => {
+      reqs.push(OBS("ballot/img", media, "image"));
+    });
+    Promise.all(reqs)
+      .then(res => {
+        if (res[0]) {
+          console.log(res)
+          // this.setData({
+          //   imgList: this.data.imgList.concat(res)
+          // });
+          wx.hideLoading();
+        } else {
+          wx.showToast({
+            icon: "none",
+            title: "上传失败"
+          });
+        }
+      })
+      .catch(err => {
+        if (err != "type") {
+          wx.showToast({
+            icon: "none",
+            title: (err.data && err.data.msg) || "上传失败"
+          });
+        }
+      });
   },
   next(val, type, i, up, url) {
     app.circle
@@ -209,6 +241,9 @@ Page({
       });
   },
   //上传视频
+  getSignature(callback) {
+    callback('DHy3HUBq8yp+ASG0oeqdANi0LTRzZWNyZXRJZD1BS0lEQlBsc2xOTjk2dWE2T1Znd2ZNSTBzakpnVDFJSXhvak8mY3VycmVudFRpbWVTdGFtcD0xNTk1ODE3NjIzJmV4cGlyZVRpbWU9MTU5NTk5MDQyMyZyYW5kb209NTE1MjYwODU0JnByb2NlZHVyZT1qbGtqX3ZvZF90YXNrJnRhc2tOb3RpZnlNb2RlPUZpbmlzaCZzZXNzaW9uQ29udGV4dD1odHRwczovL2dhdGV3YXkuamlubGluZ2tlamkuY24vbWFqb3IvdGVuY2VudC9ub3RpZmljYXRpb24vdm9kQ2hlY2smY2xhc3NJZD02Njc4MjEmdm9kU3ViQXBwSWQ9MTUwMDAwMTE2Ng==') 
+  },
   uploadVideo() {
     wx.chooseVideo({
       compressed: true,
@@ -222,10 +257,48 @@ Page({
           });
           return;
         }
-        this.next2(res, 2);
+        console.log(res)
+        // let that = this
+        // VodUploader.start({
+        //   // 必填，把 wx.chooseVideo 回调的参数(file)传进来
+        //   mediaFile: res,
+        //   // 必填，获取签名的函数
+        //   getSignature: that.getSignature,
+        //   // 选填，视频名称，强烈推荐填写(如果不填，则默认为“来自小程序”)
+        //   mediaName: '视频',
+        //   // 选填，视频封面，把 wx.chooseImage 回调的参数(file)传进来
+        //   coverFile: res.coverFile,
+        //   // 上传中回调，获取上传进度等信息
+        //   progress: function (result) {
+        //     console.log('progress');
+        //     console.log(result);
+        //   },
+        //   // 上传完成回调，获取上传后的视频 URL 等信息
+        //   finish: (result) => {
+        //     console.log('finish');
+        //     console.log(result);
+        //     wx.showModal({
+        //       title: '上传成功',
+        //       content: 'fileId:' + result.fileId + '\nvideoName:' + result.videoName,
+        //       showCancel: false
+        //     });
+        //   },
+        //   // 上传错误回调，处理异常
+        //   error: function (result) {
+        //     console.log('error');
+        //     console.log(result);
+        //     wx.showModal({
+        //       title: '上传失败',
+        //       content: JSON.stringify(result),
+        //       showCancel: false
+        //     });
+        //   },
+        // });
+        // this.next2(res, 2);
       }
     });
   },
+
   judge() {
     this.setData({
       hide: false
@@ -282,13 +355,13 @@ Page({
     allCircle.forEach(item => {
       item.isSel = false;
     });
-    if (e.currentTarget.dataset.other){
+    if (e.currentTarget.dataset.other) {
       this.setData({
         allCircle: allCircle,
         selId: '',
         showFlag: true
       })
-    }else{
+    } else {
       allCircle[e.currentTarget.dataset.index].isSel = true;
       this.setData({
         allCircle: allCircle,
@@ -299,23 +372,27 @@ Page({
   },
   // 未加圈子判断
   judgeCircle() {
-    if(this.circle && !(this.data.selId > 0)) {
-      let type = 0, that = this, image =
-      this.data.media_type == 1
-        ? this.data.param.image.join(",")
-        : this.data.param.cover
+    if (this.circle && !(this.data.selId > 0)) {
+      let type = 0,
+        that = this,
+        image =
+        this.data.media_type == 1 ?
+        this.data.param.image.join(",") :
+        this.data.param.cover
       this.data.allCircle.forEach(item => {
         item.id == this.data.circleId ? type = 1 : ''
       })
-      if(!type) {
-        if(this.data.param.content.trim() || image || this.data.param.video) {
-            wx.showModal({
+      if (!type) {
+        if (this.data.param.content.trim() || image || this.data.param.video) {
+          wx.showModal({
             content: `是否发布并加入【${this.data.circleTitle}】圈子`,
             confirmColor: '#DF2020',
             cancelColor: '#999999',
-            success (res) {
+            success(res) {
               if (res.confirm) {
-                let param = { fs_id: that.data.circleId}
+                let param = {
+                  fs_id: that.data.circleId
+                }
                 app.circle.addOne(param).then(msg => {
                   that.setData({
                     selId: that.data.circleId
@@ -348,10 +425,9 @@ Page({
   // 发布帖子
   result() {
     let param = {
-      image:
-        this.data.media_type == 1
-          ? this.data.param.image.join(",")
-          : this.data.param.cover,
+      image: this.data.media_type == 1 ?
+        this.data.param.image.join(",") :
+        this.data.param.cover,
       content: this.data.param.content || "",
       video: this.data.param.video,
       //选择展示到圈子,并且选中或者是为空
@@ -408,25 +484,29 @@ Page({
             app.globalData.rlSuc = true;
             if (integral == "first" || integral == "day") {
               setTimeout(() => {
-                if(this.circle && this.data.selId == this.data.circleId) {
+                if (this.circle && this.data.selId == this.data.circleId) {
                   wx.navigateBack()
-                } else if(this.circle && this.data.selId != this.data.circleId && this.data.selId> 0){
+                } else if (this.circle && this.data.selId != this.data.circleId && this.data.selId > 0) {
                   wx.redirectTo({
                     url: '/pages/cDetail/cDetail?id=' + this.data.selId,
                   })
-                } else {  
-                  wx.switchTab({ url: "/pages/post/post" });
+                } else {
+                  wx.switchTab({
+                    url: "/pages/post/post"
+                  });
                 }
               }, 2000);
             } else {
-              if(this.circle && this.data.selId == this.data.circleId) {
+              if (this.circle && this.data.selId == this.data.circleId) {
                 wx.navigateBack()
-              } else if(this.circle && this.data.selId != this.data.circleId && this.data.selId> 0){
+              } else if (this.circle && this.data.selId != this.data.circleId && this.data.selId > 0) {
                 wx.redirectTo({
                   url: '/pages/cDetail/cDetail?id=' + this.data.selId,
                 })
-              } else {  
-                wx.switchTab({ url: "/pages/post/post" });
+              } else {
+                wx.switchTab({
+                  url: "/pages/post/post"
+                });
               }
             }
           })
