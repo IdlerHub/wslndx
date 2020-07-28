@@ -152,7 +152,6 @@ module.exports =
                     observer: function observer() {
                         var newVal = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
                         // this.data.videoTwo ? this.setData({ current: 1, _last: 1 }) :''
-                        console.log(newVal)
                         this._videoListChanged(newVal);
                     }
                 },
@@ -287,7 +286,6 @@ module.exports =
                     if (prevQueue.length === 0 && current !== 2) {
                         circular = false;
                     }
-                    console.log(nextQueue)
                     this.setData({
                         curQueue: curQueue,
                         circular: circular,
@@ -387,7 +385,6 @@ module.exports =
                     });
                 },
                 showred() {
-                    console.log(34324234)
                 },
                 addShare(id) {
                     this.data.curQueue.forEach((item, index) => {

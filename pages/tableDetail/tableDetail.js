@@ -6,17 +6,17 @@ Page({
     minutes: 0,
     seconds: 0,
     colleted: false,
-    avatarList:[1,2,3,4,5],
+    avatarList: [1, 2, 3, 4],
     showServise: false
   },
-  timer:'',
+  timer: '',
   onLoad: function (options) {
 
   },
   onShow: function () {
-    this.leftTimer(1590650413)
+    this.leftTimer(1596094296)
     this.timer = setInterval(() => {
-      this.leftTimer(1590650413)
+      this.leftTimer(1596094296)
     }, 1000);
   },
   onUnload() {
@@ -29,21 +29,21 @@ Page({
 
   },
   leftTimer(timer) {
-    var leftTime = (new Date(1593328939 * 1000)) - (new Date()); //计算剩余的毫秒数 
-      var days = parseInt(leftTime / 1000 / 60 / 60 / 24, 10); //计算剩余的天数 
-      var hours = parseInt(leftTime / 1000 / 60 / 60 % 24, 10); //计算剩余的小时 
-      var minutes = parseInt(leftTime / 1000 / 60 % 60, 10);//计算剩余的分钟 
-      var seconds = parseInt(leftTime / 1000 % 60, 10);//计算剩余的秒数 
-      days = days;
-      hours = this.checkTime(hours);
-      minutes = this.checkTime(minutes);
-      seconds = this.checkTime(seconds);
-      this.setData({
-        days,
-        hours,
-        minutes,
-        seconds
-      })
+    var leftTime = (new Date(timer * 1000)) - (new Date()); //计算剩余的毫秒数 
+    var days = parseInt(leftTime / 1000 / 60 / 60 / 24, 10); //计算剩余的天数 
+    var hours = parseInt(leftTime / 1000 / 60 / 60 % 24, 10); //计算剩余的小时 
+    var minutes = parseInt(leftTime / 1000 / 60 % 60, 10); //计算剩余的分钟 
+    var seconds = parseInt(leftTime / 1000 % 60, 10); //计算剩余的秒数 
+    days = days;
+    hours = this.checkTime(hours);
+    minutes = this.checkTime(minutes);
+    seconds = this.checkTime(seconds);
+    this.setData({
+      days,
+      hours,
+      minutes,
+      seconds
+    })
   },
   checkTime(i) {
     if (i < 10) {
@@ -52,9 +52,9 @@ Page({
     return i;
   },
   collect() {
-    if(this.data.colleted) {
+    if (this.data.colleted) {
       wx.showToast({
-        icon:'none',
+        icon: 'none',
         title: '已取消收藏',
       })
       this.setData({
@@ -62,17 +62,17 @@ Page({
       })
     } else {
       wx.showToast({
-        icon:'none',
+        icon: 'none',
         title: '收藏成功',
       })
       this.setData({
         colleted: true
       })
     }
-    
+
   },
   rightNow() {
-    if(this.data.avatarList.length < 5) {
+    if (this.data.avatarList.length < 5) {
       wx.showModal({
         content: `再邀请${ 5 - this.data.avatarList.length}位好友就可以上课啦`,
         confirmColor: '#DF2020',

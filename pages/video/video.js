@@ -215,19 +215,14 @@ Page({
       let that = this;
       wx.getNetworkType({
         success: res => {
-          console.log(res.networkType)
           if (res.networkType == "wifi") {
             that.wifi = true;
             app.playVedio("wifi");
-            that.videoContext.play();
             that.setData({
-              autoplay: true,
               pause: false
             });
           } else {
-            that.videoContext.pause();
             that.setData({
-              autoplay: false,
               pause: true
             });
             that.wifi = false;
@@ -240,17 +235,13 @@ Page({
                 if (res.confirm) {
                   app.playVedio("flow");
                   that.setData({
-                    autoplay: true,
                     pause: false
                   });
-                  that.videoContext.play();
                   wx.offNetworkStatusChange();
                 } else if (res.cancel) {
                   app.playVedio("wifi");
-                  that.videoContext.pause();
                   that.setData({
-                    pause: true,
-                    autoplay: false
+                    pause: true
                   });
                 }
               }
@@ -261,9 +252,7 @@ Page({
     } else if (this.data.currentTab == 0) {
       this.setData({
         pause: false,
-        autoplay: true
       });
-      this.videoContext.play();
     }
   },
   getMorelist() {
@@ -317,11 +306,7 @@ Page({
   tap() {
     if (this.data.pause) {
       this.judgeWifi();
-      this.setData({
-        pause: false
-      });
     } else {
-      this.videoContext.pause();
       this.setData({
         pause: true
       });

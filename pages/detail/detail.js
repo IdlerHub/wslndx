@@ -6,6 +6,7 @@ const plugin = requirePlugin("WechatSI");
 const manager = plugin.getRecordRecognitionManager();
 const innerAudioContext = wx.createInnerAudioContext();
 var htmlparser = require("../../utils/htmlparser.js");
+import OBS from "../../OBS/OBSUploadFile.js";
 Page({
   data: {
     sort: 0,
@@ -50,6 +51,7 @@ Page({
     /* rect: wx.getMenuButtonBoundingClientRect() */
   },
   pageName: "视频页（视频详情页）",
+  timeTemplate: '',
   videoTime: 0,
   videoTime2: 0,
   vRecordAdd: false,
@@ -208,7 +210,6 @@ Page({
         key: 'plathStatus',
         success (res) {
           if(res) {
-            console.log(res.data)
             if(res.data.status) return
             let timeType = that.compareDate(app.util.formatTime(new Date()).slice(0,10), res.data.time)
             timeType ?  that.setData({
@@ -368,7 +369,6 @@ Page({
     app.classroom.updateProgress(param).then(res => {
       this.timeTemplate = 0
       this.videoTime2 = 0
-      console.log(res.msg)
     }).catch(() => {
       this.videoTime2 = this.videoTime
     })
@@ -1322,6 +1322,7 @@ Page({
         filePath,
         voiceActon: false
       });
+      console.log(filePath)
     };
 
     // 识别错误事件

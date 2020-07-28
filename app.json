@@ -60,6 +60,7 @@
     "pages/infoAddress/infoAddress",
     "pages/voteRank/voteRank",
     "pages/voteWinner/voteWinner",
+    "pages/liveList/liveList",
     "pages/timetable/timetable",
     "pages/tableDetail/tableDetail",
     "pages/gamePage/gamePage",
@@ -104,17 +105,14 @@
       }
     ]
   },
-  "navigateToMiniProgramAppIdList": [
-    "wxa61ccf86d0ba437e",
-    "wx92d650b253f8f2e3",
-    "wxb92e40c1a0520a27",
-    "wx21038783a46791dd",
-    "wxefc543d1ca554b3b"
-  ],
   "plugins": {
     "WechatSI": {
       "version": "0.3.4",
       "provider": "wx069ba97219f66d99"
-    }
+    },
+    "live-player-plugin": {
+      "version": "1.1.3",
+      "provider": "wx2b03c6e691cd7370"
+    }                        
   }
 }
