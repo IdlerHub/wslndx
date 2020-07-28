@@ -252,11 +252,9 @@ Page({
     app.vote.getPosterInfo(params).then(res => {
       wx.hideLoading();
       this.setData({
+        shareInfo: res.data,
         shareFlag: false,
         sharePoster: true
-      });
-      this.setData({
-        shareInfo: res.data
       });
       //这里需要下载对应的网络图片资源并且开始绘画canvas
       this.downloadImg(this.data.shareInfo.avatar, "userImg");
