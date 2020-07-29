@@ -163,7 +163,7 @@
 				{
 					"id": 9,
 					"name": "pages/post/post",
-					"pathName": "pages/release/release",
+					"pathName": "pages/post/post",
 					"query": "id=102",
 					"scene": null
 				},

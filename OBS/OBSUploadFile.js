@@ -111,7 +111,6 @@ const OBSupload = async function(dir, filePath, type) {
     }
   } else {
     checkRes = checkAudio(filePath);
-    console.log(!checkRes)
     if (!checkRes) {
       return Promise.reject("type");
     }
@@ -134,7 +133,6 @@ const OBSupload = async function(dir, filePath, type) {
         : "https://lndxcallbackdev.jinlingkeji.cn/tool/moderationImage",
     audio: ''
   };
-
   const OBSPolicy = {
     //设定policy内容
     expiration: expires_at,
@@ -169,8 +167,6 @@ const OBSupload = async function(dir, filePath, type) {
   };
   let uploadResponse = await wxp.uploadFile(req);
   console.log(req)
-  console.log(uploadResponse)
-
   let fitResponse = null;
   if (uploadResponse.statusCode == 200) {
     if (uploadResponse.data.code == 1) {

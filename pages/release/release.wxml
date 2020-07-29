@@ -15,10 +15,21 @@
                 <image src="../../images/show-camera.png" ></image>
                 <view>照片/视频</view>
             </view>
-            <!-- {{recordAction ? "recordStop" : "recordStart"}} -->
-            <view class='ub recordSmallbox' bindtap='{{recordAction ? "recordStop" : "recordStart"}}'>
+            <view class='ub recordSmallbox' bindtap='showRecorBox' wx:if="{{!param.audio && !param.video}}">
                 <image src="../../images/record/voiceBtn.png"></image>
                 <view>录制音频</view>
+            </view>
+        </view>
+        <view class="voiceBox" wx:if="{{param.audio}}">
+            <view class="voiceBoxRight">
+                <image src="{{voiceplayimg}}" bindtap="playVoice"></image>
+                <viwe class="centerImg {{ playRecord ? 'centerActive' : ''}}"></viwe>
+                <view class="timer" wx:if="{{!playRecord}}">0{{timer.minute}}:{{timer.second > 9 ? timer.second : '0' + timer.second}}</view>
+                <view class="timer" wx:else>0{{playTiemr.minute}}:{{playTiemr.second > 9 ? playTiemr.second : '0' + playTiemr.second}}</view>
+            </view>
+            <view class="delBtn" bindtap="delRecord"> 
+                <image src="../../images/delete.png"></image>
+                删除
             </view>
         </view>
     </view>
@@ -61,7 +72,7 @@
         </view>
         <view class="recordover" wx:if="{{recordStatus == 3}}">
             <view class="recordoverBox">
-                <image src="../../images/record/recordBack.png" bindtap="recordStart" data-starus="2"></image>
+                <image src="../../images/record/recordBack.png" bindtap="recordStart" data-starus="2" data-remake='1'></image>
                 <text>重录</text>
             </view>
             <view class="recordoverBox" wx:if="{{!playRecord}}">
@@ -77,7 +88,7 @@
                 <text>试听中</text>
             </view>
             <view class="recordoverBox">
-                <image src="../../images/record/recodeUpdowm.png"></image>
+                <image src="../../images/record/recodeUpdowm.png" bindtap="uprecorde"></image>
                 <text>提交</text>
             </view>
         </view>
