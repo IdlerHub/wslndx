@@ -163,8 +163,8 @@
         },
         {
           "id": 9,
-          "name": "pages/post/post",
-          "pathName": "pages/post/post",
+          "name": "pages/release/release",
+          "pathName": "pages/release/release",
           "query": "id=102",
           "scene": null
         },

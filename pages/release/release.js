@@ -795,6 +795,7 @@ Page({
               media_type: 1
             });
             wx.hideLoading();
+            this.judge();
           } else {
             wx.showToast({
               icon: "none",
