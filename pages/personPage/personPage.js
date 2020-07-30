@@ -55,6 +55,9 @@ Page({
   onHide() {
     innerAudioContext.stop()
   },
+  onUnload() {
+    innerAudioContext.stop()
+  },
   onPullDownRefresh() {
     this.param.page = 1;
     this.setData({
