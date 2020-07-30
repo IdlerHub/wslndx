@@ -165,6 +165,11 @@ function defaultCircle(param) {
   return httpService.post("Friendscircle/defaultCircle", param)
 }
 
+/* 获取腾讯云VOD签名 */
+function getSignature(param) {
+  return httpService.post("upload/getSignature", param)
+}
+
 module.exports = {
   allCircles,
   noJoinCircles,
@@ -194,5 +199,6 @@ module.exports = {
   bokeblogTop,
   defaultCircle,
   addOne,
-  myNews
+  myNews,
+  getSignature
 }

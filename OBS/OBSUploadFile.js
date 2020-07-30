@@ -7,7 +7,9 @@ const getPolicyEncode = require("./getPolicy.js");
 const getSignature = require("./GetSignature.js");
 
 import store from "../store";
-import { wxp } from "../utils/service";
+import {
+  wxp
+} from "../utils/service";
 
 function randomUUID() {
   var chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz".split(
@@ -53,7 +55,10 @@ function checkType(file) {
   let attrs = null;
   legalType.some((v, i) => {
     if (file.endsWith(v)) {
-      attrs = { type: v, ct: map[i] };
+      attrs = {
+        type: v,
+        ct: map[i]
+      };
       return true;
     }
   });
@@ -66,12 +71,35 @@ function checkVideo(file) {
   let attrs = null;
   legalType.some((v, i) => {
     if (file.endsWith(v)) {
-      attrs = { type: v, ct: ctList[i] };
+      attrs = {
+        type: v,
+        ct: ctList[i]
+      };
       return true;
     }
   });
   return attrs;
 }
+
+function checkAudio(file) {
+  const legalType = [".mp3", ".m4a"];
+  const map = [
+    "audio/mpeg",
+    "audio/mpeg"
+  ];
+  let attrs = null;
+  legalType.some((v, i) => {
+    if (file.endsWith(v)) {
+      attrs = {
+        type: v,
+        ct: map[i]
+      };
+      return true;
+    }
+  });
+  return attrs;
+}
+
 
 //兼容android未重定向
 function fitAndroid(url) {
@@ -80,7 +108,7 @@ function fitAndroid(url) {
   });
 }
 
-const OBSupload = async function(dir, filePath, type) {
+const OBSupload = async function (dir, filePath, type) {
   let checkRes;
   if (type == "image") {
     checkRes = checkType(filePath);
@@ -93,13 +121,8 @@ const OBSupload = async function(dir, filePath, type) {
       return Promise.reject("type");
     }
   } else {
-    checkRes = checkVideo(filePath);
+    checkRes = checkAudio(filePath);
     if (!checkRes) {
-      wx.showToast({
-        icon: "none",
-        title: "视频类型未知,请重新选择上传",
-        duration: 1500
-      });
       return Promise.reject("type");
     }
   }
@@ -114,22 +137,29 @@ const OBSupload = async function(dir, filePath, type) {
   } = store.getState().security;
   const fileName = cacheUrl(dir, checkRes.type); //指定上传到OBS桶中的对象名
   const redirects = {
-    image:
-      store.process == "production"
-        ? "https://lndxcallbackpro.jinlingkeji.cn/tool/moderationImage"
-        : "https://lndxcallbackdev.jinlingkeji.cn/tool/moderationImage",
-    video: getApp().API_URL + "h5opus/putUploadVideo"
+    image: store.process == "production" ?
+      "https://lndxdev.jinlingkeji.cn/api/v22/upload/checkoutImage" :
+      "https://lndxdev.jinlingkeji.cn/api/v22/upload/checkoutImage",
+    audio: ''
   };
-
   const OBSPolicy = {
     //设定policy内容
     expiration: expires_at,
-    conditions: [
-      { bucket: bucket }, //Bucket name
-      { key: fileName },
-      { "x-obs-security-token": securitytoken },
-      { "Content-Type": checkRes.ct },
-      { success_action_status: 200 },
+    conditions: [{
+        bucket: bucket
+      }, //Bucket name
+      {
+        key: fileName
+      },
+      {
+        "x-obs-security-token": securitytoken
+      },
+      {
+        "Content-Type": checkRes.ct
+      },
+      {
+        success_action_status: 200
+      },
       {
         success_action_redirect: redirects[type]
       }
@@ -153,19 +183,23 @@ const OBSupload = async function(dir, filePath, type) {
       "x-obs-security-token": securitytoken
     }
   };
-
   let uploadResponse = await wxp.uploadFile(req);
   let fitResponse = null;
   if (uploadResponse.statusCode == 200) {
-    uploadResponse.data = JSON.parse(uploadResponse.data);
+    uploadResponse['data'] ? uploadResponse.data = JSON.parse(uploadResponse.data) : ''
     if (uploadResponse.data.code == 1) {
       if (type == "image") {
-        return Promise.resolve("https://hwcdn.jinlingkeji.cn/" + fileName);
+        if (uploadResponse.data.data.category_suggestions.politics == "block") {
+          return Promise.resolve("../../images/sensitivity.png");
+        } else {
+          return Promise.resolve("https://hwcdn.jinlingkeji.cn/" + fileName);
+        }
       } else {
         return Promise.resolve(fileName);
       }
     } else {
-      getApp().fundebug.notifyHttpError(req, uploadResponse);
+      return Promise.resolve("https://hwcdn.jinlingkeji.cn/" + fileName);
+      // getApp().fundebug.notifyHttpError(req, uploadResponse);
     }
   } else if (uploadResponse.statusCode == 303) {
     fitResponse = await fitAndroid(uploadResponse.header.Location);

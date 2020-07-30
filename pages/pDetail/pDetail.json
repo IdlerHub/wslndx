@@ -5,6 +5,7 @@
   "enablePullDownRefresh": true,
   "usingComponents": {
     "navBar": "/components/navBar/navBar",
-    "integralAnimation": "/components/integralAni/integralAni"
+    "integralAnimation": "/components/integralAni/integralAni",
+    "playRrecord": "/components/playRrecord/playRrecord"
   }
 }
