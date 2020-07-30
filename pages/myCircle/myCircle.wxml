@@ -43,6 +43,7 @@
 				</view>
 			</view>
 		</view>
+		<playRrecord wx:if="{{item.url && item.duration > 0}}" recordUrl="{{item.url}}" duration="{{item.duration}}" currentTab="{{currentTab}}"></playRrecord>
 		<view class="likeComment" wx:if="{{ item.like_avatar_list[0] || item.last_comment.nickname}}">
 			<view class="likesavatar"  wx:if="{{item.like_avatar_list[0] && item.likes!= 0 }}" style="margin-bottom: {{ item.last_comment.nickname ? '' : '20rpx'}};">
 				<view class="likesLeft">
