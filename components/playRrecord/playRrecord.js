@@ -14,22 +14,9 @@ Component({
     recordUrl: {
       type: String,
       value: ''
-    },
-    currentTab: {
-      type: String,
-      value: ""
     }
   },
   observers:{
-    "currentTab": function (currentTab) {
-      if(currentTab == this.data.current) {
-        this.setData({
-          playRecord: 0,
-          current: currentTab
-        })
-        innerAudioContext.stop();
-      } 
-    }
   },
   /**
    * 组件的初始数据
@@ -56,6 +43,22 @@ Component({
         current: this.data.currentTab
       })
     },
+    detached: function () {
+      console.log('组件销毁')
+      innerAudioContext.stop();
+    }
+  },
+  pageLifetimes: {
+    show: function() {
+      // 页面被展示
+    },
+    hide: function() {
+      console.log('页面隐藏')
+      innerAudioContext.stop();
+    },
+    resize: function(size) {
+      // 页面尺寸变化
+    }
   },
   /**
    * 组件的方法列表
@@ -85,7 +88,6 @@ Component({
       })
   
       innerAudioContext.onStop(() => {
-        console.log(4324324324)
         this.playTiemr ? clearInterval(this.playTiemr) : ''
         this.setData({
           playRecord: 0,
