@@ -273,8 +273,7 @@ Page({
           // 选填，视频封面，把 wx.chooseImage 回调的参数(file)传进来
           coverFile: res.coverFile,
           // 上传中回调，获取上传进度等信息
-          progress: function (result) {
-          },
+          progress: function (result) {},
           // 上传完成回调，获取上传后的视频 URL 等信息
           finish: (result) => {
             wx.hideLoading()
@@ -571,7 +570,7 @@ Page({
     });
   },
   getSystemInfo() {
-    let system =  wx.getSystemInfoSync()
+    let system = wx.getSystemInfoSync()
     return system.microphoneAuthorized
   },
   /**
@@ -585,11 +584,23 @@ Page({
     recorderManager.onStop(res => {
       this.filePath = res.tempFilePath;
       let duration = res.duration;
-        this.setData({
-          recordStatus: 3
+      if (!this.data.timer.minute && !this.data.timer.second) {
+        wx.showToast({
+          title: '录音时间过短',
+          icon: 'none'
         })
         this.timer ? [clearInterval(this.timer), this.timer = null] : ''
-      console.log(res.tempFilePath, res.duration)
+        this.setData({
+          recordStatus: 1,
+          'timer.minute': 0,
+          'timer.second': 0
+        })
+        return
+      }
+      this.setData({
+        recordStatus: 3
+      })
+      this.timer ? [clearInterval(this.timer), this.timer = null] : ''
     })
 
     innerAudioContext.onPlay(() => {
@@ -633,34 +644,36 @@ Page({
       that = this
     switch (type) {
       case '1': {
-         wx.showModal({
-            content: '重录会删除这条录音，确定重录',
-            confirmColor: '#DF2020',
-            success(res) {
-              if (res.confirm) {
-                that.setData({
-                  recordStatus: type,
-                  'timer.minute': 0,
-                  'timer.second': 0
-                })
-              }
+        wx.showModal({
+          content: '重录会删除这条录音，确定重录',
+          confirmColor: '#DF2020',
+          success(res) {
+            if (res.confirm) {
+              that.setData({
+                recordStatus: type,
+                'timer.minute': 0,
+                'timer.second': 0
+              })
             }
-          })
-          break;
+          }
+        })
+        break;
       }
       case '2':
-         if (this.data.$state.authRecord) {
-          if(this.getSystemInfo()) {
+        if (this.data.$state.authRecord) {
+          if (this.getSystemInfo()) {
             that.setData({
-              recordStatus: type
+              recordStatus: type,
+              'timer.minute': 0,
+              'timer.second': 0
             })
             recorderManager.start({
               duration: 600000,
               format: 'mp3'
             })
-          } else {  
+          } else {
             recorderManager.start()
-            wx.nextTick(() =>{
+            wx.nextTick(() => {
               recorderManager.stop()
             })
           }
@@ -670,44 +683,32 @@ Page({
         break;
       case '3':
         recorderManager.stop()
-        if(!this.data.timer.minute && !this.data.timer.second){
-          wx.showToast({
-            title: '录音时间过短',
-            icon: 'none'
-          })
-          this.setData({
-            recordStatus: 1,
-            'timer.minute': 0,
-            'timer.second': 0
-          })
-          return
-        }
         break;
     }
   },
   interval() {
-      this.setData({
-        'timer.minute': 0,
+    this.setData({
+      'timer.minute': 0,
+      'timer.second': 0
+    })
+    this.timer ? [clearInterval(this.timer), this.timer = null] : ''
+    this.timer = setInterval(() => {
+      let num = this.data.timer.second
+      num += 1
+      num > 60 ? this.setData({
+        'timer.minute': this.data.timer.minute += 1,
         'timer.second': 0
+      }) : this.setData({
+        'timer.second': num
       })
-      this.timer ? [clearInterval(this.timer), this.timer = null] : ''
-      this.timer = setInterval(() => {
-        let num = this.data.timer.second
-        num += 1
-        num > 60 ? this.setData({
-          'timer.minute': this.data.timer.minute += 1,
-          'timer.second': 0
-        }) : this.setData({
-          'timer.second': num
+      if (this.data.timer.minute >= 5) {
+        clearInterval(this.timer)
+        this.timer = null
+        this.setData({
+          recordStatus: 3
         })
-        if (this.data.timer.minute >= 5) {
-          clearInterval(this.timer)
-          this.timer = null
-          this.setData({
-            recordStatus: 3
-          })
-        }
-      }, 1000)
+      }
+    }, 1000)
   },
   playVoice() {
     if (!this.data.playRecord) {
@@ -776,7 +777,7 @@ Page({
             i >= 0 && up ? this.setData({
               [`param.image[${i}]`]: res,
               media_type: 1
-            }) :  this.setData({
+            }) : this.setData({
               'param.image': this.data.param.image.concat(res),
               media_type: 1
             });

@@ -1116,7 +1116,6 @@ Page({
       innerAudioContext.stop();
     } else {
       this.recordUrl = recordUrl
-
       this.setData({
         'playVoice.status': 1,
         'playVoice.id': id,

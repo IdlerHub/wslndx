@@ -185,11 +185,12 @@ const OBSupload = async function (dir, filePath, type) {
   };
   let uploadResponse = await wxp.uploadFile(req);
   let fitResponse = null;
+  console.log(uploadResponse)
   if (uploadResponse.statusCode == 200) {
     uploadResponse['data'] ? uploadResponse.data = JSON.parse(uploadResponse.data) : ''
     if (uploadResponse.data.code == 1) {
       if (type == "image") {
-        if (uploadResponse.data.data.category_suggestions.politics == "block") {
+        if (uploadResponse.data.data.suggestion == "block") {
           return Promise.resolve("../../images/sensitivity.png");
         } else {
           return Promise.resolve("https://hwcdn.jinlingkeji.cn/" + fileName);
