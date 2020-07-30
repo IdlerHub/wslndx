@@ -57,7 +57,7 @@
 				</view>
 			</view>
 		</view>
-		<playRrecord wx:if="{{item.url && item.duration > 0}}" recordUrl="{{item.url}}" duration="{{item.duration}}" playTiemr="{{playTiemr}}" currentTab="{{currentTab}}"></playRrecord>
+		<playRrecord wx:if="{{item.url && item.duration > 0}}" recordUrl="{{item.url}}" duration="{{item.duration}}" currentTab="{{currentTab}}"></playRrecord>
 		<view class="likeComment" wx:if="{{ item.like_avatar_list[0] || item.last_comment.nickname}}">
 			<view class="likesavatar" wx:if="{{item.like_avatar_list[0] && item.likes!= 0 }}"
 				style="margin-bottom: {{ item.last_comment.nickname ? '' : '20rpx'}};">
@@ -168,7 +168,7 @@
 				wx:key="page">
 				<block
 					wx:if="{{(page + 1) - currentPage[currentTab].page >= -1 && (page + 1) - currentPage[currentTab].page <= 1}}">
-					<template is="listitem" wx:for="{{subList}}" data="{{item:item, page,index, $state, voiceplayimg, playTiemr, currentTab}}" wx:key="index" />
+					<template is="listitem" wx:for="{{subList}}" data="{{item:item, page,index, $state, voiceplayimg, currentTab}}" wx:key="index" />
 				</block>
 				<view wx:else style='height:{{pageFrame[currentTab][page + 1].height}}px;'></view>
 			</view>
@@ -187,7 +187,7 @@
 				wx:key="page">
 				<block
 					wx:if="{{(page + 1) - currentPage[currentTab].page >= -1 && (page + 1) - currentPage[currentTab].page <= 1}}">
-					<template is="listitem" wx:for="{{subList}}" data="{{item:item, page, index, $state, voiceplayimg, playTiemr, currentTab}}" wx:key="index" />
+					<template is="listitem" wx:for="{{subList}}" data="{{item:item, page, index, $state, voiceplayimg, currentTab}}" wx:key="index" />
 				</block>
 				<view wx:else style='height:{{pageFrame[currentTab][page + 1].height}}px;'></view>
 			</view>
@@ -212,7 +212,7 @@
 					wx:key="page">
 					<block
 						wx:if="{{(page + 1) - currentPage[currentTab].page >= -1 && (page + 1) - currentPage[currentTab].page <= 1}}">
-						<template is="listitem" wx:for="{{subList}}" data="{{item:item, page, index, $state, voiceplayimg, playTiemr, currentTab}}" wx:key="index" />
+						<template is="listitem" wx:for="{{subList}}" data="{{item:item, page, index, $state, voiceplayimg, currentTab}}" wx:key="index" />
 					</block>
 					<view wx:else style='height:{{pageFrame[currentTab][page + 1].height}}px;'></view>
 				</view>

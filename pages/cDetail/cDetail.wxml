@@ -49,7 +49,7 @@
 					<view class="collect" catchtap="collect" data-id="{{item.id}}" data-status="{{item.collectstatus}}" data-index="{{index}}" data-userid="{{item.uid}}" data-follow="{{item.is_follow}}" data-name="{{item.nickname}}">...</view>
 				</view>
 			</view>
-			<view bindtap="navigate" data-id="{{ item.id }}">
+			<view catchtap="navigate" data-id="{{ item.id }}">
 				<rich-text wx:if="{{ item.content }}" class="name" nodes="{{ item.content }}"></rich-text>
 				<view class="content" wx:if="{{ item.images.length > 0 }}">
 					<view class="img one" wx:if="{{ item.images.length == 1 }}">
@@ -59,13 +59,14 @@
 						<image mode="aspectFill" wx:for="{{ item.images }}" wx:for-item="items" wx:key="index" src="{{ fn.search(item.images[index]) > 0 ? item.images[index] : item.image_compress[index] + '/resize,m_fixed,w_216,h_216' }}" data-urls="{{ item.images }}" data-current="{{ items }}" catchtap="previewImage"></image>
 					</view>
 				</view>
-				<view class="content" wx:if="{{ item.url }}">
+				<view class="content" wx:if="{{ item.url && item.duration == 0}}">
 					<view class="bg">
 						<image mode="aspectFill" src="{{ item.auditing ? $state.imgHost + '/tip.jpg' : item.image }}" class="poster"></image>
 						<image mode="aspectFill" src="{{ $state.imgHost }}/play-hl.png" class="play"></image>
 					</view>
 				</view>
 			</view>
+			<playRrecord wx:if="{{item.url && item.duration > 0}}" recordUrl="{{item.url}}" duration="{{item.duration}}" currentTab="0"></playRrecord>
 			<view class="likeComment" wx:if="{{ item.like_avatar_list[0] || item.last_comment.nickname}}">
 				<view class="likesavatar"  wx:if="{{item.like_avatar_list[0] && item.likes!= 0 }}" style="margin-bottom: {{ item.last_comment.nickname ? '' : '20rpx'}};">
 					<view class="likesLeft">
