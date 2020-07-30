@@ -5,6 +5,7 @@ const VodUploader = require('../../vod/vodsdk.js');
 const plugin = requirePlugin("WechatSI");
 // 获取**全局唯一**的语音识别管理器**recordRecoManager**
 const manager = plugin.getRecordRecognitionManager();
+const recorderManager = wx.getRecorderManager()
 const innerAudioContext = wx.createInnerAudioContext();
 import OBS from "../../OBS/OBSUploadFile.js";
 const app = getApp();
@@ -39,7 +40,7 @@ Page({
     voiceplayimg: 'https://hwcdn.jinlingkeji.cn/images/pro/triangle.png'
   },
   pageName: "发帖页",
-  timer: '',
+  timer: null,
   playTiemr: '',
   onLoad(ops) {
     ops.type ? this.circle = true : ''
@@ -68,6 +69,7 @@ Page({
     }
   },
   onShow() {
+    recorderManager.stop()
     this.getRecordAuth();
     this.initRecord();
     if (this.data.$state.releaseParam != null) {
@@ -566,6 +568,10 @@ Page({
       fail(res) {}
     });
   },
+  getSystemInfo() {
+    let system =  wx.getSystemInfoSync()
+    return system.microphoneAuthorized
+  },
   /**
    * 初始化语音识别回调 && 语音播放
    */
@@ -577,6 +583,7 @@ Page({
       // 获取音频文件临时地址
       this.filePath = res.tempFilePath;
       let duration = res.duration;
+      console.log(res.tempFilePath, res.duration)
     };
     // 识别错误事件
     manager.onError = res => {};
@@ -628,9 +635,10 @@ Page({
             success(res) {
               if (res.confirm) {
                 that.setData({
-                  recordStatus: type
+                  recordStatus: type,
+                  'timer.minute': 0,
+                  'timer.second': 0
                 })
-                that.interval()
               }
             }
           })
@@ -638,10 +646,20 @@ Page({
       }
       case '2':
          if (this.data.$state.authRecord) {
-          that.setData({
-            recordStatus: type
-          })
-          this.interval()
+           console.log(this.getSystemInfo())
+          if(this.getSystemInfo()) {
+            that.setData({
+              recordStatus: type
+            })
+            this.interval()
+          } else {  
+            manager.start({
+              lang: "zh_CN"
+            });
+            wx.nextTick(() =>{
+              manager.stop();
+            })
+          }
         } else {
           this.authrecord()
         }
@@ -651,35 +669,39 @@ Page({
           recordStatus: type
         })
         manager.stop();
-        this.timer ? clearInterval(this.timer) : ''
+        this.timer ? [clearInterval(this.timer), this.timer = null] : ''
         break;
     }
   },
   interval() {
-    manager.start({
-      lang: "zh_CN"
-    });
-    this.setData({
-      'timer.minute': 0,
-      'timer.second': 0
-    })
-    this.timer ? clearInterval(this.timer) : ''
-    this.timer = setInterval(() => {
-      let num = this.data.timer.second
-      num += 1
-      num > 60 ? this.setData({
-        'timer.minute': this.data.timer.minute += 1,
+    wx.stopRecord()
+    wx.nextTick(() => {
+      manager.start({
+        lang: "zh_CN"
+      });
+      this.setData({
+        'timer.minute': 0,
         'timer.second': 0
-      }) : this.setData({
-        'timer.second': num
       })
-      if (this.data.timer.minute >= 5) {
-        clearInterval(this.timer)
-        this.setData({
-          recordStatus: 3
+      this.timer ? [clearInterval(this.timer), this.timer = null] : ''
+      this.timer = setInterval(() => {
+        let num = this.data.timer.second
+        num += 1
+        num > 60 ? this.setData({
+          'timer.minute': this.data.timer.minute += 1,
+          'timer.second': 0
+        }) : this.setData({
+          'timer.second': num
         })
-      }
-    }, 1000)
+        if (this.data.timer.minute >= 5) {
+          clearInterval(this.timer)
+          this.timer = null
+          this.setData({
+            recordStatus: 3
+          })
+        }
+      }, 1000)
+    })
   },
   playVoice() {
     if (!this.data.playRecord) {
@@ -726,7 +748,13 @@ Page({
     this.filePath = null
   },
   //用于数据统计
-  onHide() {},
+  onHide() {
+    this.getSystemInfo() ? this.setData({
+      recordStatus: 3
+    }) : ''
+    manager.stop();
+    this.timer ? [clearInterval(this.timer), this.timer = null] : ''
+  },
   obsUpload(medias, type, i, up) {
     let reqs = [];
     if (type) {
@@ -736,6 +764,7 @@ Page({
       });
       Promise.all(reqs)
         .then(res => {
+          console.log(res)
           if (res[0]) {
             i >= 0 && up ? this.setData({
               [`param.image[${i}]`]: res,

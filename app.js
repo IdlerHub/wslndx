@@ -1,58 +1,56 @@
 /*
  * @Date: 2019-05-28 09:50:08
- * @LastEditors: hxz
- * @LastEditTime: 2020-03-06 15:01:04
+ * @LastEditors: wjl
+ * @LastEditTime: 2020-07-30 09:34:25
  */
-import {
-  wxp
-} from "./utils/service";
-import {
-  uma
-} from "umtrack-wx";
+import { wxp } from "./utils/service";
+import { uma } from "umtrack-wx";
 /* 全局状态管理 */
 import store from "./store";
 // const vodwxsdk = require('vod-wx-sdk-v2')
 /* sse */
 const socket = require("data/socket.js");
 /* 小程序直播组件 */
-var livePlayer = requirePlugin('live-player-plugin')
+var livePlayer = requirePlugin("live-player-plugin");
 /* 接入bug平台 */
 var fundebug = require("fundebug-wxjs");
 fundebug.init({
   apikey: "b3b256c65b30a1b0eb26f8d9c2cd7855803498f0c667df934be2c72048af93d9",
   releaseStage: store.process,
-  monitorMethodCall: true /* 自定义函数的监控 */ ,
-  monitorMethodArguments: true /* 监控小程序中的函数调用的参数 */ ,
-  monitorHttpData: true /* 收集 HTTP 请求错误的 body  */ ,
+  monitorMethodCall: true /* 自定义函数的监控 */,
+  monitorMethodArguments: true /* 监控小程序中的函数调用的参数 */,
+  monitorHttpData: true /* 收集 HTTP 请求错误的 body  */,
   setSystemInfo: true,
   silentInject: true,
-  filters: [{
+  filters: [
+    {
       req: {
         url: /log\.aldwx\.com/,
-        method: /^GET$/
-      }
+        method: /^GET$/,
+      },
     },
     {
       req: {
         url: /recordFinish/,
-        method: /^POST$/
-      }
+        method: /^POST$/,
+      },
     },
     {
       req: {
         url: /lists/,
-        method: /^POST$/
-      }
+        method: /^POST$/,
+      },
     },
     {
-      error: /getHistory/
-    }, {
-      errMsg: / request:fail timeout | uploadFile:ok | request:fail | request:ok /
-    }
+      error: /getHistory/,
+    },
+    {
+      errMsg: / request:fail timeout | uploadFile:ok | request:fail | request:ok /,
+    },
   ],
   metaData: {
-    storeData: store.$state
-  }
+    storeData: store.$state,
+  },
 });
 //工具库
 var util = require("utils/util.js");
@@ -82,12 +80,13 @@ App({
   fundebug,
   livePlayer,
   umengConfig: {
-    appKey: store.process == "develop" ?
-      "5e4cad07eef38d3632042549" :
-      "5e4cd613e1367a268d56bfa2", //由友盟分配的APP_KEY
+    appKey:
+      store.process == "develop"
+        ? "5e4cad07eef38d3632042549"
+        : "5e4cd613e1367a268d56bfa2", //由友盟分配的APP_KEY
     useOpenid: false, // 是否使用openid进行统计，此项为false时将使用友盟+随机ID进行用户统计。使用openid来统计微信小程序的用户，会使统计的指标更为准确，对系统准确性要求高的应用推荐使用OpenID。
     autoGetOpenid: false, // 是否需要通过友盟后台获取openid，如若需要，请到友盟后台设置appId及secret
-    debug: false //是否打开调试模式
+    debug: false, //是否打开调试模式
   },
   /*埋点统计*/
   onLaunch: async function (opts) {
@@ -122,14 +121,21 @@ App({
           wx.setStorageSync("invite", opstObj.u); /* 邀请码记录 */
         }
       }
-      livePlayer.getShareParams()
-        .then(res => {
+      livePlayer
+        .getShareParams()
+        .then((res) => {
           // 开发者在跳转进入直播间页面时，页面路径上携带的自定义参数，这里传回给开发者
-          console.log('get custom params', res.custom_params)
-          res.custom_params ? [wx.setStorageSync("invite", res.custom_params.uid),this.globalData.shareObj = res.custom_params] : ''
-        }).catch(err => {
-          console.log('get share params', err)
+          console.log("get custom params", res.custom_params);
+          res.custom_params
+            ? [
+                wx.setStorageSync("invite", res.custom_params.uid),
+                (this.globalData.shareObj = res.custom_params),
+              ]
+            : "";
         })
+        .catch((err) => {
+          console.log("get share params", err);
+        });
     }
     let userInfo = wx.getStorageSync("userInfo") || {};
     let mpVersion = wx.getStorageSync("mpVersion");
@@ -152,15 +158,16 @@ App({
     }
     if (wxtype < 606) {
       wx.reLaunch({
-        url: "/pages/upwxpage/upwxpage"
+        url: "/pages/upwxpage/upwxpage",
       });
     } else if (!this.store.$state.userInfo.mobile) {
       wx.reLaunch({
-        url: "/pages/sign/sign"
+        url: "/pages/sign/sign",
       });
     } else if (this.globalData.shareObj.p) {
       wx.reLaunch({
-        url: "/pages/voteDetail/voteDetail?voteid=" + this.globalData.shareObj.o
+        url:
+          "/pages/voteDetail/voteDetail?voteid=" + this.globalData.shareObj.o,
       });
     }
   },
@@ -189,25 +196,32 @@ App({
           wx.setStorageSync("invite", opts.query.uid); /* 邀请码存储 */
         }
       }
-      livePlayer.getShareParams()
-      .then(res => {
-        // 开发者在跳转进入直播间页面时，页面路径上携带的自定义参数，这里传回给开发者
-        console.log('get custom params', res.custom_params)
-        res.custom_params ? [wx.setStorageSync("invite", res.custom_params.uid),this.globalData.shareObj = res.custom_params] : ''
-      }).catch(err => {
-        console.log('get share params', err)
-      })
+      livePlayer
+        .getShareParams()
+        .then((res) => {
+          // 开发者在跳转进入直播间页面时，页面路径上携带的自定义参数，这里传回给开发者
+          console.log("get custom params", res.custom_params);
+          res.custom_params
+            ? [
+                wx.setStorageSync("invite", res.custom_params.uid),
+                (this.globalData.shareObj = res.custom_params),
+              ]
+            : "";
+        })
+        .catch((err) => {
+          console.log("get share params", err);
+        });
       if (!this.store.$state.userInfo.mobile) {
         wx.reLaunch({
-          url: "/pages/sign/sign"
+          url: "/pages/sign/sign",
         });
       } else if (opts.type == "lottery") {
         wx.reLaunch({
-          url: "/pages/education/education?type=lottery&login=1"
+          url: "/pages/education/education?type=lottery&login=1",
         });
       } else if (opstObj.p) {
         wx.reLaunch({
-          url: "/pages/voteDetail/voteDetail?voteid=" + opstObj.o
+          url: "/pages/voteDetail/voteDetail?voteid=" + opstObj.o,
         });
       }
     }
@@ -229,7 +243,7 @@ App({
     fundebug.notifyError(err);
   },
   wxLogin: async function () {
-    await wxp.login({}).then(res => {
+    await wxp.login({}).then((res) => {
       if (res.code) {
         this.globalData.code = res.code;
         console.log("wxCode", res.code);
@@ -239,9 +253,9 @@ App({
     });
     await this.user
       .wxLoginCode({
-        code: this.globalData.code
+        code: this.globalData.code,
       })
-      .then(msg => {
+      .then((msg) => {
         if (msg.data.tempCode) {
           /* 新用户未注册 */
           console.log("tempCode", msg.data.tempCode);
@@ -260,17 +274,18 @@ App({
             for (let attr in this.globalData.query) {
               params.push(attr + "=" + this.globalData.query[attr]);
             }
-            this.globalData.shareObj.type == "lottery" ?
-              wx.reLaunch({
-                url: "/pages/education/education?type=lottery&login=1&id=" +
-                  this.globalData.lotteryId
-              }) :
-              wx.reLaunch({
-                url: this.globalData.path + "?" + params.join("&")
-              });
+            this.globalData.shareObj.type == "lottery"
+              ? wx.reLaunch({
+                  url:
+                    "/pages/education/education?type=lottery&login=1&id=" +
+                    this.globalData.lotteryId,
+                })
+              : wx.reLaunch({
+                  url: this.globalData.path + "?" + params.join("&"),
+                });
           } else {
             wx.reLaunch({
-              url: "/pages/index/index"
+              url: "/pages/index/index",
             });
           }
         }
@@ -282,14 +297,14 @@ App({
     if (sign.time !== new Date().toDateString()) {
       sign = {
         status: false,
-        count: 0
+        count: 0,
       };
     }
     this.store.setState({
       visitedNum: wx.getStorageSync("visitedNum") || [],
       userInfo: wx.getStorageSync("userInfo") || {},
       authKey: wx.getStorageSync("authKey") || "",
-      signStatus: sign
+      signStatus: sign,
     });
     this.getSets();
   },
@@ -302,7 +317,7 @@ App({
       data.school = areaArray[2];
     }
     this.store.setState({
-      userInfo: data
+      userInfo: data,
     });
     wx.setStorageSync("userInfo", data);
     if (data.id) {
@@ -315,7 +330,7 @@ App({
   /* 更新AuthKey */
   setAuthKey: function (data) {
     this.store.setState({
-      authKey: data
+      authKey: data,
     });
     wx.setStorageSync("authKey", data);
   },
@@ -323,37 +338,37 @@ App({
   setShare: function (data) {
     this.store.setState({
       shareImgurl: data.data.img_url,
-      shareTitle: data.data.title
+      shareTitle: data.data.title,
     });
   },
   /* 更新store中的用户授权  */
   getSets: function () {
     let self = this;
     wx.getSetting({
-      success: res => {
+      success: (res) => {
         if (res.errMsg == "getSetting:ok") {
           let auth = res.authSetting["scope.userInfo"];
           self.store.setState({
             authUserInfo: auth || false,
-            baseInfo: !auth && self.store.$state.visitedNum.length > 10
+            baseInfo: !auth && self.store.$state.visitedNum.length > 10,
           });
         }
         let record = res.authSetting["scope.record"];
         self.store.setState({
-          authRecord: record || false
+          authRecord: record || false,
         });
-      }
+      },
     });
   },
   /* 更新store中的用户免费查看的视频数目 */
   addVisitedNum: function (id) {
-    if (!id) return
+    if (!id) return;
     let arr = this.store.$state.visitedNum;
     if (!this.store.$state.authUserInfo && arr.indexOf(id) == -1) {
       arr.push(id);
       this.store.setState({
         visitedNum: arr,
-        baseInfo: arr.length > 10
+        baseInfo: arr.length > 10,
       });
       wx.setStorageSync("visitedNum", arr);
     }
@@ -367,25 +382,25 @@ App({
     let param = {
       userInfo: JSON.stringify(e.detail.userInfo),
       encryptedData: e.detail.encryptedData,
-      iv: e.detail.iv
+      iv: e.detail.iv,
     };
-    this.user.profile(param).then(msg => {
+    this.user.profile(param).then((msg) => {
       this.setUser(msg.data.userInfo);
     });
   },
 
   playVedio(type) {
-    type == "wifi" ?
-      "" :
-      this.store.setState({
-        flow: true
-      });
+    type == "wifi"
+      ? ""
+      : this.store.setState({
+          flow: true,
+        });
   },
   /* 更新签到信息 */
   setSignIn(data, bl) {
     /* 每天只显示一次签到弹窗 */
     this.store.setState({
-      signStatus: data
+      signStatus: data,
     });
 
     !!bl &&
@@ -394,21 +409,21 @@ App({
         data: {
           time: new Date().toDateString(),
           status: data.status,
-          count: data.count
-        }
+          count: data.count,
+        },
       });
   },
   // 获取用户openid
   getUserOpenData() {
-    this.user.getUserOpenData().then(res => {
+    this.user.getUserOpenData().then((res) => {
       this.store.setState({
-        openId: res.data.openid
-      })
+        openId: res.data.openid,
+      });
       wx.setStorage({
         data: res.data.openid,
-        key: 'openId',
-      })
-    })
+        key: "openId",
+      });
+    });
   },
   /* 版本检测 */
   checkVersion: function () {
@@ -427,14 +442,14 @@ App({
                   // 新的版本已经下载好，调用 applyUpdate 应用新版本并重启
                   updateManager.applyUpdate();
                 }
-              }
+              },
             });
           });
           updateManager.onUpdateFailed(function () {
             // 新的版本下载失败
             wx.showModal({
               title: "已经有新版本了哟~",
-              content: "新版本已经上线啦~，请您删除当前小程序，重新搜索打开哟~"
+              content: "新版本已经上线啦~，请您删除当前小程序，重新搜索打开哟~",
             });
           });
         }
@@ -442,47 +457,45 @@ App({
     }
   },
   bokemessage(res) {
-    let {
-      num = 0, avatar
-    } = JSON.parse(res.data).data;
+    let { num = 0, avatar } = JSON.parse(res.data).data;
     this.store.setState({
       unRead: num,
       surPass: num > 99,
-      lastMan: avatar
+      lastMan: avatar,
     });
   },
   prizemessage(res) {
     let phoneList = JSON.parse(res.data);
     this.store.setState({
-      phoneList: phoneList.data
+      phoneList: phoneList.data,
     });
   },
   onPageNotFound() {
     wx.reLaunch({
-      url: "/pages/index/index"
+      url: "/pages/index/index",
     });
   },
   // 获取新手指引
   getGuide() {
     if (this.store.$state.userInfo.mobile) {
-      return this.user.guideRecord().then(res => {
+      return this.user.guideRecord().then((res) => {
         let newGuide = res.data;
         this.store.setState({
-          newGuide
+          newGuide,
         });
       });
     }
   },
   // 获取任务状态
   getTaskStatus() {
-    this.user.getNewTaskStatus().then(res => {
+    this.user.getNewTaskStatus().then((res) => {
       this.store.setState({
-        taskStatus: res.data
+        taskStatus: res.data,
       });
     });
-    this.user.getDayTaskStatus().then(res => {
+    this.user.getDayTaskStatus().then((res) => {
       this.store.setState({
-        dayStatus: res.data
+        dayStatus: res.data,
       });
     });
   },
@@ -496,30 +509,31 @@ App({
             wx.showToast({
               title: "内容复制成功",
               icon: "none",
-              duration: 3000
+              duration: 3000,
             });
-          }
+          },
         });
-      }
+      },
     });
   },
   withdrawShare(ops) {
-    wx.uma.trackEvent('totalShare', {
-      'shareName': '我的邀请'
+    wx.uma.trackEvent("totalShare", {
+      shareName: "我的邀请",
     });
     return {
-      title: '一起来网上老年大学学习',
-      path: "/pages/index/index?uid=" +
+      title: "一起来网上老年大学学习",
+      path:
+        "/pages/index/index?uid=" +
         this.store.$state.userInfo.id +
         "&type=invite&activity=1",
-      imageUrl: "https://hwcdn.jinlingkeji.cn/images/dev/withdrawShareImg2.png"
+      imageUrl: "https://hwcdn.jinlingkeji.cn/images/dev/withdrawShareImg2.png",
     };
   },
   getSecureToken() {
     setTimeout(() => {
-      vote.getSecureToken().then(res => {
+      vote.getSecureToken().then((res) => {
         this.store.setState({
-          security: res.data.credential
+          security: res.data.credential,
         });
       });
     }, 1000);
@@ -542,13 +556,13 @@ App({
     currentTab: 0,
     detail: {
       id: 0,
-      likestatus: 0
+      likestatus: 0,
     },
     phoneList: [],
     lottery: "",
     shareObj: {
-      type: 0
+      type: 0,
     },
-    uma
-  }
+    uma,
+  },
 });

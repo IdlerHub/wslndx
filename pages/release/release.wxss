@@ -219,11 +219,13 @@ textarea {
 }
 
 .recordBox .iconDel {
+  display: block;
   width: 27rpx;
   height: 27rpx;
   position: absolute;
-  top:31rpx;
-  right: 29rpx;
+  top:-1rpx;
+  right: -1rpx;
+  padding: 30rpx;
 }
 
 .recordBox .recordStanby {

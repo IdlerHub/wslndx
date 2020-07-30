@@ -1,7 +1,0 @@
-{
-  "usingComponents": {
-    "voteCard": "/components/voteCard/voteCard"
-  },
-  "navigationBarTitleText": "同心抗疫 老年大学在行动",
-  "enablePullDownRefresh": true
-}
