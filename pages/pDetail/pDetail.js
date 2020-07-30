@@ -32,8 +32,18 @@ Page({
     voiceplayimg: "https://hwcdn.jinlingkeji.cn/images/pro/triangle.png",
     replyshow: false,
     showintegral: false,
-    showSheet: false
+    showSheet: false,
     /* rect: wx.getMenuButtonBoundingClientRect() */
+    playVoice: {
+      status: 0,
+      duration: 0,
+      voiceplayimg: 'https://hwcdn.jinlingkeji.cn/images/pro/triangle.png',
+      playTimer: {
+        minute: 0,
+        second: 0
+      },
+      id: 0
+    }
   },
   pageName: "博客详情（秀风采正文）",
   onLoad(options) {
@@ -84,6 +94,10 @@ Page({
     wx.onMemoryWarning(function() {
       console.log("内存不足");
     });
+    innerAudioContext.stop()
+  },
+  onHide() {
+    innerAudioContext.stop()
   },
   setHeight() {
     let that = this;
@@ -135,6 +149,10 @@ Page({
         detail.auditing =
           new Date().getTime() - new Date(detail.createtime * 1000) < 7000;
         detail.pause = true;
+        detail.timer = {
+          minute: parseInt(detail.duration / 60),
+          second: detail.duration - (parseInt(detail.duration / 60) * 60)
+        }
         this.setData({
           detail: detail,
           "nav[0].num": app.util.tow(detail.comments) || detail.comments,
@@ -994,6 +1012,7 @@ Page({
       voicetextstatus: "正在语音转文字…"
     });
     this.voicetime();
+    innerAudioContext.stop()
     manager.start({
       lang: "zh_CN"
     });
@@ -1265,5 +1284,55 @@ Page({
     this.setData({
       showSheet: false
     });
+  },
+  initRecord() {
+    innerAudioContext.onPlay(() => {
+      this.playTiemr ? [clearInterval(this.playTiemr), this.playTiemr= null ] : ''
+      this.playTiemr = setInterval(() => {
+        if (this.data.playVoice.playTiemr.minute == this.itemTimer.minute && this.data.playVoice.playTiemr.second == this.itemTimer.second) {
+          innerAudioContext.stop()
+          return
+        }
+        let num = this.data.playVoice.playTiemr.second
+        num += 1
+        num > 60 ? this.setData({
+          'playVoice.playTiemr.minute': this.data.playVoice.playTiemr.minute += 1,
+          'playVoice.playTiemr.second': 0
+        }) : this.setData({
+          'playVoice.playTiemr.second': num
+        })
+      }, 1000)
+    })
+
+    innerAudioContext.onStop(() => {
+      this.playTiemr ? [clearInterval(this.playTiemr), this.playTiemr= null]  : ''
+      this.setData({
+        'playVoice.status': 0,
+        'playVoice.id': 0,
+      })
+    })
+  },
+  checkRecord(e) {
+    let duration = e.currentTarget.dataset.duration,
+      recordUrl = e.currentTarget.dataset.record,
+      id = e.currentTarget.dataset.id
+    this.itemTimer = e.currentTarget.dataset.timer
+    if (this.data.playVoice.status && recordUrl == this.recordUrl) {
+      this.setData({
+        'playVoice.status': 0,
+      })
+      innerAudioContext.stop();
+    } else {
+      this.recordUrl = recordUrl
+
+      this.setData({
+        'playVoice.status': 1,
+        'playVoice.id': id,
+        'playVoice.playTiemr.minute': 0,
+        'playVoice.playTiemr.second': 0
+      })
+      innerAudioContext.src = recordUrl;
+      innerAudioContext.play();
+    }
   }
 });

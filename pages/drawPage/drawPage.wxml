@@ -40,7 +40,7 @@
           </image>
           <image class="frame_action-img" src="/images/drawAction3.png"
             wx:if="{{lottery_count == 0.5 || lottery_count == 1.5 }}"></image>
-          <image class="frame_action-img" src="/images/drawone.png" wx:if="{{lottery_count == 1 }}"
+          <image class="frame_action-img" src="{{$state.imgHost}}/drawone.png" wx:if="{{lottery_count == 1 }}"
             style="{{clickLuck != '' ? 'animation: action 0.5s infinite;' : ''  }}"></image>
           <image class="frame_action-img" src="{{$state.imgHost}}/drawnone.png" wx:if="{{lottery_count >= 2}}"></image>
         </view>

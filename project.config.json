@@ -37,7 +37,7 @@
     ]
   },
   "setting": {
-    "urlCheck": false,
+    "urlCheck": true,
     "es6": true,
     "enhance": true,
     "postcss": true,
@@ -163,8 +163,8 @@
         },
         {
           "id": 9,
-          "name": "pages/release/release",
-          "pathName": "pages/release/release",
+          "name": "pages/post/post",
+          "pathName": "pages/post/post",
           "query": "id=102",
           "scene": null
         },

@@ -288,6 +288,7 @@ Page({
           },
           // 上传错误回调，处理异常
           error: function (result) {
+            console.log(result)
             wx.showToast({
               title: '上传失败'
             })
@@ -654,7 +655,7 @@ Page({
               recordStatus: type
             })
             recorderManager.start({
-              duration: 300000,
+              duration: 600000,
               format: 'mp3'
             })
           } else {  

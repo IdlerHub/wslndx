@@ -14,6 +14,10 @@ Component({
     recordUrl: {
       type: String,
       value: ''
+    },
+    playDuration: {
+      type: Number,
+      value: 0
     }
   },
   observers:{
@@ -29,6 +33,10 @@ Component({
       minute: 0
     },
     playTiemr: {
+      second: 0,
+      minute: 0
+    },
+    interTimer: {
       second: 0,
       minute: 0
     },
@@ -70,9 +78,10 @@ Component({
           'playTiemr.minute': 0,
           'playTiemr.second': 0
         })
-        this.playTiemr ? clearInterval(this.playTiemr) : ''
+        this.playTiemr ? [clearInterval(this.playTiemr), this.playTiemr= null ] : ''
         this.playTiemr = setInterval(() => {
-          if (this.data.playTiemr.minute == this.data.timer.minute && this.data.playTiemr.second == this.data.timer.second) {
+          console.log(this.data.playTiemr.minute, this.data.interTimer.minute , this.data.playTiemr.second, this.data.interTimer.second)
+          if (this.data.playTiemr.minute == this.data.interTimer.minute && this.data.playTiemr.second == this.data.interTimer.second) {
             innerAudioContext.stop()
             return
           }
@@ -88,7 +97,7 @@ Component({
       })
   
       innerAudioContext.onStop(() => {
-        this.playTiemr ? clearInterval(this.playTiemr) : ''
+        this.playTiemr ? [clearInterval(this.playTiemr), this.playTiemr= null]  : ''
         this.setData({
           playRecord: 0,
           voiceplayimg: 'https://hwcdn.jinlingkeji.cn/images/pro/triangle.png'
@@ -103,10 +112,14 @@ Component({
     },
     playVoice() {
       if (!this.data.playRecord) {
+        console.log(324234234234)
         this.setData({
           playRecord: 1,
-          voiceplayimg: 'https://hwcdn.jinlingkeji.cn/images/pro/voicepause.png'
+          voiceplayimg: 'https://hwcdn.jinlingkeji.cn/images/pro/voicepause.png',
+          'interTimer.minute': parseInt(this.data.playDuration/60),
+          'interTimer.second': this.data.playDuration - (parseInt(this.data.playDuration/60) * 60)
         })
+        console.log(this.data.interTimer, this.data.playDuration, this.data.recordUrl)
         innerAudioContext.src = this.data.recordUrl;
         innerAudioContext.play();
       } else {
