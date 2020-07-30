@@ -21,8 +21,8 @@
             </view>
         </view>
         <view class="voiceBox" wx:if="{{param.audio}}">
-            <view class="voiceBoxRight">
-                <image src="{{voiceplayimg}}" bindtap="playVoice"></image>
+            <view class="voiceBoxRight" bindtap="playVoice">
+                <image src="{{voiceplayimg}}"></image>
                 <viwe class="centerImg {{ playRecord ? 'centerActive' : ''}}"></viwe>
                 <view class="timer" wx:if="{{!playRecord}}">0{{timer.minute}}:{{timer.second > 9 ? timer.second : '0' + timer.second}}</view>
                 <view class="timer" wx:else>0{{playTiemr.minute}}:{{playTiemr.second > 9 ? playTiemr.second : '0' + playTiemr.second}}</view>

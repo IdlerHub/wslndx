@@ -69,7 +69,7 @@ Page({
     }
   },
   onShow() {
-    recorderManager.stop()
+    recorderManager.stop() && manager.stop()
     this.getRecordAuth();
     this.initRecord();
     if (this.data.$state.releaseParam != null) {
@@ -583,6 +583,10 @@ Page({
       // 获取音频文件临时地址
       this.filePath = res.tempFilePath;
       let duration = res.duration;
+        this.setData({
+          recordStatus: 3
+        })
+        this.timer ? [clearInterval(this.timer), this.timer = null] : ''
       console.log(res.tempFilePath, res.duration)
     };
     // 识别错误事件
@@ -678,10 +682,6 @@ Page({
           })
           return
         }
-        this.setData({
-          recordStatus: type
-        })
-        this.timer ? [clearInterval(this.timer), this.timer = null] : ''
         break;
     }
   },
@@ -689,7 +689,8 @@ Page({
     wx.stopRecord()
     wx.nextTick(() => {
       manager.start({
-        lang: "zh_CN"
+        lang: "zh_CN",
+        duration: "30000"
       });
       this.setData({
         'timer.minute': 0,
