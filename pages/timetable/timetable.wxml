@@ -29,7 +29,7 @@
   <view wx:for="{{nav}}" id="{{item.index}}" wx:key="index" class="itemBox" wx:if="{{list.length > 0}}">
     <view class="contariner">
       <text id="text{{item.id}}" class="itemDay">{{item.txt}}</text>
-      <navigator id="item{{item.id}}" class="item" wx:for="{{2}}" wx:key="index" hover-class="none" url="/pages/tableDetail/tableDetail"
+      <navigator id="item{{item.id}}" class="item" wx:for="{{5}}" wx:key="index" hover-class="none" url="/pages/tableDetail/tableDetail"
         open-type="navigate">
         <view class="imgBox">
           <image

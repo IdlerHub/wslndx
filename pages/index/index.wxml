@@ -162,7 +162,7 @@
         </swiper>
         <!-- 农场和电台 -->
         <scroll-view class="jumpout" scroll-x enable-flex>
-          <navigator class="jumpoutBox" url="/pages/liveList/liveList" hover-class="none">
+          <navigator class="jumpoutBox" url="/pages/timetable/timetable" hover-class="none">
             <image class="img" mode="widthFix" src="{{  !recommend ? '' : $state.imgHost + '/liveBtn.png' }}">
             </image>
           </navigator>

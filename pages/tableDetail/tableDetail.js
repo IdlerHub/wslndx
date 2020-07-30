@@ -11,16 +11,16 @@ Page({
   },
   timer: '',
   onLoad: function (options) {
-
-  },
-  onShow: function () {
-    this.leftTimer(1596094296)
+    this.leftTimer(1596020126);
     this.timer = setInterval(() => {
-      this.leftTimer(1596094296)
+      this.leftTimer(1596020126);
     }, 1000);
   },
+  onShow: function () {
+    
+  },
   onUnload() {
-    clearInterval(this.timer)
+    clearInterval(this.timer);
   },
   onPullDownRefresh: function () {
 
@@ -38,6 +38,9 @@ Page({
     hours = this.checkTime(hours);
     minutes = this.checkTime(minutes);
     seconds = this.checkTime(seconds);
+    let flag =
+      days == "0" && seconds == "00" && hours == "00" && minutes == "00";
+    if (flag) clearInterval(this.timer);
     this.setData({
       days,
       hours,
@@ -46,10 +49,10 @@ Page({
     })
   },
   checkTime(i) {
-    if (i < 10) {
-      i = "0" + i;
+    if(i < 0) {
+      i = 0
     }
-    return i;
+    return i < 10 ? '0' + i : i
   },
   collect() {
     if (this.data.colleted) {

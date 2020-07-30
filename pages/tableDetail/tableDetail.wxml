@@ -48,11 +48,11 @@
       <image src="../../images/share-wx.png"></image>
       <text>邀请</text>
     </view>
-    <view class="leftBox" bindtap="collect">
+    <!-- <view class="leftBox" bindtap="collect">
       <view class="center"></view>
       <image src="{{colleted ? '../../images/heart-red.png' : '../../images/heart-ash.png'}}"></image>
       <text>{{colleted ? '已收藏' : '收藏'}}</text>
-    </view>
+    </view> -->
   </view>
   <view class="right" bindtap="rightNow">
     立即学习
