@@ -1,10 +1,5 @@
 //获取应用实例
 const VodUploader = require('../../vod/vodsdk.js');
-// 获取**全局唯一**的语音识别管理器**recordRecoManager**
-// const recorderManager = wx.getRecorderManager()
-const plugin = requirePlugin("WechatSI");
-// 获取**全局唯一**的语音识别管理器**recordRecoManager**
-const manager = plugin.getRecordRecognitionManager();
 const recorderManager = wx.getRecorderManager()
 const innerAudioContext = wx.createInnerAudioContext();
 import OBS from "../../OBS/OBSUploadFile.js";
@@ -69,7 +64,7 @@ Page({
     }
   },
   onShow() {
-    recorderManager.stop() && manager.stop()
+    recorderManager.stop()
     this.getRecordAuth();
     this.initRecord();
     if (this.data.$state.releaseParam != null) {
@@ -576,11 +571,11 @@ Page({
    * 初始化语音识别回调 && 语音播放
    */
   initRecord() {
-    //有新的识别内容返回，则会调用此事件
-    manager.onRecognize = res => {};
-    // 识别结束事件
-    manager.onStop = res => {
-      // 获取音频文件临时地址
+    recorderManager.onStart(() => {
+      this.interval()
+    })
+
+    recorderManager.onStop(res => {
       this.filePath = res.tempFilePath;
       let duration = res.duration;
         this.setData({
@@ -588,9 +583,7 @@ Page({
         })
         this.timer ? [clearInterval(this.timer), this.timer = null] : ''
       console.log(res.tempFilePath, res.duration)
-    };
-    // 识别错误事件
-    manager.onError = res => {};
+    })
 
     innerAudioContext.onPlay(() => {
       this.setData({
@@ -650,18 +643,18 @@ Page({
       }
       case '2':
          if (this.data.$state.authRecord) {
-           console.log(this.getSystemInfo())
           if(this.getSystemInfo()) {
             that.setData({
               recordStatus: type
             })
-            this.interval()
+            recorderManager.start({
+              duration: 300000,
+              format: 'mp3'
+            })
           } else {  
-            manager.start({
-              lang: "zh_CN"
-            });
+            recorderManager.start()
             wx.nextTick(() =>{
-              manager.stop();
+              recorderManager.stop()
             })
           }
         } else {
@@ -669,7 +662,7 @@ Page({
         }
         break;
       case '3':
-        manager.stop();
+        recorderManager.stop()
         if(!this.data.timer.minute && !this.data.timer.second){
           wx.showToast({
             title: '录音时间过短',
@@ -686,12 +679,6 @@ Page({
     }
   },
   interval() {
-    wx.stopRecord()
-    wx.nextTick(() => {
-      manager.start({
-        lang: "zh_CN",
-        duration: "30000"
-      });
       this.setData({
         'timer.minute': 0,
         'timer.second': 0
@@ -714,7 +701,6 @@ Page({
           })
         }
       }, 1000)
-    })
   },
   playVoice() {
     if (!this.data.playRecord) {
@@ -766,7 +752,7 @@ Page({
     this.getSystemInfo() ? this.data.recordStatus == 2 && this.setData({
       recordStatus: 3
     }) : ''
-    manager.stop();
+    recorderManager.stop()
     this.timer ? [clearInterval(this.timer), this.timer = null] : ''
   },
   obsUpload(medias, type, i, up) {
