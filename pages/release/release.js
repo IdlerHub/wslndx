@@ -98,6 +98,10 @@ Page({
     wx.setKeepScreenOn({
       keepScreenOn: false
     })
+    innerAudioContext.stop()
+    recorderManager.stop()
+    this.timer ? [clearInterval(this.timer), this.timer = null] : ''
+    this.playTiemr ? [clearInterval(this.playTiemr), this.playTiemr = null] : ''
   },
   input(e) {
     this.setData({
@@ -626,10 +630,12 @@ Page({
     })
 
     innerAudioContext.onStop(() => {
-      this.playTiemr ? clearInterval(this.playTiemr) : ''
+      this.playTiemr ? [clearInterval(this.playTiemr), this.playTiemr = null] : ''
       this.setData({
         playRecord: 0,
-        voiceplayimg: 'https://hwcdn.jinlingkeji.cn/images/pro/triangle.png'
+        voiceplayimg: 'https://hwcdn.jinlingkeji.cn/images/pro/triangle.png',
+        'playTiemr.minute':0,
+        'playTiemr.second': 0
       })
     })
   },
@@ -707,6 +713,7 @@ Page({
         this.setData({
           recordStatus: 3
         })
+        recorderManager.stop()
       }
     }, 1000)
   },
@@ -761,7 +768,13 @@ Page({
       recordStatus: 3
     }) : ''
     recorderManager.stop()
+    innerAudioContext.stop()
+    this.setData({
+      playRecord: 0,
+      voiceplayimg: 'https://hwcdn.jinlingkeji.cn/images/pro/triangle.png'
+    })
     this.timer ? [clearInterval(this.timer), this.timer = null] : ''
+    this.playTiemr ? [clearInterval(this.playTiemr), this.playTiemr = null] : ''
   },
   obsUpload(medias, type, i, up) {
     let reqs = [];
