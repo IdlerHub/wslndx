@@ -34,7 +34,7 @@ Page({
       0: [],
       1: [],
       2:[]
-    }
+    },
   },
   pageName: "秀风采页",
   stopTap:{
@@ -211,6 +211,7 @@ Page({
       };
     }
   },
+
   pageInit() {
     this.param = [
       { page: 1, pageSize: 10, is_follow: 0 },

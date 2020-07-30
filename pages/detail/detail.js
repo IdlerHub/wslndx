@@ -6,6 +6,7 @@ const plugin = requirePlugin("WechatSI");
 const manager = plugin.getRecordRecognitionManager();
 const innerAudioContext = wx.createInnerAudioContext();
 var htmlparser = require("../../utils/htmlparser.js");
+import OBS from "../../OBS/OBSUploadFile.js";
 Page({
   data: {
     sort: 0,
@@ -1321,6 +1322,7 @@ Page({
         filePath,
         voiceActon: false
       });
+      console.log(filePath)
     };
 
     // 识别错误事件
