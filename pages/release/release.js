@@ -621,9 +621,8 @@ Page({
       remake = e.currentTarget.dataset.remake,
       that = this
     switch (type) {
-      case '2':
-        if (remake) {
-          wx.showModal({
+      case '1': {
+         wx.showModal({
             content: '重录会删除这条录音，确定重录',
             confirmColor: '#DF2020',
             success(res) {
@@ -635,7 +634,10 @@ Page({
               }
             }
           })
-        } else if (this.data.$state.authRecord) {
+          break;
+      }
+      case '2':
+         if (this.data.$state.authRecord) {
           that.setData({
             recordStatus: type
           })

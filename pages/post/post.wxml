@@ -1,117 +1,117 @@
 <wxs module="fn">
 	module.exports = {
 	search: function(str) {
-		return str.search('gif');
-		}
+	return str.search('gif');
+	}
 	}
 </wxs>
 <template name="listitem">
-  <view class="item">
-    <view class="top" catchtap="navigate" data-id="{{ item.id }}">
-      <view class="left">
-        <view class="avatarUrl"
-          style="border:{{item.is_cert ? '2rpx solid rgba(253,169,0,1);' :''}}">
-          <image mode="aspectFill" src="{{ item.avatar }}" data-item="{{ item }}"
-            catchtap="toUser" lazy-load></image>
-          <image class="fs" src="/images/approve.png" wx:if="{{item.is_cert}}"></image>
-        </view>
-        <view class="text">
-          <view class="nickName line">
-            {{ item.nickname }}
-          </view>
-          <text class="date">{{ item.createtimes }}</text>
-          <text wx:if="{{ item.university_name }}"
-            class="school">{{ item.university_name }}</text>
-        </view>
-      </view>
-      <view class="right">
-        {{list}}
-        <view class="attension" wx:if="{{!item.is_follow && item.uid != $state.userInfo.id}}" data-index="{{index}}"
-          data-userid="{{item.uid}}" data-page="{{page}}" data-name="{{item.nickname}}" catchtap="attention">关注</view>
-        <view class="collect" catchtap="collect" data-id="{{item.id}}"
-          data-status="{{item.collectstatus}}" data-index="{{index}}" data-page="{{page}}" data-userid="{{item.uid}}"
-          data-follow="{{item.is_follow}}" data-name="{{item.nickname}}">...</view>
-      </view>
-    </view>
-    <view catchtap="navigate" data-id="{{ item.id }}">
-      <rich-text wx:if="{{ item.content }}" class="name" nodes="{{ item.content }}"></rich-text>
-      <view class="content" wx:if="{{ item.images.length > 0 }}">
-        <view class="img one" wx:if="{{ item.images.length == 1 }}">
-          <image mode="widthFix" wx:for="{{ item.images }}" wx:for-item="items" wx:key="index"
-            src="{{ fn.search(item.images[0]) > 0 ?  item.images : item.image_compress + '/resize,p_50' }}"
-            data-urls="{{ item.images }}" data-current="{{ items }}" data-index="{{ index }}"
-            catchtap="previewImage" lazy-load></image>
-        </view>
-        <view class="img three" wx:if="{{ item.images.length > 1 }}">
-          <image mode="aspectFill" wx:for="{{ item.images }}" wx:for-item="items" wx:key="index"
-            src="{{ fn.search(item.images[index]) > 0 ? item.images[index] : item.image_compress[index] + '/resize,m_fixed,w_216,h_216' }}"
-            data-urls="{{ item.images }}" data-current="{{ items }}" data-index="{{ index }}"
-            catchtap="previewImage" lazy-load></image>
-        </view>
-      </view>
-      <!-- wx:if="{{ item.url }}" -->
-      <view class="content"
-        wx:if="{{ item.check_status == 1 || item.check_status == 2 || item.check_status == 0 }}">
-        <view class="bg">
-          <image mode="aspectFill"
-            src="{{ item.check_status == 0 ?  $state.imgHost + '/tip.jpg' : item.check_status == 2 ? $state.imgHost + '/sensitivity.png' : item.image }}"
-            class="poster" lazy-load></image>
-          <image mode="aspectFill" src="{{ $state.imgHost }}/play-hl.png" class="play" lazy-load>
-          </image>
-        </view>
-      </view>
-    </view>
-    <view class="likeComment" wx:if="{{ item.like_avatar_list[0] || item.last_comment.nickname}}">
-      <view class="likesavatar"  wx:if="{{item.like_avatar_list[0] && item.likes!= 0 }}" style="margin-bottom: {{ item.last_comment.nickname ? '' : '20rpx'}};">
-        <view class="likesLeft">
-          <image wx:for="{{item.like_avatar_list}}" wx:for-item="linkeItem" wx:for-index="likeIndex" wx:key="likeIndex" src="{{linkeItem}}"></image>
-        </view>
-      </view>
-      <view class="lastComment" wx:if="{{item.last_comment.nickname}}" catchtap="navigate" data-id="{{ item.id }}">
-        <view class="lastContet">
-          <text>{{item.last_comment.nickname}}: </text>
-          <rich-text nodes="<div style='overflow:hidden;white-space:nowrap;text-overflow:ellipsis;'>{{ item.last_comment.content }} </div>"></rich-text>
-        </view>
-      </view>
-    </view>
-    <navigator wx:if="{{ item.fs_title }}" url="../cDetail/cDetail?id={{ item.fs_id }}"
-      hover-class="none" open-type="navigate" class="label" style="margin: {{ !item.like_avatar_list[0] && !item.last_comment.nickname ? '30rpx 30rpx 0 30rpx' : '0 30rpx 20rpx 30rpx'}};"> #{{ item.fs_title }}精选</navigator>
-    <view class="btn" style="margin-top:{{!item.like_avatar_list[0] && !item.last_comment.nickname ? '30rpx' : ''}}">
-      <!-- 点赞 -->
-      <formCode bind:handler="praise" class="item" data-place="{{page}}" data-index="{{ index }}" data-type="true"
-        data-id="{{item.id}}" data-uid="{{item.uid}}">
-        <view class="container-sub">
-          <view
-            class="praise  {{ item.likestatus ? 'end' : '' }} {{ item.praising ? 'ani' : '' }}"
-            data-page="{{page}}" data-index="{{ index }}" data-type="true" bindanimationend="aniend"
-            data-id="{{item.id}}"></view>
-          <text class="text">{{ item.likes != 0 ? item.lw || item.likes : '点赞' }} </text>
-        </view>
-      </formCode>
-      <text class="division"></text>
-      <!-- 评论 -->
-      <view hover-class="none" class="item" bindtap="handleRelse"
-        data-status="{{ $state.userInfo.status }}" data-id="{{ item.id }}" data-type="reply">
-        <formCode>
-          <view class="container-sub">
-            <icon class="iconfont icon-comment"></icon>
-            <text class="text">{{ item.comments != 0 ?  item.cw || item.comments : '评论'}}</text>
-          </view>
-        </formCode>
-      </view>
-      <text class="division"></text>
-      <button class="share item" open-type="share" data-index="{{ index }}" data-page="{{page}}" hover-class="btn-hover"
-        wx:if="{{ item.check_status != 0 && item.check_status != 2}}">
-        <icon class="iconfont icon-fenxiang"></icon>
-        <text class="text">{{ item.forward != 0 ? item.fw || item.forward : '分享'}}</text>
-      </button>
-      <button class="share item" bindtap="unShare"
-        wx:if="{{ item.check_status == 0 || item.check_status == 2}}">
-        <icon class="iconfont icon-fenxiang"></icon>
-        <text class="text">{{ item.forward != 0 ? item.fw || item.forward : '分享' }}</text>
-      </button>
-    </view>
-  </view>
+	<view class="item">
+		<view class="top" catchtap="navigate" data-id="{{ item.id }}">
+			<view class="left">
+				<view class="avatarUrl" style="border:{{item.is_cert ? '2rpx solid rgba(253,169,0,1);' :''}}">
+					<image mode="aspectFill" src="{{ item.avatar }}" data-item="{{ item }}" catchtap="toUser" lazy-load></image>
+					<image class="fs" src="/images/approve.png" wx:if="{{item.is_cert}}"></image>
+				</view>
+				<view class="text">
+					<view class="nickName line">
+						{{ item.nickname }}
+					</view>
+					<text class="date">{{ item.createtimes }}</text>
+					<text wx:if="{{ item.university_name }}" class="school">{{ item.university_name }}</text>
+				</view>
+			</view>
+			<view class="right">
+				{{list}}
+				<view class="attension" wx:if="{{!item.is_follow && item.uid != $state.userInfo.id}}" data-index="{{index}}"
+					data-userid="{{item.uid}}" data-page="{{page}}" data-name="{{item.nickname}}" catchtap="attention">关注</view>
+				<view class="collect" catchtap="collect" data-id="{{item.id}}" data-status="{{item.collectstatus}}"
+					data-index="{{index}}" data-page="{{page}}" data-userid="{{item.uid}}" data-follow="{{item.is_follow}}"
+					data-name="{{item.nickname}}">...</view>
+			</view>
+		</view>
+		<view catchtap="navigate" data-id="{{ item.id }}">
+			<rich-text wx:if="{{ item.content }}" class="name" nodes="{{ item.content }}"></rich-text>
+			<view class="content" wx:if="{{ item.images.length > 0 }}">
+				<view class="img one" wx:if="{{ item.images.length == 1 }}">
+					<image mode="widthFix" wx:for="{{ item.images }}" wx:for-item="items" wx:key="index"
+						src="{{ fn.search(item.images[0]) > 0 ?  item.images : item.image_compress + '/resize,p_50' }}"
+						data-urls="{{ item.images }}" data-current="{{ items }}" data-index="{{ index }}" catchtap="previewImage"
+						lazy-load></image>
+				</view>
+				<view class="img three" wx:if="{{ item.images.length > 1 }}">
+					<image mode="aspectFill" wx:for="{{ item.images }}" wx:for-item="items" wx:key="index"
+						src="{{ fn.search(item.images[index]) > 0 ? item.images[index] : item.image_compress[index] + '/resize,m_fixed,w_216,h_216' }}"
+						data-urls="{{ item.images }}" data-current="{{ items }}" data-index="{{ index }}" catchtap="previewImage"
+						lazy-load></image>
+				</view>
+			</view>
+			<!-- wx:if="{{ item.url }}" -->
+			<view class="content" wx:if="{{ item.check_status == 1 || item.check_status == 2 || item.check_status == 0 }}">
+				<view class="bg">
+					<image mode="aspectFill"
+						src="{{ item.check_status == 0 ?  $state.imgHost + '/tip.jpg' : item.check_status == 2 ? $state.imgHost + '/sensitivity.png' : item.image }}"
+						class="poster" lazy-load></image>
+					<image mode="aspectFill" src="{{ $state.imgHost }}/play-hl.png" class="play" lazy-load>
+					</image>
+				</view>
+			</view>
+		</view>
+		<playRrecord wx:if="{{item.url && item.duration > 0}}" recordUrl="{{item.url}}" duration="{{item.duration}}" playTiemr="{{playTiemr}}" currentTab="{{currentTab}}"></playRrecord>
+		<view class="likeComment" wx:if="{{ item.like_avatar_list[0] || item.last_comment.nickname}}">
+			<view class="likesavatar" wx:if="{{item.like_avatar_list[0] && item.likes!= 0 }}"
+				style="margin-bottom: {{ item.last_comment.nickname ? '' : '20rpx'}};">
+				<view class="likesLeft">
+					<image wx:for="{{item.like_avatar_list}}" wx:for-item="linkeItem" wx:for-index="likeIndex" wx:key="likeIndex"
+						src="{{linkeItem}}"></image>
+				</view>
+			</view>
+			<view class="lastComment" wx:if="{{item.last_comment.nickname}}" catchtap="navigate" data-id="{{ item.id }}">
+				<view class="lastContet">
+					<text>{{item.last_comment.nickname}}: </text>
+					<rich-text
+						nodes="<div style='overflow:hidden;white-space:nowrap;text-overflow:ellipsis;'>{{ item.last_comment.content }} </div>">
+					</rich-text>
+				</view>
+			</view>
+		</view>
+		<navigator wx:if="{{ item.fs_title }}" url="../cDetail/cDetail?id={{ item.fs_id }}" hover-class="none"
+			open-type="navigate" class="label"
+			style="margin: {{ !item.like_avatar_list[0] && !item.last_comment.nickname ? '30rpx 30rpx 0 30rpx' : '0 30rpx 20rpx 30rpx'}};">
+			#{{ item.fs_title }}精选</navigator>
+		<view class="btn" style="margin-top:{{!item.like_avatar_list[0] && !item.last_comment.nickname ? '30rpx' : ''}}">
+			<!-- 点赞 -->
+			<formCode bind:handler="praise" class="item" data-place="{{page}}" data-index="{{ index }}" data-type="true"
+				data-id="{{item.id}}" data-uid="{{item.uid}}">
+				<view class="container-sub">
+					<view class="praise  {{ item.likestatus ? 'end' : '' }} {{ item.praising ? 'ani' : '' }}" data-page="{{page}}"
+						data-index="{{ index }}" data-type="true" bindanimationend="aniend" data-id="{{item.id}}"></view>
+					<text class="text">{{ item.likes != 0 ? item.lw || item.likes : '点赞' }} </text>
+				</view>
+			</formCode>
+			<text class="division"></text>
+			<!-- 评论 -->
+			<view hover-class="none" class="item" bindtap="handleRelse" data-status="{{ $state.userInfo.status }}"
+				data-id="{{ item.id }}" data-type="reply">
+				<formCode>
+					<view class="container-sub">
+						<icon class="iconfont icon-comment"></icon>
+						<text class="text">{{ item.comments != 0 ?  item.cw || item.comments : '评论'}}</text>
+					</view>
+				</formCode>
+			</view>
+			<text class="division"></text>
+			<button class="share item" open-type="share" data-index="{{ index }}" data-page="{{page}}" hover-class="btn-hover"
+				wx:if="{{ item.check_status != 0 && item.check_status != 2}}">
+				<icon class="iconfont icon-fenxiang"></icon>
+				<text class="text">{{ item.forward != 0 ? item.fw || item.forward : '分享'}}</text>
+			</button>
+			<button class="share item" bindtap="unShare" wx:if="{{ item.check_status == 0 || item.check_status == 2}}">
+				<icon class="iconfont icon-fenxiang"></icon>
+				<text class="text">{{ item.forward != 0 ? item.fw || item.forward : '分享' }}</text>
+			</button>
+		</view>
+	</view>
 </template>
 <view class="tabnav" style="padding-top:{{ top }}px">
 	<view class="{{ currentTab != 0 ? 'lose' : ''}} tabnav-item" bindtap="switchNav" data-current="0">
@@ -151,8 +151,7 @@
 						<image src="{{item.image}}"></image>
 						<text>{{item.title}}</text>
 					</navigator>
-					<navigator class="scroll-view" open-type="navigate" hover-class="none"
-						url="../circle/circle?type=1">
+					<navigator class="scroll-view" open-type="navigate" hover-class="none" url="../circle/circle?type=1">
 						<image src="{{$state.imgHost}}/larstCircle.png"></image>
 						<text>加入圈子</text>
 					</navigator>
@@ -160,15 +159,19 @@
 			</view>
 			<view class="stick" catchtap="navigate" data-id="{{ bokeTop.id }}" wx:if="{{bokeTop.content}}">
 				<image src="/images/Stick.png"></image>
-				<rich-text class="stickText" nodes="<div style='overflow:hidden;white-space:nowrap;text-overflow:ellipsis;'>{{ bokeTop.content }} </div>"></rich-text>
+				<rich-text class="stickText"
+					nodes="<div style='overflow:hidden;white-space:nowrap;text-overflow:ellipsis;'>{{ bokeTop.content }} </div>">
+				</rich-text>
 				<image src="/images/stickright.png"></image>
 			</view>
-				<view wx:for="{{ list }}" class="wrap" wx:for-item="subList" wx:for-index="page" id="listpage-{{page + 1}}" wx:key="page" >
-					<block wx:if="{{(page + 1) - currentPage[currentTab].page >= -1 && (page + 1) - currentPage[currentTab].page <= 1}}" >
-            <template is="listitem" wx:for="{{subList}}" data="{{item:item, page,index, $state}}" wx:key="index"/>
-          </block>
-          <view wx:else style='height:{{pageFrame[currentTab][page + 1].height}}px;' ></view>
-				</view>
+			<view wx:for="{{ list }}" class="wrap" wx:for-item="subList" wx:for-index="page" id="listpage-{{page + 1}}"
+				wx:key="page">
+				<block
+					wx:if="{{(page + 1) - currentPage[currentTab].page >= -1 && (page + 1) - currentPage[currentTab].page <= 1}}">
+					<template is="listitem" wx:for="{{subList}}" data="{{item:item, page,index, $state, voiceplayimg, playTiemr, currentTab}}" wx:key="index" />
+				</block>
+				<view wx:else style='height:{{pageFrame[currentTab][page + 1].height}}px;'></view>
+			</view>
 			<mp-loading type="circle" wx:if="{{ showLoading }}"></mp-loading>
 			<view class="upbottom" wx:if="{{showBottom[currentTab]}}">已经到底咯~</view>
 		</scroll-view>
@@ -180,12 +183,14 @@
 			<view wx:if="{{ isRefreshing }}" class="weui-loadmore">
 				<view class="weui-loading"></view>
 			</view>
-			<view wx:for="{{ nowList }}" class="wrap" wx:for-item="subList" wx:for-index="page" id="listpage-{{page + 1}}" wx:key="page" >
-        <block wx:if="{{(page + 1) - currentPage[currentTab].page >= -1 && (page + 1) - currentPage[currentTab].page <= 1}}" >
-          <template is="listitem" wx:for="{{subList}}" data="{{item:item, page, index, $state}}" wx:key="index"/>
-        </block>
-        <view wx:else style='height:{{pageFrame[currentTab][page + 1].height}}px;' ></view>
-      </view>
+			<view wx:for="{{ nowList }}" class="wrap" wx:for-item="subList" wx:for-index="page" id="listpage-{{page + 1}}"
+				wx:key="page">
+				<block
+					wx:if="{{(page + 1) - currentPage[currentTab].page >= -1 && (page + 1) - currentPage[currentTab].page <= 1}}">
+					<template is="listitem" wx:for="{{subList}}" data="{{item:item, page, index, $state, voiceplayimg, playTiemr, currentTab}}" wx:key="index" />
+				</block>
+				<view wx:else style='height:{{pageFrame[currentTab][page + 1].height}}px;'></view>
+			</view>
 			<mp-loading type="circle" wx:if="{{ showLoading }}"></mp-loading>
 			<view class="upbottom" wx:if="{{showBottom[currentTab]}}">已经到底咯~</view>
 		</scroll-view>
@@ -203,12 +208,14 @@
 					<view class="txt">啥都没有呢</view>
 					<view class="txt">赶快去关注有趣的人吧！</view>
 				</view>
-        <view wx:for="{{ flowList }}" class="wrap" wx:for-item="subList" wx:for-index="page" id="listpage-{{page + 1}}" wx:key="page" >
-          <block wx:if="{{(page + 1) - currentPage[currentTab].page >= -1 && (page + 1) - currentPage[currentTab].page <= 1}}" >
-            <template is="listitem" wx:for="{{subList}}" data="{{item:item, page, index, $state}}" wx:key="index"/>
-          </block>
-          <view wx:else style='height:{{pageFrame[currentTab][page + 1].height}}px;' ></view>
-        </view>
+				<view wx:for="{{ flowList }}" class="wrap" wx:for-item="subList" wx:for-index="page" id="listpage-{{page + 1}}"
+					wx:key="page">
+					<block
+						wx:if="{{(page + 1) - currentPage[currentTab].page >= -1 && (page + 1) - currentPage[currentTab].page <= 1}}">
+						<template is="listitem" wx:for="{{subList}}" data="{{item:item, page, index, $state, voiceplayimg, playTiemr, currentTab}}" wx:key="index" />
+					</block>
+					<view wx:else style='height:{{pageFrame[currentTab][page + 1].height}}px;'></view>
+				</view>
 			</view>
 			<mp-loading type="circle" wx:if="{{ showLoading }}"></mp-loading>
 			<view class="upbottom" wx:if="{{showBottom[currentTab] && flowList[0][0] }}">已经到底咯~</view>
@@ -230,7 +237,8 @@
 <navBar path="post" />
 <view class="ActionSheet" wx:if="{{showSheet}}" bindtap="closeSheet">
 	<view class="ActionSheet-box">
-		<view class="ActionSheet-item" catchtap="{{is_follow ? 'clsocancelFollowing' : 'attention'}}" wx:if="{{flowId != $state.userInfo.id}}">
+		<view class="ActionSheet-item" catchtap="{{is_follow ? 'clsocancelFollowing' : 'attention'}}"
+			wx:if="{{flowId != $state.userInfo.id}}">
 			{{is_follow ? '取消关注' : '关注'}}
 		</view>
 		<view class="ActionSheet-item" catchtap="{{collectstatus ? 'cancelCollection' : 'setCollect'}}">

@@ -58,6 +58,7 @@
         </view>
     </view>
     <view wx:else class="recordBox">
+        <image src="../../images/icon-del.png" class="iconDel" bindtap="delRecord"></image>
         <view class="recordStanby" wx:if="{{recordStatus == 1}}">
             <image src="../../images/record/recordStanby.png" bindtap="recordStart" data-starus="2"></image>
             <text>点击录音</text>
@@ -72,7 +73,8 @@
         </view>
         <view class="recordover" wx:if="{{recordStatus == 3}}">
             <view class="recordoverBox">
-                <image src="../../images/record/recordBack.png" bindtap="recordStart" data-starus="2" data-remake='1'></image>
+                <image src="../../images/record/recordBack.png" bindtap="recordStart" data-starus="1"></image>
+                <text style="margin-bottom: 6rpx;"></text>
                 <text>重录</text>
             </view>
             <view class="recordoverBox" wx:if="{{!playRecord}}">
@@ -89,6 +91,7 @@
             </view>
             <view class="recordoverBox">
                 <image src="../../images/record/recodeUpdowm.png" bindtap="uprecorde"></image>
+                <text style="margin-bottom: 6rpx;"></text>
                 <text>提交</text>
             </view>
         </view>

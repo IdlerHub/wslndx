@@ -218,6 +218,14 @@ textarea {
   padding-bottom: 140rpx;
 }
 
+.recordBox .iconDel {
+  width: 27rpx;
+  height: 27rpx;
+  position: absolute;
+  top:31rpx;
+  right: 29rpx;
+}
+
 .recordBox .recordStanby {
   margin-top: 164rpx;
   display: flex;
@@ -371,7 +379,6 @@ textarea {
 .voiceBox .voiceBoxRight .centerImg {
   width: 192rpx;
   height: 28rpx;
-  /* margin: 0 16rpx 0 25rpx; */
   background: url('https://hwcdn.jinlingkeji.cn/images/dev/postVoiceImg.png') center;
   background-size: 563rpx 28rpx;
 }

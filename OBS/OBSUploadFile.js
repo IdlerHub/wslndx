@@ -7,7 +7,9 @@ const getPolicyEncode = require("./getPolicy.js");
 const getSignature = require("./GetSignature.js");
 
 import store from "../store";
-import { wxp } from "../utils/service";
+import {
+  wxp
+} from "../utils/service";
 
 function randomUUID() {
   var chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz".split(
@@ -53,7 +55,10 @@ function checkType(file) {
   let attrs = null;
   legalType.some((v, i) => {
     if (file.endsWith(v)) {
-      attrs = { type: v, ct: map[i] };
+      attrs = {
+        type: v,
+        ct: map[i]
+      };
       return true;
     }
   });
@@ -66,7 +71,10 @@ function checkVideo(file) {
   let attrs = null;
   legalType.some((v, i) => {
     if (file.endsWith(v)) {
-      attrs = { type: v, ct: ctList[i] };
+      attrs = {
+        type: v,
+        ct: ctList[i]
+      };
       return true;
     }
   });
@@ -82,7 +90,10 @@ function checkAudio(file) {
   let attrs = null;
   legalType.some((v, i) => {
     if (file.endsWith(v)) {
-      attrs = { type: v, ct: map[i] };
+      attrs = {
+        type: v,
+        ct: map[i]
+      };
       return true;
     }
   });
@@ -97,7 +108,7 @@ function fitAndroid(url) {
   });
 }
 
-const OBSupload = async function(dir, filePath, type) {
+const OBSupload = async function (dir, filePath, type) {
   let checkRes;
   if (type == "image") {
     checkRes = checkType(filePath);
@@ -125,23 +136,30 @@ const OBSupload = async function(dir, filePath, type) {
     endpoint
   } = store.getState().security;
   const fileName = cacheUrl(dir, checkRes.type); //指定上传到OBS桶中的对象名
-  const redirects =
-  {
-    image:
-      store.process == "production"
-        ? "https://lndxcallbackpro.jinlingkeji.cn/tool/moderationImage"
-        : "https://lndxcallbackdev.jinlingkeji.cn/tool/moderationImage",
+  const redirects = {
+    image: store.process == "production" ?
+      "https://lndxdev.jinlingkeji.cn/api/v22/upload/checkoutImage" :
+      "https://lndxdev.jinlingkeji.cn/api/v22/upload/checkoutImage",
     audio: ''
   };
   const OBSPolicy = {
     //设定policy内容
     expiration: expires_at,
-    conditions: [
-      { bucket: bucket }, //Bucket name
-      { key: fileName },
-      { "x-obs-security-token": securitytoken },
-      { "Content-Type": checkRes.ct },
-      { success_action_status: 200 },
+    conditions: [{
+        bucket: bucket
+      }, //Bucket name
+      {
+        key: fileName
+      },
+      {
+        "x-obs-security-token": securitytoken
+      },
+      {
+        "Content-Type": checkRes.ct
+      },
+      {
+        success_action_status: 200
+      },
       {
         success_action_redirect: redirects[type]
       }
@@ -161,18 +179,21 @@ const OBSupload = async function(dir, filePath, type) {
       key: fileName,
       "Content-Type": checkRes.ct,
       success_action_status: 200,
-      success_action_redirect:  redirects[type],
+      success_action_redirect: redirects[type],
       "x-obs-security-token": securitytoken
     }
   };
   let uploadResponse = await wxp.uploadFile(req);
-  console.log(req)
   let fitResponse = null;
   if (uploadResponse.statusCode == 200) {
+    uploadResponse['data'] ? uploadResponse.data = JSON.parse(uploadResponse.data) : ''
     if (uploadResponse.data.code == 1) {
-      uploadResponse.data = JSON.parse(uploadResponse.data);
       if (type == "image") {
-        return Promise.resolve("https://hwcdn.jinlingkeji.cn/" + fileName);
+        if (uploadResponse.data.data.category_suggestions.politics == "block") {
+          return Promise.resolve("../../images/sensitivity.png");
+        } else {
+          return Promise.resolve("https://hwcdn.jinlingkeji.cn/" + fileName);
+        }
       } else {
         return Promise.resolve(fileName);
       }

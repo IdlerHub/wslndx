@@ -65,7 +65,8 @@
     "pages/tableDetail/tableDetail",
     "pages/gamePage/gamePage",
     "pages/timetableList/timetableList",
-    "pages/webPay/webPay"
+    "pages/webPay/webPay",
+    "components/playRrecord/playRrecord"
   ],
   "permission": {
     "scope.userLocation": {
@@ -113,6 +114,6 @@
     "live-player-plugin": {
       "version": "1.1.4",
       "provider": "wx2b03c6e691cd7370"
-    }                        
+    }
   }
 }
