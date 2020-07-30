@@ -38,6 +38,9 @@ Page({
   timer: null,
   playTiemr: '',
   onLoad(ops) {
+    wx.setKeepScreenOn({
+      keepScreenOn: true
+    })
     ops.type ? this.circle = true : ''
     if (ops.title) {
       this.getCircleList().then(() => {
@@ -92,6 +95,9 @@ Page({
       media_type: this.data.media_type,
       showRelease: true
     });
+    wx.setKeepScreenOn({
+      keepScreenOn: false
+    })
   },
   input(e) {
     this.setData({
