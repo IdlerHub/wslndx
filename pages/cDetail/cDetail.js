@@ -469,6 +469,10 @@ Page({
       this.playTiemr = setInterval(() => {
         if (this.data.playVoice.playTiemr.minute == this.itemTimer.minute && this.data.playVoice.playTiemr.second == this.itemTimer.second) {
           innerAudioContext.stop()
+          this.setData({
+            'playVoice.status': 0,
+            'playVoice.id': 0,
+          })
           return
         }
         let num = this.data.playVoice.playTiemr.second
