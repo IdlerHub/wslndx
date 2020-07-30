@@ -665,10 +665,22 @@ Page({
         }
         break;
       case '3':
+        manager.stop();
+        if(!this.data.timer.minute && !this.data.timer.second){
+          wx.showToast({
+            title: '录音时间过短',
+            icon: 'none'
+          })
+          this.setData({
+            recordStatus: 1,
+            'timer.minute': 0,
+            'timer.second': 0
+          })
+          return
+        }
         this.setData({
           recordStatus: type
         })
-        manager.stop();
         this.timer ? [clearInterval(this.timer), this.timer = null] : ''
         break;
     }
@@ -720,6 +732,7 @@ Page({
 
   },
   uprecorde(i, up) {
+    innerAudioContext.stop()
     wx.showToast({
       title: '正在压缩',
       icon: 'none',
@@ -749,7 +762,7 @@ Page({
   },
   //用于数据统计
   onHide() {
-    this.getSystemInfo() ? this.setData({
+    this.getSystemInfo() ? this.data.recordStatus == 2 && this.setData({
       recordStatus: 3
     }) : ''
     manager.stop();
