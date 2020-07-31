@@ -61,12 +61,13 @@
     "pages/voteRank/voteRank",
     "pages/voteWinner/voteWinner",
     "pages/liveList/liveList",
-    "pages/timetable/timetable",
-    "pages/tableDetail/tableDetail",
     "pages/gamePage/gamePage",
-    "pages/timetableList/timetableList",
     "pages/webPay/webPay",
-    "components/playRrecord/playRrecord"
+    "components/playRrecord/playRrecord",
+    "pages/tableDetail/tableDetail",
+    "pages/timetable/timetable",
+    "pages/timetableList/timetableList"
+    
   ],
   "permission": {
     "scope.userLocation": {

@@ -25,27 +25,28 @@
 </view>
 
 
-<view id="contentView">
-  <view wx:for="{{nav}}" id="{{item.index}}" wx:key="index" class="itemBox" wx:if="{{list.length > 0}}">
+<view wx:if="{{noneLessons}}" id="contentView">
+  <view wx:for="{{nav}}" id="{{item.index}}" wx:key="index" class="itemBox">
     <view class="contariner">
-      <text id="text{{item.id}}" class="itemDay">{{item.txt}}</text>
-      <navigator id="item{{item.id}}" class="item" wx:for="{{5}}" wx:key="index" hover-class="none" url="/pages/tableDetail/tableDetail"
+      <!-- <text id="text{{item.id}}" class="itemDay">{{item.txt}}</text> -->
+      <navigator id="item{{item.id}}" class="item" wx:for="{{lessons[index]}}" wx:for-item="lesson" wx:for-index="classIndex" wx:key="index" hover-class="none" url="/pages/tableDetail/tableDetail"
         open-type="navigate">
         <view class="imgBox">
+          <view id="text{{item.id}}" class="img-week">{{item.name}}</view>
           <image
-            src="https://jinling-xcx-dev.obs.cn-north-1.myhuaweicloud.com:443/uploads/images/36c5713053c4b623b5ee321908a139aa.jpg"
+            src="{{lesson.cover}}"
             class="img"></image>
           <image class="icon" mode="aspectFill" src="{{ $state.imgHost }}/play.png"></image>
         </view>
         <view class="txtBox">
-          <text class="title">不出国也要学习英语学习时间管理</text>
-          <text class="time">每周一 16:00-18:00</text>
+          <text class="title">{{lesson.name}}</text>
+          <text class="time">{{lesson.start_day}}-{{lesson.end_day}} {{lesson.strat_time}}-{{lesson.end_time}}</text>
           <view class="textBottom">
             <view class="teacher">
               <image src="../../images/peosonIcon.png"></image>
-              <text>蓝成森</text>
+              <text>{{lesson.teacher}}</text>
             </view>
-            <view class="btn">预约报名</view>
+            <view class="btn">进入学习</view>
           </view>
         </view>
       </navigator>
@@ -53,5 +54,11 @@
   </view>
 </view>
 
-
-<template is="item" wx:if="{{list.length == 0}}"></template>
+<!-- 缺省 -->
+<view class="none-lesson" wx:else>
+  <image src="{{$state.imgHost}}/courseqs.png"></image>
+  <text>
+    暂无排课
+    去浏览其他内容吧~
+  </text>
+</view>
