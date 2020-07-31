@@ -615,6 +615,7 @@ Page({
         'playTiemr.second': 0
       })
       this.playTiemr ? [clearInterval(this.playTiemr), this.playTiemr = null] : ''
+      console.log(4345435)
       this.playTiemr = setInterval(() => {
         if (this.data.playTiemr.minute == this.data.timer.minute && this.data.playTiemr.second == this.data.timer.second) {
           this.stopVoice()
@@ -631,7 +632,9 @@ Page({
       }, 1000)
     })
 
-    innerAudioContext.onStop(() => {})
+    innerAudioContext.onStop(() => {
+      // this.stopVoice()
+    })
   },
   showRecorBox() {
     this.setData({
@@ -649,6 +652,7 @@ Page({
           confirmColor: '#DF2020',
           success(res) {
             if (res.confirm) {
+              that.stopVoice()
               that.setData({
                 recordStatus: type,
                 'timer.minute': 0,
@@ -713,19 +717,18 @@ Page({
   },
   playVoice() {
     if (!this.data.playRecord) {
-      this.stopVoice()
+      // this.stopVoice()
       this.setData({
         playRecord: 1,
         voiceplayimg: 'https://hwcdn.jinlingkeji.cn/images/pro/voicepause.png'
       })
       innerAudioContext.src = this.filePath;
       innerAudioContext.play();
-      innerAudioContext.seek(0);
     } else {
       this.setData({
         playRecord: 0
       })
-      innerAudioContext.stop();
+      this.stopVoice()
     }
 
   },
