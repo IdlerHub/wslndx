@@ -1,0 +1,23 @@
+<!--pages/sign/sign.wxml-->
+<view class="container">
+  <navigationBar id="navigationBar" placeholderBg="#F8F8F8" color="#000000" title="网上老年大学" background="#F8F8F8"
+    class="navigationBar"></navigationBar>
+  <view class="content">
+    <image src="/images/logo.png" class="logo"></image>
+    <text class="logo-title">网上老年大学</text>
+    <view class="mesg">
+      <text class="mesg-r"></text>
+      <view class="content-p">
+        <text>老年大学的移动知识学习平台</text> 
+        <text>精设十万个免费课程</text>
+      </view>
+    </view>
+    <view class="mesg">
+      <text class="mesg-r"></text>
+      <view class="content-p">
+        <text>老年大学的专属社交平台</text>
+        <text>在轻松愉悦的氛围里遍览世界</text> </view>
+    </view>
+  </view>
+</view>
+<button class="authorize-phone" bindtap="toLogin" style="bottom: {{isPad ? '20rpx' : ''}};">我要注册</button>

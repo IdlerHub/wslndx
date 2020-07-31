@@ -1,0 +1,10 @@
+{
+  "backgroundTextStyle": "light",
+  "navigationBarTitleText": "我的学分",
+  "navigationBarTextStyle": "black",
+  "enablePullDownRefresh": true,
+  "onReachBottomDistance": 0,
+  "usingComponents": {
+    "address": "../../components/address/address"
+  }
+}

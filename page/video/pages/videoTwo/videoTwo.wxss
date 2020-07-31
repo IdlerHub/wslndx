@@ -1,0 +1,387 @@
+@charset "UTF-8";
+.container {
+  width: 100vw;
+  height: 100vh;
+}
+.myVideo {
+  height: 100%;
+  width: 100%;
+}
+
+/* 背景幕 */
+.dropback {
+  position: fixed;
+  height: 100vh;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.15);
+  visibility: visible; }
+
+.dropback .frontdrop {
+  z-index: 10; }
+
+/* 视频播放幕 和 授权幕 */
+.tapbg,
+.userInfo-mask {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh; }
+
+.userInfo-mask {
+  display: flex;
+  align-items: center;
+  justify-content: center; }
+
+.userInfo-box {
+  width: 500rpx;
+  padding: 80rpx 40rpx;
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  justify-content: center;
+  align-items: center;
+  border-radius: 20rpx; }
+
+.userInfo-box .text {
+  font-family: PingFangSC-Regular;
+  font-size: 38rpx;
+  color: #3a3a3a;
+  text-align: center;
+  line-height: 65rpx; }
+
+.userInfo-box button {
+  background: #df2020;
+  border-radius: 4px;
+  width: 100%;
+  height: 88rpx;
+  font-family: PingFangSC-Regular;
+  font-size: 36rpx;
+  color: #fff;
+  margin-top: 30rpx; }
+
+  .vedioAll {
+    width: 100%;
+    position: absolute;
+    bottom: 38rpx;
+  }
+  .vedioAll .redPacket {
+    position: absolute;
+    width: 110px;
+    height: 107px;
+    top: -256rpx;
+    right: 2rpx;
+    background: url('https://hwcdn.jinlingkeji.cn/images/pro/redPacketanimiton.png');
+    background-size: cover;
+    animation: ani 2s steps(23, end) infinite;
+  }
+  .vedioAll .moneyPackt {
+    position: absolute;
+    width: 88rpx;
+    height: 88rpx;
+    top: -118rpx;
+    right: 17rpx;
+    background: url('https://hwcdn.jinlingkeji.cn/images/pro/moneyActive.png');
+    background-size: cover;
+    animation: ani 1s steps(23, end) infinite;
+  }
+  .vedioAll .vedioAllTop {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding-left: 30rpx;
+    overflow: visible;
+  }
+  /* 底部视频描述 */
+  .info {
+    width: 750rpx;
+    box-sizing: border-box;
+    height: 313rpx; 
+    position: relative;
+    top: 38rpx;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-content: flex-end;  
+    }
+  
+  .info .icon {
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    position: absolute; }
+  
+  .synopsis {
+    left: 30rpx;
+    /* width: calc(100% - 60rpx); */
+    margin: 35rpx 0 51rpx 30rpx;
+    width: 568rpx;
+    bottom: 146rpx;
+    font-size: 34rpx;
+    color: #ffffff;
+    line-height: 48rpx;
+    word-break: break-all;
+    text-overflow: ellipsis;
+    white-space: normal;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3; }
+  
+  /* 加群 */
+  .cimg {
+    left: 26rpx;
+    /* bottom: calc(50% - 345rpx); */
+    bottom: 328rpx;
+    width: 110rpx;
+    height: 110rpx;
+    border-radius: 50%;
+    border: 2rpx solid rgba(255, 255, 255, 0.5); }
+  
+  .join {
+    position: absolute;
+    left: 650rpx;
+    top: calc(50% - 235rpx);
+    width: 44rpx;
+    height: 44rpx;
+    border-radius: 50%;
+    background: #ed3030;
+    line-height: 40rpx;
+    text-align: center;
+    color: #fff;
+    font-size: 45rpx; }
+  
+  /* 点赞 */
+  .praise {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 120rpx;
+    height: 120rpx;
+    z-index: 20;
+    /* top: calc(50% - 175rpx); */
+    text-align: center;
+    overflow: visible;}
+  
+  .praise .heart {
+    margin: 0 auto;
+    width: 80rpx;
+    height: 80rpx; }
+  
+  .praising {
+    position: fixed;
+    right: -30rpx;
+    bottom: 222rpx;
+    z-index: 1000;
+    margin-top: -224rpx; }
+  
+  /* 视频标题 */
+  .vedioTitle {
+    z-index: 5;
+    bottom: 330rpx;
+    left: 169rpx;
+    margin-left: 26rpx;
+  }
+  .vedioTitle .vedioTitle-p {
+    font-size:40rpx;
+    font-weight:500;
+    color:#fff;
+    width: 435rpx;
+    margin-top: 11rpx;
+    height: 40rpx;
+    overflow: hidden;
+    line-height: 40rpx;
+    text-overflow:ellipsis;
+    white-space: nowrap;
+  }
+  .viewMore {
+    width: 164rpx;
+    height:50rpx;
+    background:rgba(250,249,250,0.8);
+    border-radius:25rpx;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    line-height: 50rpx;
+    padding-left: 10rpx;
+    font-size:28rpx;
+    font-weight:500;
+    color:rgba(51,51,51,1);
+    margin-top: 19rpx;
+  } .viewMore .viewMoreimg {
+    width: 11rpx;
+    height: 22rpx;
+    margin-left: 10rpx;
+  }
+  /* 点赞动画 */
+  .ani {
+    width: 180rpx;
+    height: 180rpx;
+    background-size: cover;
+    animation: ani steps(20) 1s both; }
+  
+  .praise .text {
+    font-family: "黑体";
+    font-size: 36rpx;
+    color: #ffffff;
+    text-shadow: 0 2rpx 4rpx rgba(0, 0, 0, 0.5);
+    line-height: 43rpx; }
+  
+  /* 分享 */
+  .share {
+    position: absolute;
+    top: 176rpx;
+    right: 0;
+    width: 120rpx;
+    text-align: center;
+    line-height: normal;
+    z-index: 5; }
+  
+  .share .icon {
+    margin: 0 auto;
+    width: 72rpx;
+    height: 72rpx; }
+  
+  .share .text {
+    font-family: "黑体";
+    font-size: 36rpx;
+    color: #ffffff;
+    text-shadow: 0 2rpx 4rpx rgba(0, 0, 0, 0.5);
+    line-height: 43rpx; }
+
+/* 完整视频 */
+.complete {
+  position: fixed;
+  width: 120rpx;
+  left: 610rpx;
+  top: 50%;
+  z-index: 3;
+  margin-top: 115rpx;
+  text-align: center; }
+
+.complete .icon {
+  margin: 0 auto;
+  width: 79rpx;
+  height: 79rpx; }
+
+.complete .text {
+  font-family: "黑体";
+  font-size: 30rpx;
+  color: #ffffff;
+  text-shadow: 0 2rpx 4rpx rgba(0, 0, 0, 0.19);
+  line-height: 42rpx; }
+
+/* 视频暂停 */
+.pause {
+  position: fixed;
+  z-index: 3;
+  width: 146rpx;
+  height: 146rpx;
+  left: 0;
+  right: 0;
+  top: -267rpx;
+  bottom: 0;
+  margin: auto; }
+
+.vistor-head {
+  position: fixed;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 110rpx;
+  line-height: 110rpx;
+  top: 0;
+  left: 0;
+  background: rgba(223, 32, 32, 0.9);
+  font-family: PingFangSC-Regular;
+  font-size: 36rpx;
+  color: #ffffff;
+  padding: 0 30rpx; }
+  .vistor-head .iconfont {
+    width: 60rpx;
+    height: 60rpx; }
+    .vistor-head .iconfont:nth-child(4) {
+      position: absolute;
+      top: 25rpx; }
+
+.vistor-home {
+  position: fixed;
+  z-index: 100;
+  width: 156rpx;
+  height: 156rpx;
+  right: 30rpx;
+  bottom: 150rpx;
+  border-radius: 50%;
+  background: #df2020;
+  font-size: 36rpx;
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center; }
+  .vistor-home .iconfont {
+    width: 50rpx;
+    height: 50rpx; }
+  /* 活动红包 */
+  .redPaket {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.65);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .redPaket .redbox {
+    width: 750rpx;
+    height: 950rpx;
+    background: url('https://hwcdn.jinlingkeji.cn/images/dev/videoredbg3.png') no-repeat center;
+    background-size:100% 100%;
+    position: relative;
+  }
+  .redPaket .redbox .wechat {
+    position: absolute;
+    width:320rpx;
+    height:60rpx;
+    background:rgba(213,37,39,1);
+    border-radius:30rpx;
+    font-size:40rpx;
+    font-family:Source Han Sans CN;
+    font-weight:400;
+    color:rgba(255,255,255,1);
+    text-align: center;
+    line-height: 60rpx;
+    top: 323rpx;
+    left: 50%;
+    margin-left: -160rpx;
+  }
+  .redPaket .redbox .copybtn {
+    position: absolute;
+    width: 428rpx;
+    height: 124rpx;
+    bottom: 116rpx;
+    left: 50%;
+    margin-left: -214rpx;
+    background: url('https://hwcdn.jinlingkeji.cn/images/dev/redBtn.png') no-repeat center;
+    background-size: 100% 100%;
+    font-size:40rpx;
+    font-family:Source Han Sans CN;
+    font-weight:500;
+    color:rgba(213,37,39,1);
+    text-align:center;
+    line-height: 124rpx;
+  }
+  .info .moneyPackt {
+    position: absolute;
+    width: 88rpx;
+    height: 88rpx;
+    top: -109rpx;
+    right: 37rpx;
+    background: url('https://hwcdn.jinlingkeji.cn/images/pro/moneyActive.png');
+    background-size: cover;
+    animation: ani 1s steps(23, end) infinite;
+  }

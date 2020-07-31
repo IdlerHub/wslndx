@@ -1,0 +1,18 @@
+<view class="container">
+  <mp-video-swiper id="videoSwiper" class="myVideo" video-list="{{list}}" prevideoList="{{prevideoList}}" nextRtight="{{nextRtight}}" pause="{{pause}}" videoTwo="{{videoTwo}}"
+    bindplay="vedioRecordAdd" bindpause="onPause" bindtimeupdate="onTimeUpdate" bindended="recordFinish"
+    binderror="videoError" bindwaiting="onWaiting" bindprogress="onProgress" bindmorelist="getMorelist"
+    bindgetpreList="getpreList" bindgetCur="getCur" bindnavigate="navigate" bindshowIntegral="showIntegral" bindtap="tap" bindvideoTwochange="videoTwochange"></mp-video-swiper>
+</view>
+<!-- 学分动画 -->
+<integralAnimation integral="{{integral}}" integralContent="{{integralContent}}" wx:if="{{showintegral}}">
+</integralAnimation>
+<!-- 新年红包活动 -->
+<view class="redPaket" wx:if="{{isshowRedbig}}" bindtap="closeRed">
+  <view class="redbox">
+    <view class="wechat">{{wechatnum}}</view>
+    <view class="copybtn" catchtap="copywechat">
+      点击复制微信号
+    </view>
+  </view>
+</view>

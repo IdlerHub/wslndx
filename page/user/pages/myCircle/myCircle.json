@@ -1,0 +1,10 @@
+{
+  "backgroundTextStyle": "light",
+  "navigationBarTitleText": "风采展示",
+  "navigationBarTextStyle": "black",
+  "enablePullDownRefresh": true,
+  "usingComponents": {
+    "formCode": "/components/formCode/formCode",
+    "playRrecord": "/components/playRrecord/playRrecord"
+  }
+}

@@ -96,6 +96,66 @@
       }
     ]
   },
+  "subpackages": [
+    {
+      "root": "page/login/",
+      "pages": [
+        "pages/login/login",
+        "pages/sign/sign"
+      ]
+    },
+    {
+      "root": "page/index/",
+      "pages": [
+        "pages/index/index",
+        "pages/drag/drag",
+        "pages/certificate/certificate",
+        "pages/detail/detail",
+        "pages/education/education",
+        "pages/rankingList/rankingList",
+        "pages/search/search"
+      ]
+    },
+    {
+      "root": "page/video/",
+      "pages": [
+        "pages/video/video",
+        "pages/videoItemize/videoItemize",
+        "pages/videoTwo/videoTwo"
+      ]
+    },
+    {
+      "root": "page/post/",
+      "pages": [
+        "pages/post/post",
+        "pages/release/release",
+        "pages/personPage/personPage",
+        "pages/pDetail/pDetail",
+        "pages/cDetail/cDetail"
+      ]
+    },
+    {
+      "root": "page/user/",
+      "pages": [
+        "pages/user/user",
+        "pages/attentionPage/attentionPage",
+        "pages/circle/circle",
+        "pages/collection/collection",
+        "pages/drawPage/drawPage",
+        "pages/experience/experience",
+        "pages/giftMessage/giftMessage",
+        "pages/history/history",
+        "pages/info/info",
+        "pages/invitation/invitation",
+        "pages/makeMoney/makeMoney",
+        "pages/messagePage/messagePage",
+        "pages/myCircle/myCircle",
+        "pages/score/score",
+        "pages/usermesseage/usermesseage",
+        "pages/winPrize/winPrize"
+      ]
+    }
+  ],
   "plugins": {
     "WechatSI": {
       "version": "0.3.4",

@@ -1,0 +1,37 @@
+<canvas class="cav" canvas-id="canva_invite" style="height:{{small ? '900rpx' : ''}}; width:{{ small ? '680rpx' : ''}}"></canvas>
+<scroll-view class="scroll" scroll-y="true">
+  <view class="theme" hover-class="none">
+    <image class="bg" src="/images/invitation{{withdraw ? '2' : ''}}.png" mode="aspectFill"> </image>
+    <view class="user" hover-class="none">
+      <image class="portrait" src="{{ $state.userInfo.avatar }}" mode="aspectFill"> </image>
+      <text class="name">我是{{ $state.userInfo.nickname }}</text>
+    </view>
+    <view class="phrase">老有所学，老有所乐，邀请你一起学习交友。</view>
+    <view class="dsc" hover-class="none">
+      <image class="qrcode" src="{{ qrcode }}" mode="aspectFill"> </image>
+      <view>
+        <text>长按识别二维码</text>
+        <text>一起在线学习</text>
+      </view>
+    </view>
+  </view>
+  <view class="broadcast" > 分享给微信好友，好友识别二维码进入小</view>
+  <view class="broadcast" style="padding-top: 0;">程序后系统会奖励 <text> +25学分 </text> 到个人账户 </view>
+</scroll-view>
+
+<view class="buttons" hover-class="none" wx:if="{{!withdraw}}">
+  <button class="save" hover-class="none" bindtap="save">
+    <image class="icon" src="{{ $state.imgHost }}/download.png" mode="aspectFill"> </image>
+    <text>保存图片</text>
+  </button>
+  <button class="share" hover-class="none" open-type="share">
+    <image class="icon" src="{{ $state.imgHost }}/weixin.png" mode="aspectFill"> </image>
+    <text>分享好友</text>
+  </button>
+</view>
+<view class="bottomBtn" wx:else>
+  <button class="save" hover-class="none" bindtap="save">
+    <image src="/images/dowloud.png"></image>
+    <text>保存图片</text>
+  </button>
+</view>

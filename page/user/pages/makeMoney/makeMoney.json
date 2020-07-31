@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "recruitShare": "/components/recruitShare/recruitShare"
+  },
+  "navigationBarTitleText": "新学员邀请榜"
+}

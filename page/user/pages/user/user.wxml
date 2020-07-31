@@ -1,0 +1,100 @@
+<!--
+ * @Date: 2019-06-11 21:04:19
+ * @LastEditors: hxz
+ * @LastEditTime: 2019-08-13 11:32:53
+ -->
+<view class="container">
+  <!-- 下拉刷新 -->
+  <view wx:if="{{ isRefreshing }}" class="weui-loadmore indexdrop">
+    <view class="weui-loading"></view>
+  </view>
+  <navigator hover-class="none" class="top" url="../info/info" open-type="navigate">
+    <image class="bg" mode="widthFix" src="{{ $state.userInfo.avatar }}"></image>
+    <view class="box">
+      <view class="left">
+        <image class="img" mode="widthFix" src="{{ $state.userInfo.avatar }}"></image>
+        <view class="info">
+          <text class="line name">{{ $state.userInfo.nickname }}</text>
+          <view class="line" style="margin-top: 10rpx;">
+            <text class="city">{{ $state.userInfo.addressCity || "暂无" }}</text>
+            <text class="school">{{ $state.userInfo.school || $state.userInfo.university || "+添加学校标签" }}</text>
+          </view>
+        </view>
+      </view>
+      <icon class="iconfont icon-arrow-right"></icon>
+    </view>
+  </navigator>
+  <view class="navgationto">
+    <view class="navgationBox" bindtap="toScore">
+      <image src="{{ $state.imgHost }}/integralbg.png"></image>
+      <text class="navTitle">学分兑礼品</text>
+      <text class="num">{{ my_score }}可用学分</text>
+      <view class="toScore">
+        <image src="{{ $state.imgHost }}/Return.png"></image>
+      </view>
+    </view>
+    <view class="navgationBox" bindtap="toInvite">
+      <image src="{{ $state.imgHost }}/invitebg.png"></image>
+      <text class="navTitle">邀请新学员</text>
+      <text class="num">一起来学习</text>
+      <view class="toInvite">
+        <image src="{{ $state.imgHost }}/Return.png"></image>
+      </view>
+    </view>
+  </view>
+  <view class="list">
+    <navigator hover-class="none" class="nav" url="/pages/collection/collection" open-type="navigate">
+      <image src="{{ $state.imgHost }}/usershoucang.png" class="iconfont"></image>
+      <text>我的收藏</text>
+    </navigator>
+    <navigator hover-class="none" class="nav" url="/pages/history/history" open-type="navigate">
+      <image src="{{ $state.imgHost }}/userhistory.png" class="iconfont"></image>
+      <text>学习历史</text>
+    </navigator>
+    <navigator hover-class="none" class="nav" url="/pages/myCircle/myCircle" open-type="navigate">
+      <image src="{{ $state.imgHost }}/userfengcai.png" class="iconfont"></image>
+      <text>风采展示</text>
+    </navigator>
+    <navigator hover-class="none" class="nav" url="/pages/experience/experience" open-type="navigate">
+      <image src="{{ $state.imgHost }}/experience.png" class="iconfont"></image>
+      <text>体验官申请</text>
+    </navigator>
+    <navigator hover-class="none" class="nav" url="../circle/circle?type=1" open-type="navigate">
+      <image src="{{ $state.imgHost }}/useraddquan.png" class="iconfont"></image>
+      <text>加入圈子</text>
+    </navigator>
+    <button class="nav" open-type="contact" bindcontact="handleContact" session-from='{"name": "{{$state.userInfo.nickname}}","avatarUrl":"{{$state.userInfo.avatar}}","nickName":"{{$state.userInfo.nickname}}"}'>
+      <image src="{{ $state.imgHost }}/userkefu.png" class="iconfont"></image>
+      <text>联系客服</text>
+    </button>
+    <navigator hover-class="none" class="nav" url="/pages/drawPage/drawPage" open-type="navigate" bindtap="drawPage">
+      <image src="{{ $state.imgHost }}/draw.png" class="iconfont"></image>
+      <text>学分抽奖</text>
+    </navigator>
+    <navigator hover-class="none" class="nav" url="/pages/usermesseage/usermesseage" open-type="navigate"
+      bindtap="drawPage">
+      <image src="{{ $state.imgHost }}/messeageicon.png" class="iconfont"></image>
+      <view class="news">我的消息 <view class="smallred" wx:if="{{showMes > 0}}"></view>
+      </view>
+    </navigator>
+    <navigator hover-class="none" class="nav" url="/pages/attentionPage/attentionPage" open-type="navigate"
+      bindtap="drawPage">
+      <image src="{{ $state.imgHost }}/attentionicon.png" class="iconfont"></image>
+      <text>我的关注</text>
+    </navigator>
+    <!-- <navigator hover-class="none" class="nav" url="/pages/timetable/timetable" open-type="navigate"
+      bindtap="drawPage">
+      <image src="{{ $state.imgHost }}/timetable.png" class="iconfont"></image>
+      <text>课程表</text>
+    </navigator> -->
+  </view>
+  <navBar path="user" />
+  <!-- wx:if="{{$state.newGuide.user == 0}}" -->
+  <cover-view class="userGuide" wx:if="{{$state.newGuide.user == 0}}">
+    <cover-view class="userGuide-msg" bindtap="closeGuide">
+      <cover-image class="userGuide-msgimg" src="{{$state.imgHost}}/userMsg.png"></cover-image>
+      <cover-image src="{{$state.imgHost}}/know.png" class="nextGude"></cover-image>
+    </cover-view>
+    <cover-image class="userGuide-img" src="{{$state.imgHost}}/experienceApply.png"></cover-image>
+  </cover-view>
+</view>

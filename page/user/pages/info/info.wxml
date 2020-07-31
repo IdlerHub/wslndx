@@ -1,0 +1,84 @@
+<!--
+ * @Date: 2019-05-28 09:50:08
+ * @LastEditors: hxz
+ * @LastEditTime: 2019-08-12 15:15:34
+ -->
+<view class="container">
+  <view class="box">
+    <!-- 姓名 -->
+    <view class="nameInput">
+      <view class="nameInput__title">真实姓名</view>
+      <input placeholder="{{ userInfo.name == '' ? '请填写(非必填)' : userInfo.name }}" class="nameInput__name"
+        placeholder-style="color:#B6B5B5" value="{{userName}}" bindblur="upUsername" bindfocus="focus"
+        style="padding-right:{{padding || param.school != '' ? '24' : '24'}}px"></input>
+    </view>
+    <!-- 地区 -->
+    <view class="section" wx:if="areaList">
+      <view class="section__title">地区</view>
+      <picker mode="multiSelector" bindchange="bindMultiPickerChange" bindcolumnchange="bindMultiPickerColumnChange"
+        value="{{ multiIndex }}" range="{{ multiAddress }}">
+        <view class="placeholder">
+          <text wx:if="{{ !param.address[1] }}">请选择</text>
+          <view class="picker" wx:if="{{ param.address[1] }}"> {{ param.address[0] }}，{{ param.address[1] }} </view>
+          <image class="icon" mode="aspectFill" src="{{ $state.imgHost }}/Return-black.png"></image>
+        </view>
+      </picker>
+    </view>
+    <!-- 学校 -->
+    <view class="section" wx:if="singleSchool" bindtap="tipOrder">
+      <view class="section__title">大学</view>
+      <picker mode="selector" disabled="{{ !param.address[1] }}" bindchange="bindSchool" value="{{ singleIndex }}"
+        range="{{ singleSchool }}">
+        <view class="placeholder">
+          <text wx:if="{{ !param.school }}">请选择</text>
+          <view class="picker" wx:if="{{ param.school }}"> {{ param.school }} </view>
+          <image class="icon" mode="aspectFill" src="{{ $state.imgHost }}/Return-black.png"></image>
+        </view>
+      </picker>
+    </view>
+    <!-- 性别 -->
+    <view class="section">
+      <view class="section__title">性别</view>
+      <picker bindchange="bindSexChange" value="{{ param.gender }}" range="{{ gender }}">
+        <view class="placeholder">
+          <text wx:if="{{ param.gender != 0 && param.gender != 1 }}">请选择</text>
+          <view class="picker" wx:if="{{ param.gender == 0 || param.gender == 1 }}">
+            {{ gender[param.gender] }}
+          </view>
+          <image class="icon" mode="aspectFill" src="{{ $state.imgHost }}/Return-black.png"></image>
+        </view>
+      </picker>
+    </view>
+    <!-- 年龄 -->
+    <view class="section">
+      <view class="section__title">年龄段</view>
+      <picker bindchange="bindAgeChange" value="{{ param.age }}" range="{{ age }}">
+        <view class="placeholder">
+          <text wx:if="{{ !param.age }}">请选择</text>
+          <view class="picker" wx:if="{{ param.age }}">
+            {{ param.age }}
+          </view>
+          <image class="icon" mode="aspectFill" src="{{ $state.imgHost }}/Return-black.png"></image>
+        </view>
+      </picker>
+    </view>
+    <!-- 收货地址 -->
+    <view class="section">
+      <view class="section__title">收货地址</view>
+      <view class="placeholder" catchtap="fill">
+        <text>{{userAddress.goods_address_id ? '修改' : '请补充'}}</text>
+        <image class="icon" mode="aspectFill" src="{{ $state.imgHost }}/Return-black.png"></image>
+      </view>
+    </view>
+     <!-- 电子邮箱 -->
+     <view class="nameInput" style="border: 0;">
+      <view class="nameInput__title">电子邮箱</view>
+      <input placeholder="{{ userInfo.name == '' ? '请填写' : userInfo.name }}" class="nameInput__name"
+        placeholder-style="color:#B6B5B5" value="{{userAddress.email}}" bindblur="upEmail" bindfocus="focus"
+        style="padding-right:{{padding || param.school != '' ? '24' : '24'}}px"></input>
+    </view>
+  </view>
+</view>
+
+<!-- 学分动画 -->
+<integralAnimation integral="+65 学分" integralContent="完成完善资料" wx:if="{{showintegral}}"></integralAnimation>
