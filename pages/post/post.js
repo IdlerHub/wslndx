@@ -1083,6 +1083,9 @@ Page({
             'playVoice.status': 0,
             'playVoice.id': 0,
           })
+          wx.setKeepScreenOn({
+            keepScreenOn: false
+          })
           return
         }
         let num = this.data.playVoice.playTiemr.second
@@ -1114,6 +1117,9 @@ Page({
         'playVoice.status': 0,
       })
       innerAudioContext.stop();
+      wx.setKeepScreenOn({
+        keepScreenOn: false
+      })
     } else {
       this.recordUrl = recordUrl
       this.setData({
@@ -1124,6 +1130,9 @@ Page({
       })
       innerAudioContext.src = recordUrl;
       innerAudioContext.play();
+      wx.setKeepScreenOn({
+        keepScreenOn: true
+      })
     }
   }
 });

@@ -36,11 +36,8 @@ Page({
   },
   pageName: "发帖页",
   timer: null,
-  playTiemr: '',
+  playTiemr: null,
   onLoad(ops) {
-    wx.setKeepScreenOn({
-      keepScreenOn: true
-    })
     ops.type ? this.circle = true : ''
     if (ops.title) {
       this.getCircleList().then(() => {
@@ -67,7 +64,12 @@ Page({
     }
   },
   onShow() {
-    recorderManager.stop()
+    wx.setKeepScreenOn({
+      keepScreenOn: true
+    })
+    // recorderManager.stop()
+    this.stopVoice()
+    if(this.timer) recorderManager.stop()
     this.getRecordAuth();
     this.initRecord();
     if (this.data.$state.releaseParam != null) {
@@ -612,10 +614,10 @@ Page({
         'playTiemr.minute': 0,
         'playTiemr.second': 0
       })
-      this.playTiemr ? clearInterval(this.playTiemr) : ''
+      this.playTiemr ? [clearInterval(this.playTiemr), this.playTiemr = null] : ''
       this.playTiemr = setInterval(() => {
         if (this.data.playTiemr.minute == this.data.timer.minute && this.data.playTiemr.second == this.data.timer.second) {
-          innerAudioContext.stop()
+          this.stopVoice()
           return
         }
         let num = this.data.playTiemr.second
@@ -629,15 +631,7 @@ Page({
       }, 1000)
     })
 
-    innerAudioContext.onStop(() => {
-      this.playTiemr ? [clearInterval(this.playTiemr), this.playTiemr = null] : ''
-      this.setData({
-        playRecord: 0,
-        voiceplayimg: 'https://hwcdn.jinlingkeji.cn/images/pro/triangle.png',
-        'playTiemr.minute':0,
-        'playTiemr.second': 0
-      })
-    })
+    innerAudioContext.onStop(() => {})
   },
   showRecorBox() {
     this.setData({
@@ -719,12 +713,14 @@ Page({
   },
   playVoice() {
     if (!this.data.playRecord) {
+      this.stopVoice()
       this.setData({
         playRecord: 1,
         voiceplayimg: 'https://hwcdn.jinlingkeji.cn/images/pro/voicepause.png'
       })
       innerAudioContext.src = this.filePath;
       innerAudioContext.play();
+      innerAudioContext.seek(0);
     } else {
       this.setData({
         playRecord: 0
@@ -733,8 +729,18 @@ Page({
     }
 
   },
-  uprecorde(i, up) {
+  stopVoice() {
     innerAudioContext.stop()
+    this.setData({
+      playRecord: 0,
+      voiceplayimg: 'https://hwcdn.jinlingkeji.cn/images/pro/triangle.png',
+      'playTiemr.minute': 0,
+      'playTiemr.second': 0
+    })
+    this.playTiemr ? [clearInterval(this.playTiemr), this.playTiemr = null] : ''
+  },
+  uprecorde(i, up) {
+    this.stopVoice()
     wx.showToast({
       title: '正在压缩',
       icon: 'none',
