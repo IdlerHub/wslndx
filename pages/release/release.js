@@ -809,6 +809,9 @@ Page({
               icon: "none",
               title: (err.data && err.data.msg) || "上传失败"
             });
+            // wx.showModal({
+            //   content: JSON.stringify(err)
+            // })
           }
         });
     } else {
