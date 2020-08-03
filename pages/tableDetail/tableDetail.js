@@ -19,33 +19,14 @@ Page({
       "每周六",
       "每周日",
     ],
-    lessonDetail: {
-      //课程详情
-      id: 1,
-      name: "美术课",
-      description: "美术课",
-      cover:
-        "https://hwcdn.jinlingkeji.cn/uploads/images/937caf1a361ac4d2bc33dfb931ed622d.jpg",
-      introduction: "<p>美术课美术课美术课美术课美术课术课</p>",
-      chapter_num: 1,
-      teacher: "王老师",
-      start_day: "7月30日",
-      end_day: "8月30日",
-      start_time: "10:20",
-      end_time: "11:20",
-      week: 1,
-      countdown: 1277934,
-      conditions: 10, //总共需邀请人数
-      invite_num: 5, //已经邀请人数
-      is_own: 0,
-    },
+    lessonDetail: {}, //课程详情
   },
   timer: "",
   onLoad: function (options) {
     if (options.inviter) {
       console.log(options);
     }
-    this.data.lessonId = options.lesson_id
+    this.data.lessonId = options.lesson_id;
     this.getLiveDetailDate(options.lessonId);
     this.timer = setInterval(() => {
       let countdown = this.data.lessonDetail.countdown - 1;
@@ -57,7 +38,8 @@ Page({
     clearInterval(this.timer);
   },
 
-  getLiveDetailDate(lesson_id, inviter = 0) { //获取邀请记录,报名详情
+  getLiveDetailDate(lesson_id, inviter = 0) {
+    //获取邀请记录,报名详情
     let _this = this;
     let params = {
       lesson_id,
@@ -71,6 +53,8 @@ Page({
         lessonDetail: res[0].data,
         avatarList: res[1].data,
       });
+    }).catch(err=>{
+      console.log(err)
     });
   },
   leftTimer(leftTime) {
@@ -133,7 +117,7 @@ Page({
   onPullDownRefresh: function () {},
   onShareAppMessage: function () {
     let { lesson_id, cover } = this.data.lessonDetail;
-    let { id, nickname } = this.data.$state.userInfo
+    let { id, nickname } = this.data.$state.userInfo;
     console.log(this.data.$state.userInfo);
     return {
       title: `${nickname}邀请你`,

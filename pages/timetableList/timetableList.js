@@ -1,27 +1,22 @@
 // pages/timetableList/timetableList.js
+const LiveDate = require("../../data/LiveDate");
 Page({
   data: {
-    courseListL:[]
+    courseListL: [],
   },
   onLoad: function (options) {
-
+    this.getUserLessons();
   },
-  onShow: function () {
-
+  onShow: function () {},
+  getUserLessons(){
+    LiveDate.getUserLessons().then(res=>{
+      console.log(res)
+      this.setDate({
+        courseListL: res.data,
+      });
+    });
   },
-  onHide: function () {
-
-  },
-  onUnload: function () {
-
-  },
-  onPullDownRefresh: function () {
-
-  },
-  onReachBottom: function () {
-
-  },
-  onShareAppMessage: function () {
-
-  }
-})
+  onUnload: function () {},
+  onPullDownRefresh: function () {},
+  onShareAppMessage: function () {},
+});
