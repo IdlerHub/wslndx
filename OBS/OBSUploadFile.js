@@ -191,7 +191,7 @@ const OBSupload = async function (dir, filePath, type) {
     if (uploadResponse.data.code == 1) {
       if (type == "image") {
         if (uploadResponse.data.data.suggestion == "block") {
-          return Promise.resolve("../../images/sensitivity.png");
+          return Promise.resolve(`../../images/sensitivity.png`);
         } else {
           return Promise.resolve("https://hwcdn.jinlingkeji.cn/" + fileName);
         }

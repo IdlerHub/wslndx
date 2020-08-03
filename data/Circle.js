@@ -170,6 +170,15 @@ function getSignature(param) {
   return httpService.post("upload/getSignature", param)
 }
 
+/**
+ *  @description: 获取桶上传的ak/sk等相关参数
+ * @param {*}
+ * @return:  promise
+ * **/
+function getSecureToken() {
+  return httpService.post("h5opus/getSecureToken", {}, true);
+}
+
 module.exports = {
   allCircles,
   noJoinCircles,
@@ -200,5 +209,6 @@ module.exports = {
   defaultCircle,
   addOne,
   myNews,
-  getSignature
+  getSignature,
+  getSecureToken
 }

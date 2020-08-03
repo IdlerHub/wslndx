@@ -1,0 +1,109 @@
+<!--
+ * @Date: 2019-06-11 21:00:43
+ * @LastEditors: hxz
+ * @LastEditTime: 2019-08-13 09:29:54
+ -->
+<!-- 下拉刷新 -->
+<view wx:if="{{ isRefreshing }}" class="weui-loadmore indexdrop">
+	<view class="weui-loading"></view>
+</view>
+<view class="circle" hover-class="none" hover-stop-propagation="false">
+	<view wx:if="{{ circle.length > 0 }}" wx:for="{{ circle }}" wx:key="index" class="item">
+		<view class="top" bindtap="navigate" data-id="{{ item.id }}">
+			<view class="left">
+				<view class="avatarUrl" style="border:{{item.is_cert ? '2rpx solid rgba(253,169,0,1);' :''}}">
+					<image mode="aspectFill" src="{{ item.avatar }}" data-item="{{ item }}" catchtap="toUser" lazy-load></image>
+					<image class="fs" src="/images/approve.png" wx:if="{{item.is_cert}}"></image>
+				</view>
+				<view class="text">
+					<view class="nickName line">
+						{{ item.nickname }}
+					</view>
+				</view>
+			</view>
+			<text class="date">{{ item.createtimes }}</text>
+			<view class="delete" data-index="{{ index }}" catchtap="del">
+				<image mode="aspectFill" src="{{ $state.imgHost }}/delete.png"></image>删除
+			</view>
+		</view>
+		<view bindtap="navigate" data-id="{{ item.id }}">
+			<rich-text class="name" space="emsp" nodes="{{ item.content }}"></rich-text>
+			<view class="content" wx:if="{{ item.images.length > 0 }}">
+				<view class="img one" wx:if="{{ item.images.length == 1 }}">
+					<image mode="widthFix" src="{{ item.image_compress[0] }}" data-urls="{{ item.images }}" data-current="{{ item.images[0] }}" catchtap="previewImage"></image>
+				</view>
+				<view class="img three" wx:else>
+					<image mode="aspectFill" wx:for="{{ item.images }}" wx:for-item="items" wx:key="index" src="{{ item.image_compress[index] }}" data-urls="{{ item.images }}" data-current="{{ items }}" catchtap="previewImage"></image>
+				</view>
+			</view>
+			<view class="content" wx:if="{{ item.check_status == 1 || item.check_status == 2 || item.check_status == 0 }}">
+				<view class="bg">
+					<image mode="aspectFill" src="{{ item.check_status == 0 ?  $state.imgHost + '/tip.jpg' : item.check_status == 2 ? $state.imgHost + '/sensitivity.png' : item.image }}" class="poster"></image>
+					<image mode="aspectFill" src="{{ $state.imgHost }}/play-hl.png" class="play"></image>
+				</view>
+			</view>
+		</view>
+		<view class="voiceBox" wx:if="{{item.url && item.duration > 0}}" bindtap="checkRecord" data-duration="{{item.duration}}" data-record="{{item.url}}" data-timer="{{item.timer}}" data-id="{{item.id}}">
+			<view class="voiceBoxRight">
+					<image src="{{item.id != playVoice.id ? $state.imgHost + '/triangle.png' : $state.imgHost + '/voicepause.png'}}"></image>
+					<viwe class="centerImg {{ playVoice.status && item.id == playVoice.id ? 'centerActive' : ''}}"></viwe>
+					<view class="timer" wx:if="{{item.id != playVoice.id}}">0{{item.timer.minute}}:{{item.timer.second > 9 ?item.timer.second : '0' + item.timer.second}}</view>
+					<view class="timer" wx:else>0{{playVoice.playTiemr.minute}}:{{playVoice.playTiemr.second > 9 ? playVoice.playTiemr.second : '0' + playVoice.playTiemr.second}}</view>
+			</view>
+		</view>
+		<view class="likeComment" wx:if="{{ item.like_avatar_list[0] || item.last_comment.nickname}}">
+			<view class="likesavatar"  wx:if="{{item.like_avatar_list[0] && item.likes!= 0 }}" style="margin-bottom: {{ item.last_comment.nickname ? '' : '20rpx'}};">
+				<view class="likesLeft">
+					<image wx:for="{{item.like_avatar_list}}" wx:for-item="linkeItem" wx:for-index="likeIndex" wx:key="likeIndex" src="{{linkeItem}}"></image>
+				</view>
+			</view>
+			<view class="lastComment" wx:if="{{item.last_comment.nickname}}" catchtap="navigate" data-id="{{ item.id }}">
+				<view class="lastContet">
+					<text>{{item.last_comment.nickname}}: </text>
+					<rich-text nodes="<div style='overflow:hidden;white-space:nowrap;text-overflow:ellipsis;'>{{ item.last_comment.content }} </div>"></rich-text>
+				</view>
+			</view>
+		</view>
+		<navigator wx:if="{{ item.fs_title }}" url="/page/post/pages/cDetail/cDetail?id={{ item.fs_id }}"
+		hover-class="none" open-type="navigate" class="label" style="margin: {{ !item.like_avatar_list[0] && !item.last_comment.nickname ? '30rpx 30rpx 0 30rpx' : '0 30rpx 20rpx 30rpx'}};"> #{{ item.fs_title }}精选</navigator>
+		<view class="btn" style="margin-top:{{!item.like_avatar_list[0] && !item.last_comment.nickname ? '30rpx' : ''}}" >
+			<!-- 点赞 -->
+			<formCode bind:handler="praise" class="item" data-index="{{ index }}">
+				<view class="container-sub">
+					<view class="praise  {{ item.likestatus ? 'end' : '' }} {{ item.praising ? 'ani' : '' }}" data-index="{{ index }}" bindanimationend="aniend"></view>
+					<text class="text">{{ item.likes != 0 ? item.lw || item.likes : '点赞' }} </text>
+				</view>
+			</formCode>
+				<text class="division"></text>
+				<!-- 评论 -->
+			<navigator url="/page/post/pages/pDetail/pDetail?id={{ item.id }}&comment" hover-class="none" open-type="navigate" class="item">
+				<formCode>
+					<view class="container-sub">
+						<icon class="iconfont icon-comment"></icon>
+						<text class="text">{{ item.comments != 0 ?  item.cw || item.comments : '评论' }}</text>
+					</view>
+				</formCode>
+			</navigator>
+			<text class="division"></text>
+			<button class="share item" open-type="share" data-index="{{ index }}" hover-class="btn-hover" wx:if="{{ item.check_status != 0 && item.check_status != 2}}">
+				<icon class="iconfont icon-fenxiang"></icon>
+				<text class="text">{{ item.forward != 0 ? item.fw || item.forward : '分享' }}</text>
+			</button>
+			<button class="share item" bindtap="unShare" wx:if="{{ item.check_status == 0 || item.check_status == 2}}">
+				<icon class="iconfont icon-fenxiang"></icon>
+				<text class="text">{{ item.forward != 0 ? item.fw || item.forward : '分享' }}</text>
+			</button>
+		</view>
+		
+	</view>
+
+	<!-- 当前无内容 -->
+	<view class="ncir" wx:if="{{ circle.length == 0 }}">
+		<image mode="widthFix" src="{{ $state.imgHost }}/ncir.png"></image>
+		<text class="line">啥都没有呢~\n</text>
+		<navigator url="/page/post/pages/release/release" hover-class="none" open-type="navigate">马上发布</navigator>
+	</view>
+	<view class="popup" wx:if="{{ rlAni }}">
+		<view class="publishAni"></view>
+	</view>
+</view>

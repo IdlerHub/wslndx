@@ -60,7 +60,6 @@ var user = require("data/User.js");
 var video = require("data/Video.js");
 var circle = require("data/Circle.js");
 var lottery = require("data/Lottery.js");
-var vote = require("data/Vote.js");
 var tutor = require("data/Tutor.js");
 //app.js
 App({
@@ -73,7 +72,6 @@ App({
   video,
   circle,
   lottery,
-  vote,
   tutor,
   socket,
   store,
@@ -164,11 +162,6 @@ App({
       wx.reLaunch({
         url: "/pages/sign/sign",
       });
-    } else if (this.globalData.shareObj.p) {
-      wx.reLaunch({
-        url:
-          "/pages/voteDetail/voteDetail?voteid=" + this.globalData.shareObj.o,
-      });
     }
   },
   onShow: function (opts) {
@@ -218,10 +211,6 @@ App({
       } else if (opts.type == "lottery") {
         wx.reLaunch({
           url: "/pages/education/education?type=lottery&login=1",
-        });
-      } else if (opstObj.p) {
-        wx.reLaunch({
-          url: "/pages/voteDetail/voteDetail?voteid=" + opstObj.o,
         });
       }
     }
@@ -531,7 +520,7 @@ App({
   },
   getSecureToken() {
     setTimeout(() => {
-      vote.getSecureToken().then((res) => {
+      circle.getSecureToken().then((res) => {
         this.store.setState({
           security: res.data.credential,
         });

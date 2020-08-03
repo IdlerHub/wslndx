@@ -163,8 +163,8 @@
 				},
 				{
 					"id": 9,
-					"name": "pages/release/release",
-					"pathName": "pages/release/release",
+					"name": "pages/post/post",
+					"pathName": "pages/post/post",
 					"query": "id=102",
 					"scene": null
 				},
@@ -177,23 +177,16 @@
 				},
 				{
 					"id": -1,
-					"name": "pages/timetable/timetable",
-					"pathName": "pages/timetable/timetable",
+					"name": "pages/vote/vote",
+					"pathName": "pages/vote/vote",
 					"query": "",
 					"scene": null
 				},
 				{
-					"id": -1,
-					"name": "pages/tableDetail/tableDetail",
-					"pathName": "pages/tableDetail/tableDetail",
-					"query": "lessonId=7",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "pages/liveDetail/liveDetail",
-					"pathName": "pages/liveDetail/liveDetail",
-					"query": "lessonId=7",
+					"id": 14,
+					"name": "pages/voteDetail/voteDetail",
+					"pathName": "pages/voteDetail/voteDetail",
+					"query": "type=share&vote=0&uid=915",
 					"scene": null
 				}
 			]

@@ -355,7 +355,7 @@ Page({
     /* 只能迭代一层 */
     if (this.data.limit) return;
     wx.navigateTo({
-      url: "/pages/videoItemize/videoItemize?categoryId=" +
+      url: "../../page/video/pages/videoItemize/videoItemize?categoryId=" +
         this.data.cur.category_id +
         "&share=" +
         this.data.vistor
@@ -364,7 +364,7 @@ Page({
   navgateto(e) {
     let id = e.currentTarget.dataset.id;
     wx.navigateTo({
-      url: "/pages/videoItemize/videoItemize?categoryId=" +
+      url: "../../page/video/pages/videoItemize/videoItemize?categoryId=" +
         id +
         "&share=" +
         this.data.vistor
@@ -377,7 +377,7 @@ Page({
   complete() {
     let cur = this.data.cur;
     wx.navigateTo({
-      url: "../detail/detail?id=" + cur.target_id
+      url: "../../page/index/pages/detail/detail?id=" + cur.target_id
     });
   },
   // 用于数据统计
@@ -434,7 +434,7 @@ Page({
       app.updateBase(e);
       e.currentTarget.dataset.type ?
         wx.navigateTo({
-          url: "/pages/makeMoney/makeMoney"
+          url: "../../page/user/pages/makeMoney/makeMoney"
         }) :
         "";
     }

@@ -3,53 +3,24 @@
     "pages/index/index",
     "pages/loading/loading",
     "pages/video/video",
-    "pages/release/release",
     "pages/post/post",
-    "pages/circle/circle",
     "pages/member/member",
-    "pages/cDetail/cDetail",
-    "pages/pDetail/pDetail",
-    "pages/detail/detail",
-    "pages/certificate/certificate",
-    "pages/info/info",
     "pages/user/user",
     "pages/login/login",
-    "pages/score/score",
-    "pages/collection/collection",
-    "pages/history/history",
-    "pages/myCircle/myCircle",
-    "pages/invitation/invitation",
     "pages/gift/gift",
     "pages/education/education",
-    "pages/videoItemize/videoItemize",
     "pages/commentDetail/commentDetail",
-    "pages/message/message",
     "pages/sign/sign",
     "pages/agreement/agreement",
-    "pages/videoTwo/videoTwo",
-    "pages/experience/experience",
     "components/navBar/navBar",
     "pages/upwxpage/upwxpage",
-    "pages/personPage/personPage",
-    "pages/drawPage/drawPage",
-    "pages/winPrize/winPrize",
-    "pages/giftMessage/giftMessage",
-    "pages/search/search",
-    "pages/drag/drag",
     "components/integralAni/integralAni",
-    "pages/usermesseage/usermesseage",
-    "pages/messagePage/messagePage",
-    "pages/attentionPage/attentionPage",
-    "pages/makeMoney/makeMoney",
-    "pages/strategy/strategy",
     "pages/myApprentice/myApprentice",
     "pages/myEarnings/myEarnings",
     "components/recruitShare/recruitShare",
     "pages/withdraw/withdraw",
     "pages/withdrawalRecord/withdrawalRecord",
     "pages/myProduction/myProduction",
-    "pages/rankingList/rankingList",
-    "pages/infoAddress/infoAddress",
     "pages/liveList/liveList",
     "pages/gamePage/gamePage",
     "pages/webPay/webPay",
@@ -97,6 +68,57 @@
       }
     ]
   },
+  "subpackages": [
+    {
+      "root": "page/index/",
+      "pages": [
+        "pages/drag/drag",
+        "pages/certificate/certificate",
+        "pages/detail/detail",
+        "pages/rankingList/rankingList",
+        "pages/search/search"
+      ]
+    },
+    {
+      "root": "page/video/",
+      "pages": [
+        "pages/videoItemize/videoItemize",
+        "pages/videoTwo/videoTwo"
+      ]
+    },
+    {
+      "root": "page/post/",
+      "pages": [
+        "pages/release/release",
+        "pages/personPage/personPage",
+        "pages/pDetail/pDetail",
+        "pages/cDetail/cDetail",
+        "pages/message/message"
+      ]
+    },
+    {
+      "root": "page/user/",
+      "pages": [
+        "pages/attentionPage/attentionPage",
+        "pages/circle/circle",
+        "pages/collection/collection",
+        "pages/drawPage/drawPage",
+        "pages/experience/experience",
+        "pages/giftMessage/giftMessage",
+        "pages/history/history",
+        "pages/info/info",
+        "pages/invitation/invitation",
+        "pages/makeMoney/makeMoney",
+        "pages/messagePage/messagePage",
+        "pages/myCircle/myCircle",
+        "pages/score/score",
+        "pages/usermesseage/usermesseage",
+        "pages/winPrize/winPrize",
+        "pages/infoAddress/infoAddress",
+        "pages/strategy/strategy"
+  ]
+    }
+  ],
   "plugins": {
     "WechatSI": {
       "version": "0.3.4",
