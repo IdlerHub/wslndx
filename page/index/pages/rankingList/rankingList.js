@@ -109,14 +109,14 @@ Page({
       wx.uma.trackEvent("rankingShare, ", { name: "个人榜分享" });
       return {
         title: '老年大学学员PK学习榜，快来看看您的学习排第几！',
-        path: `pages/rankingList/rankingList?type=share&uid=${this.data.$state.userInfo.id}&mode=1`,
+        path: `page/index/pages/rankingList/rankingList?type=share&uid=${this.data.$state.userInfo.id}&mode=1`,
         imageUrl: this.data.$state.imgHost + '/rankingShareimg3.png'
       };
     } else {
       wx.uma.trackEvent("rankingShare, ", { name: "学校榜分享" });
       return {
         title: '老年大学PK学习榜，快来看看您的学校排第几!',
-        path: `pages/rankingList/rankingList?type=share&uid=${this.data.$state.userInfo.id}&mode=0`,
+        path: `page/index/pages/rankingList/rankingList?type=share&uid=${this.data.$state.userInfo.id}&mode=0`,
         imageUrl: this.data.$state.imgHost + '/rankingShareimg2.png'
       };
     }

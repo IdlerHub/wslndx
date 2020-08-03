@@ -108,7 +108,7 @@
   </view>
   <!-- 搜索/学分 -->
   <view class="search-box">
-    <navigator class="search-left" url="/pages/search/search">
+    <navigator class="search-left" url="/page/index/pages/search/search">
       <image src="{{$state.imgHost}}/searchp.png"></image>
       <text>搜索课程名称</text>
     </navigator>
@@ -135,7 +135,7 @@
         </formCode>
       </block>
     </scroll-view>
-    <navigator class="tabclassify" url="/pages/drag/drag?index={{currentTab}}">
+    <navigator class="tabclassify" url="/page/index/pages/drag/drag?index={{currentTab}}">
       <image src="{{$state.imgHost}}/tabclassify.png"></image>
     </navigator>
   </view>
@@ -166,7 +166,7 @@
             <image class="img" mode="widthFix" src="{{  !recommend ? '' : $state.imgHost + '/liveBtn.png' }}">
             </image>
           </navigator> -->
-          <navigator class="jumpoutBox" url="/pages/rankingList/rankingList" hover-class="none">
+          <navigator class="jumpoutBox" url="/page/index/pages/rankingList/rankingList" hover-class="none">
             <image class="img" mode="widthFix" src="{{  !recommend ? '' : $state.imgHost + '/rankingDoor2.png' }}">
             </image>
           </navigator>

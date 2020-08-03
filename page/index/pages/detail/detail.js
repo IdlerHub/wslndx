@@ -5,8 +5,7 @@ const plugin = requirePlugin("WechatSI");
 // 获取**全局唯一**的语音识别管理器**recordRecoManager**
 const manager = plugin.getRecordRecognitionManager();
 const innerAudioContext = wx.createInnerAudioContext();
-var htmlparser = require("../../utils/htmlparser.js");
-import OBS from "../../OBS/OBSUploadFile.js";
+var htmlparser = require("../../../../utils/htmlparser");
 Page({
   data: {
     sort: 0,
@@ -727,7 +726,7 @@ Page({
       return {
         title: this.data.detail.title,
         path:
-          "/pages/detail/detail?id=" +
+          "page/index/pages/detail/detail?id=" +
           this.data.id +
           "&curid=" +
           this.data.cur.id +

@@ -9,8 +9,6 @@
     "pages/member/member",
     "pages/cDetail/cDetail",
     "pages/pDetail/pDetail",
-    "pages/detail/detail",
-    "pages/certificate/certificate",
     "pages/info/info",
     "pages/user/user",
     "pages/login/login",
@@ -21,12 +19,10 @@
     "pages/invitation/invitation",
     "pages/gift/gift",
     "pages/education/education",
-    "pages/videoItemize/videoItemize",
     "pages/commentDetail/commentDetail",
     "pages/message/message",
     "pages/sign/sign",
     "pages/agreement/agreement",
-    "pages/videoTwo/videoTwo",
     "pages/experience/experience",
     "components/navBar/navBar",
     "pages/upwxpage/upwxpage",
@@ -34,8 +30,6 @@
     "pages/drawPage/drawPage",
     "pages/winPrize/winPrize",
     "pages/giftMessage/giftMessage",
-    "pages/search/search",
-    "pages/drag/drag",
     "components/integralAni/integralAni",
     "pages/usermesseage/usermesseage",
     "pages/messagePage/messagePage",
@@ -48,7 +42,6 @@
     "pages/withdraw/withdraw",
     "pages/withdrawalRecord/withdrawalRecord",
     "pages/myProduction/myProduction",
-    "pages/rankingList/rankingList",
     "pages/infoAddress/infoAddress",
     "pages/liveList/liveList",
     "pages/gamePage/gamePage",
@@ -99,20 +92,11 @@
   },
   "subpackages": [
     {
-      "root": "page/login/",
-      "pages": [
-        "pages/login/login",
-        "pages/sign/sign"
-      ]
-    },
-    {
       "root": "page/index/",
       "pages": [
-        "pages/index/index",
         "pages/drag/drag",
         "pages/certificate/certificate",
         "pages/detail/detail",
-        "pages/education/education",
         "pages/rankingList/rankingList",
         "pages/search/search"
       ]
@@ -120,7 +104,6 @@
     {
       "root": "page/video/",
       "pages": [
-        "pages/video/video",
         "pages/videoItemize/videoItemize",
         "pages/videoTwo/videoTwo"
       ]
