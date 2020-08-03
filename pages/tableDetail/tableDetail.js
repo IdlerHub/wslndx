@@ -1,4 +1,5 @@
 // pages/tableDetail/tableDetail.js
+const LiveDate = require("../../data/LiveDate");
 Page({
   data: {
     days: 0,

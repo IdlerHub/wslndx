@@ -1,5 +1,5 @@
-const LiveDate = require("../../data/LiveDate");
 // pages/timetable/timetable.js
+const LiveDate = require("../../data/LiveDate");
 Page({
   data: {
     navScrollLeft: 0,
@@ -169,7 +169,12 @@ Page({
     }
   },
   getLiveLessons() {
+    console.log("获取课程列表")
     LiveDate.getLiveLessons().then((res) => {
+      this.setData({
+        lessons: res.data.lessons,
+        nav: res.data.weeks,
+      });
       console.log(res);
     });
   },
