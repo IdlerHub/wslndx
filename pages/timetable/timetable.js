@@ -168,14 +168,12 @@ Page({
       });
     }
   },
-  getLiveLessons() {
-    console.log("获取课程列表")
+  getLiveLessons() {  //获取直播课程列表
     LiveDate.getLiveLessons().then((res) => {
       this.setData({
         lessons: res.data.lessons,
         nav: res.data.weeks,
       });
-      console.log(res);
     });
   },
   getheight() {

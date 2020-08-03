@@ -19,7 +19,7 @@ function getLiveLessons() {
  * @return:  promise
  * **/
 function getApplyDetail(params) {
-  return httpService.post("schedule/applyDetail", param);
+  return httpService.post("schedule/applyDetail", params);
 }
 /** 
  *  @description: 获取邀请记录
@@ -27,7 +27,7 @@ function getApplyDetail(params) {
  * @return:  promise
  * **/
 function getInviteRecord(params) {
-  return httpService.post("schedule/inviteRecord", param);
+  return httpService.post("schedule/inviteRecord", params);
 }
 /** 
  *  @description: 立即学习(即领取课程,用户首次进入课程详情页面)
@@ -35,7 +35,7 @@ function getInviteRecord(params) {
  * @return:  promise
  * **/
 function getReceiveLesson(params) {
-  return httpService.post("schedule/receiveLesson", param);
+  return httpService.post("schedule/receiveLesson", params);
 }
 
 
@@ -45,7 +45,7 @@ function getReceiveLesson(params) {
  * @return:  promise
  * **/
 function getLessonDetail(params) {
-  return httpService.post("schedule/lessonDetail", param);
+  return httpService.post("schedule/lessonDetail", params);
 }
 
 /** 

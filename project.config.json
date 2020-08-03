@@ -181,6 +181,13 @@
 					"pathName": "pages/timetable/timetable",
 					"query": "",
 					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/tableDetail/tableDetail",
+					"pathName": "pages/tableDetail/tableDetail",
+					"query": "lessonId=7",
+					"scene": null
 				}
 			]
 		}

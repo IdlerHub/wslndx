@@ -29,7 +29,7 @@
   <view wx:for="{{nav}}" id="{{item.index}}" wx:key="index" class="itemBox">
     <view class="contariner">
       <!-- <text id="text{{item.id}}" class="itemDay">{{item.txt}}</text> -->
-      <navigator id="item{{item.id}}" class="item" wx:for="{{lessons[index]}}" wx:for-item="lesson" wx:for-index="classIndex" wx:key="index" hover-class="none" url="/pages/tableDetail/tableDetail"
+      <navigator id="item{{item.id}}" class="item" wx:for="{{lessons[index]}}" wx:for-item="lesson" wx:for-index="classIndex" wx:key="index" hover-class="none" url="/pages/tableDetail/tableDetail?lessonId={{lesson.id}}"
         open-type="navigate">
         <view class="imgBox">
           <view id="text{{item.id}}" class="img-week">{{item.name}}</view>
