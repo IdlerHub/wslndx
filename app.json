@@ -24,11 +24,7 @@
     "pages/liveList/liveList",
     "pages/gamePage/gamePage",
     "pages/webPay/webPay",
-    "components/playRrecord/playRrecord",
-    "pages/tableDetail/tableDetail",
-    "pages/timetable/timetable",
-    "pages/timetableList/timetableList",
-    "pages/liveDetail/liveDetail"
+    "components/playRrecord/playRrecord"
   ],
   "permission": {
     "scope.userLocation": {
@@ -117,6 +113,14 @@
         "pages/infoAddress/infoAddress",
         "pages/strategy/strategy"
   ]
+    },{
+      "root": "page/live/",
+      "pages": [
+        "pages/tableDetail/tableDetail",
+        "pages/timetable/timetable",
+        "pages/timetableList/timetableList",
+        "pages/liveDetail/liveDetail"
+      ]
     }
   ],
   "plugins": {
