@@ -1,5 +1,4 @@
-const Tutor = require("../../data/Tutor")
-
+const LiveDate = require("../../data/LiveDate");
 // pages/timetable/timetable.js
 Page({
   data: {
@@ -147,6 +146,7 @@ Page({
   timer: null,
   onLoad: function (options) {
     this.getheight();
+    this.getLiveLessons();
   },
   onShow: function () {},
   switchNav(event) {
@@ -167,6 +167,11 @@ Page({
         },
       });
     }
+  },
+  getLiveLessons() {
+    LiveDate.getLiveLessons().then((res) => {
+      console.log(res);
+    });
   },
   getheight() {
     let query = wx.createSelectorQuery().in(this);

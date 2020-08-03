@@ -139,30 +139,42 @@ page {
   justify-content: center;
   align-items: center;
 }
-.inviteBox text {
+
+.inviteBox .inviteShow {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.inviteBox .inviteShow text {
   font-size:40rpx;
   font-weight:500;
   color:rgba(58,58,58,1);
 }
-.inviteBox .num {
+.inviteBox .inviteShow .num {
   color: #DF2020;
 }
-.inviteBox .avatarBox {
+.inviteBox .inviteShow .avatarBox {
   width: calc(100vw - 220rpx);
+  height: 90rpx;
+  overflow: hidden;
   margin-top: 50rpx;
   margin-bottom: 40rpx;
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: center;
 }
-.inviteBox .avatarShow {
-  flex-wrap: wrap;
+.inviteBox .inviteShow .avatarShow {
+  height: 220rpx;
+  
   justify-content: flex-start;
 }
-.inviteBox .avatarBox image:nth-child(5n){
+.inviteBox .inviteShow .avatarBox image:nth-child(5n){
   margin-right: 0;
 }
-.inviteBox .avatarBox image {
+.inviteBox .inviteShow .avatarBox image {
   width: 90rpx;
   height: 90rpx;
   margin-right: 20rpx;

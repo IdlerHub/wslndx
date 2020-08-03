@@ -104,7 +104,10 @@ function xhr(path, method, param = {}, noToken) {
 function post(path, param = {}, noToken) {
   return xhr(path, "POST", param, noToken);
 }
-
+// get
+function get(path, param = {}, noToken) {
+  return xhr(path, "GET", param, noToken);
+}
 // delete
 function del(path, param = {}, noToken, type) {
   return xhr(path, "DELETE", param, noToken);
@@ -147,6 +150,7 @@ function upload(path, file, noLoading) {
 
 module.exports = {
   post: post,
+  get: get,
   del: del,
   upload: upload,
   wxp: wxp

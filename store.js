@@ -4,7 +4,7 @@
  * @LastEditTime: 2020-02-27 15:30:09
  */
 import Store from "wxministore";
-let env = "production";
+let env = "develop";
 let imgHost;
 let activityUrl;
 let API_URL;

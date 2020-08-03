@@ -1,40 +1,47 @@
-<!--pages/tableDetail/tableDetail.wxml-->
+<!-- pages/tableDetail/tableDetail.wxml -->
 <view class="contariner">
   <view class="imgBox">
-    <image
-      src="{{lessonDetail.cover}}">
-    </image>
+    <image src="{{lessonDetail.cover}}"></image>
     <view class="timeBox">
       <text class="txt">开课倒计时</text>
       <view class="timer">
         <text>{{days}}</text>
-        <text> 天 </text>
+        <text>天</text>
         <text>{{hours}}</text>
-        <text> 时 </text>
+        <text>时</text>
         <text>{{minutes}}</text>
-        <text> 分 </text>
+        <text>分</text>
         <text>{{seconds}}</text>
-        <text> 秒 </text>
+        <text>秒</text>
       </view>
     </view>
   </view>
   <view class="titleBox">
     <text>{{lessonDetail.name}}</text>
-    <text>{{lessonDetail.start_day}}-{{lessonDetail.end_day}} · {{weekList[lessonDetail.week-1]}} · {{lessonDetail.start_time}}-{{lessonDetail.end_time}}</text>
+    <text>
+      {{lessonDetail.start_day}}-{{lessonDetail.end_day}} · {{weekList[lessonDetail.week-1]}} · {{lessonDetail.start_time}}-{{lessonDetail.end_time}}
+    </text>
   </view>
   <view class="inviteBox">
-    <text>可以邀请<text class="num">{{lessonDetail.conditions}}</text>位好友一起上课</text>
-    <view class="avatarBox {{showMoreAvatar ? 'avatarShow': ''}}">
-        <image src="../../images/addUser.png" wx:for="{{avatarList.length}}" wx:key="index"></image>
+    <view class="inviteShow" bindtap="showAllAvatar">
+      <text>
+        可以邀请<text class="num">{{lessonDetail.conditions}}</text>位好友一起上课
+      </text>
+      <view class="avatarBox {{showMoreAvatar ? 'avatarShow': ''}}">
+        <image src="{{item.avatar}}" wx:for="{{avatarList}}" wx:key="{{item.id}}"></image>
+        <image src="../../images/addUser.png" wx:for="{{lessonDetail.conditions -  lessonDetail.invite_num}}" wx:key="index"></image>
+      </view>
     </view>
-    <button open-type="contact">{{lessonDetail.is_own ? '去上课' : '去邀请'}}</button>
+    <button bindtap="showServise">{{lessonDetail.is_own ? '去上课' : '去邀请'}}</button>
   </view>
   <view class="tabList">
     <view class="tab">
-      <text>总课时数</text> <text>{{lessonDetail.chapter_num}}次课 </text>
+      <text>总课时数</text>
+      <text>{{lessonDetail.chapter_num}}次课</text>
     </view>
     <view class="tab">
-      <text>授课老师</text> <text>{{lessonDetail.teacher}}</text>
+      <text>授课老师</text>
+      <text>{{lessonDetail.teacher}}</text>
     </view>
   </view>
   <view class="content">
@@ -54,19 +61,17 @@
       <text>{{colleted ? '已收藏' : '收藏'}}</text>
     </view> -->
   </view>
-  <view class="right" bindtap="rightNow">
-    立即学习
-  </view>
+  <view class="right" bindtap="rightNow">立即学习</view>
 </view>
-
-
 <!-- 消息盒子 -->
 <cover-view class="servise" wx:if="{{showServise}}">
   <cover-view class="serviseBox">
     <cover-view class="text">进入客服消息后，点击右下角</cover-view>
     <cover-view class="text">快捷图片，扫码进入班群上课</cover-view>
     <cover-image src="{{$state.imgHost}}/serviseImg.png" class="image"></cover-image>
-    <button open-type="contact" hover-class="none" show-message-card send-message-img="{{$state.imgHost}}/serviceIMG.jpg" send-message-title="添加老师" catchtap="showServise" session-from='{"name": "{{$state.userInfo.nickname}}","avatarUrl":"{{$state.userInfo.avatar}}","nickName":"{{$state.userInfo.nickname}}"}'>去客服页面添加</button>
+    <button open-type="contact" hover-class="none" show-message-card send-message-img="{{$state.imgHost}}/serviceIMG.jpg" send-message-title="添加老师" catchtap="showServise" session-from='{"name": "{{$state.userInfo.nickname}}","avatarUrl":"{{$state.userInfo.avatar}}","nickName":"{{$state.userInfo.nickname}}"}'>
+      去客服页面添加
+    </button>
   </cover-view>
   <cover-image src="{{$state.imgHost}}/cancel.png" class="cancel" catchtap="showServise"></cover-image>
 </cover-view>
