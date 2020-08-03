@@ -56,8 +56,8 @@
     "components/playRrecord/playRrecord",
     "pages/tableDetail/tableDetail",
     "pages/timetable/timetable",
-    "pages/timetableList/timetableList"
-    
+    "pages/timetableList/timetableList",
+    "pages/liveDetail/liveDetail"
   ],
   "permission": {
     "scope.userLocation": {
