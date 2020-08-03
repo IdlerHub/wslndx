@@ -1,7 +1,6 @@
 //获取应用实例
 const VodUploader = require('../../vod/vodsdk.js');
 const recorderManager = wx.getRecorderManager()
-// const innerAudioContext = wx.createInnerAudioContext();
 import OBS from "../../OBS/OBSUploadFile.js";
 const app = getApp();
 Page({
@@ -101,7 +100,7 @@ Page({
     wx.setKeepScreenOn({
       keepScreenOn: false
     })
-    this.innerAudioContext.destroy().stop()
+    this.innerAudioContext.destroy()
     recorderManager.stop()
     this.timer ? [clearInterval(this.timer), this.timer = null] : ''
     this.playTiemr ? [clearInterval(this.playTiemr), this.playTiemr = null] : ''
@@ -783,7 +782,7 @@ Page({
       recordStatus: 3
     }) : ''
     recorderManager.stop()
-    innerAudioContext.stop()
+    this.innerAudioContext.stop()
     this.setData({
       playRecord: 0,
       voiceplayimg: 'https://hwcdn.jinlingkeji.cn/images/pro/triangle.png'
