@@ -253,7 +253,6 @@ page .bbbig {
 .prizrBigbox .prizrbox {
   width: 626rpx;
   height: 760rpx;
-  background: url('/images/prizrBg.png') no-repeat cneter;
   background-size: 100% 100%;
   position: relative;
   top: 109rpx;

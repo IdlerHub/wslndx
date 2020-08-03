@@ -15,21 +15,12 @@ Component({
       type: String,
       value: ''
     },
-    currentTab: {
-      type: String,
-      value: ""
+    playDuration: {
+      type: Number,
+      value: 0
     }
   },
   observers:{
-    "currentTab": function (currentTab) {
-      if(currentTab == this.data.current) {
-        this.setData({
-          playRecord: 0,
-          current: currentTab
-        })
-        innerAudioContext.stop();
-      } 
-    }
   },
   /**
    * 组件的初始数据
@@ -45,6 +36,10 @@ Component({
       second: 0,
       minute: 0
     },
+    interTimer: {
+      second: 0,
+      minute: 0
+    },
     current:0
   },
 
@@ -56,6 +51,22 @@ Component({
         current: this.data.currentTab
       })
     },
+    detached: function () {
+      console.log('组件销毁')
+      innerAudioContext.stop();
+    }
+  },
+  pageLifetimes: {
+    show: function() {
+      // 页面被展示
+    },
+    hide: function() {
+      console.log('页面隐藏')
+      innerAudioContext.stop();
+    },
+    resize: function(size) {
+      // 页面尺寸变化
+    }
   },
   /**
    * 组件的方法列表
@@ -67,9 +78,10 @@ Component({
           'playTiemr.minute': 0,
           'playTiemr.second': 0
         })
-        this.playTiemr ? clearInterval(this.playTiemr) : ''
+        this.playTiemr ? [clearInterval(this.playTiemr), this.playTiemr= null ] : ''
         this.playTiemr = setInterval(() => {
-          if (this.data.playTiemr.minute == this.data.timer.minute && this.data.playTiemr.second == this.data.timer.second) {
+          console.log(this.data.playTiemr.minute, this.data.interTimer.minute , this.data.playTiemr.second, this.data.interTimer.second)
+          if (this.data.playTiemr.minute == this.data.interTimer.minute && this.data.playTiemr.second == this.data.interTimer.second) {
             innerAudioContext.stop()
             return
           }
@@ -85,8 +97,7 @@ Component({
       })
   
       innerAudioContext.onStop(() => {
-        console.log(4324324324)
-        this.playTiemr ? clearInterval(this.playTiemr) : ''
+        this.playTiemr ? [clearInterval(this.playTiemr), this.playTiemr= null]  : ''
         this.setData({
           playRecord: 0,
           voiceplayimg: 'https://hwcdn.jinlingkeji.cn/images/pro/triangle.png'
@@ -101,10 +112,14 @@ Component({
     },
     playVoice() {
       if (!this.data.playRecord) {
+        console.log(324234234234)
         this.setData({
           playRecord: 1,
-          voiceplayimg: 'https://hwcdn.jinlingkeji.cn/images/pro/voicepause.png'
+          voiceplayimg: 'https://hwcdn.jinlingkeji.cn/images/pro/voicepause.png',
+          'interTimer.minute': parseInt(this.data.playDuration/60),
+          'interTimer.second': this.data.playDuration - (parseInt(this.data.playDuration/60) * 60)
         })
+        console.log(this.data.interTimer, this.data.playDuration, this.data.recordUrl)
         innerAudioContext.src = this.data.recordUrl;
         innerAudioContext.play();
       } else {

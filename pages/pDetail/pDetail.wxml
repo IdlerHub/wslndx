@@ -65,13 +65,20 @@
 					<image mode="aspectFill" src="{{ $state.imgHost }}/play-hl.png" class="play" bindtap="play"></image>
 				</view>
 			</view>
-			<playRrecord wx:if="{{ detail.url && detail.duration > 0 }}" recordUrl="{{detail.url}}" duration="{{detail.duration}}" currentTab="0" style="position: relative;left: -30rpx;"></playRrecord>
 			<view class="content" wx:if="{{ item.check_status == 2 || detail.check_status == 0 }}">
 				<view class="bg">
 					<image mode="aspectFill"
 						src="{{ detail.check_status == 0 ?  $state.imgHost + '/tip.jpg' : detail.check_status == 2 ? $state.imgHost + '/sensitivity.png' : '' }}"
 						class="poster"></image>
 					<image mode="aspectFill" src="{{ $state.imgHost }}/play-hl.png" class="play"></image>
+				</view>
+			</view>
+			<view class="topvoiceBox" wx:if="{{detail.url && detail.duration > 0}}" bindtap="checkRecord" data-duration="{{detail.duration}}" data-record="{{detail.url}}" data-timer="{{detail.timer}}" data-id="{{detail.id}}">
+				<view class="voiceBoxRight">
+						<image src="{{detail.id != playVoice.id ? $state.imgHost + '/triangle.png' : $state.imgHost + '/voicepause.png'}}"></image>
+						<viwe class="centerImg {{ playVoice.status && detail.id == playVoice.id ? 'centerActive' : ''}}"></viwe>
+						<view class="timer" wx:if="{{detail.id != playVoice.id}}">0{{detail.timer.minute}}:{{detail.timer.second > 9 ?detail.timer.second : '0' + detail.timer.second}}</view>
+						<view class="timer" wx:else>0{{playVoice.playTiemr.minute}}:{{playVoice.playTiemr.second > 9 ? playVoice.playTiemr.second : '0' + playVoice.playTiemr.second}}</view>
 				</view>
 			</view>
 			<view wx:if="{{ detail.fs_title }}" class="label" bindtap="tocdetai">#{{ detail.fs_title }}精选</view>

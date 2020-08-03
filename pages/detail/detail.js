@@ -476,7 +476,7 @@ Page({
       i = e || 0;
     } else {
       i = e.currentTarget.dataset.index;
-      if (this.data.cur.id == list[i].id) return;
+      // if (this.data.cur.id == list[i].id) return;
     }
     this.setData({
       cur: list[i]

@@ -1,11 +1,7 @@
 //获取应用实例
 const VodUploader = require('../../vod/vodsdk.js');
-// 获取**全局唯一**的语音识别管理器**recordRecoManager**
-// const recorderManager = wx.getRecorderManager()
-const plugin = requirePlugin("WechatSI");
-// 获取**全局唯一**的语音识别管理器**recordRecoManager**
-const manager = plugin.getRecordRecognitionManager();
-const innerAudioContext = wx.createInnerAudioContext();
+const recorderManager = wx.getRecorderManager()
+// const innerAudioContext = wx.createInnerAudioContext();
 import OBS from "../../OBS/OBSUploadFile.js";
 const app = getApp();
 Page({
@@ -39,8 +35,8 @@ Page({
     voiceplayimg: 'https://hwcdn.jinlingkeji.cn/images/pro/triangle.png'
   },
   pageName: "发帖页",
-  timer: '',
-  playTiemr: '',
+  timer: null,
+  playTiemr: null,
   onLoad(ops) {
     ops.type ? this.circle = true : ''
     if (ops.title) {
@@ -68,6 +64,13 @@ Page({
     }
   },
   onShow() {
+    this.innerAudioContext =  wx.createInnerAudioContext();
+    wx.setKeepScreenOn({
+      keepScreenOn: true
+    })
+    // recorderManager.stop()
+    this.stopVoice()
+    if(this.timer) recorderManager.stop()
     this.getRecordAuth();
     this.initRecord();
     if (this.data.$state.releaseParam != null) {
@@ -95,6 +98,14 @@ Page({
       media_type: this.data.media_type,
       showRelease: true
     });
+    wx.setKeepScreenOn({
+      keepScreenOn: false
+    })
+    this.innerAudioContext.destroy().stop()
+    recorderManager.stop()
+    this.timer ? [clearInterval(this.timer), this.timer = null] : ''
+    this.playTiemr ? [clearInterval(this.playTiemr), this.playTiemr = null] : ''
+    this.innerAudioContext.destroy()
   },
   input(e) {
     this.setData({
@@ -270,8 +281,7 @@ Page({
           // 选填，视频封面，把 wx.chooseImage 回调的参数(file)传进来
           coverFile: res.coverFile,
           // 上传中回调，获取上传进度等信息
-          progress: function (result) {
-          },
+          progress: function (result) {},
           // 上传完成回调，获取上传后的视频 URL 等信息
           finish: (result) => {
             wx.hideLoading()
@@ -285,6 +295,7 @@ Page({
           },
           // 上传错误回调，处理异常
           error: function (result) {
+            console.log(result)
             wx.showToast({
               title: '上传失败'
             })
@@ -566,30 +577,50 @@ Page({
       fail(res) {}
     });
   },
+  getSystemInfo() {
+    let system = wx.getSystemInfoSync()
+    return system.microphoneAuthorized
+  },
   /**
    * 初始化语音识别回调 && 语音播放
    */
   initRecord() {
-    //有新的识别内容返回，则会调用此事件
-    manager.onRecognize = res => {};
-    // 识别结束事件
-    manager.onStop = res => {
-      // 获取音频文件临时地址
+    recorderManager.onStart(() => {
+      this.interval()
+    })
+
+    recorderManager.onStop(res => {
       this.filePath = res.tempFilePath;
       let duration = res.duration;
-    };
-    // 识别错误事件
-    manager.onError = res => {};
+      if (!this.data.timer.minute && !this.data.timer.second) {
+        wx.showToast({
+          title: '录音时间过短',
+          icon: 'none'
+        })
+        this.timer ? [clearInterval(this.timer), this.timer = null] : ''
+        this.setData({
+          recordStatus: 1,
+          'timer.minute': 0,
+          'timer.second': 0
+        })
+        return
+      }
+      this.setData({
+        recordStatus: 3
+      })
+      this.timer ? [clearInterval(this.timer), this.timer = null] : ''
+    })
 
-    innerAudioContext.onPlay(() => {
+    this.innerAudioContext.onPlay(() => {
       this.setData({
         'playTiemr.minute': 0,
         'playTiemr.second': 0
       })
-      this.playTiemr ? clearInterval(this.playTiemr) : ''
+      this.playTiemr ? [clearInterval(this.playTiemr), this.playTiemr = null] : ''
+      console.log(4345435)
       this.playTiemr = setInterval(() => {
         if (this.data.playTiemr.minute == this.data.timer.minute && this.data.playTiemr.second == this.data.timer.second) {
-          innerAudioContext.stop()
+          this.stopVoice()
           return
         }
         let num = this.data.playTiemr.second
@@ -603,12 +634,8 @@ Page({
       }, 1000)
     })
 
-    innerAudioContext.onStop(() => {
-      this.playTiemr ? clearInterval(this.playTiemr) : ''
-      this.setData({
-        playRecord: 0,
-        voiceplayimg: 'https://hwcdn.jinlingkeji.cn/images/pro/triangle.png'
-      })
+    this.innerAudioContext.onStop(() => {
+      // this.stopVoice()
     })
   },
   showRecorBox() {
@@ -622,48 +649,55 @@ Page({
       that = this
     switch (type) {
       case '1': {
-         wx.showModal({
-            content: '重录会删除这条录音，确定重录',
-            confirmColor: '#DF2020',
-            success(res) {
-              if (res.confirm) {
-                that.setData({
-                  recordStatus: type
-                })
-                that.interval()
-              }
+        wx.showModal({
+          content: '重录会删除这条录音，确定重录',
+          confirmColor: '#DF2020',
+          success(res) {
+            if (res.confirm) {
+              that.stopVoice()
+              that.setData({
+                recordStatus: type,
+                'timer.minute': 0,
+                'timer.second': 0
+              })
             }
-          })
-          break;
+          }
+        })
+        break;
       }
       case '2':
-         if (this.data.$state.authRecord) {
-          that.setData({
-            recordStatus: type
-          })
-          this.interval()
+        if (this.data.$state.authRecord) {
+          if (this.getSystemInfo()) {
+            that.setData({
+              recordStatus: type,
+              'timer.minute': 0,
+              'timer.second': 0
+            })
+            recorderManager.start({
+              duration: 600000,
+              format: 'mp3'
+            })
+          } else {
+            recorderManager.start()
+            wx.nextTick(() => {
+              recorderManager.stop()
+            })
+          }
         } else {
           this.authrecord()
         }
         break;
       case '3':
-        this.setData({
-          recordStatus: type
-        })
-        manager.stop();
-        this.timer ? clearInterval(this.timer) : ''
+        recorderManager.stop()
         break;
     }
   },
   interval() {
-    manager.start({
-      lang: "zh_CN"
-    });
     this.setData({
       'timer.minute': 0,
       'timer.second': 0
     })
-    this.timer ? clearInterval(this.timer) : ''
+    this.timer ? [clearInterval(this.timer), this.timer = null] : ''
     this.timer = setInterval(() => {
       let num = this.data.timer.second
       num += 1
@@ -675,29 +709,46 @@ Page({
       })
       if (this.data.timer.minute >= 5) {
         clearInterval(this.timer)
+        this.timer = null
         this.setData({
           recordStatus: 3
         })
+        recorderManager.stop()
       }
     }, 1000)
   },
   playVoice() {
     if (!this.data.playRecord) {
+      // this.stopVoice()
+      this.innerAudioContext = wx.createInnerAudioContext();
+      this.initRecord();
       this.setData({
         playRecord: 1,
         voiceplayimg: 'https://hwcdn.jinlingkeji.cn/images/pro/voicepause.png'
       })
-      innerAudioContext.src = this.filePath;
-      innerAudioContext.play();
+      this.innerAudioContext.src = this.filePath;
+      this.innerAudioContext.play();
     } else {
       this.setData({
         playRecord: 0
       })
-      innerAudioContext.stop();
+      this.stopVoice()
     }
 
   },
+  stopVoice() {
+    this.innerAudioContext.stop()
+    this.innerAudioContext.destroy()
+    this.setData({
+      playRecord: 0,
+      voiceplayimg: 'https://hwcdn.jinlingkeji.cn/images/pro/triangle.png',
+      'playTiemr.minute': 0,
+      'playTiemr.second': 0
+    })
+    this.playTiemr ? [clearInterval(this.playTiemr), this.playTiemr = null] : ''
+  },
   uprecorde(i, up) {
+    this.stopVoice()
     wx.showToast({
       title: '正在压缩',
       icon: 'none',
@@ -722,11 +773,24 @@ Page({
       showVoiceBox: 0,
       recordStatus: 1
     });
-    innerAudioContext.stop();
+    this.innerAudioContext.stop();
+    this.innerAudioContext.destroy()
     this.filePath = null
   },
   //用于数据统计
-  onHide() {},
+  onHide() {
+    this.getSystemInfo() ? this.data.recordStatus == 2 && this.setData({
+      recordStatus: 3
+    }) : ''
+    recorderManager.stop()
+    innerAudioContext.stop()
+    this.setData({
+      playRecord: 0,
+      voiceplayimg: 'https://hwcdn.jinlingkeji.cn/images/pro/triangle.png'
+    })
+    this.timer ? [clearInterval(this.timer), this.timer = null] : ''
+    this.playTiemr ? [clearInterval(this.playTiemr), this.playTiemr = null] : ''
+  },
   obsUpload(medias, type, i, up) {
     let reqs = [];
     if (type) {
@@ -736,15 +800,17 @@ Page({
       });
       Promise.all(reqs)
         .then(res => {
+          console.log(res)
           if (res[0]) {
             i >= 0 && up ? this.setData({
               [`param.image[${i}]`]: res,
               media_type: 1
-            }) :  this.setData({
+            }) : this.setData({
               'param.image': this.data.param.image.concat(res),
               media_type: 1
             });
             wx.hideLoading();
+            this.judge();
           } else {
             wx.showToast({
               icon: "none",
@@ -758,6 +824,9 @@ Page({
               icon: "none",
               title: (err.data && err.data.msg) || "上传失败"
             });
+            // wx.showModal({
+            //   content: JSON.stringify(err)
+            // })
           }
         });
     } else {
