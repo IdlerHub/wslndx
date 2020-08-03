@@ -10,7 +10,7 @@ var httpService = require("../utils/service.js");
  * @return:  promise
  * **/
 function getLiveLessons() {
-  return httpService.get("schedule/lessons");
+  return httpService.post("schedule/lessons");
 }
 
 module.exports = {
