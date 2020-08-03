@@ -11,7 +11,7 @@ Page({
   getUserLessons(){
     LiveDate.getUserLessons().then(res=>{
       console.log(res)
-      this.setDate({
+      this.setData({
         courseListL: res.data,
       });
     });

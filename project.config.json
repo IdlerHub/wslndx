@@ -177,16 +177,9 @@
 				},
 				{
 					"id": -1,
-					"name": "pages/vote/vote",
-					"pathName": "pages/vote/vote",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": 14,
-					"name": "pages/voteDetail/voteDetail",
-					"pathName": "pages/voteDetail/voteDetail",
-					"query": "type=share&vote=0&uid=915",
+					"name": "pages/liveDetail/liveDetail",
+					"pathName": "pages/liveDetail/liveDetail",
+					"query": "lessonId=7",
 					"scene": null
 				}
 			]
