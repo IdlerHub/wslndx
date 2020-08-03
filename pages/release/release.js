@@ -1,7 +1,7 @@
 //获取应用实例
 const VodUploader = require('../../vod/vodsdk.js');
 const recorderManager = wx.getRecorderManager()
-const innerAudioContext = wx.createInnerAudioContext();
+// const innerAudioContext = wx.createInnerAudioContext();
 import OBS from "../../OBS/OBSUploadFile.js";
 const app = getApp();
 Page({
@@ -64,6 +64,7 @@ Page({
     }
   },
   onShow() {
+    this.innerAudioContext =  wx.createInnerAudioContext();
     wx.setKeepScreenOn({
       keepScreenOn: true
     })
@@ -100,10 +101,11 @@ Page({
     wx.setKeepScreenOn({
       keepScreenOn: false
     })
-    innerAudioContext.stop()
+    this.innerAudioContext.destroy().stop()
     recorderManager.stop()
     this.timer ? [clearInterval(this.timer), this.timer = null] : ''
     this.playTiemr ? [clearInterval(this.playTiemr), this.playTiemr = null] : ''
+    this.innerAudioContext.destroy()
   },
   input(e) {
     this.setData({
@@ -609,7 +611,7 @@ Page({
       this.timer ? [clearInterval(this.timer), this.timer = null] : ''
     })
 
-    innerAudioContext.onPlay(() => {
+    this.innerAudioContext.onPlay(() => {
       this.setData({
         'playTiemr.minute': 0,
         'playTiemr.second': 0
@@ -632,7 +634,7 @@ Page({
       }, 1000)
     })
 
-    innerAudioContext.onStop(() => {
+    this.innerAudioContext.onStop(() => {
       // this.stopVoice()
     })
   },
@@ -718,12 +720,14 @@ Page({
   playVoice() {
     if (!this.data.playRecord) {
       // this.stopVoice()
+      this.innerAudioContext = wx.createInnerAudioContext();
+      this.initRecord();
       this.setData({
         playRecord: 1,
         voiceplayimg: 'https://hwcdn.jinlingkeji.cn/images/pro/voicepause.png'
       })
-      innerAudioContext.src = this.filePath;
-      innerAudioContext.play();
+      this.innerAudioContext.src = this.filePath;
+      this.innerAudioContext.play();
     } else {
       this.setData({
         playRecord: 0
@@ -733,7 +737,8 @@ Page({
 
   },
   stopVoice() {
-    innerAudioContext.stop()
+    this.innerAudioContext.stop()
+    this.innerAudioContext.destroy()
     this.setData({
       playRecord: 0,
       voiceplayimg: 'https://hwcdn.jinlingkeji.cn/images/pro/triangle.png',
@@ -768,7 +773,8 @@ Page({
       showVoiceBox: 0,
       recordStatus: 1
     });
-    innerAudioContext.stop();
+    this.innerAudioContext.stop();
+    this.innerAudioContext.destroy()
     this.filePath = null
   },
   //用于数据统计
