@@ -231,7 +231,7 @@ Page({
       return
     } else {
       wx.navigateTo({
-        url: '/pages/winPrize/winPrize',
+        url: '/page/user/pages/winPrize/winPrize',
       })
       this.setData({
         showToast: false,

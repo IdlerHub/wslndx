@@ -73,7 +73,7 @@ Page({
     let end = this.data.vistor ? "&home=true" : "";
     wx.navigateTo({
       url:
-        "/pages/videoTwo/videoTwo?id=" +
+        "../videoTwo/videoTwo?id=" +
         id +
         "&categoryId=" +
         this.params.categoryId +

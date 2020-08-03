@@ -187,9 +187,9 @@ Page({
       })
     } else {
       status.currentTarget.dataset.type == 'reply' ? wx.navigateTo({
-        url: `/pages/pDetail/pDetail?id= ${status.currentTarget.dataset.id}&comment`,
+        url: `/page/post/pages/pages/pDetail/pDetail?id= ${status.currentTarget.dataset.id}&comment`,
       }) : wx.navigateTo({
-        url: '/pages/release/release',
+        url: '/page/post/pages/release/release',
       })
     }
   },
@@ -198,12 +198,11 @@ Page({
       wx.switchTab({
         url: "/pages/user/user"
       })
+    } else {
+      wx.navigateTo({
+        url: `/page/post/pages/personPage/personPage?uid=${e.currentTarget.dataset.item.uid}&nickname=${e.currentTarget.dataset.item.nickname}&university_name=${e.currentTarget.dataset.item.university_name}&avatar=${e.currentTarget.dataset.item.avatar}&addressCity=${e.currentTarget.dataset.item.province}&follow=${e.currentTarget.dataset.item.is_follow}`
+      });
     }
-  },
-  toMessage() {
-    wx.navigateTo({
-      url: "/pages/message/message"
-    })
   },
   onShareAppMessage: function (ops, b) {
     if (ops.from === "menu") {
@@ -223,14 +222,14 @@ Page({
       return {
         title: app.util.delHtmlTag(article.content),
         imageUrl: article.image || article.images[0] || "../../images/sharemessage.jpg",
-        path: "/pages/pDetail/pDetail?id=" + bkid + "&type=share&uid=" + this.data.$state.userInfo.id
+        path: "/page/post/pages/pDetail/pDetail?id=" + bkid + "&type=share&uid=" + this.data.$state.userInfo.id
       }
     }
   },
   navigate(e) {
     let id = e.currentTarget.dataset.id
     wx.navigateTo({
-      url: "../pDetail/pDetail?id=" + id
+      url: "/page/post/pages/pDetail/pDetail?id=" + id
     })
   },
   //取消收藏

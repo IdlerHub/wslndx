@@ -630,7 +630,7 @@ Page({
         imageUrl:
           article.image || article.images[0] || "../../images/sharemessage.jpg",
         path:
-          "/pages/pDetail/pDetail?id=" +
+          "/page/post/pages/pDetail/pDetail?id=" +
           bkid +
           "&type=share&uid=" +
           this.data.$state.userInfo.id
@@ -935,8 +935,11 @@ Page({
     manager.onStop = res => {
       clearInterval(this.timer);
       // 取出录音文件识别出来的文字信息
+      console.log(22222222)
       if (!this.data.showvoiceauto) return;
+      console.log(111111)
       let text = res.result;
+      console.log(text)
       this.data.replyshow
         ? (text = this.data.replycontent + text)
         : (text = this.data.content + text);
@@ -1005,6 +1008,35 @@ Page({
         voiceActon: false
       });
     };
+    innerAudioContext.onPlay(() => {
+      this.playTiemr ? [clearInterval(this.playTiemr), this.playTiemr= null ] : ''
+      this.playTiemr = setInterval(() => {
+        if (this.data.playVoice.playTiemr.minute == this.itemTimer.minute && this.data.playVoice.playTiemr.second == this.itemTimer.second) {
+          innerAudioContext.stop()
+          this.setData({
+            'playVoice.status': 0,
+            'playVoice.id': 0,
+          })
+          return
+        }
+        let num = this.data.playVoice.playTiemr.second
+        num += 1
+        num > 60 ? this.setData({
+          'playVoice.playTiemr.minute': this.data.playVoice.playTiemr.minute += 1,
+          'playVoice.playTiemr.second': 0
+        }) : this.setData({
+          'playVoice.playTiemr.second': num
+        })
+      }, 1000)
+    })
+
+    innerAudioContext.onStop(() => {
+      this.playTiemr ? [clearInterval(this.playTiemr), this.playTiemr= null]  : ''
+      this.setData({
+        'playVoice.status': 0,
+        'playVoice.id': 0,
+      })
+    })
   },
   touchstart() {
     this.setData({
@@ -1185,7 +1217,7 @@ Page({
       });
     } else {
       wx.navigateTo({
-        url: `/pages/personPage/personPage?uid=${e.currentTarget.dataset.item.uid}&nickname=${e.currentTarget.dataset.item.nickname}&avatar=${e.currentTarget.dataset.item.avatar}`
+        url: `../personPage/personPage?uid=${e.currentTarget.dataset.item.uid}&nickname=${e.currentTarget.dataset.item.nickname}&avatar=${e.currentTarget.dataset.item.avatar}`
       });
     }
   },
@@ -1284,37 +1316,6 @@ Page({
     this.setData({
       showSheet: false
     });
-  },
-  initRecord() {
-    innerAudioContext.onPlay(() => {
-      this.playTiemr ? [clearInterval(this.playTiemr), this.playTiemr= null ] : ''
-      this.playTiemr = setInterval(() => {
-        if (this.data.playVoice.playTiemr.minute == this.itemTimer.minute && this.data.playVoice.playTiemr.second == this.itemTimer.second) {
-          innerAudioContext.stop()
-          this.setData({
-            'playVoice.status': 0,
-            'playVoice.id': 0,
-          })
-          return
-        }
-        let num = this.data.playVoice.playTiemr.second
-        num += 1
-        num > 60 ? this.setData({
-          'playVoice.playTiemr.minute': this.data.playVoice.playTiemr.minute += 1,
-          'playVoice.playTiemr.second': 0
-        }) : this.setData({
-          'playVoice.playTiemr.second': num
-        })
-      }, 1000)
-    })
-
-    innerAudioContext.onStop(() => {
-      this.playTiemr ? [clearInterval(this.playTiemr), this.playTiemr= null]  : ''
-      this.setData({
-        'playVoice.status': 0,
-        'playVoice.id': 0,
-      })
-    })
   },
   checkRecord(e) {
     let duration = e.currentTarget.dataset.duration,

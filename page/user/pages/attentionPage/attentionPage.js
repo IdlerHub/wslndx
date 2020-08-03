@@ -53,7 +53,7 @@ Page({
   touser(e) {
     let index = e.currentTarget.dataset.index
     wx.navigateTo({
-      url: `/pages/personPage/personPage?uid=${this.data.list[index].id}&nickname=${this.data.list[index].nickname}&university_name=${this.data.list[index].university}&avatar=${this.data.list[index].avatar}&addressCity=${this.data.list[index].city}&follow=${this.data.list[index].status == '关注' ? 0 : 1}`
+      url: `/page/post/pages/personPage/personPage?uid=${this.data.list[index].id}&nickname=${this.data.list[index].nickname}&university_name=${this.data.list[index].university}&avatar=${this.data.list[index].avatar}&addressCity=${this.data.list[index].city}&follow=${this.data.list[index].status == '关注' ? 0 : 1}`
     })
   }
 })

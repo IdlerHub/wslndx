@@ -54,7 +54,7 @@ Page({
           title: "邀请好友注册",
           score: 25,
           status: false,
-          page: "/pages/invitation/invitation",
+          page: "/page/user/pages/invitation/invitation",
           authorization: false,
           showStatus: {
             name: "",
@@ -144,7 +144,7 @@ Page({
           title: "完善资料",
           score: 65,
           status: false,
-          page: "/pages/info/info",
+          page: "/page/user/pages/info/info",
           authorization: false,
           showStatus: {
             name: "finish_user_info_status",
@@ -475,15 +475,6 @@ Page({
                   getAddress: true,
                   giftInfo: param
                 })
-                // app.user.exchange(param).then(res => {
-                //   wx.navigateTo({
-                //     url:
-                //       "/pages/gift/gift?name=" +
-                //       e.currentTarget.dataset.title +
-                //       "&image=" +
-                //       e.currentTarget.dataset.image
-                //   });
-                // });
               }
             }
           });
@@ -562,8 +553,8 @@ Page({
     }
   },
   toDraw() {
-    wx: wx.navigateTo({
-      url: "/pages/drawPage/drawPage"
+    wx.navigateTo({
+      url: "/page/user/pages/drawPage/drawPage"
     });
     wx.uma.trackEvent("integral_btnClick", { btnName: "学分抽奖" });
   },
@@ -592,7 +583,7 @@ Page({
     let item = e.currentTarget.dataset.item;
     wx.navigateTo({
       url:
-        "/pages/giftMessage/giftMessage?totalPoints=" + this.data.totalPoints,
+        "/page/user/pages/giftMessage/giftMessage?totalPoints=" + this.data.totalPoints,
       success: function(res) {
         // 通过eventChannel向被打开页面传送数据
         res.eventChannel.emit("acceptDataFromOpenerPage", { data: item });

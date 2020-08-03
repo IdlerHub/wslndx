@@ -3,46 +3,24 @@
     "pages/index/index",
     "pages/loading/loading",
     "pages/video/video",
-    "pages/release/release",
     "pages/post/post",
-    "pages/circle/circle",
     "pages/member/member",
-    "pages/cDetail/cDetail",
-    "pages/pDetail/pDetail",
-    "pages/info/info",
     "pages/user/user",
     "pages/login/login",
-    "pages/score/score",
-    "pages/collection/collection",
-    "pages/history/history",
-    "pages/myCircle/myCircle",
-    "pages/invitation/invitation",
     "pages/gift/gift",
     "pages/education/education",
     "pages/commentDetail/commentDetail",
-    "pages/message/message",
     "pages/sign/sign",
     "pages/agreement/agreement",
-    "pages/experience/experience",
     "components/navBar/navBar",
     "pages/upwxpage/upwxpage",
-    "pages/personPage/personPage",
-    "pages/drawPage/drawPage",
-    "pages/winPrize/winPrize",
-    "pages/giftMessage/giftMessage",
     "components/integralAni/integralAni",
-    "pages/usermesseage/usermesseage",
-    "pages/messagePage/messagePage",
-    "pages/attentionPage/attentionPage",
-    "pages/makeMoney/makeMoney",
-    "pages/strategy/strategy",
     "pages/myApprentice/myApprentice",
     "pages/myEarnings/myEarnings",
     "components/recruitShare/recruitShare",
     "pages/withdraw/withdraw",
     "pages/withdrawalRecord/withdrawalRecord",
     "pages/myProduction/myProduction",
-    "pages/infoAddress/infoAddress",
     "pages/liveList/liveList",
     "pages/gamePage/gamePage",
     "pages/webPay/webPay",
@@ -111,17 +89,16 @@
     {
       "root": "page/post/",
       "pages": [
-        "pages/post/post",
         "pages/release/release",
         "pages/personPage/personPage",
         "pages/pDetail/pDetail",
-        "pages/cDetail/cDetail"
+        "pages/cDetail/cDetail",
+        "pages/message/message"
       ]
     },
     {
       "root": "page/user/",
       "pages": [
-        "pages/user/user",
         "pages/attentionPage/attentionPage",
         "pages/circle/circle",
         "pages/collection/collection",
@@ -136,8 +113,10 @@
         "pages/myCircle/myCircle",
         "pages/score/score",
         "pages/usermesseage/usermesseage",
-        "pages/winPrize/winPrize"
-      ]
+        "pages/winPrize/winPrize",
+        "pages/infoAddress/infoAddress",
+        "pages/strategy/strategy"
+  ]
     }
   ],
   "plugins": {

@@ -1,7 +1,0 @@
-{
-  "usingComponents": {
-    "address": "../../components/address/address"
-  },
-  "navigationBarTitleText": "中奖记录",
-  "navigationBarTextStyle": "black"
-}

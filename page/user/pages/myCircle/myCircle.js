@@ -136,7 +136,7 @@ Page({
   navigate(e) {
     let id = e.currentTarget.dataset.id
     wx.navigateTo({
-      url: "../pDetail/pDetail?id=" + id
+      url: "/page/post/pages/pDetail/pDetail?id=" + id
     })
   },
   del(e) {

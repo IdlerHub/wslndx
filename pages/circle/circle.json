@@ -1,9 +1,0 @@
-{
-  "backgroundTextStyle": "light",
-  "navigationBarTitleText": "圈子",
-  "navigationBarTextStyle": "black",
-  "enablePullDownRefresh": false,
-  "usingComponents": {
-		"drag": "../../components/drag/index"
-  }
-}

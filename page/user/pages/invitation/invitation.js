@@ -1,6 +1,6 @@
 //Page Object
 const app = getApp();
-import { wxp } from "../../utils/service";
+import { wxp } from "../../../../utils/service";
 
 Page({
   data: {
@@ -60,7 +60,7 @@ Page({
       .exec();
   },
   draw: function () {
-    let img = this.data.withdraw ? '../../images/invitation2.png' : '../../images/invitation.png'
+    let img = '../../images/invitation2.png'
     let ctx = wx.createCanvasContext("canva_invite", this)
     let ratio = 0.5;
     ctx.drawImage(

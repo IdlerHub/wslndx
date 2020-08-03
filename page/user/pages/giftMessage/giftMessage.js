@@ -53,12 +53,6 @@ Page({
                   getAddress: true,
                   giftInfo: param,
                 });
-
-                // app.user.exchange(param).then(res => {
-                //   wx.navigateTo({
-                //     url: "/pages/gift/gift?name=" + this.data.gift.title + '&image=' + this.data.gift.image
-                //   })
-                // })
               }
             },
           });
@@ -77,12 +71,6 @@ Page({
                   getAddress: true,
                   giftInfo: param,
                 });
-
-                // app.user.exchange(param).then(res => {
-                //   wx.navigateTo({
-                //     url: "/pages/gift/gift?name=" + this.data.gift.title + '&image=' + this.data.gift.image
-                //   })
-                // })
               }
             },
           });

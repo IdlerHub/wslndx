@@ -1,7 +1,7 @@
 <canvas class="cav" canvas-id="canva_invite" style="height:{{small ? '900rpx' : ''}}; width:{{ small ? '680rpx' : ''}}"></canvas>
 <scroll-view class="scroll" scroll-y="true">
   <view class="theme" hover-class="none">
-    <image class="bg" src="/images/invitation{{withdraw ? '2' : ''}}.png" mode="aspectFill"> </image>
+    <image class="bg" src="../../images/invitation2.png" mode="aspectFill"> </image>
     <view class="user" hover-class="none">
       <image class="portrait" src="{{ $state.userInfo.avatar }}" mode="aspectFill"> </image>
       <text class="name">我是{{ $state.userInfo.nickname }}</text>

@@ -1,5 +1,0 @@
-<!--pages/experience/experience.wxml-->
-<view class="container">
-    <view class="title">{{ article.title }}</view>
-    <rich-text nodes="{{article.content }}"></rich-text>
-</view>

@@ -1,6 +1,6 @@
 // pages/messagePage/messagePage.js
 const app = getApp()
-var htmlparser = require("../../utils/htmlparser.js");
+var htmlparser = require("../../../../utils/htmlparser.js");
 
 Page({
   data: {

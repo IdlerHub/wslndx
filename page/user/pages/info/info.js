@@ -200,7 +200,7 @@ Page({
   fill(){
     this.getGoodsAddress().then(()=>{
       wx.navigateTo({
-        url: "/pages/infoAddress/infoAddress"
+        url: "/page/user/pages/infoAddress/infoAddress"
       })
     });
   },

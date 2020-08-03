@@ -19,7 +19,7 @@ Page({
   tomessage(e) {
     let id = e.currentTarget.dataset.id;
     wx.navigateTo({
-      url: "/pages/messagePage/messagePage?id=" + id
+      url: "/page/user/pages/messagePage/messagePage?id=" + id
     });
   },
   getMessage() {

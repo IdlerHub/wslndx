@@ -233,7 +233,7 @@ Page({
       return {
         title: app.util.delHtmlTag(article.content),
         imageUrl: article.image || article.images[0] || "../../images/sharemessage.jpg",
-        path: "/pages/pDetail/pDetail?id=" +
+        path: "/page/post/pages/pDetail/pDetail?id=" +
           bkid +
           "&type=share&uid=" +
           this.data.$state.userInfo.id
@@ -645,7 +645,7 @@ Page({
   navigate(e) {
     let id = e.currentTarget.dataset.id;
     wx.navigateTo({
-      url: "../pDetail/pDetail?id=" + id
+      url: "../../page/post/pages/pDetail/pDetail?id=" + id
     });
   },
   //下拉刷新
@@ -764,13 +764,13 @@ Page({
       });
     } else {
       wx.navigateTo({
-        url: `/pages/personPage/personPage?uid=${e.currentTarget.dataset.item.uid}&nickname=${e.currentTarget.dataset.item.nickname}&university_name=${e.currentTarget.dataset.item.university_name}&avatar=${e.currentTarget.dataset.item.avatar}&addressCity=${e.currentTarget.dataset.item.province}&follow=${e.currentTarget.dataset.item.is_follow}`
+        url: `/page/post/pages/personPage/personPage?uid=${e.currentTarget.dataset.item.uid}&nickname=${e.currentTarget.dataset.item.nickname}&university_name=${e.currentTarget.dataset.item.university_name}&avatar=${e.currentTarget.dataset.item.avatar}&addressCity=${e.currentTarget.dataset.item.province}&follow=${e.currentTarget.dataset.item.is_follow}`
       });
     }
   },
   toMessage() {
     wx.navigateTo({
-      url: "/pages/message/message"
+      url: "page/post/pages/message/message"
     });
   },
   switchTab(event) {
@@ -808,14 +808,14 @@ Page({
     } else {
       if (status.currentTarget.dataset.type == "reply") {
         wx.navigateTo({
-          url: `/pages/pDetail/pDetail?id= ${status.currentTarget.dataset.id}&comment`
+          url: `/page/post/pages/pDetail/pDetail?id= ${status.currentTarget.dataset.id}&comment`
         });
         wx.uma.trackEvent("post_btnClick", {
           btnName: "评论按钮"
         });
       } else {
         wx.navigateTo({
-          url: "/pages/release/release"
+          url: "/page/post/pages/release/release"
         });
         wx.uma.trackEvent("post_btnClick", {
           btnName: "发帖按钮"

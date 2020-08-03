@@ -1,9 +1,0 @@
-{
-  "backgroundTextStyle": "light",
-  "navigationBarTitleText": "我的收藏",
-  "navigationBarTextStyle": "black",
-  "enablePullDownRefresh": true,
-  "usingComponents": {
-    "formCode": "/components/formCode/formCode"
-  }
-}

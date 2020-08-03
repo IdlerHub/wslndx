@@ -241,11 +241,6 @@ Page({
       url: "../pDetail/pDetail?id=" + id
     });
   },
-  toMessage() {
-    wx.navigateTo({
-      url: "/pages/message/message"
-    });
-  },
   //用于数据统计
   onHide() {},
   unShare() {

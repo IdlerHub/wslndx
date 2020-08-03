@@ -2,7 +2,7 @@
 const VodUploader = require('../../vod/vodsdk.js');
 const recorderManager = wx.getRecorderManager()
 const innerAudioContext = wx.createInnerAudioContext();
-import OBS from "../../OBS/OBSUploadFile.js";
+import OBS from "../../../../OBS/OBSUploadFile.js"
 const app = getApp();
 Page({
   data: {
@@ -488,7 +488,7 @@ Page({
                   wx.navigateBack()
                 } else if (this.circle && this.data.selId != this.data.circleId && this.data.selId > 0) {
                   wx.redirectTo({
-                    url: '/pages/cDetail/cDetail?id=' + this.data.selId,
+                    url: '/page/post/pages/cDetail/cDetail?id=' + this.data.selId,
                   })
                 } else {
                   wx.switchTab({

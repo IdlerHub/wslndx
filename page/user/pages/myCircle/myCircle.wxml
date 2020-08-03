@@ -64,7 +64,7 @@
 				</view>
 			</view>
 		</view>
-		<navigator wx:if="{{ item.fs_title }}" url="../cDetail/cDetail?id={{ item.fs_id }}"
+		<navigator wx:if="{{ item.fs_title }}" url="/page/post/pages/cDetail/cDetail?id={{ item.fs_id }}"
 		hover-class="none" open-type="navigate" class="label" style="margin: {{ !item.like_avatar_list[0] && !item.last_comment.nickname ? '30rpx 30rpx 0 30rpx' : '0 30rpx 20rpx 30rpx'}};"> #{{ item.fs_title }}精选</navigator>
 		<view class="btn" style="margin-top:{{!item.like_avatar_list[0] && !item.last_comment.nickname ? '30rpx' : ''}}" >
 			<!-- 点赞 -->
@@ -76,7 +76,7 @@
 			</formCode>
 				<text class="division"></text>
 				<!-- 评论 -->
-			<navigator url="../pDetail/pDetail?id={{ item.id }}&comment" hover-class="none" open-type="navigate" class="item">
+			<navigator url="/page/post/pages/pDetail/pDetail?id={{ item.id }}&comment" hover-class="none" open-type="navigate" class="item">
 				<formCode>
 					<view class="container-sub">
 						<icon class="iconfont icon-comment"></icon>
@@ -101,7 +101,7 @@
 	<view class="ncir" wx:if="{{ circle.length == 0 }}">
 		<image mode="widthFix" src="{{ $state.imgHost }}/ncir.png"></image>
 		<text class="line">啥都没有呢~\n</text>
-		<navigator url="../release/release" hover-class="none" open-type="navigate">马上发布</navigator>
+		<navigator url="/page/post/pages/release/release" hover-class="none" open-type="navigate">马上发布</navigator>
 	</view>
 	<view class="popup" wx:if="{{ rlAni }}">
 		<view class="publishAni"></view>
