@@ -112,14 +112,16 @@
         "pages/winPrize/winPrize",
         "pages/infoAddress/infoAddress",
         "pages/strategy/strategy"
-  ]
-    },{
+      ]
+    },
+    {
       "root": "page/live/",
       "pages": [
         "pages/tableDetail/tableDetail",
         "pages/timetable/timetable",
         "pages/timetableList/timetableList",
-        "pages/liveDetail/liveDetail"
+        "pages/liveDetail/liveDetail",
+        "pages/liveSearch/liveSearch"
       ]
     }
   ],

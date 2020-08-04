@@ -1,5 +1,5 @@
 // pages/liveDetail/liveDetail.js
-const LiveDate = require("../../data/LiveDate");
+const LiveData = require("../../data/LiveData");
 const app = getApp();
 const plugin = requirePlugin("WechatSI");
 // 获取**全局唯一**的语音识别管理器**recordRecoManager**
@@ -204,7 +204,7 @@ Page({
   //获取数据
   getLessonDetail(lesson_id) {
     let _this = this;
-    LiveDate.getLessonDetail({ lesson_id }).then((res) => {
+    LiveData.getLessonDetail({ lesson_id }).then((res) => {
       console.log(res);
       wx.setNavigationBarTitle({
         title: res.data.lesson.name || "",
@@ -217,7 +217,7 @@ Page({
   },
   getSublesson(lesson_id) {
     let _this = this;
-    LiveDate.getSublesson({ lesson_id })
+    LiveData.getSublesson({ lesson_id })
       .then((res) => {
         console.log(res);
         _this.setData({

@@ -1,7 +1,7 @@
 <!--pages/timetable/timetable.wxml-->
 <view class="pageTop">
   <view class="search-box">
-    <navigator class="search-left" hover-class="none">
+    <navigator class="search-left" url="../liveSearch/liveSearch" hover-class="none">
       <image src="{{$state.imgHost}}/searchp.png"></image>
       <text>搜索课程名称</text>
     </navigator>
@@ -27,7 +27,7 @@
 <view wx:if="{{noneLessons}}" id="contentView">
   <view wx:for="{{nav}}" id="{{item.index}}" wx:key="index" class="itemBox">
     <view class="contariner">
-      <text id="text{{item.id}}" class="itemDay"></text>
+      <text id="text{{item.id}}"></text>
       <!-- <navigator id="item{{item.id}}" class="item" wx:for="{{lessons[index]}}" wx:for-item="lesson" wx:for-index="classIndex" wx:key="index" hover-class="none" url="../tableDetail/tableDetail?lessonId={{lesson.id}}" -->
       <navigator id="item{{item.id}}" class="item" wx:for="{{lessons[index]}}" wx:for-item="lesson" wx:for-index="classIndex" wx:key="index" hover-class="none" url="../liveDetail/liveDetail?lessonId={{lesson.id}}"
         open-type="navigate">
@@ -40,7 +40,7 @@
         </view>
         <view class="txtBox">
           <text class="title">{{lesson.name}}</text>
-          <text class="time">{{lesson.start_day}}-{{lesson.end_day}} {{lesson.strat_time}}-{{lesson.end_time}}</text>
+          <text class="time">{{lesson.start_day}}-{{lesson.end_day}} {{lesson.start_time}}-{{lesson.end_time}}</text>
           <view class="textBottom">
             <view class="teacher">
               <image src="../../images/userImg.png"></image>

@@ -1,5 +1,5 @@
 // pages/tableDetail/tableDetail.js
-const LiveDate = require("../../data/LiveDate");
+const LiveData = require("../../data/LiveData");
 Page({
   data: {
     days: 0,
@@ -46,8 +46,8 @@ Page({
       inviter, //如果是邀请进来的,就在获取的时候提交记录
     };
     return Promise.all([
-      LiveDate.getApplyDetail(params),
-      LiveDate.getInviteRecord({ lesson_id }),
+      LiveData.getApplyDetail(params),
+      LiveData.getInviteRecord({ lesson_id }),
     ]).then((res) => {
       _this.setData({
         lessonDetail: res[0].data,

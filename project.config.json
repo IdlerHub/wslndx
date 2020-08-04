@@ -181,6 +181,20 @@
 					"pathName": "page/live/pages/liveDetail/liveDetail",
 					"query": "lessonId=7",
 					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "page/live/pages/timetable/timetable",
+					"pathName": "page/live/pages/timetable/timetable",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "page/live/pages/liveSearch/liveSearch",
+					"pathName": "page/live/pages/liveSearch/liveSearch",
+					"query": "",
+					"scene": null
 				}
 			]
 		}

@@ -1,5 +1,5 @@
 // pages/timetableList/timetableList.js
-const LiveDate = require("../../data/LiveDate");
+const LiveData = require("../../data/LiveData");
 Page({
   data: {
     courseListL: [],
@@ -9,7 +9,7 @@ Page({
   },
   onShow: function () {},
   getUserLessons(){
-    LiveDate.getUserLessons().then(res=>{
+    LiveData.getUserLessons().then(res=>{
       console.log(res)
       this.setData({
         courseListL: res.data,
