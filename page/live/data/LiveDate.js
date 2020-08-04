@@ -47,6 +47,14 @@ function getReceiveLesson(params) {
 function getLessonDetail(params) {
   return httpService.post("schedule/lessonDetail", params);
 }
+/** 
+ *  @description: 课程章节列表
+ * @param {lesson_id}  --- {课程ID}
+ * @return:  promise
+ * **/
+function getSublesson(params) {
+  return httpService.post("schedule/sublesson", params);
+}
 
 /** 
  *  @description: 获取用户课程列表
@@ -62,5 +70,6 @@ module.exports = {
   getInviteRecord,
   getReceiveLesson,
   getLessonDetail,
+  getSublesson,
   getUserLessons,
 };

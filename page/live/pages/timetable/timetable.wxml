@@ -27,12 +27,12 @@
 <view wx:if="{{noneLessons}}" id="contentView">
   <view wx:for="{{nav}}" id="{{item.index}}" wx:key="index" class="itemBox">
     <view class="contariner">
-      <!-- <text id="text{{item.id}}" class="itemDay">{{item.txt}}</text> -->
+      <text id="text{{item.id}}" class="itemDay"></text>
       <!-- <navigator id="item{{item.id}}" class="item" wx:for="{{lessons[index]}}" wx:for-item="lesson" wx:for-index="classIndex" wx:key="index" hover-class="none" url="../tableDetail/tableDetail?lessonId={{lesson.id}}" -->
       <navigator id="item{{item.id}}" class="item" wx:for="{{lessons[index]}}" wx:for-item="lesson" wx:for-index="classIndex" wx:key="index" hover-class="none" url="../liveDetail/liveDetail?lessonId={{lesson.id}}"
         open-type="navigate">
         <view class="imgBox">
-          <view id="text{{item.id}}" class="img-week">{{item.name}}</view>
+          <view class="img-week">{{item.name}}</view>
           <image
             src="{{lesson.cover}}"
             class="img"></image>
