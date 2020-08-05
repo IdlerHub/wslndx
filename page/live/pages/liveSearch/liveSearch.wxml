@@ -12,8 +12,7 @@
     </view>
     <view wx:if="{{searchList.length > 0}}" id="contentView">
         <view class="contariner">
-            <!-- <navigator id="item{{item.id}}" class="item" wx:for="{{searchList}}" wx:for-item="lesson" wx:for-index="classIndex" wx:key="index" hover-class="none" url="../tableDetail/tableDetail?lessonId={{lesson.id}}" -->
-            <view class="item" wx:for="{{searchList}}" wx:for-item="lesson" wx:for-index="classIndex" wx:key="index" hover-class="none" bindtap="toDetail" data-lesson-id="{{lesson.id}}" data-own="{{lesson.is_own}}">
+            <view class="item" wx:for="{{searchList}}" wx:for-item="lesson" wx:for-index="classIndex" wx:key="index" bindtap="toDetail" data-lesson-id="{{lesson.id}}" data-own="{{lesson.is_own}}">
                 <view class="imgBox">
                     <view class="img-week">{{weekList[lesson.week-1]}}</view>
                     <image src="{{lesson.cover}}" class="img"></image>

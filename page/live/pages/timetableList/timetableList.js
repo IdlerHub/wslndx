@@ -7,7 +7,15 @@ Page({
   onLoad: function (options) {
     this.getUserLessons();
   },
-  onShow: function () {},
+  toDetail(e){
+    console.log("去详情页面")
+    let url =
+      "/page/live/pages/liveDetail/liveDetail?lessonId=" +
+      e.currentTarget.dataset.lessonId;
+    wx.navigateTo({
+      url,
+    });
+  },
   getUserLessons(){
     LiveData.getUserLessons().then(res=>{
       console.log(res)

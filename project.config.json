@@ -202,6 +202,13 @@
 					"pathName": "page/live/pages/tableDetail/tableDetail",
 					"query": "lessonId=7",
 					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "page/live/pages/timetableList/timetableList",
+					"pathName": "page/live/pages/timetableList/timetableList",
+					"query": "",
+					"scene": null
 				}
 			]
 		}
