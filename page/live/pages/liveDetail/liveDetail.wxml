@@ -13,11 +13,11 @@
             共{{lessonDetail.chapter_num}}讲 · {{lessonDetail.teacher}}-{{lessonDetail.description}}
         </view>
         <view class="share-joinClass">
-            <image class="joinClass" src="../../images/joinClass.png" alt="加入班级"></image>
-            <view class="share">
+            <image class="joinClass" src="../../images/joinClass.png" alt="加入班级" bindtap="showServise"></image>
+            <button class="share" open-type="share">
                 <image class="shareLesson" src="../../images/shareLesson.png"></image>
                 <text>分享课程</text>
-            </view>
+            </button>
         </view>
     </view>
     <!-- 直播信息 -->
@@ -137,7 +137,7 @@
             <swiper-item class="tab-item">
                 <!-- 简介 -->
                 <scroll-view scroll-y="true" class="wrap synopsis">
-                    <rich-text nodes="<p>音乐课程</p>"></rich-text>
+                    <rich-text nodes="{{lessonDetail.introduction}}"></rich-text>
                 </scroll-view>
             </swiper-item>
         </swiper>
@@ -163,9 +163,9 @@
     </view>
     <!-- 评论输入 -->
     <view class="issueBoxTow" style="bottom :{{ keyheight != 0 ? keyheight : 0}}px;height:{{replyplaceholder != '' ? '181' : ''}}px" wx:if="{{writeTow&&currentTab == 1}}">
-        <text class="replayplaceholder" wx:if="{{replyplaceholder != ''}}">
+        <view class="replayplaceholder" wx:if="{{replyplaceholder != ''}}">
             {{replyplaceholder}}
-        </text>
+        </view>
         <textarea placeholder="{{$state.newGuide.lesson == 0 ? '' : placeholder }}" fixed show-confirm-bar="{{false}}" placeholder-class="placeholder" bindinput="input" bindkeyboardheightchange="keyheight" adjust-position="{{false}}" focus="{{focus}}" bindblur="bindblur" maxlength="200" value="{{replyshow ? replycontent: content}}" cursor-spacing="190rpx"></textarea>
         <view class="issueBoxTow-txt">
             <view class="number">{{ replyshow ? replycontenLength : contenLength}}/200</view>
@@ -221,7 +221,7 @@
     <cover-view class="servise" wx:if="{{showServise}}">
         <cover-view class="serviseBox">
             <cover-view class="text">进入客服消息后，点击右下角</cover-view>
-            <cover-view class="text">快捷图片，扫码进入班群学习</cover-view>
+            <cover-view class="text">快捷图片，扫码加入班群学习</cover-view>
             <cover-image src="{{$state.imgHost}}/serviseImg.png" class="image"></cover-image>
             <button open-type="contact" hover-class="none" show-message-card send-message-img="{{$state.imgHost}}/serviceIMG.jpg" send-message-title="添加老师" catchtap="showServise" session-from='{"name": "{{$state.userInfo.nickname}}","avatarUrl":"{{$state.userInfo.avatar}}","nickName":"{{$state.userInfo.nickname}}"}'>
                 去客服页面添加

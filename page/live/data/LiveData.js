@@ -72,6 +72,56 @@ function toLiveSearch(params) {
   return httpService.post("schedule/search", params);
 }
 
+// 讨论模块接口
+/**
+ * @description: 课程评论列表
+ * @param {lesson_id,page_size,page}  --- {课程ID}
+ * @return:  promise
+ * **/
+function getCommentList(params) {
+  return httpService.post("schedule/commentList", params);
+}
+/**
+ * @description: 发布课程评论
+ * @param {lesson_id,content}  --- {课程ID,评论内容}
+ * @return:  promise
+ * **/
+function putComment(params) {
+  return httpService.post("schedule/putComment", params);
+}
+/**
+ * @description: 删除课程评论
+ * @param {comment_id}  --- {评论ID}
+ * @return:  promise
+ * **/
+function delComment(params) {
+  return httpService.post("schedule/delComment", params);
+}
+/**
+ * @description: 提交二级/三级评论
+ * @param {comment_id,reply_content,reply_id,to_user}  --- {评论ID,回复内容,回复的信息的ID(三级评论),被回复人的用户ID}
+ * @return:  promise
+ * **/
+function putReply(params) {
+  return httpService.post("schedule/putReply", params);
+}
+/**
+ * @description: 删除二级/三级评论
+ * @param {reply_id}  --- {回复ID}
+ * @return:  promise
+ * **/
+function delReply(params) {
+  return httpService.post("schedule/delReply", params);
+}
+/**
+ * @description: 评论回复详细列表
+ * @param {comment_id}  --- {评论ID}
+ * @return:  promise
+ * **/
+function replyList(params) {
+  return httpService.post("schedule/replyList", params);
+}
+
 module.exports = {
   getLiveLessons,
   getApplyDetail,
@@ -81,4 +131,10 @@ module.exports = {
   getSublesson,
   getUserLessons,
   toLiveSearch,
+  getCommentList,
+  putComment,
+  delComment,
+  putReply,
+  delReply,
+  replyList,
 };

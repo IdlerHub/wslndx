@@ -46,16 +46,21 @@ Page({
   },
   onLoad: function (options) {
     this.videoContext = wx.createVideoContext("myVideo");
-    if (options.isFirst) {
-      console.log("展示客服窗口");
+    if (options.isFirst && options.isFirst != 0) {
       this.setData({
         showServise: true,
       });
     }
+    this.init(options);
+    this.heightInit(options);
     this.getLessonDetail(options.lessonId);
     this.getSublesson(options.lessonId);
-    this.heightInit();
-    this.setVoiceHeight();
+  },
+  onReachBottom() {
+    if (this.data.currentTab == 1) {
+      this.comParam.page++;
+      this.getComment();
+    }
   },
   onShow: function () {
     this.initRecord();
@@ -64,14 +69,41 @@ Page({
     //   res.networkType == "wifi" ? app.playVedio("wifi") : "";
     // });
   },
-  //展示客服页面  
+  //展示客服页面
   showServise() {
-    //展示客服页面
     this.setData({
       showServise: !this.data.showServise,
     });
   },
-  heightInit() {
+  //初始化需要的信息
+  init(options) {
+    //请求参数
+    this.comParam = {
+      lesson_id: options.lessonId || this.data.lessonDetail.id,
+      page: 1,
+      pageSize: 10,
+    };
+    //监听键盘变化
+    wx.onKeyboardHeightChange((res) => {
+      console.log(111, res);
+      if (this.data.keyheight == 0) {
+        this.setData({
+          keyheight: res.height,
+          // keyHeight: true,
+        });
+      } else {
+        if (res.height <= 0) {
+          this.setData({
+            // keyHeight: false,
+            keyheight: 0,
+            write: true,
+            writeTow: false,
+          });
+        }
+      }
+    });
+  },
+  heightInit(options) {
     //初始化课程块高度
     let that = this;
     let windowHeight = wx.getSystemInfoSync().windowHeight;
@@ -105,26 +137,6 @@ Page({
               currentTab: 1,
             })
           : "";
-      }
-    });
-  },
-  setVoiceHeight() {
-    wx.onKeyboardHeightChange((res) => {
-      console.log(111, res);
-      if (this.data.keyheight == 0) {
-        this.setData({
-          keyheight: res.height,
-          // keyHeight: true,
-        });
-      } else {
-        if (res.height <= 0) {
-          this.setData({
-            // keyHeight: false,
-            keyheight: 0,
-            write: true,
-            writeTow: false,
-          });
-        }
       }
     });
   },
@@ -183,9 +195,10 @@ Page({
         title: res.data.lesson.name || "",
       });
       _this.setData({
-        // current: res.data.current,
+        current: res.data.current,
         lessonDetail: res.data.lesson,
       });
+      _this.getComment();
     });
   },
   getSublesson(lesson_id) {
@@ -194,7 +207,7 @@ Page({
       .then((res) => {
         console.log(res);
         _this.setData({
-          sublessons: res[1].data,
+          sublessons: res.data,
         });
       })
       .catch((err) => {
@@ -223,8 +236,8 @@ Page({
     }
     this.setHeight();
   },
+  //排序
   order() {
-    //排序
     this.setData({
       sort: this.data.sort === 0 ? 1 : 0,
       scrollviewtop: 0,
@@ -266,7 +279,7 @@ Page({
   },
   tolesson() {
     let that = this,
-      // id = ".sublessonsd" + this.data.detail.current_sublesson_id;
+      // id = ".sublessonsd" + this.data.lessonDetail.current_sublesson_id;
       id = ".sublessonsd";
     if (this.data.currentTab == 0) {
       let query = wx.createSelectorQuery().in(this);
@@ -298,6 +311,34 @@ Page({
     });
   },
   //评论模块
+  // 获取讨论
+  getComment(list, options) {
+    let comment = list || this.data.comment;
+    console.log("获取讨论", this.comParam);
+    return LiveData.getCommentList(this.comParam)
+      .then((msg) => {
+        msg.data.forEach(function (item) {
+          item.reply_array.forEach((v) => {
+            v.rtext = `回复<span  class="respond">${v.to_user}</span>:&nbsp;&nbsp;`;
+          });
+          comment.push(item);
+        });
+        this.comment = JSON.parse(JSON.stringify(comment));
+        this.setData({
+          comment: comment,
+        });
+        this.setHeight();
+      })
+      .catch((err) => {
+        if (err.code == -2) {
+          /* 帖子已经删除 */
+          this.setData({
+            lessonDetail: "",
+            delState: true,
+          });
+        }
+      });
+  },
   input(e) {
     //输入
     let lessDiscussion = this.data.$state.lessDiscussion;
@@ -423,6 +464,128 @@ Page({
       }
     }
   },
+  // 展示详情信息
+  toCommentDetail(e) {
+    let vm = this;
+    console.log("看更多的详情");
+    // wx.navigateTo({
+    //   url:
+    //     "/pages/commentDetail/commentDetail?" +
+    //     "lesson_id=" +
+    //     this.data.lessonDetail.id +
+    //     "&comment_id=" +
+    //     e.currentTarget.dataset.parentid,
+    //   events: {
+    //     refreshComments: (data) => {
+    //       this.comParam.page = 1;
+    //       this.getComment([]);
+    //     },
+    //   },
+    // });
+  },
+  //展示回复二级/三级评论
+  show(e) {
+    if (this.data.$state.userInfo.status !== "normal") {
+      wx.showModal({
+        content:
+          "由于您近期不合规操作，您的账户已被管理员禁止发帖留言，如有疑问请在个人中心联系客服处理",
+      });
+    } else {
+      this.setscrollto();
+      if (e && e.target.dataset.reply) {
+        /* 回复别人的评论 或者 回复别人的回复  */
+        this.replyParent = e.target.dataset.parent;
+        this.replyInfo = e.target.dataset.reply;
+        if (this.replyParent == null) {
+          if (this.data.$state.lessDiscussion[this.data.lessonDetail.id]) {
+            if (
+              this.data.$state.lessDiscussion[this.data.lessonDetail.id]
+                .replyInfo
+            ) {
+              this.data.$state.lessDiscussion[this.data.lessonDetail.id]
+                .replyInfo[this.replyInfo.id]
+                ? this.setData({
+                    replycontent: this.data.$state.lessDiscussion[
+                      this.data.lessonDetail.id
+                    ].replyInfo[this.replyInfo.id],
+                    replyplaceholder:
+                      "回复 " + e.currentTarget.dataset.reply.nickname,
+                    replycontenLength: this.data.$state.lessDiscussion[
+                      this.data.lessonDetail.id
+                    ].replyInfo[this.replyInfo.id].length,
+                  })
+                : this.setData({
+                    replycontent: "",
+                    replyplaceholder:
+                      "回复 " + e.currentTarget.dataset.reply.nickname,
+                    replycontenLength: 0,
+                  });
+            } else {
+              this.setData({
+                replycontent: "",
+                replyplaceholder:
+                  "回复 " + e.currentTarget.dataset.reply.nickname,
+                replycontenLength: 0,
+              });
+            }
+          } else {
+            this.setData({
+              replycontent: "",
+              replyplaceholder:
+                "回复 " + e.currentTarget.dataset.reply.nickname,
+              replycontenLength: 0,
+            });
+          }
+        } else if (this.data.$state.lessDiscussion[this.data.lessonDetail.id]) {
+          if (
+            this.data.$state.lessDiscussion[this.data.lessonDetail.id]
+              .replyParent
+          ) {
+            this.data.$state.lessDiscussion[this.data.lessonDetail.id]
+              .replyParent[this.replyParent]
+              ? this.setData({
+                  replycontent: this.data.$state.lessDiscussion[
+                    this.data.lessonDetail.id
+                  ].replyParent[this.replyParent],
+                  replyplaceholder:
+                    "回复 " + e.currentTarget.dataset.reply.from_user,
+                  replycontenLength: this.data.$state.lessDiscussion[
+                    this.data.lessonDetail.id
+                  ].replyParent[this.replyParent].length,
+                })
+              : this.setData({
+                  replycontent: "",
+                  replyplaceholder:
+                    "回复 " + e.currentTarget.dataset.reply.from_user,
+                  replycontenLength: 0,
+                });
+          } else {
+            this.setData({
+              replycontent: "",
+              replyplaceholder:
+                "回复 " + e.currentTarget.dataset.reply.from_user,
+              replycontenLength: 0,
+            });
+          }
+        } else {
+          this.setData({
+            replycontent: "",
+            replyplaceholder: "回复 " + e.currentTarget.dataset.reply.from_user,
+          });
+        }
+      } else {
+        /* 评论 */
+        this.replyInfo = null;
+        this.replyParent = null;
+      }
+      this.setData({
+        write: false,
+        writeTow: true,
+        focus: true,
+        replyshow: true,
+      });
+    }
+  },
   // 发布评论
   release(e) {
     if (!!this.data.content.trim() || !!this.data.replycontent.trim()) {
@@ -435,9 +598,9 @@ Page({
       } else if (this.replyParent) {
         /* 回复别人的回复 */
         let params = {
-          lesson_id: +this.data.lessonDetail.id,
+          // lesson_id: +this.data.lessonDetail.id,
           comment_id: this.replyParent,
-          reply_type: 2,
+          // reply_type: 2,
           reply_id: this.replyInfo.reply_id,
           reply_content: this.data.replycontent,
           to_user: this.replyInfo.reply_user_id,
@@ -446,10 +609,10 @@ Page({
       } else if (this.replyInfo) {
         /* 回复评论 */
         let params = {
-          lesson_id: +this.replyInfo.lesson_id,
+          // lesson_id: +this.replyInfo.lesson_id,
           comment_id: this.replyInfo.id,
-          reply_type: 1,
-          reply_id: -1,
+          // reply_type: 1,
+          // reply_id: -1,
           reply_content: this.data.replycontent,
           to_user: this.replyInfo.uid,
         };
@@ -465,8 +628,7 @@ Page({
   },
   // 增加评论
   addComment(param) {
-    app.classroom
-      .addComment(param)
+    LiveData.putComment(param)
       .then((res) => {
         this.setData({
           write: false,
@@ -481,15 +643,11 @@ Page({
           voicetime: 0,
           showvoiceauto: false,
         });
-        if (res.data.is_first == "day") {
-          this.setIntegral("+10 学分", "完成[云课堂]每日课程首次讨论");
-        } else {
-          wx.showToast({
-            title: "评论成功",
-            icon: "none",
-            duration: 800,
-          });
-        }
+        wx.showToast({
+          title: "评论成功",
+          icon: "none",
+          duration: 800,
+        });
         this.comParam.page = 1;
         this.getComment([]);
         let lessDiscussion = this.data.$state.lessDiscussion;
@@ -498,9 +656,9 @@ Page({
           lessDiscussion,
         });
       })
-      .catch(() => {
+      .catch((err) => {
         wx.showToast({
-          title: res.msg,
+          title: err.msg,
           image: "/images/warn.png",
           duration: 800,
         });
@@ -511,8 +669,7 @@ Page({
     wx.showLoading({
       title: "发布中",
     });
-    app.classroom
-      .addReply(params)
+    LiveData.putReply(params)
       .then((msg) => {
         wx.hideLoading();
         this.setData({
@@ -528,15 +685,11 @@ Page({
           voicetime: 0,
           showvoiceauto: false,
         });
-        if (msg.data.is_first == "day") {
-          this.setIntegral("+10 学分", "完成[云课堂]每日课程首次讨论");
-        } else {
-          wx.showToast({
-            title: "评论成功",
-            icon: "none",
-            duration: 800,
-          });
-        }
+        wx.showToast({
+          title: "评论成功",
+          icon: "none",
+          duration: 800,
+        });
         let lessDiscussion = this.data.$state.lessDiscussion;
         if (this.replyParent) {
           lessDiscussion[this.data.lessonDetail.id].replyParent[
@@ -562,7 +715,7 @@ Page({
         if (err.code == -2) {
           /* 帖子已经删除 */
           this.setData({
-            detail: "",
+            lessonDetail: "",
             delState: true,
           });
         } else if (err.code == -3) {
@@ -576,7 +729,7 @@ Page({
           this.getComment([]);
         } else {
           wx.showToast({
-            title: msg.msg || "发布失败",
+            title: err.msg || "发布失败",
             icon: "none",
             duration: 1500,
           });
@@ -591,13 +744,15 @@ Page({
       success: (res) => {
         if (res.confirm) {
           let params = {
-            lesson_id: this.data.lessonDetail.id,
-            comment_id: e.currentTarget.dataset.parentid,
-            id: e.currentTarget.dataset.item.reply_id,
+            // lesson_id: this.data.lessonDetail.id,
+            // comment_id: e.currentTarget.dataset.parentid,
+            reply_id: e.currentTarget.dataset.item.reply_id,
           };
-          app.classroom
+          console.log("删除回复");
+          LiveData
             .delReply(params)
             .then((msg) => {
+              console.log("删除回复成功")
               wx.hideLoading();
               wx.showToast({
                 title: "删除成功",
@@ -608,10 +763,11 @@ Page({
               this.getComment([]);
             })
             .catch((err) => {
+              console.log("删除回复失败",err);
               if (err.code == -2) {
                 /* 帖子已经删除 */
                 this.setData({
-                  detail: "",
+                  lessonDetail: "",
                   delState: true,
                 });
               } else {
@@ -626,34 +782,47 @@ Page({
       },
     });
   },
-  // 获取讨论
-  getComment(list, options) {
-    let comment = list || this.data.comment;
-    console.log("获取讨论");
-    // return app.classroom
-    //   .commentDetail(this.comParam)
-    //   .then((msg) => {
-    //     msg.data.forEach(function (item) {
-    //       item.reply_array.forEach((v) => {
-    //         v.rtext = `回复<span  class="respond">${v.to_user}</span>:&nbsp;&nbsp;`;
-    //       });
-    //       comment.push(item);
-    //     });
-    //     this.comment = JSON.parse(JSON.stringify(comment));
-    //     this.setData({
-    //       comment: comment,
-    //     });
-    //     this.setHeight();
-    //   })
-    //   .catch((err) => {
-    //     if (err.code == -2) {
-    //       /* 帖子已经删除 */
-    //       this.setData({
-    //         detail: "",
-    //         delState: true,
-    //       });
-    //     }
-    //   });
+  // 删除评论
+  delComment: function (e) {
+    wx.showModal({
+      content: "确定删除该评论?",
+      confirmColor: "#df2020",
+      success: (res) => {
+        if (res.confirm) {
+          let param = {
+            lesson_id: this.data.lessonDetail.id,
+            comment_id: e.currentTarget.dataset.item.id,
+          };
+          console.log("删除评论")
+          LiveData.delComment(param)
+            .then((msg) => {
+              wx.hideLoading();
+              wx.showToast({
+                title: "删除成功",
+                icon: "none",
+                duration: 1500,
+              });
+              this.comParam.page = 1;
+              this.getComment([]);
+            })
+            .catch((err) => {
+              if (err.code == -2) {
+                /* 帖子已经删除 */
+                this.setData({
+                  lessonDetail: "",
+                  delState: true,
+                });
+              } else {
+                wx.showToast({
+                  title: "删除失败，请稍后重试",
+                  image: "/images/warn.png",
+                  duration: 1500,
+                });
+              }
+            });
+        }
+      },
+    });
   },
   // 语音识别模块
   relacevoice() {
@@ -882,5 +1051,14 @@ Page({
     console.log("播放结束");
   },
   onPullDownRefresh: function () {},
-  onShareAppMessage: function () {},
+  onShareAppMessage() {
+    let lesson_id = this.data.lessonDetail.id,
+      cover = this.data.lessonDetail.cover;
+    let { nickname } = this.data.$state.userInfo;
+    return {
+      title: `${nickname}分享的课程,不是邀请页面哦`,
+      path: `/page/live/pages/liveDetail/liveDetail?lessonId=${lesson_id}`,
+      imageUrl: cover,
+    };
+  },
 });
