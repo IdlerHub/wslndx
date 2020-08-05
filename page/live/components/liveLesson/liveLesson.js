@@ -15,7 +15,6 @@ Component({
 
   methods: {
     toDetail(e) {
-      console.log(e);
       let { lessonId, own } = e.currentTarget.dataset;
       let url = "/page/live/pages/tableDetail/tableDetail?lessonId=" + lessonId;
       if (own) {

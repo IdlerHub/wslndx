@@ -23,10 +23,11 @@ Page({
   },
   timer: "",
   onLoad: function (options) {
+    console.log(options)
     if (options.inviter) {
       console.log(options);
     }
-    this.data.lessonId = options.lesson_id;
+    this.data.lessonId = options.lessonId;
     this.getLiveDetailDate(options.lessonId);
     this.timer = setInterval(() => {
       let countdown = this.data.lessonDetail.countdown - 1;
