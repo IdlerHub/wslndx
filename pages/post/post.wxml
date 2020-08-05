@@ -57,14 +57,8 @@
 				</view>
 			</view>
 		</view>
-		<view class="voiceBox" wx:if="{{item.url && item.duration > 0}}" bindtap="checkRecord" data-duration="{{item.duration}}" data-record="{{item.url}}" data-timer="{{item.timer}}" data-id="{{item.id}}">
-			<view class="voiceBoxRight">
-					<image src="{{item.id != playVoice.id ? $state.imgHost + '/triangle.png' : $state.imgHost + '/voicepause.png'}}"></image>
-					<viwe class="centerImg {{ playVoice.status && item.id == playVoice.id ? 'centerActive' : ''}}"></viwe>
-					<view class="timer" wx:if="{{item.id != playVoice.id}}">0{{item.timer.minute}}:{{item.timer.second > 9 ?item.timer.second : '0' + item.timer.second}}</view>
-					<view class="timer" wx:else>0{{playVoice.playTiemr.minute}}:{{playVoice.playTiemr.second > 9 ? playVoice.playTiemr.second : '0' + playVoice.playTiemr.second}}</view>
-			</view>
-		</view>
+		<playRrecord wx:if="{{item.url && item.duration > 0}}" item="{{item}}" playVoice="{{playVoice}}">
+		</playRrecord>
 		<view class="likeComment" wx:if="{{ item.like_avatar_list[0] || item.last_comment.nickname}}">
 			<view class="likesavatar" wx:if="{{item.like_avatar_list[0] && item.likes!= 0 }}"
 				style="margin-bottom: {{ item.last_comment.nickname ? '' : '20rpx'}};">
@@ -175,7 +169,8 @@
 				wx:key="page">
 				<block
 					wx:if="{{(page + 1) - currentPage[currentTab].page >= -1 && (page + 1) - currentPage[currentTab].page <= 1}}">
-					<template is="listitem" wx:for="{{subList}}" data="{{item:item, page,index, $state, voiceplayimg, currentTab, playVoice}}" wx:key="index" />
+					<template is="listitem" wx:for="{{subList}}"
+						data="{{item:item, page,index, $state, voiceplayimg, currentTab, playVoice}}" wx:key="index" />
 				</block>
 				<view wx:else style='height:{{pageFrame[currentTab][page + 1].height}}px;'></view>
 			</view>
@@ -194,7 +189,8 @@
 				wx:key="page">
 				<block
 					wx:if="{{(page + 1) - currentPage[currentTab].page >= -1 && (page + 1) - currentPage[currentTab].page <= 1}}">
-					<template is="listitem" wx:for="{{subList}}" data="{{item:item, page, index, $state, voiceplayimg, currentTab, playVoice}}" wx:key="index" />
+					<template is="listitem" wx:for="{{subList}}"
+						data="{{item:item, page, index, $state, voiceplayimg, currentTab, playVoice}}" wx:key="index" />
 				</block>
 				<view wx:else style='height:{{pageFrame[currentTab][page + 1].height}}px;'></view>
 			</view>
@@ -219,7 +215,8 @@
 					wx:key="page">
 					<block
 						wx:if="{{(page + 1) - currentPage[currentTab].page >= -1 && (page + 1) - currentPage[currentTab].page <= 1}}">
-						<template is="listitem" wx:for="{{subList}}" data="{{item:item, page, index, $state, voiceplayimg, currentTab, playVoice}}" wx:key="index" />
+						<template is="listitem" wx:for="{{subList}}"
+							data="{{item:item, page, index, $state, voiceplayimg, currentTab, playVoice}}" wx:key="index" />
 					</block>
 					<view wx:else style='height:{{pageFrame[currentTab][page + 1].height}}px;'></view>
 				</view>

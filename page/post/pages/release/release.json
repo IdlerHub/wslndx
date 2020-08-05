@@ -5,6 +5,7 @@
   "enablePullDownRefresh": false,
   "usingComponents": {
     "formCode": "/components/formCode/formCode",
-    "integralAnimation": "/components/integralAni/integralAni"
+    "integralAnimation": "/components/integralAni/integralAni",
+    "playRrecord": "../../components/playRrecord/playRrecord"
   }
 }

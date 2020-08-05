@@ -5,8 +5,7 @@
  */
 //获取应用实例
 const app = getApp();
-const innerAudioContext = wx.createInnerAudioContext();
-
+const record = require('../../utils/record')
 Page({
   data: {
     rlSucFlag: false,
@@ -50,6 +49,7 @@ Page({
     }
   },
   pageName: "秀风采页",
+  pageRecord: 1,
   stopTap: {
     guide: 0,
     praise: 0,
@@ -58,7 +58,6 @@ Page({
     this.pageInit()
     this.getList([]);
     this.gettop();
-    this.initRecord()
     let query = wx.createSelectorQuery().in(this);
     let systemInfo = wx.getSystemInfoSync();
     query.selectAll(".tabnav").boundingClientRect();
@@ -77,6 +76,7 @@ Page({
     });
   },
   onShow: function () {
+    record.initRecord(this)
     if (app.globalData.postShow) {
       this.setData({
         currentTab: 0
@@ -239,9 +239,6 @@ Page({
           this.data.$state.userInfo.id
       };
     }
-  },
-  onHide() {
-    innerAudioContext.stop()
   },
   pageInit() {
     this.param = [{
@@ -778,7 +775,7 @@ Page({
     this.setData({
       currentTab: cur
     })
-    innerAudioContext.stop();
+    app.backgroundAudioManager.stop();
     this.pageInit()
     this.getList([])
   },
@@ -1072,67 +1069,5 @@ Page({
       this.setfollow(this.data.flowId);
       this.closeSheet();
     });
-  },
-  initRecord() {
-    innerAudioContext.onPlay(() => {
-      this.playTiemr ? [clearInterval(this.playTiemr), this.playTiemr= null ] : ''
-      this.playTiemr = setInterval(() => {
-        if (this.data.playVoice.playTiemr.minute == this.itemTimer.minute && this.data.playVoice.playTiemr.second == this.itemTimer.second) {
-          innerAudioContext.stop()
-          this.setData({
-            'playVoice.status': 0,
-            'playVoice.id': 0,
-          })
-          wx.setKeepScreenOn({
-            keepScreenOn: false
-          })
-          return
-        }
-        let num = this.data.playVoice.playTiemr.second
-        num += 1
-        num > 60 ? this.setData({
-          'playVoice.playTiemr.minute': this.data.playVoice.playTiemr.minute += 1,
-          'playVoice.playTiemr.second': 0
-        }) : this.setData({
-          'playVoice.playTiemr.second': num
-        })
-      }, 1000)
-    })
-
-    innerAudioContext.onStop(() => {
-      this.playTiemr ? [clearInterval(this.playTiemr), this.playTiemr= null]  : ''
-      this.setData({
-        'playVoice.status': 0,
-        'playVoice.id': 0,
-      })
-    })
-  },
-  checkRecord(e) {
-    let duration = e.currentTarget.dataset.duration,
-      recordUrl = e.currentTarget.dataset.record,
-      id = e.currentTarget.dataset.id
-    this.itemTimer = e.currentTarget.dataset.timer
-    if (this.data.playVoice.status && recordUrl == this.recordUrl) {
-      this.setData({
-        'playVoice.status': 0,
-      })
-      innerAudioContext.stop();
-      wx.setKeepScreenOn({
-        keepScreenOn: false
-      })
-    } else {
-      this.recordUrl = recordUrl
-      this.setData({
-        'playVoice.status': 1,
-        'playVoice.id': id,
-        'playVoice.playTiemr.minute': 0,
-        'playVoice.playTiemr.second': 0
-      })
-      innerAudioContext.src = recordUrl;
-      innerAudioContext.play();
-      wx.setKeepScreenOn({
-        keepScreenOn: true
-      })
-    }
   }
 });

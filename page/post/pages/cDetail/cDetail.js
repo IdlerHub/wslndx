@@ -1,7 +1,7 @@
 //index.js
 //获取应用实例
 const app = getApp()
-const innerAudioContext = wx.createInnerAudioContext();
+const record = require('../../../../utils/record')
 
 Page({
   data: {
@@ -29,6 +29,7 @@ Page({
     }
   },
   pageName: '圈内帖子列表',
+  pageRecord: 1,
   onLoad(options) {
     this.id = options.id
     this.param = { fs_id: this.id, page: 1, pageSize: 10 }
@@ -45,6 +46,7 @@ Page({
     })
   },
   onShow() {
+    record.initRecord(this)
     if (app.globalData.postShow) {
       app.globalData.postShow = false;
     }
@@ -103,10 +105,11 @@ Page({
         }
       })
     }
-    this.initRecord()
   },
   onHide() {
-    innerAudioContext.stop()
+  },
+  onUnload() {
+    app.backgroundAudioManager.stop()
   },
   getList: function (list) {
     let temp = list || this.data.list
@@ -462,60 +465,5 @@ Page({
       });
       clearTimeout(timer);
     }, 2000);
-  },
-  initRecord() {
-    innerAudioContext.onPlay(() => {
-      this.playTiemr ? [clearInterval(this.playTiemr), this.playTiemr= null ] : ''
-      this.playTiemr = setInterval(() => {
-        if (this.data.playVoice.playTiemr.minute == this.itemTimer.minute && this.data.playVoice.playTiemr.second == this.itemTimer.second) {
-          innerAudioContext.stop()
-          this.setData({
-            'playVoice.status': 0,
-            'playVoice.id': 0,
-          })
-          return
-        }
-        let num = this.data.playVoice.playTiemr.second
-        num += 1
-        num > 60 ? this.setData({
-          'playVoice.playTiemr.minute': this.data.playVoice.playTiemr.minute += 1,
-          'playVoice.playTiemr.second': 0
-        }) : this.setData({
-          'playVoice.playTiemr.second': num
-        })
-      }, 1000)
-    })
-
-    innerAudioContext.onStop(() => {
-      this.playTiemr ? [clearInterval(this.playTiemr), this.playTiemr= null]  : ''
-      this.setData({
-        'playVoice.status': 0,
-        'playVoice.id': 0,
-      })
-    })
-  },
-  checkRecord(e) {
-    console.log(this.data.playVoice)
-
-    let duration = e.currentTarget.dataset.duration,
-      recordUrl = e.currentTarget.dataset.record,
-      id = e.currentTarget.dataset.id
-    this.itemTimer = e.currentTarget.dataset.timer
-    if (this.data.playVoice.status && recordUrl == this.recordUrl) {
-      this.setData({
-        'playVoice.status': 0,
-      })
-      innerAudioContext.stop();
-    } else {
-      this.recordUrl = recordUrl
-      this.setData({
-        'playVoice.status': 1,
-        'playVoice.id': id,
-        'playVoice.playTiemr.minute': 0,
-        'playVoice.playTiemr.second': 0
-      })
-      innerAudioContext.src = recordUrl;
-      innerAudioContext.play();
-    }
   }
 })

@@ -5,6 +5,7 @@
  */
 const app = getApp()
 const innerAudioContext = wx.createInnerAudioContext();
+const record = require('../../../../utils/record')
 
 //Page Object
 Page({
@@ -65,13 +66,16 @@ Page({
         }
       })
     }
+    record.initRecord(this)
     this.initRecord()
   },
   onHide: function () { 
     innerAudioContext.stop()
+    app.backgroundAudioManager.stop()
   },
   onUnload: function () {
     innerAudioContext.stop()
+    app.backgroundAudioManager.stop()
   },
   onPullDownRefresh: function () {
     this.setData({

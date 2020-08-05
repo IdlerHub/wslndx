@@ -1,6 +1,6 @@
 // pages/personPage/personPage.js
 const app = getApp();
-const innerAudioContext = wx.createInnerAudioContext();
+const record = require('../../../../utils/record')
 
 Page({
   data: {
@@ -17,6 +17,7 @@ Page({
     }
   },
   pageName: "个人简介页面",
+  pageRecord: 1,
   onLoad(options) {
     this.setData({
       us_id: options.uid,
@@ -32,6 +33,7 @@ Page({
     this.pages = getCurrentPages()[0];
   },
   onShow: function() {
+    record.initRecord(this)
     let list = this.data.list,
       flowList = this.data.flowList;
     list.forEach(item => {
@@ -50,13 +52,12 @@ Page({
     this.setData({
       list
     });
-    this.initRecord()
   },
   onHide() {
-    innerAudioContext.stop()
+
   },
   onUnload() {
-    innerAudioContext.stop()
+    app.backgroundAudioManager.stop()
   },
   onPullDownRefresh() {
     this.param.page = 1;
@@ -241,8 +242,6 @@ Page({
       url: "../pDetail/pDetail?id=" + id
     });
   },
-  //用于数据统计
-  onHide() {},
   unShare() {
     wx.showToast({
       title: "非常抱歉，不能分享这个内容！",
@@ -388,59 +387,5 @@ Page({
         }
       }
     });
-  },
-  initRecord() {
-    innerAudioContext.onPlay(() => {
-      this.playTiemr ? [clearInterval(this.playTiemr), this.playTiemr= null ] : ''
-      this.playTiemr = setInterval(() => {
-        if (this.data.playVoice.playTiemr.minute == this.itemTimer.minute && this.data.playVoice.playTiemr.second == this.itemTimer.second) {
-          innerAudioContext.stop()
-          this.setData({
-            'playVoice.status': 0,
-            'playVoice.id': 0,
-          })
-          return
-        }
-        let num = this.data.playVoice.playTiemr.second
-        num += 1
-        num > 60 ? this.setData({
-          'playVoice.playTiemr.minute': this.data.playVoice.playTiemr.minute += 1,
-          'playVoice.playTiemr.second': 0
-        }) : this.setData({
-          'playVoice.playTiemr.second': num
-        })
-      }, 1000)
-    })
-
-    innerAudioContext.onStop(() => {
-      this.playTiemr ? [clearInterval(this.playTiemr), this.playTiemr= null]  : ''
-      this.setData({
-        'playVoice.status': 0,
-        'playVoice.id': 0,
-      })
-    })
-  },
-  checkRecord(e) {
-    let duration = e.currentTarget.dataset.duration,
-      recordUrl = e.currentTarget.dataset.record,
-      id = e.currentTarget.dataset.id
-    this.itemTimer = e.currentTarget.dataset.timer
-    if (this.data.playVoice.status && recordUrl == this.recordUrl) {
-      this.setData({
-        'playVoice.status': 0,
-      })
-      innerAudioContext.stop();
-    } else {
-      this.recordUrl = recordUrl
-
-      this.setData({
-        'playVoice.status': 1,
-        'playVoice.id': id,
-        'playVoice.playTiemr.minute': 0,
-        'playVoice.playTiemr.second': 0
-      })
-      innerAudioContext.src = recordUrl;
-      innerAudioContext.play();
-    }
   }
 });

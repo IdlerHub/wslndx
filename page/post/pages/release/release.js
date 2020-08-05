@@ -2,6 +2,8 @@
 const VodUploader = require('../../vod/vodsdk.js');
 const recorderManager = wx.getRecorderManager()
 const innerAudioContext = wx.createInnerAudioContext();
+const record = require('../../../../utils/record')
+
 import OBS from "../../../../OBS/OBSUploadFile.js"
 const app = getApp();
 Page({
@@ -32,7 +34,22 @@ Page({
       second: 0,
       minute: 0
     },
-    voiceplayimg: 'https://hwcdn.jinlingkeji.cn/images/pro/triangle.png'
+    voiceplayimg: 'https://hwcdn.jinlingkeji.cn/images/pro/triangle.png',
+    playVoice: {
+      status: 0,
+      duration: 0,
+      playTimer: {
+        minute: 0,
+        second: 0
+      },
+      timer: {
+        minute: 0,
+        second: 0
+      },
+      id: 0,
+      url:'',
+      nickname: app.store.getState().userInfo.nickname
+    }
   },
   pageName: "发帖页",
   timer: null,
@@ -67,8 +84,7 @@ Page({
     wx.setKeepScreenOn({
       keepScreenOn: true
     })
-    // recorderManager.stop()
-    this.stopVoice()
+    record.initRecord(this)
     if(this.timer) recorderManager.stop()
     this.getRecordAuth();
     this.initRecord();
@@ -103,7 +119,7 @@ Page({
     innerAudioContext.stop()
     recorderManager.stop()
     this.timer ? [clearInterval(this.timer), this.timer = null] : ''
-    this.playTiemr ? [clearInterval(this.playTiemr), this.playTiemr = null] : ''
+    app.backgroundAudioManager.stop()
   },
   input(e) {
     this.setData({
@@ -111,18 +127,6 @@ Page({
     });
   },
   cancel() {
-    // this.setData({
-    //   param: {
-    //     image: [],
-    //     content: null,
-    //     video: null,
-    //     cover: null,
-    //     fs_id: "",
-    //     num: 0
-    //   },
-    //   media_type: null
-    // });
-    // this.judge();
     wx.navigateBack()
   },
   addImg() {
@@ -590,7 +594,7 @@ Page({
     recorderManager.onStop(res => {
       this.filePath = res.tempFilePath;
       let duration = res.duration;
-      if (!this.data.timer.minute && !this.data.timer.second) {
+      if (!this.data.playVoice.timer.minute && !this.data.playVoice.timer.second) {
         wx.showToast({
           title: '录音时间过短',
           icon: 'none'
@@ -598,40 +602,17 @@ Page({
         this.timer ? [clearInterval(this.timer), this.timer = null] : ''
         this.setData({
           recordStatus: 1,
-          'timer.minute': 0,
-          'timer.second': 0
+          'playVoice.timer.minute': 0,
+          'playVoice.timer.second': 0
         })
         return
       }
       this.setData({
+        "playVoice.url": res.tempFilePath,
         recordStatus: 3
       })
       this.timer ? [clearInterval(this.timer), this.timer = null] : ''
     })
-
-    innerAudioContext.onPlay(() => {
-      this.setData({
-        'playTiemr.minute': 0,
-        'playTiemr.second': 0
-      })
-      this.playTiemr ? [clearInterval(this.playTiemr), this.playTiemr = null] : ''
-      this.playTiemr = setInterval(() => {
-        if (this.data.playTiemr.minute == this.data.timer.minute && this.data.playTiemr.second == this.data.timer.second) {
-          this.stopVoice()
-          return
-        }
-        let num = this.data.playTiemr.second
-        num += 1
-        num > 60 ? this.setData({
-          'playTiemr.minute': this.data.playTiemr.minute += 1,
-          'playTiemr.second': 0
-        }) : this.setData({
-          'playTiemr.second': num
-        })
-      }, 1000)
-    })
-
-    innerAudioContext.onStop(() => {})
   },
   showRecorBox() {
     this.setData({
@@ -651,8 +632,8 @@ Page({
             if (res.confirm) {
               that.setData({
                 recordStatus: type,
-                'timer.minute': 0,
-                'timer.second': 0
+                'playVoice.timer.minute': 0,
+                'playVoice.timer.second': 0
               })
             }
           }
@@ -664,8 +645,8 @@ Page({
           if (this.getSystemInfo()) {
             that.setData({
               recordStatus: type,
-              'timer.minute': 0,
-              'timer.second': 0
+              'playVoice.timer.minute': 0,
+              'playVoice.timer.second': 0
             })
             recorderManager.start({
               duration: 600000,
@@ -688,20 +669,20 @@ Page({
   },
   interval() {
     this.setData({
-      'timer.minute': 0,
-      'timer.second': 0
+      'playVoice.timer.minute': 0,
+      'playVoice.timer.second': 0
     })
     this.timer ? [clearInterval(this.timer), this.timer = null] : ''
     this.timer = setInterval(() => {
-      let num = this.data.timer.second
+      let num = this.data.playVoice.timer.second
       num += 1
       num > 60 ? this.setData({
-        'timer.minute': this.data.timer.minute += 1,
-        'timer.second': 0
+        'playVoice.timer.minute': this.data.playVoice.timer.minute += 1,
+        'playVoice.timer.second': 0
       }) : this.setData({
-        'timer.second': num
+        'playVoice.timer.second': num
       })
-      if (this.data.timer.minute >= 5) {
+      if (this.data.playVoice.timer.minute >= 5) {
         clearInterval(this.timer)
         this.timer = null
         this.setData({
@@ -711,36 +692,10 @@ Page({
       }
     }, 1000)
   },
-  playVoice() {
-    if (!this.data.playRecord) {
-      this.stopVoice()
-      this.setData({
-        playRecord: 1,
-        voiceplayimg: 'https://hwcdn.jinlingkeji.cn/images/pro/voicepause.png'
-      })
-      innerAudioContext.src = this.filePath;
-      innerAudioContext.play();
-      innerAudioContext.seek(0);
-    } else {
-      this.setData({
-        playRecord: 0
-      })
-      innerAudioContext.stop();
-    }
-
-  },
-  stopVoice() {
-    innerAudioContext.stop()
-    this.setData({
-      playRecord: 0,
-      voiceplayimg: 'https://hwcdn.jinlingkeji.cn/images/pro/triangle.png',
-      'playTiemr.minute': 0,
-      'playTiemr.second': 0
-    })
-    this.playTiemr ? [clearInterval(this.playTiemr), this.playTiemr = null] : ''
+  playVoice(e) {
+    record.checkRecord(e, this)
   },
   uprecorde(i, up) {
-    this.stopVoice()
     wx.showToast({
       title: '正在压缩',
       icon: 'none',
@@ -752,21 +707,28 @@ Page({
     this.setData({
       'param.audio': null,
       'param.duration': null,
-      timer: {
-        second: 0,
-        minute: 0
-      },
-      playTiemr: {
-        second: 0,
-        minute: 0
-      },
       playRecord: 0,
       voiceplayimg: 'https://hwcdn.jinlingkeji.cn/images/pro/triangle.png',
       showVoiceBox: 0,
-      recordStatus: 1
+      recordStatus: 1,
+      playVoice: {
+        status: 0,
+        duration: 0,
+        playTimer: {
+          minute: 0,
+          second: 0
+        },
+        timer: {
+          minute: 0,
+          second: 0
+        },
+        id: 0,
+        url:'',
+        nickname: app.store.getState().userInfo.nickname
+      }
     });
-    innerAudioContext.stop();
     this.filePath = null
+    app.backgroundAudioManager.stop()
   },
   //用于数据统计
   onHide() {
@@ -774,13 +736,11 @@ Page({
       recordStatus: 3
     }) : ''
     recorderManager.stop()
-    innerAudioContext.stop()
     this.setData({
       playRecord: 0,
       voiceplayimg: 'https://hwcdn.jinlingkeji.cn/images/pro/triangle.png'
     })
     this.timer ? [clearInterval(this.timer), this.timer = null] : ''
-    this.playTiemr ? [clearInterval(this.playTiemr), this.playTiemr = null] : ''
   },
   obsUpload(medias, type, i, up) {
     let reqs = [];
@@ -826,7 +786,8 @@ Page({
           if (res) {
             this.setData({
               'param.audio': res,
-              'param.duration': (this.data.timer.minute * 60) + this.data.timer.second,
+              'param.duration': (this.data.playVoice.timer.minute * 60) + this.data.playVoice.timer.second,
+              "playVoice.url" :res,
               recordStatus: 1,
               showVoiceBox: 0
             });

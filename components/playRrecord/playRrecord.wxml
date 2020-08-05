@@ -1,13 +1,32 @@
 <!--components/playRrecord/playRrecord.wxml-->
-<view class="voiceBox">
-  <view class="voiceBoxRight">
-      <image src="{{voiceplayimg}}" bindtap="playVoice"></image>
-      <viwe class="centerImg {{ playRecord ? 'centerActive' : ''}}"></viwe>
-      <view class="timer" wx:if="{{!playRecord}}">0{{timer.minute}}:{{timer.second > 9 ? timer.second : '0' + timer.second}}</view>
-      <view class="timer" wx:else>0{{playTiemr.minute}}:{{playTiemr.second > 9 ? playTiemr.second : '0' + playTiemr.second}}</view>
+<view class="voiceBox" catchtap="playVoice" data-duration="{{item.duration}}" data-record="{{item.url}}" data-timer="{{item.timer}}" data-id="{{item.id}}"
+data-name="{{item.nickname}}" style="width:{{!showDel ? '420rpx' : '' }}">
+  <view class="voiceBoxRight" wx:if="{{!showDel}}">
+    <image
+      src="{{playVoice.status == 1 && item.id == playVoice.id ? 'https://hwcdn.jinlingkeji.cn/images/pro/voicepause.png' : 'https://hwcdn.jinlingkeji.cn/images/pro/triangle.png'}}">
+    </image>
+    <viwe class="centerImg {{ playVoice.status && item.id == playVoice.id ? 'centerActive' : ''}}"></viwe>
+    <view class="timer" wx:if="{{playVoice.status && item.id == playVoice.id}}">
+      0{{playVoice.playTimer.minute}}:{{playVoice.playTimer.second > 9 ? playVoice.playTimer.second : '0' + playVoice.playTimer.second}}
+    </view>
+    <view class="timer" wx:else>
+      0{{item.timer.minute}}:{{item.timer.second > 9 ? item.timer.second : '0' + item.timer.second}}
+    </view>
   </view>
-  <!-- <view class="delBtn" bindtap="delRecord"> 
+  <view class="voiceBoxRight" wx:else>
+    <image
+      src="{{playVoice.status == 1 ? 'https://hwcdn.jinlingkeji.cn/images/pro/voicepause.png' : 'https://hwcdn.jinlingkeji.cn/images/pro/triangle.png'}}">
+    </image>
+    <viwe class="centerImg {{ playVoice.status ?'centerActive' : ''}}"></viwe>
+    <view class="timer" wx:if="{{playVoice.status}}">
+      0{{playVoice.playTimer.minute}}:{{playVoice.playTimer.second > 9 ? playVoice.playTimer.second : '0' + playVoice.playTimer.second}}
+    </view>
+    <view class="timer" wx:else>
+      0{{item.timer.minute}}:{{item.timer.second > 9 ? item.timer.second : '0' + item.timer.second}}
+    </view>
+  </view>
+  <view class="delBtn" bindtap="delRecord" wx:if="{{showDel}}"> 
       <image src="../../images/delete.png"></image>
       删除
-  </view> -->
+  </view>
 </view>

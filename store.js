@@ -86,6 +86,7 @@ let store = new Store({
       wx.uma.trackEvent("join_page", {
         pageName: this.pageName
       });
+      this.pageRecord ? '' : getApp().backgroundAudioManager.stop()
     },
     onHide() {
       wx.uma.trackEvent("move", {

@@ -10,6 +10,7 @@ import store from "./store";
 // const vodwxsdk = require('vod-wx-sdk-v2')
 /* sse */
 const socket = require("data/socket.js");
+const backgroundAudioManager = wx.getBackgroundAudioManager()
 /* 小程序直播组件 */
 var livePlayer = requirePlugin("live-player-plugin");
 /* 接入bug平台 */
@@ -77,6 +78,7 @@ App({
   store,
   fundebug,
   livePlayer,
+  backgroundAudioManager,
   umengConfig: {
     appKey:
       store.process == "develop"

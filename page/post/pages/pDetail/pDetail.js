@@ -10,6 +10,8 @@ const plugin = requirePlugin("WechatSI");
 // 获取**全局唯一**的语音识别管理器**recordRecoManager**
 const manager = plugin.getRecordRecognitionManager();
 const innerAudioContext = wx.createInnerAudioContext();
+const record = require('../../../../utils/record')
+
 Page({
   data: {
     nav: [
@@ -46,6 +48,7 @@ Page({
     }
   },
   pageName: "博客详情（秀风采正文）",
+  pageRecord: 1,
   onLoad(options) {
     this.id = options.id;
     this.comParam = { blog_id: this.id, page: 1, pageSize: 10 };
@@ -89,12 +92,14 @@ Page({
   onShow() {
     this.initRecord();
     this.getRecordAuth();
+    record.initRecord(this)
   },
   onUnload() {
     wx.onMemoryWarning(function() {
       console.log("内存不足");
     });
     innerAudioContext.stop()
+    app.backgroundAudioManager.stop()
   },
   onHide() {
     innerAudioContext.stop()
@@ -1008,35 +1013,6 @@ Page({
         voiceActon: false
       });
     };
-    innerAudioContext.onPlay(() => {
-      this.playTiemr ? [clearInterval(this.playTiemr), this.playTiemr= null ] : ''
-      this.playTiemr = setInterval(() => {
-        if (this.data.playVoice.playTiemr.minute == this.itemTimer.minute && this.data.playVoice.playTiemr.second == this.itemTimer.second) {
-          innerAudioContext.stop()
-          this.setData({
-            'playVoice.status': 0,
-            'playVoice.id': 0,
-          })
-          return
-        }
-        let num = this.data.playVoice.playTiemr.second
-        num += 1
-        num > 60 ? this.setData({
-          'playVoice.playTiemr.minute': this.data.playVoice.playTiemr.minute += 1,
-          'playVoice.playTiemr.second': 0
-        }) : this.setData({
-          'playVoice.playTiemr.second': num
-        })
-      }, 1000)
-    })
-
-    innerAudioContext.onStop(() => {
-      this.playTiemr ? [clearInterval(this.playTiemr), this.playTiemr= null]  : ''
-      this.setData({
-        'playVoice.status': 0,
-        'playVoice.id': 0,
-      })
-    })
   },
   touchstart() {
     this.setData({
@@ -1200,7 +1176,7 @@ Page({
     let pages = getCurrentPages(),
       jump = false;
     pages.forEach(item => {
-      item.route == "pages/cDetail/cDetail" ? (jump = true) : "";
+      item.route == "/page/post/pages/cDetail/cDetail" ? (jump = true) : "";
     });
     if (jump) {
       wx.navigateBack();
@@ -1316,28 +1292,5 @@ Page({
     this.setData({
       showSheet: false
     });
-  },
-  checkRecord(e) {
-    let duration = e.currentTarget.dataset.duration,
-      recordUrl = e.currentTarget.dataset.record,
-      id = e.currentTarget.dataset.id
-    this.itemTimer = e.currentTarget.dataset.timer
-    if (this.data.playVoice.status && recordUrl == this.recordUrl) {
-      this.setData({
-        'playVoice.status': 0,
-      })
-      innerAudioContext.stop();
-    } else {
-      this.recordUrl = recordUrl
-
-      this.setData({
-        'playVoice.status': 1,
-        'playVoice.id': id,
-        'playVoice.playTiemr.minute': 0,
-        'playVoice.playTiemr.second': 0
-      })
-      innerAudioContext.src = recordUrl;
-      innerAudioContext.play();
-    }
   }
 });
