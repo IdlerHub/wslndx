@@ -2,6 +2,7 @@
 const LiveData = require("../../data/LiveData");
 Page({
   data: {
+    toView: "week0",
     navScrollLeft: 0,
     nav: [
       {
@@ -38,199 +39,102 @@ Page({
     currentTab: 0,
     anchorArray: [],
     noneLessons: true,
-    lessons: [
-      [
-        {
-          id: 7,
-          name: "美术课",
-          description: "美术课",
-          cover:
-            "https://hwcdn.jinlingkeji.cn/uploads/images/937caf1a361ac4d2bc33dfb931ed622d.jpg",
-          teacher: "王老师",
-          week: 1,
-          start_day: "4月2日",
-          end_day: "5月20日",
-          strat_time: "10:20",
-          end_time: "11:20",
-        },
-        {
-          id: 7,
-          name: "美术课",
-          description: "美术课",
-          cover:
-            "https://hwcdn.jinlingkeji.cn/uploads/images/937caf1a361ac4d2bc33dfb931ed622d.jpg",
-          teacher: "王老师",
-          week: 1,
-          start_day: "4月2日",
-          end_day: "5月20日",
-          strat_time: "10:20",
-          end_time: "11:20",
-        },
-      ],
-      [
-        {
-          id: 7,
-          name: "美术课",
-          description: "美术课",
-          cover:
-            "https://hwcdn.jinlingkeji.cn/uploads/images/937caf1a361ac4d2bc33dfb931ed622d.jpg",
-          teacher: "王老师",
-          week: 1,
-          start_day: "4月2日",
-          end_day: "5月20日",
-          strat_time: "10:20",
-          end_time: "11:20",
-        },
-      ],
-      [
-        {
-          id: 7,
-          name: "美术课",
-          description: "美术课",
-          cover:
-            "https://hwcdn.jinlingkeji.cn/uploads/images/937caf1a361ac4d2bc33dfb931ed622d.jpg",
-          teacher: "王老师",
-          week: 1,
-          start_day: "4月2日",
-          end_day: "5月20日",
-          strat_time: "10:20",
-          end_time: "11:20",
-        },
-        {
-          id: 7,
-          name: "美术课",
-          description: "美术课",
-          cover:
-            "https://hwcdn.jinlingkeji.cn/uploads/images/937caf1a361ac4d2bc33dfb931ed622d.jpg",
-          teacher: "王老师",
-          week: 1,
-          start_day: "4月2日",
-          end_day: "5月20日",
-          strat_time: "10:20",
-          end_time: "11:20",
-        },
-      ],
-      [
-        {
-          id: 7,
-          name: "美术课",
-          description: "美术课",
-          cover:
-            "https://hwcdn.jinlingkeji.cn/uploads/images/937caf1a361ac4d2bc33dfb931ed622d.jpg",
-          teacher: "王老师",
-          week: 1,
-          start_day: "4月2日",
-          end_day: "5月20日",
-          strat_time: "10:20",
-          end_time: "11:20",
-        },
-      ],
-      [
-        {
-          id: 7,
-          name: "美术课",
-          description: "美术课",
-          cover:
-            "https://hwcdn.jinlingkeji.cn/uploads/images/937caf1a361ac4d2bc33dfb931ed622d.jpg",
-          teacher: "王老师",
-          week: 1,
-          start_day: "4月2日",
-          end_day: "5月20日",
-          strat_time: "10:20",
-          end_time: "11:20",
-        },
-      ],
-    ],
+    lessons: [],
   },
   scroll: false,
   timer: null,
   onLoad: function (options) {
-    this.getheight();
-    this.getLiveLessons();
-  },
-  onShow: function () {},
-  switchNav(event) {
-    let cur = event.currentTarget.dataset.current;
-    if (this.data.currentTab != cur) {
+    this.getLiveLessons().then(() => {
+      let cur = new Date().getDay() - 1; //当前周几对应跳转
       this.setData({
+        toView: "week" + cur,
         currentTab: cur,
       });
-      this.scroll = true;
-      wx.pageScrollTo({
-        scrollTop: this.data.topArr[cur],
-        duration: 0,
-        success: () => {
-          this.timer ? clearTimeout(this.timer) : "";
-          this.timer = setTimeout(() => {
-            this.scroll = false;
-          }, 1200);
-        },
-      });
-    }
+      // this.getheight();
+    });
   },
-  getLiveLessons() {  //获取直播课程列表
-    LiveData.getLiveLessons().then((res) => {
+  getLiveLessons() {
+    //获取直播课程列表
+    return LiveData.getLiveLessons().then((res) => {
       this.setData({
         lessons: res.data.lessons,
         nav: res.data.weeks,
       });
     });
   },
-  getheight() {
-    let query = wx.createSelectorQuery().in(this);
-    let that = this,
-      heightArr = [],
-      topArr = [],
-      date = new Date().getDay();
-    this.data.nav.forEach((item, index) => {
-      query.select(`#text${item.id}`).boundingClientRect();
-      query.exec(function (res) {
-        heightArr.push(res[index].top + 126);
-        topArr.push(res[index].top - 148);
-        if (heightArr.length == 5) {
-          that.setData({
-            anchorArray: heightArr,
-            topArr,
-          });
-          date > 5
-            ? ""
-            : that.setData(
-                {
-                  currentTab: date - 1,
-                },
-                () => {
-                  that.scroll = true;
-                  wx.pageScrollTo({
-                    scrollTop: that.data.topArr[date - 1],
-                    duration: 0,
-                    success: () => {
-                      that.timer ? clearTimeout(that.timer) : "";
-                      that.timer = setTimeout(() => {
-                        that.scroll = false;
-                      }, 1200);
-                    },
-                  });
-                }
-              );
-        }
+  switchNav(event) {
+    let cur = event.currentTarget.dataset.current;
+    if (this.data.currentTab != cur) {
+      this.setData({
+        currentTab: cur,
+        toView: "week" + cur,
       });
-    });
-  },
-  onPageScroll(e) {
-    if (this.scroll) return;
-    let scrollTop = e.scrollTop,
-      scrollArr = this.data.anchorArray;
-    for (let i = 0; i < scrollArr.length; i++) {
-      if (scrollTop >= 0 && scrollTop < scrollArr[0]) {
-        // selectFloorIndex控制筛选块高亮显示
-        this.setData({
-          currentTab: 0,
-        });
-      } else if (scrollTop >= scrollArr[i - 1] && scrollTop < scrollArr[i]) {
-        this.setData({
-          currentTab: i,
-        });
-      }
+      this.scroll = true;
+      this.timer ? clearTimeout(this.timer) : "";
+      this.timer = setTimeout(() => {
+        this.scroll = false;
+      }, 1200);
     }
   },
+  getheight() {
+    let lessons = this.data.lessons;
+    let height = 121; //每个的大小
+    let scrollTopList = []; //需要滑动的距离
+    let sum = 0;
+    // console.log(1111,height)
+    lessons.forEach((item, index) => {
+      let nowTop = item.length * height;
+      scrollTopList.push(sum + nowTop);
+      sum += item.length * height;
+    });
+    this.setData({
+      scrollTopList: scrollTopList,
+    });
+    this.scroll = true;
+    this.timer ? clearTimeout(this.timer) : "";
+    this.timer = setTimeout(() => {
+      this.scroll = false;
+    }, 1200);
+  },
+  controlScroll(e) {
+    let _this = this;
+    this.timer ? clearTimeout(this.timer) : "";
+    this.timer = setTimeout(() => {
+      let info = wx.getStorageSync("SystemInfo");
+      let { windowHeight = 667 } = info.source.system;
+      let query = wx.createSelectorQuery().in(this);
+      let tempCur = [];
+      query.select(`#week0`).boundingClientRect();
+      query.select(`#week1`).boundingClientRect();
+      query.select(`#week2`).boundingClientRect();
+      query.select(`#week3`).boundingClientRect();
+      query.select(`#week4`).boundingClientRect();
+      query.exec(function (res) {
+        res.forEach((item, index) => {
+          if (item.top > 0 && item.top < windowHeight) {
+            // 取最小的就是周期
+            tempCur.push(index);
+          }
+        });
+        _this.setData({
+          currentTab: tempCur[0],
+        });
+      });
+    }, 200);
+
+  },
+  scrollTop() {
+    //到顶
+    this.setData({
+      currentTab: 0,
+    });
+  },
+  scrollBottom() {
+    //到底
+    // this.setData({
+    //   currentTab: 4,
+    // });
+    // this.scroll = false
+  },
+  onPageScroll(e) {},
 });

@@ -70,5 +70,6 @@ Page({
   onShow: function () {},
   onUnload: function () {},
   onPullDownRefresh: function () {},
+  // TODO: 缺省页面样式还没做
   onShareAppMessage: function () {},
 });

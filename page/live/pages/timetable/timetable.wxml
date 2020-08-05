@@ -15,7 +15,7 @@
       scroll-with-animation="true" enable-flex scroll-into-view="item{{currentTab < 4 ? 0 : currentTab - 3}}">
       <block wx:for="{{ nav }}" wx:for-index="id" wx:for-item="item" wx:key="id">
         <formCode bind:handler="switchNav" data-current="{{ id }}" data-id="{{item.id}}" data-itemId="{{item.index}}">
-          <view class="item {{ [currentTab == id ? 'active' : '',id == 0 ? 'itemone' : ''] }}"
+          <view class="weekItem {{ [currentTab == id ? 'active' : '',id == 0 ? 'itemone' : ''] }}"
             style="" id="item{{id}}">{{ item.name }}</view>
         </formCode>
       </block>
@@ -23,13 +23,12 @@
   </view>
 </view>
 
-
-<view wx:if="{{noneLessons}}" id="contentView">
-  <view wx:for="{{nav}}" id="{{item.index}}" wx:key="index" class="itemBox">
+<!-- 页面列表 -->
+<scroll-view  scroll-into-view="{{toView}}" scroll-y wx:if="{{noneLessons}}" class="scrollView" id="contentView" bindscroll="controlScroll">
+  <view wx:for="{{nav}}" id="{{'week'+index}}" wx:key="index" class="itemBox">
     <view class="contariner">
-      <text id="text{{item.id}}"></text>
-      <!-- <navigator id="item{{item.id}}" class="item" wx:for="{{lessons[index]}}" wx:for-item="lesson" wx:for-index="classIndex" wx:key="index" hover-class="none" url="../tableDetail/tableDetail?lessonId={{lesson.id}}" -->
-      <navigator id="item{{item.id}}" class="item" wx:for="{{lessons[index]}}" wx:for-item="lesson" wx:for-index="classIndex" wx:key="index" hover-class="none" url="../liveDetail/liveDetail?lessonId={{lesson.id}}"
+      <!-- <navigator class="item" wx:for="{{lessons[index]}}" wx:for-item="lesson" wx:for-index="classIndex" wx:key="index" hover-class="none" url="../tableDetail/tableDetail?lessonId={{lesson.id}}" -->
+      <!-- <navigator class="item" wx:for="{{lessons[index]}}" wx:for-item="lesson" wx:for-index="classIndex" wx:key="index" hover-class="none" url="../liveDetail/liveDetail?lessonId={{lesson.id}}"
         open-type="navigate">
         <view class="imgBox">
           <view class="img-week">{{item.name}}</view>
@@ -49,10 +48,11 @@
             <view class="btn">进入学习</view>
           </view>
         </view>
-      </navigator>
+      </navigator> -->
+        <liveLesson id="{{'weeks-'+index}}" lessons="{{lessons[index]}}" weeksIndex="{{index}}"></liveLesson>
     </view>
   </view>
-</view>
+</scroll-view>
 
 <!-- 缺省 -->
 <view class="none-lesson" wx:else>
