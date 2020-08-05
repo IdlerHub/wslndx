@@ -862,3 +862,62 @@ rich-text {
     opacity: 0;
   }
 }
+
+/* 客服盒子 */
+.servise {
+  width: 100%;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background:rgba(0,0,0,0.6);
+  z-index: 999;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow:visible;
+}
+.servise .serviseBox {
+  width:600rpx;
+  height:648rpx;
+  background:rgba(255,255,255,1);
+  border-radius:10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  box-sizing: border-box;
+  overflow:visible;
+}
+.servise .serviseBox .text {
+  width:100%;
+  font-size:36rpx;
+  font-family:PingFangSC-Regular,PingFang SC;
+  font-weight:400;
+  color:rgba(58,58,58,1);
+  text-align: center;
+  margin-top: 10rpx;
+  /* overflow: visible; */
+}
+.servise .serviseBox .image {
+  width: 520rpx;
+  height: 260rpx;
+  margin: 40rpx 0 60rpx 0;
+}
+.servise .serviseBox button {
+  width:520rpx;
+  height:88rpx;
+  background:rgba(223,32,32,1);
+  border-radius:4rpx;
+  font-size:36rpx;
+  font-family:PingFangSC-Medium,PingFang SC;
+  font-weight:500;
+  color:rgba(255,255,255,1);
+  overflow:visible;
+}
+.servise .cancel {
+  width: 74rpx;
+  height: 74rpx;
+  margin-top: 38rpx;
+}

@@ -19,6 +19,7 @@ Page({
         name: "简介",
       },
     ],
+    showServise: false, //展示客服盒子
     currentTab: 0, //分类
     sort: 0, //排序
     moreSublessons: "moreSublessons",
@@ -37,54 +38,20 @@ Page({
     voicetextstatus: "",
     content: "",
     voiceplayimg: "https://hwcdn.jinlingkeji.cn/images/pro/triangle.png",
-    current: {
-      //当前直播信息
-      cover:
-        "https://hwcdn.jinlingkeji.cn/uploads/images/937caf1a361ac4d2bc33dfb931ed622d.jpg",
-      name: "课程111",
-      description: "这是副标题",
-      start_day: "4月20日",
-      end_day: "5月20日",
-      start_time: "10:10",
-      end_tiem: "20:00",
-      teacher: "王老师",
-    },
+    current: {}, //当前直播信息
     lessonDetail: {}, //课程详情信息
-    sublessons: [
-      //回放课程列表
-      {
-        id: 1,
-        name: "31265165156",
-        room_id: 45,
-        cover:
-          "https://hwcdn.jinlingkeji.cn/uploads/images/83009583afb4e82090f51e3e26d2773a.jpg",
-        lesson_id: 1,
-        weigh: 1,
-        record_url: "",
-        start_time: 1596418776,
-        end_time: 1596454776,
-        is_end: 0,
-      },
-      {
-        id: 3,
-        name: "OBS推流",
-        room_id: 25,
-        cover:
-          "http://mmbiz.qpic.cn/mmbiz_jpg/ib2b2fxwZ6jJuVDVXBCSCPrvyXtq1PoZecj32nRTQ0nLp8Sjlojoxh0xfdS8k2amNiabcH2Gd7Q80YMPNdiaGyWlw/0",
-        lesson_id: 1,
-        weigh: 2,
-        record_url:
-          "http://tencentvod.jinlingkeji.cn/d7be315dvodcq1301323545/05ab114f5285890805858343405/oMVHZWipb0AA.mp4",
-        start_time: 1596418776,
-        end_time: 1596454776,
-        is_end: 1,
-      },
-    ],
+    sublessons: [], //回放课程列表
     comment: [], //  讨论
     playFlag: false, //视频播放状态
   },
   onLoad: function (options) {
     this.videoContext = wx.createVideoContext("myVideo");
+    if (options.isFirst) {
+      console.log("展示客服窗口");
+      this.setData({
+        showServise: true,
+      });
+    }
     this.getLessonDetail(options.lessonId);
     this.getSublesson(options.lessonId);
     this.heightInit();
@@ -97,7 +64,13 @@ Page({
     //   res.networkType == "wifi" ? app.playVedio("wifi") : "";
     // });
   },
-  onUnload: function () {},
+  //展示客服页面  
+  showServise() {
+    //展示客服页面
+    this.setData({
+      showServise: !this.data.showServise,
+    });
+  },
   heightInit() {
     //初始化课程块高度
     let that = this;
