@@ -24,21 +24,30 @@ Page({
   timer: "",
   onLoad: function (options) {
     console.log(options)
-    if (options.inviter) {
-      console.log(options);
+    let inviter = 0;
+    if (options.inviter && this.data.$state.userInfo.id != options.inviter) {
+      console.log("分享进来的", this.data.$state);
+      inviter = options.inviter;
     }
     this.data.lessonId = options.lessonId;
-    this.getLiveDetailDate(options.lessonId);
+    this.getLiveDetailDate(options.lessonId, inviter);
     this.timer = setInterval(() => {
       let countdown = this.data.lessonDetail.countdown - 1;
       this.leftTimer(countdown);
     }, 1000);
   },
-  onShow: function () {},
+  // onShow(){
+  //   this.getLiveDetailDate(this.data.lessonDetail.id);
+  //   if(!this.timer){
+  //     this.timer = setInterval(() => {
+  //       let countdown = this.data.lessonDetail.countdown - 1;
+  //       this.leftTimer(countdown);
+  //     }, 1000);
+  //   }
+  // },
   onUnload() {
     clearInterval(this.timer);
   },
-
   getLiveDetailDate(lesson_id, inviter = 0) {
     //获取邀请记录,报名详情
     let _this = this;
@@ -115,14 +124,23 @@ Page({
       });
     }
   },
-  onPullDownRefresh: function () {},
+  onPullDownRefresh: function () {
+    console.log('下拉刷新')
+    // let lessonId = this.data.lessonDetail.id;
+    // this.getLiveDetailDate(options.lessonId);
+    // this.timer = setInterval(() => {
+    //   let countdown = this.data.lessonDetail.countdown - 1;
+    //   this.leftTimer(countdown);
+    // }, 1000);
+    // wx.stopPullDownRefresh() //停止下拉刷新
+  },
   onShareAppMessage: function () {
-    let { lesson_id, cover } = this.data.lessonDetail;
+    let lesson_id = this.data.lessonDetail.id,
+      cover = this.data.lessonDetail.cover;
     let { id, nickname } = this.data.$state.userInfo;
-    console.log(this.data.$state.userInfo);
     return {
       title: `${nickname}邀请你`,
-      path: `/pages/tableDetail/tableDetail?lessonId=${lesson_id}&inviter=${id}`,
+      path: `/page/live/pages/tableDetail/tableDetail?lessonId=${lesson_id}&inviter=${id}`,
       imageUrl: cover,
     };
   },

@@ -195,6 +195,13 @@
 					"pathName": "page/live/pages/liveSearch/liveSearch",
 					"query": "",
 					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "page/live/pages/tableDetail/tableDetail",
+					"pathName": "page/live/pages/tableDetail/tableDetail",
+					"query": "lessonId=7",
+					"scene": null
 				}
 			]
 		}

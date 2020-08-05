@@ -6,9 +6,20 @@ Page({
     text: "",
     lastId: 0,
     searchList: [],
-    weekList: ['周一','周二','周三','周四','周五','周六','周日']
+    weekList: ["周一", "周二", "周三", "周四", "周五", "周六", "周日"],
   },
   onLoad: function (options) {},
+  // 去详情页
+  toDetail(e) {
+    let { lessonId, own } = e.currentTarget.dataset;
+    let url = "/page/live/pages/tableDetail/tableDetail?lessonId=" + lessonId;
+    if (own) {
+      url = "/page/live/pages/liveDetail/liveDetail?lessonId=" + lessonId;
+    }
+    wx.navigateTo({
+      url,
+    });
+  },
   //搜索内容
   toLiveSearch(last_id = 0) {
     let params = {
@@ -28,9 +39,9 @@ Page({
       item.name = `<p style="width:410rpx;display: block;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">${item.name
         .replace(/<highlight>/g, '<span style="color:#DF2020">')
         .replace(/<\/highlight>/g, "</span>")}</p>`;
-        item.teacher = `<p style="width:410rpx;display: block;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">${item.teacher
-          .replace(/<highlight>/g, '<span style="color:#DF2020">')
-          .replace(/<\/highlight>/g, "</span>")}</p>`;
+      item.teacher = `<p style="width:410rpx;display: block;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">${item.teacher
+        .replace(/<highlight>/g, '<span style="color:#DF2020">')
+        .replace(/<\/highlight>/g, "</span>")}</p>`;
       // item.subtitle = `<p style="width:410rpx;display: block;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">${item.subtitle
       //   .replace(/<highlight>/g, '<span style="color:#DF2020">')
       //   .replace(/<\/highlight>/g, "</span>")}</p>`;
@@ -59,13 +70,20 @@ Page({
       lastId: 0,
     });
   },
-  cancleSearch(){
+  cancleSearch() {
     this.setData({
       text: "",
       searchList: [],
       lastId: 0,
     });
-    wx.navigateBack();
+    wx.navigateBack({
+      fail: err=>{
+        console.log(err)
+        wx.redirectTo({
+          url: "/page/live/pages/timetable/timetable",
+        });
+      },
+    });
   },
   onShow: function () {},
   onUnload: function () {},
