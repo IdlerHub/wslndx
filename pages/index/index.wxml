@@ -107,10 +107,10 @@
     </view>
   </view>
   <!-- 搜索/学分 -->
-  <view style="position: relative;">
+  <!-- <view style="position: relative;">
     <official-account></official-account>
     <view style="width: 124rpx;height: 62rpx;background: #000;position: absolute;top: 43%;right: 24rpx;"></view>
-  </view>
+  </view> -->
   <view class="search-box">
     <navigator class="search-left" url="/page/index/pages/search/search">
       <image src="{{$state.imgHost}}/searchp.png"></image>
