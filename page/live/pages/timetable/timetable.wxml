@@ -27,28 +27,6 @@
 <scroll-view  scroll-into-view="{{toView}}" scroll-y wx:if="{{noneLessons}}" class="scrollView" id="contentView" bindscroll="controlScroll">
   <view wx:for="{{nav}}" id="{{'week'+index}}" wx:key="index" class="itemBox">
     <view class="contariner">
-      <!-- <navigator class="item" wx:for="{{lessons[index]}}" wx:for-item="lesson" wx:for-index="classIndex" wx:key="index" hover-class="none" url="../tableDetail/tableDetail?lessonId={{lesson.id}}" -->
-      <!-- <navigator class="item" wx:for="{{lessons[index]}}" wx:for-item="lesson" wx:for-index="classIndex" wx:key="index" hover-class="none" url="../liveDetail/liveDetail?lessonId={{lesson.id}}"
-        open-type="navigate">
-        <view class="imgBox">
-          <view class="img-week">{{item.name}}</view>
-          <image
-            src="{{lesson.cover}}"
-            class="img"></image>
-          <image class="icon" mode="aspectFill" src="{{ $state.imgHost }}/play.png"></image>
-        </view>
-        <view class="txtBox">
-          <text class="title">{{lesson.name}}</text>
-          <text class="time">{{lesson.start_day}}-{{lesson.end_day}} {{lesson.start_time}}-{{lesson.end_time}}</text>
-          <view class="textBottom">
-            <view class="teacher">
-              <image src="../../images/userImg.png"></image>
-              <text>{{lesson.teacher}}</text>
-            </view>
-            <view class="btn">进入学习</view>
-          </view>
-        </view>
-      </navigator> -->
         <liveLesson id="{{'weeks-'+index}}" lessons="{{lessons[index]}}" weeksIndex="{{index}}"></liveLesson>
     </view>
   </view>

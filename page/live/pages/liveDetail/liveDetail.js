@@ -46,11 +46,6 @@ Page({
   },
   onLoad: function (options) {
     this.videoContext = wx.createVideoContext("myVideo");
-    if (options.isFirst && options.isFirst != 0) {
-      this.setData({
-        showServise: true,
-      });
-    }
     this.init(options);
     this.heightInit(options);
     this.getLessonDetail(options.lessonId);
@@ -75,8 +70,14 @@ Page({
       showServise: !this.data.showServise,
     });
   },
-  //初始化需要的信息
+  //第一次加载初始化
   init(options) {
+    // 初次进入展示客服盒子
+    if (options.isFirst && options.isFirst != 0) {
+      this.setData({
+        showServise: true,
+      });
+    }
     //请求参数
     this.comParam = {
       lesson_id: options.lessonId || this.data.lessonDetail.id,
@@ -190,10 +191,15 @@ Page({
   getLessonDetail(lesson_id) {
     let _this = this;
     LiveData.getLessonDetail({ lesson_id }).then((res) => {
-      console.log(res);
       wx.setNavigationBarTitle({
         title: res.data.lesson.name || "",
       });
+      if (res.data.lesson.is_own == 0) {
+        console.log("未拥有课程");
+        wx.redirectTo({
+          url: `/page/live/pages/tableDetail/tableDetail?lessonId=${res.data.lesson.id}`,
+        });
+      }
       _this.setData({
         current: res.data.current,
         lessonDetail: res.data.lesson,

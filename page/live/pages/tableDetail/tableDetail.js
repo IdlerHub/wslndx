@@ -50,6 +50,9 @@ Page({
       LiveData.getInviteRecord({ lesson_id }),
     ])
       .then((res) => {
+        wx.setNavigationBarTitle({
+          title: res[0].data.name || "",
+        });
         _this.setData({
           lessonDetail: res[0].data,
           avatarList: res[1].data,

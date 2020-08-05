@@ -101,6 +101,10 @@ Page({
     this.timer ? clearTimeout(this.timer) : "";
     this.timer = setTimeout(() => {
       let info = wx.getStorageSync("SystemInfo");
+      if (!info) {
+        info = this.fetchAllInfo();
+      }
+      console.log(info);
       let { windowHeight = 667 } = info.source.system;
       let query = wx.createSelectorQuery().in(this);
       let tempCur = [];
@@ -121,20 +125,34 @@ Page({
         });
       });
     }, 200);
+  },
+  fetchAllInfo() {
+    //没有获取到系统信息的话
+    const menuButton = wx.getMenuButtonBoundingClientRect();
+    const systemInfo = wx.getSystemInfoSync();
 
+    const statusBarHeight = systemInfo.statusBarHeight;
+    const headerHeight =
+      (menuButton.top - systemInfo.statusBarHeight) * 2 + menuButton.height;
+
+    let data = {
+      source: {
+        menu: menuButton,
+        system: systemInfo,
+      },
+      statusBarHeight: statusBarHeight,
+      headerHeight: headerHeight,
+      headerRight: systemInfo.windowWidth - menuButton.left,
+    };
+
+    wx.setStorageSync("SystemInfo", data);
+    return data;
   },
-  scrollTop() {
-    //到顶
-    this.setData({
-      currentTab: 0,
-    });
+  onShareAppMessage() {
+    return {
+      title: `分享直播课程`,
+      path: "/page/live/pages/timetable/timetable",
+      imageUrl: "../../images/shareLive.png",
+    };
   },
-  scrollBottom() {
-    //到底
-    // this.setData({
-    //   currentTab: 4,
-    // });
-    // this.scroll = false
-  },
-  onPageScroll(e) {},
 });
