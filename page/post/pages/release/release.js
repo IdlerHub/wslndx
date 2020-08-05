@@ -702,9 +702,10 @@ Page({
       duration: 600000
     })
     this.obsUpload(this.filePath);
+    app.backgroundAudioManager.stop()
   },
-  delRecord() {
-    this.setData({
+  delRecord(that) {
+    that.setData({
       'param.audio': null,
       'param.duration': null,
       playRecord: 0,
@@ -727,7 +728,7 @@ Page({
         nickname: app.store.getState().userInfo.nickname
       }
     });
-    this.filePath = null
+    that.filePath = null
     app.backgroundAudioManager.stop()
   },
   //用于数据统计

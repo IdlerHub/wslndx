@@ -70,14 +70,13 @@
             <view class="recordoverBox" wx:if="{{!playVoice.status}}">
                 <text>0{{playVoice.timer.minute}}:{{playVoice.timer.second > 9 ? playVoice.timer.second : '0' + playVoice.timer.second}}
                 </text>
-                <image src="../../images/record/recordPlay.png" bindtap="playVoice"  data-duration="{{playVoice.duration}}" data-record="{{playVoice.url}}" data-timer="{{playVoice.timer}}" data-id="{{playVoice.id}}"
-                data-name="{{item.nickname}}"></image>
+                <image src="../../images/record/recordPlay.png" bindtap="playVoice"  data-duration="{{playVoice.duration}}" data-record="{{playVoice.url}}" data-timer="{{playVoice.timer}}" data-id="{{playVoice.id}}" data-name="{{playVoice.nickname}}"></image>
                 <text>点击试听</text>
             </view>
             <view class="recordoverBox" wx:else>
                 <text>0{{playVoice.playTimer.minute}}:{{playVoice.playTimer.second > 9 ? playVoice.playTimer.second : '0' + playVoice.playTimer.second}}
                 </text>
-                <image src="../../images/record/recordStop.png" bindtap="playVoice"  data-duration="{{playVoice.duration}}" data-record="{{playVoice.url}}" data-timer="{{playVoice.timer}}" data-id="{{playVoice.id}}"></image>
+                <image src="../../images/record/recordStop.png" bindtap="playVoice"  data-duration="{{playVoice.duration}}" data-record="{{playVoice.url}}" data-timer="{{playVoice.timer}}" data-id="{{playVoice.id}}" data-name="{{playVoice.nickname}}"></image>
                 <text>试听中</text>
             </view>
             <view class="recordoverBox">

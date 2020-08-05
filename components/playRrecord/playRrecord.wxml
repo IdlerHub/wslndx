@@ -1,7 +1,7 @@
 <!--components/playRrecord/playRrecord.wxml-->
-<view class="voiceBox" catchtap="playVoice" data-duration="{{item.duration}}" data-record="{{item.url}}" data-timer="{{item.timer}}" data-id="{{item.id}}"
-data-name="{{item.nickname}}" style="width:{{!showDel ? '420rpx' : '' }}">
-  <view class="voiceBoxRight" wx:if="{{!showDel}}">
+<view class="voiceBox" style="width:{{!showDel ? '420rpx' : '' }}">
+  <view class="voiceBoxRight" wx:if="{{!showDel}}" bindtap="playVoice" data-duration="{{item.duration}}" data-record="{{item.url}}" data-timer="{{item.timer}}" data-id="{{item.id}}"
+  data-name="{{item.nickname}}">
     <image
       src="{{playVoice.status == 1 && item.id == playVoice.id ? 'https://hwcdn.jinlingkeji.cn/images/pro/voicepause.png' : 'https://hwcdn.jinlingkeji.cn/images/pro/triangle.png'}}">
     </image>
@@ -13,7 +13,8 @@ data-name="{{item.nickname}}" style="width:{{!showDel ? '420rpx' : '' }}">
       0{{item.timer.minute}}:{{item.timer.second > 9 ? item.timer.second : '0' + item.timer.second}}
     </view>
   </view>
-  <view class="voiceBoxRight" wx:else>
+  <view class="voiceBoxRight" wx:else bindtap="playVoice" data-duration="{{item.duration}}" data-record="{{item.url}}" data-timer="{{item.timer}}" data-id="{{item.id}}"
+  data-name="{{item.nickname}}">
     <image
       src="{{playVoice.status == 1 ? 'https://hwcdn.jinlingkeji.cn/images/pro/voicepause.png' : 'https://hwcdn.jinlingkeji.cn/images/pro/triangle.png'}}">
     </image>
