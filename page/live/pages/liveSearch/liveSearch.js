@@ -3,6 +3,7 @@ const liveData = require("../../data/LiveData");
 const app = getApp();
 Page({
   data: {
+    showqst: false,
     text: "",
     lastId: 0,
     searchList: [],
@@ -27,9 +28,9 @@ Page({
       page_size: 10,
       last_id,
     };
-    liveData.toLiveSearch(params).then((res) => {
-      this.setHighLight(res.data);
-    });
+      liveData.toLiveSearch(params).then((res) => {
+        this.setHighLight(res.data);
+      });
   },
   setHighLight(lessList) {
     lessList.forEach((item) => {
@@ -50,6 +51,7 @@ Page({
     lessList.push(...lessList);
     this.setData({
       searchList: lessList,
+      showqst: true,
     });
   },
   changeText(e) {
@@ -60,6 +62,7 @@ Page({
       ? this.setData({
           searchList: [],
           lastId: 0,
+          showqst: false,
         })
       : this.toLiveSearch();
   },
@@ -88,6 +91,5 @@ Page({
   onShow: function () {},
   onUnload: function () {},
   onPullDownRefresh: function () {},
-  // TODO: 缺省页面样式还没做
   onShareAppMessage: function () {},
 });

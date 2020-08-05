@@ -36,4 +36,7 @@
             </view>
         </view>
     </view>
+    <view class="qst" wx:if="{{showqst && !searchList[0]}}">
+        <image class="ast-img" src="{{$state.imgHost}}/no-com.png"></image>
+    </view>
 </view>
