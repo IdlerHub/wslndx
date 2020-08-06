@@ -44,7 +44,10 @@ Page({
   scroll: false,
   timer: null,
   onLoad: function (options) {
-    this.getLiveLessons().then(() => {
+    this.init();
+  },
+  init(){
+    return this.getLiveLessons().then(() => {
       let cur = new Date().getDay() - 1; //当前周几对应跳转
       this.setData({
         toView: "week" + cur,
@@ -97,7 +100,7 @@ Page({
     }, 1200);
   },
   controlScroll(e) {
-    this.getheight()
+    this.getheight();
     let _this = this;
     this.timer ? clearTimeout(this.timer) : "";
     this.timer = setTimeout(() => {
@@ -126,6 +129,19 @@ Page({
         });
       });
     }, 200);
+  },
+  onPullDownRefresh() {
+    console.log("下拉刷新")
+    let _this = this;
+    this.init().then(()=>{
+      wx.showToast({
+        title: "刷新完成",
+        duration: 1000,
+      });
+      wx.stopPullDownRefresh();
+    }).catch(err=>{
+      console.log(err)
+    });
   },
   // fetchAllInfo() {
   //   //没有获取到系统信息的话
