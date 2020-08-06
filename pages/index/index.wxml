@@ -163,7 +163,7 @@
         <!-- 农场和电台 -->
         <scroll-view class="jumpout" scroll-x enable-flex>
           <navigator class="jumpoutBox" url="../../page/live/pages/timetable/timetable" hover-class="none">
-            <image class="img" mode="widthFix" src="{{  !recommend ? '' : $state.imgHost + '/liveBtn.png' }}">
+            <image class="img" mode="widthFix" src="{{  !recommend ? '' : '/images/liveBtn.png' }}">
             </image>
           </navigator>
           <navigator class="jumpoutBox" url="/pages/rankingList/rankingList" hover-class="none">

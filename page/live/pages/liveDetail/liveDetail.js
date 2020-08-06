@@ -42,35 +42,7 @@ Page({
     current: {}, //当前直播信息
     playNow: {},
     lessonDetail: {}, //课程详情信息
-    sublessons: [
-      {
-        id: 1,
-        name: "31265165156",
-        room_id: 45,
-        cover:
-          "https://hwcdn.jinlingkeji.cn/uploads/images/83009583afb4e82090f51e3e26d2773a.jpg",
-        lesson_id: 1,
-        weigh: 1,
-        record_url: "",
-        start_time: 1596418776,
-        end_time: 1596454776,
-        is_end: 1,
-      },
-      {
-        id: 3,
-        name: "OBS推流",
-        room_id: 25,
-        cover:
-          "http://mmbiz.qpic.cn/mmbiz_jpg/ib2b2fxwZ6jJuVDVXBCSCPrvyXtq1PoZecj32nRTQ0nLp8Sjlojoxh0xfdS8k2amNiabcH2Gd7Q80YMPNdiaGyWlw/0",
-        lesson_id: 1,
-        weigh: 2,
-        record_url:
-          "http://tencentvod.jinlingkeji.cn/d7be315dvodcq1301323545/05ab114f5285890805858343405/oMVHZWipb0AA.mp4",
-        start_time: 1596418776,
-        end_time: 1596454776,
-        is_end: 0,
-      },
-    ], //回放课程列表
+    sublessons: [], //回放课程列表
     comment: [], //  讨论
     playFlag: false, //视频播放状态
   },
