@@ -152,7 +152,7 @@
 						<image src="{{item.image}}"></image>
 						<text>{{item.title}}</text>
 					</navigator>
-					<navigator class="scroll-view" open-type="navigate" hover-class="none" url="../circle/circle?type=1">
+					<navigator class="scroll-view" open-type="navigate" hover-class="none" url="/page/user/pages/circle/circle?type=1">
 						<image src="{{$state.imgHost}}/larstCircle.png"></image>
 						<text>加入圈子</text>
 					</navigator>
