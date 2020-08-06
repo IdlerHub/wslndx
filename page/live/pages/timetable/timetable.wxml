@@ -26,6 +26,10 @@
 <!-- 页面列表 -->
 <scroll-view  scroll-into-view="{{toView}}" scroll-y wx:if="{{noneLessons}}" class="scrollView" id="contentView" bindscroll="controlScroll">
   <view wx:for="{{nav}}" id="{{'week'+index}}" wx:key="index" class="itemBox">
+    <view class="week-title">
+      <view class="title-left">{{item.name}}</view>
+      <view class="title-sum">共2节</view>
+    </view>
     <view class="contariner">
         <liveLesson id="{{'weeks-'+index}}" lessons="{{lessons[index]}}" weeksIndex="{{index}}"></liveLesson>
     </view>

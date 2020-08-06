@@ -363,17 +363,14 @@ rich-text {
   background: #df2020;
 }
 .drama .right {
-  font-size: 30rpx;
+  width: 138rpx;
+  height: 56rpx;
+  line-height: 56rpx;
+  text-align: center;
+  font-family:PingFangSC-Regular,PingFang SC;
+  font-size: 28rpx;
+  background: #F7F7F7;
   color: #7e7e7e;
-  display: flex;
-  align-items: center;
-}
-.drama .right .icon {
-  width: 48rpx;
-  height: 48rpx;
-}
-.drama .right text {
-  margin: 0 8rpx;
 }
 /* 讨论 */
 .nodata {

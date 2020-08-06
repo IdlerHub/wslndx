@@ -62,8 +62,8 @@
             <swiper-item class="tab-item">
                 <!-- 剧集 -->
                 <view class="none-live" wx:if="{{sublessons.length == 0}}">
-                        <image src="{{$state.imgHost}}/courseqs.png"></image>
-                        <text>暂无课程
+                    <image src="{{$state.imgHost}}/courseqs.png"></image>
+                    <text>暂无课程
                             去浏览其他内容吧~</text>
                 </view>
                 <scroll-view wx:else scroll-y="true" class="wrap drama" bindscrolltolower="{{moreSublessons}}" scroll-with-animation="true" scroll-top="{{scrollviewtop}}">
@@ -72,9 +72,9 @@
                             <text class="name">{{ index+1 }}. {{ item.name }}</text>
                             <!-- <text class="time">{{ item.minute }}分钟</text> -->
                         </view>
-                        <view class="right">
-                            <text>播放</text>
-                        </view>
+                        <view class="right" wx:if="{{item.is_end == 1}}">观看回播</view>
+                        <view class="right" wx:elif="{{item.is_end == 2}}">暂未开始</view>
+                        <view class="right" wx:else>正在直播</view>
                     </view>
                 </scroll-view>
             </swiper-item>

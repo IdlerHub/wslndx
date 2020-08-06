@@ -176,10 +176,10 @@
 					"scene": null
 				},
 				{
-					"id": -1,
+					"id": 11,
 					"name": "page/live/pages/liveDetail/liveDetail",
 					"pathName": "page/live/pages/liveDetail/liveDetail",
-					"query": "lessonId=7",
+					"query": "lessonId=25",
 					"scene": null
 				},
 				{

@@ -40,7 +40,35 @@ Page({
     voiceplayimg: "https://hwcdn.jinlingkeji.cn/images/pro/triangle.png",
     current: {}, //当前直播信息
     lessonDetail: {}, //课程详情信息
-    sublessons: [], //回放课程列表
+    sublessons: [
+      {
+        id: 1,
+        name: "31265165156",
+        room_id: 45,
+        cover:
+          "https://hwcdn.jinlingkeji.cn/uploads/images/83009583afb4e82090f51e3e26d2773a.jpg",
+        lesson_id: 1,
+        weigh: 1,
+        record_url: "",
+        start_time: 1596418776,
+        end_time: 1596454776,
+        is_end: 1,
+      },
+      {
+        id: 3,
+        name: "OBS推流",
+        room_id: 25,
+        cover:
+          "http://mmbiz.qpic.cn/mmbiz_jpg/ib2b2fxwZ6jJuVDVXBCSCPrvyXtq1PoZecj32nRTQ0nLp8Sjlojoxh0xfdS8k2amNiabcH2Gd7Q80YMPNdiaGyWlw/0",
+        lesson_id: 1,
+        weigh: 2,
+        record_url:
+          "http://tencentvod.jinlingkeji.cn/d7be315dvodcq1301323545/05ab114f5285890805858343405/oMVHZWipb0AA.mp4",
+        start_time: 1596418776,
+        end_time: 1596454776,
+        is_end: 0,
+      },
+    ], //回放课程列表
     comment: [], //  讨论
     playFlag: false, //视频播放状态
   },
@@ -132,13 +160,6 @@ Page({
         height: scrollViewHeight,
         currentTab: 0,
       });
-      if (that.data.$state.newGuide) {
-        that.data.$state.newGuide.lesson == 0
-          ? this.setData({
-              currentTab: 1,
-            })
-          : "";
-      }
     });
   },
   // 权限询问
@@ -213,7 +234,7 @@ Page({
       .then((res) => {
         console.log(res);
         _this.setData({
-          sublessons: res.data,
+          // sublessons: res.data,
         });
       })
       .catch((err) => {
@@ -480,7 +501,7 @@ Page({
         "lesson_id=" +
         this.data.lessonDetail.id +
         "&comment_id=" +
-        e.currentTarget.dataset.parentid + 
+        e.currentTarget.dataset.parentid +
         "&is_live=1",
       events: {
         refreshComments: (data) => {
@@ -756,10 +777,9 @@ Page({
             reply_id: e.currentTarget.dataset.item.reply_id,
           };
           console.log("删除回复");
-          LiveData
-            .delReply(params)
+          LiveData.delReply(params)
             .then((msg) => {
-              console.log("删除回复成功")
+              console.log("删除回复成功");
               wx.hideLoading();
               wx.showToast({
                 title: "删除成功",
@@ -770,7 +790,7 @@ Page({
               this.getComment([]);
             })
             .catch((err) => {
-              console.log("删除回复失败",err);
+              console.log("删除回复失败", err);
               if (err.code == -2) {
                 /* 帖子已经删除 */
                 this.setData({
@@ -800,7 +820,7 @@ Page({
             lesson_id: this.data.lessonDetail.id,
             comment_id: e.currentTarget.dataset.item.id,
           };
-          console.log("删除评论")
+          console.log("删除评论");
           LiveData.delComment(param)
             .then((msg) => {
               wx.hideLoading();

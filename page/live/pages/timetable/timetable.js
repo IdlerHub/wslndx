@@ -87,7 +87,7 @@ Page({
     // console.log(1111,height)
     lessons.forEach((item, index) => {
       let nowTop = item.length * height;
-      scrollTopList.push(sum + nowTop);
+      scrollTopList.push(sum + nowTop + 54);
       sum += item.length * height;
     });
     this.setData({
@@ -100,16 +100,16 @@ Page({
     }, 1200);
   },
   controlScroll(e) {
-    this.getheight();
+    // this.getheight();
     let _this = this;
     this.timer ? clearTimeout(this.timer) : "";
     this.timer = setTimeout(() => {
-      // let info = wx.getStorageSync("SystemInfo");
-      // if (!info) {
-      //   info = this.fetchAllInfo();
-      // }
+      let info = wx.getStorageSync("SystemInfo");
+      if (!info) {
+        info = this.fetchAllInfo();
+      }
       // console.log(info);
-      // let { windowHeight = 667 } = info.source.system;
+      let { windowHeight = 667 } = info.source.system;
       let query = wx.createSelectorQuery().in(this);
       let tempCur = [];
       query.select(`#week0`).boundingClientRect();
@@ -119,14 +119,23 @@ Page({
       query.select(`#week4`).boundingClientRect();
       query.exec(function (res) {
         res.forEach((item, index) => {
-          if (item.top > 0 && item.top < _this.data.scrollTopList[index]) {
-            // 取最小的就是周期
+          console.log(index,item)
+          // if (item.top > -126 && item.top < _this.data.scrollTopList[index]) {
+          //   // 取最小的就是周期
+          //   tempCur.push(index);
+          // }
+          if (item.top > -195 && item.top < windowHeight / 2) {
             tempCur.push(index);
           }
         });
-        _this.setData({
-          currentTab: tempCur[0],
-        });
+        console.log(tempCur);
+        if(tempCur.length){
+          _this.setData({
+            currentTab: tempCur[0],
+          });
+        }else{
+          console.log("meiyhou")
+        }
       });
     }, 200);
   },
@@ -142,28 +151,28 @@ Page({
       console.log(err)
     });
   },
-  // fetchAllInfo() {
-  //   //没有获取到系统信息的话
-  //   const menuButton = wx.getMenuButtonBoundingClientRect();
-  //   const systemInfo = wx.getSystemInfoSync();
+  fetchAllInfo() {
+    //没有获取到系统信息的话
+    const menuButton = wx.getMenuButtonBoundingClientRect();
+    const systemInfo = wx.getSystemInfoSync();
 
-  //   const statusBarHeight = systemInfo.statusBarHeight;
-  //   const headerHeight =
-  //     (menuButton.top - systemInfo.statusBarHeight) * 2 + menuButton.height;
+    const statusBarHeight = systemInfo.statusBarHeight;
+    const headerHeight =
+      (menuButton.top - systemInfo.statusBarHeight) * 2 + menuButton.height;
 
-  //   let data = {
-  //     source: {
-  //       menu: menuButton,
-  //       system: systemInfo,
-  //     },
-  //     statusBarHeight: statusBarHeight,
-  //     headerHeight: headerHeight,
-  //     headerRight: systemInfo.windowWidth - menuButton.left,
-  //   };
+    let data = {
+      source: {
+        menu: menuButton,
+        system: systemInfo,
+      },
+      statusBarHeight: statusBarHeight,
+      headerHeight: headerHeight,
+      headerRight: systemInfo.windowWidth - menuButton.left,
+    };
 
-  //   wx.setStorageSync("SystemInfo", data);
-  //   return data;
-  // },
+    wx.setStorageSync("SystemInfo", data);
+    return data;
+  },
   onShareAppMessage() {
     let nickname = this.data.$state.userInfo.nickname;
     return {
