@@ -119,6 +119,8 @@
   ]
     }
   ],
+  "requiredBackgroundModes": ["audio"]
+  ,
   "plugins": {
     "WechatSI": {
       "version": "0.3.4",

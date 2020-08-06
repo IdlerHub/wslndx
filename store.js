@@ -86,7 +86,7 @@ let store = new Store({
       wx.uma.trackEvent("join_page", {
         pageName: this.pageName
       });
-      this.pageRecord ? '' : getApp().backgroundAudioManager.stop()
+      this.pageRecord ? this.getPlayerState() : getApp().backgroundAudioManager.stop()
     },
     onHide() {
       wx.uma.trackEvent("move", {
@@ -109,6 +109,17 @@ let store = new Store({
           "&type=invite",
         imageUrl: this.data.$state.shareImgurl || "../../images/sharemessage.jpg"
       };
+    },
+    getPlayerState() {
+      console.log(342423)
+      wx.getBackgroundAudioPlayerState({
+        success (res) {
+          console.log(res)
+          if(res.status != 1) {
+            getApp().backgroundAudioManager.stop()
+          }
+        }
+      })
     }
   }
 });

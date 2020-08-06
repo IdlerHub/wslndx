@@ -163,8 +163,8 @@
         },
         {
           "id": 9,
-          "name": "pages/index/index",
-          "pathName": "pages/index/index",
+          "name": "page/post/pages/cDetail/cDetail",
+          "pathName": "page/post/pages/cDetail/cDetail",
           "query": "id=102",
           "scene": 1047
         },
