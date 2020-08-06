@@ -925,3 +925,25 @@ rich-text {
   height: 74rpx;
   margin-top: 38rpx;
 }
+
+/* 剧集缺省 */
+.none-live{
+  width: 100%;
+  /* height: calc(100vh - 249rpx); */
+  font-size:  34rpx;
+  color: #7E7E7E;
+  line-height: 48rpx;
+  font-family:PingFangSC-Regular,PingFang SC;
+  background-color: #fff;
+  text-align:center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.none-live image{
+  width: 490rpx;
+  height: 314rpx;
+  margin-top: 88rpx;
+  margin-bottom: 20rpx;
+}

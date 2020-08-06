@@ -61,7 +61,12 @@
         <swiper class="tab" style="height:{{ height }}px" current="{{ currentTab }}" duration="300" bindchange="switchTab">
             <swiper-item class="tab-item">
                 <!-- 剧集 -->
-                <scroll-view scroll-y="true" class="wrap drama" bindscrolltolower="{{moreSublessons}}" scroll-with-animation="true" scroll-top="{{scrollviewtop}}">
+                <view class="none-live" wx:if="{{sublessons.length == 0}}">
+                        <image src="{{$state.imgHost}}/courseqs.png"></image>
+                        <text>暂无课程
+                            去浏览其他内容吧~</text>
+                </view>
+                <scroll-view wx:else scroll-y="true" class="wrap drama" bindscrolltolower="{{moreSublessons}}" scroll-with-animation="true" scroll-top="{{scrollviewtop}}">
                     <view wx:for="{{ sublessons }}" bindtap="select" data-index="{{ index }}" wx:key="index" class="item 'played' 'active' {{'sublessonsd' + item.id}}" id="{{'sublessonsd'+item.id}}">
                         <view class="left">
                             <text class="name">{{ index+1 }}. {{ item.name }}</text>

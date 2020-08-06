@@ -131,7 +131,6 @@ Page({
     }, 200);
   },
   onPullDownRefresh() {
-    console.log("下拉刷新")
     let _this = this;
     this.init().then(()=>{
       wx.showToast({
