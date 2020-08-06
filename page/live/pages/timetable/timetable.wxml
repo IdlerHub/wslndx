@@ -24,14 +24,17 @@
 </view>
 
 <!-- 页面列表 -->
-<scroll-view  scroll-into-view="{{toView}}" scroll-y wx:if="{{noneLessons}}" class="scrollView" id="contentView" bindscroll="controlScroll">
+<scroll-view bindrefresherrefresh="pullDown" scroll-into-view="{{toView}}" scroll-y wx:if="{{noneLessons}}" class="scrollView" id="contentView" bindscroll="controlScroll">
   <view wx:for="{{nav}}" id="{{'week'+index}}" wx:key="index" class="itemBox">
     <view class="week-title">
       <view class="title-left">{{item.name}}</view>
-      <view class="title-sum">共2节</view>
+      <view class="title-sum">共{{lessons[index].length}}节</view>
     </view>
-    <view class="contariner">
+    <view class="contariner" wx:if="{{lessons[index].length != 0}}">
         <liveLesson id="{{'weeks-'+index}}" lessons="{{lessons[index]}}" weeksIndex="{{index}}"></liveLesson>
+    </view>
+    <view class="contariner" wx:else>
+      <view class="week-none">今日没有课程~</view>
     </view>
   </view>
 </scroll-view>

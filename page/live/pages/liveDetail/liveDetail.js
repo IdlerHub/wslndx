@@ -2,6 +2,7 @@
 const LiveData = require("../../../../data/LiveData");
 const app = getApp();
 const plugin = requirePlugin("WechatSI");
+
 // 获取**全局唯一**的语音识别管理器**recordRecoManager**
 const manager = plugin.getRecordRecognitionManager();
 const innerAudioContext = wx.createInnerAudioContext();
@@ -39,6 +40,7 @@ Page({
     content: "",
     voiceplayimg: "https://hwcdn.jinlingkeji.cn/images/pro/triangle.png",
     current: {}, //当前直播信息
+    playNow: {},
     lessonDetail: {}, //课程详情信息
     sublessons: [
       {
@@ -91,6 +93,48 @@ Page({
     // wx.onNetworkStatusChange((res) => {
     //   res.networkType == "wifi" ? app.playVedio("wifi") : "";
     // });
+  },
+  //获取数据
+  getLessonDetail(lesson_id) {
+    let _this = this;
+    LiveData.getLessonDetail({ lesson_id }).then((res) => {
+      wx.setNavigationBarTitle({
+        title: res.data.lesson.name || "",
+      });
+      if (res.data.lesson.is_own == 0) {
+        wx.redirectTo({
+          url: `/page/live/pages/tableDetail/tableDetail?lessonId=${res.data.lesson.id}`,
+        });
+      }
+      if (res.data.current.room_id != undefined) {
+        console.log("当天有直播");
+        _this.getLiveStatus(res.data.current);
+      }
+      _this.setData({
+        current: res.data.current,
+        lessonDetail: res.data.lesson,
+      });
+      _this.getComment();
+    });
+  },
+  getSublesson(lesson_id) {
+    let _this = this;
+    LiveData.getSublesson({ lesson_id })
+      .then((res) => {
+        console.log(res);
+        let playNow = {};
+        if (res.data[0].is_end == 1) {
+          //如果是已经结束的课,就把第一个放到当前播放中
+          playNow = res.data[0];
+        }
+        _this.setData({
+          sublessons: res.data,
+          playNow: playNow,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   },
   //展示客服页面
   showServise() {
@@ -208,39 +252,6 @@ Page({
       fail(res) {},
     });
   },
-  //获取数据
-  getLessonDetail(lesson_id) {
-    let _this = this;
-    LiveData.getLessonDetail({ lesson_id }).then((res) => {
-      wx.setNavigationBarTitle({
-        title: res.data.lesson.name || "",
-      });
-      if (res.data.lesson.is_own == 0) {
-        console.log("未拥有课程");
-        wx.redirectTo({
-          url: `/page/live/pages/tableDetail/tableDetail?lessonId=${res.data.lesson.id}`,
-        });
-      }
-      _this.setData({
-        current: res.data.current,
-        lessonDetail: res.data.lesson,
-      });
-      _this.getComment();
-    });
-  },
-  getSublesson(lesson_id) {
-    let _this = this;
-    LiveData.getSublesson({ lesson_id })
-      .then((res) => {
-        console.log(res);
-        _this.setData({
-          // sublessons: res.data,
-        });
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  },
   //课程部分功能块
   switchTab(event) {
     //滑动切换
@@ -321,27 +332,68 @@ Page({
     }
   },
   // 选择剧集
-  select(e, type) {
-    let i = 0,
-      list = this.data.sublessons;
-    if (type != undefined) {
-      i = e || 0;
+  toLiveRoom(item) {
+    let roomId = item.room_id;
+    let customParams = encodeURIComponent(
+      JSON.stringify({
+        path: "pages/index/index",
+        uid: this.data.$state.userInfo.id,
+      })
+    );
+    wx.navigateTo({
+      url: `plugin-private://wx2b03c6e691cd7370/pages/live-player-plugin?room_id=${roomId}&custom_params=${customParams}`,
+    });
+  },
+  select(e) {
+    let item = e.currentTarget.dataset.item;
+    let playNow = this.data.playNow;
+    console.log(playNow.id, item);
+    if (playNow.id && item.id === playNow.id) return;
+    if (item.is_end == 1 && item.record_url != "") {
+      this.setData({
+        playNow: item,
+      });
+      wx.nextTick(() => {
+        this.recordAddVedio();
+      });
     } else {
-      i = e.currentTarget.dataset.index;
-      // if (this.data.cur.id == list[i].id) return;
+      this.toLiveRoom(item);
     }
-    this.setData({
-      cur: list[i],
-    });
-    wx.nextTick(() => {
-      this.recordAddVedio();
-    });
+  },
+  //获取直播状态
+  getLiveStatus(current) {
+    //直播插件
+    const livePlayer = requirePlugin("live-player-plugin");
+    // 首次获取立马返回直播状态
+    livePlayer
+      .getLiveStatus({ room_id: current.room_id })
+      .then((res) => {
+        // 101: 直播中, 102: 未开始, 103: 已结束, 104: 禁播, 105: 暂停中, 106: 异常，107：已过期
+        console.log(res.liveStatus);
+        current["live_status"] = res.liveStatus;
+        this.setData({
+          current,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    // 往后间隔1分钟或更慢的频率去轮询获取直播状态
+    // setInterval(() => {
+    //   livePlayer
+    //     .getLiveStatus({ room_id: roomId })
+    //     .then((res) => {
+    //       // 101: 直播中, 102: 未开始, 103: 已结束, 104: 禁播, 105: 暂停中, 106: 异常，107：已过期
+    //       const liveStatus = res.liveStatus;
+    //     })
+    //     .catch((err) => {
+    //     });
+    // }, 60000);
   },
   //评论模块
   // 获取讨论
   getComment(list, options) {
     let comment = list || this.data.comment;
-    console.log("获取讨论", this.comParam);
     return LiveData.getCommentList(this.comParam)
       .then((msg) => {
         msg.data.forEach(function (item) {
@@ -494,7 +546,6 @@ Page({
   // 展示详情信息
   toCommentDetail(e) {
     let vm = this;
-    console.log("看更多的详情");
     wx.navigateTo({
       url:
         "/pages/commentDetail/commentDetail?" +
@@ -776,10 +827,8 @@ Page({
             // comment_id: e.currentTarget.dataset.parentid,
             reply_id: e.currentTarget.dataset.item.reply_id,
           };
-          console.log("删除回复");
           LiveData.delReply(params)
             .then((msg) => {
-              console.log("删除回复成功");
               wx.hideLoading();
               wx.showToast({
                 title: "删除成功",
@@ -790,7 +839,6 @@ Page({
               this.getComment([]);
             })
             .catch((err) => {
-              console.log("删除回复失败", err);
               if (err.code == -2) {
                 /* 帖子已经删除 */
                 this.setData({
@@ -820,7 +868,6 @@ Page({
             lesson_id: this.data.lessonDetail.id,
             comment_id: e.currentTarget.dataset.item.id,
           };
-          console.log("删除评论");
           LiveData.delComment(param)
             .then((msg) => {
               wx.hideLoading();
@@ -1063,19 +1110,15 @@ Page({
   },
   played() {
     //开始播放
-    console.log("开始播放");
   },
   timeupdate() {
     //进度条变化
-    console.log("进度条变化");
   },
   videoPause() {
     //暂停播放
-    console.log("暂停播放");
   },
   ended() {
     //播放结束
-    console.log("播放结束");
   },
   onPullDownRefresh: function () {},
   onShareAppMessage() {

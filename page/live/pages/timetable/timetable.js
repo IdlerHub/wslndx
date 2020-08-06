@@ -46,7 +46,7 @@ Page({
   onLoad: function (options) {
     this.init();
   },
-  init(){
+  init() {
     return this.getLiveLessons().then(() => {
       let cur = new Date().getDay() - 1; //当前周几对应跳转
       this.setData({
@@ -119,7 +119,7 @@ Page({
       query.select(`#week4`).boundingClientRect();
       query.exec(function (res) {
         res.forEach((item, index) => {
-          console.log(index,item)
+          // console.log(index,item)
           // if (item.top > -126 && item.top < _this.data.scrollTopList[index]) {
           //   // 取最小的就是周期
           //   tempCur.push(index);
@@ -128,28 +128,34 @@ Page({
             tempCur.push(index);
           }
         });
-        console.log(tempCur);
-        if(tempCur.length){
+        // console.log(tempCur);
+        if (tempCur.length) {
           _this.setData({
             currentTab: tempCur[0],
           });
-        }else{
-          console.log("meiyhou")
+        } else {
+          console.log("还在当前节点中");
         }
       });
     }, 200);
   },
-  onPullDownRefresh() {
+  pullDown() {
     let _this = this;
-    this.init().then(()=>{
-      wx.showToast({
-        title: "刷新完成",
-        duration: 1000,
+    console.log("下拉刷新")
+    this.init()
+      .then(() => {
+        wx.stopPullDownRefresh();
+        wx.showToast({
+          title: "刷新完成",
+          duration: 1000,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
       });
-      wx.stopPullDownRefresh();
-    }).catch(err=>{
-      console.log(err)
-    });
+  },
+  onPullDownRefresh() {
+    this.pullDown();
   },
   fetchAllInfo() {
     //没有获取到系统信息的话

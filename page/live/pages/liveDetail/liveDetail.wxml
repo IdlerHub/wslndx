@@ -1,11 +1,16 @@
 <!-- pages/liveDetail/liveDetail.wxml -->
 <view class="container">
     <!-- 视频播放 -->
-    <video id="myVideo" src="{{ currentList[0].url }}" controls page-gesture enable-play-gesture bindended="ended" bindtimeupdate="timeupdate" bindplay="played" bindpause="videoPause">
-        <cover-image wx:if="{{ !playFlag }}" mode="widthFix" src="{{  lessonDetail.cover }}" class="poster" bindtap="recordAddVedio"></cover-image>
+    <video id="myVideo" wx:if="{{playNow.record_url != ''}}" src="{{ playNow.record_url }}" controls page-gesture enable-play-gesture bindended="ended" bindtimeupdate="timeupdate" bindplay="played" bindpause="videoPause">
+        <cover-image wx:if="{{ !playFlag }}" mode="widthFix" src="{{ lessonDetail.cover }}" class="poster" bindtap="recordAddVedio"></cover-image>
         <cover-image wx:if="{{ !playFlag }}" mode="aspectFill" src="{{ $state.imgHost }}/play.png" class="play" bindtap="recordAddVedio"></cover-image>
-        <cover-view class="videomask" wx:if="{{showintegral}}"></cover-view>
+        <view class="videomask" wx:if="{{showintegral}}"></view>
     </video>
+    <view id="myVideo" wx:else>
+        <cover-image wx:if="{{ !playFlag }}" mode="widthFix" src="{{ lessonDetail.cover }}" class="poster"></cover-image>
+        <cover-image wx:if="{{ !playFlag }}" mode="aspectFill" src="{{ $state.imgHost }}/play.png" class="play"></cover-image>
+        <view class="videomask" wx:if="{{showintegral}}"></view>
+    </view>
     <!-- 课程信息 -->
     <view class="liveInfo">
         <view class="liveName">{{lessonDetail.name}}</view>
@@ -67,14 +72,15 @@
                             去浏览其他内容吧~</text>
                 </view>
                 <scroll-view wx:else scroll-y="true" class="wrap drama" bindscrolltolower="{{moreSublessons}}" scroll-with-animation="true" scroll-top="{{scrollviewtop}}">
-                    <view wx:for="{{ sublessons }}" bindtap="select" data-index="{{ index }}" wx:key="index" class="item 'played' 'active' {{'sublessonsd' + item.id}}" id="{{'sublessonsd'+item.id}}">
+                    <view wx:for="{{ sublessons }}" catchtap="select" data-item="{{item}}" data-index="{{ index }}" wx:key="index" class="item {{ playNow.id==item.id&&playNow.is_end==1 ? 'active' : ''}} {{'sublessonsd' + item.id}}" id="{{'sublessonsd'+item.id}}">
                         <view class="left">
                             <text class="name">{{ index+1 }}. {{ item.name }}</text>
                             <!-- <text class="time">{{ item.minute }}分钟</text> -->
                         </view>
                         <view class="right" wx:if="{{item.is_end == 1}}">观看回播</view>
                         <view class="right" wx:elif="{{item.is_end == 2}}">暂未开始</view>
-                        <view class="right" wx:else>正在直播</view>
+                        <view class="right" wx:elif="{{current.id == item.id && current.live_status == 101}}">正在直播</view>
+                        <view class="right" wx:else>即将开播</view>
                     </view>
                 </scroll-view>
             </swiper-item>
@@ -223,15 +229,15 @@
         </view>
     </view>
     <!-- 消息盒子 -->
-    <cover-view class="servise" wx:if="{{showServise}}">
-        <cover-view class="serviseBox">
-            <cover-view class="text">进入客服消息后，点击右下角</cover-view>
-            <cover-view class="text">快捷图片，扫码加入班群学习</cover-view>
+    <view class="servise" wx:if="{{showServise}}">
+        <view class="serviseBox">
+            <view class="text">进入客服消息后，点击右下角</view>
+            <view class="text">快捷图片，扫码加入班群学习</view>
             <cover-image src="{{$state.imgHost}}/serviseImg.png" class="image"></cover-image>
             <button open-type="contact" hover-class="none" show-message-card send-message-img="{{$state.imgHost}}/serviceIMG.jpg" send-message-title="添加老师" catchtap="showServise" session-from='{"name": "{{$state.userInfo.nickname}}","avatarUrl":"{{$state.userInfo.avatar}}","nickName":"{{$state.userInfo.nickname}}"}'>
                 去客服页面添加
             </button>
-        </cover-view>
+        </view>
         <cover-image src="{{$state.imgHost}}/cancel.png" class="cancel" catchtap="showServise"></cover-image>
-    </cover-view>
+    </view>
 </view>
