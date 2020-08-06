@@ -22,7 +22,7 @@
       {{lessonDetail.start_day}}-{{lessonDetail.end_day}} · {{weekList[lessonDetail.week-1]}} · {{lessonDetail.start_time}}-{{lessonDetail.end_time}}
     </view>
   </view>
-  <view class="inviteBox">
+  <view class="inviteBox" wx:if="{{ lessonDetail.conditions != 0 }}">
     <view class="inviteShow" bindtap="showAllAvatar">
       <view>
         可以邀请<text class="num">{{lessonDetail.conditions}}</text>位好友一起上课

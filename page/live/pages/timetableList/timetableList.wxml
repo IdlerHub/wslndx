@@ -14,7 +14,7 @@
   <view wx:else class="contariner">
     <view class="item" wx:for="{{courseListL}}" wx:for-item="lesson" wx:key="index" bindtap="toDetail" data-lesson-id="{{lesson.id}}">
       <view class="imgBox">
-        <!-- <view class="img-week">{{weekList[lesson.week-1]}}</view> -->
+        <view class="img-week" wx:if="{{lesson.is_end == 0}}">{{weekList[lesson.week-1]}}</view>
         <image src="{{lesson.cover}}" class="img"></image>
         <image class="icon" mode="aspectFill" src="{{ $state.imgHost }}/play.png"></image>
       </view>
