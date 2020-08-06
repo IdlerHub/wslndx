@@ -1,5 +1,5 @@
 // pages/timetableList/timetableList.js
-const LiveData = require("../../data/LiveData");
+const LiveData = require("../../../../data/LiveData");
 Page({
   data: {
     courseListL: [],

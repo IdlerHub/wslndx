@@ -1,5 +1,5 @@
 // page/live/pages/liveSearch/liveSearch.js
-const liveData = require("../../data/LiveData");
+const liveData = require("../../../../data/LiveData");
 const app = getApp();
 Page({
   data: {

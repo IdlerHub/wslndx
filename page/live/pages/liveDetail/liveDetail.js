@@ -1,5 +1,5 @@
 // pages/liveDetail/liveDetail.js
-const LiveData = require("../../data/LiveData");
+const LiveData = require("../../../../data/LiveData");
 const app = getApp();
 const plugin = requirePlugin("WechatSI");
 // 获取**全局唯一**的语音识别管理器**recordRecoManager**
@@ -474,20 +474,21 @@ Page({
   toCommentDetail(e) {
     let vm = this;
     console.log("看更多的详情");
-    // wx.navigateTo({
-    //   url:
-    //     "/pages/commentDetail/commentDetail?" +
-    //     "lesson_id=" +
-    //     this.data.lessonDetail.id +
-    //     "&comment_id=" +
-    //     e.currentTarget.dataset.parentid,
-    //   events: {
-    //     refreshComments: (data) => {
-    //       this.comParam.page = 1;
-    //       this.getComment([]);
-    //     },
-    //   },
-    // });
+    wx.navigateTo({
+      url:
+        "/pages/commentDetail/commentDetail?" +
+        "lesson_id=" +
+        this.data.lessonDetail.id +
+        "&comment_id=" +
+        e.currentTarget.dataset.parentid + 
+        "&is_live=1",
+      events: {
+        refreshComments: (data) => {
+          this.comParam.page = 1;
+          this.getComment([]);
+        },
+      },
+    });
   },
   //展示回复二级/三级评论
   show(e) {

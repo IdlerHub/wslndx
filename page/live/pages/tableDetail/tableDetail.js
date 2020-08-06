@@ -1,5 +1,5 @@
 // pages/tableDetail/tableDetail.js
-const LiveData = require("../../data/LiveData");
+const LiveData = require("../../../../data/LiveData");
 Page({
   data: {
     days: 0,

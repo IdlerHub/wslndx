@@ -1,5 +1,5 @@
 // pages/timetable/timetable.js
-const LiveData = require("../../data/LiveData");
+const LiveData = require("../../../../data/LiveData");
 Page({
   data: {
     toView: "week0",
