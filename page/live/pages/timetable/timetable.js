@@ -150,8 +150,9 @@ Page({
   //   return data;
   // },
   onShareAppMessage() {
+    let nickname = this.data.$state.userInfo.nickname;
     return {
-      title: `分享直播课程`,
+      title: `${nickname}邀请您一起来上课`,
       path: "/page/live/pages/timetable/timetable",
       imageUrl: "../../images/shareLive.png",
     };

@@ -128,9 +128,9 @@ Page({
   onShareAppMessage: function () {
     let lesson_id = this.data.lessonDetail.id,
       cover = this.data.lessonDetail.cover;
-    let { id, nickname } = this.data.$state.userInfo;
+    let id = this.data.$state.userInfo.id;
     return {
-      title: `${nickname}邀请你`,
+      title: `快来和我一起报名,免费好课天天学!`,
       path: `/page/live/pages/tableDetail/tableDetail?lessonId=${lesson_id}&inviter=${id}`,
       imageUrl: cover,
     };

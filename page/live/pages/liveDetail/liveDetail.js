@@ -1061,9 +1061,8 @@ Page({
   onShareAppMessage() {
     let lesson_id = this.data.lessonDetail.id,
       cover = this.data.lessonDetail.cover;
-    let { nickname } = this.data.$state.userInfo;
     return {
-      title: `${nickname}分享的课程,不是邀请页面哦`,
+      title: `快来和我一起报名,免费好课天天学!`,
       path: `/page/live/pages/liveDetail/liveDetail?lessonId=${lesson_id}`,
       imageUrl: cover,
     };
