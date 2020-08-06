@@ -1,15 +1,14 @@
 <!-- pages/liveDetail/liveDetail.wxml -->
 <view class="container">
     <!-- 视频播放 -->
-    <video id="myVideo" wx:if="{{playNow.record_url != ''}}" src="{{ playNow.record_url }}" controls page-gesture enable-play-gesture bindended="ended" bindtimeupdate="timeupdate" bindplay="played" bindpause="videoPause">
-        <cover-image wx:if="{{ !playFlag }}" mode="widthFix" src="{{ lessonDetail.cover }}" class="poster" bindtap="recordAddVedio"></cover-image>
+    <video id="myVideo" wx:if="{{playNow.record_url != '' }}" src="{{ playNow.record_url }}" controls page-gesture enable-play-gesture bindended="ended" bindtimeupdate="timeupdate" bindplay="played" bindpause="videoPause">
+        <cover-image wx:if="{{ !playFlag }}" mode="widthFix" src="{{ playNow.cover }}" class="poster" bindtap="recordAddVedio"></cover-image>
         <cover-image wx:if="{{ !playFlag }}" mode="aspectFill" src="{{ $state.imgHost }}/play.png" class="play" bindtap="recordAddVedio"></cover-image>
         <view class="videomask" wx:if="{{showintegral}}"></view>
     </video>
     <view id="myVideo" wx:else>
         <cover-image wx:if="{{ !playFlag }}" mode="widthFix" src="{{ lessonDetail.cover }}" class="poster"></cover-image>
         <cover-image wx:if="{{ !playFlag }}" mode="aspectFill" src="{{ $state.imgHost }}/play.png" class="play"></cover-image>
-        <view class="videomask" wx:if="{{showintegral}}"></view>
     </view>
     <!-- 课程信息 -->
     <view class="liveInfo">

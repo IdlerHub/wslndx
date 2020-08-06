@@ -320,7 +320,7 @@ Page({
     let item = e.currentTarget.dataset.item;
     let playNow = this.data.playNow;
     console.log(playNow.id, item);
-    if (playNow.id && item.id === playNow.id) return;
+    // if (playNow.id && item.id === playNow.id && this.data.playFlag) return;
     if (item.is_end == 1 && item.record_url != "") {
       this.setData({
         playNow: item,
@@ -1075,6 +1075,7 @@ Page({
 
   //视频播放功能块
   recordAddVedio() {
+    console.log("播放视频")
     this.videoContext.play();
     this.setData({
       playFlag: true,
@@ -1088,9 +1089,15 @@ Page({
   },
   videoPause() {
     //暂停播放
+    // this.setData({
+    //   playFlag: false,
+    // });
   },
   ended() {
     //播放结束
+    this.setData({
+      playFlag: false,
+    });
   },
   onPullDownRefresh: function () {},
   onShareAppMessage() {
