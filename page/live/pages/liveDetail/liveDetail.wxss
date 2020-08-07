@@ -146,9 +146,11 @@ page {
   overflow: hidden;
   margin-right: 20rpx;
 }
-.liveLesson .liveImg .coverImg {
-  width: 100%;
-  height: 100%;
+.liveLesson .liveImg>image {
+  width: 260rpx;
+  height: 160rpx;
+  overflow: hidden;
+
 }
 .liveLesson .liveImg .playImg {
   width: 52rpx;
@@ -164,8 +166,7 @@ page {
 }
 
 .liveLesson .lessonInfo {
-  width: 100%;
-  height: 100%;
+  flex: 1;
   position: relative;
   /* display: flex;
   justify-content: space-between;

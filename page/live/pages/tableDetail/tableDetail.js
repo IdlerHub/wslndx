@@ -100,7 +100,7 @@ Page({
   },
   rightNow() {
     let { conditions, invite_num, is_own } = this.data.lessonDetail;
-    if (conditions != invite_num) {
+    if (conditions > invite_num) {
       wx.showModal({
         content: `再邀请${conditions - invite_num}位好友就可以学习啦`,
         confirmColor: "#DF2020",

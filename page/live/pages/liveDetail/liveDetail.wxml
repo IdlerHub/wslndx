@@ -25,7 +25,7 @@
         </view>
     </view>
     <!-- 直播信息 -->
-    <view class="liveLesson" wx:if="{{false}}">
+    <view class="liveLesson">
         <view class="liveImg">
             <image class="coverImg" mode="widthFix" src="{{current.cover}}"></image>
             <image class="playImg" src="{{ $state.imgHost }}/play.png"></image>
