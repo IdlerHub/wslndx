@@ -122,6 +122,15 @@ function replyList(params) {
   return httpService.post("schedule/replyList", params);
 }
 
+/**
+ * @description: 分享课程记录
+ * @param {lesson_id}  --- {课程ID}
+ * @return:  promise
+ * **/
+function shareLesson(params) {
+  return httpService.post("schedule/shareLesson", params);
+}
+
 module.exports = {
   getLiveLessons,
   getApplyDetail,
@@ -137,4 +146,5 @@ module.exports = {
   putReply,
   delReply,
   replyList,
+  shareLesson,
 };

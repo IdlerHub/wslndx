@@ -3,8 +3,8 @@
   <view class="imgBox">
     <image src="{{lessonDetail.cover}}"></image>
     <view class="timeBox">
-      <text class="txt">开课倒计时</text>
-      <view class="timer">
+      <text class="txt">{{flag ? '已开课' : '开课倒计时'}}</text>
+      <view class="timer" wx:if="{{!flag}}">
         <text>{{days}}</text>
         <text>天</text>
         <text>{{hours}}</text>
@@ -56,11 +56,6 @@
       <image src="../../images/share-wx.png"></image>
       <text>邀请好友</text>
     </view>
-    <!-- <view class="leftBox" bindtap="collect">
-      <view class="center"></view>
-      <image src="{{colleted ? $state.imgHost + '/heart-red.png': '../../images/heart-ash.png'}}"></image>
-      <text>{{colleted ? '已收藏' : '收藏'}}</text>
-    </view> -->
   </button>
   <view class="right" bindtap="rightNow">立即学习</view>
 </view>

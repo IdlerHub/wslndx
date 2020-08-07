@@ -925,10 +925,16 @@ Page({
   // 语音播放
   playvoice() {
     innerAudioContext.src = this.data.filePath;
+    console.log("播放语音", innerAudioContext);
     innerAudioContext.play();
     innerAudioContext.onPlay(() => {
       this.setData({
         voiceplayimg: "https://hwcdn.jinlingkeji.cn/images/pro/voicepause.png",
+      });
+    });
+    InnerAudioContext.onPause(() => {
+      this.setData({
+        voiceplayimg: "https://hwcdn.jinlingkeji.cn/images/pro/triangle.png",
       });
     });
     innerAudioContext.onEnded(() => {
@@ -1075,7 +1081,7 @@ Page({
 
   //视频播放功能块
   recordAddVedio() {
-    console.log("播放视频")
+    console.log("播放视频");
     this.videoContext.play();
     this.setData({
       playFlag: true,

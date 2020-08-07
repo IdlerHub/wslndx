@@ -19,6 +19,7 @@ Page({
       "每周日",
     ],
     lessonDetail: {}, //课程详情
+    flag: false, //倒计时结束
   },
   timer: "",
   onLoad: function (options) {
@@ -45,6 +46,7 @@ Page({
       lesson_id,
       inviter, //如果是邀请进来的,就在获取的时候提交记录
     };
+    let flag = false;
     return Promise.all([
       LiveData.getApplyDetail(params),
       LiveData.getInviteRecord({ lesson_id }),
@@ -53,9 +55,11 @@ Page({
         wx.setNavigationBarTitle({
           title: res[0].data.name || "",
         });
+        if (res[0].data.countdown < 0) flag = true;
         _this.setData({
           lessonDetail: res[0].data,
           avatarList: res[1].data,
+          flag,
         });
       })
       .catch((err) => {
@@ -75,7 +79,12 @@ Page({
     seconds = this.checkTime(seconds);
     let flag =
       days == "0" && seconds == "00" && hours == "00" && minutes == "00";
-    if (flag) clearInterval(this.timer);
+    if (flag) {
+      this.setData({
+        flag,
+      });
+      clearInterval(this.timer);
+    }
     this.setData({
       days,
       hours,
@@ -99,7 +108,8 @@ Page({
       });
     } else {
       let lesson_id = this.data.lessonDetail.id;
-      if (!is_own) {  //未拥有
+      if (!is_own) {
+        //未拥有
         LiveData.getReceiveLesson({ lesson_id })
           .then((res) => {
             this.data.lessonDetail.is_own = 1;
@@ -110,7 +120,8 @@ Page({
           .catch((err) => {
             console.log(err);
           });
-      } else {  //已拥有就不再领取,从分享进去详情页,不展示客服盒子
+      } else {
+        //已拥有就不再领取,从分享进去详情页,不展示客服盒子
         wx.navigateTo({
           url: `/page/live/pages/liveDetail/liveDetail?lessonId=${lesson_id}&isFirst=0`,
         });
@@ -125,10 +136,16 @@ Page({
       });
     }
   },
+  shareLesson(lesson_id) {
+    LiveData.shareLesson({ lesson_id }).then((res) => {
+      console.log("分享成功");
+    });
+  },
   onShareAppMessage: function () {
     let lesson_id = this.data.lessonDetail.id,
       cover = this.data.lessonDetail.cover;
     let id = this.data.$state.userInfo.id;
+    this.shareLesson(lesson_id);
     return {
       title: `快来和我一起报名,免费好课天天学!`,
       path: `/page/live/pages/tableDetail/tableDetail?lessonId=${lesson_id}&inviter=${id}`,
