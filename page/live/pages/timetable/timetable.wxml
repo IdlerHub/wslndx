@@ -24,7 +24,7 @@
 </view>
 
 <!-- 页面列表 -->
-<scroll-view bindrefresherrefresh="pullDown" scroll-into-view="{{toView}}" scroll-y wx:if="{{noneLessons}}" class="scrollView" id="contentView" bindscroll="controlScroll">
+<scroll-view bindrefresherrefresh="pullDown" scroll-into-view="{{toView}}" scroll-y wx:if="{{lessons.length != 0}}" class="scrollView" id="contentView" bindscroll="controlScroll">
   <view wx:for="{{nav}}" id="{{'week'+index}}" wx:key="index" class="itemBox">
     <view class="week-title">
       <view class="title-left">{{item.name}}</view>

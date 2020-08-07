@@ -38,7 +38,6 @@ Page({
     ],
     currentTab: 0,
     anchorArray: [],
-    noneLessons: true,
     lessons: [],
   },
   scroll: false,
@@ -105,8 +104,8 @@ Page({
     let nowHeight = e.detail.scrollTop;
     // this.getheight();
     let _this = this;
-    this.timer ? clearTimeout(this.timer) : "";
-    this.timer = setTimeout(() => {
+    // this.timer ? clearTimeout(this.timer) : "";
+    // this.timer = setTimeout(() => {
       let info = wx.getStorageSync("SystemInfo");
       if (!info) {
         info = this.fetchAllInfo();
@@ -123,11 +122,9 @@ Page({
       query.select(`#week4`).boundingClientRect();
       query.exec(function (res) {
         console.log(_this.scrollHeight, nowHeight);
-        if (_this.scrollHeight > nowHeight) {
-          console.log("向上滑动");
+        if (_this.scrollHeight > nowHeight) { //向上滑动
           res[currentTab].top > (windowHeight / 2) ? currentTab-- : ''
-        } else {
-          console.log("向下滑动");
+        } else {  //向下滑动
           res[currentTab].bottom < 239 ? currentTab++ : "";
         }
         _this.scrollHeight = nowHeight;
@@ -153,7 +150,7 @@ Page({
         //   console.log("还在当前节点中");
         // }
       });
-    }, 200);
+    // }, 200);
   },
   pullDown() {
     this.init()

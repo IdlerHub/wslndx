@@ -77,8 +77,7 @@ Page({
           url: `/page/live/pages/tableDetail/tableDetail?lessonId=${res.data.lesson.id}`,
         });
       }
-      if (res.data.current.room_id != undefined) {
-        console.log("当天有直播");
+      if (res.data.current.room_id != undefined) {  //当天有直播
         _this.getLiveStatus(res.data.current);
       }
       _this.setData({
