@@ -1,7 +1,7 @@
 //index.js
 //获取应用实例
 const app = getApp()
-const record = require('../../../../utils/record')
+const record = require('../../utils/record')
 
 Page({
   data: {

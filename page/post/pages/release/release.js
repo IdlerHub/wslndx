@@ -99,7 +99,7 @@ Page({
     let pages = getCurrentPages();
     let prePage = [];
     pages.forEach(item => {
-      if (item.route == "pages/myCircle/myCircle") {
+      if (item.route == "page/post/pages/myCircle/myCircle") {
         prePage = item;
       } else if (item.route == "pages/cDetail/cDetail") {
         prePage = item;
@@ -492,7 +492,7 @@ Page({
                   wx.navigateBack()
                 } else if (this.circle && this.data.selId != this.data.circleId && this.data.selId > 0) {
                   wx.redirectTo({
-                    url: '/page/post/pages/cDetail/cDetail?id=' + this.data.selId,
+                    url: '/pages/cDetail/cDetail?id=' + this.data.selId,
                   })
                 } else {
                   wx.switchTab({

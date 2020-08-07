@@ -1176,13 +1176,13 @@ Page({
     let pages = getCurrentPages(),
       jump = false;
     pages.forEach(item => {
-      item.route == "/page/post/pages/cDetail/cDetail" ? (jump = true) : "";
+      item.route == "pages/cDetail/cDetail" ? (jump = true) : "";
     });
     if (jump) {
       wx.navigateBack();
     } else {
       wx.navigateTo({
-        url: "../cDetail/cDetail?id=" + this.data.detail.fs_id
+        url: "/pages/cDetail/cDetail?id=" + this.data.detail.fs_id
       });
     }
   },

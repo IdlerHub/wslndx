@@ -58,7 +58,7 @@
 				</view>
 			</view>
 		</view>
-		<navigator wx:if="{{ item.fs_title }}" url="/page/post/pages/cDetail/cDetail?id={{ item.fs_id }}"
+		<navigator wx:if="{{ item.fs_title }}" url="/pages/cDetail/cDetail?id={{ item.fs_id }}"
 		hover-class="none" open-type="navigate" class="label" style="margin: {{ !item.like_avatar_list[0] && !item.last_comment.nickname ? '30rpx 30rpx 0 30rpx' : '0 30rpx 20rpx 30rpx'}};"> #{{ item.fs_title }}精选</navigator>
 		<view class="btn" style="margin-top:{{!item.like_avatar_list[0] && !item.last_comment.nickname ? '30rpx' : ''}}" >
 			<!-- 点赞 -->

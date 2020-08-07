@@ -75,7 +75,7 @@ Component({
 		},
 		gotoCdetail(e) {
 			wx.navigateTo({
-				url: "/page/post/pages/cDetail/cDetail?id=" + e.currentTarget.dataset.id
+				url: "/pages/cDetail/cDetail?id=" + e.currentTarget.dataset.id
 			})
 		},
 		longPress(e) {
