@@ -55,6 +55,12 @@ Page({
         wx.setNavigationBarTitle({
           title: res[0].data.name || "",
         });
+        if(res[0].data.is_own == 1) {
+          wx.redirectTo({
+            url: `/page/live/pages/liveDetail/liveDetail?lessonId=${lesson_id}&isFirst=0`,
+          });
+          return 
+        }
         if (res[0].data.countdown < 0) flag = true;
         _this.setData({
           lessonDetail: res[0].data,
@@ -129,12 +135,12 @@ Page({
     }
   },
   showAllAvatar() {
-    let { conditions,invite_num } = this.data.lessonDetail;
+    let { conditions, invite_num } = this.data.lessonDetail;
     // if (conditions > 5 || invite_num > 5) {
-      //展示所有头像
-      this.setData({
-        showMoreAvatar: !this.data.showMoreAvatar,
-      });
+    //展示所有头像
+    this.setData({
+      showMoreAvatar: !this.data.showMoreAvatar,
+    });
     // }
   },
   shareLesson(lesson_id) {
@@ -143,13 +149,13 @@ Page({
     });
   },
   onPullDownRefresh() {
-     this.getLiveDetailDate(this.data.lessonId).then(res=>{
-       wx.stopPullDownRefresh();
-       wx.showToast({
-         title: "刷新完成",
-         duration: 1000,
-       });
-     });
+    this.getLiveDetailDate(this.data.lessonId).then((res) => {
+      wx.stopPullDownRefresh();
+      wx.showToast({
+        title: "刷新完成",
+        duration: 1000,
+      });
+    });
   },
   onShareAppMessage: function () {
     let lesson_id = this.data.lessonDetail.id,
