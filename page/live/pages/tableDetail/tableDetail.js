@@ -129,12 +129,13 @@ Page({
     }
   },
   showAllAvatar() {
-    if (this.data.lessonDetail.conditions > 5) {
+    let { conditions,invite_num } = this.data.lessonDetail;
+    // if (conditions > 5 || invite_num > 5) {
       //展示所有头像
       this.setData({
         showMoreAvatar: !this.data.showMoreAvatar,
       });
-    }
+    // }
   },
   shareLesson(lesson_id) {
     LiveData.shareLesson({ lesson_id }).then((res) => {

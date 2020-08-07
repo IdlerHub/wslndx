@@ -147,28 +147,24 @@ page {
   justify-content: center;
   align-items: center;
 }
-.inviteBox .inviteShow text {
-  font-size:40rpx;
-  font-weight:500;
-  color:rgba(58,58,58,1);
-}
 .inviteBox .inviteShow .num {
   color: #DF2020;
 }
 .inviteBox .inviteShow .avatarBox {
   width: calc(100vw - 220rpx);
   height: 90rpx;
+  box-sizing: border-box;
   overflow: hidden;
   margin-top: 50rpx;
-  margin-bottom: 40rpx;
+  margin-bottom: 60rpx;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
 }
 .inviteBox .inviteShow .avatarShow {
-  height: 220rpx;
-  
+  height: auto;
+  margin-bottom: 40rpx;
   justify-content: flex-start;
 }
 .inviteBox .inviteShow .avatarBox image:nth-child(5n){
@@ -178,8 +174,10 @@ page {
   width: 90rpx;
   height: 90rpx;
   margin-right: 20rpx;
-  margin-bottom: 20rpx;
   border-radius: 50%;
+}
+.inviteBox .inviteShow .avatarShow image {
+  margin-bottom: 20rpx;
 }
 .inviteBox button {
   width:530rpx;

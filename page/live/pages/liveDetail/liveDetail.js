@@ -370,7 +370,6 @@ Page({
         console.log()
         if (msg.data.length == 0){
           this.comParam.page--
-          console.log("当前选择页码", this.comParam.page);
           return
         }else {
           msg.data.forEach(function (item) {
