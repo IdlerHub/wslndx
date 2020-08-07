@@ -367,17 +367,24 @@ Page({
     let comment = list || this.data.comment;
     return LiveData.getCommentList(this.comParam)
       .then((msg) => {
-        msg.data.forEach(function (item) {
-          item.reply_array.forEach((v) => {
-            v.rtext = `回复<span  class="respond">${v.to_user}</span>:&nbsp;&nbsp;`;
+        console.log()
+        if (msg.data.length == 0){
+          this.comParam.page--
+          console.log("当前选择页码", this.comParam.page);
+          return
+        }else {
+          msg.data.forEach(function (item) {
+            item.reply_array.forEach((v) => {
+              v.rtext = `回复<span  class="respond">${v.to_user}</span>:&nbsp;&nbsp;`;
+            });
+            comment.push(item);
           });
-          comment.push(item);
-        });
-        this.comment = JSON.parse(JSON.stringify(comment));
-        this.setData({
-          comment: comment,
-        });
-        this.setHeight();
+          this.comment = JSON.parse(JSON.stringify(comment));
+          this.setData({
+            comment: comment,
+          });
+          this.setHeight();
+        }
       })
       .catch((err) => {
         if (err.code == -2) {

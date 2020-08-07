@@ -46,7 +46,7 @@
   <view class="tabList">
     <view class="tab">
       <text>总课时数</text>
-      <text>{{lessonDetail.chapter_num}}次课</text>
+      <text>{{lessonDetail.chapter_num}}课时</text>
     </view>
     <view class="tab">
       <text>授课老师</text>
