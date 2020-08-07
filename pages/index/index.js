@@ -327,7 +327,7 @@ Page({
   //继续播放
   historyTap: function (e) {
     wx.navigateTo({
-      url: `../../page/index/pages/detail?id=${e.currentTarget.dataset.id}&name=${e.currentTarget.dataset.title}&play=true`
+      url: `/page/index/pages/detail/detail?id=${e.currentTarget.dataset.id}&name=${e.currentTarget.dataset.title}&play=true`
     })
     wx.uma.trackEvent('video_historyPlay', {
       'lessonsName': e.currentTarget.dataset.title

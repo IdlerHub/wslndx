@@ -23,7 +23,7 @@ Page({
     bannerList: [
       {
         img: "https://hwcdn.jinlingkeji.cn/images/pro/withdrawBanner3.png",
-        clickUrl: "/pages/makeMoney/makeMoney"
+        clickUrl: "/page/user/pages/makeMoney/makeMoney"
       }
     ],
     swiperHeight: {}

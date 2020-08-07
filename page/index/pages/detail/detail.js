@@ -1504,11 +1504,11 @@ Page({
     } else {
       if (!e.currentTarget.dataset.type) {
         wx.navigateTo({
-          url: `/pages/personPage/personPage?uid=${e.currentTarget.dataset.item.uid}&nickname=${e.currentTarget.dataset.item.nickname}&avatar=${e.currentTarget.dataset.item.avatar}`
+          url: `/page/post/pages/personPage/personPage?uid=${e.currentTarget.dataset.item.uid}&nickname=${e.currentTarget.dataset.item.nickname}&avatar=${e.currentTarget.dataset.item.avatar}`
         });
       } else {
         wx.navigateTo({
-          url: `/pages/personPage/personPage?uid=${e.currentTarget.dataset.item.reply_user_id}&nickname=${e.currentTarget.dataset.item.from_user}&avatar=${e.currentTarget.dataset.item.from_user_avatar}`
+          url: `/page/post/pages/personPage/personPage?uid=${e.currentTarget.dataset.item.reply_user_id}&nickname=${e.currentTarget.dataset.item.from_user}&avatar=${e.currentTarget.dataset.item.from_user_avatar}`
         });
       }
     }

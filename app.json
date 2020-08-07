@@ -4,7 +4,6 @@
     "pages/loading/loading",
     "pages/video/video",
     "pages/post/post",
-    "pages/member/member",
     "pages/user/user",
     "pages/login/login",
     "pages/gift/gift",
@@ -93,7 +92,8 @@
         "pages/personPage/personPage",
         "pages/pDetail/pDetail",
         "pages/cDetail/cDetail",
-        "pages/message/message"
+        "pages/message/message",
+        "pages/member/member"
       ]
     },
     {
@@ -127,7 +127,7 @@
       "provider": "wx069ba97219f66d99"
     },
     "live-player-plugin": {
-      "version": "1.1.4",
+      "version": "1.1.5",
       "provider": "wx2b03c6e691cd7370"
     }
   }

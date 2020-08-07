@@ -10,7 +10,7 @@ let activityUrl;
 let API_URL;
 let socket_host;
 let mpVersion = "v22"; /* 版本管理 */
-if (env == "develop") {
+if (env == "production") {
   /* 测试环境 */
   imgHost =
     "https://hwcdn.jinlingkeji.cn/images/dev"; /* 图片等静态资源服务器 */

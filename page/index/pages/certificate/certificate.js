@@ -63,10 +63,11 @@ Page({
   // 保存
   save() {
     // 保存图片到系统相册
+    let that = this
     wx.saveImageToPhotosAlbum({
-      filePath: this.data.img,
+      filePath: that.data.img,
       success() {
-       wx.uma.trackEvent("savaCertificate", { [`$uid_${this.data.$state.userInfo.id}`]: this.data.course});
+       wx.uma.trackEvent("savaCertificate", { [`$uid_${that.data.$state.userInfo.id}`]: that.data.course});
         wx.showToast({
           title: "保存成功"
         })
@@ -87,7 +88,7 @@ Page({
     if (ops.from === "button") {
       return {
         title: "福利！老年大学十万集免费课程在线学习",
-        path: "/pages/loading/loading"
+        path: "/pages/index/index"
       }
     }
   }
