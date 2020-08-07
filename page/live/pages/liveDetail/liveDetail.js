@@ -39,15 +39,7 @@ Page({
     voicetextstatus: "",
     content: "",
     voiceplayimg: "https://hwcdn.jinlingkeji.cn/images/pro/triangle.png",
-    current: {
-      id: 1,
-      name: "31265165156",
-      description: "美术课",
-      room_id: 45,
-      cover:
-        "https://hwcdn.jinlingkeji.cn/uploads/images/83009583afb4e82090f51e3e26d2773a.jpg",
-      teacher: "王老师",
-    }, //当前直播信息
+    current: {}, //当前直播信息
     playNow: {},
     lessonDetail: {}, //课程详情信息
     sublessons: [], //回放课程列表
@@ -91,7 +83,7 @@ Page({
         _this.getLiveStatus(res.data.current);
       }
       _this.setData({
-        // current: res.data.current,
+        current: res.data.current,
         lessonDetail: res.data.lesson,
       });
       _this.getComment();
@@ -933,7 +925,7 @@ Page({
   // 语音播放
   playvoice() {
     innerAudioContext.src = this.data.filePath;
-    console.log("播放语音", innerAudioContext);
+    console.log("播放语音", this.data.filePath);
     innerAudioContext.play();
     innerAudioContext.onPlay(() => {
       this.setData({

@@ -25,7 +25,7 @@
         </view>
     </view>
     <!-- 直播信息 -->
-    <view class="liveLesson">
+    <view class="liveLesson" wx:if="{{current.room_id}}">
         <view class="liveImg">
             <image class="coverImg" mode="widthFix" src="{{current.cover}}"></image>
             <image class="playImg" src="{{ $state.imgHost }}/play.png"></image>
@@ -37,9 +37,7 @@
                 <image src="../../images/userImg.png"></image>
                 <text>{{current.teacher}}</text>
             </view>
-            <view class="livingNow">
-                <text>直播中</text>
-            </view>
+            <image class="livingNow" src="../../images/living.png"></image>
         </view>
     </view>
     <!-- 课程以及讨论 -->

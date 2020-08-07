@@ -206,7 +206,6 @@ page {
   line-height: 40rpx;
 }
 .lessonInfo .livingNow {
-  background: #df2020;
   width: 148rpx;
   height: 48rpx;
   border-radius: 25rpx;
@@ -216,14 +215,6 @@ page {
   display: flex;
   justify-content: center;
   align-items: center;
-}
-.livingNow text {
-  margin-left: 8rpx;
-  font-size: 28rpx;
-  font-family: PingFangSC-Regular, PingFang SC;
-  font-weight: 400;
-  color: #fff;
-  line-height: 40rpx;
 }
 
 /* 课程部分 */
