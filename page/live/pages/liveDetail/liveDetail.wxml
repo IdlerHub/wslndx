@@ -191,12 +191,12 @@
         <view class="voiceBoxmask" catchtap="closevoiceBox"></view>
         <view class="voiceContent">
             <text class="replyplaceholder" wx:if="{{replyshow}}">{{replyplaceholder}}</text>
-            <text style="color:{{content != '' && !replyshow ? 'rgba(46,46,46,1)': replycontent !== '' && replyshow ? 'rgba(46,46,46,1)' : ''}}" class="placeholder" catchtap="showWrite" data-type="voice" wx:if="{{!replyshow}}">
+            <view style="color:{{content != '' && !replyshow ? 'rgba(46,46,46,1)': replycontent !== '' && replyshow ? 'rgba(46,46,46,1)' : ''}}" class="placeholder" catchtap="showWrite" data-type="voice" wx:if="{{!replyshow}}">
                 {{ content == '' ? placeholder : content }}
-            </text>
-            <text style="color:{{content != '' && !replyshow ? 'rgba(46,46,46,1)': replycontent !== '' && replyshow ? 'rgba(46,46,46,1)' : ''}}" class="placeholder" catchtap="showWrite" data-type="voice" wx:else>
+            </view>
+            <view style="color:{{content != '' && !replyshow ? 'rgba(46,46,46,1)': replycontent !== '' && replyshow ? 'rgba(46,46,46,1)' : ''}}" class="placeholder" catchtap="showWrite" data-type="voice" wx:else>
                 {{ replycontent == '' ? placeholder : replycontent }}
-            </text>
+            </view>
             <view class="voiceaction" wx:if="{{!showvoiceauto}}">
                 <view class="voice-box">
                     <text wx:if="{{voicetime != 0}}">{{voicetime}}"</text>

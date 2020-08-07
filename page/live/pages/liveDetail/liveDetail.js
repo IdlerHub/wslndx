@@ -2,7 +2,6 @@
 const LiveData = require("../../../../data/LiveData");
 const app = getApp();
 const plugin = requirePlugin("WechatSI");
-
 // 获取**全局唯一**的语音识别管理器**recordRecoManager**
 const manager = plugin.getRecordRecognitionManager();
 const innerAudioContext = wx.createInnerAudioContext();
@@ -925,16 +924,10 @@ Page({
   // 语音播放
   playvoice() {
     innerAudioContext.src = this.data.filePath;
-    console.log("播放语音", this.data.filePath);
     innerAudioContext.play();
     innerAudioContext.onPlay(() => {
       this.setData({
         voiceplayimg: "https://hwcdn.jinlingkeji.cn/images/pro/voicepause.png",
-      });
-    });
-    InnerAudioContext.onPause(() => {
-      this.setData({
-        voiceplayimg: "https://hwcdn.jinlingkeji.cn/images/pro/triangle.png",
       });
     });
     innerAudioContext.onEnded(() => {
