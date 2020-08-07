@@ -141,6 +141,15 @@ Page({
       console.log("分享成功");
     });
   },
+  onPullDownRefresh() {
+     this.getLiveDetailDate(this.data.lessonId).then(res=>{
+       wx.stopPullDownRefresh();
+       wx.showToast({
+         title: "刷新完成",
+         duration: 1000,
+       });
+     });
+  },
   onShareAppMessage: function () {
     let lesson_id = this.data.lessonDetail.id,
       cover = this.data.lessonDetail.cover;

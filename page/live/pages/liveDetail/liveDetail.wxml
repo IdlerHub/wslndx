@@ -102,7 +102,7 @@
                                         </view>
                                     </view>
                                     <rich-text nodes="{{ item.content }}" catchlongpress="copythat" data-content="{{ item.content }}" data-type="comment" data-index="{{index}}"></rich-text>
-                                    <button wx:if="{{ $state.userInfo.id != item.uid && !$state.authUserInfo }}" class="reply-btn" data-reply="{{ item }}" open-type="getUserInfo" bindgetuserinfo="onGotUserInfo">
+                                    <button wx:if="{{ $state.userInfo.id != item.uid && !$state.authUserInfo }}" class="reply-btn" data-reply="{{ item }}" open-type="getUserInfo">
                                         回复
                                     </button>
                                     <button wx:else class="reply-btn" data-reply="{{ item }}" catchtap="show">

@@ -1098,17 +1098,19 @@ Page({
       playFlag: false,
     });
   },
-  onGotUserInfo: function (e) {
-    // if (e.detail.errMsg == "getUserInfo:ok") {
-    //   app.updateBase(e);
-    //   e.currentTarget.dataset.type
-    //     ? wx.navigateTo({
-    //         url: "/pages/makeMoney/makeMoney",
-    //       })
-    //     : "";
-    // }
+  onPullDownRefresh: function () {
+    Promise.all([
+      this.getLiveStatus(this.data.lessonDetail.id),
+      this.getSublesson(this.data.lessonDetail.id),
+    ]).then((res) => {
+      console.log(res);
+      wx.stopPullDownRefresh();
+      wx.showToast({
+        title: "刷新完成",
+        duration: 1000,
+      });
+    });
   },
-  onPullDownRefresh: function () {},
   onShareAppMessage() {
     let lesson_id = this.data.lessonDetail.id,
       cover = this.data.lessonDetail.cover;
