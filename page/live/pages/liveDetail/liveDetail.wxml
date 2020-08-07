@@ -25,7 +25,7 @@
         </view>
     </view>
     <!-- 直播信息 -->
-    <view class="liveLesson" wx:if="{{current.room_id && current.live_status == 101}}">
+    <view class="liveLesson" wx:if="{{current.room_id && current.live_status == 101}}" bindtap="toWatch">
         <view class="liveImg">
             <image class="coverImg" mode="widthFix" src="{{current.cover}}"></image>
             <image class="playImg" src="{{ $state.imgHost }}/play.png"></image>

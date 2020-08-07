@@ -301,6 +301,9 @@ Page({
       });
     }
   },
+  toWatch(){
+    this.toLiveRoom(this.data.current)
+  },
   // 选择剧集
   toLiveRoom(item) {
     let roomId = item.room_id;

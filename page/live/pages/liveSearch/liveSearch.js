@@ -9,7 +9,6 @@ Page({
     searchList: [],
     weekList: ["周一", "周二", "周三", "周四", "周五", "周六", "周日"],
   },
-  onLoad: function (options) {},
   // 去详情页
   toDetail(e) {
     let { lessonId, own } = e.currentTarget.dataset;
@@ -29,10 +28,18 @@ Page({
       last_id,
     };
       liveData.toLiveSearch(params).then((res) => {
+        if(res.data.length == 0){
+          this.setData({
+            lastId: -1
+          })
+          return
+        }
         this.setHighLight(res.data);
       });
   },
   setHighLight(lessList) {
+    let lastId = lessList[lessList.length - 1].id;
+    let searchList = this.data.searchList;
     lessList.forEach((item) => {
       // item.title = item.name
       //   .replace(/<highlight>/g, "")
@@ -48,10 +55,11 @@ Page({
       //   .replace(/<\/highlight>/g, "</span>")}</p>`;
       item.bw = app.util.tow(item.browse);
     });
-    lessList.push(...lessList);
+    searchList.push(...lessList);
     this.setData({
-      searchList: lessList,
+      searchList: searchList,
       showqst: true,
+      lastId
     });
   },
   changeText(e) {
@@ -88,8 +96,10 @@ Page({
       },
     });
   },
-  onShow: function () {},
-  onUnload: function () {},
+  onReachBottom(){
+    if(this.data.lastId == -1) return
+    this.toLiveSearch(this.data.lastId);
+  },
   onPullDownRefresh: function () {},
   onShareAppMessage: function () {},
 });
