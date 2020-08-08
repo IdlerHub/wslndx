@@ -59,8 +59,8 @@ function getSublesson(params) {
  * @description: 获取用户课程列表
  * @return:  promise
  * **/
-function getUserLessons() {
-  return httpService.post("schedule/userLessons");
+function getUserLessons(params) {
+  return httpService.post("schedule/userLessons", params);
 }
 
 /**

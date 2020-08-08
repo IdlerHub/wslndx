@@ -22,16 +22,17 @@ Page({
   getUserLessons(page = 1) {
     let courseListL = this.data.courseListL;
     return LiveData.getUserLessons({ page }).then((res) => {
-      console.log(res);
       if(page == 1) courseListL = [];
-      courseListL.push(...res.data);
       if(res.data.length != 0){
+        courseListL.push(...res.data);
         this.setData({
           courseListL,
           page: page + 1,
         });
       }else{
-        this.data.page_end = true;  //已经加载完毕
+        this.setData({
+          page_end: true,
+        })
       }
     });
   },
@@ -43,6 +44,9 @@ Page({
   onPullDownRefresh() {
     this.getUserLessons()
       .then(() => {
+        this.setData({
+          page_end: false,
+        });
         wx.stopPullDownRefresh();
         wx.showToast({
           title: "刷新完成",
