@@ -100,56 +100,56 @@ Page({
     }, 1200);
   },
   controlScroll(e) {
-    console.log(e);
     let nowHeight = e.detail.scrollTop;
     // this.getheight();
     let _this = this;
     // this.timer ? clearTimeout(this.timer) : "";
     // this.timer = setTimeout(() => {
-      let info = wx.getStorageSync("SystemInfo");
-      if (!info) {
-        info = this.fetchAllInfo();
+    let info = wx.getStorageSync("SystemInfo");
+    if (!info) {
+      info = this.fetchAllInfo();
+    }
+    let { windowHeight = 667 } = info.source.system;
+    let query = wx.createSelectorQuery().in(this);
+    // let tempCur = [];
+    let currentTab = this.data.currentTab;
+    query.select(`#week0`).boundingClientRect();
+    query.select(`#week1`).boundingClientRect();
+    query.select(`#week2`).boundingClientRect();
+    query.select(`#week3`).boundingClientRect();
+    query.select(`#week4`).boundingClientRect();
+    query.exec(function (res) {
+      console.log(_this.scrollHeight, nowHeight);
+      if (_this.scrollHeight > nowHeight) {
+        //向上滑动
+        res[currentTab].top > windowHeight / 2 ? currentTab-- : "";
+      } else {
+        //向下滑动
+        res[currentTab].bottom < 239 ? currentTab++ : "";
       }
-      // console.log(info);
-      let { windowHeight = 667 } = info.source.system;
-      let query = wx.createSelectorQuery().in(this);
-      let tempCur = [];
-      let currentTab = this.data.currentTab;
-      query.select(`#week0`).boundingClientRect();
-      query.select(`#week1`).boundingClientRect();
-      query.select(`#week2`).boundingClientRect();
-      query.select(`#week3`).boundingClientRect();
-      query.select(`#week4`).boundingClientRect();
-      query.exec(function (res) {
-        console.log(_this.scrollHeight, nowHeight);
-        if (_this.scrollHeight > nowHeight) { //向上滑动
-          res[currentTab].top > (windowHeight / 2) ? currentTab-- : ''
-        } else {  //向下滑动
-          res[currentTab].bottom < 239 ? currentTab++ : "";
-        }
-        _this.scrollHeight = nowHeight;
-        _this.setData({
-          currentTab,
-        });
-        res.forEach((item, index) => {
-          // console.log(index, item);
-          // if (item.top > -126 && item.top < _this.data.scrollTopList[index]) {
-          //   // 取最小的就是周期
-          //   tempCur.push(index);
-          // }
-          // if (item.top > -195 && item.top < windowHeight / 2) {
-          //   tempCur.push(index);
-          // }
-        });
-        // console.log(tempCur);
-        // if (tempCur.length) {
-        //   _this.setData({
-        //     currentTab: tempCur[0],
-        //   });
-        // } else {
-        //   console.log("还在当前节点中");
-        // }
+      _this.scrollHeight = nowHeight;
+      _this.setData({
+        currentTab,
       });
+      // res.forEach((item, index) => {
+      // console.log(index, item);
+      // if (item.top > -126 && item.top < _this.data.scrollTopList[index]) {
+      //   // 取最小的就是周期
+      //   tempCur.push(index);
+      // }
+      // if (item.top > -195 && item.top < windowHeight / 2) {
+      //   tempCur.push(index);
+      // }
+      // });
+      // console.log(tempCur);
+      // if (tempCur.length) {
+      //   _this.setData({
+      //     currentTab: tempCur[0],
+      //   });
+      // } else {
+      //   console.log("还在当前节点中");
+      // }
+    });
     // }, 200);
   },
   pullDown() {

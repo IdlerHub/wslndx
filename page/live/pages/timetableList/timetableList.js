@@ -4,6 +4,7 @@ Page({
   data: {
     courseListL: [],
     weekList: ["周一", "周二", "周三", "周四", "周五", "周六", "周日"],
+    page: 1
   },
   onLoad: function (options) {
     this.getUserLessons();
@@ -17,15 +18,35 @@ Page({
       url,
     });
   },
-  getUserLessons() {
-    LiveData.getUserLessons().then((res) => {
+  getUserLessons(page = 1) {
+    let courseListL = this.data.courseListL;
+    return LiveData.getUserLessons({ page }).then((res) => {
       console.log(res);
-      this.setData({
-        courseListL: res.data,
-      });
+      if(page == 1) courseListL = [];
+      courseListL.push(...res.data);
+      if(res.data.length != 0){
+        this.setData({
+          courseListL,
+          page: page + 1,
+        });
+      }
     });
   },
-  onUnload: function () {},
-  onPullDownRefresh: function () {},
+  onReachBottom(){
+    this.getUserLessons(this.data.page);
+  },
+  onPullDownRefresh() {
+    this.getUserLessons()
+      .then(() => {
+        wx.stopPullDownRefresh();
+        wx.showToast({
+          title: "刷新完成",
+          duration: 1000,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  },
   onShareAppMessage: function () {},
 });
