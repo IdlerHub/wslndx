@@ -96,6 +96,10 @@ Page({
       .then((res) => {
         console.log(res);
         let playNow = {};
+        res.data.forEach((item, index) => {
+          item.minute = (item.film_length / 60).toFixed(0);
+          item["index"] = index + 1;
+        });
         if (res.data[0].is_end == 1) {
           //如果是已经结束的课,就把第一个放到当前播放中
           playNow = res.data[0];
@@ -265,7 +269,16 @@ Page({
       scrollviewtop: 0,
     });
     let sublessons = this.data.sublessons;
-    sublessons = sublessons.reverse();
+    // sublessons = sublessons.reverse();
+    if(this.data.sort) {
+      sublessons.sort((a, b) => {
+        return b.index - a.index
+      })
+    }else {
+      sublessons.sort((a, b) => {
+        return a.index - b.index;
+      });
+    }
     this.setData({
       sublessons,
     });

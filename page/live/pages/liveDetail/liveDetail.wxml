@@ -72,7 +72,7 @@
                 <scroll-view wx:else scroll-y="true" class="wrap drama" bindscrolltolower="{{moreSublessons}}" scroll-with-animation="true" scroll-top="{{scrollviewtop}}">
                     <view wx:for="{{ sublessons }}" catchtap="select" data-item="{{item}}" data-index="{{ index }}" wx:key="index" class="item {{ playNow.id==item.id&&playNow.is_end==1 ? 'active' : ''}} {{'sublessonsd' + item.id}}" id="{{'sublessonsd'+item.id}}">
                         <view class="left">
-                            <text class="name">{{ index+1 }}. {{ item.name }}</text>
+                            <text class="name">{{ item.index }}. {{ item.name }}</text>
                             <!-- <text class="time">{{ item.minute }}分钟</text> -->
                         </view>
                         <view class="right" wx:if="{{item.is_end == 1}}">观看回播</view>
