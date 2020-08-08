@@ -52,6 +52,9 @@ Page({
     this.getLessonDetail(options.lessonId);
     this.getSublesson(options.lessonId);
   },
+  onGotUserInfo(e){
+    console.log(e)
+  },
   onReachBottom() {
     if (this.data.currentTab == 1) {
       this.comParam.page++;
@@ -737,6 +740,7 @@ Page({
   reply(params) {
     wx.showLoading({
       title: "发布中",
+      mask: true,
     });
     LiveData.putReply(params)
       .then((msg) => {

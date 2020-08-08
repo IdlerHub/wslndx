@@ -161,7 +161,7 @@
                 <button wx:if="{{ $state.userInfo.id != child.reply_user_id && !$state.authUserInfo }}" class="reply-btn" data-reply="{{ child }}" data-parent="{{ item.id }}" open-type="getUserInfo" bindgetuserinfo="onGotUserInfo">
                   回复
                 </button>
-                <button wx:if="{{ $state.userInfo.id != child.reply_user_id  && $state.authUserInfo}}" class="reply-btn" data-reply="{{ child }}" data-parent="{{ item.id }}" catchtap="show">
+                <button wx:elif="{{ $state.userInfo.id != child.reply_user_id }}" class="reply-btn" data-reply="{{ child }}" data-parent="{{ item.id }}" catchtap="show">
                   回复
                 </button>
               </view>
@@ -197,7 +197,7 @@
       发布
     </view>
   </button>
-  <view class="issueBox" wx:if="{{write&&currentTab == 1&&$state.authUserInfo}}" bindtap="showWrite" data-type="reply">
+  <view class="issueBox" wx:elif="{{write&&currentTab == 1&&$state.authUserInfo}}" bindtap="showWrite" data-type="reply">
     <image src="{{$state.imgHost}}/voicebig.png" class="bigvoice" catchtap="showvoice" data-type="content"></image>
     <view class="issueBox-txt" style="color:{{content != '' ? 'rgba(46,46,46,1)': ''}}">
       {{ content != '' ? content : replycomment }}
