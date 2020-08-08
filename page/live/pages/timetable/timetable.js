@@ -49,6 +49,9 @@ Page({
   init() {
     return this.getLiveLessons().then(() => {
       let cur = new Date().getDay() - 1; //当前周几对应跳转
+      if(cur == 5 || curr == 6){
+        cur = 0
+      }
       this.setData({
         toView: "week" + cur,
         currentTab: cur,
@@ -119,7 +122,7 @@ Page({
     query.select(`#week3`).boundingClientRect();
     query.select(`#week4`).boundingClientRect();
     query.exec(function (res) {
-      console.log(_this.scrollHeight, nowHeight);
+      // console.log(_this.scrollHeight, nowHeight);
       if (_this.scrollHeight > nowHeight) {
         //向上滑动
         res[currentTab].top > windowHeight / 2 ? currentTab-- : "";
