@@ -1141,7 +1141,7 @@ Page({
     Promise.all([
       this.getLiveStatus(this.data.lessonDetail.id),
       this.getSublesson(this.data.lessonDetail.id),
-      this.getComment(),
+      this.getComment([]),
     ]).then((res) => {
       console.log(res);
       wx.stopPullDownRefresh();
