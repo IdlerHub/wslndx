@@ -112,6 +112,17 @@ Page({
       showServise: !this.data.showServise,
     });
   },
+  joinClass(){  //跳转推文链接
+    let link = this.data.lessonDetail.mp_url;
+    if(link != ''){
+      wx.navigateTo({
+        url: `/pages/education/education?url=${link}`,
+      });
+    }else{
+      this.showServise();
+    }
+    
+  },
   //第一次加载初始化
   init(options) {
     // 初次进入展示客服盒子

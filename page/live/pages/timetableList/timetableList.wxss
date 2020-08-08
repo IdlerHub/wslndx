@@ -2,11 +2,9 @@
 page,.timetableList,.contariner {
   height: 100%;
 }
-/* 搜索列表 */
 .contariner {
   padding: 0 30rpx;
   background-color: #fff;
-  overflow: hidden;
 }
 .contariner .item {
   padding-top: 31rpx;

@@ -17,7 +17,8 @@
             共{{lessonDetail.chapter_num}}讲 · {{lessonDetail.teacher}}-{{lessonDetail.description}}
         </view>
         <view class="share-joinClass">
-            <image class="joinClass" src="../../images/joinClass.png" alt="加入班级" bindtap="showServise"></image>
+            <!-- <image class="joinClass" src="../../images/joinClass.png" alt="加入班级" bindtap="showServise"></image> -->
+            <image class="joinClass" src="../../images/joinClass.png" alt="加入班级" bindtap="joinClass"></image>
             <button class="share" open-type="share">
                 <image class="shareLesson" src="../../images/shareLesson.png"></image>
                 <text>分享课程</text>
@@ -76,7 +77,9 @@
                         </view>
                         <view class="right" wx:if="{{item.is_end == 1}}">观看回播</view>
                         <view class="right" wx:elif="{{item.is_end == 2}}">暂未开始</view>
-                        <view class="right" wx:elif="{{current.id == item.id && current.live_status == 101}}">正在直播</view>
+                        <view class="right" wx:elif="{{current.id == item.id && current.live_status == 101}}">
+                            正在直播
+                        </view>
                         <view class="right" wx:else>即将开播</view>
                     </view>
                 </scroll-view>
@@ -231,7 +234,9 @@
             <cover-view class="text">进入客服消息后，点击右下角</cover-view>
             <cover-view class="text">快捷图片，扫码加入班群学习</cover-view>
             <cover-image src="{{$state.imgHost}}/serviseImg.png" class="image"></cover-image>
-            <button open-type="contact" hover-class="none" show-message-card send-message-img="{{$state.imgHost}}/serviceIMG.jpg" send-message-title="{{lessonDetail.reply_words}}" catchtap="showServise" session-from='{"name": "{{$state.userInfo.nickname}}","nickName":"{{$state.userInfo.nickname}}"}'>去客服页面添加</button>
+            <button open-type="contact" hover-class="none" show-message-card send-message-img="{{$state.imgHost}}/serviceIMG.jpg" send-message-title="{{lessonDetail.reply_words}}" catchtap="showServise" session-from='{"name": "{{$state.userInfo.nickname}}","nickName":"{{$state.userInfo.nickname}}"}'>
+                去客服页面添加
+            </button>
         </cover-view>
         <cover-image src="{{$state.imgHost}}/cancel.png" class="cancel" catchtap="showServise"></cover-image>
     </cover-view>
