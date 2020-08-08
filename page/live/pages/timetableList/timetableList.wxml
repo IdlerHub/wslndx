@@ -20,7 +20,7 @@
       </view>
       <view class="txtBox">
         <view class="title">{{ lesson.name }}</view>
-        <view class="time" wx:if="{{lesson.is_end}}">已结束,观看回放</view>
+        <view class="time" wx:if="{{lesson.is_end}}">已结课</view>
         <view class="time" wx:else>
           {{lesson.start_day}}-{{lesson.end_day}} {{lesson.start_time}}-{{lesson.end_time}}
         </view>
