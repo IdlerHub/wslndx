@@ -53,6 +53,9 @@ Page({
     this.getSublesson(options.lessonId);
   },
   onGotUserInfo(e){
+    if (e.detail.errMsg == "getUserInfo:ok") {
+      app.updateBase(e);  //更新state授权状态
+    }
     console.log(e)
   },
   onReachBottom() {
