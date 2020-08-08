@@ -4,7 +4,8 @@ Page({
   data: {
     courseListL: [],
     weekList: ["周一", "周二", "周三", "周四", "周五", "周六", "周日"],
-    page: 1
+    page: 1,
+    page_end: false
   },
   onLoad: function (options) {
     this.getUserLessons();
@@ -29,11 +30,15 @@ Page({
           courseListL,
           page: page + 1,
         });
+      }else{
+        this.data.page_end = true;  //已经加载完毕
       }
     });
   },
   onReachBottom(){
-    this.getUserLessons(this.data.page);
+    if(!this.data.page_end){
+      this.getUserLessons(this.data.page);
+    }
   },
   onPullDownRefresh() {
     this.getUserLessons()
