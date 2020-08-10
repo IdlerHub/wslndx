@@ -108,8 +108,10 @@
   </view>
   <!-- 搜索/学分 -->
   <!-- <view style="position: relative;">
-    <official-account></official-account>
-    <view style="width: 124rpx;height: 62rpx;background: #000;position: absolute;top: 43%;right: 24rpx;"></view>
+    <view style="opacity: 0;position:relative;z-index: 2;">
+      <official-account></official-account>
+    </view>
+    <view style="position: absolute;top: 50%;left: 50%;margin-left: -40px;margin-top: -11px;z-index: 1;">关注公众号</view>
   </view> -->
   <view class="search-box">
     <navigator class="search-left" url="/page/index/pages/search/search">

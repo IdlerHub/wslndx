@@ -19,7 +19,7 @@
 					<text class="name">{{ circle.title }}</text>
 					<image src="/images/smalle.png" catchtap="showbig"></image>
 				</view>
-				<navigator class="member" url="../member/member?id={{ circle.id }}&name={{ circle.title }}" hover-class="none" open-type="navigate">
+				<navigator class="member" url="/page/post/pages/member/member?id={{ circle.id }}&name={{ circle.title }}" hover-class="none" open-type="navigate">
 					{{ circle.members }}名成员
 					<image mode="aspectFill" class="icon" src="{{ $state.imgHost }}/Return.png"></image>
 				</navigator>
@@ -91,7 +91,7 @@
 				</view>
 				<text class="division"></text>
 				<!-- 评论 -->
-				<navigator url="../pDetail/pDetail?id={{ item.id }}&comment" hover-class="none" open-type="navigate" class="item">
+				<navigator url="/page/post/pages/pDetail/pDetail?id={{ item.id }}&comment" hover-class="none" open-type="navigate" class="item">
 					<icon class="iconfont icon-comment"></icon>
 					<text class="text">{{ item.comments != 0 ?  item.cw || item.comments : '评论' }}</text>
 				</navigator>
@@ -108,7 +108,7 @@
 	<view class="publishAni"></view>
 </view>
 <view class="footer">
-	<navigator url="../release/release?title={{circle.title}}&id={{circle.id}}&type=circle" hover-class="none" open-type="navigate" class="write">
+	<navigator url="/page/post/pages/release/release?title={{circle.title}}&id={{circle.id}}&type=circle" hover-class="none" open-type="navigate" class="write">
 		<text class="text">写帖</text>
 	</navigator>
 </view>

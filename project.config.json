@@ -163,9 +163,9 @@
         },
         {
           "id": 9,
-          "name": "page/post/pages/cDetail/cDetail",
-          "pathName": "page/post/pages/cDetail/cDetail",
-          "query": "id=102",
+          "name": "pages/index/index",
+          "pathName": "pages/index/index",
+          "query": "id=100295&type=share",
           "scene": 1047
         },
         {

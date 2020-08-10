@@ -4,13 +4,13 @@
  * @LastEditTime: 2020-02-27 15:30:09
  */
 import Store from "wxministore";
-let env = "develop";
+let env = "production";
 let imgHost;
 let activityUrl;
 let API_URL;
 let socket_host;
 let mpVersion = "v22"; /* 版本管理 */
-if (env == "production") {
+if (env == "develop") {
   /* 测试环境 */
   imgHost =
     "https://hwcdn.jinlingkeji.cn/images/dev"; /* 图片等静态资源服务器 */

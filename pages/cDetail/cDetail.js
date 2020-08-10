@@ -204,7 +204,7 @@ Page({
   },
   navigate(e) {
     wx.navigateTo({
-      url: "../pDetail/pDetail?id=" + e.currentTarget.dataset.id
+      url: "/page/post/pages/pDetail/pDetail?id=" + e.currentTarget.dataset.id
     })
   },
   //下拉刷新
@@ -259,7 +259,7 @@ Page({
       })
     } else {
       wx.navigateTo({
-        url: `../personPage/personPage?uid=${e.currentTarget.dataset.item.uid}&nickname=${e.currentTarget.dataset.item.nickname}&avatar=${e.currentTarget.dataset.item.avatar}`
+        url: `/page/post/pages/personPage/personPage?uid=${e.currentTarget.dataset.item.uid}&nickname=${e.currentTarget.dataset.item.nickname}&avatar=${e.currentTarget.dataset.item.avatar}`
       })
     }
   },
