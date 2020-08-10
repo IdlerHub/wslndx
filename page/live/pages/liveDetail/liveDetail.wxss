@@ -81,6 +81,9 @@ page {
   color: #3a3a3a;
   line-height: 56rpx;
   margin-bottom: 10rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 .liveInfo .liveSubtitle {
   width: 462rpx;
@@ -91,6 +94,9 @@ page {
   color: rgba(126, 126, 126, 1);
   line-height: 42rpx;
   margin-bottom: 34rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 .share-joinClass {
   display: flex;

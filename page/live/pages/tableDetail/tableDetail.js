@@ -124,7 +124,11 @@ Page({
             });
           })
           .catch((err) => {
-            console.log(err);
+            wx.showToast({
+              title: err.msg,
+              image: "/images/warn.png",
+              duration: 1000,
+            }); 
           });
       } else {
         //已拥有就不再领取,从分享进去详情页,不展示客服盒子
