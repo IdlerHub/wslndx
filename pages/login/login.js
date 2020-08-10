@@ -205,11 +205,11 @@ Page({
             app.globalData.shareObj.type == 'lottery' ? wx.reLaunch({ url: "/pages/education/education?type=lottery&login=1&id=" + app.globalData.lotteryId }) : wx.reLaunch({ url: app.globalData.path + "?" + params.join("&") })
           }, 2000)
         } else if (app.globalData.shareObj.p || app.globalData.query.liveShare) {
-          let lessonId = app.globalData.query.lesson_id;
-          let inviter = app.globalData.query.inviter;
+          let lessonId = app.globalData.query.lessonId;
+          let inviter = app.globalData.query.invite;
           setTimeout(() => {
             wx.reLaunch({
-              url: `/page/live/pages/liveDetail/liveDetail?lessonId=${lessonId}&inviter=${inviter}`,
+              url: `/page/live/pages/tableDetail/tableDetail?lessonId=${lessonId}&inviter=${inviter}`,
             });
           }, 2000);
         } else {

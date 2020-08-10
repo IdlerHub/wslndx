@@ -197,10 +197,10 @@
 					"scene": null
 				},
 				{
-					"id": -1,
+					"id": 14,
 					"name": "page/live/pages/tableDetail/tableDetail",
 					"pathName": "page/live/pages/tableDetail/tableDetail",
-					"query": "lessonId=7",
+					"query": "lessonId=4&invite=348026&liveShare=1",
 					"scene": null
 				},
 				{
