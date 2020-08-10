@@ -8,7 +8,7 @@
     </video>
     <view id="myVideo" wx:else>
         <image wx:if="{{ !playFlag }}" mode="widthFix" src="{{ lessonDetail.cover }}" class="poster"></image>
-        <image wx:if="{{ !playFlag }}" mode="aspectFill" src="{{ $state.imgHost }}/play.png" class="play"></image>
+        <!-- <image wx:if="{{ !playFlag }}" mode="aspectFill" src="{{ $state.imgHost }}/play.png" class="play"></image> -->
     </view>
     <!-- 课程信息 -->
     <view class="liveInfo">

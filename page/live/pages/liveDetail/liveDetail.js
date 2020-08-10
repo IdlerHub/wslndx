@@ -272,7 +272,6 @@ Page({
       scrollviewtop: 0,
     });
     let sublessons = this.data.sublessons;
-    // sublessons = sublessons.reverse();
     if(this.data.sort) {
       sublessons.sort((a, b) => {
         return b.index - a.index

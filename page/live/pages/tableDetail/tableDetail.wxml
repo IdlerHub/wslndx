@@ -3,7 +3,7 @@
   <view class="imgBox">
     <image src="{{lessonDetail.cover}}"></image>
     <view class="timeBox">
-      <text class="txt">{{flag ? '已开课' : '开课倒计时'}}</text>
+      <text class="txt">{{flag ? '已开课' : '报名倒计时'}}</text>
       <view class="timer" wx:if="{{!flag}}">
         <text>{{days}}</text>
         <text>天</text>
