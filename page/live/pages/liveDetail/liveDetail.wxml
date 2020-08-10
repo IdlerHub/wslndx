@@ -14,7 +14,7 @@
     <view class="liveInfo">
         <view class="liveName">{{lessonDetail.name}}</view>
         <view class="liveSubtitle">
-            共{{lessonDetail.chapter_num}}讲 · {{lessonDetail.teacher}}-{{lessonDetail.description}}
+            共{{lessonDetail.chapter_num}}讲 · {{lessonDetail.description}}
         </view>
         <view class="share-joinClass">
             <!-- <image class="joinClass" src="../../images/joinClass.png" alt="加入班级" bindtap="showServise"></image> -->

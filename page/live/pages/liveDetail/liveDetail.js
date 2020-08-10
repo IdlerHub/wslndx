@@ -51,7 +51,7 @@ Page({
     this.videoContext = wx.createVideoContext("myVideo");
     this.init(options);
     this.heightInit(options);
-    this.getLessonDetail(options.lessonId);
+    this.getLessonDetail(options.lessonId, true);
     this.getSublesson(options.lessonId);
   },
   onPullDownRefresh: function () {
@@ -93,7 +93,7 @@ Page({
     // });
   },
   //获取数据
-  getLessonDetail(lesson_id) {
+  getLessonDetail(lesson_id, flag = false) {
     let _this = this;
     LiveData.getLessonDetail({ lesson_id }).then((res) => {
       wx.setNavigationBarTitle({
@@ -107,9 +107,15 @@ Page({
       if (res.data.current.room_id != undefined) {
         //当天有直播
         _this.getLiveStatus(res.data.current);
+        if(flag) {
+          console.log("拿不到直播状态咯")
+          _this.setData({
+            current: res.data.current
+          })
+        }
       }
       _this.setData({
-        lessonDetail: res.data.lesson,
+        lessonDetail: res.data.lesson
       });
       _this.getComment();
     });
@@ -384,12 +390,15 @@ Page({
   //获取直播状态
   getLiveStatus(current) {
     console.log("查询直播状态")
+    let flag = true;
     //直播插件
     const livePlayer = requirePlugin("live-player-plugin");
     // 首次获取立马返回直播状态
     livePlayer
       .getLiveStatus({ room_id: current.room_id })
       .then((res) => {
+        flag = false;
+        console.log("是否进入2",flag)
         // 101: 直播中, 102: 未开始, 103: 已结束, 104: 禁播, 105: 暂停中, 106: 异常，107：已过期
         console.log("直播状态", res.liveStatus);
         current["live_status"] = res.liveStatus;
@@ -400,19 +409,21 @@ Page({
       .catch((err) => {
         console.log(err);
       });
+      console.log("是否进入1",flag)
     // 往后间隔1分钟或更慢的频率去轮询获取直播状态
-    // this.timer = setInterval(() => {
-    //   livePlayer
-    //     .getLiveStatus({ room_id: current.room_id })
-    //     .then((res) => {
-    //       // 101: 直播中, 102: 未开始, 103: 已结束, 104: 禁播, 105: 暂停中, 106: 异常，107：已过期
-    //       current["live_status"] = res.liveStatus;
-    //       this.setData({
-    //         current,
-    //       });
-    //     })
-    //     .catch((err) => {});
-    // }, 60000);
+    setInterval(() => {
+      livePlayer
+        .getLiveStatus({ room_id: current.room_id })
+        .then((res) => {
+          console.log("11111111111111111111", res);
+          // 101: 直播中, 102: 未开始, 103: 已结束, 104: 禁播, 105: 暂停中, 106: 异常，107：已过期
+          current["live_status"] = res.liveStatus;
+          this.setData({
+            current,
+          });
+        })
+        .catch((err) => {});
+    }, 60000);
   },
   //评论模块
   // 获取讨论
