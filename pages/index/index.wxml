@@ -168,11 +168,11 @@
         </swiper>
         <!-- 农场和电台 -->
         <scroll-view class="jumpout" scroll-x enable-flex>
-          <!-- <navigator class="jumpoutBox" url="/pages/liveList/liveList" hover-class="none">
-            <image class="img" mode="widthFix" src="{{  !recommend ? '' : $state.imgHost + '/liveBtn.png' }}">
+          <navigator class="jumpoutBox" url="../../page/live/pages/timetable/timetable" hover-class="none">
+            <image class="img" mode="widthFix" src="{{  !recommend ? '' : '/images/liveBtn.png' }}">
             </image>
-          </navigator> -->
-          <navigator class="jumpoutBox" url="/page/index/pages/rankingList/rankingList" hover-class="none">
+          </navigator>
+          <navigator class="jumpoutBox" url="/pages/rankingList/rankingList" hover-class="none">
             <image class="img" mode="widthFix" src="{{  !recommend ? '' : $state.imgHost + '/rankingDoor2.png' }}">
             </image>
           </navigator>

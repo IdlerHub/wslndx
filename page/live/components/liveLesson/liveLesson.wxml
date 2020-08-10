@@ -1,0 +1,26 @@
+<!-- page/live/components/liveLesson/liveLesson.wxml -->
+<view class="liveLesson">
+    <block wx:for="{{lessons}}" wx:for-item="lesson" wx:for-index="classIndex" wx:key="index">
+        <!-- <navigator class="item" hover-class="none" url="../liveDetail/liveDetail?lessonId={{lesson.id}}" open-type="navigate"> -->
+        <view class="item" data-lesson-id="{{lesson.id}}" data-own="{{lesson.is_own}}" bindtap="toDetail">
+            <view class="imgBox">
+                <view class="img-week">{{weeks[lesson.week-1]}}</view>
+                <image src="{{lesson.cover}}" class="img"></image>
+                <image class="icon" mode="aspectFill" src="{{ $state.imgHost }}/play.png"></image>
+            </view>
+            <view class="txtBox">
+                <text class="title">{{lesson.name}}</text>
+                <view class="time">
+                    {{lesson.start_day}}-{{lesson.end_day}} {{lesson.start_time}}-{{lesson.end_time}}
+                </view>
+                <view class="textBottom">
+                    <view class="teacher">
+                        <image src="../../images/userImg.png"></image>
+                        <text>{{lesson.teacher}}</text>
+                    </view>
+                    <view class="btn">进入学习</view>
+                </view>
+            </view>
+        </view>
+    </block>
+</view>

@@ -823,7 +823,8 @@ Page({
   //回复评论
   reply(params) {
     wx.showLoading({
-      title: "发布中"
+      title: "发布中",
+      mask: true,
     });
     app.classroom.addReply(params).then(msg => {
       wx.hideLoading();
@@ -867,6 +868,7 @@ Page({
       this.replyInfo = null;
       this.replyParent = null;
     }).catch(err => {
+      wx.hideLoading();
       if (err.code == -2) {
         /* 帖子已经删除 */
         this.setData({

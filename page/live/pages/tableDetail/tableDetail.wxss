@@ -115,14 +115,14 @@ page {
   display: flex;
   flex-direction: column;
 }
-.titleBox text:nth-child(1) {
+.titleBox view:nth-child(1) {
   height:62rpx;
   font-size:44rpx;
   font-weight:500;
   color:rgba(58,58,58,1);
   margin-bottom: 10rpx;
 }
-.titleBox text:nth-child(2) {
+.titleBox view:nth-child(2) {
   font-size:36rpx;
   font-weight:400;
   color:rgba(126,126,126,1);
@@ -139,35 +139,45 @@ page {
   justify-content: center;
   align-items: center;
 }
-.inviteBox text {
-  font-size:40rpx;
-  font-weight:500;
-  color:rgba(58,58,58,1);
+
+.inviteBox .inviteShow {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
-.inviteBox .num {
+.inviteBox .inviteShow .num {
   color: #DF2020;
 }
-.inviteBox .avatarBox {
+.inviteBox .inviteShow .avatarBox {
   width: calc(100vw - 220rpx);
+  height: 90rpx;
+  box-sizing: border-box;
+  overflow: hidden;
   margin-top: 50rpx;
-  margin-bottom: 40rpx;
+  margin-bottom: 60rpx;
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: center;
 }
-.inviteBox .avatarShow {
-  flex-wrap: wrap;
+.inviteBox .inviteShow .avatarShow {
+  height: auto;
+  margin-bottom: 40rpx;
   justify-content: flex-start;
 }
-.inviteBox .avatarBox image:nth-child(5n){
+.inviteBox .inviteShow .avatarBox image:nth-child(5n){
   margin-right: 0;
 }
-.inviteBox .avatarBox image {
+.inviteBox .inviteShow .avatarBox image {
   width: 90rpx;
   height: 90rpx;
   margin-right: 20rpx;
-  margin-bottom: 20rpx;
   border-radius: 50%;
+}
+.inviteBox .inviteShow .avatarShow image {
+  margin-bottom: 20rpx;
 }
 .inviteBox button {
   width:530rpx;
@@ -216,72 +226,3 @@ page {
   line-height:56rpx;
 }
 
-.servise {
-  width: 100%;
-  height: 100vh;
-  position: fixed;
-  top: 0;
-  left: 0;
-  background:rgba(0,0,0,0.6);
-  z-index: 999;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  overflow:visible;
-}
-.servise .serviseBox {
-  width:600rpx;
-  height:648rpx;
-  background:rgba(255,255,255,1);
-  border-radius:10px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  box-sizing: border-box;
-  overflow:visible;
-}
-.servise .serviseBox .text {
-  width:100%;
-  font-size:36rpx;
-  font-family:PingFangSC-Regular,PingFang SC;
-  font-weight:400;
-  color:rgba(58,58,58,1);
-  text-align: center;
-  margin-top: 10rpx;
-  /* overflow: visible; */
-}
-.servise .serviseBox .image {
-  width: 520rpx;
-  height: 260rpx;
-  margin: 40rpx 0 60rpx 0;
-}
-.servise .serviseBox button {
-  width:520rpx;
-  height:88rpx;
-  background:rgba(223,32,32,1);
-  border-radius:4rpx;
-  font-size:36rpx;
-  font-family:PingFangSC-Medium,PingFang SC;
-  font-weight:500;
-  color:rgba(255,255,255,1);
-  overflow:visible;
-}
-.servise .cancel {
-  width: 74rpx;
-  height: 74rpx;
-  margin-top: 38rpx;
-}
-
-.livibtn {
-  width: 250rpx;
-  height: 250rpx;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  margin-left: -125rpx;
-  margin-right: -125rpx;
-  z-index: 999;
-  background: pink;
-}
