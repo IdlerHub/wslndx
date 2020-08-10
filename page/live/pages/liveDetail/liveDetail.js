@@ -52,11 +52,24 @@ Page({
     this.getLessonDetail(options.lessonId);
     this.getSublesson(options.lessonId);
   },
-  onGotUserInfo(e){
+  onPullDownRefresh: function () {
+    return Promise.all([
+      this.getLessonDetail(this.data.lessonDetail.id),
+      this.getSublesson(this.data.lessonDetail.id),
+    ]).then((res) => {
+      console.log(1111,res);
+      wx.stopPullDownRefresh();
+      wx.showToast({
+        title: "刷新完成",
+        duration: 1000,
+      });
+    });
+  },
+  onGotUserInfo(e) {
     if (e.detail.errMsg == "getUserInfo:ok") {
-      app.updateBase(e);  //更新state授权状态
+      app.updateBase(e); //更新state授权状态
     }
-    console.log(e)
+    console.log(e);
   },
   onReachBottom() {
     if (this.data.currentTab == 1) {
@@ -83,7 +96,8 @@ Page({
           url: `/page/live/pages/tableDetail/tableDetail?lessonId=${res.data.lesson.id}`,
         });
       }
-      if (res.data.current.room_id != undefined) {  //当天有直播
+      if (res.data.current.room_id != undefined) {
+        //当天有直播
         _this.getLiveStatus(res.data.current);
       }
       _this.setData({
@@ -122,16 +136,16 @@ Page({
       showServise: !this.data.showServise,
     });
   },
-  joinClass(){  //跳转推文链接
+  joinClass() {
+    //跳转推文链接
     let link = this.data.lessonDetail.mp_url;
-    if(link != ''){
+    if (link != "") {
       wx.navigateTo({
         url: `/pages/education/education?url=${link}`,
       });
-    }else{
+    } else {
       this.showServise();
     }
-    
   },
   //第一次加载初始化
   init(options) {
@@ -272,11 +286,11 @@ Page({
       scrollviewtop: 0,
     });
     let sublessons = this.data.sublessons;
-    if(this.data.sort) {
+    if (this.data.sort) {
       sublessons.sort((a, b) => {
-        return b.index - a.index
-      })
-    }else {
+        return b.index - a.index;
+      });
+    } else {
       sublessons.sort((a, b) => {
         return a.index - b.index;
       });
@@ -330,8 +344,8 @@ Page({
       });
     }
   },
-  toWatch(){
-    this.toLiveRoom(this.data.current)
+  toWatch() {
+    this.toLiveRoom(this.data.current);
   },
   // 选择剧集
   toLiveRoom(item) {
@@ -364,6 +378,7 @@ Page({
   },
   //获取直播状态
   getLiveStatus(current) {
+    console.log("查询直播状态")
     //直播插件
     const livePlayer = requirePlugin("live-player-plugin");
     // 首次获取立马返回直播状态
@@ -371,7 +386,7 @@ Page({
       .getLiveStatus({ room_id: current.room_id })
       .then((res) => {
         // 101: 直播中, 102: 未开始, 103: 已结束, 104: 禁播, 105: 暂停中, 106: 异常，107：已过期
-        console.log(res.liveStatus);
+        console.log("直播状态", res.liveStatus);
         current["live_status"] = res.liveStatus;
         this.setData({
           current,
@@ -398,11 +413,11 @@ Page({
     let comment = list || this.data.comment;
     return LiveData.getCommentList(this.comParam)
       .then((msg) => {
-        console.log()
-        if (msg.data.length == 0){
-          this.comParam.page--
-          return
-        }else {
+        console.log();
+        if (msg.data.length == 0) {
+          this.comParam.page--;
+          return;
+        } else {
           msg.data.forEach(function (item) {
             item.reply_array.forEach((v) => {
               v.rtext = `回复<span  class="respond">${v.to_user}</span>:&nbsp;&nbsp;`;
@@ -1134,20 +1149,6 @@ Page({
     //播放结束
     this.setData({
       playFlag: false,
-    });
-  },
-  onPullDownRefresh: function () {
-    Promise.all([
-      this.getLiveStatus(this.data.lessonDetail.id),
-      this.getSublesson(this.data.lessonDetail.id),
-      this.getComment([]),
-    ]).then((res) => {
-      console.log(res);
-      wx.stopPullDownRefresh();
-      wx.showToast({
-        title: "刷新完成",
-        duration: 1000,
-      });
     });
   },
   onShareAppMessage() {

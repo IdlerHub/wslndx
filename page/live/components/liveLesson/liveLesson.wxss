@@ -73,7 +73,7 @@
 .liveLesson .item .txtBox .title {
   width: 100%;
   font-size:40rpx;
-  font-weight:400;
+  font-weight: 500;
   color:rgba(58,58,58,1);
   line-height:56rpx;
   overflow: hidden;
@@ -103,7 +103,7 @@
   height: 26rpx;
   margin-right: 10rpx;
 }
-.liveLesson .item .txtBox .textBottom  .teacher rich-text {
+.liveLesson .item .txtBox .textBottom  .teacher text {
   font-size:28rpx;
   font-weight:400;
   color:rgba(126,126,126,1);
