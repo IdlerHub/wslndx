@@ -30,7 +30,8 @@ Page({
       liveData.toLiveSearch(params).then((res) => {
         if(res.data.length == 0){
           this.setData({
-            lastId: -1
+            lastId: -1,
+            showqst: true,
           })
           return
         }
@@ -58,7 +59,7 @@ Page({
     searchList.push(...lessList);
     this.setData({
       searchList: searchList,
-      showqst: true,
+      showqst: false,
       lastId
     });
   },
