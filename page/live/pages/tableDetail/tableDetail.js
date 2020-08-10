@@ -61,7 +61,7 @@ Page({
           });
           return 
         }
-        if (res[0].data.countdown < 0) flag = true;
+        if (res[0].data.countdown <= 0) flag = true;
         _this.setData({
           lessonDetail: res[0].data,
           avatarList: res[1].data,

@@ -33,6 +33,7 @@ Page({
     placeholder: "添加你的评论",
     replycomment: "欢迎发表观点",
     replyplaceholder: "",
+    replycontent: '',
     voicetime: 0,
     showvoiceauto: false,
     voicetextstatus: "",
@@ -147,7 +148,7 @@ Page({
     let link = this.data.lessonDetail.mp_url;
     if (link != "") {
       wx.navigateTo({
-        url: `/pages/education/education?url=${link}`,
+        url: `/pages/education/education?url=${link}&type=live`,
       });
     } else {
       this.showServise();
