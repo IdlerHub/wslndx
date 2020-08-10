@@ -85,8 +85,8 @@
   font-weight:400;
   color:rgba(126,126,126,1);
   line-height:40rpx;
-  margin-top: 7rpx;
-  margin-bottom: 10rpx;
+  margin-top: 4rpx;
+  margin-bottom: 15rpx;
 }
 .liveLesson .item .txtBox .textBottom {
   width: 100%;
