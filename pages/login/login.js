@@ -206,7 +206,7 @@ Page({
           }, 2000)
         } else if (app.globalData.shareObj.p || app.globalData.query.liveShare) {
           let lessonId = app.globalData.query.lessonId;
-          let inviter = app.globalData.query.invite;
+          let inviter = app.globalData.query.inviter;
           setTimeout(() => {
             wx.reLaunch({
               url: `/page/live/pages/tableDetail/tableDetail?lessonId=${lessonId}&inviter=${inviter}`,
