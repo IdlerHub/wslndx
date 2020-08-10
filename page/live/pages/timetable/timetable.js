@@ -49,8 +49,8 @@ Page({
   init() {
     return this.getLiveLessons().then(() => {
       let cur = new Date().getDay() - 1; //当前周几对应跳转
-      if(cur == 5 || curr == 6){
-        cur = 0
+      if (cur == 5 || cur == 6) {
+        cur = 0;
       }
       this.setData({
         toView: "week" + cur,
