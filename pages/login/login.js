@@ -204,9 +204,13 @@ Page({
           setTimeout(() => {
             app.globalData.shareObj.type == 'lottery' ? wx.reLaunch({ url: "/pages/education/education?type=lottery&login=1&id=" + app.globalData.lotteryId }) : wx.reLaunch({ url: app.globalData.path + "?" + params.join("&") })
           }, 2000)
-        } else if (app.globalData.shareObj.p || app.globalData.query.vote) {
+        } else if (app.globalData.shareObj.p || app.globalData.query.liveShare) {
+          let lessonId = app.globalData.query.lesson_id;
+          let inviter = app.globalData.query.inviter;
           setTimeout(() => {
-            wx.reLaunch({ url: "/pages/voteDetail/voteDetail?voteid=" + (app.globalData.shareObj.o ? app.globalData.shareObj.o : app.globalData.query.voteid) })
+            wx.reLaunch({
+              url: `/page/live/pages/liveDetail/liveDetail?lessonId=${lessonId}&inviter=${inviter}`,
+            });
           }, 2000);
         } else {
           /*跳转首页*/

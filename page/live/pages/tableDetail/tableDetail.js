@@ -168,7 +168,7 @@ Page({
     this.shareLesson(lesson_id);
     return {
       title: `快来和我一起报名,免费好课天天学!`,
-      path: `/page/live/pages/tableDetail/tableDetail?lessonId=${lesson_id}&inviter=${id}`,
+      path: `/page/live/pages/tableDetail/tableDetail?lessonId=${lesson_id}&inviter=${id}&liveShare=1`,
       imageUrl: cover,
     };
   },
