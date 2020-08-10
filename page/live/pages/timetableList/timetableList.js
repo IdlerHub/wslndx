@@ -2,7 +2,7 @@
 const LiveData = require("../../../../data/LiveData");
 Page({
   data: {
-    courseListL: [],
+    courseList: [],
     weekList: ["周一", "周二", "周三", "周四", "周五", "周六", "周日"],
     page: 1,
     page_end: false
@@ -20,13 +20,13 @@ Page({
     });
   },
   getUserLessons(page = 1) {
-    let courseListL = this.data.courseListL;
+    let courseList = this.data.courseList;
     return LiveData.getUserLessons({ page }).then((res) => {
-      if(page == 1) courseListL = [];
+      if(page == 1) courseList = [];
       if(res.data.length != 0){
-        courseListL.push(...res.data);
+        courseList.push(...res.data);
         this.setData({
-          courseListL,
+          courseList,
           page: page + 1,
         });
       }else{
