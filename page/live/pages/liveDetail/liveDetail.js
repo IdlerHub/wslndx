@@ -45,6 +45,7 @@ Page({
     comment: [], //  讨论
     playFlag: false, //视频播放状态
   },
+  timer: null,
   onLoad: function (options) {
     this.videoContext = wx.createVideoContext("myVideo");
     this.init(options);
@@ -53,11 +54,18 @@ Page({
     this.getSublesson(options.lessonId);
   },
   onPullDownRefresh: function () {
-    return Promise.all([
+    this.setData({
+      sublessons: [],
+      playNow: {},
+      comment: [],
+      playFlag: false,
+    });
+    this.comParam.page = 1;
+    Promise.all([
       this.getLessonDetail(this.data.lessonDetail.id),
       this.getSublesson(this.data.lessonDetail.id),
     ]).then((res) => {
-      console.log(1111,res);
+      console.log("刷新完成",res);
       wx.stopPullDownRefresh();
       wx.showToast({
         title: "刷新完成",
@@ -69,7 +77,6 @@ Page({
     if (e.detail.errMsg == "getUserInfo:ok") {
       app.updateBase(e); //更新state授权状态
     }
-    console.log(e);
   },
   onReachBottom() {
     if (this.data.currentTab == 1) {
@@ -101,7 +108,6 @@ Page({
         _this.getLiveStatus(res.data.current);
       }
       _this.setData({
-        current: res.data.current,
         lessonDetail: res.data.lesson,
       });
       _this.getComment();
@@ -111,7 +117,7 @@ Page({
     let _this = this;
     LiveData.getSublesson({ lesson_id })
       .then((res) => {
-        console.log(res);
+        console.log('获取章节列表',res);
         let playNow = {};
         res.data.forEach((item, index) => {
           item.minute = (item.film_length / 60).toFixed(0);
@@ -163,7 +169,6 @@ Page({
     };
     //监听键盘变化
     wx.onKeyboardHeightChange((res) => {
-      console.log(111, res);
       if (this.data.keyheight == 0) {
         this.setData({
           keyheight: res.height,
@@ -269,7 +274,6 @@ Page({
   switchNav(event) {
     //点击切换
     let cur = event.currentTarget.dataset.index;
-    console.log(cur);
     if (this.data.currentTab === cur) {
       return;
     } else {
@@ -396,15 +400,17 @@ Page({
         console.log(err);
       });
     // 往后间隔1分钟或更慢的频率去轮询获取直播状态
-    // setInterval(() => {
+    // this.timer = setInterval(() => {
     //   livePlayer
-    //     .getLiveStatus({ room_id: roomId })
+    //     .getLiveStatus({ room_id: current.room_id })
     //     .then((res) => {
     //       // 101: 直播中, 102: 未开始, 103: 已结束, 104: 禁播, 105: 暂停中, 106: 异常，107：已过期
-    //       const liveStatus = res.liveStatus;
+    //       current["live_status"] = res.liveStatus;
+    //       this.setData({
+    //         current,
+    //       });
     //     })
-    //     .catch((err) => {
-    //     });
+    //     .catch((err) => {});
     // }, 60000);
   },
   //评论模块
@@ -413,7 +419,6 @@ Page({
     let comment = list || this.data.comment;
     return LiveData.getCommentList(this.comParam)
       .then((msg) => {
-        console.log();
         if (msg.data.length == 0) {
           this.comParam.page--;
           return;
@@ -1084,7 +1089,6 @@ Page({
         filePath,
         voiceActon: false,
       });
-      console.log(filePath);
     };
 
     // 识别错误事件
@@ -1127,7 +1131,6 @@ Page({
 
   //视频播放功能块
   recordAddVedio() {
-    console.log("播放视频");
     this.videoContext.play();
     this.setData({
       playFlag: true,
