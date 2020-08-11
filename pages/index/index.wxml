@@ -172,7 +172,7 @@
             <image class="img" mode="widthFix" src="{{  !recommend ? '' : '/images/liveBtn.png' }}">
             </image>
           </navigator>
-          <navigator class="jumpoutBox" url="/pages/rankingList/rankingList" hover-class="none">
+          <navigator class="jumpoutBox" url="/page/index/pages/rankingList/rankingList" hover-class="none">
             <image class="img" mode="widthFix" src="{{  !recommend ? '' : $state.imgHost + '/rankingDoor2.png' }}">
             </image>
           </navigator>
