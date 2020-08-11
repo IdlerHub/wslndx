@@ -22,7 +22,6 @@ Page({
     showServise: false, //展示客服盒子
     currentTab: 0, //分类
     sort: 0, //排序
-    moreSublessons: "moreSublessons",
     height: 0,
     keyheight: 0,
     write: true,
@@ -91,6 +90,9 @@ Page({
     // wx.onNetworkStatusChange((res) => {
     //   res.networkType == "wifi" ? app.playVedio("wifi") : "";
     // });
+  },
+  onUnload(){
+    clearInterval(this.timer)
   },
   //获取数据
   getLessonDetail(lesson_id, flag = false) {
@@ -411,7 +413,7 @@ Page({
       });
       console.log("是否进入1",flag)
     // 往后间隔1分钟或更慢的频率去轮询获取直播状态
-    setInterval(() => {
+    this.timer = setInterval(() => {
       livePlayer
         .getLiveStatus({ room_id: current.room_id })
         .then((res) => {

@@ -69,7 +69,7 @@
                     <text>暂无课程
                             去浏览其他内容吧~</text>
                 </view>
-                <scroll-view wx:else scroll-y="true" class="wrap drama" bindscrolltolower="{{moreSublessons}}" scroll-with-animation="true" scroll-top="{{scrollviewtop}}">
+                <scroll-view wx:else scroll-y="true" class="wrap drama" scroll-with-animation="true" scroll-top="{{scrollviewtop}}">
                     <view wx:for="{{ sublessons }}" catchtap="select" data-item="{{item}}" data-index="{{ index }}" wx:key="index" class="item {{ playNow.id==item.id&&playNow.is_end==1 ? 'active' : ''}} {{'sublessonsd' + item.id}}" id="{{'sublessonsd'+item.id}}">
                         <view class="left">
                             <text class="name">{{ item.index }}. {{ item.name }}</text>
