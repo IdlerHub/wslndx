@@ -19,19 +19,21 @@
   <view class="titleBox">
     <view>{{lessonDetail.name}}</view>
     <view>
-      {{lessonDetail.start_day}}-{{lessonDetail.end_day}} · {{weekList[lessonDetail.week-1]}} · {{lessonDetail.start_time}}-{{lessonDetail.end_time}}
+      {{lessonDetail.start_day}}-{{lessonDetail.end_day}} · {{weekList[lessonDetail.week-1]}} ·
+      {{lessonDetail.start_time}}-{{lessonDetail.end_time}}
     </view>
   </view>
   <view class="inviteBox" wx:if="{{ lessonDetail.conditions != 0 }}">
     <view class="inviteShow" bindtap="showAllAvatar">
       <view>
-        可以邀请
+        邀请
         <text class="num">{{lessonDetail.conditions}}</text>
         位好友一起上课
       </view>
       <view wx:if="{{lessonDetail.conditions > 2}}" class="avatarBox {{showMoreAvatar ? 'avatarShow': ''}}">
         <image src="{{item.avatar}}" wx:for="{{avatarList}}" wx:key="index"></image>
-        <image src="../../images/addUser.png" wx:for="{{lessonDetail.conditions -  lessonDetail.invite_num}}" wx:key="index"></image>
+        <image src="../../images/addUser.png" wx:for="{{lessonDetail.conditions -  lessonDetail.invite_num}}"
+          wx:key="index"></image>
       </view>
       <view wx:else class="avatarBox {{showMoreAvatar ? 'avatarShow': ''}}">
         <image src="{{item.avatar}}" wx:for="{{avatarList}}" wx:key="index"></image>

@@ -1,10 +1,10 @@
 /*
  * @Date: 2019-06-11 14:24:48
- * @LastEditors: hxz
- * @LastEditTime: 2020-02-27 15:30:09
+ * @LastEditors: wjl
+ * @LastEditTime: 2020-08-11 18:00:20
  */
 import Store from "wxministore";
-let env = "develop";
+let env = "";
 let imgHost;
 let activityUrl;
 let API_URL;
@@ -37,15 +37,15 @@ Store.prototype.socket_host = socket_host;
 
 let store = new Store({
   state: {
-    userInfo: {} /* 用户信息 */ ,
-    authUserInfo: false /* （微信用户信息）授权状态 */ ,
-    authRecord: false /* （微信用户录音）授权状态 */ ,
-    authRecordfail: false /* （微信用户录音）授权拒绝状态 */ ,
-    visitedNum: [] /* 最多10个未授权视频 */ ,
-    baseInfo: false /* 提示已超过10个视频，要求授权 */ ,
-    authKey: "" /* 小程序进入h5的身份标识 */ ,
+    userInfo: {} /* 用户信息 */,
+    authUserInfo: false /* （微信用户信息）授权状态 */,
+    authRecord: false /* （微信用户录音）授权状态 */,
+    authRecordfail: false /* （微信用户录音）授权拒绝状态 */,
+    visitedNum: [] /* 最多10个未授权视频 */,
+    baseInfo: false /* 提示已超过10个视频，要求授权 */,
+    authKey: "" /* 小程序进入h5的身份标识 */,
     activityUrl: activityUrl,
-    signStatus: {} /* 签到状态及弹窗 */ ,
+    signStatus: {} /* 签到状态及弹窗 */,
     imgHost: imgHost,
     title: "",
     path: "",
@@ -63,15 +63,15 @@ let store = new Store({
       lesson: 1,
       shortvideo: 1,
       user: 1,
-      lesson_category: 1
+      lesson_category: 1,
     },
     blackShow: false,
-    openId: ''
+    openId: "",
   },
   pageLisener: {
     onLoad(opts) {
       this.pramas = {
-        uid: this.data.$state.userInfo.id
+        uid: this.data.$state.userInfo.id,
       };
       if (!this.onShareAppMessage) {
         wx.showShareMenu();
@@ -84,44 +84,49 @@ let store = new Store({
     },
     onShow() {
       wx.uma.trackEvent("join_page", {
-        pageName: this.pageName
+        pageName: this.pageName,
       });
-      this.pageRecord ? this.getPlayerState() : getApp().backgroundAudioManager.stop()
+      this.pageRecord
+        ? this.getPlayerState()
+        : getApp().backgroundAudioManager.stop();
     },
     onHide() {
       wx.uma.trackEvent("move", {
-        pageName: this.pageName
+        pageName: this.pageName,
       });
     },
     onUnload() {
-      this.pageName == '首页' ? clearInterval(this.timer) : ''
-    }
+      this.pageName == "首页" ? clearInterval(this.timer) : "";
+    },
   },
   methods: {
     menuAppShare() {
-      wx.uma.trackEvent('totalShare', {
-        'shareName': 'tab三个点'
+      wx.uma.trackEvent("totalShare", {
+        shareName: "tab三个点",
       });
       return {
-        title: this.data.$state.shareTitle || "福利！老年大学十万集免费课程在线学习",
-        path: "/pages/index/index?uid=" +
+        title:
+          this.data.$state.shareTitle || "福利！老年大学十万集免费课程在线学习",
+        path:
+          "/pages/index/index?uid=" +
           this.data.$state.userInfo.id +
           "&type=invite",
-        imageUrl: this.data.$state.shareImgurl || "../../images/sharemessage.jpg"
+        imageUrl:
+          this.data.$state.shareImgurl || "../../images/sharemessage.jpg",
       };
     },
     getPlayerState() {
-      console.log(342423)
+      console.log(342423);
       wx.getBackgroundAudioPlayerState({
-        success (res) {
-          console.log(res)
-          if(res.status != 1) {
-            getApp().backgroundAudioManager.stop()
+        success(res) {
+          console.log(res);
+          if (res.status != 1) {
+            getApp().backgroundAudioManager.stop();
           }
-        }
-      })
-    }
-  }
+        },
+      });
+    },
+  },
 });
 
 module.exports = store;
