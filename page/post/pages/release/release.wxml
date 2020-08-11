@@ -1,0 +1,91 @@
+<view class="container">
+    <view class='wrap'>
+        <textarea placeholder="{{showintegral ? '' : '说点什么吧...'}}" focus="true" bindinput="input"
+            value="{{param.content}}" placeholder-class="ph-class" />
+        <view class='box'>
+            <view class='img' wx:key="index" wx:for="{{param.image}}">
+                <image class='image' mode='aspectFill' src="{{item}}" data-index='{{index}}' data-url="{{item}}" catchtap='selectImg'></image>
+                <image class='close' mode='aspectFill' src="../../images/show-close.png" data-index='{{index}}' catchtap='delImg'></image>
+            </view>
+            <view class='video' wx:if="{{param.video}}">
+                <image class='image' mode='aspectFill' src="{{$state.imgHost}}/video-bg.jpg" catchtap='addImg'></image>
+                <image class='close' mode='aspectFill' src="../../images/show-close.png" catchtap='delvideo'></image>
+            </view>
+            <view class='img ub' wx:if="{{!hide}}" bindtap='addImg'>
+                <image src="../../images/show-camera.png" ></image>
+                <view>照片/视频</view>
+            </view>
+            <view class='ub recordSmallbox' bindtap='showRecorBox' wx:if="{{!param.audio && !param.video}}">
+                <image src="../../images/record/voiceBtn.png"></image>
+                <view>录制音频</view>
+            </view>
+        </view>
+        <playRrecord wx:if="{{param.audio}}" item="{{playVoice}}" playVoice="{{playVoice}}" showDel="{{1}}">
+        </playRrecord>
+    </view>
+    <view wx:if="{{!showVoiceBox}}">
+        <view class="cBox">
+            <view class="hd">
+                <text>请选择同步的圈子</text>
+            </view>
+            <view class="bd" wx:if="{{true}}">
+                <view class="item {{item.isSel? 'issel': ''}}" wx:for="{{allCircle}}" wx:key="index" catchtap="selTap" data-index="{{index}}" data-fsid="{{item.id}}">
+                    <text>{{item.title}}</text>
+                </view>
+                <view class="item {{showFlag? 'issel': ''}}" catchtap="selTap" data-other="其他">
+                    <text>其他</text>
+                </view>
+            </view>
+        </view>
+        <view style="height: 150rpx; width: 100%;"></view>
+        <view class='footer'>
+            <formCode  bind:handler='cancel'>
+                <button class='item'>取消</button>
+            </formCode>
+            <formCode  bind:handler='judgeCircle'>
+                <button class='item ensure'>发布</button>
+            </formCode>
+        </view>
+    </view>
+    <view wx:else class="recordBox">
+        <image src="../../images/icon-del.png" class="iconDel" bindtap="delRecord"></image>
+        <view class="recordStanby" wx:if="{{recordStatus == 1}}">
+            <image src="../../images/record/recordStanby.png" bindtap="recordStart" data-starus="2"></image>
+            <text>点击录音</text>
+            <text>录音5分钟后自动结束</text>
+        </view>
+        <view class="recordStanby recordIng" wx:if="{{recordStatus == 2}}" >
+            <view class="voice-water1"></view>
+            <view class="voice-water1 voice-water2"></view>
+            <text>0{{playVoice.timer.minute}}:{{playVoice.timer.second > 9 ? playVoice.timer.second : '0' + playVoice.timer.second}}</text>
+            <image src="../../images/record/recordAction.png" bindtap="recordStart" data-starus="3"></image>
+            <text>点击结束录音</text>
+        </view>
+        <view class="recordover" wx:if="{{recordStatus == 3}}">
+            <view class="recordoverBox">
+                <image src="../../images/record/recordBack.png" bindtap="recordStart" data-starus="1"></image>
+                <text style="margin-bottom: 6rpx;"></text>
+                <text>重录</text>
+            </view>
+            <view class="recordoverBox" wx:if="{{!playVoice.status}}">
+                <text>0{{playVoice.timer.minute}}:{{playVoice.timer.second > 9 ? playVoice.timer.second : '0' + playVoice.timer.second}}
+                </text>
+                <image src="../../images/record/recordPlay.png" bindtap="playVoice"  data-duration="{{playVoice.duration}}" data-record="{{playVoice.url}}" data-timer="{{playVoice.timer}}" data-id="{{playVoice.id}}" data-name="{{playVoice.nickname}}"></image>
+                <text>点击试听</text>
+            </view>
+            <view class="recordoverBox" wx:else>
+                <text>0{{playVoice.playTimer.minute}}:{{playVoice.playTimer.second > 9 ? playVoice.playTimer.second : '0' + playVoice.playTimer.second}}
+                </text>
+                <image src="../../images/record/recordStop.png" bindtap="playVoice"  data-duration="{{playVoice.duration}}" data-record="{{playVoice.url}}" data-timer="{{playVoice.timer}}" data-id="{{playVoice.id}}" data-name="{{playVoice.nickname}}"></image>
+                <text>试听中</text>
+            </view>
+            <view class="recordoverBox">
+                <image src="../../images/record/recodeUpdowm.png" bindtap="uprecorde"></image>
+                <text style="margin-bottom: 6rpx;"></text>
+                <text>提交</text>
+            </view>
+        </view>
+    </view>
+</view>
+<!-- 学分动画 -->
+<integralAnimation integral="{{integral}}" integralContent="{{integralContent}}" wx:if="{{showintegral}}"></integralAnimation>

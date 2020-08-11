@@ -107,8 +107,14 @@
     </view>
   </view>
   <!-- 搜索/学分 -->
+  <!-- <view style="position: relative;">
+    <view style="opacity: 0;position:relative;z-index: 2;">
+      <official-account></official-account>
+    </view>
+    <view style="position: absolute;top: 50%;left: 50%;margin-left: -40px;margin-top: -11px;z-index: 1;">关注公众号</view>
+  </view> -->
   <view class="search-box">
-    <navigator class="search-left" url="/pages/search/search">
+    <navigator class="search-left" url="/page/index/pages/search/search">
       <image src="{{$state.imgHost}}/searchp.png"></image>
       <text>搜索课程名称</text>
     </navigator>
@@ -135,7 +141,7 @@
         </formCode>
       </block>
     </scroll-view>
-    <navigator class="tabclassify" url="/pages/drag/drag?index={{currentTab}}">
+    <navigator class="tabclassify" url="/page/index/pages/drag/drag?index={{currentTab}}">
       <image src="{{$state.imgHost}}/tabclassify.png"></image>
     </navigator>
   </view>
@@ -162,8 +168,8 @@
         </swiper>
         <!-- 农场和电台 -->
         <scroll-view class="jumpout" scroll-x enable-flex>
-          <navigator class="jumpoutBox" url="/pages/liveList/liveList" hover-class="none">
-            <image class="img" mode="widthFix" src="{{  !recommend ? '' : $state.imgHost + '/liveBtn.png' }}">
+          <navigator class="jumpoutBox" url="../../page/live/pages/timetable/timetable" hover-class="none">
+            <image class="img" mode="widthFix" src="{{  !recommend ? '' : '/images/liveBtn.png' }}">
             </image>
           </navigator>
           <navigator class="jumpoutBox" url="/pages/rankingList/rankingList" hover-class="none">
@@ -228,7 +234,7 @@
   <view class="integration" wx:if="{{ !$state.signStatus.count && recommend[0] && !dialog[0].image}}"
     catchtouchmove="return">
     <view class="dialog">
-      <image class="bg" src="/images/integrationBg.png" mode="aspectFill"></image>
+      <image class="bg" src="{{$state.imgHost}}/integrationBg.png" mode="aspectFill"></image>
       <view class="ani" catchtap="signIn" data-id="1"></view>
       <!-- <button catchtap="signIn" data-id="1">签到领学分</button> -->
       <icon type="cancel" size="37" color="white" data-id="0" catchtap="signIn"></icon>

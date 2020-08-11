@@ -138,7 +138,7 @@ const OBSupload = async function (dir, filePath, type) {
   const fileName = cacheUrl(dir, checkRes.type); //指定上传到OBS桶中的对象名
   const redirects = {
     image: store.process == "production" ?
-      "https://lndxdev.jinlingkeji.cn/api/v22/upload/checkoutImage" :
+      "https://lndxpre.jinlingkeji.cn/api/v22/upload/checkoutImage" :
       "https://lndxdev.jinlingkeji.cn/api/v22/upload/checkoutImage",
     audio: ''
   };
@@ -185,12 +185,13 @@ const OBSupload = async function (dir, filePath, type) {
   };
   let uploadResponse = await wxp.uploadFile(req);
   let fitResponse = null;
+  // console.log(uploadResponse)
   if (uploadResponse.statusCode == 200) {
     uploadResponse['data'] ? uploadResponse.data = JSON.parse(uploadResponse.data) : ''
     if (uploadResponse.data.code == 1) {
       if (type == "image") {
-        if (uploadResponse.data.data.category_suggestions.politics == "block") {
-          return Promise.resolve("../../images/sensitivity.png");
+        if (uploadResponse.data.data.suggestion == "block") {
+          return Promise.resolve(`../../images/sensitivity.png`);
         } else {
           return Promise.resolve("https://hwcdn.jinlingkeji.cn/" + fileName);
         }

@@ -1,0 +1,11 @@
+{
+  "backgroundTextStyle": "light",
+  "navigationBarTitleText": "秀风采正文",
+  "navigationBarTextStyle": "black",
+  "enablePullDownRefresh": true,
+  "usingComponents": {
+    "navBar": "../../components/navBar/navBar",
+    "integralAnimation": "../../components/integralAni/integralAni",
+    "playRrecord": "../../components/playRrecord/playRrecord"
+  }
+}

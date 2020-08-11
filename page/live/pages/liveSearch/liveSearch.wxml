@@ -1,0 +1,41 @@
+<!-- page/live/pages/liveSearch/liveSearch.wxml -->
+<view class="container">
+    <view class="search-top">
+        <view class="search-box">
+            <image src="{{$state.imgHost}}/searchp.png"></image>
+            <form>
+                <input placeholder="搜索课程名称" placeholder-style="color:#999;" confirm-type="search" type="text" class="search-txt" focus="focus" value="{{text}}" bindinput="changeText"></input>
+                <button wx:if="{{text != ''}}" form-type="reset" catchtap="clearText"></button>
+            </form>
+        </view>
+        <view class="cancle" bindtap="cancleSearch">取消</view>
+    </view>
+    <view wx:if="{{searchList.length > 0}}" id="contentView">
+        <view class="contariner">
+            <view class="item" wx:for="{{searchList}}" wx:for-item="lesson" wx:for-index="classIndex" wx:key="index" bindtap="toDetail" data-lesson-id="{{lesson.id}}" data-own="{{lesson.is_own}}">
+                <view class="imgBox">
+                    <view class="img-week">{{weekList[lesson.week-1]}}</view>
+                    <image src="{{lesson.cover}}" class="img"></image>
+                    <image class="icon" mode="aspectFill" src="{{ $state.imgHost }}/play.png"></image>
+                </view>
+                <view class="txtBox">
+                    <rich-text class="title" nodes="{{ lesson.name }}"></rich-text>
+                    <!-- <text class="title">{{lesson.name}}</text> -->
+                    <view class="time">
+                        {{lesson.start_day}}-{{lesson.end_day}} {{lesson.start_time}}-{{lesson.end_time}}
+                    </view>
+                    <view class="textBottom">
+                        <view class="teacher">
+                            <image src="../../images/userImg.png"></image>
+                            <rich-text nodes="{{ lesson.teacher }}"></rich-text>
+                        </view>
+                        <view class="btn">进入学习</view>
+                    </view>
+                </view>
+            </view>
+        </view>
+    </view>
+    <view class="qst" wx:elif="{{showqst && !searchList[0]}}">
+        <image class="ast-img" src="{{$state.imgHost}}/no-com.png"></image>
+    </view>
+</view>

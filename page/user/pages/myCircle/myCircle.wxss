@@ -1,0 +1,301 @@
+@charset "UTF-8";
+/* 环境变量 */
+page {
+  background: #eee; }
+
+.circle {
+  box-sizing: content-box; }
+  .circle > .item {
+    background: #fff;
+    padding: 30rpx 0 0;
+    margin-bottom: 20rpx; }
+    .circle > .item:last-of-type {
+      margin-bottom: 0; }
+  .circle .top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 30rpx 30rpx 20rpx 30rpx; }
+    .circle .top .left {
+      display: flex;
+      align-items: center;
+      flex: 2.5; }
+      .circle .top .avatarUrl {
+        width: 90rpx;
+        height: 90rpx;
+        border-radius: 50%;
+        border: 1rpx solid #d8d8d8;
+        background:#e9e9e9;
+        position: relative;
+      }
+      .circle .top .avatarUrl image {
+        width: 90rpx;
+        height: 90rpx;
+        border-radius: 50%;
+      }
+      .circle .top .avatarUrl .fs {
+        width:22rpx;
+        height:24rpx;
+        position: absolute;
+        bottom: 0rpx;
+        right: -6rpx;
+      }
+    .circle .top .text {
+      margin-left: 20rpx;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap; }
+    .circle .top .nickName {
+      font-size: 40rpx;
+      color: #343434;
+      display: flex; }
+    .circle .top .date {
+      font-size: 32rpx;
+      color: #9e9e9e;
+      white-space: nowrap;
+      flex: 1;
+      margin-right: 5px;
+      text-align: right; }
+    .circle .top .delete {
+      display: flex;
+      align-items: center;
+      font-size: 32rpx;
+      color: #9e9e9e;
+      white-space: nowrap; }
+      .circle .top .delete image {
+        width: 30rpx;
+        height: 30rpx;
+        margin-right: 5rpx; }
+  .circle .label {
+    display: inline-block;
+    background: #FFF6E6;
+    margin-top: 30rpx;
+    padding: 0 20rpx;
+    line-height: 44rpx;
+    border-radius: 6rpx;
+    color: #DB9200;
+    font-size: 28rpx;
+    text-align: center; }
+  .circle .name {
+    /* text-align: justify; */
+    text-justify: newspaper;
+    word-break: break-all;
+    line-height: 56rpx;
+    font-size: 40rpx;
+    color: #343434;
+    word-wrap: break-word;
+    white-space: pre-line; 
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 5;
+    overflow: hidden;
+    padding: 0 30rpx;
+    box-sizing: border-box;}
+  .circle .content {
+    overflow: hidden;
+    margin: 0 30rpx; }
+    .circle .content video {
+      margin-top: 20rpx;
+      width: 100%;
+      height: 350rpx; }
+    .circle .content .poster {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      filter: brightness(0.8); }
+    .circle .content .bg {
+      position: relative;
+      margin-top: 20rpx;
+      width: 100%;
+      height: 350rpx; }
+    .circle .content .play {
+      position: absolute;
+      z-index: 2;
+      width: 74rpx;
+      height: 74rpx;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      margin: auto; }
+  .circle .img {
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-start; }
+    .circle .img image {
+      margin-top: 20rpx;
+      border-radius: 6rpx;
+       }
+    .circle .img.one image {
+      width: 400rpx;
+      border-radius: 6rpx; }
+    .circle .img.three image {
+      width: 216rpx;
+      height: 216rpx;
+      margin-right: 20rpx;
+      border-radius: 6rpx; }
+      .circle .img.three image:nth-of-type(3n) {
+        margin-right: 0; }
+  .circle .btn {
+    height: 125rpx;
+    margin-top: 10rpx;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: stretch;
+    border-top: 1rpx solid #E9E9E9; }
+    .circle > .item .likeComment {
+      background: #FBFBFB;
+      border-radius: 8rpx;
+      padding-left:19rpx;
+      overflow: hidden;
+      margin: 20rpx 30rpx 20rpx 30rpx;
+    }
+     .circle  .likesavatar {
+      display: flex;
+      align-items: center;
+      margin-top: 20rpx;
+    }
+     .circle  .likesavatar .likesLeft {
+      display: flex;
+      align-items: center;
+    }
+    .circle > .item  .likesavatar {
+      display: flex;
+      align-items: center;
+      margin-top: 20rpx;
+    }
+    .circle > .item  .likesavatar .likesLeft {
+      display: flex;
+      align-items: center;
+    }
+    .circle > .item  .likesavatar .likesLeft image {
+      width: 44rpx;
+      height: 44rpx;
+      border-radius: 50%;
+      margin-right:10rpx;
+      border:2rpx solid #fff; 
+    }
+    .circle > .item  .likesavatar .likesLeft .likeTxt {
+      margin-left: 5rpx;
+      font-size:28rpx;
+      font-family:PingFangSC-Regular,PingFang SC;
+      font-weight:400;
+      color:rgba(126,126,126,1);
+    }
+    .circle > .item  .lastComment {
+      padding: 10rpx 0 20rpx 0;
+    }
+    .circle > .item  .lastComment .lastContet {
+      display: flex;
+      align-items: center;
+    }
+    .circle > .item  .lastComment .lastContet text {
+      font-size:36rpx;
+      font-family:PingFangSC-Medium,PingFang SC;
+      font-weight:500;
+      color:rgba(126,126,126,1);
+    }
+    .circle > .item  .lastComment .lastContet rich-text {
+      flex: 1;
+      width: 0;
+      font-size:36rpx;
+      font-family:PingFangSC-Regular,PingFang SC;
+      font-weight:400;
+      color:rgba(126,126,126,1);
+      margin-left: 20rpx;
+    } 
+    .circle > .item  .lastComment .more {
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+    }
+    .circle > .item  .lastComment .more text {
+      font-size:36rpx;
+      font-family:PingFangSC-Regular,PingFang SC;
+      font-weight:400;
+      color:rgba(179,179,179,1);
+    }
+    .circle > .item  .lastComment .more image {
+      width: 14rpx;
+      height: 25rpx;
+      margin-left: 10rpx;
+      margin-top: 4rpx;
+    }
+    .circle .btn > .item {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      box-sizing: border-box;
+      justify-content: center;
+    }
+    .circle .btn .division {
+      width: 2rpx;
+      height: 40rpx;
+      background: #dbdbdb; }
+    .circle .btn > .item:nth-child(1) {
+      padding-left: 0;
+      justify-content: center;
+    }
+    .circle .btn > .item:nth-child(2) {
+      padding-left: 30px;
+      justify-content: center;
+    }
+    .circle .btn > .item:nth-child(3) {
+      justify-content: center;
+    } 
+      .circle .btn > .item .iconfont {
+        font-size: 58rpx;
+        color: #bdbdbd;
+        text-align: center; }
+      .circle .btn > .item .container-sub {
+        display: flex;
+        align-items: center; }
+      .circle .btn > .item .praise {
+        width: 125rpx;
+        height: 125rpx;
+        background-size: cover;
+        background-image: url("https://jinling-xcx-dev.obs.cn-north-1.myhuaweicloud.com/images/pro/heart-ani.png");
+        animation-fill-mode: forwards; }
+        .circle .btn > .item .praise.end {
+          background-position: 100% 0; }
+        .circle .btn > .item .praise.ani {
+          animation: ani steps(20) 1s both; }
+        .circle .btn > .item .praise + .text {
+          margin-left: -20rpx; }
+      .circle .btn > .item .text {
+        margin-left: 20rpx;
+        font-family: PingFangSC-Regular;
+        font-size: 28rpx;
+        color: #3a3a3a;
+        letter-spacing: 0;
+        line-height: 40rpx; }
+
+.navigator {
+  display: inline-block; }
+
+.ncir {
+  margin-top: 200rpx;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center; }
+  .ncir text {
+    margin-top: -100rpx;
+    font-size: 32rpx;
+    color: #949494;
+    width: 100%;
+    text-align: center; }
+  .ncir navigator {
+    width: 250rpx;
+    line-height: 80rpx;
+    text-align: center;
+    background: #df2020;
+    color: #fff;
+    font-size: 36rpx;
+    border-radius: 4rpx;
+    margin: 40rpx auto 0; }
+    
+    

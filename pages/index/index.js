@@ -285,12 +285,12 @@ Page({
   },
   toInfo() {
     wx.navigateTo({
-      url: "../info/info"
+      url: "../../page/user/pages/info/info"
     })
   },
   toScore() {
     wx.navigateTo({
-      url: "/pages/makeMoney/makeMoney"
+      url: "../../page/user/pages/makeMoney/makeMoney"
       // url: "/pages/score/score?type=index"
     })
     wx.uma.trackEvent('index_btnClick', {
@@ -327,7 +327,7 @@ Page({
   //继续播放
   historyTap: function (e) {
     wx.navigateTo({
-      url: `../detail/detail?id=${e.currentTarget.dataset.id}&name=${e.currentTarget.dataset.title}&play=true`
+      url: `/page/index/pages/detail/detail?id=${e.currentTarget.dataset.id}&name=${e.currentTarget.dataset.title}&play=true`
     })
     wx.uma.trackEvent('video_historyPlay', {
       'lessonsName': e.currentTarget.dataset.title
@@ -341,7 +341,7 @@ Page({
   //点击推荐课堂
   detailTap: function (e) {
     wx.navigateTo({
-      url: `../detail/detail?id=${e.currentTarget.dataset.item.id}&name=${e.currentTarget.dataset.item.title}`
+      url: `../../page/index/pages/detail/detail?id=${e.currentTarget.dataset.item.id}&name=${e.currentTarget.dataset.item.title}`
     })
     //用于数据统计
     if (e.currentTarget.dataset.type) {
@@ -410,7 +410,7 @@ Page({
       app.user.sign().then(res => {
         /* 前往学分页面 */
         wx.navigateTo({
-          url: "/pages/score/score?type=index"
+          url: "../../page/user/pages/score/score?type=index"
         })
         app.store.setState({
           signdays: res.data.sign_days
@@ -426,7 +426,7 @@ Page({
           wx.hideToast({
             success: () => {
               wx.navigateTo({
-                url: "/pages/score/score"
+                url: "../../page/user/pages/score/score"
               })
             }
           })
@@ -521,7 +521,7 @@ Page({
     } else if (item.jump_type == 2) {
       /* 视频 */
       wx.navigateTo({
-        url: `../detail/detail?id=${item.video_id}&name=${item.title}`
+        url: `../../page/index/pages/detail/detail?id=${item.video_id}&name=${item.title}`
       })
       wx.uma.trackEvent('index_bannerClick', {
         'bannerVideo': item.title
@@ -543,7 +543,7 @@ Page({
     } else {
       /* 文章 */
       wx.navigateTo({
-        url: "../pDetail/pDetail?id=" + item.article_id
+        url: "../../page/post/pages/pDetail/pDetail?id=" + item.article_id
       })
       wx.uma.trackEvent('index_bannerClick', {
         'bannerBlog': item.title

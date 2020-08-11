@@ -1,8 +1,0 @@
-{
-  "usingComponents": {
-    "rankList": "/components/rankList/rankList"
-  },
-  "enablePullDownRefresh": true,
-  "navigationBarTitleText": "学校排行榜单",
-  "navigationBarBackgroundColor": "#fff"
-}

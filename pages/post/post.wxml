@@ -57,7 +57,8 @@
 				</view>
 			</view>
 		</view>
-		<playRrecord wx:if="{{item.url && item.duration > 0}}" recordUrl="{{item.url}}" duration="{{item.duration}}" currentTab="{{currentTab}}"></playRrecord>
+		<playRrecord wx:if="{{item.url && item.duration > 0}}" item="{{item}}" playVoice="{{playVoice}}">
+		</playRrecord>
 		<view class="likeComment" wx:if="{{ item.like_avatar_list[0] || item.last_comment.nickname}}">
 			<view class="likesavatar" wx:if="{{item.like_avatar_list[0] && item.likes!= 0 }}"
 				style="margin-bottom: {{ item.last_comment.nickname ? '' : '20rpx'}};">
@@ -75,7 +76,7 @@
 				</view>
 			</view>
 		</view>
-		<navigator wx:if="{{ item.fs_title }}" url="../cDetail/cDetail?id={{ item.fs_id }}" hover-class="none"
+		<navigator wx:if="{{ item.fs_title }}" url="/pages/cDetail/cDetail?id={{ item.fs_id }}" hover-class="none"
 			open-type="navigate" class="label"
 			style="margin: {{ !item.like_avatar_list[0] && !item.last_comment.nickname ? '30rpx 30rpx 0 30rpx' : '0 30rpx 20rpx 30rpx'}};">
 			#{{ item.fs_title }}精选</navigator>
@@ -151,7 +152,7 @@
 						<image src="{{item.image}}"></image>
 						<text>{{item.title}}</text>
 					</navigator>
-					<navigator class="scroll-view" open-type="navigate" hover-class="none" url="../circle/circle?type=1">
+					<navigator class="scroll-view" open-type="navigate" hover-class="none" url="/page/user/pages/circle/circle?type=1">
 						<image src="{{$state.imgHost}}/larstCircle.png"></image>
 						<text>加入圈子</text>
 					</navigator>
@@ -168,7 +169,8 @@
 				wx:key="page">
 				<block
 					wx:if="{{(page + 1) - currentPage[currentTab].page >= -1 && (page + 1) - currentPage[currentTab].page <= 1}}">
-					<template is="listitem" wx:for="{{subList}}" data="{{item:item, page,index, $state, voiceplayimg, currentTab}}" wx:key="index" />
+					<template is="listitem" wx:for="{{subList}}"
+						data="{{item:item, page,index, $state, voiceplayimg, currentTab, playVoice}}" wx:key="index" />
 				</block>
 				<view wx:else style='height:{{pageFrame[currentTab][page + 1].height}}px;'></view>
 			</view>
@@ -187,7 +189,8 @@
 				wx:key="page">
 				<block
 					wx:if="{{(page + 1) - currentPage[currentTab].page >= -1 && (page + 1) - currentPage[currentTab].page <= 1}}">
-					<template is="listitem" wx:for="{{subList}}" data="{{item:item, page, index, $state, voiceplayimg, currentTab}}" wx:key="index" />
+					<template is="listitem" wx:for="{{subList}}"
+						data="{{item:item, page, index, $state, voiceplayimg, currentTab, playVoice}}" wx:key="index" />
 				</block>
 				<view wx:else style='height:{{pageFrame[currentTab][page + 1].height}}px;'></view>
 			</view>
@@ -212,7 +215,8 @@
 					wx:key="page">
 					<block
 						wx:if="{{(page + 1) - currentPage[currentTab].page >= -1 && (page + 1) - currentPage[currentTab].page <= 1}}">
-						<template is="listitem" wx:for="{{subList}}" data="{{item:item, page, index, $state, voiceplayimg, currentTab}}" wx:key="index" />
+						<template is="listitem" wx:for="{{subList}}"
+							data="{{item:item, page, index, $state, voiceplayimg, currentTab, playVoice}}" wx:key="index" />
 					</block>
 					<view wx:else style='height:{{pageFrame[currentTab][page + 1].height}}px;'></view>
 				</view>

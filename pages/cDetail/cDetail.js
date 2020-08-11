@@ -1,6 +1,8 @@
 //index.js
 //获取应用实例
 const app = getApp()
+const record = require('../../utils/record')
+
 Page({
   data: {
     list: [],
@@ -14,10 +16,20 @@ Page({
       video: null,
       cover: null,
       fs_id: "",
-      num: 0
+      num: 0,
     },
+    playVoice: {
+      status: 0,
+      duration: 0,
+      playTimer: {
+        minute: 0,
+        second: 0
+      },
+      id: 0
+    }
   },
   pageName: '圈内帖子列表',
+  pageRecord: 1,
   onLoad(options) {
     this.id = options.id
     this.param = { fs_id: this.id, page: 1, pageSize: 10 }
@@ -34,6 +46,7 @@ Page({
     })
   },
   onShow() {
+    record.initRecord(this)
     if (app.globalData.postShow) {
       app.globalData.postShow = false;
     }
@@ -93,6 +106,11 @@ Page({
       })
     }
   },
+  onHide() {
+  },
+  onUnload() {
+    app.backgroundAudioManager.stop()
+  },
   getList: function (list) {
     let temp = list || this.data.list
     return app.circle.myNews(this.param).then(msg => {
@@ -107,6 +125,10 @@ Page({
         })
         item.auditing = new Date().getTime() - new Date(item.createtime * 1000) < 7000
         item.content = app.util.delHtmlTag(item.content)
+        item.timer = {
+          minute: parseInt(item.duration / 60),
+          second: item.duration - (parseInt(item.duration / 60) * 60)
+        }
       })
       this.setData({
         list: temp.concat(msg.data)
@@ -182,7 +204,7 @@ Page({
   },
   navigate(e) {
     wx.navigateTo({
-      url: "../pDetail/pDetail?id=" + e.currentTarget.dataset.id
+      url: "/page/post/pages/pDetail/pDetail?id=" + e.currentTarget.dataset.id
     })
   },
   //下拉刷新
@@ -237,7 +259,7 @@ Page({
       })
     } else {
       wx.navigateTo({
-        url: `/pages/personPage/personPage?uid=${e.currentTarget.dataset.item.uid}&nickname=${e.currentTarget.dataset.item.nickname}&avatar=${e.currentTarget.dataset.item.avatar}`
+        url: `/page/post/pages/personPage/personPage?uid=${e.currentTarget.dataset.item.uid}&nickname=${e.currentTarget.dataset.item.nickname}&avatar=${e.currentTarget.dataset.item.avatar}`
       })
     }
   },
@@ -443,5 +465,5 @@ Page({
       });
       clearTimeout(timer);
     }, 2000);
-  },
+  }
 })

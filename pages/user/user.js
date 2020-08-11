@@ -41,13 +41,13 @@ Page({
   },
   toScore() {
     wx.navigateTo({
-      url: "/pages/score/score?type=index"
+      url: "/page/user/pages/score/score?type=index"
     });
     wx.uma.trackEvent("personal_btnClick", { btnName: "学分兑换" });
   },
   toInvite() {
     wx.navigateTo({
-      url: "/pages/makeMoney/makeMoney"
+      url: "/page/user/pages/makeMoney/makeMoney"
       // url: "/pages/invitation/invitation?type=withdraw"
     });
     // wx.uma.trackEvent("personal_btnClick", { btnName: "邀请好友" });

@@ -4,6 +4,6 @@
   "navigationBarTextStyle": "black",
   "enablePullDownRefresh": true,
   "usingComponents": {
-    "playRrecord": "/components/playRrecord/playRrecord"
+    "playRrecord": "../../components/playRrecord/playRrecord"
   }
 }
