@@ -80,6 +80,9 @@
                         <view class="right" wx:elif="{{current.id == item.id && current.live_status == 101}}">
                             正在直播
                         </view>
+                        <view class="right" wx:elif="{{current.id == item.id && current.live_status == 103}}">
+                            观看回播
+                        </view>
                         <view class="right" wx:else>即将开播</view>
                     </view>
                 </scroll-view>
