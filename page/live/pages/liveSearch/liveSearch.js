@@ -27,6 +27,7 @@ Page({
       page_size: 10,
       last_id,
     };
+    this.data.searchList = [];
       liveData.toLiveSearch(params).then((res) => {
         if(res.data.length == 0){
           this.setData({
@@ -90,7 +91,6 @@ Page({
     });
     wx.navigateBack({
       fail: err=>{
-        console.log(err)
         wx.redirectTo({
           url: "/page/live/pages/timetable/timetable",
         });

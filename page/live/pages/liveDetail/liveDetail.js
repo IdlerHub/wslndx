@@ -22,7 +22,6 @@ Page({
     showServise: false, //展示客服盒子
     currentTab: 0, //分类
     sort: 0, //排序
-    moreSublessons: "moreSublessons",
     height: 0,
     keyheight: 0,
     write: true,
@@ -33,6 +32,7 @@ Page({
     placeholder: "添加你的评论",
     replycomment: "欢迎发表观点",
     replyplaceholder: "",
+    replycontent: '',
     voicetime: 0,
     showvoiceauto: false,
     voicetextstatus: "",
@@ -50,7 +50,7 @@ Page({
     this.videoContext = wx.createVideoContext("myVideo");
     this.init(options);
     this.heightInit(options);
-    this.getLessonDetail(options.lessonId);
+    this.getLessonDetail(options.lessonId, true);
     this.getSublesson(options.lessonId);
   },
   onPullDownRefresh: function () {
@@ -65,7 +65,6 @@ Page({
       this.getLessonDetail(this.data.lessonDetail.id),
       this.getSublesson(this.data.lessonDetail.id),
     ]).then((res) => {
-      console.log("刷新完成",res);
       wx.stopPullDownRefresh();
       wx.showToast({
         title: "刷新完成",
@@ -91,8 +90,11 @@ Page({
     //   res.networkType == "wifi" ? app.playVedio("wifi") : "";
     // });
   },
+  onUnload(){
+    clearInterval(this.timer)
+  },
   //获取数据
-  getLessonDetail(lesson_id) {
+  getLessonDetail(lesson_id, flag = false) {
     let _this = this;
     LiveData.getLessonDetail({ lesson_id }).then((res) => {
       wx.setNavigationBarTitle({
@@ -106,9 +108,15 @@ Page({
       if (res.data.current.room_id != undefined) {
         //当天有直播
         _this.getLiveStatus(res.data.current);
+        if(flag) {
+          console.log("拿不到直播状态咯")
+          _this.setData({
+            current: res.data.current
+          })
+        }
       }
       _this.setData({
-        lessonDetail: res.data.lesson,
+        lessonDetail: res.data.lesson
       });
       _this.getComment();
     });
@@ -117,7 +125,6 @@ Page({
     let _this = this;
     LiveData.getSublesson({ lesson_id })
       .then((res) => {
-        console.log('获取章节列表',res);
         let playNow = {};
         res.data.forEach((item, index) => {
           item.minute = (item.film_length / 60).toFixed(0);
@@ -147,7 +154,7 @@ Page({
     let link = this.data.lessonDetail.mp_url;
     if (link != "") {
       wx.navigateTo({
-        url: `/pages/education/education?url=${link}`,
+        url: `/pages/education/education?url=${link}&type=live`,
       });
     } else {
       this.showServise();
@@ -367,7 +374,6 @@ Page({
   select(e) {
     let item = e.currentTarget.dataset.item;
     let playNow = this.data.playNow;
-    console.log(playNow.id, item);
     // if (playNow.id && item.id === playNow.id && this.data.playFlag) return;
     if (item.is_end == 1 && item.record_url != "") {
       this.setData({
@@ -382,7 +388,6 @@ Page({
   },
   //获取直播状态
   getLiveStatus(current) {
-    console.log("查询直播状态")
     //直播插件
     const livePlayer = requirePlugin("live-player-plugin");
     // 首次获取立马返回直播状态
@@ -400,18 +405,19 @@ Page({
         console.log(err);
       });
     // 往后间隔1分钟或更慢的频率去轮询获取直播状态
-    // this.timer = setInterval(() => {
-    //   livePlayer
-    //     .getLiveStatus({ room_id: current.room_id })
-    //     .then((res) => {
-    //       // 101: 直播中, 102: 未开始, 103: 已结束, 104: 禁播, 105: 暂停中, 106: 异常，107：已过期
-    //       current["live_status"] = res.liveStatus;
-    //       this.setData({
-    //         current,
-    //       });
-    //     })
-    //     .catch((err) => {});
-    // }, 60000);
+    this.timer = setInterval(() => {
+      livePlayer
+        .getLiveStatus({ room_id: current.room_id })
+        .then((res) => {
+          console.log("定时获取状态", res);
+          // 101: 直播中, 102: 未开始, 103: 已结束, 104: 禁播, 105: 暂停中, 106: 异常，107：已过期
+          current["live_status"] = res.liveStatus;
+          this.setData({
+            current,
+          });
+        })
+        .catch((err) => {});
+    }, 60000);
   },
   //评论模块
   // 获取讨论

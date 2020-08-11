@@ -11,7 +11,6 @@ Page({
     this.getUserLessons();
   },
   toDetail(e) {
-    console.log("去详情页面");
     let url =
       "/page/live/pages/liveDetail/liveDetail?lessonId=" +
       e.currentTarget.dataset.lessonId;

@@ -23,10 +23,8 @@ Page({
   },
   timer: "",
   onLoad: function (options) {
-    console.log(options);
     let inviter = 0;
     if (options.inviter && this.data.$state.userInfo.id != options.inviter) {
-      console.log("分享进来的", this.data.$state);
       inviter = options.inviter;
     }
     this.data.lessonId = options.lessonId;
@@ -61,7 +59,7 @@ Page({
           });
           return 
         }
-        if (res[0].data.countdown < 0) flag = true;
+        if (res[0].data.countdown <= 0) flag = true;
         _this.setData({
           lessonDetail: res[0].data,
           avatarList: res[1].data,
@@ -148,9 +146,8 @@ Page({
     // }
   },
   shareLesson(lesson_id) {
-    LiveData.shareLesson({ lesson_id }).then((res) => {
-      console.log("分享成功");
-    });
+    //分享成功
+    LiveData.shareLesson({ lesson_id })
   },
   onPullDownRefresh() {
     this.getLiveDetailDate(this.data.lessonId).then((res) => {
@@ -168,7 +165,7 @@ Page({
     this.shareLesson(lesson_id);
     return {
       title: `快来和我一起报名,免费好课天天学!`,
-      path: `/page/live/pages/tableDetail/tableDetail?lessonId=${lesson_id}&inviter=${id}`,
+      path: `/page/live/pages/tableDetail/tableDetail?lessonId=${lesson_id}&inviter=${id}&liveShare=1`,
       imageUrl: cover,
     };
   },

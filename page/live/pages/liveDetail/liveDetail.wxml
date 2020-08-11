@@ -14,7 +14,7 @@
     <view class="liveInfo">
         <view class="liveName">{{lessonDetail.name}}</view>
         <view class="liveSubtitle">
-            共{{lessonDetail.chapter_num}}讲 · {{lessonDetail.teacher}}-{{lessonDetail.description}}
+            共{{lessonDetail.chapter_num}}讲 · {{lessonDetail.description}}
         </view>
         <view class="share-joinClass">
             <!-- <image class="joinClass" src="../../images/joinClass.png" alt="加入班级" bindtap="showServise"></image> -->
@@ -69,7 +69,7 @@
                     <text>暂无课程
                             去浏览其他内容吧~</text>
                 </view>
-                <scroll-view wx:else scroll-y="true" class="wrap drama" bindscrolltolower="{{moreSublessons}}" scroll-with-animation="true" scroll-top="{{scrollviewtop}}">
+                <scroll-view wx:else scroll-y="true" class="wrap drama" scroll-with-animation="true" scroll-top="{{scrollviewtop}}">
                     <view wx:for="{{ sublessons }}" catchtap="select" data-item="{{item}}" data-index="{{ index }}" wx:key="index" class="item {{ playNow.id==item.id&&playNow.is_end==1 ? 'active' : ''}} {{'sublessonsd' + item.id}}" id="{{'sublessonsd'+item.id}}">
                         <view class="left">
                             <text class="name">{{ item.index }}. {{ item.name }}</text>
@@ -77,10 +77,9 @@
                         </view>
                         <view class="right" wx:if="{{item.is_end == 1}}">观看回播</view>
                         <view class="right" wx:elif="{{item.is_end == 2}}">暂未开始</view>
-                        <view class="right" wx:elif="{{current.id == item.id && current.live_status == 101}}">
-                            正在直播
-                        </view>
-                        <view class="right" wx:else>即将开播</view>
+                        <view class="right" wx:elif="{{current.id == item.id && (current.live_status == 104 ||  current.live_status == 107)}}">观看回播</view>
+                        <view class="right" wx:elif="{{current.id == item.id && current.live_status == 102}}">即将开播</view>
+                        <view class="right" wx:else>正在直播</view>
                     </view>
                 </scroll-view>
             </swiper-item>

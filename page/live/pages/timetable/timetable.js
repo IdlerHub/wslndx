@@ -87,7 +87,6 @@ Page({
     let height = 121; //每个的大小
     let scrollTopList = []; //需要滑动的距离
     let sum = 0;
-    // console.log(1111,height)
     lessons.forEach((item, index) => {
       let nowTop = item.length * height;
       scrollTopList.push(sum + nowTop + 54);
@@ -106,15 +105,12 @@ Page({
     let nowHeight = e.detail.scrollTop;
     // this.getheight();
     let _this = this;
-    // this.timer ? clearTimeout(this.timer) : "";
-    // this.timer = setTimeout(() => {
     let info = wx.getStorageSync("SystemInfo");
     if (!info) {
       info = this.fetchAllInfo();
     }
     let { windowHeight = 667 } = info.source.system;
     let query = wx.createSelectorQuery().in(this);
-    // let tempCur = [];
     let currentTab = this.data.currentTab;
     query.select(`#week0`).boundingClientRect();
     query.select(`#week1`).boundingClientRect();
@@ -122,7 +118,6 @@ Page({
     query.select(`#week3`).boundingClientRect();
     query.select(`#week4`).boundingClientRect();
     query.exec(function (res) {
-      // console.log(_this.scrollHeight, nowHeight);
       if (_this.scrollHeight > nowHeight) {
         //向上滑动
         res[currentTab].top > windowHeight / 2 ? currentTab-- : "";
@@ -134,26 +129,7 @@ Page({
       _this.setData({
         currentTab,
       });
-      // res.forEach((item, index) => {
-      // console.log(index, item);
-      // if (item.top > -126 && item.top < _this.data.scrollTopList[index]) {
-      //   // 取最小的就是周期
-      //   tempCur.push(index);
-      // }
-      // if (item.top > -195 && item.top < windowHeight / 2) {
-      //   tempCur.push(index);
-      // }
-      // });
-      // console.log(tempCur);
-      // if (tempCur.length) {
-      //   _this.setData({
-      //     currentTab: tempCur[0],
-      //   });
-      // } else {
-      //   console.log("还在当前节点中");
-      // }
     });
-    // }, 200);
   },
   pullDown() {
     this.init()
