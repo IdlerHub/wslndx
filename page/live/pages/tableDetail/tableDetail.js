@@ -23,10 +23,8 @@ Page({
   },
   timer: "",
   onLoad: function (options) {
-    console.log(options);
     let inviter = 0;
     if (options.inviter && this.data.$state.userInfo.id != options.inviter) {
-      console.log("分享进来的", this.data.$state);
       inviter = options.inviter;
     }
     this.data.lessonId = options.lessonId;
@@ -148,9 +146,8 @@ Page({
     // }
   },
   shareLesson(lesson_id) {
-    LiveData.shareLesson({ lesson_id }).then((res) => {
-      console.log("分享成功");
-    });
+    //分享成功
+    LiveData.shareLesson({ lesson_id })
   },
   onPullDownRefresh() {
     this.getLiveDetailDate(this.data.lessonId).then((res) => {

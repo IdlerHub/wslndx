@@ -65,7 +65,6 @@ Page({
       this.getLessonDetail(this.data.lessonDetail.id),
       this.getSublesson(this.data.lessonDetail.id),
     ]).then((res) => {
-      console.log("刷新完成",res);
       wx.stopPullDownRefresh();
       wx.showToast({
         title: "刷新完成",
@@ -126,7 +125,6 @@ Page({
     let _this = this;
     LiveData.getSublesson({ lesson_id })
       .then((res) => {
-        console.log('获取章节列表',res);
         let playNow = {};
         res.data.forEach((item, index) => {
           item.minute = (item.film_length / 60).toFixed(0);
@@ -376,7 +374,6 @@ Page({
   select(e) {
     let item = e.currentTarget.dataset.item;
     let playNow = this.data.playNow;
-    console.log(playNow.id, item);
     // if (playNow.id && item.id === playNow.id && this.data.playFlag) return;
     if (item.is_end == 1 && item.record_url != "") {
       this.setData({
@@ -391,16 +388,12 @@ Page({
   },
   //获取直播状态
   getLiveStatus(current) {
-    console.log("查询直播状态")
-    let flag = true;
     //直播插件
     const livePlayer = requirePlugin("live-player-plugin");
     // 首次获取立马返回直播状态
     livePlayer
       .getLiveStatus({ room_id: current.room_id })
       .then((res) => {
-        flag = false;
-        console.log("是否进入2",flag)
         // 101: 直播中, 102: 未开始, 103: 已结束, 104: 禁播, 105: 暂停中, 106: 异常，107：已过期
         console.log("直播状态", res.liveStatus);
         current["live_status"] = res.liveStatus;
@@ -411,13 +404,12 @@ Page({
       .catch((err) => {
         console.log(err);
       });
-      console.log("是否进入1",flag)
     // 往后间隔1分钟或更慢的频率去轮询获取直播状态
     this.timer = setInterval(() => {
       livePlayer
         .getLiveStatus({ room_id: current.room_id })
         .then((res) => {
-          console.log("11111111111111111111", res);
+          console.log("定时获取状态", res);
           // 101: 直播中, 102: 未开始, 103: 已结束, 104: 禁播, 105: 暂停中, 106: 异常，107：已过期
           current["live_status"] = res.liveStatus;
           this.setData({

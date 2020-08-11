@@ -91,7 +91,6 @@ Page({
     });
     wx.navigateBack({
       fail: err=>{
-        console.log(err)
         wx.redirectTo({
           url: "/page/live/pages/timetable/timetable",
         });
