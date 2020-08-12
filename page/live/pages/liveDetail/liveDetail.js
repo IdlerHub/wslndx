@@ -373,7 +373,7 @@ Page({
   },
   select(e) {
     let item = e.currentTarget.dataset.item;
-    let playNow = this.data.playNow;
+    // let playNow = this.data.playNow;
     // if (playNow.id && item.id === playNow.id && this.data.playFlag) return;
     if (item.is_end == 1 && item.record_url != "") {
       this.setData({
