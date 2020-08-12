@@ -25,7 +25,7 @@
   </view>
   <view class="inviteBox" wx:if="{{ lessonDetail.conditions != 0 }}">
     <view class="inviteShow" bindtap="showAllAvatar">
-      <view>
+      <view class="inviteTip">
         邀请
         <text class="num">{{lessonDetail.conditions}}</text>
         位好友一起上课

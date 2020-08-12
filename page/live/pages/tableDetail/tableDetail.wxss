@@ -66,7 +66,7 @@ page {
 
 .imgBox {
   width: 750rpx;
-  height: 422rpx;
+  height: 580rpx;
   position: relative;
 }
 .imgBox image {
@@ -117,13 +117,13 @@ page {
 }
 .titleBox view:nth-child(1) {
   height: 62rpx;
-  font-size: 44rpx;
+  font-size: 42rpx;
   font-weight: 500;
   color: rgba(58, 58, 58, 1);
-  margin-bottom: 10rpx;
+  margin-bottom: 5rpx;
 }
 .titleBox view:nth-child(2) {
-  font-size: 36rpx;
+  font-size: 34rpx;
   font-weight: 400;
   color: rgba(126, 126, 126, 1);
   line-height: 50rpx;
@@ -131,8 +131,8 @@ page {
 
 .inviteBox {
   margin-top: 20rpx;
-  padding-top: 50rpx;
-  padding-bottom: 60rpx;
+  padding-top: 33rpx;
+  padding-bottom: 30rpx;
   background: #fff;
   display: flex;
   flex-direction: column;
@@ -147,6 +147,12 @@ page {
   justify-content: center;
   align-items: center;
 }
+.inviteBox .inviteShow .inviteTip{
+  font-size:38rpx;
+  font-family:PingFangSC-Medium,PingFang SC;
+  font-weight:500;
+  color:rgba(58,58,58,1);
+}
 .inviteBox .inviteShow .num {
   color: #df2020;
 }
@@ -155,8 +161,8 @@ page {
   height: 90rpx;
   box-sizing: border-box;
   overflow: hidden;
-  margin-top: 50rpx;
-  margin-bottom: 60rpx;
+  margin-top: 30rpx;
+  margin-bottom: 30rpx;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -195,7 +201,7 @@ page {
   padding: 0 30rpx;
 }
 .tabList .tab {
-  padding: 30rpx 0;
+  padding: 24rpx 0;
   border-bottom: 1rpx solid #e9e9e9;
 }
 .tabList .tab:nth-child(2) {
