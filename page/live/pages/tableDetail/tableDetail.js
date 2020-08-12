@@ -1,5 +1,6 @@
 // pages/tableDetail/tableDetail.js
 const LiveData = require("../../../../data/LiveData");
+var htmlparser = require("../../../../utils/htmlparser");
 Page({
   data: {
     days: 0,
@@ -64,10 +65,11 @@ Page({
             title: res[0].data.msg,
             title: res[0].data.invite_msg,
             icon: "none",
-            duration: 1000,
+            duration: 3000,
           });
         }
         if (res[0].data.countdown <= 0) flag = true;
+        res[0].data.introduction = htmlparser.default(res[0].data.introduction);
         _this.setData({
           lessonDetail: res[0].data,
           avatarList: res[1].data,
