@@ -156,9 +156,18 @@ Page({
   joinClass() {
     //跳转推文链接
     let link = this.data.lessonDetail.mp_url;
+    console.log(link)
+    link = `http://mp.weixin.qq.com/s?__biz=Mzg3OTA0NjU0Mg==&mid=100011260&idx=2&sn=93cc742e508ef7e0de553d8c3be44220&chksm=4f08d61d787f5f0b4ec81964a4e49656907e4d1`;
     if (link != "") {
+      // wx.navigateTo({
+      //   url: `/pages/education/education?url=${link}&type=live`,
+      // });
       wx.navigateTo({
-        url: `/pages/education/education?url=${link}&type=live`,
+        url: "/pages/education/education?type=live",
+        success: function (res) {
+          // 通过eventChannel向被打开页面传送数据
+          res.eventChannel.emit("liveCode", { url: link });
+        },
       });
     } else {
       this.showServise();
@@ -222,7 +231,7 @@ Page({
         scrollViewHeight -= res[3].height;
       }
       that.setData({
-        height: scrollViewHeight,
+        height: 306,
         currentTab: 0,
       });
     });
@@ -319,11 +328,15 @@ Page({
   },
   setHeight() {
     let that = this;
-    if (this.data.currentTab == 1) {
+    if (this.data.currentTab != 0) {
       let query = wx.createSelectorQuery().in(this);
-      query.select(".comment").boundingClientRect();
+      if (this.data.currentTab == 2){
+        query.select(".introduction").boundingClientRect();
+      }else{
+        query.select(".comment").boundingClientRect();
+      } 
       query.exec((res) => {
-        let height = res[0].height - -110;
+        let height = this.data.currentTab == 2 ? res[0].height : res[0].height - -110;
         height < 100
           ? that.setData({
               height: 700,

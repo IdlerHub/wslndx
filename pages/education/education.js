@@ -26,7 +26,13 @@ Page({
         opstObj[item.split("=")[0]] = item.split("=")[1];
       });
     } else {
-      if (options.type === "farm") {
+      if(options.type == "live"){
+        const event = this.getOpenerEventChannel();
+        event.on("liveCode", (data) => {
+          console.log(data);
+          this.junmpOut(data.url);
+        });
+      }else if (options.type === "farm") {
         this.junmpOut("https://h5xyx.jinlingkeji.cn");
         wx.uma.trackEvent("index_btnClick", {
           btnName: "开心农场"
