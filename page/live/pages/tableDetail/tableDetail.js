@@ -1,5 +1,6 @@
 // pages/tableDetail/tableDetail.js
 const LiveData = require("../../../../data/LiveData");
+var htmlparser = require("../../../../utils/htmlparser");
 Page({
   data: {
     days: 0,
@@ -53,13 +54,22 @@ Page({
         wx.setNavigationBarTitle({
           title: res[0].data.name || "",
         });
-        if(res[0].data.is_own == 1) {
+        if (res[0].data.is_own == 1) {
           wx.redirectTo({
             url: `/page/live/pages/liveDetail/liveDetail?lessonId=${lesson_id}&isFirst=0`,
           });
-          return 
+          return;
+        }
+        if (res[0].data.invite_msg != "") {
+          wx.showToast({
+            title: res[0].data.msg,
+            title: res[0].data.invite_msg,
+            icon: "none",
+            duration: 3000,
+          });
         }
         if (res[0].data.countdown <= 0) flag = true;
+        res[0].data.introduction = htmlparser.default(res[0].data.introduction);
         _this.setData({
           lessonDetail: res[0].data,
           avatarList: res[1].data,
@@ -126,7 +136,7 @@ Page({
               title: err.msg,
               image: "/images/warn.png",
               duration: 1000,
-            }); 
+            });
           });
       } else {
         //已拥有就不再领取,从分享进去详情页,不展示客服盒子
@@ -138,16 +148,16 @@ Page({
   },
   showAllAvatar() {
     let { conditions, invite_num } = this.data.lessonDetail;
-    // if (conditions > 5 || invite_num > 5) {
-    //展示所有头像
-    this.setData({
-      showMoreAvatar: !this.data.showMoreAvatar,
-    });
-    // }
+    if (conditions > 5 || invite_num > 5) {
+      //展示所有头像
+      this.setData({
+        showMoreAvatar: !this.data.showMoreAvatar,
+      });
+    }
   },
   shareLesson(lesson_id) {
     //分享成功
-    LiveData.shareLesson({ lesson_id })
+    LiveData.shareLesson({ lesson_id });
   },
   onPullDownRefresh() {
     this.getLiveDetailDate(this.data.lessonId).then((res) => {
