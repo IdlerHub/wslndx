@@ -1,0 +1,7 @@
+{
+  "usingComponents": {
+    "voteCard": "/page/vote/components/votecard/voteCard"
+  },
+  "navigationBarTitleText": "同心抗疫 老年大学在行动",
+  "enablePullDownRefresh": true
+}

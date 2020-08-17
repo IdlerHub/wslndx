@@ -23,7 +23,8 @@
     "pages/liveList/liveList",
     "pages/gamePage/gamePage",
     "pages/webPay/webPay",
-    "components/playRrecord/playRrecord"
+    "components/playRrecord/playRrecord",
+    "page/vote/pages/voteIndex/voteIndex"
   ],
   "permission": {
     "scope.userLocation": {
