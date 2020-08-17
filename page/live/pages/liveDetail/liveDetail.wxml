@@ -228,7 +228,7 @@
         </view>
     </view>
     <!-- 消息盒子 -->
-    <cover-view class="servise" wx:if="{{showServise}}">
+    <!-- <cover-view class="servise" wx:if="{{showServise}}">
         <cover-view class="serviseBox">
             <cover-view class="text">进入客服消息后，点击右下角</cover-view>
             <cover-view class="text">快捷图片，扫码加入班群学习</cover-view>
@@ -238,5 +238,5 @@
             </button>
         </cover-view>
         <cover-image src="{{$state.imgHost}}/cancel.png" class="cancel" catchtap="showServise"></cover-image>
-    </cover-view>
+    </cover-view> -->
 </view>
