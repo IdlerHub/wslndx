@@ -1,4 +1,3 @@
-
 // components/playRrecord/playRrecord.js
 const app = getApp()
 const record = require("../../utils/record")
@@ -28,13 +27,13 @@ Component({
     }
   },
   pageLifetimes: {
-    show: function() {
+    show: function () {
       // 页面被展示
     },
-    hide: function() {
+    hide: function () {
       console.log('页面隐藏')
     },
-    resize: function(size) {
+    resize: function (size) {
       // 页面尺寸变化
     }
   },
@@ -44,7 +43,7 @@ Component({
   methods: {
     playVoice(e) {
       let pages = getCurrentPages()
-      record.checkRecord(e,pages[pages.length - 1])
+      record.checkRecord(e, pages[pages.length - 1])
     },
     delRecord() {
       let pages = getCurrentPages()

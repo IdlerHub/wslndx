@@ -65,7 +65,8 @@
     "useCompilerModule": false,
     "userConfirmedUseCompilerModuleSwitch": true,
     "packNpmManually": false,
-    "packNpmRelationList": []
+    "packNpmRelationList": [],
+    "useApiHook": true
   },
   "compileType": "miniprogram",
   "libVersion": "2.12.0",
