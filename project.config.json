@@ -216,6 +216,13 @@
 					"pathName": "page/vote/pages/voteIndex/voteIndex",
 					"query": "",
 					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "page/vote/pages/voteArticle/voteArticle",
+					"pathName": "page/vote/pages/voteArticle/voteArticle",
+					"query": "",
+					"scene": null
 				}
 			]
 		}

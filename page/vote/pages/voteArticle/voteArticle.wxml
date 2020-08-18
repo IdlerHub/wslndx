@@ -1,12 +1,30 @@
 <!--page/vote/pages/voteArticle/voteArticle.wxml-->
 <view class="vote-article-page">
-    <view class="article-img"></view>
+    <image src="{{voteDetail.image}}" class="article-img" mode="aspectFill"></image>
     <view class="aritcle-info">
-        <view class="info-title"></view>
-        <view class="info-subtitle"></view>
+        <view class="info-title">{{voteDetail.name}}</view>
+        <rich-text class="info-subtitle" nodes="{{voteDetail.introduce}}"></rich-text>
     </view>
     <view class="article-comment">
         <view class="comment-nav">评论 2</view>
-        <view class="comment-list">评论列表</view>
+        <view class="comment-list">
+            <image src="../../images/vote-nonecomment.png" class="none-comment"></image>
+        </view>
+        <view class="comment-footer"></view>
+    </view>
+    <view class="send-comment">
+        <view class="comment-left">发表观点</view>
+        <view class="comment-right">
+            <view class="right-send">
+                <image class="bottom-bg" src="../../images/vote-leftbg.png"></image>
+                <image class="img" src="../../images/vote-flowers.png"></image>
+                <view class="send-flowers">送花</view>
+            </view>
+            <view class="right-share">
+                <image class="bottom-bg" src="../../images/vote-rightbg.png"></image>
+                <image class="img" src="../../images/vote-share.png"></image>
+                <view class="send-flowers">分享</view>
+            </view>
+        </view>
     </view>
 </view>

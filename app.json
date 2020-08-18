@@ -23,9 +23,7 @@
     "pages/liveList/liveList",
     "pages/gamePage/gamePage",
     "pages/webPay/webPay",
-    "components/playRrecord/playRrecord",
-    "page/vote/pages/voteIndex/voteIndex",
-    "page/vote/pages/voteArticle/voteArticle"
+    "components/playRrecord/playRrecord"
   ],
   "permission": {
     "scope.userLocation": {
@@ -123,6 +121,13 @@
         "pages/timetableList/timetableList",
         "pages/liveDetail/liveDetail",
         "pages/liveSearch/liveSearch"
+      ]
+    },
+    {
+      "root": "page/vote/",
+      "pages": [
+        "pages/voteIndex/voteIndex",
+        "pages/voteArticle/voteArticle"
       ]
     }
   ],

@@ -107,8 +107,10 @@ Component({
       //作品详情页
       wx.navigateTo({
         url:
-          "/pages/voteDetail/voteDetail?voteid=" + item.id +
-          "&index=" + index
+          "/pages/voteArticle/voteArticle?voteid=" +
+          item.id +
+          "&index=" +
+          index,
       });
     },
     giveLike(e) {

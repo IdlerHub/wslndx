@@ -4,8 +4,7 @@
         <view class="item-up" bindtap="toDetail" style="background: {{bgColor}}">
             <view class="item-id">编号01</view>
             <view class="item-img">
-                <image wx:if="{{voteItem.type==1}}" src="{{voteItem.url[0] || '/images/vote-wei.png'}}" alt="" mode="aspectFit" lazy-load />
-                <image wx:if="{{voteItem.type==2}}" src="{{voteItem.banner_image || '/images/vote-wei.png'}}" alt="" mode="aspectFit" lazy-load />
+                <image src="{{voteItem.image || '/images/vote-wei.png'}}" alt="" mode="aspectFit" lazy-load />
             </view>
         </view>
         <view class="item-down">

@@ -28,6 +28,9 @@
   font-size:28rpx;
   font-family:PingFang-SC-Medium,PingFang-SC;
   font-weight:500;
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 .item-img,
 .item-up .item-img image{

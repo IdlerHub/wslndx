@@ -16,24 +16,32 @@ Page({
         name: "教师a",
         class_name: "班级a",
         flowers: 30,
+        image:
+          "https://xiehui-guanwang.obs.cn-north-1.myhuaweicloud.com:443/uploads/images/20190815%5Ca6dbd1bf97aeb528e2aa6964fb2ab468.jpg",
       },
       {
         id: 2,
         name: "汪得章",
         class_name: "如何装比",
         flowers: 20,
+        image:
+          "https://xiehui-guanwang.obs.cn-north-1.myhuaweicloud.com:443/uploads/images/20190815%5Ca6dbd1bf97aeb528e2aa6964fb2ab468.jpg",
       },
       {
         id: 5,
         name: "教师c",
         class_name: "班级c",
         flowers: 1,
+        image:
+          "https://xiehui-guanwang.obs.cn-north-1.myhuaweicloud.com:443/uploads/images/20190815%5Ca6dbd1bf97aeb528e2aa6964fb2ab468.jpg",
       },
       {
         id: 4,
         name: "高粱",
         class_name: "班级b",
         flowers: 0,
+        image:
+          "https://xiehui-guanwang.obs.cn-north-1.myhuaweicloud.com:443/uploads/images/20190815%5Ca6dbd1bf97aeb528e2aa6964fb2ab468.jpg",
       },
     ],
     page: 1,
@@ -195,10 +203,10 @@ Page({
       .then((res) => {
         wx.hideLoading();
         if (page == 1) {
-          data = res.data.teachers;
+          data = res.data.list;
         } else {
           var oldData = this.data.productionList;
-          data = oldData.concat(res.data.teachers);
+          data = oldData.concat(res.data.list);
         }
         total_page = res.data.total_page;
         this.setData({
