@@ -1,0 +1,12 @@
+<!--page/vote/pages/voteArticle/voteArticle.wxml-->
+<view class="vote-article-page">
+    <view class="article-img"></view>
+    <view class="aritcle-info">
+        <view class="info-title"></view>
+        <view class="info-subtitle"></view>
+    </view>
+    <view class="article-comment">
+        <view class="comment-nav">评论 2</view>
+        <view class="comment-list">评论列表</view>
+    </view>
+</view>

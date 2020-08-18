@@ -17,6 +17,15 @@ Page({
       this.setData({
         url: webURL + "?id=" + id
       });
+    }else if(options.voteType){ //获取公众号openid
+      let webURL = "https://enrollmenth5dev.jinlingkeji.cn/#/";
+      if (options.voteType == "voteDetail") {
+        // 从详情页跳转过来获取公众号的openId
+        webURL = "https://enrollmenth5dev.jinlingkeji.cn/#/?type=voteDetail";
+      }
+      this.setData({
+        url: webURL,
+      });
     }
 
     if (!options.type) {

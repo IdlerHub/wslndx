@@ -209,6 +209,13 @@
 					"pathName": "pages/liveList/liveList",
 					"query": "",
 					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "page/vote/pages/voteIndex/voteIndex",
+					"pathName": "page/vote/pages/voteIndex/voteIndex",
+					"query": "",
+					"scene": null
 				}
 			]
 		}

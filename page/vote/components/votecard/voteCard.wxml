@@ -2,29 +2,23 @@
 <view class="vote-item" id="list-item-{{skeletonId}}">
     <block wx:if="{{showSlot}}">
         <view class="item-up" bindtap="toDetail" style="background: {{bgColor}}">
-            <view class="item-rank">
-                <view class="rank-text">
-                    <view>当前排名</view>
-                </view>
-                <view class="num">{{voteIndex+1}}</view>
-            </view>
+            <view class="item-id">编号01</view>
             <view class="item-img">
                 <image wx:if="{{voteItem.type==1}}" src="{{voteItem.url[0] || '/images/vote-wei.png'}}" alt="" mode="aspectFit" lazy-load />
                 <image wx:if="{{voteItem.type==2}}" src="{{voteItem.banner_image || '/images/vote-wei.png'}}" alt="" mode="aspectFit" lazy-load />
             </view>
-            <view class="serial">编号: {{voteItem.id-63}}</view>
         </view>
         <view class="item-down">
             <view class="item-name" bindtap="toDetail">
                 {{voteItem.name}}
             </view>
-            <view class="item-school" bindtap="toDetail">
-                {{voteItem.school || '网上老年大学'}}
+            <view class="item-subname" bindtap="toDetail">
+                课程: {{voteItem.class_name}}
             </view>
             <view class="item-footer">
-                <view class="item-zan">{{voteItem.prise_numbers}}赞</view>
+                <view class="item-zan">{{voteItem.flowers}}朵</view>
                 <view class="zan-btn" catchtap="giveLike">
-                    点击投票
+                    送花助力
                 </view>
             </view>
         </view>

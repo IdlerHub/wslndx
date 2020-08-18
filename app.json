@@ -24,7 +24,8 @@
     "pages/gamePage/gamePage",
     "pages/webPay/webPay",
     "components/playRrecord/playRrecord",
-    "page/vote/pages/voteIndex/voteIndex"
+    "page/vote/pages/voteIndex/voteIndex",
+    "page/vote/pages/voteArticle/voteArticle"
   ],
   "permission": {
     "scope.userLocation": {

@@ -9,47 +9,42 @@ function getH5Rule() {
   return httpService.post("h5opus/getH5Rule");
 }
 
-//POST Studyreport/getAllProvince 获取省份
-function getAllProvince() {
-  return httpService.post("Studyreport/getAllProvince");
-}
+// //POST Studyreport/getAllProvince 获取省份
+// function getAllProvince() {
+//   return httpService.post("Studyreport/getAllProvince");
+// }
 
-//POST Studyreport/getCity 获取城市
-function getCity(params) {
-  return httpService.post("Studyreport/getCity", params);
-}
+// //POST Studyreport/getCity 获取城市
+// function getCity(params) {
+//   return httpService.post("Studyreport/getCity", params);
+// }
 
-//POST Studyreport/getAllUniversity 获取学校
-function getSchool(params) {
-  return httpService.post("Studyreport/getAllUniversity", params);
-}
-
-//POST h5opus/getCategory 获取分类列表
-function getCategory(params) {
-  return httpService.post("h5opus/getCategory", params);
-}
+// //POST Studyreport/getAllUniversity 获取学校
+// function getSchool(params) {
+//   return httpService.post("Studyreport/getAllUniversity", params);
+// }
 
 //POST h5opus/getNewestOpus 获取最新发布的作品消息
 function getNewestOpus() {
   return httpService.post("h5opus/getNewestOpus");
 }
 
-/** POST h5opus/getOpusList
+/** POST H5teachers/getTeacherList
  * @description: 获取作品列表
- * @param {type,page}
+ * @param {page}
  * @return:  promise
  */
 function getOpusList(params) {
-  return httpService.post("h5opus/getOpusList", params);
+  return httpService.post("H5teachers/getTeacherList", params);
 }
 
-/** POST h5opus/praiseOpus
- * @description: 作品点赞
- * @param {type,id}
+/** POST H5teachers/sendFlower
+ * @description: 送花
+ * @param {uid,teacher_id}
  * @return:  promise
  */
 function praiseOpus(params) {
-  return httpService.post("h5opus/praiseOpus", params);
+  return httpService.post("H5teachers/sendFlower", params);
 }
 
 /** POST h5opus/searchOpus
@@ -145,11 +140,10 @@ function searchCertificate(params) {
 }
 
 module.exports = {
-  getAllProvince,
-  getCity,
-  getSchool,
+  // getAllProvince,
+  // getCity,
+  // getSchool,
   getH5Rule,
-  getCategory,
   getOpusList,
   praiseOpus,
   getSecureToken,

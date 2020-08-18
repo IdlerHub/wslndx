@@ -20,15 +20,15 @@ page{
   display: flex;
   justify-content: space-between;
   /* margin-bottom: 627rpx; */
-  margin-bottom: 604rpx;
+  margin-bottom: 639rpx;
 }
 .header-left{
-  max-width: 557rpx;
+  max-width: 604rpx;
   height: 64rpx;
   padding-left: 30rpx;
   display: flex;
   align-items: center;
-  margin-right: 47rpx;
+  margin-right: 30rpx;
   /* padding: 12rpx 0; */
   background:linear-gradient(270deg,rgba(27,22,236,1) 0%,rgba(14,0,211,1) 100%);
   border-radius:0px 32px 32px 0px;
@@ -58,94 +58,77 @@ page{
 }
 .header-right{
   width: 86rpx;
-  height: 96rpx;
-  margin-top: 30rpx;
-  /* background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFYAAABgCAMAAACwq3V1AAAA51BMVEUAAAD////////////////////////////////////////////////////////5+//////////////////////////////////////////////////////////////////////////////////////////////////////D1fz9/v+NsPr7/P73+f7v9P7c5v2hvvuQs/uXt/ro7/7l7f7h6v3Z5f3S4P3K2v3G2Py/0vynw/udu/uaufvz9v7O3fy6z/yzyvuuyPulwPuTtPrr8f7e6P3V4f280fyrxfvB1Py3zfy1zPymLANIAAAAKHRSTlMAAe3nqKJrYy0l+fTgsQf919DIuZmRioN6c1xUTEQ9NR0WEAvewcCsICgY7AAAAWdJREFUaN7t0teSgjAUBuDYe++9baEpigVE7AUs7/88C7OQ6DZd4fL8N0wymW/In4MoiqJpyqlYGrDAAgsssMACCyywwAILLLDAAgsssMACCyywwAILLLDAAnv/MMdriiIfOAdZZkRv2e10ZH4YJ9jecjNQNN78zQSvzQebZc8W21Uvwm6tLm53F+J6J1zU7lMsd5AV9ijt8Yb7PebGi710ZHHVj7LMcDpj+zRp0eP1B10IuYJ+rwcfGtN9djYdMvdYUuZ8xSes9YsvEEJXCQV8UdzSZEWq/s6SY2e9TBGXmcyWm+iHNMvZ5E3V50n3F5Yby32jTMa8YypXaaE/0qrkUrg0SS9NHnNf2M8yT8a+kXA6X22jB9Ku5tNhq+qTXrU0ZAgr6GVat4i8FWod9I90aoXX8FXVgsXyYs8kM8V6HD2ReL2YiZgvLvIGi8cyVmq4kI3EGyUy2IiMpf2QwUZRPJb2Qwb7A5wgzjAI7Bg+AAAAAElFTkSuQmCC'); */
-  /* background-size: 100% 100%;
-  display: flex;
-  align-items: center;
-  flex-flow: column;
-  justify-content: center;
-  text-align: center; */
+  height: 91rpx;
+  margin-right: 30rpx;
+  position: relative;
 }
-.header-right .rule,
-.header-right .rank{
-  width:89rpx;
-  height:101rpx;
-  line-height: 101rpx;
-  background:linear-gradient(180deg,rgba(0,207,255,1) 0%,rgba(0,146,231,1) 100%);
-  box-shadow:0rpx 2rpx 12rpx 0rpx rgba(27,23,235,0.5);
-  border-radius:20rpx 0rpx 0rpx 20rpx;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-weight:bold;
+.header-right .rule{
+  width: 86rpx;
+  height: 91rpx;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
 }
-.header-right .rank{
-  margin-top: 27rpx;
-  background:linear-gradient(180deg,rgba(249,165,58,1) 0%,rgba(239,65,78,1) 100%);
-  box-shadow:0rpx 2rpx 12rpx 0rpx rgba(51,8,190,1);
-}
-.header-right .rule>view,
-.header-right .rank>view{
-  width:60rpx;
-  height:72rpx;
+.header-right .rule-text{ 
+  width:58rpx;
+  height:64rpx;
   font-size:28rpx;
-  line-height: 36rpx;
-  font-family:PingFang-SC-Bold,PingFang-SC;
-  color:rgba(255,255,255,1);
-  text-shadow:0px 2px 3px rgba(10,118,177,1);
-  text-align: center;
-}
-.header-right .rank>view{
-  font-weight:bold;
-  color:rgba(255,255,255,1);
-  text-shadow:0rpx 2rpx 3rpx rgba(205,36,48,1);
-
+  font-family:PingFangSC-Medium,PingFang SC;
+  font-weight: 600;
+  color:rgba(250,59,2,1);
+  line-height:32rpx;
+  position: absolute;
+  top: 10rpx;
+  left: 14rpx;
+  bottom: 17rpx;
 }
 .vote-search{
   width:690rpx;
-  height:80rpx;
+  height:88rpx;
   margin: 0 30rpx;
-  
   margin-bottom: 32rpx;
-  background:rgba(13,0,198,1);
-  border-radius:40rpx;
+  /* background:#C70001; */
+  border-radius: 10rpx;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+.vote-search .search-left{
+  flex: 1;
+  height: 100%;
+  background: #C70001;
   display: flex;
   align-items: center;
 }
-.vote-search image{
+.vote-search .search-left image{
   width: 39rpx;
   height: 38rpx;
-  margin-left: 32rpx;
+  margin-left: 28rpx;
 }
-.vote-search input{
+.vote-search .search-left input{
   width: 410rpx;
-  margin-left: 22rpx;
-  color:rgba(255,255,255,0.4);
+  height: 100%;
+  margin-left: 16rpx;
+  color:#FFB5B0;
 }
 .search-ipt{
   font-size:36rpx;
   font-family:PingFangSC-Regular,PingFang SC;
   font-weight:400;
-  color:rgba(255,255,255,0.4);
+  color:#FFB5B0;
   line-height:50rpx;
 }
 .search-btn{
-  width:148rpx;
-  height:80rpx;
-  margin-left: 39rpx;
-  background:rgba(0,0,0,0.2);
-  border-radius:0rpx 100rpx 100rpx 0rpx;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
+  width: 148rpx;
+  height: 88rpx;
+  background:#950002;
   font-size:36rpx;
   font-family:PingFangSC-Regular,PingFang SC;
-  font-weight:400;
-  color:rgba(255,255,255,1);
+  color:white;
+  text-align: center;
+  line-height: 88rpx;
 }
 
 .swiper-list{
@@ -234,10 +217,11 @@ page{
   display: flex;
   flex-flow: wrap;
   /* align-items: center; */
-  background:#00A1FF;
+  background:#E01300;
   /* padding-bottom: 128rpx; */
   min-height: 390rpx;
-  padding-bottom: 138rpx;
+  /* padding-bottom: 138rpx; */
+  padding-bottom: 188rpx;
 }
 /* .vote-list{ padding-bottom: 138rpx; }
 .vote-none{ padding-bottom: 160rpx; } */
@@ -387,62 +371,31 @@ page{
 .vote-footer{
   position: fixed;
   bottom: 40rpx;
-  right: 30rpx;
-  left: 30rpx;
-  display: flex;
-  justify-content: center;
-  z-index: 100;
-  height: 98rpx;
-}
-.vote-footer>image{
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  z-index: -1;
-}
-.footer-left,
-.footer-right{
+  right: 175rpx;
+  left: 175rpx;
   display: flex;
   justify-content: center;
   align-items: center;
-  
-  height: 98rpx;
-  line-height: 98rpx;
-  border-radius:52rpx;
-
-  font-size:40rpx;
+  z-index: 100;
+  height: 108rpx;
+  color: #fff;
+  font-size:44rpx;
   font-family:PingFangSC-Medium,PingFang SC;
   font-weight:500;
-  color:rgba(255,255,255,1);
-}
-.footer-left{
-  width: 400rpx;
+  background:linear-gradient(270deg,#FF3100 0%,#FF8413 100%);
   box-shadow:3rpx 3rpx 12rpx 0rpx rgba(255,30,0,0.7);
-  border-radius:49rpx 0rpx 0rpx 49rpx;
+  border-radius:54rpx;
+  opacity:0.93;
 }
-.footer-right{
-  width: 340rpx;
-  border-radius:0rpx 49rpx 49rpx 0rpx;
-  box-shadow:3rpx 3rpx 12rpx 0rpx rgba(255,30,0,0.7);
-}
-.footer-left image{
+
+.vote-footer .flowers{
   width: 44rpx;
-  height: 55rpx;
-  margin-right: 16rpx;
+  height: 49rpx;
 }
-.footer-left .winner{
-  width: 50rpx;
-  height: 48rpx;
-  margin-right: 16rpx;
-}
-.footer-right image{
-  width: 50rpx;
-  height: 50rpx;
-  margin-right: 16rpx;
+.vote-footer>view{
+  height: 62rpx;
+  line-height: 62rpx;
+  margin-left: 18rpx;
 }
 
 .integration {
