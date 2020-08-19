@@ -767,7 +767,7 @@ Page({
   },
   toMessage() {
     wx.navigateTo({
-      url: "page/post/pages/message/message"
+      url: "/page/post/pages/message/message"
     });
   },
   switchTab(event) {

@@ -1,216 +1,217 @@
 {
-	"description": "项目配置文件",
-	"packOptions": {
-		"ignore": [
-			{
-				"type": "folder",
-				"value": "demo"
-			},
-			{
-				"type": "folder",
-				"value": "leetCode"
-			},
-			{
-				"type": "file",
-				"value": "config.js"
-			},
-			{
-				"type": "file",
-				"value": "Gulpfile.js"
-			},
-			{
-				"type": "file",
-				"value": "package-lock.json"
-			},
-			{
-				"type": "file",
-				"value": "variables.wxss"
-			},
-			{
-				"type": "folder",
-				"value": ".history"
-			},
-			{
-				"type": "suffix",
-				"value": ".scss"
-			}
-		]
-	},
-	"setting": {
-		"urlCheck": false,
-		"es6": true,
-		"enhance": true,
-		"postcss": true,
-		"preloadBackgroundData": false,
-		"minified": true,
-		"newFeature": true,
-		"coverView": true,
-		"nodeModules": true,
-		"autoAudits": false,
-		"showShadowRootInWxmlPanel": false,
-		"scopeDataCheck": false,
-		"uglifyFileName": false,
-		"checkInvalidKey": true,
-		"checkSiteMap": true,
-		"uploadWithSourceMap": true,
-		"compileHotReLoad": false,
-		"useMultiFrameRuntime": false,
-		"babelSetting": {
-			"ignore": [],
-			"disablePlugins": [],
-			"outputPath": ""
-		},
-		"bundle": true,
-		"useIsolateContext": true,
-		"useCompilerModule": false,
-		"userConfirmedUseCompilerModuleSwitch": true,
-		"packNpmManually": false,
-		"packNpmRelationList": []
-	},
-	"compileType": "miniprogram",
-	"libVersion": "2.12.0",
-	"appid": "wx756d04f5d669cef0",
-	"projectname": "%E4%B8%AD%E5%9B%BD%E7%BD%91%E4%B8%8A%E8%80%81%E5%B9%B4%E5%A4%A7%E5%AD%A6",
-	"isGameTourist": false,
-	"simulatorType": "wechat",
-	"simulatorPluginLibVersion": {},
-	"condition": {
-		"search": {
-			"current": -1,
-			"list": []
-		},
-		"conversation": {
-			"current": -1,
-			"list": []
-		},
-		"plugin": {
-			"current": -1,
-			"list": []
-		},
-		"game": {
-			"currentL": -1,
-			"list": []
-		},
-		"gamePlugin": {
-			"current": -1,
-			"list": []
-		},
-		"miniprogram": {
-			"current": -1,
-			"list": [
-				{
-					"id": 0,
-					"name": "微课堂分享卡片",
-					"pathName": "pages/detail/detail",
-					"query": "id=559&name=跟我轻松学古筝&type=share",
-					"scene": 1007
-				},
-				{
-					"id": 1,
-					"name": "小程序码分享",
-					"pathName": "pages/loading/loading",
-					"query": "uid=303&type=invite",
-					"scene": 1047
-				},
-				{
-					"id": 2,
-					"name": "长按图片识别小程序码进入",
-					"pathName": "pages/loading/loading",
-					"query": "uid=303&type=invite",
-					"scene": 1048
-				},
-				{
-					"id": 3,
-					"name": "手机相册选取小程序码",
-					"pathName": "pages/loading/loading",
-					"query": "uid=303&type=invite",
-					"scene": 1049
-				},
-				{
-					"id": 4,
-					"name": "短视频分享卡片",
-					"pathName": "pages/video/video",
-					"query": "id=808&type=share",
-					"scene": 1007
-				},
-				{
-					"id": 5,
-					"name": "秀风采分享卡片",
-					"pathName": "pages/pDetail/pDetail",
-					"query": "id= 1535&type=share",
-					"scene": 1007
-				},
-				{
-					"id": -1,
-					"name": "从课程分享卡片进入小程序",
-					"pathName": "pages/detail/detail",
-					"query": "id=12661&type=share",
-					"scene": null
-				},
-				{
-					"id": 8,
-					"name": "消息卡片打开小程序",
-					"pathName": "pages/education/education",
-					"query": "uid=12661&type=lottery&id=856",
-					"scene": 1008
-				},
-				{
-					"id": 9,
-					"name": "个人中心",
-					"pathName": "pages/user/user",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": 9,
-					"name": "pages/post/post",
-					"pathName": "pages/post/post",
-					"query": "id=102",
-					"scene": null
-				},
-				{
-					"id": 12,
-					"name": "学习排行榜",
-					"pathName": "pages/rankingList/rankingList",
-					"query": "uid=12661&type=invite&mode=0",
-					"scene": null
-				},
-				{
-					"id": 11,
-					"name": "page/live/pages/liveDetail/liveDetail",
-					"pathName": "page/live/pages/liveDetail/liveDetail",
-					"query": "lessonId=25",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "page/live/pages/timetable/timetable",
-					"pathName": "page/live/pages/timetable/timetable",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "page/live/pages/liveSearch/liveSearch",
-					"pathName": "page/live/pages/liveSearch/liveSearch",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": 14,
-					"name": "page/live/pages/tableDetail/tableDetail",
-					"pathName": "page/live/pages/tableDetail/tableDetail",
-					"query": "lessonId=4&invite=348026&liveShare=1",
-					"scene": null
-				},
-				{
-					"id": 15,
-					"name": "pages/liveList/liveList",
-					"pathName": "pages/liveList/liveList",
-					"query": "",
-					"scene": null
-				}
-			]
-		}
-	}
+  "description": "项目配置文件",
+  "packOptions": {
+    "ignore": [
+      {
+        "type": "folder",
+        "value": "demo"
+      },
+      {
+        "type": "folder",
+        "value": "leetCode"
+      },
+      {
+        "type": "file",
+        "value": "config.js"
+      },
+      {
+        "type": "file",
+        "value": "Gulpfile.js"
+      },
+      {
+        "type": "file",
+        "value": "package-lock.json"
+      },
+      {
+        "type": "file",
+        "value": "variables.wxss"
+      },
+      {
+        "type": "folder",
+        "value": ".history"
+      },
+      {
+        "type": "suffix",
+        "value": ".scss"
+      }
+    ]
+  },
+  "setting": {
+    "urlCheck": false,
+    "es6": true,
+    "enhance": true,
+    "postcss": true,
+    "preloadBackgroundData": false,
+    "minified": true,
+    "newFeature": true,
+    "coverView": true,
+    "nodeModules": true,
+    "autoAudits": false,
+    "showShadowRootInWxmlPanel": true,
+    "scopeDataCheck": false,
+    "uglifyFileName": false,
+    "checkInvalidKey": true,
+    "checkSiteMap": true,
+    "uploadWithSourceMap": true,
+    "compileHotReLoad": false,
+    "useMultiFrameRuntime": false,
+    "useApiHook": true,
+    "babelSetting": {
+      "ignore": [],
+      "disablePlugins": [],
+      "outputPath": ""
+    },
+    "bundle": true,
+    "useIsolateContext": true,
+    "useCompilerModule": false,
+    "userConfirmedUseCompilerModuleSwitch": true,
+    "packNpmManually": false,
+    "packNpmRelationList": []
+  },
+  "compileType": "miniprogram",
+  "libVersion": "2.12.0",
+  "appid": "wx756d04f5d669cef0",
+  "projectname": "%E4%B8%AD%E5%9B%BD%E7%BD%91%E4%B8%8A%E8%80%81%E5%B9%B4%E5%A4%A7%E5%AD%A6",
+  "isGameTourist": false,
+  "simulatorType": "wechat",
+  "simulatorPluginLibVersion": {},
+  "condition": {
+    "search": {
+      "current": -1,
+      "list": []
+    },
+    "conversation": {
+      "current": -1,
+      "list": []
+    },
+    "plugin": {
+      "current": -1,
+      "list": []
+    },
+    "game": {
+      "currentL": -1,
+      "list": []
+    },
+    "gamePlugin": {
+      "current": -1,
+      "list": []
+    },
+    "miniprogram": {
+      "current": -1,
+      "list": [
+        {
+          "id": 0,
+          "name": "微课堂分享卡片",
+          "pathName": "pages/detail/detail",
+          "query": "id=559&name=跟我轻松学古筝&type=share",
+          "scene": 1007
+        },
+        {
+          "id": 1,
+          "name": "小程序码分享",
+          "pathName": "pages/loading/loading",
+          "query": "uid=303&type=invite",
+          "scene": 1047
+        },
+        {
+          "id": 2,
+          "name": "长按图片识别小程序码进入",
+          "pathName": "pages/loading/loading",
+          "query": "uid=303&type=invite",
+          "scene": 1048
+        },
+        {
+          "id": 3,
+          "name": "手机相册选取小程序码",
+          "pathName": "pages/loading/loading",
+          "query": "uid=303&type=invite",
+          "scene": 1049
+        },
+        {
+          "id": 4,
+          "name": "短视频分享卡片",
+          "pathName": "pages/video/video",
+          "query": "id=808&type=share",
+          "scene": 1007
+        },
+        {
+          "id": 5,
+          "name": "秀风采分享卡片",
+          "pathName": "pages/pDetail/pDetail",
+          "query": "id= 1535&type=share",
+          "scene": 1007
+        },
+        {
+          "id": -1,
+          "name": "从课程分享卡片进入小程序",
+          "pathName": "pages/detail/detail",
+          "query": "id=12661&type=share",
+          "scene": null
+        },
+        {
+          "id": 8,
+          "name": "消息卡片打开小程序",
+          "pathName": "pages/education/education",
+          "query": "uid=12661&type=lottery&id=856",
+          "scene": 1008
+        },
+        {
+          "id": 9,
+          "name": "个人中心",
+          "pathName": "pages/user/user",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": 9,
+          "name": "page/live/pages/tableDetail/tableDetail",
+          "pathName": "page/live/pages/tableDetail/tableDetail",
+          "query": "lessonId=8&inviter=22&liveShare=1",
+          "scene": null
+        },
+        {
+          "id": 12,
+          "name": "学习排行榜",
+          "pathName": "pages/rankingList/rankingList",
+          "query": "uid=12661&type=invite&mode=0",
+          "scene": null
+        },
+        {
+          "id": 11,
+          "name": "page/live/pages/liveDetail/liveDetail",
+          "pathName": "page/live/pages/liveDetail/liveDetail",
+          "query": "lessonId=25",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "page/live/pages/timetable/timetable",
+          "pathName": "page/live/pages/timetable/timetable",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": -1,
+          "name": "page/live/pages/liveSearch/liveSearch",
+          "pathName": "page/live/pages/liveSearch/liveSearch",
+          "query": "",
+          "scene": null
+        },
+        {
+          "id": 14,
+          "name": "page/live/pages/tableDetail/tableDetail",
+          "pathName": "page/live/pages/tableDetail/tableDetail",
+          "query": "lessonId=4&invite=348026&liveShare=1",
+          "scene": null
+        },
+        {
+          "id": 15,
+          "name": "pages/liveList/liveList",
+          "pathName": "pages/liveList/liveList",
+          "query": "",
+          "scene": null
+        }
+      ]
+    }
+  }
 }
