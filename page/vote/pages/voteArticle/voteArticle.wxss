@@ -123,3 +123,283 @@
     top: 0;
     z-index: -1;
 }
+
+/* 评论 */
+.issueBoxTow {
+  width: 100%;
+  padding: 46rpx 30rpx;
+  background: rgba(255, 255, 255, 1);
+  position: fixed;
+  bottom: 0;
+  box-sizing: border-box;
+  z-index: 2;
+  height: 316rpx;
+  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+}
+.issueBoxTow .replayplaceholder {
+  font-size: 32rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: rgba(153, 153, 153, 1);
+  position: relative;
+  top: -15rpx;
+}
+.issueBoxTow textarea {
+  width: 100%;
+  height: 160rpx;
+  font-size: 36rpx;
+  line-height: 48rpx;
+}
+.issueBoxTow .issueBoxTow-txt {
+  margin-top: 22rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.issueBoxTow .issueBoxTow-txt .issueBoxTow-btn {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+.issueBoxTow .issueBoxTow-txt .number {
+  font-size: 28rpx;
+  font-weight: 400;
+  color: rgba(153, 153, 153, 1);
+}
+.issueBoxTow .issueBoxTow-txt .submit {
+  width: 152rpx;
+  height: 68rpx;
+  background: rgba(223, 32, 32, 1);
+  border-radius: 34rpx;
+  font-size: 38rpx;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 1);
+  text-align: center;
+  line-height: 68rpx;
+  margin-left: 30rpx;
+}
+.issueBoxTow .issueBoxTow-txt .voicebtn {
+  width: 168rpx;
+  height: 68rpx;
+  background: rgba(237, 237, 237, 1);
+  border-radius: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 36rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: rgba(102, 102, 102, 1);
+  position: relative;
+}
+.issueBoxTow .issueBoxTow-txt .voicebtn image {
+  width: 25rpx;
+  height: 36rpx;
+  margin-right: 13rpx;
+}
+
+/* canvas */
+.sharePoster{
+width:630rpx;
+height:940rpx;
+overflow: hidden;
+/* position: fixed;
+top: 0;
+left: 0;
+z-index: 101; */
+}
+
+.show-img{
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0 60rpx;
+    background: rgba(0,0,0,0.8);
+}
+.show-con{
+    width: 630rpx;
+    height: 940rpx;
+    margin-bottom: 30rpx;
+    position: relative;
+}
+
+.canvas-img{
+    width: 570rpx;
+    height: 100%;
+    border-radius: 20rpx;
+    padding: 0 30rpx;
+    position: relative;
+    overflow: hidden;
+}
+.share-bg{
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+.share-del{
+    width: 72rpx;
+    height: 72rpx;
+    position: absolute;
+    right: -30rpx;
+    top: -30rpx;
+}
+.canvas-user{
+    margin-top: 30rpx;
+    display: flex;
+    align-items: center;
+    margin-bottom: 30rpx;
+}
+.user-img{
+    width: 96rpx;
+    height: 96rpx;
+    border-radius: 100%;
+    margin-right: 24rpx;
+    background: lightblue;
+}
+.canvas-info{
+    color:rgba(255,255,255,1);
+}
+.user-name{
+    max-width: 570rpx;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    height:50rpx;
+    font-size:36rpx;
+    font-family:PingFangSC-Medium,PingFang SC;
+    font-weight:500;
+    line-height:50rpx;
+}
+.tip{
+    height:40rpx;
+    font-size:28rpx;
+    font-family:PingFangSC-Regular,PingFang SC;
+    font-weight:400;
+    line-height:40rpx;
+}
+.canvas-works{
+    width: 570rpx;
+    height:380rpx;
+    background:#FF670E;
+    border-radius:14rpx;
+    margin-bottom: 22rpx;
+    overflow: hidden;
+}
+.canvas-works image{
+    width: 100%;
+    height: 100%;
+}
+.canvas-info{
+    color:rgba(255,255,255,1);
+    margin-bottom: 14rpx;
+}
+.canvas-info .canvas-name{
+    max-width: 570rpx;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    height:56rpx;
+    font-size:40rpx;
+    font-family:PingFangSC-Medium,PingFang SC;
+    font-weight:500;
+    line-height:56rpx;
+    margin-bottom: 11rpx;
+}
+.canvas-info .canvas-content{
+    max-width:570rpx;
+    font-size:36rpx;
+    font-family:PingFangSC-Regular,PingFang SC;
+    font-weight:400;
+    color:rgba(255,255,255,1);
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    text-overflow: ellipsis;
+    -webkit-box-orient: vertical;
+
+}
+.canvas-footer{
+    background: white;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 153rpx;
+    padding: 21rpx 30rpx;
+    display: flex;
+    border-radius: 0 0 20rpx 20rpx;
+    align-items: center;
+}
+.canvas-code{
+    width: 153rpx;
+    height: 153rpx;
+    margin-right: 23rpx;
+}
+.code-tip{
+    max-width:396rpx;
+    font-size:36rpx;
+    font-family:PingFangSC-Regular,PingFang SC;
+    font-weight:400;
+    color:rgba(102,102,102,1);
+    line-height:54rpx;
+}
+.poster-footer{
+    width:630rpx;
+    height:98rpx;
+    line-height: 98rpx;
+    display: flex;
+}
+.poster-footer>button,
+.poster-footer>view{
+    width: 300rpx;
+    font-size:40rpx;
+    border-radius: 10rpx;
+    font-family:PingFangSC-Medium,PingFang SC;
+    font-weight:500;
+    color:#fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.share-wechat{
+    background: #FF965D;
+    margin-right: 30rpx;
+}
+.share-img{
+    background: #FF183F;
+}
+.share-wechat>image{
+    width: 50rpx;
+    height: 41rpx;
+    margin-right: 14rpx;
+}
+.share-img>image{
+    width: 40rpx;
+    height: 41rpx;
+    margin-right: 14rpx;
+}
+
+.cartoon{
+    width: 330rpx;
+    height: 330rpx;
+    margin-left: -135rpx;
+    margin-top: -135rpx;
+    background: lightpink;
+    overflow: hidden;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 100;
+}

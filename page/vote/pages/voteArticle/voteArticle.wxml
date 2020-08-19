@@ -5,6 +5,48 @@
         <view class="info-title">{{voteDetail.name}}</view>
         <rich-text class="info-subtitle" nodes="{{voteDetail.introduce}}"></rich-text>
     </view>
+    <!-- 海报 -->
+    <canvas class="sharePoster" canvas-id="poster"></canvas>
+    <view class="show-img" wx:if="{{sharePoster}}">
+        <view class="show-con">
+            <image class="share-del" src="/images/unshare.png" alt="" catchtap="unshare" />
+            <view class="canvas-img">
+                <image class="share-bg" src="../../images/share-bg.png" alt="" />
+                <view class="canvas-user">
+                    <image class="user-img" src="{{shareInfo.avatar}}" alt=""></image>
+                    <view class="canvas-info">
+                        <view class="user-name">{{item.author || item.nickname}}</view>
+                        <view class="tip">作品编号: {{item.id}}</view>
+                    </view>
+                </view>
+                <view class="canvas-works">
+                    <image src="{{shareInfo.opus_type==1?  shareInfo.opus_url :  shareInfo.opus_banner_image }}" alt="" />
+                </view>
+                <view class="canvas-info">
+                    <!-- <view class="canvas-name">{{shareInfo.opus_name}}</view> -->
+                    <view class="canvas-content">{{shareInfo.opus_content}}</view>
+                </view>
+                <view class="canvas-footer">
+                    <image class="canvas-code" src="{{shareInfo.qrcode_url}}" alt="" />
+                    <view class="code-tip">
+                        <view>长按识别二维码</view>
+                        <view>为好友加油，一起参赛！</view>
+                    </view>
+                </view>
+            </view>
+        </view>
+        <view class="poster-footer">
+            <button open-type="share" class="share-wechat">
+                <image src="../../images/share-wechat.png"></image>
+                <view class="share-text">发送好友</view>
+            </button>
+            <view class="share-img" catchtap='savePoster'>
+                <image src="../../images/save-img.png"></image>
+                <view class="share-text">保存图片</view>
+            </view>
+        </view>
+    </view>
+
     <view class="article-comment">
         <view class="comment-nav">评论 2</view>
         <view class="comment-list">
@@ -12,18 +54,29 @@
         </view>
         <view class="comment-footer"></view>
     </view>
+    <!-- 发表观点&送花&分享 -->
     <view class="send-comment">
-        <view class="comment-left">发表观点</view>
+        <view class="comment-left" catchtap="showWrite">发表观点</view>
         <view class="comment-right">
-            <view class="right-send">
+            <view class="right-send" catchtap="sendFlower">
                 <image class="bottom-bg" src="../../images/vote-leftbg.png"></image>
                 <image class="img" src="../../images/vote-flowers.png"></image>
                 <view class="send-flowers">送花</view>
             </view>
-            <view class="right-share">
+            <view class="right-share" catchtap="shareImg">
                 <image class="bottom-bg" src="../../images/vote-rightbg.png"></image>
                 <image class="img" src="../../images/vote-share.png"></image>
                 <view class="send-flowers">分享</view>
+            </view>
+        </view>
+    </view>
+    <!-- 评论输入 -->
+    <view class="issueBoxTow" style="bottom :{{ keyheight != 0 ? keyheight : 0}}px;height:{{replyplaceholder != '' ? '181' : ''}}px" wx:if="{{writeTow}}">
+        <textarea placeholder="{{placeholder}}" fixed show-confirm-bar="{{false}}" placeholder-class="placeholder" bindinput="input" bindkeyboardheightchange="keyheight" adjust-position="{{false}}" focus="{{focus}}" bindblur="bindblur" maxlength="200" value="{{content}}" cursor-spacing="190rpx"></textarea>
+        <view class="issueBoxTow-txt">
+            <view class="number">{{ contenLength }}/200</view>
+            <view class="issueBoxTow-btn">
+                <view class="submit" catchtap="release">发布</view>
             </view>
         </view>
     </view>
