@@ -128,7 +128,9 @@
       "pages": [
         "pages/voteIndex/voteIndex",
         "pages/voteArticle/voteArticle",
-        "pages/voteInfo/voteInfo"
+        "pages/voteInfo/voteInfo",
+        "pages/voteSearch/voteSearch",
+        "pages/voteRule/voteRule"
       ]
     }
   ],

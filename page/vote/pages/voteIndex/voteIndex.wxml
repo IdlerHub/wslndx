@@ -11,7 +11,7 @@
                 </swiper-item>
             </swiper>
         </view>
-        <view class="header-right">
+        <view class="header-right" catchtap="toRule">
             <image src="../../images/vote-rule.png" class="rule"></image>
             <view class="rule-text">活动规则</view>
         </view>
@@ -37,7 +37,7 @@
         <block wx:else>
             <view class="vote-none">
                 <view class="none-con">
-                    <image src="/images/vote-none.png" alt="" />
+                    <!-- <image src="/images/vote-none.png" alt="" /> -->
                     <text>暂无作品展示</text>
                 </view>
             </view>

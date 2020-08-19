@@ -9,47 +9,8 @@ Page({
     showJump: false, //展示跳转卡片
     jumpUrl: {},
     type: 0, //分类的id
-    newProduction: [
-      {
-        id: 1,
-        mobile: "130****6800",
-        name: "汪得章",
-      },
-    ],
-    productionList: [
-      {
-        id: 3,
-        name: "教师a",
-        class_name: "班级a",
-        flowers: 30,
-        image:
-          "https://xiehui-guanwang.obs.cn-north-1.myhuaweicloud.com:443/uploads/images/20190815%5Ca6dbd1bf97aeb528e2aa6964fb2ab468.jpg",
-      },
-      {
-        id: 2,
-        name: "汪得章",
-        class_name: "如何装比",
-        flowers: 20,
-        image:
-          "https://xiehui-guanwang.obs.cn-north-1.myhuaweicloud.com:443/uploads/images/20190815%5Ca6dbd1bf97aeb528e2aa6964fb2ab468.jpg",
-      },
-      {
-        id: 5,
-        name: "教师c",
-        class_name: "班级c",
-        flowers: 1,
-        image:
-          "https://xiehui-guanwang.obs.cn-north-1.myhuaweicloud.com:443/uploads/images/20190815%5Ca6dbd1bf97aeb528e2aa6964fb2ab468.jpg",
-      },
-      {
-        id: 4,
-        name: "高粱",
-        class_name: "班级b",
-        flowers: 0,
-        image:
-          "https://xiehui-guanwang.obs.cn-north-1.myhuaweicloud.com:443/uploads/images/20190815%5Ca6dbd1bf97aeb528e2aa6964fb2ab468.jpg",
-      },
-    ],
+    newProduction: [],
+    productionList: [],
     page: 1,
     total_page: 1,
     // supportFlag: 1 //今日点赞权限 0=无, 1=有
@@ -79,11 +40,11 @@ Page({
   toRule() {
     //跳转到活动规则
     wx.navigateTo({
-      url: "/pages/voteRule/voteRule",
+      url: "/page/vote/pages/voteRule/voteRule",
     });
   },
   toInfo() {
-    //获奖页面
+    //领取鲜花页面
     wx.navigateTo({
       url: "/page/vote/pages/voteInfo/voteInfo",
     });
@@ -92,15 +53,15 @@ Page({
     //作品详情页
     wx.navigateTo({
       url:
-        "/pages/voteDetail/voteDetail?voteid=" +
+        "/page/vote/pages/voteDetail/voteDetail?voteid=" +
         e.currentTarget.dataset.id +
         "&index=" +
         e.currentTarget.dataset.index,
     });
-  },
+  },  
   toSearch() {
     wx.navigateTo({
-      url: "/pages/voteSearch/voteSearch",
+      url: "/page/vote/pages/voteSearch/voteSearch",
     });
   },
   setLikeData(index) {
@@ -134,22 +95,22 @@ Page({
     //活动弹窗
     let item = this.data.jumpUrl;
     this.closeJump(); //关闭卡片,跳转
-    if (item.jump_type == 1) {
-      //外连接
-      wx.navigateTo({
-        url: `../education/education?type=0&url=${item.clickurl}`,
-      });
-    } else if (item.jump_type == 2) {
-      //小程序的tab页
-      wx.switchTab({
-        url: item.clickurl,
-      });
-    } else if (item.jump_type == 4) {
-      //小程序内的页面
-      wx.navigateTo({
-        url: item.clickurl,
-      });
-    }
+    // if (item.jump_type == 1) {
+    //   //外连接
+    //   wx.navigateTo({
+    //     url: `../education/education?type=0&url=${item.clickurl}`,
+    //   });
+    // } else if (item.jump_type == 2) {
+    //   //小程序的tab页
+    //   wx.switchTab({
+    //     url: item.clickurl,
+    //   });
+    // } else if (item.jump_type == 4) {
+    //   //小程序内的页面
+    //   wx.navigateTo({
+    //     url: item.clickurl,
+    //   });
+    // }
     // wx.navigateTo({
     //   url: `../education/education?url=${e.currentTarget.dataset.peper}&type=0}`
     // })
@@ -159,33 +120,23 @@ Page({
       showJump: false,
     });
   },
-  join() {
-    wx.navigateTo({
-      url: "/pages/voteProduction/voteProduction",
-    });
-  },
-  works() {
-    wx.navigateTo({
-      url: "/pages/myProduction/myProduction",
-    });
-  },
   getNewestOpus() {
     let flag = false;
     let showCard = {};
     let activityFlag = false;
     //获取最新作品顶部轮播
     app.vote.getNewestOpus().then((res) => {
-      if (res.data.countdown.jump_type) {
-        //倒计时
-        flag = true;
-        showCard = res.data.countdown;
-      }
-      if (res.data.overinfo.jump_type) {
-        //活动结束
-        flag = true;
-        showCard = res.data.overinfo;
-        activityFlag = true;
-      }
+      // if (res.data.countdown.jump_type) {
+      //   //倒计时
+      //   flag = true;
+      //   showCard = res.data.countdown;
+      // }
+      // if (res.data.overinfo.jump_type) {
+      //   //活动结束
+      //   flag = true;
+      //   showCard = res.data.overinfo;
+      //   activityFlag = true;
+      // }
       this.setData({
         newProduction: res.data.list,
         jumpUrl: showCard,
@@ -249,7 +200,7 @@ Page({
       });
   },
   init() {
-    // return Promise.all([this.getdata(1), this.getNewestOpus()]);
+    return Promise.all([this.getdata(1), this.getNewestOpus()]);
   },
   onPullDownRefresh() {
     this.init().then(() => {
