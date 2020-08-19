@@ -47,7 +47,7 @@
     "coverView": true,
     "nodeModules": true,
     "autoAudits": false,
-    "showShadowRootInWxmlPanel": false,
+    "showShadowRootInWxmlPanel": true,
     "scopeDataCheck": false,
     "uglifyFileName": false,
     "checkInvalidKey": true,
@@ -55,6 +55,7 @@
     "uploadWithSourceMap": true,
     "compileHotReLoad": false,
     "useMultiFrameRuntime": false,
+    "useApiHook": true,
     "babelSetting": {
       "ignore": [],
       "disablePlugins": [],
@@ -65,8 +66,7 @@
     "useCompilerModule": false,
     "userConfirmedUseCompilerModuleSwitch": true,
     "packNpmManually": false,
-    "packNpmRelationList": [],
-    "useApiHook": true
+    "packNpmRelationList": []
   },
   "compileType": "miniprogram",
   "libVersion": "2.12.0",
@@ -164,9 +164,9 @@
         },
         {
           "id": 9,
-          "name": "pages/post/post",
-          "pathName": "pages/post/post",
-          "query": "id=102",
+          "name": "page/live/pages/tableDetail/tableDetail",
+          "pathName": "page/live/pages/tableDetail/tableDetail",
+          "query": "lessonId=8&inviter=22&liveShare=1",
           "scene": null
         },
         {

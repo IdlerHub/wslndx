@@ -158,7 +158,7 @@ Page({
     //跳转推文链接
     let link = this.data.lessonDetail.mp_url;
     console.log(link)
-    link = `http://mp.weixin.qq.com/s?__biz=Mzg3OTA0NjU0Mg==&mid=100011260&idx=2&sn=93cc742e508ef7e0de553d8c3be44220&chksm=4f08d61d787f5f0b4ec81964a4e49656907e4d1`;
+    // link = `http://mp.weixin.qq.com/s?__biz=Mzg3OTA0NjU0Mg==&mid=100011260&idx=2&sn=93cc742e508ef7e0de553d8c3be44220&chksm=4f08d61d787f5f0b4ec81964a4e49656907e4d1`;
     if (link != "") {
       // wx.navigateTo({
       //   url: `/pages/education/education?url=${link}&type=live`,

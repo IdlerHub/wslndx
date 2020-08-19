@@ -49,6 +49,7 @@ Page({
   },
   pageName: "博客详情（秀风采正文）",
   pageRecord: 1,
+  textHeight: 0,
   onLoad(options) {
     this.id = options.id;
     this.comParam = { blog_id: this.id, page: 1, pageSize: 10 };
@@ -87,6 +88,18 @@ Page({
     }
     getCurrentPages().forEach(item => {
       item.route == "pages/post/post" ? (this.postPages = item) : "";
+    });
+    wx.onKeyboardHeightChange(res => {
+          this.setData({
+            textHeight: res.height,
+            write: true
+          },() => {
+            console.log(this.data.textHeight - this.textHeight >= 0)
+            this.data.textHeight - this.textHeight >= 0 ?  '' : this.setData({
+              write: false
+            });
+            this.textHeight = res.height
+          });
     });
   },
   onShow() {
@@ -333,11 +346,6 @@ Page({
         focus: true
       });
     }
-  },
-  textHeight(e) {
-    this.setData({
-      textHeight: e.detail.height + "px"
-    });
   },
   touchStart() {
     setTimeout(() => {
