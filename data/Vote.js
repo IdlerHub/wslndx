@@ -24,9 +24,9 @@ function getH5Rule() {
 //   return httpService.post("Studyreport/getAllUniversity", params);
 // }
 
-//POST h5opus/getNewestOpus 获取最新发布的作品消息
+//POST H5teachers/getNewsMessage 获取最新的10条送花信息
 function getNewestOpus() {
-  return httpService.post("h5opus/getNewestOpus");
+  return httpService.post("H5teachers/getNewsMessage");
 }
 
 /** POST H5teachers/getTeacherList
@@ -56,22 +56,13 @@ function searchOpus(params) {
   return httpService.post("h5opus/searchOpus", params);
 }
 
-/** POST h5opus/getMyOpus
- * @description: 我的作品
- * @param {type}    作品审核状态
- * @return:  promise
- */
-function getMyOpus(params) {
-  return httpService.post("h5opus/getMyOpus", params);
-}
-
-/** POST h5opus/getOpusInfo
- * @description: 作品详情
- * @param {id}  作品id
+/** POST H5teachers/getTeacherInfo
+ * @description: 获取教师详情
+ * @param {teacher_id}  作品id
  * @return:  promise
  */
 function getOpusInfo(params) {
-  return httpService.post("h5opus/getOpusInfo", params);
+  return httpService.post("H5teachers/getTeacherInfo", params);
 }
 
 // POST h5opus/getSearchWord 搜索历史记录
@@ -90,24 +81,6 @@ function delSearchWord(params) {
 }
 
 /**
- *  @description: 获取桶上传的ak/sk等相关参数
- * @param {*}
- * @return:  promise
- * **/
-function getSecureToken() {
-  return httpService.post("h5opus/getSecureToken", {}, true);
-}
-
-/**
- *  @description: 上传作品
- * @param {uid，name，content，type，hoc_id，url}
- * @return:  promise
- * **/
-function uploadOpus(params) {
-  return httpService.post("h5opus/uploadOpus", params);
-}
-
-/**
  *  @description: 记录活动邀请用户数
  * @param {uid, invite_id , invite_type}
  * @return:  promise
@@ -116,23 +89,13 @@ function recordInvite(params) {
   return httpService.post("h5opus/recordInvite", params);
 }
 
-/** /h5opus/getPosterInfo
+/** H5teachers/getPosterInfo
  *  @description: 获取海报信息
- * @param {uid，ho_id}
+ * @param {teacher_id}
  * @return:  promise
  * **/
 function getPosterInfo(params) {
-  return httpService.post("h5opus/getPosterInfo", params);
-}
-
-// POST h5opus/getSchoolSortList 活动学校排行
-function getSchoolSortList() {
-  return httpService.post("h5opus/getSchoolSortList");
-}
-
-// POST h5opus/getPrize 活动排行榜type:1=优秀组织奖,2=个人作品奖,个人作品的话要多传一个hoc_id
-function getPrize(params) {
-  return httpService.post("h5opus/getPrize", params);
+  return httpService.post("H5teachers/getPosterInfo", params);
 }
 
 function searchCertificate(params) {
@@ -146,10 +109,7 @@ module.exports = {
   getH5Rule,
   getOpusList,
   praiseOpus,
-  getSecureToken,
-  uploadOpus,
   searchOpus,
-  getMyOpus,
   getOpusInfo,
   getSearchWord,
   recordInvite,
@@ -157,7 +117,5 @@ module.exports = {
   getNewestOpus,
   delSearchWord,
   noteGuide,
-  getSchoolSortList,
-  getPrize,
   searchCertificate,
 };

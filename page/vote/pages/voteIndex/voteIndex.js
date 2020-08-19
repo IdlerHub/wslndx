@@ -9,7 +9,13 @@ Page({
     showJump: false, //展示跳转卡片
     jumpUrl: {},
     type: 0, //分类的id
-    newProduction: [],
+    newProduction: [
+      {
+        id: 1,
+        mobile: "130****6800",
+        name: "汪得章",
+      },
+    ],
     productionList: [
       {
         id: 3,
@@ -181,7 +187,7 @@ Page({
         activityFlag = true;
       }
       this.setData({
-        newProduction: res.data.opus,
+        newProduction: res.data.list,
         jumpUrl: showCard,
         showJump: flag,
         activityFlag,
