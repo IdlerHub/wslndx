@@ -76,10 +76,10 @@ Page({
       url: "/pages/voteRule/voteRule",
     });
   },
-  toWinner() {
+  toInfo() {
     //获奖页面
     wx.navigateTo({
-      url: "/pages/voteWinner/voteWinner",
+      url: "/page/vote/pages/voteInfo/voteInfo",
     });
   },
   toDetail(e) {

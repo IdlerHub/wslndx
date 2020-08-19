@@ -56,7 +56,7 @@
             </view>
         </block>
     </view>
-    <view class="vote-footer">
+    <view class="vote-footer" catchtap="toInfo">
         <!-- <image src="../../images/vote-btn.png" alt="" /> -->
         <!-- 活动是否结束 -->
         <!-- <view class="footer-left" catchtap="toWinner" wx:if="{{activityFlag}}">
@@ -73,7 +73,7 @@
             <text>我的作品</text>
         </view> -->
         <image class="flowers" src="../../images/vote-flowers.png" alt="" />
-        <view>查看获奖</view>
+        <view>领鲜花</view>
     </view>
     <!-- 活动弹窗
     <view class="integration" wx:if="{{showJump}}" catchtouchmove="return">

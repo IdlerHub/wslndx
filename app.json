@@ -127,7 +127,8 @@
       "root": "page/vote/",
       "pages": [
         "pages/voteIndex/voteIndex",
-        "pages/voteArticle/voteArticle"
+        "pages/voteArticle/voteArticle",
+        "pages/voteInfo/voteInfo"
       ]
     }
   ],
