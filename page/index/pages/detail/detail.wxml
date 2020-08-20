@@ -93,7 +93,7 @@
       </view>
       <view class="order" wx:if="{{ currentTab == 2 }}" bindtap="copySynopsis">
         <view class="order_box">
-          <image src="../../images/copyThat.png"></image>
+          <image src="/images/copyThat.png"></image>
           <test>复制简介</test>
         </view>
       </view>
@@ -285,7 +285,7 @@
   <view class="chanBox">
     <view class="top">
       请选择您的学校
-      <image src="../../images/icon-del.png" bindtap="closeShool"></image>
+      <image src="/images/icon-del.png" bindtap="closeShool"></image>
     </view>
     <view class="plath">
       <text>地区</text>

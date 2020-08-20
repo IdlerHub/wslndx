@@ -192,12 +192,12 @@
 	</view>
 	<view class="popup write" id="write" wx:if="{{ write }}">
 		<view class="bg" bindtap="hide" bindtouchstart="touchStart"></view>
-		<view class="box" style="{{ textHeight ? 'bottom:'+ textHeight : ''}}">
+		<view class="box" style="{{ textHeight ? 'bottom:'+ textHeight + 'px' : ''}}">
 			<!-- prettier-ignore -->
 			<text class="replayplaceholder" wx:if="{{replyplaceholder != ''}}">{{replyplaceholder}}</text>
 			<textarea placeholder="{{placeholder}}" focus="{{ focus }}" fixed bindinput="input"
 				value='{{ replyshow ? replycontent : content}}' placeholder-class="ph-class"
-				show-confirm-bar="{{ false }}" adjust-position="{{ false }}" bindfocus="textHeight" hold-keyboard
+				show-confirm-bar="{{ false }}" adjust-position="{{ false }}" hold-keyboard
 				maxlength="200"></textarea>
 			<!-- prettier-ignore -->
 			<view class="right">

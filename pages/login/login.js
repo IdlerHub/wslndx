@@ -75,6 +75,9 @@ Page({
         master_uid: wx.getStorageSync("invite") /* 邀请码 */
       }
       this.login(param)
+      wx.uma.trackEvent('video_historyPlay', {
+        'signBtn': '授权'
+      });
     } else {
       return
     }
@@ -166,6 +169,9 @@ Page({
         master_uid: wx.getStorageSync("invite") /* 邀请码 */
       }
       this.login(params)
+      wx.uma.trackEvent('video_historyPlay', {
+        'signBtn': '手机号'
+      });
     }
   },
   /* 登录请求 */

@@ -142,6 +142,7 @@ Page({
           sublessons: res.data,
           playNow: playNow,
         });
+        _this.order()
       })
       .catch((err) => {
         console.log(err);
@@ -1182,7 +1183,7 @@ Page({
       cover = this.data.lessonDetail.cover;
     return {
       title: `快来和我一起报名,免费好课天天学!`,
-      path: `/page/live/pages/liveDetail/liveDetail?lessonId=${lesson_id}`,
+      path: `/page/live/pages/liveDetail/liveDetail?lessonId=${lesson_id}&inviter=${this.data.$state.userInfo.id}&liveShare=1`,
       imageUrl: cover,
     };
   },
