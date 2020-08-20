@@ -35,10 +35,11 @@ Page({
     } else if (wx.getStorageSync("AccountsId") == "") {
       //如果没有公众号的openId
       //跳转去授权页面
-      console.log("没有公众号的openid");
+      let uid = wx.getStorageSync("userInfo").id;
+      console.log("没有公众号的openid", uid);
       //voteType表示从哪个页面过去请求,之后方便返回
-      wx.navigateTo({
-        url: "/pages/education/education?voteType=voteIndex",
+      wx.redirectTo({
+        url: `/pages/education/education?voteType=voteIndex&uid=${uid}`,
       });
     }
   },

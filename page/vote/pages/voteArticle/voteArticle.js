@@ -155,6 +155,9 @@ Page({
     };
     this.addTeacherComment(params);
   },
+  delComment(){
+    console.log("删除评论")
+  },
   getOpusInfo(id) {
     //获取作品信息
     wx.showLoading({

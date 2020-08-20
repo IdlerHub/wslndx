@@ -48,9 +48,31 @@
     </view>
 
     <view class="article-comment">
-        <view class="comment-nav">评论 2</view>
-        <view class="comment-list">
+        <view class="comment-nav">
+            <text class="nav-title">评论 2</text>
+        </view>
+        <view class="none-list" wx:if="{{false}}">
             <image src="../../images/vote-nonecomment.png" class="none-comment"></image>
+        </view>
+        <view class="comment-list" wx:else>
+            <view class="comment-item" wx:for="{{commentList}}" wx:key="index">
+                <view class="item-avatar">
+                    <image src="{{item.avatar}}"></image>
+                </view>
+                <view class="item-commentinfo">
+                    <view class="commentinfo-user">
+                        <view class="user-nickname">{{item.nickname}}</view>
+                        <view class="user-time" wx:if="{{item.uid ===  $state.userInfo.id}}" catchtap="delComment">
+                            <text class="create-time">{{item.createtime}}</text>
+                            <view class="icon-del">
+                                <image src="../../images/vote-del.png" />
+                                <text>删除</text>
+                            </view>
+                        </view>
+                    </view>
+                    <view class="item-content">{{item.content}}</view>
+                </view>
+            </view>
         </view>
         <view class="comment-footer"></view>
     </view>
