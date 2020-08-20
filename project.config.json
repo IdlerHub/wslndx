@@ -218,10 +218,10 @@
 					"scene": null
 				},
 				{
-					"id": -1,
+					"id": 17,
 					"name": "page/vote/pages/voteArticle/voteArticle",
 					"pathName": "page/vote/pages/voteArticle/voteArticle",
-					"query": "",
+					"query": "voteid=1",
 					"scene": null
 				},
 				{

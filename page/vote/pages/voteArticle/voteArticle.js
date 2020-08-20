@@ -1,10 +1,9 @@
 // page/vote/pages/voteArticle/voteArticle.js
+const app = getApp()
 Page({
-  /**
-   * 页面的初始数据
-   */
   data: {
-    voteDetail: {
+    voteIndex: 0,
+    item: {
       id: 2,
       name: "汪得章",
       introduce: "这是一个无耻得人",
@@ -16,6 +15,13 @@ Page({
     keyheight: 0, //键盘高度
     focus: false, //评论内容聚焦状态
     sharePoster: false, //展示分享海报
+    userImg: "", //用户头像
+    showImg: "", //展示图片
+    code: "", //二维码
+    imgs: "/images/share-bg.png", //海报背景图片
+    shareTitle: "", //分享标题
+    jumpUrl: {}, //跳转卡片
+    showJump: false, //展示跳转卡片
     shareInfo: {
       id: 63,
       nickname: "老汪",
@@ -29,10 +35,41 @@ Page({
     console.log(e.detail.value);
   },
   onLoad: function (options) {
-    this.init(options);
+    console.log(options);
+    if (!options.voteid || options.voteid == "") {
+      wx.showToast({
+        title: "参数有误",
+        icon: "none",
+      });
+      // wx.navigateBack();
+      return;
+    }
+    this.getOpenId(options);
+    this.init();
+    this.getOpusInfo(options.voteid);
+    if (options.index) {
+      //选中的index
+      this.setData({
+        voteIndex: options.index,
+      });
+    }
+  },
+  getOpenId(ops) {
+    if (ops.accounts_openid && ops.accounts_openid != "") {
+      wx.setStorageSync("AccountsId", ops.accounts_openid);
+    } else if (wx.getStorageSync("AccountsId") == "") {
+      //如果没有公众号的openId
+      //跳转去授权页面
+      let uid = wx.getStorageSync("userInfo").id;
+      console.log("没有公众号的openid");
+      //voteType表示从哪个页面过去请求,之后方便返回
+      wx.redirectTo({
+        url: `/pages/education/education?voteType=voteArticle&voteid=${ops.voteid}&uid=${uid}`,
+      });
+    }
   },
   onShow: function () {},
-  init(options) {
+  init() {
     //监听键盘变化
     wx.onKeyboardHeightChange((res) => {
       if (this.data.keyheight == 0) {
@@ -100,35 +137,68 @@ Page({
     let content = this.data.content.trim();
     console.log(content);
   },
-  getPosterInfo(ho_id) {
-    console.log("分享");
-    let params = { ho_id: ho_id };
+  getOpusInfo(id) {
+    wx.showLoading({
+      title: "加载中",
+      mask: true,
+    });
     let that = this;
-    // app.vote.getPosterInfo(params).then((res) => {
-    //   wx.hideLoading();
-    //   this.setData({
-    //     shareInfo: res.data,
-    //     shareFlag: false,
-    //     sharePoster: true,
-    //   });
-    //   //这里需要下载对应的网络图片资源并且开始绘画canvas
-    //   this.downloadImg(this.data.shareInfo.avatar, "userImg");
-    //   if (this.data.voteDetail.type == 1) {
-    //     this.downloadImg(this.data.shareInfo.opus_url, "showImg"); //图片下载
-    //   } else {
-    //     this.downloadImg(this.data.shareInfo.opus_banner_image, "showImg"); //视频封面下载
-    //   }
-    //   this.downloadImg(this.data.shareInfo.qrcode_url, "code"); //二维码下载
-    //   setTimeout(() => {
-    //     wx.getSystemInfo({
-    //       success: function (res) {
-    //         var v = 750 / res.windowWidth; //获取手机比例
-    //         // let system = res.system
-    //         that.drawPoster(v);
-    //       },
-    //     });
-    //   }, 1000);
-    // });
+    let params = { teacher_id: id };
+    app.vote
+      .getOpusInfo(params)
+      .then((res) => {
+        wx.hideLoading();
+        let title = res.data.name;
+        that.setData({
+          item: res.data,
+          shareTitle: res.data.share_title || "别改了,黄花菜都凉了",
+        });
+        if (title.length > 10) {
+          //标题过长
+          title = title.substr(0, 10) + "...";
+        }
+        wx.setNavigationBarTitle({
+          title: title,
+        });
+      })
+      .catch((err) => {
+        wx.hideLoading();
+        wx.showToast({
+          title: err.msg,
+          icon: "none",
+          duration: 2000,
+        });
+      });
+  },
+  getPosterInfo(teacher_id) {
+    console.log("分享");
+    let params = { teacher_id };
+    let that = this;
+    app.vote.getPosterInfo(params).then((res) => {
+      wx.hideLoading();
+      this.setData({
+        shareInfo: res.data,
+        shareFlag: false,
+        sharePoster: true,
+      });
+      //这里需要下载对应的网络图片资源并且开始绘画canvas
+      this.downloadImg(this.data.shareInfo.avatar, "userImg");
+      if (this.data.item.type == 1) {
+        this.downloadImg(this.data.shareInfo.opus_url, "showImg"); //图片下载
+      } else {
+        this.downloadImg(this.data.shareInfo.opus_banner_image, "showImg"); //视频封面下载
+      }
+      this.downloadImg(this.data.shareInfo.qrcode_url, "code"); //二维码下载
+      setTimeout(() => {
+        wx.getSystemInfo({
+          success: function (res) {
+            var v = 750 / res.windowWidth; //获取手机比例
+            // let system = res.system
+            that.drawPoster(v);
+          },
+        });
+      }, 1000);
+    });
   },
   shareImg(e) {
     //点击生成海报
@@ -136,7 +206,7 @@ Page({
       title: "图片生成中...",
       mask: true,
     });
-    this.getPosterInfo(this.data.voteDetail.id);
+    this.getPosterInfo(this.data.item.id);
   },
   savePoster() {
     //保存本地
@@ -258,7 +328,7 @@ Page({
     ctx.fillText(this.data.shareInfo.nickname, 150 / v, 65 / v);
     ctx.setFontSize(28 / v);
     ctx.setFillStyle("white");
-    ctx.fillText("作品编号: " + (this.data.voteDetail.id), 150 / v, 115 / v);
+    ctx.fillText("作品编号: " + this.data.item.id, 150 / v, 115 / v);
     ctx.restore(); //恢复限制
     //分享图片
     ctx.rect(30 / v, 157 / v, 570 / v, 380 / v);
@@ -358,32 +428,24 @@ Page({
   onReachBottom: function () {},
   onShareAppMessage: function () {
     console.log("分享");
-    // let item = this.data.voteDetail;
-    // let id = item.id;
-    // let uid = wx.getStorageSync("userInfo").id;
-    // let imgUrl = this.data.imgs;
-    // let title = this.data.shareTitle;
-    // if (item.type == 2) {
-    //   imgUrl = item.banner_image;
-    // } else if (item.type == 1) {
-    //   imgUrl = item.url[0];
-    // }
-    // return {
-    //   title: title,
-    //   path:
-    //     "/pages/voteArticle/voteArticle?voteid=" +
-    //     id +
-    //     "&type=share&vote=0&uid=" +
-    //     uid, // 路径，传递参数到指定页面。
-    //   imageUrl: imgUrl,
-    //   success: function (res) {
-    //     // 转发成功
-    //     console.log("转发成功");
-    //   },
-    //   fail: function (res) {
-    //     // 转发失败
-    //     console.log("转发失败");
-    //   },
-    // };
+    let item = this.data.item;
+    let id = item.id;
+    let uid = wx.getStorageSync("userInfo").id;
+    let imgUrl = this.data.imgs;
+    let title = this.data.shareTitle;
+    if (item.type == 2) {
+      imgUrl = item.banner_image;
+    } else if (item.type == 1) {
+      imgUrl = item.url[0];
+    }
+    return {
+      title: title,
+      path:
+        "/pages/voteArticle/voteArticle?voteid=" +
+        id +
+        "&type=share&vote=0&uid=" +
+        uid, // 路径，传递参数到指定页面。
+      imageUrl: imgUrl,
+    };
   },
 });

@@ -35,8 +35,12 @@ Page({
       },
     ],
   },
-
   onLoad: function (options) {},
+  getData(){
+    return Promise.all([]).then(res=>{
+      
+    })
+  },
   onShow: function () {},
   onUnload: function () {},
   onPullDownRefresh: function () {},

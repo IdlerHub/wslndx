@@ -19,6 +19,15 @@ Page({
   onLoad(ops) {
     console.log(ops);
     console.log("公众号openid", wx.getStorageSync("AccountsId"));
+    // this.getOpenId(ops);
+    // wx.showLoading({
+    //   title: "加载中",
+    // });
+    this.init().then((res) => {
+      wx.hideLoading();
+    });
+  },
+  getOpenId(ops){
     if (ops.accounts_openid && ops.accounts_openid != "") {
       wx.setStorageSync("AccountsId", ops.accounts_openid);
     } else if (wx.getStorageSync("AccountsId") == "") {
@@ -30,12 +39,6 @@ Page({
         url: "/pages/education/education?voteType=voteIndex",
       });
     }
-    // wx.showLoading({
-    //   title: "加载中",
-    // });
-    this.init().then((res) => {
-      wx.hideLoading();
-    });
   },
   toRule() {
     //跳转到活动规则
@@ -50,10 +53,11 @@ Page({
     });
   },
   toDetail(e) {
+    console.log(e.currentTarget.dataset);
     //作品详情页
     wx.navigateTo({
       url:
-        "/page/vote/pages/voteDetail/voteDetail?voteid=" +
+        "/page/vote/pages/voteArticle/voteArticle?voteid=" +
         e.currentTarget.dataset.id +
         "&index=" +
         e.currentTarget.dataset.index,

@@ -30,8 +30,8 @@ page{
   align-items: center;
   margin-right: 30rpx;
   /* padding: 12rpx 0; */
-  background:linear-gradient(270deg,rgba(27,22,236,1) 0%,rgba(14,0,211,1) 100%);
-  border-radius:0px 32px 32px 0px;
+  background: linear-gradient(90deg,rgba(86,110,93,1) 0%,rgba(71,98,89,1) 100%);
+  border-radius:0 32rpx 32rpx 0;
 }
 .header-left image{
   width: 36rpx;
@@ -98,7 +98,7 @@ page{
 .vote-search .search-left{
   flex: 1;
   height: 100%;
-  background: #C70001;
+  background: #AD0702;
   display: flex;
   align-items: center;
 }
@@ -123,7 +123,7 @@ page{
 .search-btn{
   width: 148rpx;
   height: 88rpx;
-  background:#950002;
+  background:#950500;
   font-size:36rpx;
   font-family:PingFangSC-Regular,PingFang SC;
   color:white;
@@ -217,7 +217,7 @@ page{
   display: flex;
   flex-flow: wrap;
   /* align-items: center; */
-  background:#E01300;
+  background:#C60601;
   /* padding-bottom: 128rpx; */
   min-height: 390rpx;
   /* padding-bottom: 138rpx; */
@@ -239,7 +239,7 @@ page{
 
 .item-up{
   height: 220rpx;
-  background: #0071B3;
+  background: #AD0702;
   position: relative;
   overflow: hidden;
 }
@@ -359,7 +359,7 @@ page{
   width:154rpx;
   height:56rpx;
   line-height: 56rpx;
-  background:#FF0000;
+  background:#FF1515;
   border-radius:28rpx;
 
   text-align: center;
@@ -382,7 +382,7 @@ page{
   font-size:44rpx;
   font-family:PingFangSC-Medium,PingFang SC;
   font-weight:500;
-  background:linear-gradient(270deg,#FF3100 0%,#FF8413 100%);
+  background:linear-gradient(270deg,rgba(255,7,0,1) 0%,rgba(255,62,26,1) 100%);
   box-shadow:3rpx 3rpx 12rpx 0rpx rgba(255,30,0,0.7);
   border-radius:54rpx;
   opacity:0.93;

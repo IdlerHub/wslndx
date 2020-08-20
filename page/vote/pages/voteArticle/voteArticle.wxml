@@ -1,9 +1,9 @@
 <!--page/vote/pages/voteArticle/voteArticle.wxml-->
 <view class="vote-article-page">
-    <image src="{{voteDetail.image}}" class="article-img" mode="aspectFill"></image>
+    <image src="{{item.image}}" class="article-img" mode="aspectFit"></image>
     <view class="aritcle-info">
-        <view class="info-title">{{voteDetail.name}}</view>
-        <rich-text class="info-subtitle" nodes="{{voteDetail.introduce}}"></rich-text>
+        <view class="info-title">{{item.name}}</view>
+        <rich-text class="info-subtitle" nodes="{{item.introduce}}"></rich-text>
     </view>
     <!-- 海报 -->
     <canvas class="sharePoster" canvas-id="poster"></canvas>

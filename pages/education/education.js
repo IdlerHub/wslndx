@@ -18,10 +18,10 @@ Page({
         url: webURL + "?id=" + id
       });
     }else if(options.voteType){ //获取公众号openid
-      let webURL = "https://enrollmenth5dev.jinlingkeji.cn/#/";
-      if (options.voteType == "voteDetail") {
+      let webURL = `https://enrollmenth5dev.jinlingkeji.cn/#/?voteType=voteIndex&uid=${options.uid}`;
+      if (options.voteType == "voteArticle") {
         // 从详情页跳转过来获取公众号的openId
-        webURL = "https://enrollmenth5dev.jinlingkeji.cn/#/?type=voteDetail";
+        webURL = `https://enrollmenth5dev.jinlingkeji.cn/#/?voteType=voteArticle&voteid=${options.voteid}&uid=${options.uid}`;
       }
       this.setData({
         url: webURL,
