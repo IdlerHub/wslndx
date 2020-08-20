@@ -13,19 +13,21 @@ Page({
     productionList: [],
     page: 1,
     total_page: 1,
-    // supportFlag: 1 //今日点赞权限 0=无, 1=有
   },
   pageName: "票选活动首页",
   onLoad(ops) {
     console.log(ops);
     console.log("公众号openid", wx.getStorageSync("AccountsId"));
-    // this.getOpenId(ops);
+    this.getOpenId(ops);
     // wx.showLoading({
     //   title: "加载中",
     // });
     this.init().then((res) => {
       wx.hideLoading();
     });
+  },
+  init() {
+    return Promise.all([this.getdata(1), this.getNewestOpus()]);
   },
   getOpenId(ops){
     if (ops.accounts_openid && ops.accounts_openid != "") {
@@ -70,13 +72,12 @@ Page({
   },
   setLikeData(index) {
     wx.showToast({
-      title: "点赞成功",
+      title: "助力成功",
       icon: "none",
       duration: 2500,
     });
     let work = this.data.productionList[index];
-    if (work.prise_numbers < 10000) work.prise_numbers += 1;
-    work.is_praise = 1;
+    if (work.flowers < 10000) work.flowers += 1;
     let key = "productionList[" + index + "]";
     this.setData({
       [key]: work,
@@ -85,13 +86,14 @@ Page({
   },
   giveLike(e) {
     //点赞
-    //step 活动是否过期
-    // step1 判断今天是否点赞过
+    //step1 活动是否过期
     // step2  作品点赞数添加 （修改data中数据），不刷新页面
-    let index = e.detail;
-    let work = this.data.productionList[index];
+    let index = e.detail,
+        work = this.data.productionList[index],
+        openid = wx.getStorageSync("AccountsId");
     let params = {
       teacher_id: work.id, //需要作品带的type
+      openid,
     };
     this.praiseOpus(params, index);
   },
@@ -188,23 +190,12 @@ Page({
         this.setLikeData(index);
       })
       .catch((err) => {
-        if (err.data.type == 2) {
-          //送花失败
-          this.setData({
-            jumpUrl: err.data.jump_info,
-            showJump: true,
-          });
-          return;
-        }
         wx.showToast({
           title: err.msg,
           icon: "none",
           duration: 2500,
         });
       });
-  },
-  init() {
-    return Promise.all([this.getdata(1), this.getNewestOpus()]);
   },
   onPullDownRefresh() {
     this.init().then(() => {

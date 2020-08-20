@@ -1,8 +1,8 @@
 // page/vote/pages/voteArticle/voteArticle.js
-const app = getApp()
+const app = getApp();
 Page({
   data: {
-    voteIndex: 0,
+    hocIndex: 0,
     item: {
       id: 2,
       name: "汪得章",
@@ -10,6 +10,7 @@ Page({
       image:
         "https://xiehui-guanwang.obs.cn-north-1.myhuaweicloud.com:443/uploads/images/20190815%5Ca6dbd1bf97aeb528e2aa6964fb2ab468.jpg",
     },
+    commentList: [],  //评论列表
     content: "", //评论内容
     placeholder: "发表你的观点", //候选字
     keyheight: 0, //键盘高度
@@ -18,7 +19,7 @@ Page({
     userImg: "", //用户头像
     showImg: "", //展示图片
     code: "", //二维码
-    imgs: "/images/share-bg.png", //海报背景图片
+    imgs: "../../images/share-bg.png", //海报背景图片
     shareTitle: "", //分享标题
     jumpUrl: {}, //跳转卡片
     showJump: false, //展示跳转卡片
@@ -46,11 +47,11 @@ Page({
     }
     this.getOpenId(options);
     this.init();
-    this.getOpusInfo(options.voteid);
+    this.getData(options.voteid);
     if (options.index) {
       //选中的index
       this.setData({
-        voteIndex: options.index,
+        hocIndex: options.index,
       });
     }
   },
@@ -85,6 +86,9 @@ Page({
         }
       }
     });
+  },
+  getData(id) {
+    Promise.all([this.getOpusInfo(id), this.getTeacherComment(id)]);
   },
   showWrite(e) {
     if (this.data.$state.userInfo.status !== "normal") {
@@ -135,9 +139,24 @@ Page({
   release() {
     console.log("发表评论");
     let content = this.data.content.trim();
-    console.log(content);
+    if (content == "") {
+      wx.showToast(
+        {
+          title: "评论不能为空",
+          icon: "none",
+        },
+        1000
+      );
+      return;
+    }
+    let params = {
+      teacher_id: this.data.item.id,
+      content,
+    };
+    this.addTeacherComment(params);
   },
   getOpusInfo(id) {
+    //获取作品信息
     wx.showLoading({
       title: "加载中",
       mask: true,
@@ -171,6 +190,7 @@ Page({
       });
   },
   getPosterInfo(teacher_id) {
+    //获取海报信息
     console.log("分享");
     let params = { teacher_id };
     let that = this;
@@ -181,13 +201,10 @@ Page({
         shareFlag: false,
         sharePoster: true,
       });
+      console.log(this.data.shareInfo);
       //这里需要下载对应的网络图片资源并且开始绘画canvas
       this.downloadImg(this.data.shareInfo.avatar, "userImg");
-      if (this.data.item.type == 1) {
-        this.downloadImg(this.data.shareInfo.opus_url, "showImg"); //图片下载
-      } else {
-        this.downloadImg(this.data.shareInfo.opus_banner_image, "showImg"); //视频封面下载
-      }
+      this.downloadImg(this.data.shareInfo.image, "showImg"); //视频封面下载
       this.downloadImg(this.data.shareInfo.qrcode_url, "code"); //二维码下载
       setTimeout(() => {
         wx.getSystemInfo({
@@ -198,6 +215,27 @@ Page({
           },
         });
       }, 1000);
+    });
+  },
+  getTeacherComment(id) {
+    let params = { teacher_id: id };
+    app.vote.getTeacherComment(params).then((res) => {
+      this.setData({
+        commentList: res.data.list,
+      });
+    });
+  },
+  addTeacherComment(params) {
+    //新增评论
+    app.vote.addTeacherComment(params).then((res) => {
+      console.log(res);
+      wx.showToast(
+        {
+          title: `评论成功，系统审核通过后发布`,
+          icon: "none",
+        },
+        1000
+      );
     });
   },
   shareImg(e) {
@@ -270,7 +308,36 @@ Page({
     }, 500);
   },
   sendFlower() {
-    console.log("送花");
+    let openid = wx.getStorageSync("AccountsId");
+    let params = {
+      teacher_id: this.data.item.id,
+      openid,
+    };
+    this.praiseOpus(params);
+  },
+  praiseOpus(params) {
+    let that = this;
+    app.vote
+      .praiseOpus(params)
+      .then((res) => {
+        let work = that.data.item;
+        work.flowers += work.flowers < 10000 ? 1 : 0;
+        that.setData({
+          item: work,
+        });
+        let list = getCurrentPages();
+        const page = list[list.length - 2];
+        if (page.route == "page/vote/pages/voteIndex/voteIndex") {
+          page.setLikeData(that.data.hocIndex);
+        }
+      })
+      .catch((err) => {
+        wx.showToast({
+          title: err.msg,
+          icon: "none",
+          duration: 2500,
+        });
+      });
   },
   unshare() {
     this.setData({
@@ -282,9 +349,7 @@ Page({
     wx.downloadFile({
       url: url,
       success: function (res) {
-        switch (
-          data //临时路径
-        ) {
+        switch (data) {
           case "code":
             that.setData({
               code: res.tempFilePath,
@@ -318,38 +383,38 @@ Page({
     // ctx.rect(30 / v, 31 / v, 570 / v, 96 / v)
 
     ctx.save();
-    // 圆的圆心的 x 坐标和 y 坐标，25 是半径，后面的两个参数就是起始和结束，这样就能画好一个圆了
-    ctx.arc(78 / v, 78 / v, 48 / v, 0, 2 * Math.PI);
+    // 圆的圆心的 x 坐标和 y 坐标，半径，后面的两个参数就是起始和结束
+    ctx.arc(78 / v, 78 / v, 45 / v, 0, 2 * Math.PI);
     ctx.clip();
-    ctx.drawImage(this.data.userImg, 30 / v, 31 / v, 96 / v, 96 / v);
+    ctx.drawImage(this.data.userImg, 30 / v, 31 / v, 90 / v, 90 / v);
     ctx.restore();
-    ctx.setFontSize(30 / v);
+    ctx.setFontSize(40 / v);
     ctx.setFillStyle("white");
-    ctx.fillText(this.data.shareInfo.nickname, 150 / v, 65 / v);
+    ctx.fillText(this.data.shareInfo.name, 150 / v, 65 / v);
     ctx.setFontSize(28 / v);
     ctx.setFillStyle("white");
-    ctx.fillText("作品编号: " + this.data.item.id, 150 / v, 115 / v);
+    // ctx.fillText("作品编号: " + this.data.item.id, 150 / v, 115 / v);
+    ctx.fillText(this.data.shareInfo.class_name, 150 / v, 115 / v);
     ctx.restore(); //恢复限制
     //分享图片
     ctx.rect(30 / v, 157 / v, 570 / v, 380 / v);
     ctx.lineJoin = "round";
     ctx.lineWidth = 20 / v;
     //作品图片
-    let worksImg = this.data.showImg || "/images/vote-wei.png";
+    let worksImg = this.data.showImg;
     ctx.drawImage(worksImg, 30 / v, 157 / v, 570 / v, 380 / v);
 
     //作品名称
-    ctx.setFontSize(40 / v);
-    ctx.setFillStyle("white");
-    ctx.fillText(this.data.shareInfo.opus_name, 30 / v, 598 / v, 560 / v);
-    ctx.save();
+    // ctx.setFontSize(40 / v);
+    // ctx.setFillStyle("white");
+    // ctx.fillText(this.data.shareInfo.opus_name, 30 / v, 598 / v, 560 / v);
+    // ctx.save();
     //作品内容
     // ctx.rect(30 * ratio, 616 * ratio, 570 * ratio, 172 * ratio)
-
-    ctx.setFontSize(36 * ratio);
+    ctx.setFontSize(40 * ratio);
     ctx.setFillStyle("white");
     //可以尝试切割字符串,循环数组,达到换行的效果
-    let info = this.data.shareInfo.opus_content;
+    let info = this.data.shareInfo.brief;
     let len = 0;
     if (info.length > 15 && info.length < 30) {
       //两行以内
@@ -379,10 +444,10 @@ Page({
 
     ctx.fillRect(0 / v, 740 / v, 630 / v, 235 / v);
     ctx.drawImage(this.data.code, 30 / v, 761 / v, 153 / v, 153 / v);
-    ctx.setFontSize(36 / v);
+    ctx.setFontSize(40 / v);
     ctx.setFillStyle("#666666");
     ctx.fillText("长按识别二维码", 210 / v, 826 / v);
-    ctx.fillText("为好友加油,一起参赛!", 210 / v, 877 / v);
+    ctx.fillText("为老师送花助力加油!", 210 / v, 877 / v);
     // ctx.setFillStyle('white');
     // ctx.fill();
     // ctx.draw();

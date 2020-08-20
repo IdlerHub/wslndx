@@ -8,7 +8,7 @@
         </view>
     </view>
     <view class="vote-info">
-        <view class="voteinfo-left">
+        <view class="info-view voteinfo-left">
             <view class="left-flowers">
                 <image src="../../images/flowers-red.png"></image>
             </view>
@@ -17,7 +17,7 @@
                 <view class="text-second">我的鲜花</view>
             </view>
         </view>
-        <view class="voteinfo-right">
+        <button open-type="share" class="info-view voteinfo-right">
             <view class="right-flowers">
                 <image src="../../images/vote-adduser.png"></image>
             </view>
@@ -25,12 +25,12 @@
                 <view class="text-first">领鲜花</view>
                 <view class="text-second">邀请好友参与</view>
             </view>
-        </view>
+        </button>
     </view>
     <view class="task-card">
         <view class="task-title">鲜花任务</view>
         <view class="task-list">
-            <view class="task-item" wx:for="{{taskList}}">
+            <view class="task-item" wx:for="{{taskList}}" wx:key="index">
                 <view class="item-left">
                     <view class="item-title">{{item.name}}</view>
                     <view class="item-content">
@@ -45,7 +45,7 @@
     <view class="vote-mine">
         <view class="mine-title">我的投票</view>
         <view class="mine-list">
-            <view class="mine-item" wx:for="{{voteList}}">
+            <view class="mine-item" wx:for="{{voteList}}" wx:key="index">
                 <view class="mine-img">
                     <image src="{{item.image}}"></image>
                 </view>

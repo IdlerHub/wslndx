@@ -70,11 +70,6 @@ function getSearchWord() {
   return httpService.post("h5opus/getSearchWord");
 }
 
-// POST h5opus/noteGuide 记录用户活动引导状态
-function noteGuide() {
-  return httpService.post("h5opus/noteGuide");
-}
-
 // POST h5opus/delSearchWord 删除历史搜索记录
 function delSearchWord(params) {
   return httpService.post("h5opus/delSearchWord", params);
@@ -98,8 +93,40 @@ function getPosterInfo(params) {
   return httpService.post("H5teachers/getPosterInfo", params);
 }
 
-function searchCertificate(params) {
-  return httpService.post("h5opus/searchCertificate", params);
+/** H5teachers/getTeacherComment
+ *  @description: 新增教师评论列表
+ * @param {teacher_id}
+ * @return:  promise
+ * **/
+function getTeacherComment(params) {
+  return httpService.post("H5teachers/getTeacherComment", params);
+}
+
+/** H5teachers/addTeacherComment
+ *  @description: 新增教师评论
+ * @param {teacher_id, content}
+ * @return:  promise
+ * **/
+function addTeacherComment(params) {
+  return httpService.post("H5teachers/addTeacherComment", params);
+}
+
+/** H5teachers/getMySendList
+ *  @description: 获取我的送花列表
+ * @param {page}
+ * @return:  promise
+ * **/
+function getMySendList(params) {
+  return httpService.post("H5teachers/getMySendList", params);
+}
+
+/** H5teachers/getTask
+ *  @description: 获取任务列表
+ * @param {}
+ * @return:  promise
+ * **/
+function getTaskList() {
+  return httpService.post("H5teachers/getTask");
 }
 
 module.exports = {
@@ -116,6 +143,8 @@ module.exports = {
   getPosterInfo,
   getNewestOpus,
   delSearchWord,
-  noteGuide,
-  searchCertificate,
+  getMySendList,
+  getTaskList,
+  getTeacherComment,
+  addTeacherComment,
 };

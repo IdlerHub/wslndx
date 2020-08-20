@@ -8,11 +8,13 @@
 .info-header{
     height: 284rpx;
     width: 100%;
-    background: #FA3C01;
     display: flex;
     box-sizing: border-box;
     padding: 40rpx 30rpx;
+    background: url('https://hwcdn.jinlingkeji.cn/uploads/images/vote-info-bg.png') no-repeat;
+    background-size: 100% 100%;
 }
+
 .info-header .user-img{
     width: 128rpx;
     height: 128rpx;
@@ -45,7 +47,7 @@
     display: flex;
     align-items: center;
 }
-.vote-info>view{
+.vote-info .info-view{
     width: 345rpx;
     height: 160rpx;
     border-radius: 10rpx;

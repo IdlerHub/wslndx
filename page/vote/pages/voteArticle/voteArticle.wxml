@@ -15,22 +15,22 @@
                 <view class="canvas-user">
                     <image class="user-img" src="{{shareInfo.avatar}}" alt=""></image>
                     <view class="canvas-info">
-                        <view class="user-name">{{item.author || item.nickname}}</view>
-                        <view class="tip">作品编号: {{item.id}}</view>
+                        <view class="user-name">{{shareInfo.name}}</view>
+                        <view class="tip">{{shareInfo.class_name}}</view>
                     </view>
                 </view>
                 <view class="canvas-works">
-                    <image src="{{shareInfo.opus_type==1?  shareInfo.opus_url :  shareInfo.opus_banner_image }}" alt="" />
+                    <image src="{{shareInfo.image }}" alt="" />
                 </view>
                 <view class="canvas-info">
                     <!-- <view class="canvas-name">{{shareInfo.opus_name}}</view> -->
-                    <view class="canvas-content">{{shareInfo.opus_content}}</view>
+                    <view class="canvas-content">{{shareInfo.brief}}</view>
                 </view>
                 <view class="canvas-footer">
                     <image class="canvas-code" src="{{shareInfo.qrcode_url}}" alt="" />
                     <view class="code-tip">
                         <view>长按识别二维码</view>
-                        <view>为好友加油，一起参赛！</view>
+                        <view>为老师送花助力加油！</view>
                     </view>
                 </view>
             </view>
@@ -58,10 +58,15 @@
     <view class="send-comment">
         <view class="comment-left" catchtap="showWrite">发表观点</view>
         <view class="comment-right">
-            <view class="right-send" catchtap="sendFlower">
+            <view class="right-send" wx:if="{{false}}" catchtap="sendFlower">
                 <image class="bottom-bg" src="../../images/vote-leftbg.png"></image>
                 <image class="img" src="../../images/vote-flowers.png"></image>
                 <view class="send-flowers">送花</view>
+            </view>
+            <view class="right-send" wx:else catchtap="sendFlower">
+                <image class="bottom-bg" src="../../images/vote-leftbg.png"></image>
+                <image class="img" src="../../images/vote-full-flowers.png" style="margin-right: 15rpx;"></image>
+                <view class="send-flowers">1</view>
             </view>
             <view class="right-share" catchtap="shareImg">
                 <image class="bottom-bg" src="../../images/vote-rightbg.png"></image>

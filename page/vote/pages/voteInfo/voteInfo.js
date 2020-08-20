@@ -1,49 +1,83 @@
 // page/vote/pages/voteInfo/voteInfo.js
+const app = getApp();
 Page({
   data: {
-    taskList: [{
-        "id": 1,
-        "name": "签到",
-        "numbers": 1,
-        "integral": 3,
-        "desc": "签到任务",
-        "tips_message": ["去签到", "已签到", "已领取"],
-        "url": "",
-        "urltype": 2,
-        "get_integral": 0,
-        "prize_status": 2
-    }, {
-        "id": 2,
-        "name": "分享",
-        "numbers": 1666,
-        "integral": 6,
-        "desc": "分享任务",
-        "tips_message": ["去完成", "已完成", "已领取"],
-        "url": "",
-        "urltype": 0,
-        "get_integral": 0,
-        "prize_status": 2
-    }],
-    voteList: [
-      {
-        id: 2,
-        name: "汪得章",
-        image:
-          "https://xiehui-guanwang.obs.cn-north-1.myhuaweicloud.com:443/uploads/images/20190815%5Ca6dbd1bf97aeb528e2aa6964fb2ab468.jpg",
-        class_name: "如何装比",
-        flowers: 23,
-      },
-    ],
+    taskList: [],
+    voteList: [],
+    page: 1,
+    total_page: 1,
   },
-  onLoad: function (options) {},
-  getData(){
-    return Promise.all([]).then(res=>{
-      
+  onLoad: function (options) {
+    this.getTaskList();
+    this.getMySendList();
+  },
+  shareUser(){
+    wx.showModal({
+      title: '首次进入提示去邀请并且关注公众号才算'
     })
   },
+  getTaskList() {
+    app.vote
+      .getTaskList()
+      .then((res) => {
+        console.log(res);
+        this.setData({
+          taskList: res.data,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  },
+  getMySendList(page = 1) {
+    let voteList = this.data.voteList;
+    app.vote
+      .getMySendList({ page })
+      .then((res) => {
+        let total_page = res.data.total_page;
+        if (page > 1) {
+          voteList = voteList.concat(res.data.list);
+        } else {
+          voteList = res.data.list;
+        }
+        this.setData({
+          voteList,
+          page,
+          total_page,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  },
   onShow: function () {},
-  onUnload: function () {},
-  onPullDownRefresh: function () {},
-  onReachBottom: function () {},
+  onPullDownRefresh: function () {
+    console.log("刷新");
+    this.setData({
+      taskList: [],
+      voteList: [],
+      page: 1,
+      total_page: 1,
+    });
+    Promise.all([this.getTaskList(), this.getMySendList()]).then((res) => {
+      wx.showToast({
+        title: "刷新完成",
+        duration: 1000,
+      });
+      wx.stopPullDownRefresh();
+    });
+  },
+  onReachBottom: function () {
+    console.log("分页加载");
+    if (this.data.total_page > this.data.page) {
+      this.getMySendList(this.data.page + 1);
+    } else {
+      wx.showToast({
+        icon: "none",
+        title: "已经到底了哦",
+        duration: 1000,
+      });
+    }
+  },
   onShareAppMessage: function () {},
 });

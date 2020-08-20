@@ -76,8 +76,8 @@ page{
   height:64rpx;
   font-size:28rpx;
   font-family:PingFangSC-Medium,PingFang SC;
-  font-weight: 600;
-  color:rgba(250,59,2,1);
+  font-weight: 500;
+  color:#FFCCCC;
   line-height:32rpx;
   position: absolute;
   top: 10rpx;
