@@ -59,7 +59,7 @@
                 <view class="item-commentinfo">
                     <view class="commentinfo-user">
                         <view class="user-nickname">{{item.nickname}}</view>
-                        <view class="user-time" wx:if="{{item.uid ===  $state.userInfo.id}}" catchtap="delComment">
+                        <view class="user-time" wx:if="{{item.uid ===  $state.userInfo.id}}" data-index="{{index}}" data-commentid="{{item.id}}" catchtap="delComment">
                             <text class="create-time">{{item.createtime}}</text>
                             <view class="icon-del">
                                 <image src="../../images/vote-del.png" />

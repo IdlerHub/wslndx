@@ -112,6 +112,15 @@ function addTeacherComment(params) {
   return httpService.post("H5teachers/addTeacherComment", params);
 }
 
+/** H5teachers/deleteTeacherComment
+ *  @description: 删除教师评论
+ * @param {comment_id}
+ * @return:  promise
+ * **/
+function deleteTeacherComment(params) {
+  return httpService.post("H5teachers/deleteTeacherComment", params);
+}
+
 /** H5teachers/getMySendList
  *  @description: 获取我的送花列表
  * @param {page}
@@ -148,4 +157,5 @@ module.exports = {
   getTaskList,
   getTeacherComment,
   addTeacherComment,
+  deleteTeacherComment,
 };

@@ -153,8 +153,24 @@ Page({
     };
     this.addTeacherComment(params);
   },
-  delComment() {
-    console.log("删除评论");
+  delComment(e) {
+    console.log(e.currentTarget.dataset);
+    let { commentid, index } = e.currentTarget.dataset;
+    let commentList = this.data.commentList;
+    app.vote.deleteTeacherComment({comment_id:commentid}).then(res=>{
+      console.log(res)
+      commentList.splice(index,1);
+      this.setData({
+        commentList,
+      });
+      wx.showToast({
+        title: "删除成功",
+        icon: "success",
+        duration: 2000,
+      });
+    }).catch(err=>{
+      console.log(err)
+    })
   },
   getOpusInfo(id) {
     //获取作品信息
@@ -516,7 +532,6 @@ Page({
     });
   },
   onReachBottom() {
-    console.log("分页评论获取");
     if (this.data.total_page > this.data.page) {
       this.getTeacherComment(this.data.item.id,this.data.page + 1);
     } else {
