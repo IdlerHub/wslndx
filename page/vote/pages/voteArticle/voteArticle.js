@@ -10,7 +10,10 @@ Page({
       image:
         "https://xiehui-guanwang.obs.cn-north-1.myhuaweicloud.com:443/uploads/images/20190815%5Ca6dbd1bf97aeb528e2aa6964fb2ab468.jpg",
     },
-    commentList: [],  //评论列表
+    commentList: [], //评论列表
+    page: 1, //当前页码
+    total_page: 1, //评论列表总页码
+    total: 0, //总评论数量
     content: "", //评论内容
     placeholder: "发表你的观点", //候选字
     keyheight: 0, //键盘高度
@@ -30,10 +33,6 @@ Page({
         "戴口罩，勤洗手，不聚会，少出门，向一线的医务工作者致敬，为武汉加油！",
     }, //海报详情
     tempImg: "", //canvas临时路径
-  },
-  input(e) {
-    //输入
-    console.log(e.detail.value);
   },
   onLoad: function (options) {
     console.log(options);
@@ -59,8 +58,7 @@ Page({
     if (ops.accounts_openid && ops.accounts_openid != "") {
       wx.setStorageSync("AccountsId", ops.accounts_openid);
     } else if (wx.getStorageSync("AccountsId") == "") {
-      //如果没有公众号的openId
-      //跳转去授权页面
+      //如果没有公众号的openId,跳转去授权页面
       let uid = wx.getStorageSync("userInfo").id;
       console.log("没有公众号的openid");
       //voteType表示从哪个页面过去请求,之后方便返回
@@ -88,7 +86,7 @@ Page({
     });
   },
   getData(id) {
-    Promise.all([this.getOpusInfo(id), this.getTeacherComment(id)]);
+    return Promise.all([this.getOpusInfo(id), this.getTeacherComment(id)]);
   },
   showWrite(e) {
     if (this.data.$state.userInfo.status !== "normal") {
@@ -155,8 +153,8 @@ Page({
     };
     this.addTeacherComment(params);
   },
-  delComment(){
-    console.log("删除评论")
+  delComment() {
+    console.log("删除评论");
   },
   getOpusInfo(id) {
     //获取作品信息
@@ -220,11 +218,21 @@ Page({
       }, 1000);
     });
   },
-  getTeacherComment(id) {
-    let params = { teacher_id: id };
+  getTeacherComment(id, page = 1) {
+    let params = { teacher_id: id, page };
+    let commentList = this.data.commentList;
     app.vote.getTeacherComment(params).then((res) => {
+      let total_page = res.data.total_page;
+      if (page == 1) {
+        commentList = res.data.list;
+      } else {
+        commentList = commentList.concat(res.data.list);
+      }
       this.setData({
-        commentList: res.data.list,
+        commentList,
+        page,
+        total_page,
+        total: res.data.total,
       });
     });
   },
@@ -492,9 +500,34 @@ Page({
       }, 100);
     });
   },
-  onPullDownRefresh: function () {},
-  onReachBottom: function () {},
-  onShareAppMessage: function () {
+  onPullDownRefresh() {
+    this.setData({
+      commentList: [],
+      content: [],
+      page: 1,
+      total_page: 1,
+    });
+    this.getData(this.data.item.id).then(res=>{
+      wx.showToast({
+        title: "刷新完成",
+        duration: 1000,
+      });
+      wx.stopPullDownRefresh();
+    });
+  },
+  onReachBottom() {
+    console.log("分页评论获取");
+    if (this.data.total_page > this.data.page) {
+      this.getTeacherComment(this.data.item.id,this.data.page + 1);
+    } else {
+      wx.showToast({
+        icon: "none",
+        title: "已经到底了哦",
+        duration: 1000,
+      });
+    }
+  },
+  onShareAppMessage() {
     console.log("分享");
     let item = this.data.item;
     let id = item.id;

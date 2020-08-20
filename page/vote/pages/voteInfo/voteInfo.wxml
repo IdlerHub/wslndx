@@ -38,7 +38,10 @@
                         朵鲜花
                     </view>
                 </view>
-                <view class="item-right">{{item.tips_message[item.prize_status]}}</view>
+                <!-- 已完成变灰 -->
+                <view wx:if="{{item .prize_status==2}}" class="item-right">{{item.tips_message[item.prize_status]}}</view>
+                <!-- 未完成或者待领取 -->
+                <view wx:else class="item-right  item-right-red" data-task="{{item}}" catchtap="performTask">{{item.tips_message[item.prize_status]}}</view>
             </view>
         </view>
     </view>

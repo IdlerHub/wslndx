@@ -5,33 +5,32 @@ Page({
     inputcontent: "", //输入框的内容
     searchWord: "", //搜索关键词
     productionList: [], //作品列表
-    page: 1,
-    total_page: 1,
-    history: []
+    scroll_id: '',  //获取分页搜索列表
+    history: [],
   },
-  pageName: '赛事活动搜索页',
+  pageName: "赛事活动搜索页",
   goBack() {
     wx.navigateBack(); //返回
   },
   toDetail(e) {
     wx.navigateTo({
-      url: "/pages/voteDetail/voteDetail?voteid=" + e.currentTarget.dataset.id
+      url: "/pages/voteDetail/voteDetail?voteid=" + e.currentTarget.dataset.id,
     });
   },
   clickSearch(e) {
     //选中历史记录搜索
-      this.setData({
-        searchWord: e.currentTarget.dataset.word,
-        inputcontent: e.currentTarget.dataset.word,
-        clearhidden: false
-      });
-      this.searchOpus(1);
+    this.setData({
+      searchWord: e.currentTarget.dataset.word,
+      inputcontent: e.currentTarget.dataset.word,
+      clearhidden: false,
+    });
+    this.searchOpus(1);
   },
   toSearch(e) {
     //输入结束后的关键词
     this.setData({
       searchWord: e.detail.value,
-      inputcontent: e.detail.value
+      inputcontent: e.detail.value,
     });
     this.searchOpus(1);
   },
@@ -40,7 +39,7 @@ Page({
     if (e.detail.value) {
       //输入框还有内容
       this.setData({
-        clearhidden: false
+        clearhidden: false,
       });
     } else {
       //输入框清空
@@ -53,7 +52,7 @@ Page({
     let item = this.data.history;
     item.splice(index, 1);
     this.setData({
-      history: item
+      history: item,
     });
     this.delSearchWord(id);
   },
@@ -62,7 +61,7 @@ Page({
       clearhidden: true,
       inputcontent: "",
       searchWord: "",
-      history: []
+      history: [],
     });
     this.getSearchWord(); //获取搜索历史
   },
@@ -72,32 +71,33 @@ Page({
   },
   getSearchWord() {
     //搜索记录
-    app.vote.getSearchWord().then(res => {
+    app.vote.getSearchWord().then((res) => {
       this.setData({
-        history: res.data
+        history: res.data,
       });
     });
   },
-  searchOpus(page) {
+  searchOpus(scroll_id) {
     //搜索结果
     let params = {
       word: this.data.searchWord,
-      page: page
+      scroll_id,
     };
-    let data = [];
-    let total_page = 1;
-    app.vote.searchOpus(params).then(res => {
-      if (page == 1) {
-        data = res.data.data;
-      } else {
-        var oldData = this.data.productionList;
-        data = oldData.concat(res.data.data);
+    let data = this.data.productionList;
+    app.vote.searchOpus(params).then((res) => {
+      if(res.data.data.length == 0){
+        wx.showToast({
+          icon: "none",
+          title: "已经没有数据了哦",
+          duration: 1000,
+        });
+        return 
       }
-      total_page = res.data.total_page;
+      data = oldData.concat(res.data.data);
+      scroll_id = res.data.scroll_id;
       this.setData({
         productionList: data,
-        page: page,
-        total_page: total_page
+        scroll_id
       });
     });
   },
@@ -106,15 +106,6 @@ Page({
     // this.searchOpus(1);
   },
   onReachBottom() {
-    let page = this.data.page;
-    if(page < this.data.total_page){
-      this.searchOpus(page + 1);
-    }else{
-      wx.showToast({
-        icon: "none",
-        title: "已经没有数据了哦",
-        duration: 1000
-      });
-    }
-  }
+    this.searchOpus(this.data.scroll_id);
+  },
 });

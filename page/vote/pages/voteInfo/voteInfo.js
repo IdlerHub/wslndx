@@ -35,10 +35,10 @@ Page({
       .getMySendList({ page })
       .then((res) => {
         let total_page = res.data.total_page;
-        if (page > 1) {
-          voteList = voteList.concat(res.data.list);
-        } else {
+        if (page == 1) {
           voteList = res.data.list;
+        } else {
+          voteList = voteList.concat(res.data.list);
         }
         this.setData({
           voteList,
@@ -49,6 +49,9 @@ Page({
       .catch((err) => {
         console.log(err);
       });
+  },
+  performTask(){
+    console.log("去完成任务或者领取鲜花")
   },
   onShow: function () {},
   onPullDownRefresh: function () {

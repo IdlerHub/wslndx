@@ -213,8 +213,8 @@
 				},
 				{
 					"id": -1,
-					"name": "page/vote/pages/voteArticle/voteArticle",
-					"pathName": "page/vote/pages/voteArticle/voteArticle",
+					"name": "page/vote/pages/voteInfo/voteInfo",
+					"pathName": "page/vote/pages/voteInfo/voteInfo",
 					"query": "voteid=2",
 					"scene": null
 				}

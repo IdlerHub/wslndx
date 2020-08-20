@@ -49,12 +49,9 @@
 
     <view class="article-comment">
         <view class="comment-nav">
-            <text class="nav-title">评论 2</text>
+            <text class="nav-title">评论 {{total > 0 ? total : ''}}</text>
         </view>
-        <view class="none-list" wx:if="{{false}}">
-            <image src="../../images/vote-nonecomment.png" class="none-comment"></image>
-        </view>
-        <view class="comment-list" wx:else>
+        <view class="comment-list" wx:if="{{total>0}}">
             <view class="comment-item" wx:for="{{commentList}}" wx:key="index">
                 <view class="item-avatar">
                     <image src="{{item.avatar}}"></image>
@@ -73,6 +70,9 @@
                     <view class="item-content">{{item.content}}</view>
                 </view>
             </view>
+        </view>
+        <view class="none-list" wx:else>
+            <image src="../../images/vote-nonecomment.png" class="none-comment"></image>
         </view>
         <view class="comment-footer"></view>
     </view>

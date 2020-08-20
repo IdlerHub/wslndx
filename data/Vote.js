@@ -4,9 +4,9 @@
  */
 var httpService = require("../utils/service.js");
 
-//POST h5opus/getH5Rule 获取活动规则
+//POST H5teachers/getRule 获取活动规则
 function getH5Rule() {
-  return httpService.post("h5opus/getH5Rule");
+  return httpService.post("H5teachers/getRule");
 }
 
 // //POST Studyreport/getAllProvince 获取省份
@@ -47,14 +47,6 @@ function praiseOpus(params) {
   return httpService.post("H5teachers/sendFlower", params);
 }
 
-/** POST h5opus/searchOpus
- * @description: 作品搜索
- * @param {word,page}
- * @return:  promise
- */
-function searchOpus(params) {
-  return httpService.post("h5opus/searchOpus", params);
-}
 
 /** POST H5teachers/getTeacherInfo
  * @description: 获取教师详情
@@ -65,14 +57,23 @@ function getOpusInfo(params) {
   return httpService.post("H5teachers/getTeacherInfo", params);
 }
 
-// POST h5opus/getSearchWord 搜索历史记录
-function getSearchWord() {
-  return httpService.post("h5opus/getSearchWord");
+/** POST H5teachers/searchTeacher
+ * @description: 作品搜索
+ * @param {word,scroll_id}
+ * @return:  promise
+ */
+function searchOpus(params) {
+  return httpService.post("H5teachers/searchTeacher", params);
 }
 
-// POST h5opus/delSearchWord 删除历史搜索记录
+// POST H5teachers/getSearchWord 搜索历史记录
+function getSearchWord() {
+  return httpService.post("H5teachers/getSearchWord");
+}
+
+// POST H5teachers/delSearchWord 删除历史搜索记录
 function delSearchWord(params) {
-  return httpService.post("h5opus/delSearchWord", params);
+  return httpService.post("H5teachers/delSearchWord", params);
 }
 
 /**
