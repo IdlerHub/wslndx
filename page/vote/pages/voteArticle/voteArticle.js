@@ -24,8 +24,6 @@ Page({
     code: "", //二维码
     imgs: "../../images/share-bg.png", //海报背景图片
     shareTitle: "", //分享标题
-    jumpUrl: {}, //跳转卡片
-    showJump: false, //展示跳转卡片
     shareInfo: {
       id: 63,
       nickname: "老汪",
@@ -33,6 +31,8 @@ Page({
         "戴口罩，勤洗手，不聚会，少出门，向一线的医务工作者致敬，为武汉加油！",
     }, //海报详情
     tempImg: "", //canvas临时路径
+    jumpUrl: {}, //送花失败展示提示卡片
+    showJump: false, //展示跳转卡片
   },
   onLoad: function (options) {
     console.log(options);
@@ -157,20 +157,23 @@ Page({
     console.log(e.currentTarget.dataset);
     let { commentid, index } = e.currentTarget.dataset;
     let commentList = this.data.commentList;
-    app.vote.deleteTeacherComment({comment_id:commentid}).then(res=>{
-      console.log(res)
-      commentList.splice(index,1);
-      this.setData({
-        commentList,
+    app.vote
+      .deleteTeacherComment({ comment_id: commentid })
+      .then((res) => {
+        console.log(res);
+        commentList.splice(index, 1);
+        this.setData({
+          commentList,
+        });
+        wx.showToast({
+          title: "删除成功",
+          icon: "success",
+          duration: 2000,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
       });
-      wx.showToast({
-        title: "删除成功",
-        icon: "success",
-        duration: 2000,
-      });
-    }).catch(err=>{
-      console.log(err)
-    })
   },
   getOpusInfo(id) {
     //获取作品信息
@@ -347,15 +350,22 @@ Page({
     app.vote
       .praiseOpus(params)
       .then((res) => {
-        let work = that.data.item;
-        work.flowers += work.flowers < 10000 ? 1 : 0;
-        that.setData({
-          item: work,
-        });
-        let list = getCurrentPages();
-        const page = list[list.length - 2];
-        if (page.route == "page/vote/pages/voteIndex/voteIndex") {
-          page.setLikeData(that.data.hocIndex);
+        if (res.data.type == 1) { //送花成功
+          let work = that.data.item;
+          work.flowers += work.flowers < 10000 ? 1 : 0;
+          that.setData({
+            item: work,
+          });
+          let list = getCurrentPages();
+          const page = list[list.length - 2];
+          if (page.route == "page/vote/pages/voteIndex/voteIndex") {
+            page.setLikeData(that.data.hocIndex);
+          }
+        } else {
+          that.setData({
+            jumpUrl: res.data.jump_info,
+            showJump: true
+          });
         }
       })
       .catch((err) => {
@@ -365,6 +375,36 @@ Page({
           duration: 2500,
         });
       });
+  },
+  jumpPeper(){
+    console.log("跳转")
+    //活动弹窗
+    let item = this.data.jumpUrl;
+    this.closeJump(); //关闭卡片,跳转
+    // if (item.jump_type == 1) {
+    //   //外连接
+    //   wx.navigateTo({
+    //     url: `../education/education?type=0&url=${item.clickurl}`,
+    //   });
+    // } else if (item.jump_type == 2) {
+    //   //小程序的tab页
+    //   wx.switchTab({
+    //     url: item.clickurl,
+    //   });
+    // } else if (item.jump_type == 4) {
+    //   //小程序内的页面
+    //   wx.navigateTo({
+    //     url: item.clickurl,
+    //   });
+    // }
+    // wx.navigateTo({
+    //   url: `../education/education?url=${e.currentTarget.dataset.peper}&type=0}`
+    // })
+  },
+  closeJump(){
+    this.setData({
+      showJump: flase
+    })
   },
   unshare() {
     this.setData({
@@ -523,7 +563,7 @@ Page({
       page: 1,
       total_page: 1,
     });
-    this.getData(this.data.item.id).then(res=>{
+    this.getData(this.data.item.id).then((res) => {
       wx.showToast({
         title: "刷新完成",
         duration: 1000,
@@ -533,7 +573,7 @@ Page({
   },
   onReachBottom() {
     if (this.data.total_page > this.data.page) {
-      this.getTeacherComment(this.data.item.id,this.data.page + 1);
+      this.getTeacherComment(this.data.item.id, this.data.page + 1);
     } else {
       wx.showToast({
         icon: "none",
@@ -547,13 +587,9 @@ Page({
     let item = this.data.item;
     let id = item.id;
     let uid = wx.getStorageSync("userInfo").id;
-    let imgUrl = this.data.imgs;
-    let title = this.data.shareTitle;
-    if (item.type == 2) {
-      imgUrl = item.banner_image;
-    } else if (item.type == 1) {
-      imgUrl = item.url[0];
-    }
+    let imgUrl = item.image;
+    let title = this.data.shareTitle || '好友助力';
+    
     return {
       title: title,
       path:
