@@ -186,12 +186,15 @@ Page({
       mask: true,
     });
     let that = this;
-    let params = { teacher_id: id };
+    let invite_id = wx.getStorageSync("invite") || 0;
+    // type:1 二维码; 2: 分享卡片
+    let type = app.globalData.shareObj.f ? app.globalData.shareObj.f : 2;
+    let params = { teacher_id: id, invite_id, type };
     app.vote
       .getOpusInfo(params)
       .then((res) => {
         wx.hideLoading();
-        let title = res.data.name;
+        let title = res.data.teacher_info.name;
         that.setData({
           item: res.data.teacher_info,
           shareMessage: res.data.share_message,
@@ -206,6 +209,7 @@ Page({
       })
       .catch((err) => {
         wx.hideLoading();
+        console.log(err)
         wx.showToast({
           title: err.msg,
           icon: "none",
@@ -228,7 +232,7 @@ Page({
       console.log(this.data.shareInfo);
       //这里需要下载对应的网络图片资源并且开始绘画canvas
       this.downloadImg(this.data.shareInfo.avatar, "userImg");
-      this.downloadImg(this.data.shareInfo.image, "showImg"); //视频封面下载
+      this.downloadImg(this.data.shareInfo.image, "showImg");
       this.downloadImg(this.data.shareInfo.qrcode_url, "code"); //二维码下载
       setTimeout(() => {
         wx.getSystemInfo({
@@ -239,6 +243,13 @@ Page({
           },
         });
       }, 1000);
+    }).catch(err=>{
+      wx.hideLoading();
+      wx.showToast({
+        title: err.msg,
+        icon: "none",
+        duration: 1000
+      })
     });
   },
   getTeacherComment(id, page = 1) {
@@ -421,26 +432,37 @@ Page({
     wx.downloadFile({
       url: url,
       success: function (res) {
-        switch (data) {
-          case "code":
-            that.setData({
-              code: res.tempFilePath,
-            });
-            break;
-          case "userImg":
-            that.setData({
-              userImg: res.tempFilePath,
-            });
-            break;
-          case "showImg":
-            that.setData({
-              showImg: res.tempFilePath,
-            });
-            break;
-          default:
-            //没有下载
-            break;
+        if (res.statusCode === 200) {
+          switch (data) {
+            case "code":
+              that.setData({
+                code: res.tempFilePath,
+              });
+              break;
+            case "userImg":
+              that.setData({
+                userImg: res.tempFilePath,
+              });
+              break;
+            case "showImg":
+              that.setData({
+                showImg: res.tempFilePath,
+              });
+              break;
+            default:
+              //没有下载
+              break;
+          }
+        }else {
+          console.log(res)
         }
+      },
+      fail: function(err) {
+        wx.showToast({
+          title: "图片下载失败",
+          icon: 'none',
+          duration: 1000
+        })
       },
     });
   },
@@ -493,17 +515,17 @@ Page({
       for (var a = 0; a < 2; a++) {
         let content = info.substr(len, 15);
         len += 15;
-        ctx.fillText(content, 30 * ratio, (658 + a * 48) / v);
+        ctx.fillText(content, 30 * ratio, (598 + a * 48) / v);
       }
     } else if (info.length > 30) {
       //超过三行
       let con1 = info.substr(len, 15);
       let con2 = info.substr(15, 14) + "...";
-      ctx.fillText(con1, 30 * ratio, 658 / v);
-      ctx.fillText(con2, 30 * ratio, (658 + 48) / v);
+      ctx.fillText(con1, 30 * ratio, 598 / v);
+      ctx.fillText(con2, 30 * ratio, (598 + 48) / v);
     } else {
       //就一行
-      ctx.fillText(info, 30 * ratio, 658 / v);
+      ctx.fillText(info, 30 * ratio, 598 / v);
     }
 
     ctx.restore();
@@ -597,7 +619,7 @@ Page({
       path:
         "/pages/voteArticle/voteArticle?voteid=" +
         id +
-        "&type=share&vote=0&uid=" +
+        "&type=share&vote=1&uid=" +
         uid, // 路径，传递参数到指定页面。
       imageUrl: this.data.shareMessage.image,
     };

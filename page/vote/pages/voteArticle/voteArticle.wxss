@@ -288,14 +288,14 @@
 width:630rpx;
 height:940rpx;
 overflow: hidden;
-opacity: 0;
-position: fixed;
-top: -1000px;
-left: -1000px;
+/* opacity: 0; */
 /* position: fixed;
+top: -1000px;
+left: -1000px; */
+position: fixed;
 top: 0;
 left: 0;
-z-index: 101; */
+z-index: 101;
 }
 
 .show-img{
@@ -354,7 +354,7 @@ z-index: 101; */
 .user-img{
     width: 90rpx;
     height: 90rpx;
-    border-radius: 100%;
+    border-radius: 50%;
     margin-right: 24rpx;
     background: lightblue;
 }
@@ -445,7 +445,6 @@ z-index: 101; */
     line-height: 98rpx;
     display: flex;
 }
-.poster-footer>button,
 .poster-footer>view{
     width: 300rpx;
     font-size:40rpx;
@@ -459,15 +458,25 @@ z-index: 101; */
 }
 .share-wechat{
     background: #FF965D;
-    margin-right: 30rpx;
-}
-.share-img{
-    background: #FF183F;
+    position: relative;
 }
 .share-wechat>image{
     width: 50rpx;
     height: 41rpx;
     margin-right: 14rpx;
+}
+.share-other{
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    opacity: 0;
+    z-index: 10;
+}
+.share-img{
+    background: #FF183F;
+    margin-left: 40rpx;
 }
 .share-img>image{
     width: 40rpx;

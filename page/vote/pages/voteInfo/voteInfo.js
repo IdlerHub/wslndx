@@ -2,6 +2,8 @@
 const app = getApp();
 Page({
   data: {
+    flowers: 0, //拥有花朵
+    shareMessage: {}, //分享配置信息
     taskList: [],
     voteList: [],
     page: 1,
@@ -22,7 +24,9 @@ Page({
       .then((res) => {
         console.log(res);
         this.setData({
-          taskList: res.data,
+          taskList: res.data.task,
+          shareMessage: res.data.share_message,
+          flowers: res.data.flowers,
         });
       })
       .catch((err) => {
@@ -89,5 +93,13 @@ Page({
       });
     }
   },
-  onShareAppMessage: function () {},
+  onShareAppMessage() {
+    console.log("分享");
+    let uid = wx.getStorageSync("userInfo").id;
+    return {
+      title: this.data.shareMessage.title,
+      path: "/page/vote/pages/voteIndex/voteIndex?type=share&vote=1&uid=" + uid, // 路径，传递参数到指定页面。
+      imageUrl: this.data.shareMessage.image,
+    };
+  },
 });

@@ -30,16 +30,17 @@
                     <image class="canvas-code" src="{{shareInfo.qrcode_url}}" alt="" />
                     <view class="code-tip">
                         <view>长按识别二维码</view>
-                        <view>为老师送花助力加油！</view>
+                        <view>为老师送花助力加油!</view>
                     </view>
                 </view>
             </view>
         </view>
         <view class="poster-footer">
-            <button open-type="share" class="share-wechat">
-                <image src="../../images/share-wechat.png"></image>
+            <view class="share-wechat">
+                <button open-type="share" class="share-other"></button>
+                <image src="https://hwcdn.jinlingkeji.cn/images/pro/makeMoneywx.png"></image>
                 <view class="share-text">发送好友</view>
-            </button>
+            </view>
             <view class="share-img" catchtap='savePoster'>
                 <image src="../../images/save-img.png"></image>
                 <view class="share-text">保存图片</view>

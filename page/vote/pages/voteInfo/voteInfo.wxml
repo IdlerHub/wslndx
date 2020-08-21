@@ -13,7 +13,7 @@
                 <image src="../../images/flowers-red.png"></image>
             </view>
             <view class="left-text">
-                <view class="text-first">30朵</view>
+                <view class="text-first">{{flowers}}朵</view>
                 <view class="text-second">我的鲜花</view>
             </view>
         </view>

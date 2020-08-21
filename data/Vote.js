@@ -25,8 +25,8 @@ function getH5Rule() {
 // }
 
 //POST H5teachers/getNewsMessage 获取最新的10条送花信息
-function getNewestOpus() {
-  return httpService.post("H5teachers/getNewsMessage");
+function getNewestOpus(params) {
+  return httpService.post("H5teachers/getNewsMessage", params);
 }
 
 /** POST H5teachers/getTeacherList

@@ -5,6 +5,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    shareMessage: {}, //分享配置信息
     activityFlag: false, //活动是否结束(获取最新作品那边传入)
     showJump: false, //展示跳转卡片
     jumpUrl: {},
@@ -19,9 +20,9 @@ Page({
     console.log(ops);
     console.log("公众号openid", wx.getStorageSync("AccountsId"));
     this.getOpenId(ops);
-    // wx.showLoading({
-    //   title: "加载中",
-    // });
+    wx.showLoading({
+      title: "加载中",
+    });
     this.init().then((res) => {
       wx.hideLoading();
     });
@@ -29,7 +30,7 @@ Page({
   init() {
     return Promise.all([this.getdata(1), this.getNewestOpus()]);
   },
-  getOpenId(ops){
+  getOpenId(ops) {
     if (ops.accounts_openid && ops.accounts_openid != "") {
       wx.setStorageSync("AccountsId", ops.accounts_openid);
     } else if (wx.getStorageSync("AccountsId") == "") {
@@ -65,7 +66,7 @@ Page({
         "&index=" +
         e.currentTarget.dataset.index,
     });
-  },  
+  },
   toSearch() {
     wx.navigateTo({
       url: "/page/vote/pages/voteSearch/voteSearch",
@@ -90,8 +91,8 @@ Page({
     //step1 活动是否过期
     // step2  作品点赞数添加 （修改data中数据），不刷新页面
     let index = e.detail,
-        work = this.data.productionList[index],
-        openid = wx.getStorageSync("AccountsId");
+      work = this.data.productionList[index],
+      openid = wx.getStorageSync("AccountsId");
     let params = {
       teacher_id: work.id, //需要作品带的type
       openid,
@@ -131,8 +132,11 @@ Page({
     let flag = false;
     let showCard = {};
     let activityFlag = false;
+    let invate_id = wx.getStorageSync("invite") || 0;
+    // type:1 二维码; 2: 分享卡片
+    let type = app.globalData.shareObj.f ? app.globalData.shareObj.f : 2;
     //获取最新作品顶部轮播
-    app.vote.getNewestOpus().then((res) => {
+    app.vote.getNewestOpus({ invate_id, type }).then((res) => {
       // if (res.data.countdown.jump_type) {
       //   //倒计时
       //   flag = true;
@@ -146,6 +150,7 @@ Page({
       // }
       this.setData({
         newProduction: res.data.list,
+        shareMessage: res.data.share_message,
         jumpUrl: showCard,
         showJump: flag,
         activityFlag,
@@ -197,6 +202,15 @@ Page({
           duration: 2500,
         });
       });
+  },
+  onShareAppMessage() {
+    console.log("分享");
+    let uid = wx.getStorageSync("userInfo").id;
+    return {
+      title: this.data.shareMessage.title,
+      path: "/page/vote/pages/voteIndex/voteIndex?type=share&vote=1&uid=" + uid, // 路径，传递参数到指定页面。
+      imageUrl: this.data.shareMessage.image,
+    };
   },
   onPullDownRefresh() {
     this.init().then(() => {

@@ -219,17 +219,17 @@
 					"scene": null
 				},
 				{
-					"id": -1,
+					"id": 17,
 					"name": "page/vote/pages/voteArticle/voteArticle",
 					"pathName": "page/vote/pages/voteArticle/voteArticle",
-					"query": "voteid=3",
+					"query": "voteid=3&type=share&uid=5555",
 					"scene": null
 				},
 				{
-					"id": -1,
+					"id": 18,
 					"name": "page/vote/pages/voteIndex/voteIndex",
 					"pathName": "page/vote/pages/voteIndex/voteIndex",
-					"query": "voteid=3",
+					"query": "type=share&vote=1&uid=915",
 					"scene": null
 				},
 				{
@@ -237,6 +237,13 @@
 					"name": "page/vote/pages/voteSearch/voteSearch",
 					"pathName": "page/vote/pages/voteSearch/voteSearch",
 					"query": "voteid=3",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/index/index",
+					"pathName": "pages/index/index",
+					"query": "scene=u%3D915%26t%3D1%26o%3D3%26p%3D4",
 					"scene": null
 				}
 			]

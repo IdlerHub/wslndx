@@ -210,7 +210,7 @@ Page({
           setTimeout(() => {
             app.globalData.shareObj.type == 'lottery' ? wx.reLaunch({ url: "/pages/education/education?type=lottery&login=1&id=" + app.globalData.lotteryId }) : wx.reLaunch({ url: app.globalData.path + "?" + params.join("&") })
           }, 2000)
-        } else if (app.globalData.shareObj.p || app.globalData.query.liveShare) {
+        } else if (app.globalData.query.liveShare) {
           let lessonId = app.globalData.query.lessonId;
           let inviter = app.globalData.query.inviter;
           setTimeout(() => {
@@ -218,7 +218,17 @@ Page({
               url: `/page/live/pages/tableDetail/tableDetail?lessonId=${lessonId}&inviter=${inviter}`,
             });
           }, 2000);
-        } else {
+        }else if (app.globalData.shareObj.p || app.globalData.query.vote) {
+          setTimeout(() => {
+            wx.reLaunch({
+              url:
+                "/page/vote/pages/voteArticle/voteArticle?voteid=" +
+                (app.globalData.shareObj.o
+                  ? app.globalData.shareObj.o
+                  : app.globalData.query.voteid),
+            });
+          }, 2000);
+        }  else {
           /*跳转首页*/
           setTimeout(() => {
             wx.reLaunch({ url: "/pages/index/index?type=login" })
