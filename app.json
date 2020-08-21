@@ -19,7 +19,6 @@
     "components/recruitShare/recruitShare",
     "pages/withdraw/withdraw",
     "pages/withdrawalRecord/withdrawalRecord",
-    "pages/myProduction/myProduction",
     "pages/liveList/liveList",
     "pages/gamePage/gamePage",
     "pages/webPay/webPay",

@@ -14,7 +14,9 @@ Page({
   },
   toDetail(e) {
     wx.navigateTo({
-      url: "/pages/voteDetail/voteDetail?voteid=" + e.currentTarget.dataset.id,
+      url:
+        "/page/vote/pages/voteArticle/voteArticle?voteid=" +
+        e.currentTarget.dataset.id,
     });
   },
   clickSearch(e) {
@@ -23,16 +25,18 @@ Page({
       searchWord: e.currentTarget.dataset.word,
       inputcontent: e.currentTarget.dataset.word,
       clearhidden: false,
+      productionList: [],
     });
-    this.searchOpus(1);
+    this.searchOpus();
   },
   toSearch(e) {
     //输入结束后的关键词
     this.setData({
       searchWord: e.detail.value,
       inputcontent: e.detail.value,
+      productionList: [],
     });
-    this.searchOpus(1);
+    this.searchOpus();
   },
   changeSearch(e) {
     //输入时
@@ -40,7 +44,11 @@ Page({
       //输入框还有内容
       this.setData({
         clearhidden: false,
+        // searchWord: e.detail.value,
+        // inputcontent: e.detail.value,
+        // productionList: [],
       });
+      // this.searchOpus();
     } else {
       //输入框清空
       this.clearInput();
@@ -58,10 +66,10 @@ Page({
   },
   clearInput() {
     this.setData({
+      productionList: [],
       clearhidden: true,
       inputcontent: "",
       searchWord: "",
-      history: [],
     });
     this.getSearchWord(); //获取搜索历史
   },
@@ -77,23 +85,31 @@ Page({
       });
     });
   },
-  searchOpus(scroll_id) {
+  searchOpus(scroll_id = '') {
     //搜索结果
+    if (this.data.searchWord != '' && this.data.searchWord.trim() == "") {
+      wx.showToast({
+        title: "请输入搜索关键字",
+        icon: "none",
+        duration: 1000,
+      });
+      return;
+    }
     let params = {
       word: this.data.searchWord,
       scroll_id,
     };
     let data = this.data.productionList;
     app.vote.searchOpus(params).then((res) => {
-      if(res.data.data.length == 0){
+      if (scroll_id != '' && res.data.data.length == 0) {
         wx.showToast({
           icon: "none",
           title: "已经没有数据了哦",
           duration: 1000,
         });
-        return 
+        return;
       }
-      data = oldData.concat(res.data.data);
+      data = data.concat(res.data.data);
       scroll_id = res.data.scroll_id;
       this.setData({
         productionList: data,

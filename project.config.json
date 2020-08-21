@@ -224,6 +224,20 @@
 					"pathName": "page/vote/pages/voteArticle/voteArticle",
 					"query": "voteid=3",
 					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "page/vote/pages/voteIndex/voteIndex",
+					"pathName": "page/vote/pages/voteIndex/voteIndex",
+					"query": "voteid=3",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "page/vote/pages/voteSearch/voteSearch",
+					"pathName": "page/vote/pages/voteSearch/voteSearch",
+					"query": "voteid=3",
+					"scene": null
 				}
 			]
 		}

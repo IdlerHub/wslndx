@@ -1,7 +1,7 @@
 <!-- page/vote/pages/voteIndex/voteIndex.wxml -->
 <view class="vote">
     <view class="vote-header">
-        <image class="vote-img" src="{{$state.imgHost}}/vote-bg.png" alt="" />
+        <!-- <image class="vote-img" src="{{$state.imgHost}}/vote-bg.png" alt="" /> -->
         <view class="header-left">
             <image src="../../images/vote-talk.png" alt="" />
             <!-- <image src="../../images/vote-talk.png" alt="" hidden="{{!newProduction.length}}" /> -->

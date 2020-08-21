@@ -48,7 +48,7 @@
     <view class="vote-mine">
         <view class="mine-title">我的投票</view>
         <view class="mine-list">
-            <view class="mine-item" wx:for="{{voteList}}" wx:key="index">
+            <view class="mine-item" wx:for="{{voteList}}" wx:key="index" catchtap="toDetail" data-id="{{item.id}}">
                 <view class="mine-img">
                     <image src="{{item.image}}"></image>
                 </view>

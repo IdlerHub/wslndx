@@ -11,10 +11,10 @@ Page({
     this.getTaskList();
     this.getMySendList();
   },
-  shareUser(){
+  shareUser() {
     wx.showModal({
-      title: '首次进入提示去邀请并且关注公众号才算'
-    })
+      title: "首次进入提示去邀请并且关注公众号才算",
+    });
   },
   getTaskList() {
     app.vote
@@ -50,8 +50,15 @@ Page({
         console.log(err);
       });
   },
-  performTask(){
-    console.log("去完成任务或者领取鲜花")
+  performTask() {
+    console.log("去完成任务或者领取鲜花");
+  },
+  toDetail(e) {
+    wx.navigateTo({
+      url:
+        "/page/vote/pages/voteArticle/voteArticle?voteid=" +
+        e.currentTarget.dataset.id,
+    });
   },
   onShow: function () {},
   onPullDownRefresh: function () {
