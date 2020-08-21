@@ -271,3 +271,17 @@
     top: 38rpx;
     right: 30rpx;
 }
+/* 我的投票缺省 */
+.none-mine{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.none-mine>image{
+    width: 470rpx;
+    height: 430rpx;
+    margin-top: 22rpx;
+    margin-bottom: 37rpx;
+}

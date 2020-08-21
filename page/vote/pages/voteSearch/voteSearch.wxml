@@ -18,17 +18,12 @@
                     <rich-text class="mine-info-subname" nodes="{{ item.class_name }}"></rich-text>
                     <view class="mine-info-number">已获{{item.flowers}}朵</view>
                 </view>
-                <view class="mine-info-id">编号: {{item.id}}</view>
+                <rich-text class="mine-info-id" nodes="<span>编号: </span>{{item.id}}"></rich-text>
             </view>
         </view>
         <view class="none-production" wx:else>
-            <view class="none-img">
-                <image src="../../images/vote-production.png" alt="" />
-            </view>
-            <view class="none-content">
-                <text>搜索不到您想要的结果
-                    请换个关键词试试</text>
-            </view>
+            <image class="none-img" src="../../images/none-search.png" alt="" />
+            <view class="none-content">换个关键词再试试</view>
         </view>
     </block>
     <block wx:else>

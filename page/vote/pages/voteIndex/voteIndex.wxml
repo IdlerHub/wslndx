@@ -4,7 +4,6 @@
         <!-- <image class="vote-img" src="{{$state.imgHost}}/vote-bg.png" alt="" /> -->
         <view class="header-left">
             <image src="../../images/vote-talk.png" alt="" />
-            <!-- <image src="../../images/vote-talk.png" alt="" hidden="{{!newProduction.length}}" /> -->
             <swiper autoplay interval="2000" vertical circular class="text">
                 <swiper-item wx:for="{{newProduction}}" wx:key="index" class="swiper-item">
                     用户{{item.mobile}}送了#{{item.name}}1朵花
@@ -59,10 +58,10 @@
             <image src="../../images/vote-myproduction.png" alt="" />
             <text>我的作品</text>
         </view> -->
-        <image class="flowers" src="../../images/vote-flowers.png" alt="" />
+        <image class="flowers" src="../../images/vote-full-flowers.png" alt="" />
         <view>领鲜花</view>
     </view>
-    活动弹窗
+    <!-- 活动弹窗 -->
     <view class="integration" wx:if="{{showJump}}" catchtouchmove="return">
         <view class="dialog">
             <view class="bg" style="background: url('{{jumpUrl.image}}') no-repeat center; background-size: 100% 100%;border-radius:10px" mode="aspectFill" catchtap="jumpPeper"></view>

@@ -214,10 +214,10 @@ page{
   flex-flow: wrap;
   /* align-items: center; */
   background:#C60601;
-  /* padding-bottom: 128rpx; */
   min-height: 390rpx;
-  /* padding-bottom: 138rpx; */
-  padding-bottom: 188rpx;
+  padding-bottom: 150rpx;
+  /* padding-bottom: 188rpx; */
+  
 }
 /* .vote-list{ padding-bottom: 138rpx; }
 .vote-none{ padding-bottom: 160rpx; } */

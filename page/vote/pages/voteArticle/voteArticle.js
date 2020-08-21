@@ -23,7 +23,7 @@ Page({
     showImg: "", //展示图片
     code: "", //二维码
     imgs: "../../images/share-bg.png", //海报背景图片
-    shareTitle: "", //分享标题
+    shareMessage: {}, //分享信息
     shareInfo: {
       id: 63,
       nickname: "老汪",
@@ -53,6 +53,10 @@ Page({
         hocIndex: options.index,
       });
     }
+  },
+  recordShare(options) {
+    //记录分享
+    // if(options)
   },
   getOpenId(ops) {
     if (ops.accounts_openid && ops.accounts_openid != "") {
@@ -189,8 +193,8 @@ Page({
         wx.hideLoading();
         let title = res.data.name;
         that.setData({
-          item: res.data,
-          shareTitle: res.data.share_title || "别改了,黄花菜都凉了",
+          item: res.data.teacher_info,
+          shareMessage: res.data.share_message,
         });
         if (title.length > 10) {
           //标题过长
@@ -350,7 +354,8 @@ Page({
     app.vote
       .praiseOpus(params)
       .then((res) => {
-        if (res.data.type == 1) { //送花成功
+        if (res.data.type == 1) {
+          //送花成功
           let work = that.data.item;
           work.flowers += work.flowers < 10000 ? 1 : 0;
           that.setData({
@@ -364,7 +369,7 @@ Page({
         } else {
           that.setData({
             jumpUrl: res.data.jump_info,
-            showJump: true
+            showJump: true,
           });
         }
       })
@@ -376,8 +381,8 @@ Page({
         });
       });
   },
-  jumpPeper(){
-    console.log("跳转")
+  jumpPeper() {
+    console.log("跳转");
     //活动弹窗
     let item = this.data.jumpUrl;
     this.closeJump(); //关闭卡片,跳转
@@ -401,10 +406,10 @@ Page({
     //   url: `../education/education?url=${e.currentTarget.dataset.peper}&type=0}`
     // })
   },
-  closeJump(){
+  closeJump() {
     this.setData({
-      showJump: flase
-    })
+      showJump: flase,
+    });
   },
   unshare() {
     this.setData({
@@ -587,17 +592,14 @@ Page({
     let item = this.data.item;
     let id = item.id;
     let uid = wx.getStorageSync("userInfo").id;
-    let imgUrl = item.image;
-    let title = this.data.shareTitle || '好友助力';
-    
     return {
-      title: title,
+      title: this.data.shareMessage.title,
       path:
         "/pages/voteArticle/voteArticle?voteid=" +
         id +
         "&type=share&vote=0&uid=" +
         uid, // 路径，传递参数到指定页面。
-      imageUrl: imgUrl,
+      imageUrl: this.data.shareMessage.image,
     };
   },
 });
