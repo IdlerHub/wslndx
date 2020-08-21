@@ -39,9 +39,9 @@
                     </view>
                 </view>
                 <!-- 已完成变灰 -->
-                <view wx:if="{{item .prize_status==2}}" class="item-right">{{item.tips_message[item.prize_status]}}</view>
+                <view wx:if="{{item.prize_status==2}}" class="item-right">{{item.tips_message[item.prize_status]}}</view>
                 <!-- 未完成或者待领取 -->
-                <view wx:else class="item-right  item-right-red" data-task="{{item}}" catchtap="performTask">{{item.tips_message[item.prize_status]}}</view>
+                <button wx:else open-type="{{item.urltype==1&&item.prize_status==0?'share':''}}" class="item-right  item-right-red" data-task="{{item}}" catchtap="performTask">{{item.tips_message[item.prize_status]}}</button>
             </view>
         </view>
     </view>

@@ -139,6 +139,24 @@ function getTaskList() {
   return httpService.post("H5teachers/getTask");
 }
 
+/**
+ *  @description: 完成任务所需接口
+ * @param {配置任务路径以及完成路径}
+ * @return:  promise
+ * **/
+function toGetHttp(url, params) {
+  return httpService.post(url, params);
+}
+
+/** H5teachers/getTaskPrize
+ * @description: 领取奖励接口
+ * @param {task_id} 用户任务id
+ * @return:  promise
+ * **/
+function getTaskPrize(params) {
+  return httpService.post("H5teachers/getTaskPrize", params);
+}
+
 module.exports = {
   // getAllProvince,
   // getCity,
@@ -158,4 +176,6 @@ module.exports = {
   getTeacherComment,
   addTeacherComment,
   deleteTeacherComment,
+  toGetHttp,
+  getTaskPrize,
 };

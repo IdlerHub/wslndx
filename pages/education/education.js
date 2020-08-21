@@ -35,7 +35,12 @@ Page({
         opstObj[item.split("=")[0]] = item.split("=")[1];
       });
     } else {
-      if(options.type == "live"){
+      if(options.type == 'task'){ //票选活动页面任务
+        const event = this.getOpenerEventChannel();
+        event.on(options.type, (data) => {
+          this.junmpOut(data.url);
+        });
+      }else if(options.type == "live"){ //直播课
         const event = this.getOpenerEventChannel();
         event.on("liveCode", (data) => {
           console.log(data);
