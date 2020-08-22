@@ -222,7 +222,7 @@
 					"id": 17,
 					"name": "page/vote/pages/voteArticle/voteArticle",
 					"pathName": "page/vote/pages/voteArticle/voteArticle",
-					"query": "voteid=3&type=share&uid=5555",
+					"query": "voteid=3",
 					"scene": null
 				},
 				{

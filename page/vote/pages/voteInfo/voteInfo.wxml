@@ -8,7 +8,7 @@
         </view>
     </view>
     <view class="vote-info">
-        <view class="info-view voteinfo-left">
+        <view class="info-view voteinfo-left" catchtap="toRefresh">
             <view class="left-flowers">
                 <image src="../../images/flowers-red.png"></image>
             </view>

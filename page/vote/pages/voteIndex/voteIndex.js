@@ -23,8 +23,8 @@ Page({
     });
     this.init().then((res) => {
       wx.hideLoading();
+      this.getSign();
     });
-    this.getSign();
   },
   init() {
     return Promise.all([this.getdata(1), this.getNewestOpus()]);
@@ -46,7 +46,13 @@ Page({
   },
   getSign(){
     app.vote.getSign().then(res=>{
-      console.log(res)
+      wx.showToast({
+        title: res.msg,
+        icon: 'none',
+        duration: 1000
+      })
+    }).catch(err=>{
+      console.log(err)
     })
   },
   toRule() {
@@ -135,11 +141,17 @@ Page({
     let flag = false;
     let showCard = {};
     // let activityFlag = false;
-    let invate_id = wx.getStorageSync("invite") || 0;
+    let invite_id = wx.getStorageSync("invite") || 0;
     // type:1 二维码; 2: 分享卡片
     let type = app.globalData.shareObj.f ? app.globalData.shareObj.f : 2;
+    console.log("data:", invite_id, type);
     //获取最新作品顶部轮播
-    app.vote.getNewestOpus({ invate_id, type }).then((res) => {
+    app.vote.getNewestOpus({ invite_id, type }).then((res) => {
+      if (res.data.publicinfo.jump_type) {
+        //未关注公众号
+        flag = true;
+        showCard = res.data.publicinfo;
+      }
       if (res.data.countdown.jump_type) {
         //倒计时
         flag = true;
@@ -149,7 +161,7 @@ Page({
         //活动结束
         flag = true;
         showCard = res.data.overinfo;
-        activityFlag = true;
+        // activityFlag = true;
       }
       this.setData({
         newProduction: res.data.list,
@@ -216,10 +228,12 @@ Page({
   onShareAppMessage() {
     console.log("分享");
     let uid = wx.getStorageSync("userInfo").id;
+    let title = this.data.shareMessage.title,
+      imageUrl = this.data.shareMessage.image;
     return {
-      title: this.data.shareMessage.title,
+      title,
       path: "/page/vote/pages/voteIndex/voteIndex?type=share&vote=1&uid=" + uid, // 路径，传递参数到指定页面。
-      imageUrl: this.data.shareMessage.image,
+      imageUrl,
     };
   },
   onPullDownRefresh() {

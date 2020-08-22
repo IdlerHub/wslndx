@@ -450,7 +450,7 @@ z-index: 101; */
 .poster-footer>view{
     width: 300rpx;
     font-size:40rpx;
-    border-radius: 10rpx;
+    border-radius: 49rpx;
     font-family:PingFangSC-Medium,PingFang SC;
     font-weight:500;
     color:#fff;
@@ -537,4 +537,29 @@ border-top-right-radius: 10rpx;
 }
 .integration .dialog icon {
 margin-top: 48rpx;
+}
+.goHome{
+    position: fixed;
+    right: 10rpx;
+    bottom: 289rpx;
+    width: 148rpx;
+    height: 148rpx;
+    border-radius: 50%;
+    background: linear-gradient(270deg,#F60600 0%,#FF4B4B 100%);
+    box-shadow: 0 3rpx 8rpx #FF1E00;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    
+}
+.goHome>text {
+    display: inline-block;
+    color: #fff;
+    width:76rpx;
+    height:84rpx;
+    font-size:38rpx;
+    font-family:PingFang-SC-Bold,PingFang-SC;
+    font-weight:bold;
+    line-height:40rpx;
 }

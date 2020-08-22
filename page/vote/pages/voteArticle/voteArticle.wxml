@@ -47,7 +47,8 @@
             </view>
         </view>
     </view>
-
+    <!-- 返回首页 -->
+    <view class="goHome" catchtap="goVoteIndex"><text>返回首页</text></view>
     <view class="article-comment">
         <view class="comment-nav">
             <text class="nav-title">评论 {{total > 0 ? total : ''}}</text>

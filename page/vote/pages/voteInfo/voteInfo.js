@@ -18,11 +18,30 @@ Page({
       title: "首次进入提示去邀请并且关注公众号才算",
     });
   },
+  showToast(title) {
+    wx.showToast({
+      title,
+      icon: "none",
+      duration: 1500,
+    });
+  },
+  toRefresh() {
+    app.vote
+      .getTaskList()
+      .then((res) => {
+        this.showToast("鲜花数已更新,做任务获得更多鲜花");
+        this.setData({
+          flowers: res.data.flowers,
+        });
+      })
+      .catch((err) => {
+        this.showToast(err.msg);
+      });
+  },
   getTaskList() {
     app.vote
       .getTaskList()
       .then((res) => {
-        console.log(res);
         this.setData({
           taskList: res.data.task,
           shareMessage: res.data.share_message,
@@ -30,7 +49,7 @@ Page({
         });
       })
       .catch((err) => {
-        console.log(err);
+        this.showToast(err.msg);
       });
   },
   getMySendList(page = 1) {
@@ -51,7 +70,7 @@ Page({
         });
       })
       .catch((err) => {
-        console.log(err);
+        this.showToast(err.msg);
       });
   },
   performTask(e) {
@@ -101,11 +120,8 @@ Page({
   getTaskPrize(task_id) {
     app.vote.getTaskPrize({ task_id }).then((res) => {
       console.log(res);
-      wx.showToast({
-        title: res.msg,
-        icon: "none",
-        duration: 1500,
-      });
+      this.showToast(res.msg);
+      this.getTaskList();
     });
   },
   toDetail(e) {
@@ -137,20 +153,18 @@ Page({
     if (this.data.total_page > this.data.page) {
       this.getMySendList(this.data.page + 1);
     } else {
-      wx.showToast({
-        icon: "none",
-        title: "已经到底了哦",
-        duration: 1000,
-      });
+      this.showToast("已经到底了哦");
     }
   },
   onShareAppMessage() {
-    console.log("分享");
     let uid = wx.getStorageSync("userInfo").id;
+    console.log("分享", this.data.shareMessage.title);
+    let title = this.data.shareMessage.title;
+    let imageUrl = this.data.shareMessage.image;
     return {
-      title: this.data.shareMessage.title,
+      title,
       path: "/page/vote/pages/voteIndex/voteIndex?type=share&vote=1&uid=" + uid, // 路径，传递参数到指定页面。
-      imageUrl: this.data.shareMessage.image,
+      imageUrl,
     };
   },
 });

@@ -3,13 +3,7 @@ const app = getApp();
 Page({
   data: {
     hocIndex: 0,
-    item: {
-      id: 2,
-      name: "汪得章",
-      introduce: "这是一个无耻得人",
-      image:
-        "https://xiehui-guanwang.obs.cn-north-1.myhuaweicloud.com:443/uploads/images/20190815%5Ca6dbd1bf97aeb528e2aa6964fb2ab468.jpg",
-    },
+    item: {},
     commentList: [], //评论列表
     page: 1, //当前页码
     total_page: 1, //评论列表总页码
@@ -24,12 +18,7 @@ Page({
     code: "", //二维码
     imgs: "../../images/share-bg.png", //海报背景图片
     shareMessage: {}, //分享信息
-    shareInfo: {
-      id: 63,
-      nickname: "老汪",
-      opus_content:
-        "戴口罩，勤洗手，不聚会，少出门，向一线的医务工作者致敬，为武汉加油！",
-    }, //海报详情
+    shareInfo: {}, //海报详情
     tempImg: "", //canvas临时路径
     jumpUrl: {}, //送花失败展示提示卡片
     showJump: false, //展示跳转卡片
@@ -38,7 +27,7 @@ Page({
     console.log(options);
     if (!options.voteid || options.voteid == "") {
       wx.showToast({
-        title: "参数有误",
+        title: "课程已删除",
         icon: "none",
       });
       // wx.navigateBack();
@@ -53,6 +42,11 @@ Page({
         hocIndex: options.index,
       });
     }
+  },
+  goVoteIndex(){
+    wx.navigateTo({
+      url: '/page/vote/pages/voteIndex/voteIndex'
+    })
   },
   recordShare(options) {
     //记录分享
@@ -161,23 +155,32 @@ Page({
     console.log(e.currentTarget.dataset);
     let { commentid, index } = e.currentTarget.dataset;
     let commentList = this.data.commentList;
-    app.vote
-      .deleteTeacherComment({ comment_id: commentid })
-      .then((res) => {
-        console.log(res);
-        commentList.splice(index, 1);
-        this.setData({
-          commentList,
-        });
-        wx.showToast({
-          title: "删除成功",
-          icon: "success",
-          duration: 2000,
-        });
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    wx.showModal({
+      content: "确定删除该评论?",
+      confirmColor: "#df2020",
+      success:res=>{
+        if(res.confirm) {
+          app.vote
+            .deleteTeacherComment({ comment_id: commentid })
+            .then((res) => {
+              console.log(res);
+              commentList.splice(index, 1);
+              this.setData({
+                commentList,
+              });
+              wx.showToast({
+                title: "删除成功",
+                icon: "success",
+                duration: 2000,
+              });
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        }
+      }
+    });
+    
   },
   getOpusInfo(id) {
     //获取作品信息
@@ -190,6 +193,7 @@ Page({
     // type:1 二维码; 2: 分享卡片
     let type = app.globalData.shareObj.f ? app.globalData.shareObj.f : 2;
     let params = { teacher_id: id, invite_id, type };
+    console.log("data:", params);
     app.vote
       .getOpusInfo(params)
       .then((res) => {
@@ -627,16 +631,16 @@ Page({
   onShareAppMessage() {
     console.log("分享");
     let item = this.data.item;
-    let id = item.id;
     let uid = wx.getStorageSync("userInfo").id;
+    let title = this.data.shareMessage.title
     return {
-      title: this.data.shareMessage.title,
+      title,
       path:
-        "/pages/voteArticle/voteArticle?voteid=" +
-        id +
+        "/page/vote/pages/voteArticle/voteArticle?voteid=" +
+        item.id +
         "&type=share&vote=1&uid=" +
         uid, // 路径，传递参数到指定页面。
-      imageUrl: this.data.shareMessage.image,
+      imageUrl: item.image,
     };
   },
 });

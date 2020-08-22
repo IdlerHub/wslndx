@@ -120,7 +120,8 @@
     font-size:28rpx;
     font-family:PingFangSC-Regular,PingFang SC;
     font-weight:400;
-    color:#F2323A;
+    /* color:#F2323A; */
+    color:#999999;
     line-height:32rpx;
 }
 .mine-info-id{

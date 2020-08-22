@@ -4,7 +4,7 @@
         <view class="item-up" bindtap="toDetail" style="background: {{bgColor}}">
             <view class="item-id">编号{{voteItem.id}}</view>
             <view class="item-img">
-                <image src="{{voteItem.image}}" alt="" mode="aspectFit" lazy-load />
+                <image src="{{voteItem.image}}" alt="" lazy-load />
             </view>
         </view>
         <view class="item-down">
