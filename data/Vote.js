@@ -156,7 +156,23 @@ function toGetHttp(url, params) {
 function getTaskPrize(params) {
   return httpService.post("H5teachers/getTaskPrize", params);
 }
+/** H5teachers/doTask
+ * @description: 做任务(推文)
+ * @param {task_id} 用户任务id
+ * @return:  promise
+ * **/
+function doTask(params) {
+  return httpService.post("H5teachers/doTask", params);
+}
 
+/** H5teachers/getSign
+ * @description: 签到任务
+ * @param {} 
+ * @return:  promise
+ * **/
+function getSign() {
+  return httpService.post("H5teachers/getSign");
+}
 module.exports = {
   // getAllProvince,
   // getCity,
@@ -178,4 +194,6 @@ module.exports = {
   deleteTeacherComment,
   toGetHttp,
   getTaskPrize,
+  doTask,
+  getSign,
 };

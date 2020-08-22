@@ -288,8 +288,8 @@
 width:630rpx;
 height:940rpx;
 overflow: hidden;
-/* opacity: 0; */
-/* position: fixed;
+/* opacity: 0;
+position: fixed;
 top: -1000px;
 left: -1000px; */
 position: fixed;
@@ -525,7 +525,14 @@ height: 100%;
 border-top-left-radius: 10rpx;
 border-top-right-radius: 10rpx;
 }
-
+.integration .dialog .bg .share-jump{
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  opacity: 0;
+}
 .integration .dialog icon {
 margin-top: 48rpx;
 }

@@ -90,7 +90,7 @@ Page({
     });
   },
   getData(id) {
-    return Promise.all([this.getOpusInfo(id), this.getTeacherComment(id)]);
+    return Promise.all([this.getOpusInfo(id), this.getTeacherComment(id)],this.getPosterInfo(id));
   },
   showWrite(e) {
     if (this.data.$state.userInfo.status !== "normal") {
@@ -221,28 +221,27 @@ Page({
     //获取海报信息
     console.log("分享");
     let params = { teacher_id };
-    let that = this;
+    // let that = this;
     app.vote.getPosterInfo(params).then((res) => {
       wx.hideLoading();
       this.setData({
         shareInfo: res.data,
         shareFlag: false,
-        sharePoster: true,
       });
       console.log(this.data.shareInfo);
       //这里需要下载对应的网络图片资源并且开始绘画canvas
-      this.downloadImg(this.data.shareInfo.avatar, "userImg");
-      this.downloadImg(this.data.shareInfo.image, "showImg");
-      this.downloadImg(this.data.shareInfo.qrcode_url, "code"); //二维码下载
-      setTimeout(() => {
-        wx.getSystemInfo({
-          success: function (res) {
-            var v = 750 / res.windowWidth; //获取手机比例
-            // let system = res.system
-            that.drawPoster(v);
-          },
-        });
-      }, 1000);
+      // this.downloadImg(this.data.shareInfo.avatar, "userImg");
+      // this.downloadImg(this.data.shareInfo.image, "showImg");
+      // this.downloadImg(this.data.shareInfo.qrcode_url, "code"); //二维码下载
+      // setTimeout(() => {
+      //   wx.getSystemInfo({
+      //     success: function (res) {
+      //       var v = 750 / res.windowWidth; //获取手机比例
+      //       // let system = res.system
+      //       that.drawPoster(v);
+      //     },
+      //   });
+      // }, 1000);
     }).catch(err=>{
       wx.hideLoading();
       wx.showToast({
@@ -284,12 +283,30 @@ Page({
     });
   },
   shareImg(e) {
+    let that = this;
     //点击生成海报
     wx.showLoading({
       title: "图片生成中...",
       mask: true,
     });
-    this.getPosterInfo(this.data.item.id);
+    this.setData({
+      sharePoster: true,
+    });
+    //这里需要下载对应的网络图片资源并且开始绘画canvas
+    this.downloadImg(this.data.shareInfo.avatar, "userImg");
+    this.downloadImg(this.data.shareInfo.image, "showImg");
+    this.downloadImg(this.data.shareInfo.qrcode_url, "code"); //二维码下载
+    setTimeout(() => {
+      wx.hideLoading();
+      wx.getSystemInfo({
+        success: function (res) {
+          var v = 750 / res.windowWidth; //获取手机比例
+          // let system = res.system
+          that.drawPoster(v);
+        },
+      });
+    }, 1000);
+    // this.getPosterInfo(this.data.item.id);
   },
   savePoster() {
     //保存本地
@@ -397,29 +414,27 @@ Page({
     //活动弹窗
     let item = this.data.jumpUrl;
     this.closeJump(); //关闭卡片,跳转
-    // if (item.jump_type == 1) {
-    //   //外连接
-    //   wx.navigateTo({
-    //     url: `../education/education?type=0&url=${item.clickurl}`,
-    //   });
-    // } else if (item.jump_type == 2) {
-    //   //小程序的tab页
-    //   wx.switchTab({
-    //     url: item.clickurl,
-    //   });
-    // } else if (item.jump_type == 4) {
-    //   //小程序内的页面
-    //   wx.navigateTo({
-    //     url: item.clickurl,
-    //   });
-    // }
-    // wx.navigateTo({
-    //   url: `../education/education?url=${e.currentTarget.dataset.peper}&type=0}`
-    // })
+    if(item.type == 1) return //缺少鲜花
+    if (item.jump_type == 1) {
+      //外连接
+      wx.navigateTo({
+        url: `/pages/education/education?type=0&url=${item.clickurl}`,
+      });
+    } else if (item.jump_type == 2) {
+      //小程序的tab页
+      wx.switchTab({
+        url: item.clickurl,
+      });
+    } else if (item.jump_type == 4) {
+      //小程序内的页面
+      wx.navigateTo({
+        url: item.clickurl,
+      });
+    }
   },
   closeJump() {
     this.setData({
-      showJump: flase,
+      showJump: false,
     });
   },
   unshare() {
@@ -458,6 +473,7 @@ Page({
         }
       },
       fail: function(err) {
+        console.log(err)
         wx.showToast({
           title: "图片下载失败",
           icon: 'none',
@@ -495,8 +511,7 @@ Page({
     ctx.lineJoin = "round";
     ctx.lineWidth = 20 / v;
     //作品图片
-    let worksImg = this.data.showImg;
-    ctx.drawImage(worksImg, 30 / v, 157 / v, 570 / v, 380 / v);
+    ctx.drawImage(this.data.showImg, 30 / v, 157 / v, 570 / v, 380 / v);
 
     //作品名称
     // ctx.setFontSize(40 / v);

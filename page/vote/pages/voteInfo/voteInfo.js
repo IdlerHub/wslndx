@@ -72,8 +72,12 @@ Page({
     } else if (task.urltype == 3) {
       //跳转任务页面
       //执行外链接的方法列表
+      this.doTask(task.id);
       this.jumpTask(task);
     }
+  },
+  doTask(task_id) {
+    app.vote.doTask({ task_id });
   },
   //跳转任务
   jumpTask(task) {
@@ -99,9 +103,9 @@ Page({
       console.log(res);
       wx.showToast({
         title: res.msg,
-        icon: 'none',
-        duration: 1500
-      })
+        icon: "none",
+        duration: 1500,
+      });
     });
   },
   toDetail(e) {

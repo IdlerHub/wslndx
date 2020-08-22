@@ -6,7 +6,7 @@ Page({
    */
   data: {
     shareMessage: {}, //分享配置信息
-    activityFlag: false, //活动是否结束(获取最新作品那边传入)
+    // activityFlag: false, //活动是否结束(获取最新作品那边传入)
     showJump: false, //展示跳转卡片
     jumpUrl: {},
     type: 0, //分类的id
@@ -17,8 +17,6 @@ Page({
   },
   pageName: "票选活动首页",
   onLoad(ops) {
-    console.log(ops);
-    console.log("公众号openid", wx.getStorageSync("AccountsId"));
     this.getOpenId(ops);
     wx.showLoading({
       title: "加载中",
@@ -26,6 +24,7 @@ Page({
     this.init().then((res) => {
       wx.hideLoading();
     });
+    this.getSign();
   },
   init() {
     return Promise.all([this.getdata(1), this.getNewestOpus()]);
@@ -42,7 +41,13 @@ Page({
       wx.redirectTo({
         url: `/pages/education/education?voteType=voteIndex&uid=${uid}`,
       });
+      return 
     }
+  },
+  getSign(){
+    app.vote.getSign().then(res=>{
+      console.log(res)
+    })
   },
   toRule() {
     //跳转到活动规则
@@ -103,25 +108,23 @@ Page({
     //活动弹窗
     let item = this.data.jumpUrl;
     this.closeJump(); //关闭卡片,跳转
-    // if (item.jump_type == 1) {
-    //   //外连接
-    //   wx.navigateTo({
-    //     url: `../education/education?type=0&url=${item.clickurl}`,
-    //   });
-    // } else if (item.jump_type == 2) {
-    //   //小程序的tab页
-    //   wx.switchTab({
-    //     url: item.clickurl,
-    //   });
-    // } else if (item.jump_type == 4) {
-    //   //小程序内的页面
-    //   wx.navigateTo({
-    //     url: item.clickurl,
-    //   });
-    // }
-    // wx.navigateTo({
-    //   url: `../education/education?url=${e.currentTarget.dataset.peper}&type=0}`
-    // })
+    if(item.type == 1) return //缺少鲜花
+    if (item.jump_type == 1) {
+      //外连接
+      wx.navigateTo({
+        url: `/pages/education/education?type=0&url=${item.clickurl}`,
+      });
+    } else if (item.jump_type == 2) {
+      //小程序的tab页
+      wx.switchTab({
+        url: item.clickurl,
+      });
+    } else if (item.jump_type == 4) {
+      //小程序内的页面
+      wx.navigateTo({
+        url: item.clickurl,
+      });
+    }
   },
   closeJump() {
     this.setData({
@@ -131,29 +134,29 @@ Page({
   getNewestOpus() {
     let flag = false;
     let showCard = {};
-    let activityFlag = false;
+    // let activityFlag = false;
     let invate_id = wx.getStorageSync("invite") || 0;
     // type:1 二维码; 2: 分享卡片
     let type = app.globalData.shareObj.f ? app.globalData.shareObj.f : 2;
     //获取最新作品顶部轮播
     app.vote.getNewestOpus({ invate_id, type }).then((res) => {
-      // if (res.data.countdown.jump_type) {
-      //   //倒计时
-      //   flag = true;
-      //   showCard = res.data.countdown;
-      // }
-      // if (res.data.overinfo.jump_type) {
-      //   //活动结束
-      //   flag = true;
-      //   showCard = res.data.overinfo;
-      //   activityFlag = true;
-      // }
+      if (res.data.countdown.jump_type) {
+        //倒计时
+        flag = true;
+        showCard = res.data.countdown;
+      }
+      if (res.data.overinfo.jump_type) {
+        //活动结束
+        flag = true;
+        showCard = res.data.overinfo;
+        activityFlag = true;
+      }
       this.setData({
         newProduction: res.data.list,
         shareMessage: res.data.share_message,
         jumpUrl: showCard,
         showJump: flag,
-        activityFlag,
+        // activityFlag,
       });
     });
   },
@@ -193,7 +196,14 @@ Page({
     app.vote
       .praiseOpus(params)
       .then((res) => {
-        this.setLikeData(index);
+        if(res.data.type == 1){
+          this.setLikeData(index);
+        }else {
+          this.setData({
+            jumpUrl: res.data.jump_info,
+            showJump: true,
+          });
+        }
       })
       .catch((err) => {
         wx.showToast({

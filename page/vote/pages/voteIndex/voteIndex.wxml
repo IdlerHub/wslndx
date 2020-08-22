@@ -64,7 +64,9 @@
     <!-- 活动弹窗 -->
     <view class="integration" wx:if="{{showJump}}" catchtouchmove="return">
         <view class="dialog">
-            <view class="bg" style="background: url('{{jumpUrl.image}}') no-repeat center; background-size: 100% 100%;border-radius:10px" mode="aspectFill" catchtap="jumpPeper"></view>
+            <view class="bg" style="background: url('{{jumpUrl.image}}') no-repeat center; background-size: 100% 100%;border-radius:10px" mode="aspectFill">
+                <button class="share-jump" open-type="{{jumpUrl.type==1 ? 'share' : ''}}" catchtap="jumpPeper"></button>
+            </view>
             <icon type="cancel" size="37" color="white" data-id="0" catchtap="closeJump"></icon>
         </view>
     </view>
