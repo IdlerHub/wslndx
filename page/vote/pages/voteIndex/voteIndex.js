@@ -147,11 +147,6 @@ Page({
     console.log("data:", invite_id, type);
     //获取最新作品顶部轮播
     app.vote.getNewestOpus({ invite_id, type }).then((res) => {
-      if (res.data.publicinfo.jump_type) {
-        //未关注公众号
-        flag = true;
-        showCard = res.data.publicinfo;
-      }
       if (res.data.countdown.jump_type) {
         //倒计时
         flag = true;
@@ -162,6 +157,11 @@ Page({
         flag = true;
         showCard = res.data.overinfo;
         // activityFlag = true;
+      }
+      if (res.data.publicinfo.jump_type) {
+        //未关注公众号
+        flag = true;
+        showCard = res.data.publicinfo;
       }
       this.setData({
         newProduction: res.data.list,
