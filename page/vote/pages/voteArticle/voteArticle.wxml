@@ -81,15 +81,15 @@
     <view class="send-comment">
         <view class="comment-left" catchtap="showWrite">发表观点</view>
         <view class="comment-right">
-            <view class="right-send" wx:if="{{false}}" catchtap="sendFlower">
+            <view class="right-send" wx:if="{{item.flowers}}" catchtap="sendFlower">
                 <image class="bottom-bg" src="../../images/vote-leftbg.png"></image>
-                <image class="img" src="../../images/vote-flowers.png"></image>
-                <view class="send-flowers">送花</view>
+                <image class="img" src="../../images/vote-full-flowers.png" style="margin-right: 15rpx;"></image>
+                <view class="send-flowers">{{item.flowers}}</view>
             </view>
             <view class="right-send" wx:else catchtap="sendFlower">
                 <image class="bottom-bg" src="../../images/vote-leftbg.png"></image>
-                <image class="img" src="../../images/vote-full-flowers.png" style="margin-right: 15rpx;"></image>
-                <view class="send-flowers">1</view>
+                <image class="img" src="../../images/vote-flowers.png"></image>
+                <view class="send-flowers">送花</view>
             </view>
             <view class="right-share" catchtap="shareImg">
                 <image class="bottom-bg" src="../../images/vote-rightbg.png"></image>

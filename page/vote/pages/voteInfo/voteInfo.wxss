@@ -84,7 +84,6 @@
 }
 .left-text .text-first,
 .right-text .text-first{
-    width:88rpx;
     height:56rpx;
     font-size:40rpx;
     font-family:PingFang-SC-Bold,PingFang-SC;
