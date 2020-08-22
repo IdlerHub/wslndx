@@ -215,7 +215,7 @@ page{
   /* align-items: center; */
   background:#C60601;
   min-height: 390rpx;
-  padding-bottom: 150rpx;
+  padding-bottom: 170rpx;
   /* padding-bottom: 188rpx; */
   
 }
@@ -226,7 +226,7 @@ page{
 }
 .vote-item{
   width: 330rpx;
-  height: 428rpx;
+  height: 448rpx;
   margin-right: 30rpx;
   margin-bottom: 30rpx;
   overflow: hidden;

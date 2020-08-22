@@ -4,7 +4,7 @@
 }*/
 .vote-item{
   width: 330rpx;
-  height: 428rpx;
+  height: 448rpx;
   margin-right: 30rpx;
   margin-bottom: 30rpx;
   overflow: hidden;
@@ -12,7 +12,8 @@
 } 
 
 .item-up{
-  height: 220rpx;
+  /* height: 220rpx; */
+  height: 240rpx;
   /* background: #0071B3; */
   position: relative;
   overflow: hidden;
@@ -100,8 +101,8 @@
   right: 10rpx;
 }
 .item-down{
-  height: 208rpx;
-  background: white;
+  height: 228rpx;
+  background: #fff;
 }
 .item-name{
   padding-top: 12rpx;
