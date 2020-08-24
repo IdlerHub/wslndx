@@ -65,7 +65,6 @@ Page({
       });
     }
   },
-  onShow: function () {},
   init() {
     //监听键盘变化
     wx.onKeyboardHeightChange((res) => {
@@ -508,7 +507,7 @@ Page({
     let that = this;
     let ratio = 0.5;
     let ctx = wx.createCanvasContext("poster", this);
-    ctx.drawImage(this.data.imgs, 0, 0, 630 / v, 812 / v);
+    ctx.drawImage(this.data.imgs, 0, 0, 660 / v, 814 / v);
     ctx.save();
     ctx.beginPath();
     //头部
@@ -547,17 +546,17 @@ Page({
     //可以尝试切割字符串,循环数组,达到换行的效果
     let info = this.data.shareInfo.brief;
     let len = 0;
-    if (info.length > 15 && info.length < 30) {
-      //两行以内
-      for (var a = 0; a < 2; a++) {
-        let content = info.substr(len, 15);
-        len += 15;
+    if (info.length > 14 && info.length < 42) {
+      //三行以内
+      for (var a = 0; a < 3; a++) {
+        let content = info.substr(len, 14);
+        len += 14;
         ctx.fillText(content, 30 * ratio, (598 + a * 48) / v);
       }
-    } else if (info.length > 30) {
+    } else if (info.length > 42) {
       //超过三行
-      let con1 = info.substr(len, 15);
-      let con2 = info.substr(15, 14) + "...";
+      let con1 = info.substr(len, 14);
+      let con2 = info.substr(14, 12) + "...";
       ctx.fillText(con1, 30 * ratio, 598 / v);
       ctx.fillText(con2, 30 * ratio, (598 + 48) / v);
     } else {
