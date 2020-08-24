@@ -43,10 +43,10 @@ Page({
       });
     }
   },
-  goVoteIndex(){
+  goVoteIndex() {
     wx.navigateTo({
-      url: '/page/vote/pages/voteIndex/voteIndex'
-    })
+      url: "/page/vote/pages/voteIndex/voteIndex",
+    });
   },
   recordShare(options) {
     //记录分享
@@ -84,7 +84,10 @@ Page({
     });
   },
   getData(id) {
-    return Promise.all([this.getOpusInfo(id), this.getTeacherComment(id)],this.getPosterInfo(id));
+    return Promise.all(
+      [this.getOpusInfo(id), this.getTeacherComment(id)],
+      this.getPosterInfo(id)
+    );
   },
   showWrite(e) {
     if (this.data.$state.userInfo.status !== "normal") {
@@ -158,8 +161,8 @@ Page({
     wx.showModal({
       content: "确定删除该评论?",
       confirmColor: "#df2020",
-      success:res=>{
-        if(res.confirm) {
+      success: (res) => {
+        if (res.confirm) {
           app.vote
             .deleteTeacherComment({ comment_id: commentid })
             .then((res) => {
@@ -178,9 +181,8 @@ Page({
               console.log(err);
             });
         }
-      }
+      },
     });
-    
   },
   getOpusInfo(id) {
     //获取作品信息
@@ -213,7 +215,7 @@ Page({
       })
       .catch((err) => {
         wx.hideLoading();
-        console.log(err)
+        console.log(err);
         wx.showToast({
           title: err.msg,
           icon: "none",
@@ -226,34 +228,37 @@ Page({
     console.log("分享");
     let params = { teacher_id };
     // let that = this;
-    app.vote.getPosterInfo(params).then((res) => {
-      wx.hideLoading();
-      this.setData({
-        shareInfo: res.data,
-        shareFlag: false,
-      });
-      console.log(this.data.shareInfo);
-      //这里需要下载对应的网络图片资源并且开始绘画canvas
-      // this.downloadImg(this.data.shareInfo.avatar, "userImg");
-      // this.downloadImg(this.data.shareInfo.image, "showImg");
-      // this.downloadImg(this.data.shareInfo.qrcode_url, "code"); //二维码下载
-      // setTimeout(() => {
-      //   wx.getSystemInfo({
-      //     success: function (res) {
-      //       var v = 750 / res.windowWidth; //获取手机比例
-      //       // let system = res.system
-      //       that.drawPoster(v);
-      //     },
-      //   });
-      // }, 1000);
-    }).catch(err=>{
-      wx.hideLoading();
-      wx.showToast({
-        title: err.msg,
-        icon: "none",
-        duration: 1000
+    app.vote
+      .getPosterInfo(params)
+      .then((res) => {
+        wx.hideLoading();
+        this.setData({
+          shareInfo: res.data,
+          shareFlag: false,
+        });
+        console.log(this.data.shareInfo);
+        //这里需要下载对应的网络图片资源并且开始绘画canvas
+        // this.downloadImg(this.data.shareInfo.avatar, "userImg");
+        // this.downloadImg(this.data.shareInfo.image, "showImg");
+        // this.downloadImg(this.data.shareInfo.qrcode_url, "code"); //二维码下载
+        // setTimeout(() => {
+        //   wx.getSystemInfo({
+        //     success: function (res) {
+        //       var v = 750 / res.windowWidth; //获取手机比例
+        //       // let system = res.system
+        //       that.drawPoster(v);
+        //     },
+        //   });
+        // }, 1000);
       })
-    });
+      .catch((err) => {
+        wx.hideLoading();
+        wx.showToast({
+          title: err.msg,
+          icon: "none",
+          duration: 1000,
+        });
+      });
   },
   getTeacherComment(id, page = 1) {
     let params = { teacher_id: id, page };
@@ -418,7 +423,7 @@ Page({
     //活动弹窗
     let item = this.data.jumpUrl;
     this.closeJump(); //关闭卡片,跳转
-    if(item.type == 1) return //缺少鲜花
+    if (item.type == 1) return; //缺少鲜花
     if (item.jump_type == 1) {
       //外连接
       wx.navigateTo({
@@ -446,43 +451,56 @@ Page({
       sharePoster: false,
     });
   },
+  setImage(res, data) {
+    let _this = this;
+    switch (data) {
+      case "code":
+        _this.setData({
+          code: res.tempFilePath,
+        });
+        break;
+      case "userImg":
+        _this.setData({
+          userImg: res.tempFilePath,
+        });
+        break;
+      case "showImg":
+        _this.setData({
+          showImg: res.tempFilePath,
+        });
+        break;
+      default:
+        //没有下载
+        break;
+    }
+  },
   downloadImg(url, data) {
-    let that = this;
+    let _this = this;
     wx.downloadFile({
       url: url,
       success: function (res) {
         if (res.statusCode === 200) {
-          switch (data) {
-            case "code":
-              that.setData({
-                code: res.tempFilePath,
-              });
-              break;
-            case "userImg":
-              that.setData({
-                userImg: res.tempFilePath,
-              });
-              break;
-            case "showImg":
-              that.setData({
-                showImg: res.tempFilePath,
-              });
-              break;
-            default:
-              //没有下载
-              break;
-          }
-        }else {
-          console.log(res)
+          _this.setImage(res, data);
+        } else {
+          console.log(res);
         }
       },
-      fail: function(err) {
-        console.log(err)
-        wx.showToast({
-          title: "图片下载失败",
-          icon: 'none',
-          duration: 1000
-        })
+      fail: function (err) {
+        console.log(err);
+        //获取网络图片临时目录path
+        wx.getImageInfo({
+          src: url,
+          success: function (res) {
+            //res.path是网络图片的本地地址
+            _this.setImage(res, data);
+          },
+          fail: function (res) {},
+        });
+        // wx.showToast({
+        //   title: "图片下载失败",
+        //   icon: 'none',
+        //   duration: 1000
+        // })
       },
     });
   },
@@ -556,7 +574,7 @@ Page({
     // ctx.lineWidth = 20 / v;
 
     ctx.fillRect(0 / v, 740 / v, 630 / v, 235 / v);
-    ctx.drawImage(this.data.code, 30 / v, 761 / v, 153 / v, 153 / v);
+    ctx.drawImage(this.data.code, 30 / v, 761 / v, 170 / v, 170 / v);
     ctx.setFontSize(40 / v);
     ctx.setFillStyle("#666666");
     ctx.fillText("长按识别二维码", 210 / v, 826 / v);
@@ -632,7 +650,7 @@ Page({
     console.log("分享");
     let item = this.data.item;
     let uid = wx.getStorageSync("userInfo").id;
-    let title = this.data.shareMessage.title
+    let title = this.data.shareMessage.title;
     return {
       title,
       path:

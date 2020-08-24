@@ -62,11 +62,14 @@
     width: 100%;
     padding: 30rpx;
     box-sizing: border-box;
+    display: flex;
+    justify-content: center;
 }
 .article-comment .none-list .none-comment{
     width: 470rpx;
-    height: 434rpx;
-    margin: 55rpx 140rpx 69rpx 140rpx;
+    height: 356rpx;
+    /* margin: 25rpx 140rpx 69rpx 140rpx; */
+    margin-top: 25rpx;
 }
 .article-comment .comment-list{
     width: 100%;
@@ -290,14 +293,14 @@
 width:630rpx;
 height:940rpx;
 overflow: hidden;
-opacity: 0;
+/* opacity: 0;
 position: fixed;
 top: -1000px;
-left: -1000px;
-/* position: fixed;
+left: -1000px; */
+position: fixed;
 top: 0;
 left: 0;
-z-index: 101; */
+z-index: 101;
 }
 
 .show-img{
@@ -422,15 +425,18 @@ z-index: 101; */
     bottom: 0;
     left: 0;
     right: 0;
-    height: 153rpx;
+    /* height: 153rpx; */
+    height: 170rpx;
     padding: 21rpx 30rpx;
     display: flex;
     border-radius: 0 0 20rpx 20rpx;
     align-items: center;
 }
 .canvas-code{
-    width: 153rpx;
-    height: 153rpx;
+    /* width: 153rpx;
+    height: 153rpx; */
+    width: 170rpx;
+    height: 170rpx;
     margin-right: 23rpx;
 }
 .code-tip{
@@ -550,7 +556,7 @@ margin-top: 48rpx;
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 100;
+    z-index: 10;
     
 }
 .goHome>text {
