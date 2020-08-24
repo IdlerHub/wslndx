@@ -293,14 +293,14 @@
 width:630rpx;
 height:940rpx;
 overflow: hidden;
-/* opacity: 0;
+opacity: 0;
 position: fixed;
 top: -1000px;
-left: -1000px; */
-position: fixed;
+left: -1000px;
+/* position: fixed;
 top: 0;
 left: 0;
-z-index: 101;
+z-index: 101; */
 }
 
 .show-img{
