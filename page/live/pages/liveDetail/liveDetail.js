@@ -134,15 +134,17 @@ Page({
           item.minute = (item.film_length / 60).toFixed(0);
           item["index"] = index + 1;
         });
-        if (res.data[0].is_end == 1) {
-          //如果是已经结束的课,就把第一个放到当前播放中
-          playNow = res.data[0];
-        }
         _this.setData({
           sublessons: res.data,
-          playNow: playNow,
         });
         _this.order()
+        _this.data.sublessons.forEach(item => {
+          //如果是已经结束的课,就把第一个放到当前播放中
+          item.is_end && JSON.stringify(playNow) == '{}' ? playNow = item : ''
+        })
+        _this.setData({
+          playNow: playNow
+        });
       })
       .catch((err) => {
         console.log(err);

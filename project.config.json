@@ -164,8 +164,8 @@
         },
         {
           "id": 9,
-          "name": "page/live/pages/tableDetail/tableDetail",
-          "pathName": "page/live/pages/tableDetail/tableDetail",
+          "name": "page/live/pages/timetable/timetable",
+          "pathName": "page/live/pages/timetable/timetable",
           "query": "lessonId=8&inviter=22&liveShare=1",
           "scene": null
         },
