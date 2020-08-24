@@ -30,30 +30,33 @@ Page({
     return Promise.all([this.getdata(1), this.getNewestOpus()]);
   },
   getOpenId(ops) {
+    let uid = wx.getStorageSync("userInfo").id;
     if (ops.accounts_openid && ops.accounts_openid != "") {
       wx.setStorageSync("AccountsId", ops.accounts_openid);
-    } else if (wx.getStorageSync("AccountsId") == "") {
+    } else if (wx.getStorageSync("AccountsId") == "" && uid) {
       //如果没有公众号的openId
       //跳转去授权页面
-      let uid = wx.getStorageSync("userInfo").id;
       console.log("没有公众号的openid", uid);
       //voteType表示从哪个页面过去请求,之后方便返回
       wx.redirectTo({
         url: `/pages/education/education?voteType=voteIndex&uid=${uid}`,
       });
-      return 
+      return;
     }
   },
-  getSign(){
-    app.vote.getSign().then(res=>{
-      wx.showToast({
-        title: res.msg,
-        icon: 'none',
-        duration: 1000
+  getSign() {
+    app.vote
+      .getSign()
+      .then((res) => {
+        wx.showToast({
+          title: res.msg,
+          icon: "none",
+          duration: 1000,
+        });
       })
-    }).catch(err=>{
-      console.log(err)
-    })
+      .catch((err) => {
+        console.log(err);
+      });
   },
   toRule() {
     //跳转到活动规则
@@ -83,14 +86,15 @@ Page({
       url: "/page/vote/pages/voteSearch/voteSearch",
     });
   },
-  setLikeData(index) {
+  setLikeData(index, res) {
     wx.showToast({
-      title: "助力成功",
+      title: res.msg,
       icon: "none",
       duration: 2500,
     });
     let work = this.data.productionList[index];
-    if (work.flowers < 10000) work.flowers += 1;
+    // if (work.flowers < 10000) work.flowers += 1;
+    work.flowers += 1;
     let key = "productionList[" + index + "]";
     this.setData({
       [key]: work,
@@ -114,7 +118,7 @@ Page({
     //活动弹窗
     let item = this.data.jumpUrl;
     this.closeJump(); //关闭卡片,跳转
-    if(item.type == 1) return //缺少鲜花
+    if (item.type == 1) return; //缺少鲜花
     if (item.jump_type == 1) {
       //外连接
       wx.navigateTo({
@@ -208,9 +212,9 @@ Page({
     app.vote
       .praiseOpus(params)
       .then((res) => {
-        if(res.data.type == 1){
-          this.setLikeData(index);
-        }else {
+        if (res.data.type == 1) {
+          this.setLikeData(index, res);
+        } else {
           this.setData({
             jumpUrl: res.data.jump_info,
             showJump: true,
@@ -244,7 +248,7 @@ Page({
   onReachBottom() {
     let page = this.data.page;
     if (page < this.data.total_page) {
-      // this.getdata(page + 1);
+      this.getdata(page + 1);
     } else {
       wx.showToast({
         icon: "none",

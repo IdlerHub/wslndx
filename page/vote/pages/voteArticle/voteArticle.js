@@ -33,7 +33,7 @@ Page({
       // wx.navigateBack();
       return;
     }
-    this.getOpenId(options);
+    // this.getOpenId(options);
     this.init();
     this.getData(options.voteid);
     if (options.index) {
@@ -53,11 +53,11 @@ Page({
     // if(options)
   },
   getOpenId(ops) {
+    let uid = wx.getStorageSync("userInfo").id;
     if (ops.accounts_openid && ops.accounts_openid != "") {
       wx.setStorageSync("AccountsId", ops.accounts_openid);
-    } else if (wx.getStorageSync("AccountsId") == "") {
+    } else if (wx.getStorageSync("AccountsId") == "" && uid) {
       //如果没有公众号的openId,跳转去授权页面
-      let uid = wx.getStorageSync("userInfo").id;
       console.log("没有公众号的openid");
       //voteType表示从哪个页面过去请求,之后方便返回
       wx.redirectTo({
@@ -331,7 +331,6 @@ Page({
             1000
           );
           that.unshare();
-          that.shareOff(); //关闭窗口
         },
         fail(err) {
           //授权问题报错
@@ -391,9 +390,15 @@ Page({
       .praiseOpus(params)
       .then((res) => {
         if (res.data.type == 1) {
+          wx.showToast({
+            title: res.msg,
+            icon: "none",
+            duration: 2500,
+          });
           //送花成功
           let work = that.data.item;
-          work.flowers += work.flowers < 10000 ? 1 : 0;
+          // work.flowers += work.flowers < 10000 ? 1 : 0;
+          work.flowers += 1;
           that.setData({
             item: work,
           });
@@ -507,7 +512,7 @@ Page({
     let that = this;
     let ratio = 0.5;
     let ctx = wx.createCanvasContext("poster", this);
-    ctx.drawImage(this.data.imgs, 0, 0, 660 / v, 814 / v);
+    ctx.drawImage(this.data.imgs, 0, 0, 630 / v, 812 / v);
     ctx.save();
     ctx.beginPath();
     //头部

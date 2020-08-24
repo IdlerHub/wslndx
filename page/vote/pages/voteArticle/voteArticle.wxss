@@ -8,6 +8,7 @@
     /* height: 421rpx; */
     height: 536rpx;
     background: #333;
+    border-bottom: 2rpx solid #EDEDED;
 }
 .aritcle-info{
     width: 100%;
@@ -66,10 +67,10 @@
     justify-content: center;
 }
 .article-comment .none-list .none-comment{
-    width: 470rpx;
-    height: 356rpx;
+    width: 365rpx;
+    height: 312rpx;
     /* margin: 25rpx 140rpx 69rpx 140rpx; */
-    margin-top: 25rpx;
+    /* margin-top: 25rpx; */
 }
 .article-comment .comment-list{
     width: 100%;
@@ -163,7 +164,8 @@
     width: 100%;
 }
 .comment-left{
-    width: 354rpx;
+    /* width: 354rpx; */
+    flex: 1;
     height: 80rpx;
     line-height: 80rpx;
     color: #999999;
@@ -188,16 +190,22 @@
     justify-content: center;
     text-align: center;
     border-radius: 45rpx;
-    width: 152rpx;
+    min-width: 152rpx;
     height: 80rpx;
-    font-size:30rpx;
+    font-size: 32rpx;
     font-family:PingFangSC-Medium,PingFang SC;
-    font-weight:500;
+    background: linear-gradient(139deg,#F60600 0%,#FF4B4B 100%);
+    font-weight: bold;
     color:#fff;
     position: relative;
+    padding: 0 20rpx;
+}
+.comment-right .right-share{
+    margin-right: 30rpx;
 }
 .comment-right .right-send{
     margin-right: 16rpx;
+    background: linear-gradient(139deg,#FFA100 0%,#FF6F00 100%);
 }
 .comment-right .img{
     width: 35rpx;
@@ -320,7 +328,7 @@ z-index: 101; */
 }
 .show-con{
     width: 630rpx;
-    height: 940rpx;
+    height: 952rpx;
     margin-bottom: 30rpx;
     position: relative;
 }
@@ -344,8 +352,8 @@ z-index: 101; */
     bottom: 0;
 }
 .share-del{
-    width: 72rpx;
-    height: 72rpx;
+    width: 84rpx;
+    height: 84rpx;
     position: absolute;
     right: -30rpx;
     top: -30rpx;
@@ -382,10 +390,10 @@ z-index: 101; */
 }
 .canvas-works{
     width: 570rpx;
-    height:380rpx;
+    height: 380rpx;
     background:#FF670E;
     border-radius:14rpx;
-    margin-bottom: 22rpx;
+    margin-bottom: 26rpx;
     overflow: hidden;
 }
 .canvas-works image{
@@ -465,7 +473,7 @@ z-index: 101; */
     align-items: center;
 }
 .share-wechat{
-    background: #FF965D;
+    background:linear-gradient(139deg,#FFA100 0%,#FF6F00 100%);
     position: relative;
 }
 .share-wechat>image{
@@ -483,7 +491,7 @@ z-index: 101; */
     z-index: 10;
 }
 .share-img{
-    background: #FF183F;
+    background:linear-gradient(139deg,#F60600 0%,#FF4B4B 100%);
     margin-left: 40rpx;
 }
 .share-img>image{
@@ -548,8 +556,8 @@ margin-top: 48rpx;
     position: fixed;
     right: 10rpx;
     bottom: 289rpx;
-    width: 148rpx;
-    height: 148rpx;
+    width: 138rpx;
+    height: 138rpx;
     border-radius: 50%;
     background: linear-gradient(270deg,#F60600 0%,#FF4B4B 100%);
     box-shadow: 0 3rpx 8rpx #FF1E00;
@@ -557,7 +565,7 @@ margin-top: 48rpx;
     align-items: center;
     justify-content: center;
     z-index: 10;
-    
+    line-height: 54rpx;
 }
 .goHome>text {
     display: inline-block;

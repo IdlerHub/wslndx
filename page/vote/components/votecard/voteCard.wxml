@@ -12,7 +12,7 @@
                 {{voteItem.name}}
             </view>
             <view class="item-subname" bindtap="toDetail">
-                课程: {{voteItem.class_name}}
+                {{voteItem.class_name}}
             </view>
             <view class="item-footer">
                 <view class="item-zan">{{voteItem.flowers}}朵</view>

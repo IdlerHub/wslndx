@@ -17,21 +17,23 @@
   /* background: #0071B3; */
   position: relative;
   overflow: hidden;
+  border-bottom:  2rpx solid #EDEDED;
 }
 .item-up .item-id{
   height: 44rpx;
   line-height: 44rpx;
   display: inline-block;
-  background: rgba(0,0,0,0.6);
+  background: rgba(0,0,0,0.4);
   border-radius:10rpx 0rpx 20rpx 0rpx;
   padding: 2rpx 8rpx;
   color: #fff;
   font-size:28rpx;
   font-family:PingFang-SC-Medium,PingFang-SC;
-  font-weight:500;
+  font-weight: 400;
   position: absolute;
   top: 0;
   left: 0;
+  opacity: 0.8;
 }
 .item-img,
 .item-up .item-img image{
@@ -143,10 +145,10 @@
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
-  max-width: 132rpx;
+  /* max-width: 132rpx; */
 }
 .zan-btn{
-  width:154rpx;
+  width: 150rpx;
   height:56rpx;
   line-height: 56rpx;
   background:#FF2900;

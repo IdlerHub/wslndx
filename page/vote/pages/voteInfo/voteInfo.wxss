@@ -53,7 +53,8 @@
     border-radius: 10rpx;
     background: #fff;
     display: flex;
-    justify-content: center;
+    /* justify-content: center; */
+    padding-left: 30rpx;
     align-items: center;
 }
 
@@ -87,7 +88,7 @@
     height:56rpx;
     font-size:40rpx;
     font-family:PingFang-SC-Bold,PingFang-SC;
-    font-weight: blod;
+    font-weight: bold;
     color:#333;
     line-height:56rpx;
 }
@@ -97,7 +98,7 @@
     font-size:28rpx;
     font-family:PingFangSC-Regular,PingFang SC;
     font-weight:400;
-    color:#666;
+    color:#999;
     line-height:40rpx;
 }
 .right-text .text-first{
@@ -159,19 +160,21 @@
     color:#F2323A;
 }
 .task-item .item-right{
-    width:172rpx;
-    height:80rpx;
+    width: 166rpx;
+    height: 72rpx;
     background:rgba(204,204,204,1);
-    border-radius:40rpx;
-    line-height: 80rpx;
+    border-radius: 36rpx;
+    line-height: 72rpx;
     text-align: center;
-    font-size:40rpx;
+    font-size: 34rpx;
     font-family:PingFang-SC-Medium,PingFang-SC;
-    font-weight:500;
     color:#fff;
 }
 .task-item .item-right-red{
     background: #F2323A;
+}
+.task-item .item-right-y{
+    background: #FFA100;   
 }
 /* 我的投票 */
 .vote-mine{
@@ -215,6 +218,7 @@
     border-radius: 10rpx;
     overflow: hidden;
     margin-right: 30rpx;
+    border: 2rpx solid #EDEDED;
 }
 .mine-item .mine-img>image{
     width: 100%;
@@ -259,7 +263,7 @@
     line-height:32rpx;
 }
 .mine-info-id{
-    width:101rpx;
+    min-width:101rpx;
     height:40rpx;
     font-size:28rpx;
     font-family:PingFangSC-Regular,PingFang SC;

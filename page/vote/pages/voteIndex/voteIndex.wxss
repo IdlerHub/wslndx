@@ -113,13 +113,13 @@ page{
   width: 410rpx;
   height: 100%;
   margin-left: 16rpx;
-  color:#FFB5B0;
+  color:rgba(255,181,176,0.8);
 }
 .search-ipt{
   font-size:36rpx;
   font-family:PingFangSC-Regular,PingFang SC;
   font-weight:400;
-  color:#FFB5B0;
+  color:rgba(255,181,176,0.8);
   line-height:50rpx;
 }
 .search-btn{
@@ -349,7 +349,7 @@ page{
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
-  max-width: 132rpx;
+  /* max-width: 132rpx; */
 }
 .zan-btn{
   width:154rpx;
@@ -359,14 +359,14 @@ page{
   border-radius:28rpx;
 
   text-align: center;
-  font-size:30rpx;
+  font-size:32rpx;
   font-family:PingFangSC-Regular,PingFang SC;
   font-weight:400;
   color:rgba(255,255,255,1);
 }
 .vote-footer{
   position: fixed;
-  bottom: 40rpx;
+  bottom: 80rpx;
   right: 175rpx;
   left: 175rpx;
   display: flex;
@@ -378,10 +378,10 @@ page{
   font-size:44rpx;
   font-family:PingFangSC-Medium,PingFang SC;
   font-weight:500;
-  background:linear-gradient(270deg,rgba(255,7,0,1) 0%,rgba(255,62,26,1) 100%);
-  box-shadow:3rpx 3rpx 12rpx 0rpx rgba(255,30,0,0.7);
+  background:#FF6F00;
+  /* box-shadow:3rpx 3rpx 12rpx 0rpx rgba(255,30,0,0.7); */
   border-radius:54rpx;
-  opacity:0.93;
+  opacity:0.97;
 }
 
 .vote-footer .flowers{
