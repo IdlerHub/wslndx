@@ -643,11 +643,13 @@ Page({
     if (this.data.total_page > this.data.page) {
       this.getTeacherComment(this.data.item.id, this.data.page + 1);
     } else {
-      wx.showToast({
-        icon: "none",
-        title: "已经到底了哦",
-        duration: 1000,
-      });
+      if (this.data.page != 1) {
+        wx.showToast({
+          icon: "none",
+          title: "已经到底了哦",
+          duration: 1000,
+        });
+      }
     }
   },
   onShareAppMessage() {

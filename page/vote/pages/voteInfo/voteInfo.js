@@ -45,7 +45,7 @@ Page({
       .getTaskList()
       .then((res) => {
         this.setData({
-          // isShow: res.data.is_show,
+          isShow: res.data.is_show,
           isShowMessage: res.data.is_show_message,
           taskList: res.data.task,
           shareMessage: res.data.share_message,

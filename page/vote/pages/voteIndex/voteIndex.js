@@ -18,17 +18,19 @@ Page({
   pageName: "票选活动首页",
   onLoad(ops) {
     this.getOpenId(ops);  //获取公众号openid
-    this.init().then((res) => {
-      wx.hideLoading();
-      this.getSign();
-    });
+    this.init();
   },
   init() {
     if (wx.getStorageSync("AccountsId") != "") {
       wx.showLoading({
         title: "加载中",
       });
-      return Promise.all([this.getdata(1), this.getNewestOpus()]);
+      return Promise.all([this.getdata(1), this.getNewestOpus()]).then(
+        (res) => {
+          wx.hideLoading();
+          this.getSign();
+        }
+      );
     }
   },
   getOpenId(ops) {
@@ -252,11 +254,13 @@ Page({
     if (page < this.data.total_page) {
       this.getdata(page + 1);
     } else {
-      wx.showToast({
-        icon: "none",
-        title: "已经没有数据了哦",
-        duration: 1000,
-      });
+      if (this.data.page != 1) {
+        wx.showToast({
+          icon: "none",
+          title: "已经到底了哦",
+          duration: 1000,
+        });
+      }
     }
   },
 });
