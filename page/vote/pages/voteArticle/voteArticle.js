@@ -33,7 +33,7 @@ Page({
       // wx.navigateBack();
       return;
     }
-    // this.getOpenId(options);
+    this.getOpenId(options);
     this.init();
     this.getData(options.voteid);
     if (options.index) {

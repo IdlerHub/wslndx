@@ -17,17 +17,19 @@ Page({
   },
   pageName: "票选活动首页",
   onLoad(ops) {
-    this.getOpenId(ops);
-    wx.showLoading({
-      title: "加载中",
-    });
+    this.getOpenId(ops);  //获取公众号openid
     this.init().then((res) => {
       wx.hideLoading();
       this.getSign();
     });
   },
   init() {
-    return Promise.all([this.getdata(1), this.getNewestOpus()]);
+    if (wx.getStorageSync("AccountsId") != "") {
+      wx.showLoading({
+        title: "加载中",
+      });
+      return Promise.all([this.getdata(1), this.getNewestOpus()]);
+    }
   },
   getOpenId(ops) {
     let uid = wx.getStorageSync("userInfo").id;

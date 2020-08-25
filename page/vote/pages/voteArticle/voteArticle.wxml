@@ -24,8 +24,7 @@
                 </view>
                 <view class="canvas-info">
                     <!-- <view class="canvas-name">{{shareInfo.opus_name}}</view> -->
-                    <!-- <view class="canvas-content">{{shareInfo.brief}}</view> -->
-                    <view class="canvas-content">势头见到不海带结大的激动的平稳期间可全面水电卡就是点击傲娇地哦基础垃圾吊降低欧美男你是低价将的</view>
+                    <view class="canvas-content">{{shareInfo.brief}}</view>
                 </view>
                 <view class="canvas-footer">
                     <image class="canvas-code" src="{{shareInfo.qrcode_url}}" alt="" />

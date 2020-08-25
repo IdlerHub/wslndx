@@ -15,7 +15,7 @@ if (env == "develop") {
   imgHost =
     "https://hwcdn.jinlingkeji.cn/images/dev"; /* 图片等静态资源服务器 */
   activityUrl = "https://gqjydev.jinlingkeji.cn/?"; /* 国情教育链接 */
-  API_URL = `https://lndxdev.jinlingkeji.cn/api/${mpVersion}/`; /* 数据服务器 */
+  API_URL = `https://lndxtest.jinlingkeji.cn/api/${mpVersion}/`; /* 数据服务器 */
   socket_host = "develop.jinlingkeji.cn:8182";
 } else if (env == "production") {
   /* 发布环境 */
