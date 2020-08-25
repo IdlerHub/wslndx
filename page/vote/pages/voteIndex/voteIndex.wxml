@@ -1,0 +1,73 @@
+<!-- page/vote/pages/voteIndex/voteIndex.wxml -->
+<view class="vote">
+    <view class="vote-header">
+        <!-- <image class="vote-img" src="{{$state.imgHost}}/vote-bg.png" alt="" /> -->
+        <view class="header-left">
+            <image src="../../images/vote-talk.png" alt="" />
+            <swiper autoplay interval="2000" vertical circular class="text">
+                <swiper-item wx:for="{{newProduction}}" wx:key="index" class="swiper-item">
+                    用户{{item.mobile}}送了#{{item.name}}1朵花
+                </swiper-item>
+            </swiper>
+        </view>
+        <view class="header-right" catchtap="toRule">
+            <image src="../../images/vote-rule.png" class="rule"></image>
+            <view class="rule-text">活动规则</view>
+        </view>
+    </view>
+    <!-- <view class="header-none" style="{{styleNone}}"></view> -->
+    <view class="vote-search" catchtap="toSearch">
+        <view class="search-left">
+            <image src="../../images/vote-search.png" alt="" />
+            <input type="text" placeholder="请输入姓名或编号" placeholder-class="search-ipt" disabled />
+        </view>
+        <view class="search-btn">搜索</view>
+    </view>
+    <view class="vote-body">
+        <block wx:if="{{productionList.length}}">
+            <view class="vote-list">
+                <block wx:for="{{productionList}}" wx:key="index">
+                    <view class="vote-item">
+                        <voteCard bind:giveLike="giveLike" voteItem="{{item}}" voteIndex="{{index}}"></voteCard>
+                    </view>
+                </block>
+            </view>
+        </block>
+        <block wx:else>
+            <view class="vote-none">
+                <view class="none-con">
+                    <!-- <image src="/images/vote-none.png" alt="" /> -->
+                    <text>暂无作品展示</text>
+                </view>
+            </view>
+        </block>
+    </view>
+    <view class="vote-footer" catchtap="toInfo">
+        <!-- <image src="../../images/vote-btn.png" alt="" /> -->
+        <!-- 活动是否结束 -->
+        <!-- <view class="footer-left" catchtap="toWinner" wx:if="{{activityFlag}}">
+            <image class="winner" src="../../images/vote-winner.png" alt="" />
+            <text>查看获奖</text>
+        </view>
+        <view class="footer-left" catchtap="join" wx:else>
+            <image src="../../images/vote-join.png" alt="" />
+            <text>我要参赛</text>
+        </view>
+
+        <view class="footer-right" catchtap="works">
+            <image src="../../images/vote-myproduction.png" alt="" />
+            <text>我的作品</text>
+        </view> -->
+        <image class="flowers" src="../../images/vote-full-flowers.png" alt="" />
+        <view>领鲜花</view>
+    </view>
+    <!-- 活动弹窗 -->
+    <view class="integration" wx:if="{{showJump}}" catchtouchmove="return">
+        <view class="dialog">
+            <view class="bg" style="background: url('{{jumpUrl.image}}') no-repeat center; background-size: 100% 100%;border-radius:10px" mode="aspectFill">
+                <button class="share-jump" open-type="{{jumpUrl.type==1 ? 'share' : ''}}" catchtap="jumpPeper"></button>
+            </view>
+            <icon type="cancel" size="37" color="white" data-id="0" catchtap="closeJump"></icon>
+        </view>
+    </view>
+</view>

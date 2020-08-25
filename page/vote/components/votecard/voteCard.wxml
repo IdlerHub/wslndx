@@ -1,0 +1,25 @@
+<!--page/vote/components/votecard/voteCard.wxml-->
+<view class="vote-item" id="list-item-{{skeletonId}}">
+    <block wx:if="{{showSlot}}">
+        <view class="item-up" bindtap="toDetail" style="background: {{bgColor}}">
+            <view class="item-id">编号{{voteItem.id}}</view>
+            <view class="item-img">
+                <image src="{{voteItem.image}}" alt="" lazy-load />
+            </view>
+        </view>
+        <view class="item-down">
+            <view class="item-name" bindtap="toDetail">
+                {{voteItem.name}}
+            </view>
+            <view class="item-subname" bindtap="toDetail">
+                {{voteItem.class_name}}
+            </view>
+            <view class="item-footer">
+                <view class="item-zan">{{voteItem.flowers}}朵</view>
+                <view class="zan-btn" catchtap="giveLike">
+                    送花助力
+                </view>
+            </view>
+        </view>
+    </block>
+</view>

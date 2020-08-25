@@ -1,0 +1,7 @@
+{
+  "usingComponents": {
+    "voteCard": "/page/vote/components/votecard/voteCard"
+  },
+  "navigationBarTitleText": "助力教师送好礼",
+  "enablePullDownRefresh": true
+}

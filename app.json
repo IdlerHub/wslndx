@@ -19,7 +19,6 @@
     "components/recruitShare/recruitShare",
     "pages/withdraw/withdraw",
     "pages/withdrawalRecord/withdrawalRecord",
-    "pages/myProduction/myProduction",
     "pages/liveList/liveList",
     "pages/gamePage/gamePage",
     "pages/webPay/webPay",
@@ -121,6 +120,16 @@
         "pages/timetableList/timetableList",
         "pages/liveDetail/liveDetail",
         "pages/liveSearch/liveSearch"
+      ]
+    },
+    {
+      "root": "page/vote/",
+      "pages": [
+        "pages/voteIndex/voteIndex",
+        "pages/voteArticle/voteArticle",
+        "pages/voteInfo/voteInfo",
+        "pages/voteSearch/voteSearch",
+        "pages/voteRule/voteRule"
       ]
     }
   ],

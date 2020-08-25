@@ -1,0 +1,204 @@
+.search{
+    margin: 30rpx 34rpx 0 30rpx;
+    height: 88rpx;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.search-left{
+    width: 530rpx;
+    height: 100%;
+    background: #F7F7F7;
+    display: flex;
+    align-items: center;
+    padding-left: 23rpx;
+    padding-right: 30rpx;
+    border-radius: 8rpx;
+    position: relative;
+}
+.item-voteid{
+  height: 44rpx;
+  line-height: 44rpx;
+  display: inline-block;
+  background: rgba(0,0,0,0.6);
+  border-radius:10rpx 0rpx 20rpx 0rpx;
+  padding: 2rpx 8rpx;
+  color: #fff;
+  font-size:28rpx;
+  font-family:PingFang-SC-Medium,PingFang-SC;
+  font-weight:500;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.search-right{
+    flex: 1;
+    margin-left: 30rpx;
+    height: 100%;
+    line-height: 88rpx;
+    text-align: center;
+    font-size:36rpx;
+    font-family:PingFangSC-Regular,PingFang SC;
+    font-weight:400;
+    color:rgba(51,51,51,1);
+}
+.search-left input{
+    width: 430rpx;
+    margin-left: 11rpx;
+    font-size: 36rpx;
+}
+
+.production-list{
+    margin: 0 30rpx;
+}
+.mine-list .mine-item{
+    display: flex;
+    align-items: center;
+    padding: 30rpx;
+    height: 160rpx;
+    position: relative;
+}
+.mine-list .mine-item::after{
+    content: "";
+    height: 2rpx;
+    position: absolute;
+    background: #E9E9E9;
+    bottom: 0;
+    left: 30rpx;
+    right: 30rpx;
+    box-sizing: border-box;
+}
+.mine-list .mine-item:last-child::after{
+    position: relative;
+}
+.mine-item .mine-img{
+    width: 260rpx;
+    height: 160rpx;
+    border-radius: 10rpx;
+    overflow: hidden;
+    margin-right: 30rpx;
+    border: 2rpx solid #EDEDED;
+}
+.mine-item .mine-img>image{
+    width: 100%;
+    height: 100%;
+}
+.mine-info{
+    flex: 1;
+    height: 100%;
+    display: flex;
+    justify-content: space-around;
+    flex-direction: column;
+}
+.mine-info .mine-info-name{
+    max-width: 240rpx;
+    height:56rpx;
+    font-size:40rpx;
+    font-family:PingFang-SC-Bold,PingFang-SC;
+    font-weight:bold;
+    color:#3A3A3A;
+    line-height:56rpx;
+    margin-bottom: 2rpx;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+.mine-info .mine-info-subname{
+    max-width: 350rpx;
+    height:40rpx;
+    font-size:28rpx;
+    font-family:PingFangSC-Regular,PingFang SC;
+    font-weight:400;
+    color:#666666;
+    line-height:40rpx;
+    margin-bottom: 23rpx;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.mine-info .mine-info-number{
+    height:32rpx;
+    font-size:28rpx;
+    font-family:PingFangSC-Regular,PingFang SC;
+    font-weight:400;
+    /* color:#F2323A; */
+    color:#999999;
+    line-height:32rpx;
+}
+.mine-info-id{
+    width:101rpx;
+    height:40rpx;
+    font-size:28rpx;
+    font-family:PingFangSC-Regular,PingFang SC;
+    font-weight:400;
+    color:#999999;
+    line-height:40rpx;
+    position: absolute;
+    top: 38rpx;
+    right: 30rpx;
+}
+
+.none-production{
+    display: flex;
+    justify-content: space-around;
+    flex-flow: column;
+    align-items: center;
+    margin-top: 50rpx;
+}
+.none-production .none-img{
+    margin-top: 150rpx;
+    width: 472rpx;
+    height: 284rpx;
+    margin-bottom: 10rpx;
+}
+.none-production .none-content{
+    text-align: center;
+    height:53rpx;
+    font-size:38rpx;
+    font-family:PingFangSC-Regular,PingFang SC;
+    font-weight:400;
+    color:rgba(153,153,153,1);
+    line-height:53rpx;
+}
+.history-list{
+    margin: 0 30rpx;
+}
+.history-item{
+    height: 42rpx;
+    line-height: 42rpx;
+    padding-top: 48rpx;
+    padding-bottom: 30rpx;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2rpx solid #EDEDED;
+    
+}
+
+.history-left{
+    flex: 1;
+    display: flex;
+    align-items: center;
+}
+.history-left text{
+    max-width: 530rpx;
+    font-size:36rpx;
+    font-family:PingFangSC-Regular,PingFang SC;
+    font-weight:400;
+    color:rgba(46,46,46,1);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.history-left image{
+    width: 42rpx;
+    height: 42rpx;
+    margin-right: 17rpx;
+}
+.history-right{
+    height: 100%;
+}
+.history-right image{
+    width: 30rpx;
+    height: 30rpx;
+}

@@ -17,6 +17,16 @@ Page({
       this.setData({
         url: webURL + "?id=" + id
       });
+    }else if(options.voteType){ //获取公众号openid
+      // let webURL = `https://enrollmenth5dev.jinlingkeji.cn/#/?voteType=voteIndex&uid=${options.uid}`;
+      let webURL = `https://authorization.jinlingkeji.cn/#/?voteType=voteIndex&uid=${options.uid}`;
+      if (options.voteType == "voteArticle") {
+        // 从详情页跳转过来获取公众号的openId
+        webURL = `https://authorization.jinlingkeji.cn/#/?voteType=voteArticle&voteid=${options.voteid}&uid=${options.uid}`;
+      }
+      this.setData({
+        url: webURL,
+      });
     }
 
     if (!options.type) {
@@ -26,7 +36,12 @@ Page({
         opstObj[item.split("=")[0]] = item.split("=")[1];
       });
     } else {
-      if(options.type == "live"){
+      if(options.type == 'task'){ //票选活动页面任务
+        const event = this.getOpenerEventChannel();
+        event.on(options.type, (data) => {
+          this.junmpOut(data.url);
+        });
+      }else if(options.type == "live"){ //直播课
         const event = this.getOpenerEventChannel();
         event.on("liveCode", (data) => {
           console.log(data);
