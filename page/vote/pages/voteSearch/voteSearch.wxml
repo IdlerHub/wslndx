@@ -17,7 +17,7 @@
                     <rich-text class="mine-info-name" nodes="{{ item.name }}"></rich-text>
                     <rich-text class="mine-info-subname" nodes="{{ item.class_name }}"></rich-text>
                     <!-- <view class="mine-info-number">已获{{item.flowers}}朵</view> -->
-                    <rich-text class="mine-info-number" nodes="<span>编号: </span>{{item.sort_id}}"></rich-text>
+                    <rich-text class="mine-info-number" nodes="{{item.sort_id}}"></rich-text>
                 </view>
                 <!-- <rich-text class="mine-info-id" nodes="<span>编号: </span>{{item.id}}"></rich-text> -->
             </view>

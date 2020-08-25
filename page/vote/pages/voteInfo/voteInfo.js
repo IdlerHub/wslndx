@@ -101,7 +101,9 @@ Page({
     //去执行任务
     if (task.urltype == 1) {
       //执行邀请的方法列表,首次进来需要弹窗
-    this.changeIsShow();
+      if (task.prize_status == 0) {
+        this.changeIsShow();
+      }
     } else if (task.urltype == 2) {
       //交互任务,类似签到
       //执行接口请求的方法列表
