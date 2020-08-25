@@ -3,6 +3,8 @@ const app = getApp();
 Page({
   data: {
     flowers: 0, //拥有花朵
+    isShow: 0,  //是否首次点击分享
+    isShowMessage: "好友通过邀请链接或二维码进入活动，并且关注公众号才算邀请成功得鲜花哦~",  //首次分享提示内容
     shareMessage: {}, //分享配置信息
     taskList: [],
     voteList: [],
@@ -43,6 +45,8 @@ Page({
       .getTaskList()
       .then((res) => {
         this.setData({
+          // isShow: res.data.is_show,
+          isShowMessage: res.data.is_show_message,
           taskList: res.data.task,
           shareMessage: res.data.share_message,
           flowers: res.data.flowers,
@@ -73,6 +77,21 @@ Page({
         this.showToast(err.msg);
       });
   },
+  changeIsShow(){
+    let _this = this;
+    if (_this.data.isShow == 0) {
+        wx.showModal({
+          title: _this.data.isShowMessage,
+          confirmColor: "#F2323A",
+          success(res) {
+            _this.setData({
+              isShow: 1,
+            });
+            app.vote.changeIsShow();
+          },
+        });
+      }
+  },
   performTask(e) {
     let task = e.currentTarget.dataset.task;
     console.log("去完成任务或者领取鲜花", task);
@@ -82,8 +101,8 @@ Page({
     }
     //去执行任务
     if (task.urltype == 1) {
-      //执行邀请的方法列表,不需要处理
-      return;
+      //执行邀请的方法列表,首次进来需要弹窗
+    this.changeIsShow();
     } else if (task.urltype == 2) {
       //交互任务,类似签到
       //执行接口请求的方法列表

@@ -173,6 +173,16 @@ function doTask(params) {
 function getSign() {
   return httpService.post("H5teachers/getSign");
 }
+
+/** H5teachers/changeIsShow
+ * @description: 修改是否首次进来分享
+ * @param {} 
+ * @return:  promise
+ * **/
+function changeIsShow() {
+  return httpService.post("H5teachers/changeIsShow");
+}
+
 module.exports = {
   // getAllProvince,
   // getCity,
@@ -196,4 +206,5 @@ module.exports = {
   getTaskPrize,
   doTask,
   getSign,
+  changeIsShow,
 };

@@ -161,7 +161,7 @@
     white-space: nowrap;
     text-overflow: ellipsis;
 }
-.item-left .item-content>text{
+.item-left .item-content>.extra{
     font-size:44rpx;
     font-family:PingFang-SC-Bold,PingFang-SC;
     font-weight:bold;
