@@ -24,13 +24,14 @@ Page({
     showJump: false, //展示跳转卡片
   },
   onLoad: function (options) {
+    let opstObj = {};
     if (!options.voteid || options.voteid == "") {
-      wx.showToast({
-        title: "课程已删除",
-        icon: "none",
+      let optsStr = decodeURIComponent(options.scene).split("&");
+      optsStr.forEach((item, index) => {
+        opstObj[item.split("=")[0]] = item.split("=")[1];
       });
-      // wx.navigateBack();
-      return;
+      options.voteid = opstObj.o;
+      console.log(options)
     }
     this.getOpenId(options);
     this.init();

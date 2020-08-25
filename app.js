@@ -166,6 +166,10 @@ App({
       wx.reLaunch({
         url: "/pages/sign/sign",
       });
+    } else if(opstObj.p){
+      wx.reLaunch({
+        url: `/page/vote/pages/voteArticle/voteArticle?voteid=${opstObj.o}&uid=${opstObj.u}`,
+      });
     }
   },
   onShow: function (opts) {
