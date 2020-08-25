@@ -24,7 +24,6 @@ Page({
     showJump: false, //展示跳转卡片
   },
   onLoad: function (options) {
-    console.log(options);
     if (!options.voteid || options.voteid == "") {
       wx.showToast({
         title: "课程已删除",
@@ -57,9 +56,7 @@ Page({
     if (ops.accounts_openid && ops.accounts_openid != "") {
       wx.setStorageSync("AccountsId", ops.accounts_openid);
     } else if (wx.getStorageSync("AccountsId") == "" && uid) {
-      //如果没有公众号的openId,跳转去授权页面
-      console.log("没有公众号的openid");
-      //voteType表示从哪个页面过去请求,之后方便返回
+      //没有公众号的openId,voteType表示从哪个页面过去请求,之后方便返回
       wx.redirectTo({
         url: `/pages/education/education?voteType=voteArticle&voteid=${ops.voteid}&uid=${uid}`,
       });
@@ -135,7 +132,6 @@ Page({
     });
   },
   release() {
-    console.log("发表评论");
     let content = this.data.content.trim();
     if (content == "") {
       wx.showToast(
@@ -154,7 +150,6 @@ Page({
     this.addTeacherComment(params);
   },
   delComment(e) {
-    console.log(e.currentTarget.dataset);
     let { commentid, index } = e.currentTarget.dataset;
     let commentList = this.data.commentList;
     wx.showModal({
@@ -165,7 +160,6 @@ Page({
           app.vote
             .deleteTeacherComment({ comment_id: commentid })
             .then((res) => {
-              console.log(res);
               commentList.splice(index, 1);
               this.setData({
                 commentList,
@@ -194,7 +188,6 @@ Page({
     // type:1 二维码; 2: 分享卡片
     let type = app.globalData.shareObj.f ? app.globalData.shareObj.f : 2;
     let params = { teacher_id: id, invite_id, type };
-    console.log("data:", params);
     app.vote
       .getOpusInfo(params)
       .then((res) => {
@@ -214,7 +207,6 @@ Page({
       })
       .catch((err) => {
         wx.hideLoading();
-        console.log(err);
         wx.showToast({
           title: err.msg,
           icon: "none",
@@ -224,7 +216,6 @@ Page({
   },
   getPosterInfo(teacher_id) {
     //获取海报信息
-    console.log("分享");
     let params = { teacher_id };
     // let that = this;
     app.vote
@@ -235,7 +226,6 @@ Page({
           shareInfo: res.data,
           shareFlag: false,
         });
-        console.log(this.data.shareInfo);
         //这里需要下载对应的网络图片资源并且开始绘画canvas
         // this.downloadImg(this.data.shareInfo.avatar, "userImg");
         // this.downloadImg(this.data.shareInfo.image, "showImg");
@@ -280,7 +270,6 @@ Page({
   addTeacherComment(params) {
     //新增评论
     app.vote.addTeacherComment(params).then((res) => {
-      console.log(res);
       wx.showToast(
         {
           title: `评论成功，系统审核通过后发布`,
@@ -423,7 +412,6 @@ Page({
       });
   },
   jumpPeper() {
-    console.log("跳转");
     //活动弹窗
     let item = this.data.jumpUrl;
     this.closeJump(); //关闭卡片,跳转
@@ -653,7 +641,6 @@ Page({
     }
   },
   onShareAppMessage() {
-    console.log("分享");
     let item = this.data.item;
     let uid = wx.getStorageSync("userInfo").id;
     let title = this.data.shareMessage.title;
