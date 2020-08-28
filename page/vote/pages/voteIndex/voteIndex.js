@@ -38,9 +38,7 @@ Page({
     if (ops.accounts_openid && ops.accounts_openid != "") {
       wx.setStorageSync("AccountsId", ops.accounts_openid);
     } else if (wx.getStorageSync("AccountsId") == "" && uid) {
-      //如果没有公众号的openId
-      //跳转去授权页面
-      console.log("没有公众号的openid", uid);
+      //如果没有公众号的openId,跳转去授权页面
       //voteType表示从哪个页面过去请求,之后方便返回
       wx.redirectTo({
         url: `/pages/education/education?voteType=voteIndex&uid=${uid}`,
@@ -75,7 +73,6 @@ Page({
     });
   },
   toDetail(e) {
-    console.log(e.currentTarget.dataset);
     //作品详情页
     wx.navigateTo({
       url:
@@ -152,7 +149,6 @@ Page({
     let invite_id = wx.getStorageSync("invite") || 0;
     // type:1 二维码; 2: 分享卡片
     let type = app.globalData.shareObj.f ? app.globalData.shareObj.f : 2;
-    console.log("data:", invite_id, type);
     //获取最新作品顶部轮播
     app.vote.getNewestOpus({ invite_id, type }).then((res) => {
       if (res.data.countdown.jump_type) {
@@ -234,7 +230,6 @@ Page({
       });
   },
   onShareAppMessage() {
-    console.log("分享");
     let uid = wx.getStorageSync("userInfo").id;
     let title = this.data.shareMessage.title,
       imageUrl = this.data.shareMessage.image;

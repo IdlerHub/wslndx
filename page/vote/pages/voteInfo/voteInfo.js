@@ -94,7 +94,6 @@ Page({
   },
   performTask(e) {
     let task = e.currentTarget.dataset.task;
-    console.log("去完成任务或者领取鲜花", task);
     if (task.prize_status == 1) {
       //任务完成,领取奖励
       this.getTaskPrize(task.id);
@@ -102,7 +101,9 @@ Page({
     //去执行任务
     if (task.urltype == 1) {
       //执行邀请的方法列表,首次进来需要弹窗
-    this.changeIsShow();
+      if (task.prize_status == 0) {
+        this.changeIsShow();
+      }
     } else if (task.urltype == 2) {
       //交互任务,类似签到
       //执行接口请求的方法列表
@@ -131,14 +132,11 @@ Page({
   },
   //接口请求
   toGetHttp(url, params = {}) {
-    app.vote.toGetHttp(url, params).then((res) => {
-      console.log(res);
-    });
+    app.vote.toGetHttp(url, params)
   },
   // 领取任务奖励
   getTaskPrize(task_id) {
     app.vote.getTaskPrize({ task_id }).then((res) => {
-      console.log(res);
       this.showToast(res.msg);
       this.getTaskList();
     });
@@ -152,7 +150,6 @@ Page({
   },
   onShow: function () {},
   onPullDownRefresh: function () {
-    console.log("刷新");
     this.setData({
       taskList: [],
       voteList: [],
@@ -168,7 +165,6 @@ Page({
     });
   },
   onReachBottom: function () {
-    console.log("分页加载");
     if (this.data.total_page > this.data.page) {
       this.getMySendList(this.data.page + 1);
     } else {
@@ -177,7 +173,6 @@ Page({
   },
   onShareAppMessage() {
     let uid = wx.getStorageSync("userInfo").id;
-    console.log("分享", this.data.shareMessage.title);
     let title = this.data.shareMessage.title;
     let imageUrl = this.data.shareMessage.image;
     return {
