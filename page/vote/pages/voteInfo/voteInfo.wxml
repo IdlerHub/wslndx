@@ -1,0 +1,72 @@
+<!-- page/vote/pages/voteInfo/voteInfo.wxml -->
+<view class="vote-info-page">
+    <view class="info-header">
+        <image src="{{$state.userInfo.avatar}}" class="user-img"></image>
+        <view class="user-info">
+            <view class="user-name">{{$state.userInfo.nickname}}</view>
+            <view class="user-subname">{{$state.userInfo.school}}</view>
+        </view>
+    </view>
+    <view class="vote-info">
+        <view class="info-view voteinfo-left" catchtap="toRefresh">
+            <view class="left-flowers">
+                <image src="../../images/flowers-red.png"></image>
+            </view>
+            <view class="left-text">
+                <view class="text-first">{{flowers}}朵</view>
+                <view class="text-second">我的鲜花</view>
+            </view>
+        </view>
+        <button open-type="{{isShow == 0 ? '' : 'share'}}" class="info-view voteinfo-right" catchtap="changeIsShow">
+            <view class="right-flowers">
+                <image src="../../images/vote-adduser.png"></image>
+            </view>
+            <view class="right-text">
+                <view class="text-first">领鲜花</view>
+                <view class="text-second">邀请好友参与</view>
+            </view>
+        </button>
+    </view>
+    <view class="task-card">
+        <view class="task-title">鲜花任务</view>
+        <view class="task-list">
+            <view class="task-item" wx:for="{{taskList}}" wx:key="index">
+                <view class="item-left">
+                    <view class="item-title">{{item.name}}</view>
+                    <view class="item-content">
+                        <text class="extra">+{{item.integral}}</text>
+                        朵鲜花
+                        <text wx:if="{{item.extra != ''}}">{{item.extra}}</text>
+                    </view>
+                </view>
+                <!-- 已完成变灰 -->
+                <view wx:if="{{item.prize_status==2}}" class="item-right">{{item.tips_message[item.prize_status]}}</view>
+                <!-- 未完成或者待领取 -->
+                <button wx:elif="{{item.prize_status == 1}}" open-type="{{item.urltype==1&&item.prize_status==0?'share':''}}" class="item-right  item-right-y" data-task="{{item}}" catchtap="performTask">{{item.tips_message[item.prize_status]}}</button>
+                <!-- 未完成或者待领取 -->
+                <view wx:elif="{{isShow == 0}}" class="item-right  item-right-red" data-task="{{item}}" catchtap="performTask">{{item.tips_message[item.prize_status]}}</view>
+                <button wx:else open-type="{{item.urltype==1&&item.prize_status==0?'share':''}}" class="item-right  item-right-red" data-task="{{item}}" catchtap="performTask">{{item.tips_message[item.prize_status]}}</button>
+                
+            </view>
+        </view>
+    </view>
+    <view class="vote-mine">
+        <view class="mine-title">我的投票</view>
+        <view class="mine-list" wx:if="{{voteList.length}}">
+            <view class="mine-item" wx:for="{{voteList}}" wx:key="index" catchtap="toDetail" data-id="{{item.id}}">
+                <view class="mine-img">
+                    <image src="{{item.image}}"></image>
+                </view>
+                <view class="mine-info">
+                    <view class="mine-info-name">{{item.name}}</view>
+                    <view class="mine-info-subname">{{item.class_name}}</view>
+                    <view class="mine-info-number">已获{{item.flowers}}朵</view>
+                </view>
+                <view class="mine-info-id">编号: {{item.id}}</view>
+            </view>
+        </view>
+        <view class="none-mine" wx:else>
+            <image src="../../images/none-minevote.png" />
+        </view>
+    </view>
+</view>

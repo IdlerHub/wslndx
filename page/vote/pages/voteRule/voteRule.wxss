@@ -1,0 +1,23 @@
+/* pages/voteRule/voteRule.wxss */
+.voteRule-content{
+    /* margin-top: 39rpx; */
+    margin: 39rpx 30rpx;
+}
+.voteRule-content .title{
+    height:56rpx;
+    font-size:40rpx;
+    font-family:PingFangSC-Medium,PingFang SC;
+    font-weight:500;
+    color:rgba(46,46,46,1);
+    line-height:56rpx;
+    text-align: center;
+    margin-bottom: 25rpx;
+}
+.voteRule-content .text{
+    margin: 0 30rpx;
+    font-size:36rpx;
+    font-family:PingFangSC-Regular,PingFang SC;
+    font-weight:400;
+    color:rgba(102,102,102,1);
+    line-height:58rpx;
+}

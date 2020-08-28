@@ -62,6 +62,7 @@ var video = require("data/Video.js");
 var circle = require("data/Circle.js");
 var lottery = require("data/Lottery.js");
 var tutor = require("data/Tutor.js");
+var vote = require("data/Vote.js"); //票选活动接口
 //app.js
 App({
   API_URL: store.API_URL,
@@ -74,6 +75,7 @@ App({
   circle,
   lottery,
   tutor,
+  vote,
   socket,
   store,
   fundebug,
@@ -163,6 +165,10 @@ App({
     } else if (!this.store.$state.userInfo.mobile) {
       wx.reLaunch({
         url: "/pages/sign/sign",
+      });
+    } else if(opstObj.p){
+      wx.reLaunch({
+        url: `/page/vote/pages/voteArticle/voteArticle?voteid=${opstObj.o}&uid=${opstObj.u}`,
       });
     }
   },

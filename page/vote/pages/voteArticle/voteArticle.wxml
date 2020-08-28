@@ -1,0 +1,118 @@
+<!--page/vote/pages/voteArticle/voteArticle.wxml-->
+<view class="vote-article-page">
+    <image src="{{item.image}}" class="article-img" mode="aspectFit"></image>
+    <view class="aritcle-info">
+        <view class="info-title">{{item.name}}</view>
+        <rich-text class="info-subtitle" space="ensp" nodes="{{item.introduce}}"></rich-text>
+    </view>
+    <!-- 海报 -->
+    <canvas class="sharePoster" canvas-id="poster"></canvas>
+    <view class="show-img" wx:if="{{sharePoster}}">
+        <view class="show-con">
+            <image class="share-del" src="/images/unshare.png" alt="" catchtap="unshare" />
+            <view class="canvas-img">
+                <image class="share-bg" src="../../images/share-bg.png" alt="" />
+                <view class="canvas-user">
+                    <image class="user-img" src="{{shareInfo.avatar}}" alt=""></image>
+                    <view class="canvas-info">
+                        <view class="user-name">{{shareInfo.name}}</view>
+                        <view class="tip">{{shareInfo.class_name}}</view>
+                    </view>
+                </view>
+                <view class="canvas-works">
+                    <image src="{{shareInfo.image }}" alt="" />
+                </view>
+                <view class="canvas-info">
+                    <!-- <view class="canvas-name">{{shareInfo.opus_name}}</view> -->
+                    <view class="canvas-content">{{shareInfo.brief}}</view>
+                </view>
+                <view class="canvas-footer">
+                    <image class="canvas-code" src="{{shareInfo.qrcode_url}}" alt="" />
+                    <view class="code-tip">
+                        <view>长按识别二维码</view>
+                        <view>为老师送花助力加油!</view>
+                    </view>
+                </view>
+            </view>
+        </view>
+        <view class="poster-footer">
+            <view class="share-wechat" catchtap="unshare">
+                <button open-type="share" class="share-other"></button>
+                <image src="https://hwcdn.jinlingkeji.cn/images/pro/makeMoneywx.png"></image>
+                <view class="share-text">发送好友</view>
+            </view>
+            <view class="share-img" catchtap='savePoster'>
+                <image src="../../images/save-img.png"></image>
+                <view class="share-text">保存图片</view>
+            </view>
+        </view>
+    </view>
+    <!-- 返回首页 -->
+    <view class="goHome" catchtap="goVoteIndex"><text>返回首页</text></view>
+    <view class="article-comment">
+        <view class="comment-nav">
+            <text class="nav-title">评论 {{total > 0 ? total : ''}}</text>
+        </view>
+        <view class="comment-list" wx:if="{{total>0}}">
+            <view class="comment-item" wx:for="{{commentList}}" wx:key="index">
+                <view class="item-avatar">
+                    <image src="{{item.avatar}}"></image>
+                </view>
+                <view class="item-commentinfo">
+                    <view class="commentinfo-user">
+                        <view class="user-nickname">{{item.nickname}}</view>
+                        <view class="user-time" wx:if="{{item.uid ===  $state.userInfo.id}}" data-index="{{index}}" data-commentid="{{item.id}}" catchtap="delComment">
+                            <text class="create-time">{{item.createtime}}</text>
+                            <view class="icon-del">
+                                <image src="../../images/vote-del.png" />
+                                <text>删除</text>
+                            </view>
+                        </view>
+                    </view>
+                    <view class="item-content">{{item.content}}</view>
+                </view>
+            </view>
+        </view>
+        <view class="none-list" wx:else>
+            <image src="../../images/vote-nonecomment.png" class="none-comment"></image>
+        </view>
+        <view class="comment-footer"></view>
+    </view>
+    <!-- 发表观点&送花&分享 -->
+    <view class="send-comment">
+        <view class="comment-left" catchtap="showWrite">发表观点</view>
+        <view class="comment-right">
+            <view class="right-send" wx:if="{{item.flowers}}" catchtap="sendFlower">
+                <image class="img" src="../../images/vote-full-flowers.png" style="margin-right: 15rpx;"></image>
+                <view class="send-flowers">{{item.flowers}}</view>
+            </view>
+            <view class="right-send" wx:else catchtap="sendFlower">
+                <image class="img" src="../../images/vote-flowers.png"></image>
+                <view class="send-flowers">送花</view>
+            </view>
+            <view class="right-share" catchtap="shareImg">
+                <image class="img" src="../../images/vote-share.png"></image>
+                <view class="send-flowers">分享</view>
+            </view>
+        </view>
+    </view>
+    <!-- 评论输入 -->
+    <view class="issueBoxTow" style="bottom :{{ keyheight != 0 ? keyheight : 0}}px;height:{{replyplaceholder != '' ? '181' : ''}}px" wx:if="{{writeTow}}">
+        <textarea placeholder="{{placeholder}}" fixed show-confirm-bar="{{false}}" placeholder-class="placeholder" bindinput="input" bindkeyboardheightchange="keyheight" adjust-position="{{false}}" focus="{{focus}}" bindblur="bindblur" maxlength="200" value="{{content}}" cursor-spacing="190rpx"></textarea>
+        <view class="issueBoxTow-txt">
+            <view class="number">{{ contenLength }}/200</view>
+            <view class="issueBoxTow-btn">
+                <view class="submit" catchtap="release">发布</view>
+            </view>
+        </view>
+    </view>
+    <!-- 活动弹窗 -->
+    <view class="integration" wx:if="{{showJump}}" catchtouchmove="return">
+        <view class="dialog">
+            <view class="bg" style="background: url('{{jumpUrl.image}}') no-repeat center; background-size: 100% 100%;border-radius:10px" mode="aspectFill">
+                <button class="share-jump" open-type="{{jumpUrl.type==1 ? 'share' : ''}}" catchtap="jumpPeper"></button>
+            </view>
+            <icon type="cancel" size="37" color="white" data-id="0" catchtap="closeJump"></icon>
+        </view>
+    </view>
+</view>
