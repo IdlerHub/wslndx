@@ -44,7 +44,6 @@ Page({
     voiceplayimg: "https://hwcdn.jinlingkeji.cn/images/pro/triangle.png",
     replyshow: false,
     showintegral: false,
-    showServise: false,
     replycontent: '',
     showplece: false,
     /* rect: wx.getMenuButtonBoundingClientRect() */
@@ -1517,11 +1516,14 @@ Page({
   },
   //客服盒子
   showServise() {
-    this.data.showServise ? this.setData({
-      showServise: false
-    }) : this.setData({
-      showServise: true
-    })
+    let link = this.data.detail.mp_url
+    wx.navigateTo({
+      url: "/pages/education/education?type=live",
+      success: function (res) {
+        // 通过eventChannel向被打开页面传送数据
+        res.eventChannel.emit("liveCode", { url: link })
+      },
+    });
   },
   closeShool() {
     wx.setStorageSync(

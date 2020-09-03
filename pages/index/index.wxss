@@ -412,8 +412,8 @@
 }
 
 .recommend .item .left .status {
-  width: 90rpx;
-  height: 52rpx;
+  width: 90rpx !important;
+  height: 52rpx !important;
   position: absolute;
   top: 0;
   left: 0;

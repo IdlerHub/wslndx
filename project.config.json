@@ -164,9 +164,9 @@
         },
         {
           "id": 9,
-          "name": "page/post/pages/personPage/personPage",
-          "pathName": "page/post/pages/pDetail/pDetail",
-          "query": "id=113651",
+          "name": "page/live/pages/liveVideo/liveVideo",
+          "pathName": "page/live/pages/liveVideo/liveVideo",
+          "query": "index=1",
           "scene": null
         },
         {
