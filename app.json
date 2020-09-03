@@ -119,7 +119,8 @@
         "pages/timetable/timetable",
         "pages/timetableList/timetableList",
         "pages/liveDetail/liveDetail",
-        "pages/liveSearch/liveSearch"
+        "pages/liveSearch/liveSearch",
+        "pages/liveVideo/liveVideo"
       ]
     },
     {
