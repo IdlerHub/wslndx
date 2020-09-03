@@ -20,24 +20,25 @@ Page({
     this.context = wx.createCanvasContext("myCanvas", this)
     let r = wx.getSystemInfoSync().windowWidth / 750
     // 背景图
-    this.context.drawImage("../../images/certificate.png", 0, 0, 690 * r, 912 * r)
+    this.context.drawImage("../../images/certificate.png", 0, 0, 690 * r, 1057 * r)
     // 文字
     this.context.fillStyle = '#3A3A3A'
     this.context.font = `20px sans-serif`
     this.context.setTextBaseline("top")
-    this.context.fillText(userInfo.nickname, 107 * r + (200 * r - this.context.measureText(userInfo.nickname).width) / 2, 340 * r, 200 * r)
+    this.context.fillText(userInfo.nickname, 107 * r + (200 * r - this.context.measureText(userInfo.nickname).width) / 2, 345 * r, 200 * r)
     this.context.font = `18px sans-serif`
     if(this.context.measureText(course).width < 170) {
-      this.context.fillText(course, 180 * r + (310 * r - this.context.measureText(course).width) / 2, 425 * r, 310 * r)
+      this.context.fillText(course, 180 * r + (310 * r - this.context.measureText(course).width) / 2, 430 * r, 310 * r)
     } else if (this.context.measureText(course).width > 170 && this.context.measureText(course).width < 220) {
-      this.context.fillText(course, 180 * r + (348 * r - this.context.measureText(course).width) / 2, 425 * r, 310 * r) 
+      this.context.fillText(course, 180 * r + (348 * r - this.context.measureText(course).width) / 2, 430 * r, 310 * r) 
     } else if(this.context.measureText(course).width > 220 && this.context.measureText(course).width < 300){
-      this.context.fillText(course, 180 * r + (522 * r - this.context.measureText(course).width) / 2, 425 * r, 310 * r)
+      this.context.fillText(course, 180 * r + (522 * r - this.context.measureText(course).width) / 2, 430 * r, 310 * r)
     } else {
-      this.context.fillText(course, 180 * r + (730 * r - this.context.measureText(course).width) / 2, 425 * r, 310 * r)
+      this.context.fillText(course, 180 * r + (730 * r - this.context.measureText(course).width) / 2, 430 * r, 310 * r)
     }
-    this.context.font = `14px sans-serif`
-    this.context.fillText(app.util.dateUnit(), 420 * r, 780 * r)
+    this.context.font = `15px sans-serif`
+    this.context.setFillStyle('#666666')
+    this.context.fillText(app.util.dateUnit(), 92 * r, 856 * r)
     // this.context.setTextAlign("right")
     let that = this
     this.context.draw(true, () => {
@@ -45,9 +46,9 @@ Page({
         x: 0,
         y: 0,
         width: 690 * r,
-        height: 912 * r,
+        height: 1057 * r,
         destWidth: 690,
-        destHeight: 912,
+        destHeight: 1057,
         canvasId: "myCanvas",
         success(res) {
           that.setData({

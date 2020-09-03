@@ -1,5 +1,5 @@
 <view class="container">
-  <canvas style="width: 690rpx; height: 912rpx;" canvas-id="myCanvas"></canvas>
+  <canvas style="width: 690rpx; height: 1057rpx;" canvas-id="myCanvas"></canvas>
   <!-- <image src="{{ img }}" style="width: 690rpx; height: 912rpx;"></image> -->
   <cover-view class="operate">
     <button class="save" bindtap="save" hover-class="btn-hover">
