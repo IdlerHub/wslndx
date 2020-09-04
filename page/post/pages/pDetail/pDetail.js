@@ -402,9 +402,9 @@ Page({
       });
     }
   },
-  // 发布评论
-  release() {
-    if (!!this.data.content.trim() || !!this.data.replycontent.trim()) {
+  // 发布评论e
+  release(e) {
+    if ((!!this.data.content.trim() || !!this.data.replycontent.trim()) && !e.currentTarget.dataset.type) {
       if (this.replyParent) {
         /* 回复别人的回复 */
         let params = {
@@ -431,6 +431,34 @@ Page({
         let param = { blog_id: this.id, content: this.data.content };
         this.post(param);
       }
+    } else {
+      let param = {}
+      if (this.replyParent) {
+        /* 回复别人的回复 */
+        param = {
+          blog_id: +this.id,
+          comment_id: this.replyParent,
+          reply_type: 2,
+          reply_id: this.replyInfo.reply_id,
+          reply_content: this.data.replycontent,
+          to_user: this.replyInfo.reply_user_id
+        };
+      } else if (this.replyInfo) {
+        /* 回复评论 */
+        param = {
+          blog_id: +this.id,
+          comment_id: this.replyInfo.id,
+          reply_type: 1,
+          reply_id: -1,
+          reply_content: this.data.replycontent,
+          to_user: this.replyInfo.uid
+        };
+      } else {
+        param = { blog_id: this.id, content: this.data.content };
+      }
+      wx.navigateTo({
+        url: `/page/post/pages/release/release?params=${JSON.stringify(param)}`,
+      })
     }
   },
   post(param) {

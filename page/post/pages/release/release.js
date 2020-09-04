@@ -55,6 +55,7 @@ Page({
   timer: null,
   playTiemr: null,
   onLoad(ops) {
+    console.log(JSON.parse(ops.params))
     ops.type ? this.circle = true : ''
     if (ops.title) {
       this.getCircleList().then(() => {
