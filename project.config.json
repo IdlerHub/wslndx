@@ -164,8 +164,8 @@
         },
         {
           "id": 9,
-          "name": "page/live/pages/liveVideo/liveVideo",
-          "pathName": "page/live/pages/liveVideo/liveVideo",
+          "name": "page/index/pages/assistant/assistant",
+          "pathName": "page/index/pages/assistant/assistant",
           "query": "index=1",
           "scene": null
         },

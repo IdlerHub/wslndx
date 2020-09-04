@@ -70,7 +70,8 @@
         "pages/certificate/certificate",
         "pages/detail/detail",
         "pages/rankingList/rankingList",
-        "pages/search/search"
+        "pages/search/search",
+        "pages/assistant/assistant"
       ]
     },
     {

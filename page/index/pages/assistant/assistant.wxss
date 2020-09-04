@@ -1,0 +1,170 @@
+page {
+  background: #EDEDED;
+}
+
+.contrainer {
+  padding: 60rpx 30rpx;
+}
+
+.talkItem {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  margin-bottom: 60rpx;
+}
+
+.rightItem {
+  justify-content: flex-end;
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 60rpx;
+}
+
+.talkItem .logo {
+  width: 88rpx;
+  height: 89rpx;
+  margin-right: 25rpx;
+  border-radius: 50%;
+}
+
+.rightItem image {
+  width: 88rpx;
+  height: 89rpx;
+  border-radius: 50%;
+  margin-left: 25rpx;
+}
+
+.talkItem .msgBox {
+  width: 490rpx;
+  min-height: 70rpx;
+  padding: 30rpx 15rpx;
+  padding-left: 30rpx;
+  box-sizing: border-box;
+  background: #fff;
+  /* border: 1rpx solid #DADBDA; */
+  border-radius: 8rpx;
+  position: relative;
+}
+
+.rightItem .msgBox {
+  display: inline-block;
+  min-height: 70rpx;
+  padding: 26rpx 41rpx 26rpx 31rpx;
+  box-sizing: border-box;
+  background: #3BB021;
+  /* border: 1rpx solid #DADBDA; */
+  border-radius: 8rpx;
+  position: relative;
+}
+
+button {
+  line-height: normal;
+}
+
+.talkItem .msgBox text {
+  font-size: 36rpx;
+  font-weight: 400;
+  color: #333333;
+  line-height: 50rpx;
+}
+
+.talkItem .msgBox image {
+  width: 81rpx;
+  height: 29rpx;
+  display: block;
+  margin-bottom: 10rpx;
+}
+
+.rightItem .msgBox text {
+  font-size: 36rpx;
+  font-weight: 400;
+  color: #fff;
+  line-height: 50rpx;
+}
+
+.talkItem .msgBox .attenBtn {
+  width: 429rpx;
+  height: 80rpx;
+  background: linear-gradient(90deg, #FF421E 0%, #F61A1A 100%);
+  border-radius: 6rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 36rpx;
+  font-weight: 400;
+  color: #FFFFFF;
+  margin-top: 22rpx;
+}
+
+.talkItem .msgBox .listItem {
+  margin-top: 20rpx;
+  display: inline-block;
+  padding: 15rpx 30rpx;
+  background: #F2F2F2;
+  border-radius: 6rpx;
+  border: 1rpx solid #DADBDA;
+  font-size: 36rpx;
+  font-weight: 400;
+  color: #333333;
+}
+
+.talkItem .msgBox .replyBox {
+  font-size: 36rpx;
+  font-weight: 400;
+  color: #365FB3;
+  text-decoration: underline;
+}
+
+.rightItem .msgBox:before {
+  content: '';
+  width: 0;
+  height: 0;
+  border-top: 12rpx solid transparent;
+  border-left: 14rpx solid #3BB021;
+  border-bottom: 12rpx solid transparent;
+  position: absolute;
+  top: 30rpx;
+  right: -12rpx;
+  z-index: 8;
+}
+
+/* .rightItem .msgBox:after {
+  content: '';
+  width: 0;
+  height: 0;
+  border-top: 13rpx solid transparent;
+  border-left: 15rpx solid #DADBDA;
+  border-bottom: 13rpx solid transparent;
+  position: absolute;
+  top: 30rpx;
+  right: -12.8rpx;
+  z-index: 5;
+} */
+
+.talkItem .msgBox:before {
+  content: '';
+  width: 0;
+  height: 0;
+  border-top: 12rpx solid transparent;
+  border-right: 14rpx solid #fff;
+  border-bottom: 12rpx solid transparent;
+  position: absolute;
+  top: 30rpx;
+  left: -14rpx;
+  z-index: 8;
+}
+
+/* .talkItem .msgBox:after {
+  content: '';
+  width: 0;
+  height: 0;
+  border-top: 13rpx solid transparent;
+  border-right: 15rpx solid #DADBDA;
+  border-bottom: 13rpx solid transparent;
+  position: absolute;
+  top: 30rpx;
+  left: -15.8rpx;
+  z-index: 5;
+} */

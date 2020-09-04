@@ -252,6 +252,9 @@
     </view>
   </view>
 </view>
+<navigator url="/page/index/pages/assistant/assistant" hover-class="none">
+  <image src="/images/xiaolin.png" class="xiaolin"></image>
+</navigator>
 <!-- wx:if="{{ $state.newGuide.index == 0 }}" -->
 <cover-view class="getGuideBox" wx:if="{{ $state.newGuide.index == 0 }}">
   <cover-view class="numberbox" wx:if="{{guideNum == 1}}">
