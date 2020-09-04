@@ -3,7 +3,7 @@ page {
   height: 100%;
 }
 page .container {
-  height: calc(100% + 120rpx);
+  height: calc(100% + 240rpx);
 }
 page .container > .top {
   position: relative;
@@ -186,6 +186,7 @@ page .list {
   position: relative;
   border-radius: 14rpx;
   margin: 0 30rpx;
+  margin-bottom: 80rpx;
   width: 690rpx;
   display: flex;
   flex-wrap: wrap;

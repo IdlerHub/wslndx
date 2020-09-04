@@ -16,7 +16,7 @@
             <view class="listItem" bindtap="additem" wx:if="{{ index != 4}}" data-item="{{listItem}}" data-index="{{index}}">
               {{listItem.name}}
             </view>
-            <button class="listItem" wx:else open-type="contact" send-message-img="../../images/dianwo.png" show-message-card > {{listItem.name}}</button>
+            <button class="listItem" wx:else open-type="contact" send-message-img="../../images/dianwo.png" send-message-title="添加老师" show-message-card > {{listItem.name}}</button>
           </view>
         </view>
       </view>
