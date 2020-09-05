@@ -1048,11 +1048,11 @@ page .getGuideBox .nextBtn {
 }
 
 .xiaolin {
-  width: 140rpx;
-  height: 150rpx;
+  width: 168rpx;
+  height: 178rpx;
   position: fixed;
   bottom: 295rpx;
-  right: 30rpx;
+  right: 18rpx;
   z-index: 9999;
 }
 
