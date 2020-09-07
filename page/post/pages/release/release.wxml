@@ -11,7 +11,7 @@
                 <image class='image' mode='aspectFill' src="{{$state.imgHost}}/video-bg.jpg" catchtap='addImg'></image>
                 <image class='close' mode='aspectFill' src="../../images/show-close.png" catchtap='delvideo'></image>
             </view>
-            <view class='img ub' wx:if="{{!hide}}" bindtap='addImg'>
+            <view class='img ub' wx:if="{{!hide && !replyparam.blog_id}}" bindtap='addImg'>
                 <image src="../../images/show-camera.png" ></image>
                 <view>照片/视频</view>
             </view>
@@ -24,7 +24,7 @@
         </playRrecord>
     </view>
     <view wx:if="{{!showVoiceBox}}">
-        <view class="cBox">
+        <view class="cBox" wx:if="{{!replyparam.blog_id}}">
             <view class="hd">
                 <text>请选择同步的圈子</text>
             </view>
@@ -42,7 +42,7 @@
             <formCode  bind:handler='cancel'>
                 <button class='item'>取消</button>
             </formCode>
-            <formCode  bind:handler='judgeCircle'>
+            <formCode  bind:handler='{{replyparam.blog_id ? "reply" : "judgeCircle"}}'>
                 <button class='item ensure'>发布</button>
             </formCode>
         </view>

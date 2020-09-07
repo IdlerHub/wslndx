@@ -1,6 +1,6 @@
 <!--components/playRrecord/playRrecord.wxml-->
 <view class="voiceBox" style="width:{{!showDel ? '420rpx' : '' }}">
-  <view class="voiceBoxRight" wx:if="{{!showDel}}" bindtap="playVoice" data-duration="{{item.duration}}" data-record="{{item.url}}" data-timer="{{item.timer}}" data-id="{{item.id}}"
+  <view class="voiceBoxRight" wx:if="{{!showDel}}" bindtap="playVoice" data-duration="{{item.duration}}" data-record="{{item.url || item.audio_url}}" data-timer="{{item.timer}}" data-id="{{item.id}}"
   data-name="{{item.nickname}}">
     <image
       src="{{playVoice.status == 1 && item.id == playVoice.id ? 'https://hwcdn.jinlingkeji.cn/images/pro/voicepause.png' : 'https://hwcdn.jinlingkeji.cn/images/pro/triangle.png'}}">

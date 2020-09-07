@@ -14,9 +14,16 @@ const record = require('../../../../utils/record')
 
 Page({
   data: {
-    nav: [
-      { name: "评论", class: ".comment", num: 0 },
-      { name: "点赞", class: ".praise", num: 0 }
+    nav: [{
+        name: "评论",
+        class: ".comment",
+        num: 0
+      },
+      {
+        name: "点赞",
+        class: ".praise",
+        num: 0
+      }
     ],
     isRefreshing: false,
     tip: true,
@@ -52,8 +59,16 @@ Page({
   textHeight: 0,
   onLoad(options) {
     this.id = options.id;
-    this.comParam = { blog_id: this.id, page: 1, pageSize: 10 };
-    this.praParam = { blog_id: this.id, page: 1, pageSize: 10 };
+    this.comParam = {
+      blog_id: this.id,
+      page: 1,
+      pageSize: 10
+    };
+    this.praParam = {
+      blog_id: this.id,
+      page: 1,
+      pageSize: 10
+    };
     this.setData({
       detail: "",
       comment: [],
@@ -79,27 +94,25 @@ Page({
     if (this.data.$state.blogcomment[options.id.trim()]) {
       this.setData({
         content: this.data.$state.blogcomment[options.id.trim()].replycontent,
-        contenLength:
-          this.data.$state.blogcomment[options.id.trim()].replycontent != ""
-            ? this.data.$state.blogcomment[options.id.trim()].replycontent
-                .length
-            : 0
+        contenLength: this.data.$state.blogcomment[options.id.trim()].replycontent != "" ?
+          this.data.$state.blogcomment[options.id.trim()].replycontent
+          .length : 0
       });
     }
     getCurrentPages().forEach(item => {
       item.route == "pages/post/post" ? (this.postPages = item) : "";
     });
     wx.onKeyboardHeightChange(res => {
-          this.setData({
-            textHeight: res.height,
-            write: true
-          },() => {
-            console.log(this.data.textHeight - this.textHeight >= 0)
-            this.data.textHeight - this.textHeight >= 0 ?  '' : this.setData({
-              write: false
-            });
-            this.textHeight = res.height
-          });
+      this.setData({
+        textHeight: res.height,
+        write: true
+      }, () => {
+        console.log(this.data.textHeight - this.textHeight >= 0)
+        this.data.textHeight - this.textHeight >= 0 ? '' : this.setData({
+          write: false
+        });
+        this.textHeight = res.height
+      });
     });
   },
   onShow() {
@@ -108,7 +121,7 @@ Page({
     record.initRecord(this)
   },
   onUnload() {
-    wx.onMemoryWarning(function() {
+    wx.onMemoryWarning(function () {
       console.log("内存不足");
     });
     innerAudioContext.stop()
@@ -147,17 +160,19 @@ Page({
     this.setHeight();
   },
   getDetail() {
-    let param = { blog_id: this.id };
+    let param = {
+      blog_id: this.id
+    };
     return app.circle
       .detail(param)
       .then(msg => {
         let detail = msg.data[0];
         let arr = [],
           brr = [];
-        detail.images.forEach(function(i) {
+        detail.images.forEach(function (i) {
           arr.push(i.image);
         });
-        detail.images.forEach(function(i) {
+        detail.images.forEach(function (i) {
           brr.push(i.image_compress);
         });
         detail.content = app.util.delHtmlTag(detail.content)
@@ -219,7 +234,9 @@ Page({
           detail.praising = true;
           app.socket.send({
             type: "Bokemessage",
-            data: { uid: this.data.detail.uid }
+            data: {
+              uid: this.data.detail.uid
+            }
           });
           if (msg.data.is_first == "first") {
             this.setData({
@@ -233,8 +250,12 @@ Page({
               });
             }, 2000);
           }
-          this.setData({ detail: detail });
-          wx.uma.trackEvent("post_btnClick", { btnName: "点赞按钮" });
+          this.setData({
+            detail: detail
+          });
+          wx.uma.trackEvent("post_btnClick", {
+            btnName: "点赞按钮"
+          });
         })
         .catch(err => {
           if (err.code == -2) {
@@ -270,8 +291,7 @@ Page({
   show(e) {
     if (this.data.$state.userInfo.status !== "normal") {
       wx.showModal({
-        content:
-          "由于您近期不合规操作，您的账户已被管理员禁止发帖留言，如有疑问请在个人中心联系客服处理"
+        content: "由于您近期不合规操作，您的账户已被管理员禁止发帖留言，如有疑问请在个人中心联系客服处理"
       });
     } else {
       if (e && e.target.dataset.reply) {
@@ -279,10 +299,8 @@ Page({
         this.replyParent = e.target.dataset.parent;
         this.replyInfo = e.target.dataset.reply;
         this.setData({
-          replyplaceholder:
-            e.currentTarget.dataset.reply.nickname != undefined
-              ? "回复 " + e.currentTarget.dataset.reply.nickname
-              : "回复 " + e.currentTarget.dataset.reply.from_user,
+          replyplaceholder: e.currentTarget.dataset.reply.nickname != undefined ?
+            "回复 " + e.currentTarget.dataset.reply.nickname : "回复 " + e.currentTarget.dataset.reply.from_user,
           replyshow: true
         });
         if (this.data.$state.blogcomment[this.data.detail.id]) {
@@ -291,42 +309,36 @@ Page({
             this.data.$state.blogcomment[this.data.detail.id]["replyParent"]
           ) {
             this.data.$state.blogcomment[this.data.detail.id]["replyParent"][
-              this.replyParent
-            ]
-              ? this.setData({
-                  replycontent:
-                    this.data.$state.blogcomment[this.data.detail.id][
-                      "replyParent"
-                    ][this.replyParent] || "",
-                  replycontenLength:
-                  this.data.$state.blogcomment[this.data.detail.id][
-                    "replyParent"
-                  ][this.replyParent] ? this.data.$state.blogcomment[this.data.detail.id][
-                      "replyParent"
-                    ][this.replyParent].length : 0,
-                  replyshow: true
-                })
-              : "";
+                this.replyParent
+              ] ?
+              this.setData({
+                replycontent: this.data.$state.blogcomment[this.data.detail.id][
+                  "replyParent"
+                ][this.replyParent] || "",
+                replycontenLength: this.data.$state.blogcomment[this.data.detail.id][
+                  "replyParent"
+                ][this.replyParent] ? this.data.$state.blogcomment[this.data.detail.id][
+                  "replyParent"
+                ][this.replyParent].length : 0,
+                replyshow: true
+              }) :
+              "";
           } else if (
             this.data.$state.blogcomment[this.data.detail.id]["replyInfo"]
           ) {
             this.setData({
-              replycontent:
-                this.data.$state.blogcomment[this.data.detail.id]["replyInfo"][
+              replycontent: this.data.$state.blogcomment[this.data.detail.id]["replyInfo"][
                   this.replyInfo.id
-                ] != undefined
-                  ? this.data.$state.blogcomment[this.data.detail.id][
-                      "replyInfo"
-                    ][this.replyInfo.id]
-                  : "",
-              replycontenLength:
-                this.data.$state.blogcomment[this.data.detail.id]["replyInfo"][
+                ] != undefined ?
+                this.data.$state.blogcomment[this.data.detail.id][
+                  "replyInfo"
+                ][this.replyInfo.id] : "",
+              replycontenLength: this.data.$state.blogcomment[this.data.detail.id]["replyInfo"][
                   this.replyInfo.id
-                ] != undefined
-                  ? this.data.$state.blogcomment[this.data.detail.id][
-                      "replyInfo"
-                    ][this.replyInfo.id].length
-                  : 0,
+                ] != undefined ?
+                this.data.$state.blogcomment[this.data.detail.id][
+                  "replyInfo"
+                ][this.replyInfo.id].length : 0,
               replyshow: true
             });
           }
@@ -339,7 +351,9 @@ Page({
           replyplaceholder: "",
           replyshow: false
         });
-        wx.uma.trackEvent("post_btnClick", { btnName: "评论按钮" });
+        wx.uma.trackEvent("post_btnClick", {
+          btnName: "评论按钮"
+        });
       }
       this.setData({
         write: true,
@@ -366,20 +380,20 @@ Page({
         replycontenLength: e.detail.value.length
       });
       let blogcomment = this.data.$state.blogcomment;
-      blogcomment[this.data.detail.id]
-        ? ""
-        : (blogcomment[this.data.detail.id] = {});
+      blogcomment[this.data.detail.id] ?
+        "" :
+        (blogcomment[this.data.detail.id] = {});
       if (this.replyParent) {
-        blogcomment[this.data.detail.id]["replyParent"]
-          ? ""
-          : (blogcomment[this.data.detail.id]["replyParent"] = {});
+        blogcomment[this.data.detail.id]["replyParent"] ?
+          "" :
+          (blogcomment[this.data.detail.id]["replyParent"] = {});
         blogcomment[this.data.detail.id]["replyParent"][
           this.replyParent
         ] = this.data.replycontent;
       } else {
-        blogcomment[this.data.detail.id]["replyInfo"]
-          ? ""
-          : (blogcomment[this.data.detail.id]["replyInfo"] = {});
+        blogcomment[this.data.detail.id]["replyInfo"] ?
+          "" :
+          (blogcomment[this.data.detail.id]["replyInfo"] = {});
         blogcomment[this.data.detail.id]["replyInfo"][
           this.replyInfo.id
         ] = this.data.replycontent;
@@ -393,9 +407,9 @@ Page({
         contenLength: e.detail.value.length
       });
       let blogcomment = this.data.$state.blogcomment;
-      blogcomment[this.data.detail.id]
-        ? ""
-        : (blogcomment[this.data.detail.id] = {});
+      blogcomment[this.data.detail.id] ?
+        "" :
+        (blogcomment[this.data.detail.id] = {});
       blogcomment[this.data.detail.id]["replycontent"] = this.data.content;
       app.store.setState({
         blogcomment
@@ -403,65 +417,50 @@ Page({
     }
   },
   // 发布评论e
-  release(e) {
-    if ((!!this.data.content.trim() || !!this.data.replycontent.trim()) && !e.currentTarget.dataset.type) {
-      if (this.replyParent) {
-        /* 回复别人的回复 */
-        let params = {
-          blog_id: +this.id,
-          comment_id: this.replyParent,
-          reply_type: 2,
-          reply_id: this.replyInfo.reply_id,
-          reply_content: this.data.replycontent,
-          to_user: this.replyInfo.reply_user_id
-        };
-        this.reply(params);
-      } else if (this.replyInfo) {
-        /* 回复评论 */
-        let params = {
-          blog_id: +this.id,
-          comment_id: this.replyInfo.id,
-          reply_type: 1,
-          reply_id: -1,
-          reply_content: this.data.replycontent,
-          to_user: this.replyInfo.uid
-        };
-        this.reply(params);
-      } else {
-        let param = { blog_id: this.id, content: this.data.content };
-        this.post(param);
-      }
+  release(e, params, type) {
+    let param = {},
+      replyType = 0
+    if (this.replyParent) {
+      /* 回复别人的回复 */
+      param = {
+        blog_id: +this.id,
+        comment_id: this.replyParent,
+        reply_type: 2,
+        reply_id: this.replyInfo.reply_id,
+        reply_content: this.data.replycontent,
+        to_user: this.replyInfo.reply_user_id,
+        type: 1
+      };
+      replyType = 1
+    } else if (this.replyInfo) {
+      /* 回复评论 */
+      param = {
+        blog_id: +this.id,
+        comment_id: this.replyInfo.id,
+        reply_type: 1,
+        reply_id: -1,
+        reply_content: this.data.replycontent,
+        to_user: this.replyInfo.uid,
+        type: 1
+      };
+      replyType = 1
     } else {
-      let param = {}
-      if (this.replyParent) {
-        /* 回复别人的回复 */
-        param = {
-          blog_id: +this.id,
-          comment_id: this.replyParent,
-          reply_type: 2,
-          reply_id: this.replyInfo.reply_id,
-          reply_content: this.data.replycontent,
-          to_user: this.replyInfo.reply_user_id
-        };
-      } else if (this.replyInfo) {
-        /* 回复评论 */
-        param = {
-          blog_id: +this.id,
-          comment_id: this.replyInfo.id,
-          reply_type: 1,
-          reply_id: -1,
-          reply_content: this.data.replycontent,
-          to_user: this.replyInfo.uid
-        };
-      } else {
-        param = { blog_id: this.id, content: this.data.content };
-      }
+      param = {
+        blog_id: this.id,
+        content: this.data.content,
+        type: 1
+      };
+    }
+    params ? Object.assign(param, params) : ''
+    if (e.currentTarget.dataset.type) {
       wx.navigateTo({
         url: `/page/post/pages/release/release?params=${JSON.stringify(param)}`,
       })
+    } else if (!!this.data.content.trim() || !!this.data.replycontent.trim() || !!params.content.trim() || !!params.reply_content.trim()) {
+      replyType ? this.reply(param, type) : this.post(param, type)
     }
   },
-  post(param) {
+  post(param, type) {
     this.setData({
       write: false,
       showvoice: false,
@@ -475,11 +474,15 @@ Page({
       .comment(param)
       .then(msg => {
         wx.hideLoading();
-        let blogcomment = this.data.$state.blogcomment;
-        blogcomment[this.data.detail.id]["replycontent"] = "";
-        app.store.setState({
-          blogcomment
-        });
+        if (type) {
+          wx.navigateBack()
+        } else {
+          let blogcomment = this.data.$state.blogcomment;
+          blogcomment[this.data.detail.id]["replycontent"] = "";
+          app.store.setState({
+            blogcomment
+          });
+        }
         if (msg.data.is_first == "first") {
           this.setData({
             integral: "+50 学分",
@@ -515,21 +518,23 @@ Page({
           contenLength: 0
         });
         this.comParam.page = 1;
-        // app.socket.send(this.data.detail.uid)
         app.socket.send({
           type: "Bokemessage",
-          data: { uid: this.data.detail.uid }
+          data: {
+            uid: this.data.detail.uid
+          }
         });
         this.getComment([]);
       })
       .catch(msg => {
+        console.log(msg)
         if (msg.code == -2) {
           /* 帖子已经删除 */
           this.setData({
             detail: "",
             delState: true
           });
-        } else {
+        } else if (msg.code == 0) {
           wx.showToast({
             title: msg.msg,
             icon: "none",
@@ -543,10 +548,21 @@ Page({
     return app.circle
       .getComment(this.comParam)
       .then(msg => {
-        msg.data.forEach(function(item) {
+        msg.data.forEach(function (item) {
           item.reply_array.forEach(v => {
+            v.id = v.reply_id
             v.rtext = `回复<span  class="respond">${v.to_user}</span>:&nbsp;&nbsp;`;
+            v.pause = true;
+            v.timer = {
+              minute: parseInt(v.audio_duration / 60),
+              second: v.audio_duration - (parseInt(v.audio_duration / 60) * 60)
+            }
           });
+          item.pause = true;
+          item.timer = {
+            minute: parseInt(item.audio_duration / 60),
+            second: item.audio_duration - (parseInt(item.audio_duration / 60) * 60)
+          }
           comment.push(item);
         });
         this.comment = JSON.parse(JSON.stringify(comment));
@@ -555,11 +571,11 @@ Page({
         });
         this.setHeight();
         if (options) {
-          this.data.comment.length > 0
-            ? this.setData({
-                write: false
-              })
-            : this.show();
+          this.data.comment.length > 0 ?
+            this.setData({
+              write: false
+            }) :
+            this.show();
         }
       })
       .catch(msg => {
@@ -655,23 +671,23 @@ Page({
       complete: () => {}
     });
   },
-  onShareAppMessage: function(ops) {
+  onShareAppMessage: function (ops) {
     if (ops.from === "menu") {
       return this.menuAppShare();
     }
     if (ops.from === "button") {
       console.log("ShareAppMessage  button");
       let bkid = ops.target.dataset.id;
-      app.circle.addForward({ blog_id: bkid }).then(() => {
+      app.circle.addForward({
+        blog_id: bkid
+      }).then(() => {
         this.getDetail();
       });
       let article = this.data.detail;
       return {
         title: article.content,
-        imageUrl:
-          article.image || article.images[0] || "../../images/sharemessage.jpg",
-        path:
-          "/page/post/pages/pDetail/pDetail?id=" +
+        imageUrl: article.image || article.images[0] || "../../images/sharemessage.jpg",
+        path: "/page/post/pages/pDetail/pDetail?id=" +
           bkid +
           "&type=share&uid=" +
           this.data.$state.userInfo.id
@@ -679,7 +695,7 @@ Page({
     }
   },
   //删除评论
-  delComment: function(e) {
+  delComment: function (e) {
     wx.showModal({
       content: "确定删除该评论?",
       confirmColor: "#df2020",
@@ -766,7 +782,7 @@ Page({
     });
   },
   /* 回复评论 */
-  reply(params) {
+  reply(params, type) {
     this.setData({
       write: false,
       showvoice: false,
@@ -809,28 +825,34 @@ Page({
             duration: 1500
           });
         }
-        let blogcomment = this.data.$state.blogcomment;
-        if (this.replyParent) {
-          blogcomment[this.data.detail.id]["replyParent"][this.replyParent] =
-            "";
-          this.setData({
-            replycontent: ""
-          });
+        if (type) {
+          wx.navigateBack()
         } else {
-          blogcomment[this.data.detail.id]["replyInfo"][this.replyInfo.id] = "";
-          this.setData({
-            replycontent: ""
+          let blogcomment = this.data.$state.blogcomment;
+          if (this.replyParent) {
+            blogcomment[this.data.detail.id]["replyParent"][this.replyParent] =
+              "";
+            this.setData({
+              replycontent: ""
+            });
+          } else {
+            blogcomment[this.data.detail.id]["replyInfo"][this.replyInfo.id] = "";
+            this.setData({
+              replycontent: ""
+            });
+          }
+          app.store.setState({
+            blogcomment
           });
         }
-        app.store.setState({
-          blogcomment
-        });
         this.getDetail();
         this.comParam.page = 1;
         this.getComment([]);
         app.socket.send({
           type: "Bokemessage",
-          data: { uid: params.to_user }
+          data: {
+            uid: params.to_user
+          }
         });
       })
       .catch(msg => {
@@ -850,7 +872,7 @@ Page({
           this.getDetail();
           this.comParam.page = 1;
           this.getComment([]);
-        } else {
+        } else if (msg.code == 0) {
           wx.showToast({
             title: msg.msg || "发布失败",
             icon: "none",
@@ -859,14 +881,15 @@ Page({
         }
       });
   },
-  tohome: function() {
-    wx.reLaunch({ url: "/pages/index/index" });
+  tohome: function () {
+    wx.reLaunch({
+      url: "/pages/index/index"
+    });
   },
   toCommentDetail(e) {
     let vm = this;
     wx.navigateTo({
-      url:
-        "/pages/commentDetail/commentDetail?" +
+      url: "/pages/commentDetail/commentDetail?" +
         "blog_id=" +
         this.id +
         "&comment_id=" +
@@ -919,8 +942,7 @@ Page({
     });
     if (this.data.$state.authRecordfail) {
       wx.showModal({
-        content:
-          "您已拒绝授权使用麦克风录音权限，请打开获取麦克风授权！否则无法使用小程序部分功能",
+        content: "您已拒绝授权使用麦克风录音权限，请打开获取麦克风授权！否则无法使用小程序部分功能",
         confirmText: "去授权",
         confirmColor: "#df2020",
         success: res => {
@@ -947,7 +969,7 @@ Page({
       });
     }
   },
-  getRecordAuth: function() {
+  getRecordAuth: function () {
     wx.getSetting({
       success(res) {
         let record = res.authSetting["scope.record"];
@@ -963,7 +985,7 @@ Page({
   /**
    * 初始化语音识别回调
    */
-  initRecord: function() {
+  initRecord: function () {
     //有新的识别内容返回，则会调用此事件
     manager.onRecognize = res => {
       clearInterval(this.timer);
@@ -976,14 +998,12 @@ Page({
     manager.onStop = res => {
       clearInterval(this.timer);
       // 取出录音文件识别出来的文字信息
-      console.log(22222222)
       if (!this.data.showvoiceauto) return;
-      console.log(111111)
       let text = res.result;
       console.log(text)
-      this.data.replyshow
-        ? (text = this.data.replycontent + text)
-        : (text = this.data.content + text);
+      this.data.replyshow ?
+        (text = this.data.replycontent + text) :
+        (text = this.data.content + text);
       // 获取音频文件临时地址
       let filePath = res.tempFilePath;
       let duration = res.duration;
@@ -993,29 +1013,29 @@ Page({
         });
         return;
       }
-      this.data.replyshow
-        ? this.setData({
-            replycontent: text
-          })
-        : this.setData({
-            content: text
-          });
+      this.data.replyshow ?
+        this.setData({
+          replycontent: text
+        }) :
+        this.setData({
+          content: text
+        });
       if (this.data.replyshow) {
         let blogcomment = this.data.$state.blogcomment;
-        blogcomment[this.data.detail.id]
-          ? ""
-          : (blogcomment[this.data.detail.id] = {});
+        blogcomment[this.data.detail.id] ?
+          "" :
+          (blogcomment[this.data.detail.id] = {});
         if (this.replyParent) {
-          blogcomment[this.data.detail.id]["replyParent"]
-            ? ""
-            : (blogcomment[this.data.detail.id]["replyParent"] = {});
+          blogcomment[this.data.detail.id]["replyParent"] ?
+            "" :
+            (blogcomment[this.data.detail.id]["replyParent"] = {});
           blogcomment[this.data.detail.id]["replyParent"][
             this.replyParent
           ] = this.data.replycontent;
         } else if (this.replyInfo) {
-          blogcomment[this.data.detail.id]["replyInfo"]
-            ? ""
-            : (blogcomment[this.data.detail.id]["replyInfo"] = {});
+          blogcomment[this.data.detail.id]["replyInfo"] ?
+            "" :
+            (blogcomment[this.data.detail.id]["replyInfo"] = {});
           blogcomment[this.data.detail.id]["replyInfo"][
             this.replyInfo.id
           ] = this.data.replycontent;
@@ -1025,9 +1045,9 @@ Page({
         });
       } else {
         let blogcomment = this.data.$state.blogcomment;
-        blogcomment[this.data.detail.id]
-          ? ""
-          : (blogcomment[this.data.detail.id] = {});
+        blogcomment[this.data.detail.id] ?
+          "" :
+          (blogcomment[this.data.detail.id] = {});
         blogcomment[this.data.detail.id]["replycontent"] = this.data.content;
         app.store.setState({
           blogcomment
@@ -1158,8 +1178,7 @@ Page({
     app.copythat(e.target.dataset.content);
     if (e.target.dataset.type == "content") {
       this.setData({
-        "detail.content":
-          "<span style='background:#f6eeee'>" +
+        "detail.content": "<span style='background:#f6eeee'>" +
           this.data.detail.content +
           "</span>"
       });
@@ -1186,8 +1205,8 @@ Page({
       }, 2500);
     } else {
       this.data.comment[e.target.dataset.index].reply_array[
-        e.target.dataset.chiindex
-      ].reply_content =
+          e.target.dataset.chiindex
+        ].reply_content =
         "<span style='background:#f6eeee'>" +
         this.data.comment[e.target.dataset.index].reply_array[
           e.target.dataset.chiindex
@@ -1234,16 +1253,18 @@ Page({
     }
   },
   collect() {
-    this.data.showSheet
-      ? this.setData({
-          showSheet: false
-        })
-      : this.setData({
-          showSheet: true
-        });
+    this.data.showSheet ?
+      this.setData({
+        showSheet: false
+      }) :
+      this.setData({
+        showSheet: true
+      });
   },
   attention() {
-    let param = { follower_uid: this.data.detail.uid };
+    let param = {
+      follower_uid: this.data.detail.uid
+    };
     app.user.following(param).then(res => {
       this.setData({
         showSheet: false,
@@ -1258,7 +1279,9 @@ Page({
     });
   },
   clsocancelFollowing() {
-    let param = { follower_uid: this.data.detail.uid };
+    let param = {
+      follower_uid: this.data.detail.uid
+    };
     app.user.cancelFollowing(param).then(res => {
       this.setData({
         showSheet: false,
@@ -1273,7 +1296,9 @@ Page({
     });
   },
   cancelCollection() {
-    let param = { blog_id: this.data.detail.id };
+    let param = {
+      blog_id: this.data.detail.id
+    };
     app.circle
       .collectCancel(param)
       .then(res => {

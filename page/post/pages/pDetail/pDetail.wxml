@@ -113,6 +113,8 @@
 							</view>
 							<rich-text nodes="{{ item.content }}" catchlongpress="copythat"
 								data-content="{{ item.content }}" data-type='reply' data-index="{{index}}"></rich-text>
+								<playRrecord style="position: relative; left: -30rpx;" wx:if="{{item.audio_url && item.audio_duration > 0}}" item="{{item}}" playVoice="{{playVoice}}">
+								</playRrecord>
 							<button wx:if="{{ $state.userInfo.id != item.uid }}" class="reply-btn"
 								data-reply="{{ item }}" catchtap="show">回复</button>
 						</view>
@@ -137,6 +139,8 @@
 						<rich-text nodes="{{ child.rtext + child.reply_content }}" catchlongpress="copythat"
 							data-content="{{ child.reply_content }}" data-index="{{index}}" data-chiindex="{{number}}"
 							data-type="child"></rich-text>
+							<playRrecord style="position: relative; left: -30rpx;" wx:if="{{child.audio_url && child.audio_duration > 0}}" item="{{child}}" playVoice="{{playVoice}}">
+							</playRrecord>
 						<button wx:if="{{ $state.userInfo.id != child.reply_user_id }}" class="reply-btn"
 							data-reply="{{ child }}" data-parent="{{ item.id }}" catchtap="show">回复</button>
 					</view>

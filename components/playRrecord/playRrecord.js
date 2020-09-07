@@ -44,6 +44,7 @@ Component({
     playVoice(e) {
       let pages = getCurrentPages()
       record.checkRecord(e, pages[pages.length - 1])
+      console.log(this.data.playVoice)
     },
     delRecord() {
       let pages = getCurrentPages()
