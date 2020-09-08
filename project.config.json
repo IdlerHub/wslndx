@@ -164,9 +164,9 @@
         },
         {
           "id": 9,
-          "name": "page/post/pages/pDetail/pDetail",
-          "pathName": "page/post/pages/pDetail/pDetail",
-          "query": "id=1691&comment",
+          "name": "pages/commentDetail/commentDetail",
+          "pathName": "pages/commentDetail/commentDetail",
+          "query": "blog_id=1691&comment_id=1069",
           "scene": null
         },
         {

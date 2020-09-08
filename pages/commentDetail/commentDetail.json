@@ -3,5 +3,7 @@
   "navigationBarTitleText": "评论详情",
   "navigationBarTextStyle": "black",
   "enablePullDownRefresh": true,
-  "usingComponents": {}
+  "usingComponents": {
+    "playRrecord": "../../components/playRrecord/playRrecord"
+  }
 }

@@ -10,6 +10,7 @@ const plugin = requirePlugin("WechatSI")
 // 获取**全局唯一**的语音识别管理器**recordRecoManager**
 const manager = plugin.getRecordRecognitionManager()
 const innerAudioContext = wx.createInnerAudioContext();
+const record = require('../../utils/record')
 Page({
   /**
    * 页面的初始数据
@@ -30,6 +31,16 @@ Page({
     voivetext: "",
     voiceplayimg: "https://hwcdn.jinlingkeji.cn/images/pro/triangle.png",
     replyshow: false,
+    playVoice: {
+      status: 0,
+      duration: 0,
+      voiceplayimg: 'https://hwcdn.jinlingkeji.cn/images/pro/triangle.png',
+      playTimer: {
+        minute: 0,
+        second: 0
+      },
+      id: 0
+    }
   },
   pageName: "多回复详情页",
   /**
@@ -39,7 +50,7 @@ Page({
     this.navParams = options;
     this.apiIndex = 0;
     if (options.lesson_id) {
-      if(options.is_live) {
+      if (options.is_live) {
         this.apiIndex = 1;
         console.log("这是直播的")
       }
@@ -58,14 +69,26 @@ Page({
   onShow: function () {
     this.initRecord();
     this.getRecordAuth();
+    record.initRecord(this)
   },
   /**
    * 获取评论详情
    */
   getData() {
     return app.circle.replyDetail(this.navParams).then((res) => {
+      res.data.pause = true;
+      res.data.timer = {
+        minute: parseInt(res.data.audio_duration / 60),
+        second: res.data.audio_duration - (parseInt(res.data.audio_duration / 60) * 60)
+      }
       res.data.reply_array.forEach((v) => {
         v.rtext = `回复<span  class="respond">${v.to_user}</span>:&nbsp;&nbsp;`;
+        v.pause = true;
+        v.timer = {
+          minute: parseInt(v.audio_duration / 60),
+          second: v.audio_duration - (parseInt(v.audio_duration / 60) * 60)
+        }
+        v.id = v.reply_id
       });
       this.setData({
         detail: res.data,
@@ -77,6 +100,11 @@ Page({
     return this.data.apiList[this.apiIndex].replyList(this.navParams).then((res) => {
       res.data.reply_array.forEach((v) => {
         v.rtext = `回复<span  class="respond">${v.to_user}</span>:&nbsp;&nbsp;`;
+        v.timer = {
+          minute: parseInt(v.audio_duration / 60),
+          second: v.audio_duration - (parseInt(v.audio_duration / 60) * 60)
+        }
+        v.id = v.reply_id
       });
       this.setData({
         detail: res.data,
@@ -163,7 +191,7 @@ Page({
         comment_id: this.data.detail.id,
         id: e.currentTarget.dataset.item.reply_id,
       };
-      if(this.apiIndex == 1){
+      if (this.apiIndex == 1) {
         params = {
           reply_id: e.currentTarget.dataset.item.reply_id,
         };
@@ -227,8 +255,7 @@ Page({
     this.replyInfo = e.target.dataset.reply;
     if (this.data.$state.userInfo.status !== "normal") {
       wx.showModal({
-        content:
-          "由于您近期不合规操作，您的账户已被管理员禁止发帖留言，如有疑问请在个人中心联系客服处理",
+        content: "由于您近期不合规操作，您的账户已被管理员禁止发帖留言，如有疑问请在个人中心联系客服处理",
         confirmColor: "#df2020",
       });
     } else {
@@ -257,21 +284,20 @@ Page({
             ]
           ) {
             this.data.$state.lessDiscussion[this.data.detail.lesson_id][
-              "replyParent"
-            ][this.data.detail.id]
-              ? this.setData({
-                  content: this.data.$state.lessDiscussion[
-                    this.data.detail.lesson_id
-                  ]["replyParent"][this.data.detail.id],
-                  contenLength:
-                    this.data.$state.lessDiscussion[this.data.detail.lesson_id][
-                      "replyParent"
-                    ][this.data.detail.id].length || 0,
-                })
-              : this.setData({
-                  content: "",
-                  contenLength: 0,
-                });
+                "replyParent"
+              ][this.data.detail.id] ?
+              this.setData({
+                content: this.data.$state.lessDiscussion[
+                  this.data.detail.lesson_id
+                ]["replyParent"][this.data.detail.id],
+                contenLength: this.data.$state.lessDiscussion[this.data.detail.lesson_id][
+                  "replyParent"
+                ][this.data.detail.id].length || 0,
+              }) :
+              this.setData({
+                content: "",
+                contenLength: 0,
+              });
           } else if (
             !this.replyInfo &&
             this.data.$state.lessDiscussion[this.data.detail.lesson_id][
@@ -279,21 +305,20 @@ Page({
             ]
           ) {
             this.data.$state.lessDiscussion[this.data.detail.lesson_id][
-              "replyInfo"
-            ][this.data.detail.id]
-              ? this.setData({
-                  content: this.data.$state.lessDiscussion[
-                    this.data.detail.lesson_id
-                  ]["replyInfo"][this.data.detail.id],
-                  contenLength:
-                    this.data.$state.lessDiscussion[this.data.detail.lesson_id][
-                      "replyInfo"
-                    ][this.data.detail.id].length || 0,
-                })
-              : this.setData({
-                  content: "",
-                  contenLength: 0,
-                });
+                "replyInfo"
+              ][this.data.detail.id] ?
+              this.setData({
+                content: this.data.$state.lessDiscussion[
+                  this.data.detail.lesson_id
+                ]["replyInfo"][this.data.detail.id],
+                contenLength: this.data.$state.lessDiscussion[this.data.detail.lesson_id][
+                  "replyInfo"
+                ][this.data.detail.id].length || 0,
+              }) :
+              this.setData({
+                content: "",
+                contenLength: 0,
+              });
           } else {
             this.setData({
               content: "",
@@ -301,8 +326,7 @@ Page({
             });
           }
         }
-      } else {
-      }
+      } else {}
     }
   },
   /* 关闭输出框 */
@@ -320,20 +344,20 @@ Page({
     });
     if (this.data.detail.blog_id) {
       let blogcomment = this.data.$state.blogcomment;
-      blogcomment[this.data.detail.blog_id]
-        ? ""
-        : (blogcomment[this.data.detail.blog_id] = {});
+      blogcomment[this.data.detail.blog_id] ?
+        "" :
+        (blogcomment[this.data.detail.blog_id] = {});
       if (this.replyInfo) {
-        blogcomment[this.data.detail.blog_id]["replyParent"]
-          ? ""
-          : (blogcomment[this.data.detail.blog_id]["replyParent"] = {});
+        blogcomment[this.data.detail.blog_id]["replyParent"] ?
+          "" :
+          (blogcomment[this.data.detail.blog_id]["replyParent"] = {});
         blogcomment[this.data.detail.blog_id]["replyParent"][
           this.data.detail.id
         ] = this.data.content;
       } else {
-        blogcomment[this.data.detail.blog_id]["replyInfo"]
-          ? ""
-          : (blogcomment[this.data.detail.blog_id]["replyInfo"] = {});
+        blogcomment[this.data.detail.blog_id]["replyInfo"] ?
+          "" :
+          (blogcomment[this.data.detail.blog_id]["replyInfo"] = {});
         blogcomment[this.data.detail.blog_id]["replyInfo"][
           this.data.detail.id
         ] = this.data.content;
@@ -343,20 +367,20 @@ Page({
       });
     } else {
       let lessDiscussion = this.data.$state.lessDiscussion;
-      lessDiscussion[this.data.detail.lesson_id]
-        ? ""
-        : (lessDiscussion[this.data.detail.lesson_id] = {});
+      lessDiscussion[this.data.detail.lesson_id] ?
+        "" :
+        (lessDiscussion[this.data.detail.lesson_id] = {});
       if (this.replyInfo) {
-        lessDiscussion[this.data.detail.lesson_id]["replyParent"]
-          ? ""
-          : (lessDiscussion[this.data.detail.lesson_id]["replyParent"] = {});
+        lessDiscussion[this.data.detail.lesson_id]["replyParent"] ?
+          "" :
+          (lessDiscussion[this.data.detail.lesson_id]["replyParent"] = {});
         lessDiscussion[this.data.detail.lesson_id]["replyParent"][
           this.data.detail.id
         ] = this.data.content;
       } else {
-        lessDiscussion[this.data.detail.lesson_id]["replyInfo"]
-          ? ""
-          : (lessDiscussion[this.data.detail.lesson_id]["replyInfo"] = {});
+        lessDiscussion[this.data.detail.lesson_id]["replyInfo"] ?
+          "" :
+          (lessDiscussion[this.data.detail.lesson_id]["replyInfo"] = {});
         lessDiscussion[this.data.detail.lesson_id]["replyInfo"][
           this.data.detail.id
         ] = this.data.content;
@@ -367,38 +391,43 @@ Page({
     }
   },
   /* 发送回复 */
-  release() {
-    if (!!this.data.content.trim()) {
+  release(e, params, type) {
+    let param = {}
+    if (this.data.detail.lesson_id) {
+      param = {
+        lesson_id: this.data.detail.lesson_id,
+        comment_id: this.data.detail.id,
+        reply_content: this.data.content,
+        reply_type: this.replyInfo ? 2 : 1,
+        reply_id: this.replyInfo ? this.replyInfo.reply_id : -1,
+        to_user: this.replyInfo ?
+          this.replyInfo.reply_user_id : this.data.detail.uid,
+        type: 1
+      };
+    } else {
+      param = {
+        blog_id: this.data.detail.blog_id,
+        comment_id: this.data.detail.id,
+        reply_content: this.data.content,
+        reply_type: this.replyInfo ? 2 : 1,
+        reply_id: this.replyInfo ? this.replyInfo.reply_id : -1,
+        to_user: this.replyInfo ?
+          this.replyInfo.reply_user_id : this.data.detail.uid,
+        type: 1
+      };
+    }
+    params ? Object.assign(param, params) : ''
+    if (e.currentTarget.dataset.type) {
+      wx.navigateTo({
+        url: `/page/post/pages/release/release?params=${JSON.stringify(param)}`,
+      })
+    } else if (!!this.data.content.trim() || !!params.reply_content.trim()) {
       /* 回复别人的回复 reply_type=2   /  回复评论主体 reply_type=1   */
-      if (this.data.detail.lesson_id) {
-        let params = {
-          lesson_id: this.data.detail.lesson_id,
-          comment_id: this.data.detail.id,
-          reply_content: this.data.content,
-          reply_type: this.replyInfo ? 2 : 1,
-          reply_id: this.replyInfo ? this.replyInfo.reply_id : -1,
-          to_user: this.replyInfo
-            ? this.replyInfo.reply_user_id
-            : this.data.detail.uid,
-        };
-        this.reply(params);
-      } else {
-        let params = {
-          blog_id: this.data.detail.blog_id,
-          comment_id: this.data.detail.id,
-          reply_content: this.data.content,
-          reply_type: this.replyInfo ? 2 : 1,
-          reply_id: this.replyInfo ? this.replyInfo.reply_id : -1,
-          to_user: this.replyInfo
-            ? this.replyInfo.reply_user_id
-            : this.data.detail.uid,
-        };
-        this.reply(params);
-      }
+      this.reply(param, type);
     }
   },
   /* 回复评论 */
-  reply(params) {
+  reply(params, type) {
     // this.hide()
     wx.showLoading({
       title: "发布中",
@@ -407,9 +436,6 @@ Page({
       this.data.apiList[this.apiIndex]
         .addReply(params)
         .then(() => {
-          this.toast("回复成功");
-          this.emitEvent();
-          this.getlesData();
           let lessDiscussion = this.data.$state.lessDiscussion;
           if (this.replyInfo) {
             lessDiscussion[this.data.detail.lesson_id]["replyParent"][
@@ -423,6 +449,9 @@ Page({
           app.store.setState({
             lessDiscussion,
           });
+          this.toast("回复成功");
+          this.emitEvent();
+          this.getlesData();
           this.setData({
             content: "",
             showvoice: false,
@@ -445,22 +474,26 @@ Page({
       app.circle
         .reply(params)
         .then(() => {
+          if (type) {
+            wx.navigateBack()
+          } else {
+            let blogcomment = this.data.$state.blogcomment;
+            if (this.replyInfo) {
+              blogcomment[this.data.detail.blog_id]["replyParent"][
+                this.data.detail.id
+              ] = "";
+            } else {
+              blogcomment[this.data.detail.blog_id]["replyInfo"][
+                this.data.detail.id
+              ] = "";
+            }
+            app.store.setState({
+              blogcomment,
+            });
+          }
           this.toast("回复成功");
           this.emitEvent();
           this.getData();
-          let blogcomment = this.data.$state.blogcomment;
-          if (this.replyInfo) {
-            blogcomment[this.data.detail.blog_id]["replyParent"][
-              this.data.detail.id
-            ] = "";
-          } else {
-            blogcomment[this.data.detail.blog_id]["replyInfo"][
-              this.data.detail.id
-            ] = "";
-          }
-          app.store.setState({
-            blogcomment,
-          });
           this.setData({
             content: "",
             showvoice: false,
@@ -471,11 +504,12 @@ Page({
           });
         })
         .catch((err) => {
+          console.log(err)
           if (err.code == -2) {
             this.toast("帖子已删除,回复失败");
           } else if (err.code == -3) {
             this.toast("信息已删除,回复失败");
-          } else {
+          } else if(err.code == 0) {
             this.toast("回复失败");
           }
         });
@@ -501,8 +535,7 @@ Page({
       write: false,
     });
     wx.navigateTo({
-      url:
-        "../comment/comment?content=" +
+      url: "../comment/comment?content=" +
         (this.data.content != undefined ? this.data.content : ""),
       events: {
         commentContent: (res) => {
@@ -542,8 +575,7 @@ Page({
     });
     if (this.data.$state.authRecordfail) {
       wx.showModal({
-        content:
-          "您已拒绝授权使用麦克风录音权限，请打开获取麦克风授权！否则无法使用小程序部分功能",
+        content: "您已拒绝授权使用麦克风录音权限，请打开获取麦克风授权！否则无法使用小程序部分功能",
         confirmText: "去授权",
         confirmColor: "#df2020",
         success: (res) => {
@@ -619,20 +651,20 @@ Page({
       });
       if (this.data.detail.blog_id) {
         let blogcomment = this.data.$state.blogcomment;
-        blogcomment[this.data.detail.blog_id] != undefined
-          ? ""
-          : (blogcomment[this.data.detail.blog_id] = {});
+        blogcomment[this.data.detail.blog_id] != undefined ?
+          "" :
+          (blogcomment[this.data.detail.blog_id] = {});
         if (this.replyInfo) {
-          blogcomment[this.data.detail.blog_id]["replyParent"] != undefined
-            ? ""
-            : (blogcomment[this.data.detail.blog_id]["replyParent"] = {});
+          blogcomment[this.data.detail.blog_id]["replyParent"] != undefined ?
+            "" :
+            (blogcomment[this.data.detail.blog_id]["replyParent"] = {});
           blogcomment[this.data.detail.blog_id]["replyParent"][
             this.data.detail.id
           ] = this.data.content;
         } else {
-          blogcomment[this.data.detail.blog_id]["replyInfo"] != undefined
-            ? ""
-            : (blogcomment[this.data.detail.blog_id]["replyInfo"] = {});
+          blogcomment[this.data.detail.blog_id]["replyInfo"] != undefined ?
+            "" :
+            (blogcomment[this.data.detail.blog_id]["replyInfo"] = {});
           blogcomment[this.data.detail.blog_id]["replyInfo"][
             this.data.detail.id
           ] = this.data.content;
@@ -642,20 +674,20 @@ Page({
         });
       } else {
         let lessDiscussion = this.data.$state.lessDiscussion;
-        lessDiscussion[this.data.detail.lesson_id] != undefined
-          ? ""
-          : (lessDiscussion[this.data.detail.lesson_id] = {});
+        lessDiscussion[this.data.detail.lesson_id] != undefined ?
+          "" :
+          (lessDiscussion[this.data.detail.lesson_id] = {});
         if (this.replyInfo) {
-          lessDiscussion[this.data.detail.lesson_id]["replyParent"] != undefined
-            ? ""
-            : (blogcomment[this.data.detail.lesson_id]["replyParent"] = {});
+          lessDiscussion[this.data.detail.lesson_id]["replyParent"] != undefined ?
+            "" :
+            (blogcomment[this.data.detail.lesson_id]["replyParent"] = {});
           lessDiscussion[this.data.detail.lesson_id]["replyParent"][
             this.data.detail.id
           ] = this.data.content;
         } else {
-          lessDiscussion[this.data.detail.lesson_id]["replyInfo"] != undefined
-            ? ""
-            : (lessDiscussion[this.data.detail.lesson_id]["replyInfo"] = {});
+          lessDiscussion[this.data.detail.lesson_id]["replyInfo"] != undefined ?
+            "" :
+            (lessDiscussion[this.data.detail.lesson_id]["replyInfo"] = {});
           lessDiscussion[this.data.detail.lesson_id]["replyInfo"][
             this.data.detail.id
           ] = this.data.content;
@@ -728,9 +760,9 @@ Page({
     let text = "",
       voicetext = this.data.voicetext;
     if (this.replyInfo) {
-      this.data.content == ""
-        ? ""
-        : (text = this.data.content.replace(voicetext, ""));
+      this.data.content == "" ?
+        "" :
+        (text = this.data.content.replace(voicetext, ""));
       this.setData({
         showvoiceauto: false,
         content: text,
@@ -739,20 +771,20 @@ Page({
       });
       if (this.data.detail.blog_id) {
         let blogcomment = this.data.$state.blogcomment;
-        blogcomment[this.data.detail.blog_id]
-          ? ""
-          : (blogcomment[this.data.detail.blog_id] = {});
+        blogcomment[this.data.detail.blog_id] ?
+          "" :
+          (blogcomment[this.data.detail.blog_id] = {});
         if (this.replyInfo) {
-          blogcomment[this.data.detail.blog_id]["replyParent"]
-            ? ""
-            : (blogcomment[this.data.detail.blog_id]["replyParent"] = {});
+          blogcomment[this.data.detail.blog_id]["replyParent"] ?
+            "" :
+            (blogcomment[this.data.detail.blog_id]["replyParent"] = {});
           blogcomment[this.data.detail.blog_id]["replyParent"][
             this.data.detail.id
           ] = this.data.content;
         } else {
-          blogcomment[this.data.detail.blog_id]["replyInfo"]
-            ? ""
-            : (blogcomment[this.data.detail.blog_id]["replyInfo"] = {});
+          blogcomment[this.data.detail.blog_id]["replyInfo"] ?
+            "" :
+            (blogcomment[this.data.detail.blog_id]["replyInfo"] = {});
           blogcomment[this.data.detail.blog_id]["replyInfo"][
             this.data.detail.id
           ] = this.data.content;
@@ -762,20 +794,20 @@ Page({
         });
       } else {
         let lessDiscussion = this.data.$state.lessDiscussion;
-        lessDiscussion[this.data.detail.lesson_id]
-          ? ""
-          : (lessDiscussion[this.data.detail.lesson_id] = {});
+        lessDiscussion[this.data.detail.lesson_id] ?
+          "" :
+          (lessDiscussion[this.data.detail.lesson_id] = {});
         if (this.replyInfo) {
-          lessDiscussion[this.data.detail.lesson_id]["replyParent"]
-            ? ""
-            : (lessDiscussion[this.data.detail.lesson_id]["replyParent"] = {});
+          lessDiscussion[this.data.detail.lesson_id]["replyParent"] ?
+            "" :
+            (lessDiscussion[this.data.detail.lesson_id]["replyParent"] = {});
           lessDiscussion[this.data.detail.lesson_id]["replyParent"][
             this.data.detail.id
           ] = this.data.content;
         } else {
-          lessDiscussion[this.data.detail.lesson_id]["replyInfo"]
-            ? ""
-            : (lessDiscussion[this.data.detail.lesson_id]["replyInfo"] = {});
+          lessDiscussion[this.data.detail.lesson_id]["replyInfo"] ?
+            "" :
+            (lessDiscussion[this.data.detail.lesson_id]["replyInfo"] = {});
           lessDiscussion[this.data.detail.lesson_id]["replyInfo"][
             this.data.detail.id
           ] = this.data.content;
@@ -785,9 +817,9 @@ Page({
         });
       }
     } else {
-      this.data.content == ""
-        ? ""
-        : (text = this.data.content.replace(voicetext, ""));
+      this.data.content == "" ?
+        "" :
+        (text = this.data.content.replace(voicetext, ""));
       this.setData({
         showvoiceauto: false,
         content: text,
@@ -796,20 +828,20 @@ Page({
       });
       if (this.data.detail.blog_id) {
         let blogcomment = this.data.$state.blogcomment;
-        blogcomment[this.data.detail.blog_id]
-          ? ""
-          : (blogcomment[this.data.detail.blog_id] = {});
+        blogcomment[this.data.detail.blog_id] ?
+          "" :
+          (blogcomment[this.data.detail.blog_id] = {});
         if (this.replyInfo) {
-          blogcomment[this.data.detail.blog_id]["replyParent"]
-            ? ""
-            : (blogcomment[this.data.detail.blog_id]["replyParent"] = {});
+          blogcomment[this.data.detail.blog_id]["replyParent"] ?
+            "" :
+            (blogcomment[this.data.detail.blog_id]["replyParent"] = {});
           blogcomment[this.data.detail.blog_id]["replyParent"][
             this.data.detail.id
           ] = this.data.content;
         } else {
-          blogcomment[this.data.detail.blog_id]["replyInfo"]
-            ? ""
-            : (blogcomment[this.data.detail.blog_id]["replyInfo"] = {});
+          blogcomment[this.data.detail.blog_id]["replyInfo"] ?
+            "" :
+            (blogcomment[this.data.detail.blog_id]["replyInfo"] = {});
           blogcomment[this.data.detail.blog_id]["replyInfo"][
             this.data.detail.id
           ] = this.data.content;
@@ -819,20 +851,20 @@ Page({
         });
       } else {
         let lessDiscussion = this.data.$state.lessDiscussion;
-        lessDiscussion[this.data.detail.lesson_id]
-          ? ""
-          : (lessDiscussion[this.data.detail.lesson_id] = {});
+        lessDiscussion[this.data.detail.lesson_id] ?
+          "" :
+          (lessDiscussion[this.data.detail.lesson_id] = {});
         if (this.replyInfo) {
-          lessDiscussion[this.data.detail.lesson_id]["replyParent"]
-            ? ""
-            : (lessDiscussion[this.data.detail.lesson_id]["replyParent"] = {});
+          lessDiscussion[this.data.detail.lesson_id]["replyParent"] ?
+            "" :
+            (lessDiscussion[this.data.detail.lesson_id]["replyParent"] = {});
           lessDiscussion[this.data.detail.lesson_id]["replyParent"][
             this.data.detail.id
           ] = this.data.content;
         } else {
-          lessDiscussion[this.data.detail.lesson_id]["replyInfo"]
-            ? ""
-            : (lessDiscussion[this.data.detail.lesson_id]["replyInfo"] = {});
+          lessDiscussion[this.data.detail.lesson_id]["replyInfo"] ?
+            "" :
+            (lessDiscussion[this.data.detail.lesson_id]["replyInfo"] = {});
           lessDiscussion[this.data.detail.lesson_id]["replyInfo"][
             this.data.detail.id
           ] = this.data.content;

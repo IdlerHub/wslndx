@@ -115,6 +115,9 @@
 	</view>
 </template>
 <view class="tabnav" style="padding-top:{{ top }}px">
+	<navigator url="/page/post/pages/search/search" hover-class="none" class="search"> 
+		<image src="/images/postSearchIcon.png"></image>
+	</navigator>
 	<view class="{{ currentTab != 0 ? 'lose' : ''}} tabnav-item" bindtap="switchNav" data-current="0">
 		<text>推荐</text>
 		<view class="smallred" wx:if="{{currentTab == 1 && $state.unRead}}"></view>

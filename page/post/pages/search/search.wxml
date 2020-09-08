@@ -1,0 +1,18 @@
+<!--page/post/pages/search/search.wxml-->
+<view class="search-top">
+  <view class="search-box">
+    <image src="{{$state.imgHost}}/searchp.png"></image>
+    <form>
+      <input placeholder="搜索圈子与用户" placeholder-style="color:#999;" confirm-type="search" type="text" class="search-txt"
+        focus="focus" value="{{text}}" bindinput="txtchange" bindconfirm="earchlesss"></input>
+      <button wx:if="{{text != ''}}" form-type="reset" catchtap="cleartxt"></button>
+    </form>
+  </view>
+  <navigator open-type="navigateBack" class="cancle" hover-class="none">取消</navigator>
+</view>
+<view class="historyBox">
+  <view class="historyTop">
+    <text>搜索历史</text>
+    <view class="historyTop-right"> <image src="{{$state.imgHost}}/delete.png"></image> 清空</view>
+  </view>
+</view>

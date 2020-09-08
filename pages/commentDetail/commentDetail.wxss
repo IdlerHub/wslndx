@@ -158,6 +158,11 @@ page {
       height:36rpx;
       margin-right: 13rpx 
     }
+    .write .box .right .voicebtn1 image {
+      width: 32rpx;
+      height: 32rpx;
+      margin-right: 13rpx
+    }
     .write .box .right .release {
       width:152rpx;
       height:68rpx;
