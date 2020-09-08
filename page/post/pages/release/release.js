@@ -47,7 +47,7 @@ Page({
         second: 0
       },
       id: 0,
-      url:'',
+      url: '',
       nickname: app.store.getState().userInfo.nickname
     }
   },
@@ -55,29 +55,42 @@ Page({
   timer: null,
   playTiemr: null,
   onLoad(ops) {
-    ops.type ? this.circle = true : ''
-    if (ops.title) {
-      this.getCircleList().then(() => {
-        let allCircle = this.data.allCircle;
-        let showFlag = true;
-        let id = "";
-        allCircle.forEach(item => {
-          if (item.title == ops.title) {
-            item.isSel = true;
-            showFlag = false;
-            id = ops.id
-          }
-        });
-        this.setData({
-          allCircle: allCircle,
-          selId: id,
-          showFlag: showFlag,
-          circleId: ops.id,
-          circleTitle: ops.title
-        })
-      });
+    if (ops.params) {
+      wx.setNavigationBarTitle({
+        title: '发表评论'
+      })
+      this.setData({
+        'param.content': JSON.parse(ops.params).content || JSON.parse(ops.params).reply_content,
+        replyparam: JSON.parse(ops.params)
+      })
     } else {
-      this.getCircleList();
+      wx.setNavigationBarTitle({
+        title: '发帖子'
+      })
+      ops.type ? this.circle = true : ''
+      if (ops.title) {
+        this.getCircleList().then(() => {
+          let allCircle = this.data.allCircle;
+          let showFlag = true;
+          let id = "";
+          allCircle.forEach(item => {
+            if (item.title == ops.title) {
+              item.isSel = true;
+              showFlag = false;
+              id = ops.id
+            }
+          });
+          this.setData({
+            allCircle: allCircle,
+            selId: id,
+            showFlag: showFlag,
+            circleId: ops.id,
+            circleTitle: ops.title
+          })
+        });
+      } else {
+        this.getCircleList();
+      }
     }
   },
   onShow() {
@@ -85,7 +98,7 @@ Page({
       keepScreenOn: true
     })
     record.initRecord(this)
-    if(this.timer) recorderManager.stop()
+    if (this.timer) recorderManager.stop()
     this.getRecordAuth();
     this.initRecord();
     if (this.data.$state.releaseParam != null) {
@@ -96,6 +109,14 @@ Page({
     }
   },
   onUnload() {
+    wx.setKeepScreenOn({
+      keepScreenOn: false
+    })
+    innerAudioContext.stop()
+    recorderManager.stop()
+    this.timer ? [clearInterval(this.timer), this.timer = null] : ''
+    app.backgroundAudioManager.stop()
+    if(this.data.replyparam) return
     let pages = getCurrentPages();
     let prePage = [];
     pages.forEach(item => {
@@ -107,23 +128,16 @@ Page({
         prePage = item;
       }
     });
-    if (prePage == []) return
+    if (prePage.length == 0) return
     prePage.setData({
       releaseParam: this.data.param,
       media_type: this.data.media_type,
       showRelease: true
     });
-    wx.setKeepScreenOn({
-      keepScreenOn: false
-    })
-    innerAudioContext.stop()
-    recorderManager.stop()
-    this.timer ? [clearInterval(this.timer), this.timer = null] : ''
-    app.backgroundAudioManager.stop()
   },
   input(e) {
     this.setData({
-      "param.content": e.detail.value
+      "param.content": e.detail.value,
     });
   },
   cancel() {
@@ -168,87 +182,8 @@ Page({
           title: "上传中"
         });
         this.obsUpload(res.tempFilePaths, 1, i, up)
-        // this.next(res.tempFilePaths, 1, i, up);
       }
     });
-  },
-  next(val, type, i, up, url) {
-    app.circle
-      .upload(val[0], type)
-      .then(msg => {
-        msg = JSON.parse(msg);
-        if (msg.code == 1) {
-          let image = this.data.param.image;
-          if (i != undefined) {
-            image[i] = msg.data.url;
-          } else {
-            image.push(msg.data.url);
-          }
-          this.setData({
-            "param.image": image,
-            media_type: type
-          });
-          this.judge();
-        } else {
-          wx.showToast({
-            title: ms.msg,
-            icon: "none",
-            duration: 1500
-          });
-        }
-
-        val.splice(0, 1);
-        if (val.length > 0) {
-          return this.next(val, type);
-        }
-      })
-      .catch(err => {
-        let image = this.data.param.image;
-        if (!up) {
-          image.push("../../images/sensitivity.png");
-          this.setData({
-            "param.image": image
-          });
-        } else {
-          image[i] = "../../images/sensitivity.png";
-          this.setData({
-            "param.image": image
-          });
-        }
-        val.splice(0, 1);
-        if (val.length > 0) {
-          return this.next(val, type);
-        }
-      });
-  },
-  next2(val, type) {
-    app.circle
-      .upload(val.tempFilePath, type)
-      .then(msg => {
-        msg = JSON.parse(msg);
-        if (msg.code == 1) {
-          this.setData({
-            "param.video": msg.data.url,
-            "param.cover": msg.data.cover,
-            "param.asset_id": msg.data.asset_id,
-            media_type: type
-          });
-          this.judge();
-        } else {
-          wx.showToast({
-            title: ms.msg,
-            icon: "none",
-            duration: 1500
-          });
-        }
-      })
-      .catch(err => {
-        wx.showToast({
-          title: "上传失败！",
-          icon: "none",
-          duration: 1500
-        });
-      });
   },
   //上传视频
   getSignature(callback) {
@@ -274,17 +209,11 @@ Page({
         })
         let that = this
         VodUploader.start({
-          // 必填，把 wx.chooseVideo 回调的参数(file)传进来
           mediaFile: res,
-          // 必填，获取签名的函数
           getSignature: that.getSignature,
-          // 选填，视频名称，强烈推荐填写(如果不填，则默认为“来自小程序”)
           mediaName: '视频',
-          // 选填，视频封面，把 wx.chooseImage 回调的参数(file)传进来
           coverFile: res.coverFile,
-          // 上传中回调，获取上传进度等信息
           progress: function (result) {},
-          // 上传完成回调，获取上传后的视频 URL 等信息
           finish: (result) => {
             wx.hideLoading()
             this.setData({
@@ -295,7 +224,6 @@ Page({
             this.judge();
             this.delRecord()
           },
-          // 上传错误回调，处理异常
           error: function (result) {
             console.log(result)
             wx.showToast({
@@ -303,7 +231,6 @@ Page({
             })
           },
         });
-        // this.next2(res, 2);
       }
     });
   },
@@ -537,6 +464,13 @@ Page({
       });
     }
   },
+  //回复/评论
+  reply(e) {
+    let pages = getCurrentPages(), params = this.data.replyparam, type = 1
+    Object.assign(params, { content: params['reply_type'] != undefined ? '' : this.data.param.content, reply_content: params['reply_type'] != undefined ? this.data.param.content : '' })
+    this.data.param.audio ? Object.assign(params, { audio_url: this.data.param.audio,  audio_duration: this.data.param.duration, type: 2 }) : ''
+    pages[pages.length - 2].release(e,params,type)
+  },
   // 权限询问
   authrecord() {
     if (this.data.$state.authRecordfail) {
@@ -724,7 +658,7 @@ Page({
           second: 0
         },
         id: 0,
-        url:'',
+        url: '',
         nickname: app.store.getState().userInfo.nickname
       }
     });
@@ -776,9 +710,6 @@ Page({
               icon: "none",
               title: (err.data && err.data.msg) || "上传失败"
             });
-            // wx.showModal({
-            //   content: JSON.stringify(err)
-            // })
           }
         });
     } else {
@@ -788,7 +719,7 @@ Page({
             this.setData({
               'param.audio': res,
               'param.duration': (this.data.playVoice.timer.minute * 60) + this.data.playVoice.timer.second,
-              "playVoice.url" :res,
+              "playVoice.url": res,
               recordStatus: 1,
               showVoiceBox: 0
             });

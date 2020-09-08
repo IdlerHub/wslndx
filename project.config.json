@@ -164,9 +164,9 @@
         },
         {
           "id": 9,
-          "name": "page/index/pages/assistant/assistant",
-          "pathName": "page/index/pages/assistant/assistant",
-          "query": "index=1",
+          "name": "page/post/pages/pDetail/pDetail",
+          "pathName": "page/post/pages/pDetail/pDetail",
+          "query": "id=1691&comment",
           "scene": null
         },
         {
@@ -174,76 +174,6 @@
           "name": "学习排行榜",
           "pathName": "pages/rankingList/rankingList",
           "query": "uid=12661&type=invite&mode=0",
-          "scene": null
-        },
-        {
-          "id": 11,
-          "name": "page/live/pages/liveDetail/liveDetail",
-          "pathName": "page/live/pages/liveDetail/liveDetail",
-          "query": "lessonId=25",
-          "scene": null
-        },
-        {
-          "id": -1,
-          "name": "page/live/pages/timetable/timetable",
-          "pathName": "page/live/pages/timetable/timetable",
-          "query": "",
-          "scene": null
-        },
-        {
-          "id": -1,
-          "name": "page/live/pages/liveSearch/liveSearch",
-          "pathName": "page/live/pages/liveSearch/liveSearch",
-          "query": "",
-          "scene": null
-        },
-        {
-          "id": 14,
-          "name": "page/live/pages/tableDetail/tableDetail",
-          "pathName": "page/live/pages/tableDetail/tableDetail",
-          "query": "lessonId=4&invite=348026&liveShare=1",
-          "scene": null
-        },
-        {
-          "id": 15,
-          "name": "pages/liveList/liveList",
-          "pathName": "pages/liveList/liveList",
-          "query": "",
-          "scene": null
-        },
-        {
-          "id": -1,
-          "name": "page/vote/pages/voteInfo/voteInfo",
-          "pathName": "page/vote/pages/voteInfo/voteInfo",
-          "query": "voteid=2",
-          "scene": null
-        },
-        {
-          "id": 17,
-          "name": "page/vote/pages/voteArticle/voteArticle",
-          "pathName": "page/vote/pages/voteArticle/voteArticle",
-          "query": "voteid=4",
-          "scene": null
-        },
-        {
-          "id": 18,
-          "name": "page/vote/pages/voteIndex/voteIndex",
-          "pathName": "page/vote/pages/voteIndex/voteIndex",
-          "query": "type=share&vote=1&uid=915",
-          "scene": null
-        },
-        {
-          "id": -1,
-          "name": "page/vote/pages/voteSearch/voteSearch",
-          "pathName": "page/vote/pages/voteSearch/voteSearch",
-          "query": "voteid=3",
-          "scene": null
-        },
-        {
-          "id": -1,
-          "name": "pages/index/index",
-          "pathName": "pages/index/index",
-          "query": "scene=u%3D915%26t%3D1%26o%3D3%26p%3D4",
           "scene": null
         }
       ]
