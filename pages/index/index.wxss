@@ -1047,3 +1047,12 @@ page .getGuideBox .nextBtn {
   font-size: 28rpx;
 }
 
+.xiaolin {
+  width: 168rpx;
+  height: 178rpx;
+  position: fixed;
+  bottom: 295rpx;
+  right: 18rpx;
+  z-index: 9999;
+}
+

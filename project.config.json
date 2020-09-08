@@ -164,9 +164,15 @@
         },
         {
           "id": 9,
+<<<<<<< HEAD
           "name": "page/post/pages/search/search",
           "pathName": "page/post/pages/search/search",
           "query": "blog_id=1691&comment_id=1069",
+=======
+          "name": "page/index/pages/assistant/assistant",
+          "pathName": "page/index/pages/assistant/assistant",
+          "query": "index=1",
+>>>>>>> c8ca61a69b366d458431e8ac97c3baf5574c817d
           "scene": null
         },
         {
