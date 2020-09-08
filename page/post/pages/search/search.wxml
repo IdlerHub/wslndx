@@ -10,9 +10,23 @@
   </view>
   <navigator open-type="navigateBack" class="cancle" hover-class="none">取消</navigator>
 </view>
-<view class="historyBox">
+<view class="historyBox" wx:if="{{searchWordlist.length > 0}}">
   <view class="historyTop">
     <text>搜索历史</text>
-    <view class="historyTop-right"> <image src="{{$state.imgHost}}/delete.png"></image> 清空</view>
+    <view class="historyTop-right">
+      <image src="{{$state.imgHost}}/delete.png"></image> 清空
+    </view>
+  </view>
+  <view class="itemBox">
+    <view wx:for="{{searchWordlist}}" wx:key="index" class="item">item</view>
   </view>
 </view>
+<view class="tabBox">
+  <view wx:for="{{2}}" wx:key="index" class="tab {{ current == index ? 'active' : '' }}" bindtap="checkTab" data-index="{{index}}">{{ index ? '用户' : '圈子'}}
+    <text wx:if="{{current == index}}"></text>
+  </view >
+</view>
+<swiper current="{{current}}" class="swiper" style="height: {{height}};"></swiper>
+<!-- <view class="qst">
+  <image class="ast-img" src="{{$state.imgHost}}/no-com.png"></image>
+</view> -->

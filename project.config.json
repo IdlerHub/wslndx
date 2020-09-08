@@ -164,8 +164,8 @@
         },
         {
           "id": 9,
-          "name": "pages/commentDetail/commentDetail",
-          "pathName": "pages/commentDetail/commentDetail",
+          "name": "page/post/pages/search/search",
+          "pathName": "page/post/pages/search/search",
           "query": "blog_id=1691&comment_id=1069",
           "scene": null
         },
