@@ -182,6 +182,13 @@
 					"pathName": "page/live/pages/liveDetail/liveDetail",
 					"query": "lessonId=7",
 					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "page/live/pages/liveCenter/liveCenter",
+					"pathName": "page/live/pages/liveCenter/liveCenter",
+					"query": "lessonId=7",
+					"scene": null
 				}
 			]
 		}

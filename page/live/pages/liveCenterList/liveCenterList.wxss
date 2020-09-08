@@ -1,4 +1,4 @@
-/* page/live/components/liveLesson/liveLesson.wxss */
+/* page/live/pages/liveCenterList/liveCenterList.wxss */
 .liveLesson {
   width: 100%;
   box-sizing: border-box;
@@ -109,9 +109,9 @@
   color: rgba(126, 126, 126, 1);
 }
 .liveLesson .item .txtBox .textBottom .btn {
-  width: 148rpx;
-  height: 48rpx;
-  line-height: 48rpx;
+  width: 120rpx;
+  height: 50rpx;
+  line-height: 50rpx;
   box-sizing: border-box;
   padding: 0rpx 18rpx;
   background: #df2020;

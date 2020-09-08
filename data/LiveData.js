@@ -137,7 +137,7 @@ function shareLesson(params) {
  * @return:  promise
  * **/
 function getSendMessage(params) {
-  return httpService.post("test/testSubscribe", params);
+  return httpService.post("test/subscribeLesson", params);
 }
 
 module.exports = {
