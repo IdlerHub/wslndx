@@ -131,6 +131,15 @@ function shareLesson(params) {
   return httpService.post("schedule/shareLesson", params);
 }
 
+/**
+ * @description: 获取公众号订阅消息
+ * @param {lesson_id, uid , openid}  --- {课程ID}
+ * @return:  promise
+ * **/
+function getSendMessage(params) {
+  return httpService.post("test/testSubscribe", params);
+}
+
 module.exports = {
   getLiveLessons,
   getApplyDetail,
@@ -147,4 +156,5 @@ module.exports = {
   delReply,
   replyList,
   shareLesson,
+  getSendMessage,
 };

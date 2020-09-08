@@ -115,12 +115,57 @@ page {
   justify-content: space-between;
   align-items: center;
 }
-
-.share-joinClass .joinClass {
-  width: 272rpx;
+.live-info{
   height: 72rpx;
+  display: flex;
+  align-items: center;
+  font-size: 32rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: #FFFFFF;
+  position: relative;
 }
-
+.live-info::after{
+  content: "";
+  position: absolute;
+  width: 4rpx;
+  height: 60rpx;
+  background: #CCCCCC;
+  border-radius: 3rpx;
+  right: -30rpx;
+  top: 6rpx;
+}
+.live-info .join-class{
+  width: 230rpx;
+  height: 72rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(319deg, #FF183F 0%, #FF5454 100%);
+  box-shadow: 0px 2rpx 6rpx 0px rgba(255, 0, 0, 0.4);
+  border-radius: 40rpx;
+  margin-right: 30rpx;
+}
+.live-info .join-class image{
+  width: 43rpx;
+  height: 36rpx;
+  margin-right: 12rpx;
+}
+.subscribe{
+  width: 230rpx;
+  height: 72rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(319deg, #FE772A 0%, #FE8D4E 100%);
+  box-shadow: 0px 2rpx 6rpx 0px #FF6812;
+  border-radius: 40rpx;
+}
+.live-info .subscribe image{
+  width: 42rpx;
+  height: 39rpx;
+  margin-right: 12rpx;
+}
 .share-joinClass .share {
   display: flex;
   align-items: center;

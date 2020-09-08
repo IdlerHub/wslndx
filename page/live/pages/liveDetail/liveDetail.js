@@ -33,7 +33,7 @@ Page({
     placeholder: "添加你的评论",
     replycomment: "欢迎发表观点",
     replyplaceholder: "",
-    replycontent: '',
+    replycontent: "",
     voicetime: 0,
     showvoiceauto: false,
     voicetextstatus: "",
@@ -91,8 +91,54 @@ Page({
     //   res.networkType == "wifi" ? app.playVedio("wifi") : "";
     // });
   },
-  onUnload(){
-    clearInterval(this.timer)
+  onUnload() {
+    clearInterval(this.timer);
+  },
+  subscribe() {
+    //上课通知
+    //有(公众号)openid
+    // if(this.data.lesssonDetail.accounts_openid){
+    // let openid = "ojo015zeP5d5DGmZ0Dd_B8Y8Satg";
+    // this.sendSubscribe(openid)
+    // }else {  //没有的话
+    // this.getOpenId();
+    // }
+  },
+  sendSubscribe(openid) {
+    //订阅公众号消息
+    console.log(111);
+    let _this = this;
+    wx.requestSubscribeMessage({
+      tmplIds: ["dRUCYR-WQmzcr199un0olz299hdYjHXMNHQg6_9P-2A"],
+      success(res) {
+        console.log(res);
+        if (res["dRUCYR-WQmzcr199un0olz299hdYjHXMNHQg6_9P-2A"] == "accept") {
+          let params = {
+            openid,
+            lesson_id: _this.data.lessonDetail.id,
+          };
+          LiveData.getSendMessage(params)
+            .then((res) => {
+              console.log(res);
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        }
+      },
+      fail(err) {
+        console.log(err);
+      },
+    });
+  },
+  getOpenId() {
+    //没有用户的公众号openid
+    let uid = wx.getStorageSync("userInfo").id;
+    // wx.setStorageSync("AccountsId", ops.accounts_openid);
+    //liveTyp标识从哪里跳转
+    wx.redirectTo({
+      url: `/pages/education/education?liveType=liveTable&uid=${uid}`,
+    });
   },
   //获取数据
   getLessonDetail(lesson_id, flag = false) {
@@ -109,18 +155,18 @@ Page({
       if (res.data.current.room_id != undefined) {
         //当天有直播
         _this.getLiveStatus(res.data.current);
-        if(flag) {
-          console.log("拿不到直播状态咯")
+        if (flag) {
+          console.log("拿不到直播状态咯");
           _this.setData({
-            current: res.data.current
-          })
+            current: res.data.current,
+          });
         }
       }
       res.data.lesson.introduction = htmlparser.default(
         res.data.lesson.introduction
       );
       _this.setData({
-        lessonDetail: res.data.lesson
+        lessonDetail: res.data.lesson,
       });
       _this.getComment();
     });
@@ -137,13 +183,15 @@ Page({
         _this.setData({
           sublessons: res.data,
         });
-        _this.order()
-        _this.data.sublessons.forEach(item => {
+        _this.order();
+        _this.data.sublessons.forEach((item) => {
           //如果是已经结束的课,就把第一个放到当前播放中
-          item.is_end && JSON.stringify(playNow) == '{}' ? playNow = item : ''
-        })
+          item.is_end && JSON.stringify(playNow) == "{}"
+            ? (playNow = item)
+            : "";
+        });
         _this.setData({
-          playNow: playNow
+          playNow: playNow,
         });
       })
       .catch((err) => {
@@ -158,22 +206,25 @@ Page({
   },
   joinClass() {
     //跳转推文链接
-    let link = this.data.lessonDetail.mp_url, that = this
-    console.log(link)
+    let link = this.data.lessonDetail.mp_url,
+      that = this;
+    console.log(link);
     // link = `http://mp.weixin.qq.com/s?__biz=Mzg3OTA0NjU0Mg==&mid=100011260&idx=2&sn=93cc742e508ef7e0de553d8c3be44220&chksm=4f08d61d787f5f0b4ec81964a4e49656907e4d1`;
-      // wx.navigateTo({
-      //   url: `/pages/education/education?url=${link}&type=live`,
-      // });
-      wx.navigateTo({
-        url: "/pages/education/education?type=live",
-        success: function (res) {
-          // 通过eventChannel向被打开页面传送数据
-          res.eventChannel.emit("liveCode", { url: link });
-          that.data.showServise ? that.setData({
-            showServise: false
-          }) : ''
-        },
-      });
+    // wx.navigateTo({
+    //   url: `/pages/education/education?url=${link}&type=live`,
+    // });
+    wx.navigateTo({
+      url: "/pages/education/education?type=live",
+      success: function (res) {
+        // 通过eventChannel向被打开页面传送数据
+        res.eventChannel.emit("liveCode", { url: link });
+        that.data.showServise
+          ? that.setData({
+              showServise: false,
+            })
+          : "";
+      },
+    });
   },
   //第一次加载初始化
   init(options) {
@@ -332,13 +383,14 @@ Page({
     let that = this;
     if (this.data.currentTab != 0) {
       let query = wx.createSelectorQuery().in(this);
-      if (this.data.currentTab == 2){
+      if (this.data.currentTab == 2) {
         query.select(".introduction").boundingClientRect();
-      }else{
+      } else {
         query.select(".comment").boundingClientRect();
-      } 
+      }
       query.exec((res) => {
-        let height = this.data.currentTab == 2 ? res[0].height : res[0].height - -110;
+        let height =
+          this.data.currentTab == 2 ? res[0].height : res[0].height - -110;
         height < 100
           ? that.setData({
               height: 700,
