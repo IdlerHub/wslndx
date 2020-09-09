@@ -42,6 +42,8 @@ Page({
     current: {}, //当前直播信息
     playNow: {},
     lessonDetail: {}, //课程详情信息
+    mp_openid: "", //公众号的openid
+    is_subscribe: 0, //是否订阅消息
     sublessons: [], //回放课程列表
     comment: [], //  讨论
     playFlag: false, //视频播放状态
@@ -96,13 +98,21 @@ Page({
   },
   subscribe() {
     //上课通知
-    //有(公众号)openid
-    // if(this.data.lesssonDetail.accounts_openid){
-    // let openid = "ojo015zeP5d5DGmZ0Dd_B8Y8Satg";
-    // this.sendSubscribe(openid)
-    // }else {  //没有的话
-    // this.getOpenId();
-    // }
+    if (this.data.is_subscribe) {
+      console.log("你已经订阅了");
+      wx.showToast({
+        title: "您已经订阅过该课程消息",
+        icon: "none",
+      });
+    } else {
+      //有(公众号)openid
+      if (this.data.mp_openid) {
+        // let openid = "ojo015zeP5d5DGmZ0Dd_B8Y8Satg";
+        this.sendSubscribe(this.data.mp_openid);
+      } else {
+        this.getOpenId();
+      }
+    }
   },
   sendSubscribe(openid) {
     //订阅公众号消息
@@ -113,17 +123,7 @@ Page({
       success(res) {
         console.log(res);
         if (res["dRUCYR-WQmzcr199un0olz299hdYjHXMNHQg6_9P-2A"] == "accept") {
-          let params = {
-            openid,
-            lesson_id: _this.data.lessonDetail.id,
-          };
-          LiveData.getSendMessage(params)
-            .then((res) => {
-              console.log(res);
-            })
-            .catch((err) => {
-              console.log(err);
-            });
+          _this.getSendMessage(openid);
         }
       },
       fail(err) {
@@ -136,9 +136,24 @@ Page({
     let uid = wx.getStorageSync("userInfo").id;
     // wx.setStorageSync("AccountsId", ops.accounts_openid);
     //liveTyp标识从哪里跳转
-    wx.redirectTo({
+    wx.navigateTo({
       url: `/pages/education/education?liveType=liveTable&uid=${uid}`,
     });
+  },
+  getSendMessage(openid) {  //发送订阅消息
+    let params = {
+      openid,
+      lesson_id: _this.data.lessonDetail.id,
+    };
+    LiveData.getSendMessage(params)
+      .then((res) => {
+        _this.setData({
+          is_subscribe: 1,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   },
   //获取数据
   getLessonDetail(lesson_id, flag = false) {
@@ -167,6 +182,8 @@ Page({
       );
       _this.setData({
         lessonDetail: res.data.lesson,
+        is_subscribe: res.data.is_subscribe,
+        mp_openid: res.data.mp_openid,
       });
       _this.getComment();
     });

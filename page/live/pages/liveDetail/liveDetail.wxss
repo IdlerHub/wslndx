@@ -146,6 +146,10 @@ page {
   border-radius: 40rpx;
   margin-right: 30rpx;
 }
+.live-info .join-class>view{
+  height: 72rpx;
+  line-height: 72rpx;
+}
 .live-info .join-class image{
   width: 43rpx;
   height: 36rpx;

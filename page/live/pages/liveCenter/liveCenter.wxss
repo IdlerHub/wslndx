@@ -1,6 +1,4 @@
 /* page/live/pages/liveCenter/liveCenter.wxss */
-.live-center-page {
-}
 .center-list {
     display: flex;
     align-items: center;
