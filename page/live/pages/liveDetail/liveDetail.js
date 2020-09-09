@@ -141,18 +141,26 @@ Page({
     });
   },
   getSendMessage(openid) {  //发送订阅消息
+    let _this = this
     let params = {
       openid,
       lesson_id: _this.data.lessonDetail.id,
     };
     LiveData.getSendMessage(params)
       .then((res) => {
+        wx.showToast({
+          title: res.msg,
+          icon: 'none'
+        });
         _this.setData({
           is_subscribe: 1,
         });
       })
       .catch((err) => {
-        console.log(err);
+        wx.showToast({
+          title: err.msg,
+          icon: "none",
+        });
       });
   },
   //获取数据
