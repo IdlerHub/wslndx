@@ -191,6 +191,13 @@ Page({
       this.setData({
         circle: circle
       })
+      getCurrentPages().forEach(v=> {
+        v.pageName == "秀风采搜索" ?  v.data.cList.forEach((a,b) => {
+          a.id == circle.id ? v.setData({
+            [`cList[${b}].is_follow`]: 1
+          }) :''
+        }) : ''
+      })
     })
   },
   //图片预览
@@ -395,6 +402,13 @@ Page({
       this.setfollow(this.data.flowId, true)
       this.postPages.setfollow(this.data.flowId, true)
       this.closeSheet()
+      getCurrentPages().forEach(v=> {
+        v.pageName == "秀风采搜索" ?  v.data.uList.forEach((a,b) => {
+          a.id == this.data.flowId ? v.setData({
+            [`uList[${b}].is_follow`]: 1
+          }) :''
+        }) : ''
+      })
     })
   },
   clsocancelFollowing() {

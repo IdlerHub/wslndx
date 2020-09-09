@@ -30,7 +30,9 @@ Page({
     this.param = { page: 1, pageSize: 10 };
     this.getList([]);
     wx.uma.trackEvent("post_persons", { pageName: "个人风采" });
-    this.pages = getCurrentPages()[0];
+     getCurrentPages().forEach(v => {
+      v.pageName == '秀风采页' ? this.pages = v : ''
+    });
   },
   onShow: function() {
     record.initRecord(this)
@@ -112,7 +114,7 @@ Page({
     let temp = list || this.data.list;
     this.param.us_id = this.data.us_id;
     return app.circle.myNews(this.param).then(msg => {
-      if (msg.data) {
+      if (msg.data && msg.data.length > 0) {
         let arr = [];
         for (let i in msg.data) {
           arr.push(msg.data[i]);
@@ -167,7 +169,7 @@ Page({
           this.setData({
             list: list
           });
-          this.pages.pagePraise(e.currentTarget.dataset.id);
+          this.pages ? this.pages.pagePraise(e.currentTarget.dataset.id) : ''
         })
         .catch(msg => {
           if (msg.code == -2) {
@@ -207,7 +209,7 @@ Page({
             list: list
           });
           wx.uma.trackEvent("post_btnClick", { btnName: "点赞按钮" });
-          this.pages.pagePraise(e.currentTarget.dataset.id);
+          this.pages ? this.pages.pagePraise(e.currentTarget.dataset.id) : ''
         })
         .catch(msg => {
           if (msg.code == -2) {
@@ -293,7 +295,7 @@ Page({
       .then(res => {
         let list = this.data.list;
         list[this.data.blog_index].collectstatus = 0;
-        this.pages.pagesCollect(this.data.blog_id, 0);
+        this.pages ? this.pages.pagesCollect(this.data.blog_id, 0) :''
         this.setData({
           list
         });
@@ -323,7 +325,7 @@ Page({
       .then(res => {
         let list = this.data.list;
         list[this.data.blog_index].collectstatus = 1;
-        this.pages.pagesCollect(this.data.blog_id, 1);
+        this.pages ? this.pages.pagesCollect(this.data.blog_id, 1) :''
         this.setData({
           list
         });
@@ -359,7 +361,14 @@ Page({
       this.setData({
         isFollow: 1
       });
-      this.pages.setfollow(this.data.us_id, true);
+      this.pages ? this.pages.setfollow(this.data.us_id, true) : ''
+      getCurrentPages().forEach(v=> {
+        v.pageName == "秀风采搜索" ?  v.data.uList.forEach((a,b) => {
+          a.id == this.data.us_id ? v.setData({
+            [`uList[${b}].is_follow`]: 1
+          }) :''
+        }) : ''
+      })
     });
   },
   clsocancelFollowing() {

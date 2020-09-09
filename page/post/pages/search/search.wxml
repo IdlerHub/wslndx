@@ -1,32 +1,57 @@
 <!--page/post/pages/search/search.wxml-->
+<template name="list">
+  <view id="searchBox" wx:if="{{list.length > 0}}">
+    <view class="searchItem" wx:for="{{list}}" wx:key="index" bindtap="touchListitem" data-item="{{item}}">
+      <image src="{{ item.image || item.avatar }}"></image>
+      <view class="itemTxt">
+        <text>{{item.title || item.nickname}}</text>
+        <text>{{type ? '圈子' : '用户'}}</text>
+      </view>
+      <view class="itemRight">
+        <button hover-class="none"
+          class="{{item.is_follow || item.is_follow ? 'isTure' : ''}}" catchtap="touchBtn" data-type="{{type}}" data-item="{{item}}">{{type ? item.is_follow ? '已加入' : '加圈' : item.is_follow ? '已关注' : '关注'}}</button>
+      </view>
+    </view>
+  </view>
+  <view id="searchBox" class="qst" wx:else>
+    <image class="ast-img" src="{{$state.imgHost}}/no-com.png"></image>
+  </view>
+</template>
 <view class="search-top">
   <view class="search-box">
     <image src="{{$state.imgHost}}/searchp.png"></image>
     <form>
       <input placeholder="搜索圈子与用户" placeholder-style="color:#999;" confirm-type="search" type="text" class="search-txt"
-        focus="focus" value="{{text}}" bindinput="txtchange" bindconfirm="earchlesss"></input>
+        focus="focus" value="{{text}}" bindinput="txtchange" bindconfirm="searchlesss"></input>
       <button wx:if="{{text != ''}}" form-type="reset" catchtap="cleartxt"></button>
     </form>
   </view>
   <navigator open-type="navigateBack" class="cancle" hover-class="none">取消</navigator>
 </view>
-<view class="historyBox" wx:if="{{searchWordlist.length > 0}}">
+<view class="historyBox" wx:if="{{searchWordlist.length > 0 && showHistory}}">
   <view class="historyTop">
     <text>搜索历史</text>
-    <view class="historyTop-right">
+    <view class="historyTop-right" bindtap="delSearchword">
       <image src="{{$state.imgHost}}/delete.png"></image> 清空
     </view>
   </view>
   <view class="itemBox">
-    <view wx:for="{{searchWordlist}}" wx:key="index" class="item">item</view>
+    <view wx:for="{{searchWordlist}}" wx:key="index" class="item" bindtap="touchItem" data-item="{{item}}">{{item.word}}</view>
   </view>
 </view>
-<view class="tabBox">
-  <view wx:for="{{2}}" wx:key="index" class="tab {{ current == index ? 'active' : '' }}" bindtap="checkTab" data-index="{{index}}">{{ index ? '用户' : '圈子'}}
-    <text wx:if="{{current == index}}"></text>
-  </view >
+<view wx:if="{{!showHistory}}">
+  <view class="tabBox">
+    <view wx:for="{{2}}" wx:key="index" class="tab {{ current == index ? 'active' : '' }}" bindtap="checkTab"
+      data-index="{{index}}">{{ index ? '用户' : '圈子'}}
+      <text wx:if="{{current == index}}"></text>
+    </view>
+  </view>
+  <swiper current="{{current}}" class="swiper" style="height: {{height}};">
+    <swiper-item>
+      <template is="list" data="{{list: cList,$state: $state, type: 1}}"></template>
+    </swiper-item>
+    <swiper-item>
+      <template is="list" data="{{list: uList, $state: $state}}"></template>
+    </swiper-item>
+  </swiper>
 </view>
-<swiper current="{{current}}" class="swiper" style="height: {{height}};"></swiper>
-<!-- <view class="qst">
-  <image class="ast-img" src="{{$state.imgHost}}/no-com.png"></image>
-</view> -->
