@@ -140,6 +140,25 @@ function getSendMessage(params) {
   return httpService.post("schedule/subscribeLesson", params);
 }
 
+/**
+ * @description: 获取获取课程中心
+ * @param {}
+ * @return:  promise
+ * **/
+function getLessonCenter(params) {
+  return httpService.post("schedule/getLessonCenter", params);
+}
+
+/**
+ * @description: 获取课程中心的的直播课程
+ * @param {center_id}
+ * @return:  promise
+ * **/
+function getLessonCenterClass(params) {
+  return httpService.post("schedule/getLessonCenterClass", params);
+}
+
+
 module.exports = {
   getLiveLessons,
   getApplyDetail,
@@ -157,4 +176,6 @@ module.exports = {
   replyList,
   shareLesson,
   getSendMessage,
+  getLessonCenter,
+  getLessonCenterClass,
 };

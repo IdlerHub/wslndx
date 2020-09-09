@@ -3,7 +3,7 @@ page,.timetableList,.contariner {
   height: 100%;
 }
 .contariner {
-  padding: 0 30rpx;
+  padding: 0 20rpx;
   background-color: #fff;
 }
 .contariner .item {

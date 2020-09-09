@@ -118,11 +118,12 @@ Page({
     //订阅公众号消息
     console.log(111);
     let _this = this;
+    let tmplId = "kRnHfKljAdCMxzcs1DF6ItwrxJ6Gk15iKkSzzQIK0X8";
     wx.requestSubscribeMessage({
-      tmplIds: ["dRUCYR-WQmzcr199un0olz299hdYjHXMNHQg6_9P-2A"],
+      tmplIds: [tmplId],
       success(res) {
         console.log(res);
-        if (res["dRUCYR-WQmzcr199un0olz299hdYjHXMNHQg6_9P-2A"] == "accept") {
+        if (res[tmplId] == "accept") {
           _this.getSendMessage(openid);
         }
       },

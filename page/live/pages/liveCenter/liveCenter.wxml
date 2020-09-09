@@ -2,8 +2,8 @@
 <view class="live-center-page">
     <view class="center-list">
         <view class="center-item" wx:for="{{classList}}" wx:key="index" data-item="{{item}}" bindtap="toDetail">
-            <image class="item-img" src="../../images/class.png"></image>
-            <view class="item-text">{{item.title}}</view>
+            <image class="item-img" src="{{item.image}}"></image>
+            <view class="item-text">{{item.name}}</view>
         </view>
     </view>
 </view>

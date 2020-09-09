@@ -2,7 +2,7 @@
 .liveLesson {
   width: 100%;
   box-sizing: border-box;
-  padding: 0 30rpx;
+  padding: 0 20rpx;
   background-color: #fff;
   overflow: hidden;
 }

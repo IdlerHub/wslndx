@@ -22,6 +22,9 @@
     width: 130rpx;
     height: 130rpx;
     margin-bottom: 9rpx;
+    border-radius: 20rpx;
+    overflow: hidden;
+    border: 1px solid #ededed;
 }
 .center-list .center-item .item-text{
     font-size: 32rpx;

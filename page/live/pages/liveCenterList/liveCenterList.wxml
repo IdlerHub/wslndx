@@ -3,7 +3,7 @@
     <view class="liveLesson">
         <block wx:for="{{lessons}}" wx:for-item="lesson" wx:for-index="classIndex" wx:key="index">
             <!-- <navigator class="item" hover-class="none" url="../liveDetail/liveDetail?lessonId={{lesson.id}}" open-type="navigate"> -->
-            <view class="item" data-lesson-id="{{lesson.id}}" data-own="{{lesson.is_own}}" bindtap="toDetail">
+            <view class="item" data-lesson-id="{{lesson.id}}" data-own="{{lesson.is_study}}" bindtap="toDetail">
                 <view class="imgBox">
                     <!-- <view class="img-week">{{weeks[lesson.week-1]}}</view> -->
                     <image src="{{lesson.cover}}" class="img"></image>
@@ -16,9 +16,9 @@
                     </view>
                     <view class="textBottom">
                         <view class="teacher">
-                            <text>已报名: 445人</text>
+                            <text>已报名: {{lesson.numbers}}人</text>
                         </view>
-                        <view class="btn">报名</view>
+                        <view class="btn">{{lesson.is_study? '报名' : '去学习'}}</view>
                     </view>
                 </view>
             </view>

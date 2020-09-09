@@ -2,12 +2,7 @@
 .liveLesson {
   width: 100%;
   box-sizing: border-box;
-  padding: 0 30rpx;
-  background-color: #fff;
-  overflow: hidden;
-}
-.liveLesson {
-  padding: 0 30rpx;
+  padding: 0 20rpx;
   background-color: #fff;
   overflow: hidden;
 }
@@ -109,7 +104,7 @@
   color: rgba(126, 126, 126, 1);
 }
 .liveLesson .item .txtBox .textBottom .btn {
-  width: 120rpx;
+  min-width: 120rpx;
   height: 50rpx;
   line-height: 50rpx;
   box-sizing: border-box;
