@@ -404,30 +404,34 @@ Page({
   },
   select(e) {
     let item = e.currentTarget.dataset.item;
-    if(item.live_type) {
-      if(item.live_status != 101) {
-        wx.showToast({
-          title: '直播还未开始'
-        })
-        return
-      }
-    } 
-    // let playNow = this.data.playNow;
-    // if (playNow.id && item.id === playNow.id && this.data.playFlag) return;
-    if (item.is_end == 1 && item.record_url != "") {
-      this.setData({
-        playNow: item,
-      });
-      wx.nextTick(() => {
-        this.recordAddVedio();
-      });
-    } else if (!item.live_type) {
-      this.toLiveRoom(item);
+    if (item.live_type) {
+      LiveData.getLessonDetail({
+        lesson_id: this.data.lessonDetail.id
+      }).then(res => {
+        if (res.data.current.live_status != 101) {
+          wx.showToast({
+            title: '直播还未开始',
+            icon: "none"
+          })
+          return
+        } else {
+            this.setData({
+              playNow: item
+            });
+            this.liveplayer = wx.createLivePlayerContext('myVideo')
+        }
+      })
     } else {
-      this.setData({
-        playNow: item
-      });
-      this.liveplayer = wx.createLivePlayerContext('myVideo')
+      if (item.is_end == 1 && item.record_url != "") {
+        this.setData({
+          playNow: item,
+        });
+        wx.nextTick(() => {
+          this.recordAddVedio();
+        });
+      } else if (!item.live_type) {
+        this.toLiveRoom(item);
+      }
     }
   },
   //获取直播状态
