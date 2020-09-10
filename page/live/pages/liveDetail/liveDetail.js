@@ -404,6 +404,14 @@ Page({
   },
   select(e) {
     let item = e.currentTarget.dataset.item;
+    if(item.live_type) {
+      if(item.live_status != 101) {
+        wx.showToast({
+          title: '直播还未开始'
+        })
+        return
+      }
+    } 
     // let playNow = this.data.playNow;
     // if (playNow.id && item.id === playNow.id && this.data.playFlag) return;
     if (item.is_end == 1 && item.record_url != "") {
