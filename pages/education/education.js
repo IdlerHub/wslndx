@@ -21,7 +21,7 @@ Page({
       //直播课表获取用户公众号openid
       let webURL = `https://authorization.jinlingkeji.cn/#/?uid=${options.uid}`;
       if (options.liveType == "wechatarticle") {
-        console.log("重定向跳转推文链接");
+        // console.log("重定向跳转推文链接");
         // 获取之后前往推文链接
         webURL = "https://mp.weixin.qq.com/s/bdGLXj6u6aOGVNh2owTjgA"; //跳转推文的链接
       }

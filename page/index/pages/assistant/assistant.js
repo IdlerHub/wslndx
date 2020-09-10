@@ -6,7 +6,7 @@ Page({
     list: [
       {
         id: 1,
-        name: "查看本周课程安排",
+        name: "选课中心",
       },
       {
         id: 2,
@@ -14,7 +14,7 @@ Page({
       },
       {
         id: 3,
-        name: "找最近看过的课程",
+        name: "查看本周课程安排",
       },
       {
         id: 4,
@@ -22,7 +22,7 @@ Page({
       },
       {
         id: 5,
-        name: "选课中心",
+        name: "找最近看过的课程",
       },
       {
         id: 6,
@@ -92,19 +92,20 @@ Page({
       switch (item.index) {
         case 0:
           wx.navigateTo({
-            url: "/page/live/pages/timetable/timetable",
+            url: "/page/live/pages/liveCenter/liveCenter",
           });
           break;
         case 2:
           wx.navigateTo({
-            url: "/page/user/pages/history/history",
+            url: "/page/live/pages/timetable/timetable",
           });
           break;
         case 4:
           wx.navigateTo({
-            url: "/page/live/pages/liveCenter/liveCenter",
+            url: "/page/user/pages/history/history",
           });
           break;
+        
       }
     }
   },

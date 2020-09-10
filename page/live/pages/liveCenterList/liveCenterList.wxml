@@ -18,7 +18,7 @@
                         <view class="teacher">
                             <text>已报名: {{lesson.numbers}}人</text>
                         </view>
-                        <view class="btn">{{lesson.is_study? '报名' : '去学习'}}</view>
+                        <view class="btn">{{lesson.is_study? '去学习' : '报名'}}</view>
                     </view>
                 </view>
             </view>
