@@ -88,7 +88,8 @@
         "pages/personPage/personPage",
         "pages/pDetail/pDetail",
         "pages/message/message",
-        "pages/member/member"
+        "pages/member/member",
+        "pages/search/search"
       ]
     },
     {

@@ -57,15 +57,16 @@ Page({
   onLoad(ops) {
     if (ops.params) {
       wx.setNavigationBarTitle({
-        title: '发表评论'
+        title: '音频评论'
       })
       this.setData({
         'param.content': JSON.parse(ops.params).content || JSON.parse(ops.params).reply_content,
-        replyparam: JSON.parse(ops.params)
+        replyparam: JSON.parse(ops.params),
+        showVoiceBox: 1
       })
     } else {
       wx.setNavigationBarTitle({
-        title: '发帖子'
+        title: '写帖子'
       })
       ops.type ? this.circle = true : ''
       if (ops.title) {
@@ -139,6 +140,14 @@ Page({
     this.setData({
       "param.content": e.detail.value,
     });
+    if(this.data.replyparam.blog_id) {
+      e.detail.value.length >= 200 ? wx.showModal({
+        content: '评论字数不能超过200字哦！',
+        confirmColor: '#DF2020',
+        success (res) {
+        }
+      }) : ''
+    }
   },
   cancel() {
     wx.navigateBack()
@@ -569,6 +578,8 @@ Page({
                 'playVoice.timer.minute': 0,
                 'playVoice.timer.second': 0
               })
+              recorderManager.stop()
+              app.backgroundAudioManager.stop()
             }
           }
         })
@@ -590,6 +601,7 @@ Page({
             recorderManager.start()
             wx.nextTick(() => {
               recorderManager.stop()
+              app.backgroundAudioManager.stop()
             })
           }
         } else {
@@ -598,6 +610,7 @@ Page({
         break;
       case '3':
         recorderManager.stop()
+        app.backgroundAudioManager.stop()
         break;
     }
   },
