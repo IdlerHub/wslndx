@@ -71,6 +71,10 @@ Page({
           topT: res[0][0].height + 23
         });
     });
+    console.log()
+    systemInfo.system.search('Android') >= 0 ? this.setData({
+      isAndroid: 1
+    }) : ''
     wx.uma.trackEvent("menu, ", {
       pageName: "风采展示"
     });

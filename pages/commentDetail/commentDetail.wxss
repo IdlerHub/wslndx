@@ -105,6 +105,9 @@ page {
   background: #fff;
   box-shadow: 0px 0px 15px rgba(0,0,0,0.1);
  }
+ .write .box2 {
+  padding: 30rpx;
+ }
  .write .replayplaceholder {
     font-size:32rpx;
     font-family:PingFangSC-Regular,PingFang SC;
@@ -121,8 +124,29 @@ page {
     padding: 0 30rpx 20rpx 0;
     line-height: 48rpx;
     box-sizing: border-box; }
+    .write .box2 textarea {
+      padding: 30rpx;
+      line-height: 48rpx;
+      box-sizing: border-box;
+      background: #F5F7FA;
+      margin-bottom: 30rpx; }
+      .write .box2 .voicebtn_r {
+        display: flex;
+        align-items: center;
+      }
+      
+      .write .box2 .voicebtn_r text {
+        font-size: 36rpx;
+        font-family: PingFangSC-Regular, PingFang SC;
+        font-weight: 400;
+        color: #666666;
+      }
+      .write .box .voicebtn_r image {
+        width: 40rpx;
+        height: 40rpx;
+        margin-right: 10rpx;
+      }
   .write .box .right {
-    padding-right: 30rpx; 
     display: flex;
     align-items: center
     }
@@ -139,7 +163,7 @@ page {
       align-items: center;
     }
     .write .box .right .voicebtn {
-       width:168rpx;
+       width:170rpx;
         height:68rpx;
         background:rgba(237,237,237,1);
         border-radius:34px;

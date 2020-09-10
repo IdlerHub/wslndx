@@ -168,9 +168,9 @@
         },
         {
           "id": 9,
-          "name": "page/live/pages/liveDetail/liveDetail",
-          "pathName": "page/live/pages/liveDetail/liveDetail",
-          "query": "lessonId=26",
+          "name": "pages/post/post",
+          "pathName": "pages/post/post",
+          "query": "blog_id=1692&comment_id=1005",
           "scene": null
         },
         {

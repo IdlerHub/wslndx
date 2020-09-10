@@ -54,7 +54,7 @@
 
 <view class="popup write" id="write" wx:if="{{ write }}">
   <view class="bg" bindtap="hide" bindtouchstart="hide"></view>
-  <view class="box" style="{{ textHeight ? 'bottom:'+ textHeight : ''}}">
+  <view class="box" wx:if="{{ lessonType }}" style="{{ textHeight ? 'bottom:'+ textHeight : ''}}">
     <!-- prettier-ignore -->
     <text class="replayplaceholder" wx:if="{{replyplaceholder != ''}}">{{replyplaceholder}}</text>
     <textarea placeholder="添加你的评论" focus="{{ focus }}" fixed bindinput="input" value='{{content}}'
@@ -66,10 +66,27 @@
         {{contenLength}}/200
       </view>
       <view class="right_r">
-        <view class="voicebtn1 voicebtn" catchtap="release" data-type="1">
-          <image src="/images/addIcon.png" ></image>
-          <view>音频</view>
+        <view class="voicebtn" catchtap="showvoice">
+          <image src="{{$state.imgHost}}/voicesmall.png"></image>
+          <view>语音</view>
         </view>
+        <button class="release" disabled="{{ !content  }}" catchtap="release">发布</button>
+      </view>
+    </view>
+  </view>
+  <view class="box box2" wx:else style="{{ textHeight ? 'bottom:'+ textHeight : ''}}">
+    <!-- prettier-ignore -->
+    <text class="replayplaceholder" wx:if="{{replyplaceholder != ''}}">{{replyplaceholder}}</text>
+    <textarea placeholder="请输入200字以内的评论哦~" focus="{{ focus }}" fixed bindinput="input" value='{{content}}'
+      placeholder-class="ph-class" show-confirm-bar="{{ false }}" adjust-position="{{ false }}" bindfocus="textHeight"
+      hold-keyboard maxlength="200"></textarea>
+    <!-- prettier-ignore -->
+    <view class="right" catchtap="navigator">
+      <view class="voicebtn_r" catchtap="release" data-type="1">
+        <image src="../../images/addRecord.png" ></image>
+        <text>添加音频</text>
+      </view>
+      <view class="right_r">
         <view class="voicebtn" catchtap="showvoice">
           <image src="{{$state.imgHost}}/voicesmall.png"></image>
           <view>语音</view>

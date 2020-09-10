@@ -40,7 +40,8 @@ Page({
         second: 0
       },
       id: 0
-    }
+    },
+    lessonType: 0
   },
   pageName: "多回复详情页",
   /**
@@ -54,6 +55,9 @@ Page({
         this.apiIndex = 1;
         console.log("这是直播的")
       }
+      this.setData({
+        lessonType: 1
+      })
       this.getlesData();
     } else {
       this.getData();
@@ -338,6 +342,13 @@ Page({
   },
   /* 输入的内容 */
   input(e) {
+    if(!this.data.lessonType) {
+      e.detail.value.length >= 200 ?wx.showToast({
+        title: "评论字数不能超过200字哦！",
+        icon: "none",
+        duration: 1500
+      }) : ''
+    }
     this.setData({
       content: e.detail.value,
       contenLength: e.detail.value.length,

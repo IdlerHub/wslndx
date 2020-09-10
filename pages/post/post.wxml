@@ -115,7 +115,7 @@
 	</view>
 </template>
 <view class="tabnav" style="padding-top:{{ top }}px">
-	<navigator url="/page/post/pages/search/search" hover-class="none" class="search"> 
+	<navigator url="/page/post/pages/search/search" hover-class="none" class="search" style="margin-top: {{isAndroid ? '5rpx' : ''}};"> 
 		<image src="/images/postSearchIcon.png"></image>
 	</navigator>
 	<view class="{{ currentTab != 0 ? 'lose' : ''}} tabnav-item" bindtap="switchNav" data-current="0">
