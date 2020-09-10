@@ -20,7 +20,7 @@
         <!-- <image wx:if="{{ !playFlag }}" mode="aspectFill" src="{{ $state.imgHost }}/play.png" class="play"></image> -->
     </view>
     <view wx:elif="{{playNow.live_type && current.live_status == 101}}" class="liveBox">
-        <live-player id="myVideo" src="https://applive.jinlingkeji.cn/live/stream_dev_549.flv" autoplay
+        <live-player id="myVideo" src="{{current.live_url}}" autoplay
             bindfullscreenchange="fullscreenchange" catchtouchmove />
         <cover-image src="../../images/full.png" class="fullImg" bindtap="liveFull" wx:if="{{!fullScreen}}">
         </cover-image>
