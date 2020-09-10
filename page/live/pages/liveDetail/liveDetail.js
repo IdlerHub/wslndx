@@ -108,29 +108,11 @@ Page({
       //有(公众号)openid
       if (this.data.mp_openid) {
         // let openid = "ojo015zeP5d5DGmZ0Dd_B8Y8Satg";
-        this.sendSubscribe(this.data.mp_openid);
+        this.getSendMessage(this.data.mp_openid);
       } else {
         this.getOpenId();
       }
     }
-  },
-  sendSubscribe(openid) {
-    //订阅公众号消息
-    console.log(111);
-    let _this = this;
-    let tmplId = "kRnHfKljAdCMxzcs1DF6ItwrxJ6Gk15iKkSzzQIK0X8";
-    wx.requestSubscribeMessage({
-      tmplIds: [tmplId],
-      success(res) {
-        console.log(res);
-        if (res[tmplId] == "accept") {
-          _this.getSendMessage(openid);
-        }
-      },
-      fail(err) {
-        console.log(err);
-      },
-    });
   },
   getOpenId() {
     //没有用户的公众号openid
