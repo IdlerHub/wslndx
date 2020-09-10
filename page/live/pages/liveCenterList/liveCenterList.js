@@ -58,7 +58,9 @@ Page({
     });
   },
   onReachBottom: function () {
-    this.getLessonCenterClass(this.data.center_id,this.data.page++);
+    if(this.data.page < this.data.total_page) {
+      this.getLessonCenterClass(this.data.center_id, this.data.page + 1);
+    }
   },
   /**
    * 用户点击右上角分享

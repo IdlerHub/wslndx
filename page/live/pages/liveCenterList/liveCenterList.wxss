@@ -117,3 +117,24 @@
   text-align: center;
   color: #fff;
 }
+
+/* 缺省 */
+.qstBox {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 180rpx;
+  box-sizing: border-box;
+}
+.qstBox image {
+  width: 490rpx;
+  height: 310rpx;
+}
+.qstBox text {
+  text-align: center;
+  font-size:34rpx;
+  font-weight:400;
+  color:rgba(126,126,126,1);
+  line-height:48rpx;
+}
