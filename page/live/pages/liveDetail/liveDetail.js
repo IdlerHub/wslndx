@@ -89,6 +89,7 @@ Page({
   onShow: function () {
     this.initRecord();
     this.getRecordAuth();
+    this.getLessonDetail(this.data.lessonDetail.id);
     // wx.onNetworkStatusChange((res) => {
     //   res.networkType == "wifi" ? app.playVedio("wifi") : "";
     // });
