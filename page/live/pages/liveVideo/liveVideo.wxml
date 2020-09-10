@@ -1,2 +1,2 @@
 <!--page/live/pages/liveVideo/liveVideo.wxml-->
-<!-- <live-player src="https://applive.jinlingkeji.cn/live/stream_dev_407.flv" class="player" autoplay></live-player> -->
+<live-player wx:if="{{status}}" src="https://applive.jinlingkeji.cn/live/stream_pro_1071.flv" class="player" autoplay></live-player>

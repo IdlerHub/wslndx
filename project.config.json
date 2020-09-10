@@ -3,36 +3,36 @@
   "packOptions": {
     "ignore": [
       {
-        "type": "folder",
-        "value": "demo"
+        "value": "demo",
+        "type": "folder"
       },
       {
-        "type": "folder",
-        "value": "leetCode"
+        "value": "leetCode",
+        "type": "folder"
       },
       {
-        "type": "file",
-        "value": "config.js"
+        "value": "config.js",
+        "type": "file"
       },
       {
-        "type": "file",
-        "value": "Gulpfile.js"
+        "value": "Gulpfile.js",
+        "type": "file"
       },
       {
-        "type": "file",
-        "value": "package-lock.json"
+        "value": "package-lock.json",
+        "type": "file"
       },
       {
-        "type": "file",
-        "value": "variables.wxss"
+        "value": "variables.wxss",
+        "type": "file"
       },
       {
-        "type": "folder",
-        "value": ".history"
+        "value": ".history",
+        "type": "folder"
       },
       {
-        "type": "suffix",
-        "value": ".scss"
+        "value": ".scss",
+        "type": "suffix"
       }
     ]
   },
@@ -72,9 +72,14 @@
   "libVersion": "2.12.0",
   "appid": "wx756d04f5d669cef0",
   "projectname": "%E4%B8%AD%E5%9B%BD%E7%BD%91%E4%B8%8A%E8%80%81%E5%B9%B4%E5%A4%A7%E5%AD%A6",
-  "isGameTourist": false,
-  "simulatorType": "wechat",
-  "simulatorPluginLibVersion": {},
+  "cloudfunctionTemplateRoot": "",
+  "watchOptions": {
+    "ignore": []
+  },
+  "debugOptions": {
+    "hidedInDevtools": []
+  },
+  "scripts": {},
   "condition": {
     "search": {
       "current": -1,
@@ -89,7 +94,6 @@
       "list": []
     },
     "game": {
-      "currentL": -1,
       "list": []
     },
     "gamePlugin": {
@@ -164,15 +168,9 @@
         },
         {
           "id": 9,
-<<<<<<< HEAD
-          "name": "page/post/pages/search/search",
-          "pathName": "page/post/pages/search/search",
-          "query": "blog_id=1691&comment_id=1069",
-=======
-          "name": "page/index/pages/assistant/assistant",
-          "pathName": "page/index/pages/assistant/assistant",
-          "query": "index=1",
->>>>>>> c8ca61a69b366d458431e8ac97c3baf5574c817d
+          "name": "page/live/pages/liveDetail/liveDetail",
+          "pathName": "page/live/pages/liveDetail/liveDetail",
+          "query": "lessonId=26",
           "scene": null
         },
         {

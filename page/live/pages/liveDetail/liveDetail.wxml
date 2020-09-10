@@ -1,4 +1,9 @@
 <!-- pages/liveDetail/liveDetail.wxml -->
+<cover-view wx:if="{{fullScreen}}" class="liveBack">
+    <cover-view class="imgBox" bindtap="liveFull">
+        <cover-image src="../../images/liveBack.png" class="liveBackImg"></cover-image>
+    </cover-view>
+</cover-view>
 <view class="container">
     <!-- 视频播放 -->
     <video id="myVideo" wx:if="{{playNow.record_url && playNow.record_url != '' }}" src="{{ playNow.record_url }}"
@@ -10,9 +15,15 @@
             bindtap="recordAddVedio"></cover-image>
         <view class="videomask" wx:if="{{showintegral}}"></view>
     </video>
-    <view id="myVideo" wx:else>
+    <view id="myVideo" wx:elif="{{playNow.live_type == 0}}">
         <image wx:if="{{ !playFlag }}" src="{{ lessonDetail.cover }}" class="poster"></image>
         <!-- <image wx:if="{{ !playFlag }}" mode="aspectFill" src="{{ $state.imgHost }}/play.png" class="play"></image> -->
+    </view>
+    <view wx:elif="{{playNow.live_type && current.live_status == 101}}" class="liveBox">
+        <live-player id="myVideo" src="https://applive.jinlingkeji.cn/live/stream_dev_549.flv" autoplay
+            bindfullscreenchange="fullscreenchange" catchtouchmove />
+        <cover-image src="../../images/full.png" class="fullImg" bindtap="liveFull" wx:if="{{!fullScreen}}">
+        </cover-image>
     </view>
     <!-- 课程信息 -->
     <view class="liveInfo">
@@ -30,7 +41,8 @@
         </view>
     </view>
     <!-- 直播信息 -->
-    <view class="liveLesson" wx:if="{{current.room_id && current.live_status == 101}}" bindtap="toWatch">
+    <view class="liveLesson" wx:if="{{current.room_id && current.live_status == 101}}" bindtap="toWatch"
+        data-item="{{current}}">
         <view class="liveImg">
             <image class="coverImg" mode="widthFix" src="{{current.cover}}"></image>
             <image class="playImg" src="{{ $state.imgHost }}/play.png"></image>
@@ -78,7 +90,7 @@
                     scroll-top="{{scrollviewtop}}">
                     <view wx:for="{{ sublessons }}" catchtap="select" data-item="{{item}}" data-index="{{ index }}"
                         wx:key="index"
-                        class="item {{ playNow.id==item.id&&playNow.is_end==1 ? 'active' : ''}} {{'sublessonsd' + item.id}}"
+                        class="item {{ (playNow.id==item.id&&playNow.is_end==1) ||(playNow.live_type && current.live_status == 101 && playNow.id==item.id)  ? 'active' : ''}} {{'sublessonsd' + item.id}}"
                         id="{{'sublessonsd'+item.id}}">
                         <view class="left">
                             <text class="name">{{ item.index }}. {{ item.name }}</text>

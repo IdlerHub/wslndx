@@ -205,14 +205,11 @@
 				maxlength="200"></textarea>
 			<!-- prettier-ignore -->
 			<view class="right">
-				<view class="number">
-					{{ replyshow ? replycontenLength : contenLength}}/200
+				<view class="voicebtn_r" catchtap="release" data-type="1">
+					<image src="../../images/addRecord.png" ></image>
+					<text>添加音频</text>
 				</view>
 				<view class="right_r">
-					<view class="voicebtn1 voicebtn" catchtap="release" data-type="1">
-						<image src="../../images/addIcon.png" ></image>
-						<view>音频</view>
-					</view>
 					<view class="voicebtn" catchtap="showvoice">
 						<image src="../../images/voicesmall.png"></image>
 						<view>语音</view>

@@ -31,7 +31,7 @@ Page({
     contenLength: 0,
     replycontenLength: 0,
     showvoice: false,
-    placeholder: "添加你的评论",
+    placeholder: "请输入200字以内的评论哦~",
     content: "",
     replycontent: "",
     voicetime: 0,
@@ -102,6 +102,11 @@ Page({
     getCurrentPages().forEach(item => {
       item.route == "pages/post/post" ? (this.postPages = item) : "";
     });
+  },
+  onShow() {
+    this.initRecord();
+    this.getRecordAuth();
+    record.initRecord(this)
     wx.onKeyboardHeightChange(res => {
       this.setData({
         textHeight: res.height,
@@ -114,11 +119,6 @@ Page({
         this.textHeight = res.height
       });
     });
-  },
-  onShow() {
-    this.initRecord();
-    this.getRecordAuth();
-    record.initRecord(this)
   },
   onUnload() {
     wx.onMemoryWarning(function () {
@@ -415,6 +415,11 @@ Page({
         blogcomment
       });
     }
+    e.detail.value.length >= 200 ? wx.showToast({
+      title: "评论字数不能超过200字哦！",
+      icon: "none",
+      duration: 1500
+    }) : ''
   },
   // 发布评论e
   release(e, params, type) {
@@ -453,6 +458,9 @@ Page({
     }
     params ? Object.assign(param, params) : ''
     if (e.currentTarget.dataset.type) {
+      this.setData({
+        write: false
+      })
       wx.navigateTo({
         url: `/page/post/pages/release/release?params=${JSON.stringify(param)}`,
       })

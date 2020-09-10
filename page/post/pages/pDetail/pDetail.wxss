@@ -521,7 +521,7 @@
   position: fixed;
   bottom: 0;
   width: 100%;
-  padding: 30rpx 0 30rpx 30rpx;
+  padding: 30rpx;
   box-sizing: border-box;
   background: #fff;
   box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
@@ -539,15 +539,34 @@
 .write .box textarea {
   width: 100%;
   height: 190rpx;
-  background: #ffffff;
+  background: #F5F7FA;
   font-size: 36rpx;
   line-height: 48rpx;
-  padding: 10rpx 30rpx 20rpx 0;
+  padding: 30rpx 30rpx 0 30rpx;
+  margin-bottom: 30rpx;
   box-sizing: border-box;
+  border-radius: 10rpx
+}
+
+.write .box .voicebtn_r {
+  display: flex;
+  align-items: center;
+}
+
+.write .box .voicebtn_r text {
+  font-size: 36rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: #666666;
+}
+
+.write .box .voicebtn_r image {
+  width: 40rpx;
+  height: 40rpx;
+  margin-right: 10rpx;
 }
 
 .write .box .right {
-  padding-right: 30rpx;
   display: flex;
   align-items: center
 }
@@ -567,7 +586,7 @@
 }
 
 .write .box .right .voicebtn {
-  width: 168rpx;
+  width: 170rpx;
   height: 68rpx;
   background: rgba(237, 237, 237, 1);
   border-radius: 34px;

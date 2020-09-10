@@ -63,6 +63,8 @@ Page({
         'param.content': JSON.parse(ops.params).content || JSON.parse(ops.params).reply_content,
         replyparam: JSON.parse(ops.params),
         showVoiceBox: 1
+      }, () => {
+        wx.offKeyboardHeightChange()
       })
     } else {
       wx.setNavigationBarTitle({
@@ -117,7 +119,7 @@ Page({
     recorderManager.stop()
     this.timer ? [clearInterval(this.timer), this.timer = null] : ''
     app.backgroundAudioManager.stop()
-    if(this.data.replyparam) return
+    if (this.data.replyparam) return
     let pages = getCurrentPages();
     let prePage = [];
     pages.forEach(item => {
@@ -140,12 +142,11 @@ Page({
     this.setData({
       "param.content": e.detail.value,
     });
-    if(this.data.replyparam.blog_id) {
-      e.detail.value.length >= 200 ? wx.showModal({
-        content: '评论字数不能超过200字哦！',
-        confirmColor: '#DF2020',
-        success (res) {
-        }
+    if (this.data.replyparam.blog_id) {
+      e.detail.value.length >= 200 ? wx.showToast({
+        title: "评论字数不能超过200字哦！",
+        icon: "none",
+        duration: 1500
       }) : ''
     }
   },
@@ -234,7 +235,6 @@ Page({
             this.delRecord()
           },
           error: function (result) {
-            console.log(result)
             wx.showToast({
               title: '上传失败'
             })
@@ -475,10 +475,28 @@ Page({
   },
   //回复/评论
   reply(e) {
-    let pages = getCurrentPages(), params = this.data.replyparam, type = 1
-    Object.assign(params, { content: params['reply_type'] != undefined ? '' : this.data.param.content, reply_content: params['reply_type'] != undefined ? this.data.param.content : '' })
-    this.data.param.audio ? Object.assign(params, { audio_url: this.data.param.audio,  audio_duration: this.data.param.duration, type: 2 }) : ''
-    pages[pages.length - 2].release(e,params,type)
+    if (this.data.param.content.trim()) {
+      let pages = getCurrentPages(),
+        params = this.data.replyparam,
+        type = 1
+      Object.assign(params, {
+        content: params['reply_type'] != undefined ? '' : this.data.param.content,
+        reply_content: params['reply_type'] != undefined ? this.data.param.content : ''
+      })
+      this.data.param.audio ? Object.assign(params, {
+        audio_url: this.data.param.audio,
+        audio_duration: this.data.param.duration,
+        type: 2
+      }) : ''
+      pages[pages.length - 2].release(e, params, type)
+    } else {
+      wx.showToast({
+        title: "内容不能为空！",
+        icon: "none",
+        duration: 1500
+      });
+    }
+
   },
   // 权限询问
   authrecord() {
@@ -699,7 +717,6 @@ Page({
       });
       Promise.all(reqs)
         .then(res => {
-          console.log(res)
           if (res[0]) {
             i >= 0 && up ? this.setData({
               [`param.image[${i}]`]: res,
@@ -736,7 +753,6 @@ Page({
               recordStatus: 1,
               showVoiceBox: 0
             });
-            console.log(this.data.param)
             wx.hideToast();
           } else {
             wx.hideToast();
@@ -747,7 +763,6 @@ Page({
           }
         })
         .catch(err => {
-          console.log(err)
           if (err != "type") {
             wx.showToast({
               icon: "none",
