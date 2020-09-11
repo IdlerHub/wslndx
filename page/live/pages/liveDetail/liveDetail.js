@@ -468,7 +468,7 @@ Page({
   },
   select(e) {
     let item = e.currentTarget.dataset.item;
-    if (item.live_type && item.is_end == 2) {
+    if (item.live_type && (item.is_end == 0 || item.live_status == 101)) {
       LiveData.getLessonDetail({
         lesson_id: this.data.lessonDetail.id,
       }).then((res) => {
