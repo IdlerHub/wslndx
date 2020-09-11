@@ -918,6 +918,9 @@ Page({
     });
   },
   showvoice(e) {
+    wx.uma.trackEvent("post_btnClick", {
+      btnName: "语音评论按钮"
+    });
     this.setData({
       showvoice: true,
       write: false
@@ -1009,6 +1012,7 @@ Page({
       if (!this.data.showvoiceauto) return;
       let text = res.result;
       console.log(text)
+      
       this.data.replyshow ?
         (text = this.data.replycontent + text) :
         (text = this.data.content + text);
@@ -1020,6 +1024,18 @@ Page({
           voicetextstatus: "未能识别到文字"
         });
         return;
+      }
+      if( this.data.replycontent.length >= 200 || this.data.content.length >= 200) {
+        wx.showToast({
+          title: '评论字数不能超过200字哦！',
+          icon: 'none'
+        }) 
+        this.setData({
+          voicetextstatus: "",
+          filePath,
+          voiceActon: false
+        })
+        return
       }
       this.data.replyshow ?
         this.setData({

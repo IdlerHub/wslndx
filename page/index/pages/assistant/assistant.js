@@ -38,6 +38,9 @@ Page({
     talkList: [],
   },
   onLoad: function (options) {
+    wx.uma.trackEvent('xiaolinCheck', {
+      click: '小林老师'
+    });
     let talkList = [
       {
         id: 1,
