@@ -15,10 +15,21 @@ Page({
       let webURL = "https://elsmallpro.jinlingkeji.cn/#/order-detail";
       let id = options.classId;
       this.setData({
-        url: webURL + "?id=" + id
+        url: webURL + "?id=" + id,
       });
-    }else if(options.voteType){ //获取公众号openid
-      // let webURL = `https://enrollmenth5dev.jinlingkeji.cn/#/?voteType=voteIndex&uid=${options.uid}`;
+    } else if (options.liveType) {
+      //直播课表获取用户公众号openid
+      let webURL = `https://authorization.jinlingkeji.cn/#/?uid=${options.uid}`;
+      if (options.liveType == "wechatarticle") {
+        // console.log("重定向跳转推文链接");
+        // 获取之后前往推文链接
+        webURL = "https://mp.weixin.qq.com/s/bdGLXj6u6aOGVNh2owTjgA"; //跳转推文的链接
+      }
+      this.setData({
+        url: webURL,
+      });
+    } else if (options.voteType) {
+      //获取公众号openid
       let webURL = `https://authorization.jinlingkeji.cn/#/?voteType=voteIndex&uid=${options.uid}`;
       if (options.voteType == "voteArticle") {
         // 从详情页跳转过来获取公众号的openId

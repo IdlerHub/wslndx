@@ -1,9 +1,4 @@
 <!-- pages/liveDetail/liveDetail.wxml -->
-<cover-view wx:if="{{fullScreen}}" class="liveBack">
-    <cover-view class="imgBox" bindtap="liveFull">
-        <cover-image src="../../images/liveBack.png" class="liveBackImg"></cover-image>
-    </cover-view>
-</cover-view>
 <view class="container">
     <!-- 视频播放 -->
     <video id="myVideo" wx:if="{{playNow.record_url && playNow.record_url != '' }}" src="{{ playNow.record_url }}"
@@ -15,15 +10,21 @@
             bindtap="recordAddVedio"></cover-image>
         <view class="videomask" wx:if="{{showintegral}}"></view>
     </video>
-    <view id="myVideo" wx:elif="{{playNow.live_type == 0}}">
+    <view id="myVideo" wx:elif="{{playNow.is_end}}">
         <image wx:if="{{ !playFlag }}" src="{{ lessonDetail.cover }}" class="poster"></image>
         <!-- <image wx:if="{{ !playFlag }}" mode="aspectFill" src="{{ $state.imgHost }}/play.png" class="play"></image> -->
     </view>
     <view wx:elif="{{playNow.live_type && current.live_status == 101}}" class="liveBox">
-        <live-player id="myVideo" src="{{current.live_url}}" autoplay
-            bindfullscreenchange="fullscreenchange" catchtouchmove />
-        <cover-image src="../../images/full.png" class="fullImg" bindtap="liveFull" wx:if="{{!fullScreen}}">
-        </cover-image>
+        <live-player id="myVideo" src="{{current.live_url}}" autoplay bindfullscreenchange="fullscreenchange"
+            catchtouchmove>
+            <cover-view wx:if="{{fullScreen}}" class="liveBack">
+                <cover-view class="imgBox" bindtap="liveFull">
+                    <cover-image src="../../images/liveBack.png" class="liveBackImg"></cover-image>
+                </cover-view>
+            </cover-view>
+            <cover-image src="../../images/full.png" class="fullImg" bindtap="liveFull" wx:if="{{!fullScreen}}">
+            </cover-image>
+        </live-player>
     </view>
     <!-- 课程信息 -->
     <view class="liveInfo">
@@ -32,11 +33,20 @@
             共{{lessonDetail.chapter_num}}讲 · {{lessonDetail.description}}
         </view>
         <view class="share-joinClass">
-            <!-- <image class="joinClass" src="../../images/joinClass.png" alt="加入班级" bindtap="showServise"></image> -->
-            <image class="joinClass" src="../../images/joinClass.png" alt="加入班级" bindtap="joinClass"></image>
+            <view class="live-info">
+                <view class="join-class" bindtap="joinClass">
+                    <image src="../../images/join.png"></image>
+                    <view>进班群</view>
+                </view>
+                <view class="subscribe" bindtap="subscribe">
+                    <image src="../../images/subscribe.png"></image>
+                    <view>上课通知</view>
+                </view>
+                <!-- <image src="/images/messageImg.png"></image> -->
+            </view>
             <button class="share" open-type="share">
                 <image class="shareLesson" src="../../images/shareLesson.png"></image>
-                <text>分享课程</text>
+                <text>分享</text>
             </button>
         </view>
     </view>
@@ -90,7 +100,7 @@
                     scroll-top="{{scrollviewtop}}">
                     <view wx:for="{{ sublessons }}" catchtap="select" data-item="{{item}}" data-index="{{ index }}"
                         wx:key="index"
-                        class="item {{ (playNow.id==item.id&&playNow.is_end==1) ||(playNow.live_type && current.live_status == 101 && playNow.id==item.id)  ? 'active' : ''}} {{'sublessonsd' + item.id}}"
+                        class="item {{ (playNow.id==item.id&&playNow.is_end==1) || (playNow.id==item.id&&playNow.live_type == 1 && current.live_status == 101) ? 'active' : ''}} {{'sublessonsd' + item.id}}"
                         id="{{'sublessonsd'+item.id}}">
                         <view class="left">
                             <text class="name">{{ item.index }}. {{ item.name }}</text>
@@ -100,8 +110,10 @@
                         <view class="right" wx:elif="{{item.is_end == 2}}">暂未开始</view>
                         <view class="right"
                             wx:elif="{{current.id == item.id && (current.live_status == 104 ||  current.live_status == 107)}}">
-                            观看回播</view>
-                        <view class="right" wx:elif="{{current.id == item.id && current.live_status == 102}}">即将开播
+                            观看回播
+                        </view>
+                        <view class="right" wx:elif="{{current.id == item.id && current.live_status == 102}}">
+                            即将开播
                         </view>
                         <view class="right" wx:else>正在直播</view>
                     </view>
@@ -289,9 +301,7 @@
     <!-- 消息盒子 -->
     <cover-view class="servise" wx:if="{{showServise}}">
         <cover-view class="serviseBox">
-            <cover-view class="button" bindtap="joinClass">
-                加入班级
-            </cover-view>
+            <cover-view class="button" bindtap="joinClass">加入班级</cover-view>
             <cover-image src="../../images/into.png" class="image"></cover-image>
         </cover-view>
         <cover-image src="{{$state.imgHost}}/cancel.png" class="cancel" catchtap="showServise"></cover-image>

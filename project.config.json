@@ -3,36 +3,36 @@
   "packOptions": {
     "ignore": [
       {
-        "value": "demo",
-        "type": "folder"
+        "type": "folder",
+        "value": "demo"
       },
       {
-        "value": "leetCode",
-        "type": "folder"
+        "type": "folder",
+        "value": "leetCode"
       },
       {
-        "value": "config.js",
-        "type": "file"
+        "type": "file",
+        "value": "config.js"
       },
       {
-        "value": "Gulpfile.js",
-        "type": "file"
+        "type": "file",
+        "value": "Gulpfile.js"
       },
       {
-        "value": "package-lock.json",
-        "type": "file"
+        "type": "file",
+        "value": "package-lock.json"
       },
       {
-        "value": "variables.wxss",
-        "type": "file"
+        "type": "file",
+        "value": "variables.wxss"
       },
       {
-        "value": ".history",
-        "type": "folder"
+        "type": "folder",
+        "value": ".history"
       },
       {
-        "value": ".scss",
-        "type": "suffix"
+        "type": "suffix",
+        "value": ".scss"
       }
     ]
   },
@@ -72,14 +72,9 @@
   "libVersion": "2.12.0",
   "appid": "wx756d04f5d669cef0",
   "projectname": "%E4%B8%AD%E5%9B%BD%E7%BD%91%E4%B8%8A%E8%80%81%E5%B9%B4%E5%A4%A7%E5%AD%A6",
-  "cloudfunctionTemplateRoot": "",
-  "watchOptions": {
-    "ignore": []
-  },
-  "debugOptions": {
-    "hidedInDevtools": []
-  },
-  "scripts": {},
+  "isGameTourist": false,
+  "simulatorType": "wechat",
+  "simulatorPluginLibVersion": {},
   "condition": {
     "search": {
       "current": -1,
@@ -94,6 +89,7 @@
       "list": []
     },
     "game": {
+      "currentL": -1,
       "list": []
     },
     "gamePlugin": {
@@ -168,9 +164,9 @@
         },
         {
           "id": 9,
-          "name": "pages/post/post",
-          "pathName": "pages/post/post",
-          "query": "blog_id=1692&comment_id=1005",
+          "name": "page/index/pages/assistant/assistant",
+          "pathName": "page/index/pages/assistant/assistant",
+          "query": "index=1",
           "scene": null
         },
         {
