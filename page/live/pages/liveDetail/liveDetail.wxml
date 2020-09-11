@@ -10,10 +10,6 @@
             bindtap="recordAddVedio"></cover-image>
         <view class="videomask" wx:if="{{showintegral}}"></view>
     </video>
-    <view id="myVideo" wx:elif="{{playNow.is_end}}">
-        <image wx:if="{{ !playFlag }}" src="{{ lessonDetail.cover }}" class="poster"></image>
-        <!-- <image wx:if="{{ !playFlag }}" mode="aspectFill" src="{{ $state.imgHost }}/play.png" class="play"></image> -->
-    </view>
     <view wx:elif="{{playNow.live_type && current.live_status == 101}}" class="liveBox">
         <live-player id="myVideo" src="{{current.live_url}}" autoplay bindfullscreenchange="fullscreenchange"
             catchtouchmove>
@@ -25,6 +21,10 @@
             <cover-image src="../../images/full.png" class="fullImg" bindtap="liveFull" wx:if="{{!fullScreen}}">
             </cover-image>
         </live-player>
+    </view>
+    <view id="myVideo" wx:else>
+        <image wx:if="{{ !playFlag }}" src="{{ lessonDetail.cover }}" class="poster"></image>
+        <!-- <image wx:if="{{ !playFlag }}" mode="aspectFill" src="{{ $state.imgHost }}/play.png" class="play"></image> -->
     </view>
     <!-- 课程信息 -->
     <view class="liveInfo">

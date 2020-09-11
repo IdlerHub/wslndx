@@ -541,7 +541,7 @@ Page({
     let comment = list || this.data.comment;
     return LiveData.getCommentList(this.comParam)
       .then((msg) => {
-        if (msg.data.length == 0) {
+        if (msg.data.length == 0 && !options) {
           this.comParam.page--;
           return;
         } else {
@@ -552,6 +552,7 @@ Page({
             comment.push(item);
           });
           this.comment = JSON.parse(JSON.stringify(comment));
+          console.log(comment)
           this.setData({
             comment: comment,
           });
@@ -987,7 +988,7 @@ Page({
                 duration: 1500,
               });
               this.comParam.page = 1;
-              this.getComment([]);
+              this.getComment([], 1);
             })
             .catch((err) => {
               if (err.code == -2) {
@@ -1028,7 +1029,7 @@ Page({
                 duration: 1500,
               });
               this.comParam.page = 1;
-              this.getComment([]);
+              this.getComment([], 1);
             })
             .catch((err) => {
               if (err.code == -2) {
