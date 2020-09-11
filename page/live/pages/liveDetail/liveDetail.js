@@ -90,7 +90,7 @@ Page({
   onShow: function () {
     this.initRecord();
     this.getRecordAuth();
-    this.getLessonDetail(this.data.lessonDetail.id);
+    this.data.lessonDetail.id ? this.getLessonDetail(this.data.lessonDetail.id) : '';
     // wx.onNetworkStatusChange((res) => {
     //   res.networkType == "wifi" ? app.playVedio("wifi") : "";
     // });
@@ -208,7 +208,7 @@ Page({
         _this.order();
         _this.data.sublessons.forEach((item) => {
           //如果是已经结束的课,就把第一个放到当前播放中
-          item.is_end && JSON.stringify(playNow) == "{}"
+          item.is_end == 1 && JSON.stringify(playNow) == "{}"
             ? (playNow = item)
             : "";
         });
@@ -468,7 +468,7 @@ Page({
   },
   select(e) {
     let item = e.currentTarget.dataset.item;
-    if (item.live_type) {
+    if (item.live_type && item.is_end == 2) {
       LiveData.getLessonDetail({
         lesson_id: this.data.lessonDetail.id,
       }).then((res) => {
