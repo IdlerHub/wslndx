@@ -79,15 +79,15 @@
 .historyTop .historyTop-right {
   display: flex;
   align-items: center;
-  font-size: 34rpx;
+  font-size: 28rpx;
   font-family: PingFangSC-Regular, PingFang SC;
   font-weight: 400;
   color: #999999;
 }
 
 .historyTop .historyTop-right image {
-  width: 34rpx;
-  height: 34rpx;
+  width: 30rpx;
+  height: 30rpx;
   margin-right: 12rpx;
 }
 
