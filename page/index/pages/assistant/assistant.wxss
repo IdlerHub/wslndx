@@ -37,9 +37,9 @@ page {
 }
 
 .talkItem .msgBox {
-  width: 490rpx;
+  max-width: 490rpx;
   min-height: 70rpx;
-  padding: 30rpx 15rpx;
+  padding: 30rpx 30rpx;
   padding-left: 30rpx;
   box-sizing: border-box;
   background: #fff;

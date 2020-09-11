@@ -12,8 +12,8 @@
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    border-bottom: 2rpx solid #EDEDED;
-    border-right: 2rpx solid #EDEDED;
+    border-bottom: 2rpx solid rgba(247,247,247, 0.8);
+    border-right: 2rpx solid rgba(247,247,247, 0.8);
 }
 .center-list .center-item:nth-child(3n) {
     border-right: none;
