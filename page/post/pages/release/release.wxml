@@ -20,7 +20,7 @@
                 <view>录制音频</view>
             </view>
         </view>
-        <playRrecord wx:if="{{param.audio}}" item="{{playVoice}}" playVoice="{{playVoice}}" showDel="{{1}}">
+        <playRrecord wx:if="{{param.audio}}" item="{{playVoice}}" playVoice="{{playVoice}}" showDel="{{1}}" style="{{ replyparam.blog_id ? 'position: absolute;bottom: 30rpx': ''}};">
         </playRrecord>
     </view>
     <view wx:if="{{!showVoiceBox}}">

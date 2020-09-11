@@ -11,7 +11,9 @@ page {
 .container .wrap {
   background: #fff;
   overflow: hidden;
+  min-height: 692rpx;
   margin-bottom: 30rpx;
+  position: relative;
 }
 
 textarea {

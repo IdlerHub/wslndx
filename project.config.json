@@ -164,8 +164,8 @@
         },
         {
           "id": 9,
-          "name": "page/index/pages/assistant/assistant",
-          "pathName": "page/index/pages/assistant/assistant",
+          "name": "pages/post/post",
+          "pathName": "pages/post/post",
           "query": "index=1",
           "scene": null
         },

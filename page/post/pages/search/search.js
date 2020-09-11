@@ -41,6 +41,13 @@ Page({
       this.setHeight()
     })
   },
+  swiperChange(e) {
+    this.setData({
+      current: e.detail.current
+    },() => {
+      this.setHeight()
+    })
+  },
   getSearchword(type) {
     api.searchWord({
       type

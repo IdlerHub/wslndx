@@ -46,7 +46,7 @@
       <text wx:if="{{current == index}}"></text>
     </view>
   </view>
-  <swiper current="{{current}}" class="swiper" style="height: {{height}};">
+  <swiper current="{{current}}" class="swiper" style="height: {{height}};" bindchange="swiperChange">
     <swiper-item>
       <template is="list" data="{{list: cList,$state: $state, type: 1}}"></template>
     </swiper-item>
