@@ -104,6 +104,14 @@ Page({
           guideNum: 5
         })
       }
+      console.log(app.globalData.query)
+      if(app.globalData.query.categoryId) {
+        this.data.nav.forEach((v,i) => {
+          v.id == app.globalData.query.categoryId ? this.setData({
+            currentTab: i
+          }) : ''
+        })
+      }
       this.navHeightList = []
       this.setHeight()
     })
