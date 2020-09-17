@@ -4,6 +4,6 @@
   "navigationBarTextStyle": "black",
   "enablePullDownRefresh": false,
   "usingComponents": {
-		"drag": "../../components/drag/index"
+		"drag": "/components/drag/index"
   }
 }

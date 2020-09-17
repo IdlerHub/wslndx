@@ -7,7 +7,7 @@
   "usingComponents": {
     "navBar": "/components/navBar/navBar",
     "integralAnimation": "/components/integralAni/integralAni",
-    "mp-video-swiper": "../../components/video-swiper/index"
+    "mp-video-swiper": "/components/video-swiper/index"
   },
   "navigationStyle": "custom"
 }
