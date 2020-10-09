@@ -87,6 +87,9 @@ Page({
             this.setData({
               talkList: this.data.talkList,
             });
+            wx.uma.trackEvent('xiaolinCheck', {
+              click: '关注公众号'
+            });
           }
         },
       });
@@ -124,6 +127,9 @@ Page({
             isRight: 1,
           })
         : "";
+    });
+    wx.uma.trackEvent('xiaolinCheck', {
+      click: item.name
     });
     this.setData(
       {
