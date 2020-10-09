@@ -35,6 +35,9 @@ Page({
             })
         : "";
     });
+    wx.uma.trackEvent('index_btnClick', {
+      btnName: '课程搜索'
+    });
   },
   onShow() {
     this.getRecordAuth();

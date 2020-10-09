@@ -45,6 +45,9 @@ Page({
   scrollHeight: 0,
   onLoad: function (options) {
     this.init();
+    wx.uma.trackEvent('index_btnClick', {
+      btnName: '直播课表'
+    });
   },
   init() {
     return this.getLiveLessons().then(() => {
