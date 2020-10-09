@@ -332,7 +332,7 @@ Page({
           videoName: this.data.cur.title
         });
         wx.uma.trackEvent('totalShare', {
-          'shareName': '短视频转发'
+          shareName: '短视频转发'
         });
       });
       return {
