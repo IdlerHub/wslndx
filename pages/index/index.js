@@ -177,7 +177,7 @@ Page({
       let id = this.data.nav[cur].id
       this.geteCatrcommend(id, cur)
       wx.uma.trackEvent('classify_btnClick', {
-        'name': this.data.nav[cur].name
+        name: this.data.nav[cur].name
       });
     }
     setTimeout(() => {
@@ -302,7 +302,7 @@ Page({
       // url: "/pages/score/score?type=index"
     })
     wx.uma.trackEvent('index_btnClick', {
-      'btnName': '邀请学员'
+      btnName: '邀请学员'
     });
   },
   touchstart() {
@@ -338,7 +338,7 @@ Page({
       url: `/page/index/pages/detail/detail?id=${e.currentTarget.dataset.id}&name=${e.currentTarget.dataset.title}&play=true`
     })
     wx.uma.trackEvent('video_historyPlay', {
-      'lessonsName': e.currentTarget.dataset.title
+      lessonsName: e.currentTarget.dataset.title
     });
   },
   closenow() {
@@ -358,7 +358,7 @@ Page({
       });
     } else {
       wx.uma.trackEvent('index_recommendLessons', {
-        'lessonsName': e.currentTarget.dataset.item.title
+        lessonsName: e.currentTarget.dataset.item.title
       });
     }
   },
@@ -388,7 +388,7 @@ Page({
           }, 500);
         }
         wx.uma.trackEvent('index_bannerClick', {
-          'bannerTencent': item.title
+          bannerTencent: item.title
         });
       }
     }
@@ -524,7 +524,7 @@ Page({
         url: `../education/education?type=0&url=${item.clickurl}&login=${item.is_login}`
       })
       wx.uma.trackEvent('index_bannerClick', {
-        'bannerTencent': item.title
+        bannerTencent: item.title
       });
     } else if (item.jump_type == 2) {
       /* 视频 */
@@ -532,19 +532,19 @@ Page({
         url: `../../page/index/pages/detail/detail?id=${item.video_id}&name=${item.title}`
       })
       wx.uma.trackEvent('index_bannerClick', {
-        'bannerVideo': item.title
+        bannerVideo: item.title
       });
     } else if (item.jump_type == 4) {
       this.minigo(item.clickurl)
       wx.uma.trackEvent('index_bannerClick', {
-        'bannerMini': item.title
+        bannerMini: item.title
       });
     } else if (item.jump_type == 5) {
       wx.navigateTo({
         url: item.clickurl,
       })
       wx.uma.trackEvent('index_bannerClick', {
-        'bannerActivity': item.title
+        bannerActivity: item.title
       });
     } else if (item.jump_type == 6) {
       this.toLive(item.clickurl)
@@ -554,18 +554,19 @@ Page({
         url: "../../page/post/pages/pDetail/pDetail?id=" + item.article_id
       })
       wx.uma.trackEvent('index_bannerClick', {
-        'bannerBlog': item.title
+        bannerBlog: item.title
       });
     }
   },
   // 跳友方小程序
   jumpmini() {
-    this.minigo('{"appid":"wx1433e92dcf1d0343","url":"?wxgamecid=CCBgAAoXkpQY8X-4JNwfG3&from=jinling_lndx"}')
+    this.minigo('{"appid":"wx7d6c683879173db6","url":""}')
     wx.uma.trackEvent('index_btnClick', {
-      'btnName': '斗地主'
+      btnName: '斗地主'
     });
   },
   minigo(url) {
+    console.log(JSON.parse(url),url)
     let system = JSON.parse(url)
     wx.navigateToMiniProgram({
       appId: system.appid,
@@ -601,7 +602,7 @@ Page({
       wx.uma.trackEvent('index_activityClick');
     } else {
       wx.uma.trackEvent('index_bannerClick', {
-        'bannerTencent': this.data.paperMsg.title
+        bannerTencent: this.data.paperMsg.title
       });
       wx.navigateTo({
         url: `../education/education?url=${e.currentTarget.dataset.peper}&type=0}`

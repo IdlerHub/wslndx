@@ -87,7 +87,7 @@ Page({
       }
       this.login(param)
       wx.uma.trackEvent('video_historyPlay', {
-        'signBtn': '授权'
+        signBtn: '授权'
       });
     } else {
       return
@@ -182,7 +182,7 @@ Page({
       }
       this.login(params)
       wx.uma.trackEvent('video_historyPlay', {
-        'signBtn': '手机号'
+        signBtn: '手机号'
       });
     }
   },
