@@ -22,6 +22,7 @@
     "pages/liveList/liveList",
     "pages/gamePage/gamePage",
     "pages/webPay/webPay",
+    "pages/timetable/timetable",
     "components/playRrecord/playRrecord"
   ],
   "permission": {
@@ -49,8 +50,8 @@
         "text": "云课堂"
       },
       {
-        "pagePath": "pages/video/video",
-        "text": "短视频"
+        "pagePath": "pages/timetable/timetable",
+        "text": "直播课"
       },
       {
         "pagePath": "pages/post/post",
@@ -71,7 +72,8 @@
         "pages/detail/detail",
         "pages/rankingList/rankingList",
         "pages/search/search",
-        "pages/assistant/assistant"
+        "pages/assistant/assistant",
+        "pages/hotActivity/hotActivity"
       ]
     },
     {

@@ -20,7 +20,7 @@ Component({
       if (this.data.path == 'video') {
         return
       } else {
-        wx.switchTab({ url: "/pages/video/video" })
+        wx.switchTab({ url: "/pages/timetable/timetable" })
         this.hideIndex()
       }  
     },

@@ -12,7 +12,7 @@ Page({
       class: "#recommend1",
       unMove: true
     }],
-    height: 0,
+    height:1000,
     isRefreshing: false,
     currentTab: 0,
     showReco: false,
@@ -39,6 +39,13 @@ Page({
     if (!reg.test(systemInfo.system)) {
       h = 48
     }
+    systemInfo.statusBarHeight < 30 ?
+      this.setData({
+        topT: 28
+      }) :
+      this.setData({
+        topT: 50
+      });
     this.setData({
       top: pt + h
     })
@@ -162,6 +169,11 @@ Page({
       })
     }
   },
+  centerTab(e) {
+    this.setData({
+      bannercurrentTab: e.detail.current
+    })
+  },
   switchTab(event) {
     let cur = event.detail.current,
       that = this,
@@ -235,6 +247,9 @@ Page({
       this.setData({
         [`catrecommend[${id}]`]: temp.concat(msg.data)
       })
+      temp.concat(msg.data).length < 10 ? this.setData({
+        [`nav[${this.data.currentTab}].showBtoom`]: true 
+      }) : ''
       setTimeout(() => {
         currtab != this.data.currentTab ? '' : this.setHeight()
       }, 600)
@@ -295,15 +310,6 @@ Page({
     wx.navigateTo({
       url: "../../page/user/pages/info/info"
     })
-  },
-  toScore() {
-    wx.navigateTo({
-      url: "../../page/user/pages/makeMoney/makeMoney"
-      // url: "/pages/score/score?type=index"
-    })
-    wx.uma.trackEvent('index_btnClick', {
-      btnName: '邀请学员'
-    });
   },
   touchstart() {
     this.shownow = true
@@ -373,7 +379,9 @@ Page({
       } else if (e.currentTarget.dataset.role == "post") {
         this.toPost()
       } else if (e.currentTarget.dataset.type == "score") {
-        this.toScore()
+        wx.navigateTo({
+          url: '/page/user/pages/score/score',
+        })
       } else if (e.currentTarget.dataset.type == "banner") {
         let item = e.currentTarget.dataset.item;
         if (item.jump_type == '5') {

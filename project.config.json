@@ -151,9 +151,9 @@
           "scene": null
         },
         {
-          "name": "page/live/pages/liveVideo/liveVideo",
-          "pathName": "page/live/pages/liveVideo/liveVideo",
-          "query": "categoryId=29",
+          "name": "pages/video/video",
+          "pathName": "pages/video/video",
+          "query": "",
           "scene": 1035,
           "referrerInfo": {
             "appId": "wx756d04f5d669cef0"
