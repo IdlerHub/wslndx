@@ -15,6 +15,9 @@ Page({
   uPage: 1,
   onLoad: function (options) {
     this.getSearchword(1)
+    wx.uma.trackEvent("post_btnClick", {
+      btnName: "搜索按钮"
+    });
   },
   onShow: function () {
 

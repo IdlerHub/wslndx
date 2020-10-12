@@ -43,64 +43,17 @@
     </view>
   </view>
   <view class="list">
-    <navigator hover-class="none" class="nav" url="/page/user/pages/collection/collection" open-type="navigate">
-      <image src="{{ $state.imgHost }}/usershoucang.png" class="iconfont"></image>
-      <text>我的收藏</text>
-    </navigator>
-    <navigator hover-class="none" class="nav" url="/page/user/pages/history/history" open-type="navigate">
-      <image src="{{ $state.imgHost }}/userhistory.png" class="iconfont"></image>
-      <text>学习历史</text>
-    </navigator>
-    <navigator hover-class="none" class="nav" url="/page/user/pages/myCircle/myCircle" open-type="navigate">
-      <image src="{{ $state.imgHost }}/userfengcai.png" class="iconfont"></image>
-      <text>风采展示</text>
-    </navigator>
-    <navigator hover-class="none" class="nav" url="/page/user/pages/circle/circle?type=1" open-type="navigate">
-      <image src="/images/userIcon/useraddquan.png" class="iconfont"></image>
-      <text>加入圈子</text>
-    </navigator>
-    <navigator hover-class="none" class="nav" url="/page/user/pages/usermesseage/usermesseage" open-type="navigate"
-      bindtap="drawPage">
-      <image src="/images/userIcon/messeageicon.png" class="iconfont"></image>
-      <view class="news">我的消息 <view class="smallred" wx:if="{{showMes > 0}}"></view>
+    <navigator wx:for="{{btnList}}" wx:key="index" hover-class="none" class="nav" url="{{item.page}}" open-type="navigate" wx:if="{{!item.isContact}}" bindtap="handleContact" data-index='{{index}}'>
+      <image src="{{item.icon}}" class="iconfont"></image>
+      <text wx:if="{{!item.isMews}}">{{item.name}}</text>
+      <view class="news" wx:else>我的消息 <view class="smallred" wx:if="{{showMes > 0}}"></view>
       </view>
     </navigator>
-    <navigator hover-class="none" class="nav" url="/page/user/pages/attentionPage/attentionPage" open-type="navigate"
-      bindtap="drawPage">
-      <image src="/images/userIcon/attentionicon.png" class="iconfont"></image>
-      <text>我的关注</text>
-    </navigator>
-    <navigator hover-class="none" class="nav"
-      url="/pages/education/education?type=0&url=https://mp.weixin.qq.com/s/vSd8XBQDQkvqVX_kt_YyTQ" open-type="navigate"
-      bindtap="drawPage">
-      <image src="/images/userIcon/appIcon.png" class="iconfont"></image>
-      <text>APP下载</text>
-    </navigator>
-    <navigator hover-class="none" class="nav" url="/pages/education/education?type=0&url=https://mp.weixin.qq.com/s/RBZMIupOHPjb5PeYioy8NQ"
-      open-type="navigate" bindtap="drawPage">
-      <image src="/images/userIcon/ShapeIcon.png" class="iconfont"></image>
-      <text>商务合作</text>
-    </navigator>
-    <navigator hover-class="none" class="nav" url="/pages/education/education?type=0&url=https://mp.weixin.qq.com/s/bdGLXj6u6aOGVNh2owTjgA"
-      open-type="navigate" bindtap="drawPage">
-      <image src="/images/userIcon/accountsIcon.png" class="iconfont"></image>
-      <text>关注公众号</text>
-    </navigator>
-    <navigator hover-class="none" class="nav" url="/page/user/pages/drawPage/drawPage" open-type="navigate"
-      bindtap="drawPage">
-      <image src="/images/userIcon/draw.png" class="iconfont"></image>
-      <text>学分抽奖</text>
-    </navigator>
-    <navigator hover-class="none" class="nav" url="/page/user/pages/experience/experience" open-type="navigate">
-      <image src="/images/userIcon/experience.png" class="iconfont"></image>
-      <text>体验官申请</text>
-    </navigator>
-    <button class="nav" open-type="contact" bindcontact="handleContact"
-      session-from='{"name": "{{$state.userInfo.nickname}}","avatarUrl":"{{$state.userInfo.avatar}}","nickName":"{{$state.userInfo.nickname}}"}'>
-      <image src="/images/userIcon/userkefu.png" class="iconfont"></image>
-      <text>联系客服</text>
+    <button wx:for="{{btnList}}" wx:key="index" class="nav" open-type="contact" bindcontact="handleContact" data-index='{{index}}'
+      session-from='{"name": "{{$state.userInfo.nickname}}","avatarUrl":"{{$state.userInfo.avatar}}","nickName":"{{$state.userInfo.nickname}}"}' wx:if="{{item.isContact}}">
+      <image src="{{item.icon}}" class="iconfont"></image>
+      <text>{{item.name}}</text>
     </button>
-
   </view>
   <navBar path="user" />
   <!-- wx:if="{{$state.newGuide.user == 0}}" -->

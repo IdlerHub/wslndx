@@ -80,16 +80,9 @@
       "list": []
     },
     "game": {
-      "currentL": -1,
       "list": []
     },
     "gamePlugin": {
-      "list": []
-    },
-    "search": {
-      "list": []
-    },
-    "conversation": {
       "list": []
     },
     "miniprogram": {
@@ -158,9 +151,8 @@
           "scene": null
         },
         {
-          "id": 9,
-          "name": "pages/index/index",
-          "pathName": "pages/index/index",
+          "name": "page/live/pages/liveVideo/liveVideo",
+          "pathName": "page/live/pages/liveVideo/liveVideo",
           "query": "categoryId=29",
           "scene": 1035,
           "referrerInfo": {
