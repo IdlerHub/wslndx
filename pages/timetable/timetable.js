@@ -35,6 +35,18 @@ Page({
         txt: "星期五",
         index: "item5",
       },
+      {
+        id: 6,
+        name: "周六",
+        txt: "星期六",
+        index: "item6",
+      },
+      {
+        id: 7,
+        name: "周日",
+        txt: "星期日",
+        index: "item7",
+      },
     ],
     currentTab: 0,
     anchorArray: [],

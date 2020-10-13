@@ -10,7 +10,7 @@
       <text>我的课表</text>
     </navigator>
   </view> -->
-  <view class="nav">
+  <view class="nav" style="padding: 0 30rpx;">
     <scroll-view class="nav" style="display:flex;" scroll-x="true" scroll-left="{{ navScrollLeft }}"
       scroll-with-animation="true" enable-flex scroll-into-view="item{{currentTab < 4 ? 0 : currentTab - 3}}">
       <block wx:for="{{ nav }}" wx:for-index="id" wx:for-item="item" wx:key="id">

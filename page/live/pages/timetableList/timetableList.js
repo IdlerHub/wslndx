@@ -5,6 +5,8 @@ Page({
     courseList: [],
     weekList: ["周一", "周二", "周三", "周四", "周五", "周六", "周日"],
     page: 1,
+    isToday:3, 
+    current: 0,
     page_end: false
   },
   onLoad: function (options) {
@@ -57,4 +59,9 @@ Page({
       });
   },
   onShareAppMessage: function () {},
+  checkCurrent(e) {
+    this.setData({
+      current: e.currentTarget.dataset.index
+    })
+  }
 });

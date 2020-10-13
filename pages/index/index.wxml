@@ -99,7 +99,7 @@
       <image src="/images/indexIcon/searchp.png"></image>
       <text>搜索课程名称</text>
     </navigator>
-    <navigator class="search-right">
+    <navigator class="search-right" url="/page/live/pages/timetableList/timetableList" hover-class="none">
       <image src="/images/indexIcon/timetableIcon.png"></image>
       <text>我的课程</text>
     </navigator>

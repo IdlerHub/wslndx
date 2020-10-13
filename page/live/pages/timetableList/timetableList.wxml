@@ -1,4 +1,20 @@
 <!-- pages/timetableList/timetableList.wxml -->
+<view class="top">
+  <view class="topOne">
+    <text class="month">2020年10月</text>
+    <navigator hover-class="none" url="/pages/timetable/timetable" open-type="switchTab" class="topRight"> 
+      <text>全部课程</text>
+      <image src="../../images/rightNow.png"></image>
+    </navigator>
+  </view>
+  <view class="dateBox">
+    <view class="dateItem {{current == index ? 'active' : ''}}" wx:for="{{7}}" wx:key="index" bindtap="checkCurrent" data-index="{{index}}">
+      <text>{{weekList[index]}}</text>
+      <text>0{{index}}</text>
+      <view class="now" wx:if="{{isToday == index}}"></view>
+    </view>
+  </view>
+</view>
 <view class="timetableList">
   <!-- 缺省 -->
   <view class="qstBox" wx:if="{{courseList.length == 0}}">
