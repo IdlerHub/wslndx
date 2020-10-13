@@ -1,15 +1,15 @@
 <!--pages/timetable/timetable.wxml-->
 <view class="pageTop">
-  <view class="search-box">
-    <navigator class="search-left" url="../liveSearch/liveSearch" hover-class="none">
+  <!-- <view class="search-box">
+    <navigator class="search-left" url="/page/live/pages/liveSearch/liveSearch" hover-class="none">
       <image src="{{$state.imgHost}}/searchp.png"></image>
       <text>搜索课程名称</text>
     </navigator>
-    <navigator hover-class="none" class="search-right" url="../timetableList/timetableList" open-type="navigate">
+    <navigator hover-class="none" class="search-right" url="/page/live/pages/timetableList/timetableList" open-type="navigate">
       <image src="{{ $state.imgHost }}/timetebleIcon.png" class="iconfont"></image>
       <text>我的课表</text>
     </navigator>
-  </view>
+  </view> -->
   <view class="nav">
     <scroll-view class="nav" style="display:flex;" scroll-x="true" scroll-left="{{ navScrollLeft }}"
       scroll-with-animation="true" enable-flex scroll-into-view="item{{currentTab < 4 ? 0 : currentTab - 3}}">
