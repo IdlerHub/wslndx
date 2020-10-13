@@ -15,6 +15,9 @@ Page({
   pageName: "个人中心",
   guide: 0,
   onLoad() {
+    this.setData({
+      statusBarHeight: wx.getSystemInfoSync().statusBarHeight + 80
+    })
     let btnList = [
       {id: 1, name: '我的收藏', page: '/page/user/pages/collection/collection',icon: `${this.data.$state.imgHost}/usershoucang.png`},
       {id: 2, name: '学习历史', page: '/page/user/pages/history/history',icon: `${this.data.$state.imgHost}/userhistory.png`},
@@ -29,8 +32,26 @@ Page({
       {id: 11, name: '体验官申请', page: '/page/user/pages/experience/experience',icon: '/images/userIcon/experience.png'},
       {id: 12, name: '联系客服',page:'',isContact: true,icon: '/images/userIcon/userkefu.png'}
     ]
+    let myList = [
+      {id: 1, name: '我的课程', page: '/page/live/pages/timetableList/timetableList',icon: '/images/userIcon/courseIcon.png'},
+      {id: 2, name: '我的作品', page: '/page/user/pages/myCircle/myCircle',icon: '/images/userIcon/myworkIcon.png'},
+      {id: 3, name: '我的关注', page: '/page/user/pages/attentionPage/attentionPage',icon: '/images/userIcon/attentionIcon.png'},
+      {id: 4, name: '加入圈子', page: '/page/user/pages/circle/circle?type=1',icon: '/images/userIcon/useraddquan.png'},
+      {id: 5, name: '我的收藏', page: '/page/user/pages/collection/collection',icon: '/images/userIcon/usershoucang.png'},
+      {id: 6, name: '学习历史', page: '/page/user/pages/history/history',icon: '/images/userIcon/historyicon.png'},
+      {id: 7, name: '我的消息', page: '/page/user/pages/usermesseage/usermesseage',icon: '/images/userIcon/messeageicon.png', isNews: 1},
+      {id: 8, name: 'APP下载', page: '/pages/education/education?type=0&url=https://mp.weixin.qq.com/s/vSd8XBQDQkvqVX_kt_YyTQ',icon: '/images/userIcon/appIcon.png'},
+      {id: 9, name: '学院市集', page: '',icon: '/images/userIcon/shopingIcon.png',isMini: 1, appId:"wx11cabfef2ec771b3"},
+    ],
+    moreList = [
+      {id: 1, name: '商务合作', page: '/pages/education/education?type=0&url=https://mp.weixin.qq.com/s/RBZMIupOHPjb5PeYioy8NQ',icon: '/images/userIcon/ShapeIcon.png'},
+      {id: 2, name: '体验官申请', page: '/page/user/pages/experience/experience',icon: '/images/userIcon/experience.png'},
+      {id: 3, name: '联系客服',page:'',isContact: true,icon: '/images/userIcon/userkefu.png'}
+    ]
     this.setData({
-      btnList
+      btnList,
+      myList,
+      moreList
     })
   },
   onShow() {
