@@ -59,16 +59,24 @@
     </view>
     <view class="comment" wx:if="{{recommend[0]}}">
       <view wx:for="{{6}}" wx:key="index" class="liveItem" style="{{index + 1 > 6 - 2 ? 'border:none' : '' }}">
-        <image
-          src="https://hwcdn.jinlingkeji.cn/uploads/images/14b9e1ccd6b60d61cd43afa6576f81e4.png?x-image-process=image/resize,m_fixed,w_260,h_160/quality,Q_80">
-        </image>
+        <view class="liveImgBox">
+          <image
+            src="https://hwcdn.jinlingkeji.cn/uploads/images/14b9e1ccd6b60d61cd43afa6576f81e4.png?x-image-process=image/resize,m_fixed,w_260,h_160/quality,Q_80">
+          </image>
+          <view class="liveStatus">
+            <view class="statusLeft">
+              <view wx:for="{{3}}" wx:key="index" class="statusWite"></view>
+              <view class="statusTxt">直播</view>
+            </view>
+          </view>
+        </view>
         <text>营养与健康</text>
         <text>03月06日 16:00</text>
       </view>
     </view>
     <view class="comment" wx:else>
       <view wx:for="{{6}}" wx:key="index" class="liveItem" style="{{index + 1 > 6 - 2 ? 'border:none' : '' }}">
-        <view class="img skeletonaAtive" ></view>
+        <view class="img skeletonaAtive"></view>
         <text class="skeletonaAtive"></text>
         <text class="skeletonaAtive"></text>
       </view>
@@ -153,7 +161,7 @@
         <template is="skeletonSwiper" wx:else></template>
         <!-- 中间icon -->
         <view class="centerIcon">
-          <navigator class="iconBox"hover-class="none" url="/pages/video/video">
+          <navigator class="iconBox" hover-class="none" url="/pages/video/video">
             <image src="/images/indexIcon/sortVideoicon.png"></image>
             <text>短视频</text>
           </navigator>
@@ -161,7 +169,8 @@
             <image src="/images/indexIcon/studyIcon.png"></image>
             <text>学习榜</text>
           </navigator>
-          <navigator class="iconBox" hover-class="none" url="/page/user/pages/score/score" wx:if="{{$state.authUserInfo}}">
+          <navigator class="iconBox" hover-class="none" url="/page/user/pages/score/score"
+            wx:if="{{$state.authUserInfo}}">
             <image src="/images/indexIcon/scroeIcon.png"></image>
             <text>学分兑换</text>
           </navigator>
@@ -169,8 +178,7 @@
             <image src="/images/indexIcon/scroeIcon.png"></image>
             <text>学分兑换</text>
           </button>
-          <navigator class="iconBox" hover-class="none" url="/page/index/pages/hotActivity/hotActivity"
-          >
+          <navigator class="iconBox" hover-class="none" url="/page/index/pages/hotActivity/hotActivity">
             <image src="/images/indexIcon/hotActivityIcon.png"></image>
             <text>热门活动</text>
           </navigator>

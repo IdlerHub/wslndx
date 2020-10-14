@@ -20,9 +20,13 @@ page {
 
 .swiperBox .swiperitem {
   height: 100%;
-  background: pink;
   border-radius: 16rpx;
   overflow: hidden;
+}
+
+.swiperBox .swiperitem image {
+  width: 100%;
+  height: 100%;
 }
 
 .swiperBox .indicatorBox {
@@ -65,11 +69,34 @@ page {
   border-bottom: 1px solid #E9E9E9;
 }
 
-.moreBox .listItem image {
+.moreBox .listItem .imgMask {
   width: 240rpx;
   height: 146rpx;
   border-radius: 10rpx;
   background: #D8D8D8;
+  overflow: hidden;
+  position: relative;
+}
+
+.moreBox .listItem .imgMask .cover {
+  width: 100%;
+  height: 100%;
+}
+
+.moreBox .listItem .imgMask .mask {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  background: rgba(0, 0, 0, 0.6);
+}
+
+.moreBox .listItem .imgMask .finish {
+  width: 110rpx;
+  height: 110rpx;
+  right: 0;
+  bottom: 0;
+  position: absolute;
 }
 
 .moreBox .listItem .centerBox {
@@ -108,6 +135,16 @@ page {
   color: #FFFFFF;
   text-align: center;
   line-height: 60rpx;
+  position: relative;
+}
+
+.moreBox .listItem .itemBtn .mask {
+  width: 100%;
+  height: 100%;
+  background: #FFF;
+  opacity: 0.8;
+  position: absolute;
+  top: 0;
 }
 
 .qs {

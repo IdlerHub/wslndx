@@ -388,54 +388,6 @@
   letter-spacing: 0;
 }
 
-/* .tabbar {
-  position: fixed;
-  height: 160rpx;
-  width: 100%;
-  bottom: 0;
-  background: rgba(248, 248, 248, 0.99);
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  z-index: 1;
-  border-top: 2rpx solid #e9e9e9; }
-
-.tabbar .item {
-  text-align: center;
-  line-height: 24rpx;
-  position: relative;
-  overflow: visible; }
-  .tabbar .item button {
-    overflow: visible; } */
-
-/* .tabbar .item .badge {
-  position: absolute;
-  background: #df2020;
-  top: -5px;
-  right: -5px;
-  min-width: 15px;
-  height: 20px;
-  padding: 0 5rpx;
-  line-height: 20px;
-  border-radius: 20rpx;
-  font-size: 14px;
-  color: white;
-  letter-spacing: 1px; }
-
-.tabbar .item .tab-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center; }
-
-.tabbar .icon {
-  width: 80rpx;
-  height: 80rpx; }
-
-.tabbar .name {
-  display: block;
-  font-size: 36rpx;
-  color: #979797;
-  line-height: 45rpx; } */
 
 .fixed {
   position: sticky;
@@ -975,24 +927,24 @@ page .getGuideBox .nextBtn {
   border-bottom: 1px solid #E9E9E9;
 }
 
- .topTtile text {
+.topTtile text {
   font-size: 42rpx;
   font-weight: 500;
   color: #333333;
 }
 
- .topTtile .topTtile-right {
+.topTtile .topTtile-right {
   display: flex;
   align-items: center;
 }
 
- .topTtile .topTtile-right text {
+.topTtile .topTtile-right text {
   font-size: 32rpx;
   font-weight: 400;
   color: #999999;
 }
 
- .topTtile .topTtile-right image {
+.topTtile .topTtile-right image {
   width: 22rpx;
   height: 22rpx;
   margin-left: 10rpx;
@@ -1013,18 +965,73 @@ page .getGuideBox .nextBtn {
   border-bottom: 1px solid #EDEDED;
 }
 
-.liveBox .comment .liveItem image {
+.liveBox .comment .liveItem .liveImgBox {
   width: 348rpx;
   height: 196rpx;
-  border-radius: 24rpx;
+  border-radius: 10rpx;
   background: #EDEDED;
+  overflow: hidden;
+  position: relative;
+}
+
+.liveBox .comment .liveItem .liveImgBox image {
+  width: 100%;
+  height: 100%;
+}
+
+.liveBox .comment .liveItem .liveImgBox .liveStatus {
+  padding:0 10rpx;
+  height: 44rpx;
+  background: linear-gradient(270deg, #FF565D 0%, #F2323A 100%);
+  border-radius: 10rpx 6rpx 6rpx 0px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.liveBox .comment .liveItem .liveImgBox .liveStatus .statusLeft {
+  display: flex;
+  align-items: flex-end;
+  height: 24rpx;
+}
+
+.liveItem .liveImgBox .liveStatus .statusLeft .statusWite {
+  display: block;
+  width: 5rpx;
+  height: 100%;
+  background-color: #fff;
+  border-radius: 20rpx;
+  margin-right: 5rpx;
+}
+
+.liveItem .liveImgBox .liveStatus .statusLeft .statusTxt {
+  font-size: 26rpx;
+  font-weight: 400;
+  color: #FFFFFF;
+  line-height: 22rpx;
+  margin-left: 5rpx;
+}
+
+.liveItem .liveImgBox .liveStatus .statusLeft .statusWite:nth-child(1) {
+  animation: liveStatus 0.4s 0s ease-out infinite;
+}
+
+.liveItem .liveImgBox .liveStatus .statusLeft .statusWite:nth-child(2) {
+  animation: liveStatus 0.6s 0s ease-out infinite;
+}
+
+.liveItem .liveImgBox .liveStatus .statusLeft .statusWite:nth-child(3) {
+  animation: liveStatus 0.8s 0s ease-out infinite;
 }
 
 .liveBox .comment .liveItem .img {
   width: 348rpx;
   height: 196rpx;
   border-radius: 24rpx;
-background: #EDEDED;
+  background: #EDEDED;
 }
 
 .liveBox .comment .liveItem text:nth-child(2) {
@@ -1054,6 +1061,7 @@ background: #EDEDED;
   left: 50%;
   margin-left: -180rpx;
 }
+
 .nomore image {
   width: 100%;
   height: 3rpx;
@@ -1148,5 +1156,19 @@ background: #EDEDED;
 
   100% {
     opacity: 1;
+  }
+}
+
+@keyframes liveStatus {
+  0% {
+    height: 100%;
+  }
+
+  50% {
+    height: 20%;
+  }
+
+  100% {
+    height: 100%;
   }
 }

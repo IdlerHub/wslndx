@@ -1,38 +1,15 @@
 // page/index/pages/hotActivity/hotActivity.js
+const app = getApp()
 Page({
   data: {
-    current: 0
+    current: 0,
+    swiperList:[],
+    activityList: []
   },
   onLoad: function (options) {
-    let swiperList = [
-      { id: 1},
-      { id: 2},
-      { id: 3},
-      { id: 4},
-      { id: 5},
-      { id: 6},
-    ],
-    activityList = [
-      // { id: 1},
-      // { id: 2},
-      // { id: 3},
-      // { id: 4},
-      // { id: 5},
-      // { id: 6},
-    ]
-    this.setData({
-      swiperList,
-      activityList
-    })
-  },
-  onReady: function () {
-
   },
   onShow: function () {
-
-  },
-  onUnload: function () {
-
+    Promise.all([this.getHost(), this.getHostbanner()])
   },
   onPullDownRefresh: function () {
 
@@ -40,12 +17,52 @@ Page({
   onReachBottom: function () {
 
   },
-  onShareAppMessage: function () {
-
-  },
   centerTab(e) {
     this.setData({
       current: e.detail.current
+    })
+  },
+  getHost() {
+    app.activity.hots().then(res => {
+      this.setData({
+        activityList: res.data
+      })
+    })
+  },
+  getHostbanner() {
+    app.activity.bannerList().then(res => {
+      this.setData({
+        swiperList: res.data
+      })
+    })
+  },
+  bannerGo(e) {
+    let item = e.currentTarget.dataset.item;
+    if (item.is_finish) return
+    if (item.jump_type == 1) {
+      /* 外链 */
+      wx.navigateTo({
+        url: `/pages/education/education?type=0&url=${item.extra.url}&login=0`
+      })
+    } else if (item.jump_type == 0) {
+      /* 视频 */
+      wx.navigateTo({
+        url: item.extra.url
+      })
+    } else if (item.jump_type == 3) {
+      this.minigo(item.extra.url || '', item.extra.wechat_app_id)
+    } else {
+      /* 文章 */
+      wx.navigateTo({
+        url: item.extra.url
+      })
+    }
+  },
+  minigo(url, appId) {
+    wx.navigateToMiniProgram({
+      appId: appId,
+      path: url,
+      // envVersion: 'trial',
     })
   },
 })

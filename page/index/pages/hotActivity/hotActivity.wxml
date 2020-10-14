@@ -1,8 +1,10 @@
-<view class="contariner" wx:if="{{activityList[0]}}">
+<view class="contariner" wx:if="{{activityList[0] || swiperList[0]}}">
   <view class="swiperBox">
     <swiper class="swiper" autoplay current="{{current}}" interval="2000" circular bindchange="centerTab">
-      <swiper-item wx:for="{{swiperList}}">
-        <view class="swiperitem"></view>
+      <swiper-item wx:for="{{swiperList}}" wx:key="index">
+        <view class="swiperitem" bindtap="bannerGo" data-item="{{item}}">
+          <image src="{{item.image}}"></image>
+        </view>
       </swiper-item>
     </swiper>
     <view class="indicatorBox">
@@ -14,13 +16,20 @@
     <view class="moreTitle">
       更多活动
     </view>
-    <view class="listItem" wx:for="{{activityList}}" wx:key="index">
-      <image src="https://jinling-xcx-dev.obs.cn-north-1.myhuaweicloud.com:443/uploads/images/b18558faedc4900a9fca8de4d4c0cc7b.png?x-image-process=image/resize,m_fixed,w_260,h_160/quality,Q_80"></image>
-      <view class="centerBox">
-        <text>零基础学演讲口才一鸣惊人的沟撒旦飞洒地方个电话给发货</text>
-        <text>撒旦解放好的手机号跨境电商风格和跨境电商更何况就及时更换</text>
+    <view class="listItem" wx:for="{{activityList}}" wx:key="index" bindtap="bannerGo" data-item="{{item}}">
+      <view class="imgMask">
+        <image src="{{item.image}}" class="cover"></image>
+        <view class="mask" wx:if="{{item.is_finish}}"></view>
+        <image class="finish" src="../../images/finish.png" wx:if="{{item.is_finish}}"></image>
       </view>
-      <view class="itemBtn">参与</view>
+      <view class="centerBox">
+        <text>{{item.name}}</text>
+        <text>{{item.description}}</text>
+      </view>
+      <view class="itemBtn">
+        {{ item.is_finish ? '结束' : '参与'}}
+        <view class="mask" wx:if="{{item.is_finish}}"></view>
+      </view>
     </view>
   </view>
 </view>
