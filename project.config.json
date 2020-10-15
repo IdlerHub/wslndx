@@ -151,9 +151,9 @@
           "scene": null
         },
         {
-          "name": "page/index/pages/hotActivity/hotActivity",
-          "pathName": "page/index/pages/hotActivity/hotActivity",
-          "query": "",
+          "name": "page/live/pages/tableDetail/tableDetail",
+          "pathName": "page/live/pages/tableDetail/tableDetail",
+          "query": "lessonId=28",
           "scene": 1035,
           "referrerInfo": {
             "appId": "wx756d04f5d669cef0"

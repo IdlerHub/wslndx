@@ -77,6 +77,10 @@ Page({
     this.setData({
       current: e.currentTarget.dataset.index
     }, () => {
+      wx.pageScrollTo({
+        duration: 0,
+        scrollTop: 0
+      })
       this.getUserLessons(e.currentTarget.dataset.index, this.data.weeks[e.currentTarget.dataset.index].week)
     })
   }
