@@ -27,6 +27,7 @@ Page({
   navHeightList: [],
   pageName: '首页',
   guide: 0,
+  liveTimer: '',
   onLoad: async function (e) {
     !getApp().globalData.tempCode ? '' : wx.reLaunch({
       url: "/pages/sign/sign"
@@ -63,6 +64,7 @@ Page({
     })
     this.setData({
       recommend: [],
+      liveRecommend: [],
       category: [],
       history: {},
       navScrollLeft: 0,
@@ -101,7 +103,7 @@ Page({
     this.data.isSign ? this.signIn() : ''
   },
   init() {
-    return Promise.all([this.getactivite(), this.getRecommend(), this.getCategory(), this.getBanner(), this.getPaper(), this.getDialog(), this.getGuide(), this.getRecommendLessons(), this.getUserOpenid()]).then(values => {
+    return Promise.all([this.getactivite(), this.getRecommendLessons(), this.getRecommend(), this.getCategory(), this.getBanner(), this.getPaper(), this.getDialog(), this.getGuide(), this.getUserOpenid()]).then(values => {
       if (this.data.$state.newGuide.index == 0) {
         this.setData({
           guideNum: 1,
@@ -246,7 +248,26 @@ Page({
     })
   },
   getRecommendLessons() {
-    app.liveData.recommendLessons()
+    if (this.data.liveRecommend[0]) {
+      setInterval(() => {
+        app.liveData.recommendLessons().then(res =>{
+          res.data.forEach((e, i) => {
+            this.setData({
+              [`liveRecommend[${i}][live_status]`]: e.live_status
+            })
+          })
+        })
+      }, 60000);
+    } else {
+      app.liveData.recommendLessons().then(res => {
+        this.setData({
+          liveRecommend: res.data
+        },() => {
+          res.data.length > 0 ? this.getRecommendLessons() : ''
+        })
+      })
+    }
+
   },
   geteCatrcommend(id, currtab) {
     if (this.data.catrecommend[id]) {
@@ -689,5 +710,12 @@ Page({
     } else {
       this.signIn()
     }
+  },
+  toLivelesson(e) {
+    let item =  e.currentTarget.dataset.item
+    wx.navigateTo({
+      url : "/page/live/pages/liveDetail/liveDetail?lessonId=" +
+      item.id
+    });
   }
 })

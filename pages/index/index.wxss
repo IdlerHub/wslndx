@@ -1,15 +1,19 @@
 @charset "UTF-8";
+page {
+  background: #EDEDED;
+}
 
 /* 环境变量 */
 .container {
   height: 100vh;
-  background: rgba(248, 248, 248, 1);
+  /* background: rgba(248, 248, 248, 1); */
 }
 
 .top {
   padding: 0 30rpx;
   display: flex;
   align-items: center;
+  background: rgba(248, 248, 248, 1);
 }
 
 .top .avatarBox {
@@ -953,14 +957,15 @@ page .getGuideBox .nextBtn {
 .liveBox .comment {
   display: flex;
   flex-wrap: wrap;
-  padding-left: 18rpx;
+  padding: 0 18rpx;
+  justify-content: space-between;
 }
 
 .liveBox .comment .liveItem {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  margin-right: 18rpx;
+  /* margin-right: 18rpx; */
   padding: 30rpx 0;
   border-bottom: 1px solid #EDEDED;
 }
@@ -972,6 +977,7 @@ page .getGuideBox .nextBtn {
   background: #EDEDED;
   overflow: hidden;
   position: relative;
+  border: 1px solid #EEEEEE;
 }
 
 .liveBox .comment .liveItem .liveImgBox image {
@@ -980,7 +986,7 @@ page .getGuideBox .nextBtn {
 }
 
 .liveBox .comment .liveItem .liveImgBox .liveStatus {
-  padding:0 10rpx;
+  width: 100rpx;
   height: 44rpx;
   background: linear-gradient(270deg, #FF565D 0%, #F2323A 100%);
   border-radius: 10rpx 6rpx 6rpx 0px;

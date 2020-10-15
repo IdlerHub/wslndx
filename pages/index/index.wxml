@@ -58,20 +58,23 @@
       </view>
     </view>
     <view class="comment" wx:if="{{recommend[0]}}">
-      <view wx:for="{{6}}" wx:key="index" class="liveItem" style="{{index + 1 > 6 - 2 ? 'border:none' : '' }}">
+      <view wx:for="{{liveRecommend}}" wx:key="index" class="liveItem" style="{{index + 1 > 6 - 2 ? 'border:none' : '' }}" bindtap="toLivelesson" data-item="{{item}}">
         <view class="liveImgBox">
           <image
-            src="https://hwcdn.jinlingkeji.cn/uploads/images/14b9e1ccd6b60d61cd43afa6576f81e4.png?x-image-process=image/resize,m_fixed,w_260,h_160/quality,Q_80">
+            src="{{item.cover}}">
           </image>
-          <view class="liveStatus">
-            <view class="statusLeft">
+          <view class="liveStatus" style="background: {{ item.live_status == 101 ? '' : 'linear-gradient(270deg, #44A2FF 0%, #007CF7 100%);' }}">
+            <view class="statusLeft" wx:if="{{item.live_status == 101}}">
               <view wx:for="{{3}}" wx:key="index" class="statusWite"></view>
               <view class="statusTxt">直播</view>
             </view>
+            <view class="statusLeft"wx:else>
+              <view class="statusTxt" style="margin: 0">未开始</view>
+            </view>
           </view>
         </view>
-        <text>营养与健康</text>
-        <text>03月06日 16:00</text>
+        <text>{{item.name}}</text>
+        <text>{{item.date}} {{item.time}}</text>
       </view>
     </view>
     <view class="comment" wx:else>
@@ -94,10 +97,13 @@
   <view wx:if="{{ isRefreshing }}" class="weui-loadmore indexdrop">
     <view class="weui-loading"></view>
   </view>
-  <view class="top" style="padding-top:{{ topT }}px" wx:if="{{recommend[0]}}">
-    <view class="avatarBox" catchtap="toUser">
+  <view class="top" style="padding-top:{{ topT }}px" wx:if="{{recommend[0]}}" bindtap="toInfo">
+    <view class="avatarBox" catchtap="toUser" wx:if="{{$state.authUserInfo}}">
       <open-data class="img" type="userAvatarUrl"></open-data>
     </view>
+    <button class="avatarBox" wx:else open-type="getUserInfo" bindgetuserinfo="onGotUserInfo" data-role="user" catchtap="getSomthin">
+      <open-data class="img" type="userAvatarUrl"></open-data>
+    </button>
     <text>{{$state.userInfo.school || "网上老年大学"}}</text>
   </view>
   <template is="skeletonTop" data="{{topT}}" wx:else></template>
@@ -183,7 +189,7 @@
             <text>热门活动</text>
           </navigator>
         </view>
-        <template is="liveBox" data="{{recommend}}"></template>
+        <template is="liveBox" data="{{recommend, liveRecommend}}"></template>
         <view>
         </view>
         <view class="liveBox">
