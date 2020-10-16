@@ -470,6 +470,9 @@ Page({
     !this.data.current.live_type
       ? this.toLiveRoom(this.data.current)
       : this.select(e);
+    this.setData({
+      currentTab: 1
+    })
   },
   // 选择剧集
   toLiveRoom(item) {
