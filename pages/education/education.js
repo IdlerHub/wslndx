@@ -82,7 +82,7 @@ Page({
       } else if (options.type === "lottery") {
         this.webJump();
       } else if(options.type === "sign") {
-        let webURL = `https://authorization.jinlingkeji.cn/#/?uid=${797716}&type=sign`;
+        let webURL = `https://authorization.jinlingkeji.cn/#/?uid=${this.data.$state.userInfo.id}&type=sign`;
         this.setData({
           url: webURL
         })

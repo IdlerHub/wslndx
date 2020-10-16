@@ -224,11 +224,11 @@ Page({
     }
   },
   toAtention() {
-    // let uid = wx.getStorageSync("userInfo").id;
+    let uid = wx.getStorageSync("userInfo").id;
     // wx.setStorageSync("AccountsId", ops.accounts_openid);
     //liveTyp标识从哪里跳转
     wx.navigateTo({
-      url: `/pages/education/education?liveType=liveTable&uid=${7775}`,
+      url: `/pages/education/education?liveType=liveTable&uid=${uid}`,
     });
     this.toEducation = true
   }

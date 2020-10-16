@@ -449,7 +449,8 @@ Page({
       count: 1
     }, true)
     this.setData({
-      showdialog: false
+      showdialog: false,
+      dialog: []
     })
   },
   signIn(data) {
