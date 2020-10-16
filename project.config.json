@@ -151,8 +151,8 @@
           "scene": null
         },
         {
-          "name": "page/live/pages/tableDetail/tableDetail",
-          "pathName": "page/live/pages/tableDetail/tableDetail",
+          "name": "page/live/pages/liveDetail/liveDetail",
+          "pathName": "page/live/pages/liveDetail/liveDetail",
           "query": "lessonId=28",
           "scene": 1035,
           "referrerInfo": {

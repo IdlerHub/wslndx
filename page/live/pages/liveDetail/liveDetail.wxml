@@ -25,6 +25,11 @@
     <view id="myVideo" wx:else>
         <image wx:if="{{ !playFlag }}" src="{{ lessonDetail.cover }}" class="poster"></image>
         <!-- <image wx:if="{{ !playFlag }}" mode="aspectFill" src="{{ $state.imgHost }}/play.png" class="play"></image> -->
+        <navigator class="noticeBox" hove-class="none" url="/pages/education/education?type=0&url={{lessonDetail.notice_url}}" wx:if="{{lessonDetail.notice.length > 0}}">
+            <image src="../../images/noticeIcon.png"></image>
+            <view>{{lessonDetail.notice}}</view>
+            <image src="../../images/noticeRight.png"></image>
+        </navigator>
     </view>
     <!-- 课程信息 -->
     <view class="liveInfo">
@@ -38,10 +43,11 @@
                     <image src="../../images/join.png"></image>
                     <view>进班群</view>
                 </view>
-                <view class="subscribe" bindtap="subscribe">
-                    <image src="../../images/subscribe.png"></image>
-                    <view>上课通知</view>
-                </view>
+                <navigator class="subscribe" hover-class="none"
+                    url="/pages/education/education?type=0&url=https://mp.weixin.qq.com/s/vSd8XBQDQkvqVX_kt_YyTQ">
+                    <image src="../../images/phoneIcon.png"></image>
+                    <view>打开app</view>
+                </navigator>
                 <!-- <image src="/images/messageImg.png"></image> -->
             </view>
             <button class="share" open-type="share">

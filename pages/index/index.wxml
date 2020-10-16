@@ -49,7 +49,39 @@
   </view>
 </template>
 <template name="liveBox">
-  <view class="liveBox">
+  <view wx:if="{{recommend[0]}}">
+    <view class="liveBox" wx:if="{{liveRecommend[0]}}">
+      <view class="topTtile">
+        <text>直播推荐</text>
+        <view class="topTtile-right">
+          <text>更多课程</text>
+          <image src="/images/Return-black.png"></image>
+        </view>
+      </view>
+      <view class="comment">
+        <view wx:for="{{liveRecommend}}" wx:key="index" class="liveItem"
+          style="{{index + 1 > 6 - 2 ? 'border:none' : '' }}" bindtap="toLivelesson" data-item="{{item}}">
+          <view class="liveImgBox">
+            <image src="{{item.cover}}">
+            </image>
+            <view class="liveStatus"
+              style="background: {{ item.live_status == 101 ? '' : 'linear-gradient(270deg, #44A2FF 0%, #007CF7 100%);' }}">
+              <view class="statusLeft" wx:if="{{item.live_status == 101}}">
+                <view wx:for="{{3}}" wx:key="index" class="statusWite"></view>
+                <view class="statusTxt">直播</view>
+              </view>
+              <view class="statusLeft" wx:else>
+                <view class="statusTxt" style="margin: 0">未开始</view>
+              </view>
+            </view>
+          </view>
+          <text>{{item.name}}</text>
+          <text>{{item.date}} {{item.time}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+  <view class="liveBox" wx:else>
     <view class="topTtile">
       <text>直播推荐</text>
       <view class="topTtile-right">
@@ -57,27 +89,7 @@
         <image src="/images/Return-black.png"></image>
       </view>
     </view>
-    <view class="comment" wx:if="{{recommend[0]}}">
-      <view wx:for="{{liveRecommend}}" wx:key="index" class="liveItem" style="{{index + 1 > 6 - 2 ? 'border:none' : '' }}" bindtap="toLivelesson" data-item="{{item}}">
-        <view class="liveImgBox">
-          <image
-            src="{{item.cover}}">
-          </image>
-          <view class="liveStatus" style="background: {{ item.live_status == 101 ? '' : 'linear-gradient(270deg, #44A2FF 0%, #007CF7 100%);' }}">
-            <view class="statusLeft" wx:if="{{item.live_status == 101}}">
-              <view wx:for="{{3}}" wx:key="index" class="statusWite"></view>
-              <view class="statusTxt">直播</view>
-            </view>
-            <view class="statusLeft"wx:else>
-              <view class="statusTxt" style="margin: 0">未开始</view>
-            </view>
-          </view>
-        </view>
-        <text>{{item.name}}</text>
-        <text>{{item.date}} {{item.time}}</text>
-      </view>
-    </view>
-    <view class="comment" wx:else>
+    <view class="comment">
       <view wx:for="{{6}}" wx:key="index" class="liveItem" style="{{index + 1 > 6 - 2 ? 'border:none' : '' }}">
         <view class="img skeletonaAtive"></view>
         <text class="skeletonaAtive"></text>
@@ -101,7 +113,8 @@
     <view class="avatarBox" catchtap="toUser" wx:if="{{$state.authUserInfo}}">
       <open-data class="img" type="userAvatarUrl"></open-data>
     </view>
-    <button class="avatarBox" wx:else open-type="getUserInfo" bindgetuserinfo="onGotUserInfo" data-role="user" catchtap="getSomthin">
+    <button class="avatarBox" wx:else open-type="getUserInfo" bindgetuserinfo="onGotUserInfo" data-role="user"
+      catchtap="getSomthin">
       <open-data class="img" type="userAvatarUrl"></open-data>
     </button>
     <text>{{$state.userInfo.school || "网上老年大学"}}</text>
@@ -239,7 +252,9 @@
       <icon type="cancel" size="37" color="white" data-id="0" catchtap="closeSignIn"></icon>
     </view>
   </view>
-  <signinBox wx:if="{{ !$state.signStatus.count && recommend[0] && !dialog[0].image && showSignbox}}" state="{{$state}}" top="{{topT}}" isIndex="{{true}}" bind:closesignBox="closesignBox" bind:showIntegral="showIntegral" bind:sigin="sigin"/>
+  <signinBox wx:if="{{ !$state.signStatus.count && recommend[0] && !dialog[0].image && showSignbox}}" state="{{$state}}"
+    top="{{topT}}" isIndex="{{true}}" bind:closesignBox="closesignBox" bind:showIntegral="showIntegral"
+    bind:sigin="sigin" />
 </view>
 <navigator url="/page/index/pages/assistant/assistant" hover-class="none">
   <image src="/images/xiaolin.png" class="xiaolin"></image>
@@ -247,7 +262,8 @@
 <!-- wx:if="{{ $state.newGuide.index == 0 }}" -->
 <cover-view class="getGuideBox" wx:if="{{ $state.newGuide.index == 0 }}">
   <cover-view class="numberbox" wx:if="{{guideNum == 1}}">
-    <cover-image src="{{$state.imgHost}}/indexguidsearch.png" class="guidsearch" style="top:{{topT + 132}}rpx"></cover-image>
+    <cover-image src="{{$state.imgHost}}/indexguidsearch.png" class="guidsearch" style="top:{{topT + 132}}rpx">
+    </cover-image>
     <cover-view class="numberbox-box" catchtap="nextGuide" style="top:{{topT + 200}}rpx">
       <cover-image src="{{$state.imgHost}}/indexguidsearchlabel.png" class="searchlabel"></cover-image>
     </cover-view>
@@ -263,7 +279,8 @@
     </cover-view>
   </cover-view>
   <cover-view class="numberbox" wx:if="{{guideNum == 3}}">
-    <cover-image src="{{$state.imgHost}}/categoryicon.png" class="indexSocre" style="top:{{topT + 265}}rpx"></cover-image>
+    <cover-image src="{{$state.imgHost}}/categoryicon.png" class="indexSocre" style="top:{{topT + 265}}rpx">
+    </cover-image>
     <cover-view class="numberbox-boxr" catchtap="nextGuide">
       <cover-image src="{{$state.imgHost}}/categoryicontxt.png" class="indexsocermsg"></cover-image>
     </cover-view>

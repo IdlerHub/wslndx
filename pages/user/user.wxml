@@ -36,19 +36,6 @@
       <image src="/images/userIcon/invitebg.png"></image>
     </view>
   </view>
-  <view class="list">
-    <!-- <navigator wx:for="{{btnList}}" wx:key="index" hover-class="none" class="nav" url="{{item.page}}" open-type="navigate" wx:if="{{!item.isContact}}" bindtap="handleContact" data-index='{{index}}'>
-      <image src="{{item.icon}}" class="iconfont"></image>
-      <text wx:if="{{!item.isMews}}">{{item.name}}</text>
-      <view class="news" wx:else>我的消息 <view class="smallred" wx:if="{{showMes > 0}}"></view>
-      </view>
-    </navigator>
-    <button wx:for="{{btnList}}" wx:key="index" class="nav" open-type="contact" bindcontact="handleContact" data-index='{{index}}'
-      session-from='{"name": "{{$state.userInfo.nickname}}","avatarUrl":"{{$state.userInfo.avatar}}","nickName":"{{$state.userInfo.nickname}}"}' wx:if="{{item.isContact}}">
-      <image src="{{item.icon}}" class="iconfont"></image>
-      <text>{{item.name}}</text>
-    </button> -->
-  </view>
   <view class="myslef">
     <view class="title">
       我的服务
