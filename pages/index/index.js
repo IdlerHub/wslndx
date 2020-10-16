@@ -446,10 +446,11 @@ Page({
   closeSignIn() {
     app.setSignIn({
       status: 0,
-      count: 1
+      count: 0
     }, true)
     this.setData({
       showdialog: false,
+      showSignbox: false,
       dialog: []
     })
   },
