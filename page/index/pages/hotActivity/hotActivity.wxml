@@ -24,7 +24,7 @@
       更多活动
     </view>
     <view wx:for="{{activityList}}" wx:key="index" data-item="{{item}}">
-      <view class="listItem" wx:if="{{!item.is_login}}" bindtap="bannerGo">
+      <view class="listItem" wx:if="{{!item.is_login}}" bindtap="bannerGo" data-item="{{item}}">
         <view class="imgMask">
           <image src="{{item.image}}" class="cover"></image>
           <view class="mask" wx:if="{{item.is_finish}}"></view>
@@ -39,7 +39,7 @@
           <view class="mask" wx:if="{{item.is_finish}}"></view>
         </view>
       </view>
-      <view class="listItem" wx:elif="{{item.is_login && $state.authUserInfo }}" bindtap="bannerGo">
+      <view class="listItem" wx:elif="{{item.is_login && $state.authUserInfo }}" bindtap="bannerGo" data-item="{{item}}">
         <view class="imgMask">
           <image src="{{item.image}}" class="cover"></image>
           <view class="mask" wx:if="{{item.is_finish}}"></view>
@@ -54,7 +54,7 @@
           <view class="mask" wx:if="{{item.is_finish}}"></view>
         </view>
       </view>
-      <button class="listItem" open-type="getUserInfo" bindgetuserinfo="onGotUserInfo" data-type="banner" data-item="{{item}}" wx:else>
+      <button class="listItem" open-type="getUserInfo" bindgetuserinfo="onGotUserInfo" data-type="banner" data-item="{{item}}" data-item="{{item}}" wx:else>
         <view class="imgMask">
           <image src="{{item.image}}" class="cover"></image>
           <view class="mask" wx:if="{{item.is_finish}}"></view>

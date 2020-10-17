@@ -158,8 +158,8 @@
       <view class="wrap recommend" id="recommend1">
         <!-- 广告位banner -->
         <view class="swiperBox" wx:if="{{recommend[0]}}">
-          <swiper autoplay interval="3500" duration="1000" circular class="swiper" wx:if="{{imgUrls[0].image}}"
-            current="{{bannercurrentTab}}" bindchange="centerTab">
+          <swiper autoplay interval="3500" duration="200" circular class="swiper" wx:if="{{imgUrls[0].image}}"
+            current="{{bannercurrentTab}}" bindanimationfinish="centerTab">
             <block wx:for="{{imgUrls}}" wx:key="index">
               <swiper-item>
                 <image src="{{item.image}}" class="slide-image" width="355" height="150" catchtap="bannerGo"

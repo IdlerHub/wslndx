@@ -37,6 +37,7 @@ Page({
   },
   bannerGo(e) {
     let item = e.currentTarget.dataset.item;
+    console.log(item)
     if (item.is_finish) return
     if (item.jump_type == 1) {
       /* 外链 */
