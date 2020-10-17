@@ -18,7 +18,7 @@
                         <image src="../../images/userImg.png"></image>
                         <text>{{lesson.teacher}}</text>
                     </view>
-                    <view class="btn">进入学习</view>
+                    <view class="btn">立即学习</view>
                 </view>
             </view>
         </view>

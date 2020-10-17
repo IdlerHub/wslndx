@@ -4,13 +4,14 @@ Page({
   data: {
     courseList: [],
     weekList: ["周一", "周二", "周三", "周四", "周五", "周六", "周日"],
+    weeks: [],
     page: 1,
-    isToday:3, 
     current: 0,
+    month: '',
     page_end: false
   },
   onLoad: function (options) {
-    this.getUserLessons();
+    this.getLessonWeeks()
   },
   toDetail(e) {
     let url =
@@ -20,28 +21,30 @@ Page({
       url,
     });
   },
-  getUserLessons(page = 1) {
-    let courseList = this.data.courseList;
-    return LiveData.getUserLessons({ page }).then((res) => {
-      if(page == 1) courseList = [];
-      if(res.data.length != 0){
-        courseList.push(...res.data);
-        this.setData({
-          courseList,
-          page: page + 1,
-        });
-      }else{
-        this.setData({
-          page_end: true,
-        })
-      }
+  getUserLessons(current, week) {
+    return LiveData.newUserLessons({
+      page_size: 100,
+      week
+    }).then((res) => {
+      this.setData({
+        courseList: res.data
+      });
     });
   },
-  onReachBottom(){
-    if(!this.data.page_end){
-      this.getUserLessons(this.data.page);
-    }
+  getLessonWeeks() {
+    LiveData.getLessonWeeks().then(res => {
+      this.setData({
+        weeks: res.data
+      })
+      res.data.forEach((e, i) => {
+        e.is_today ? [this.setData({
+          current: i,
+          month: e.title
+        }), this.getUserLessons(i, e.week)] : ''
+      })
+    })
   },
+  onReachBottom() {},
   onPullDownRefresh() {
     this.getUserLessons()
       .then(() => {
@@ -58,10 +61,23 @@ Page({
         console.log(err);
       });
   },
-  onShareAppMessage: function () {},
+  onShareAppMessage: function (ops) {
+    console.log(ops)
+    if (ops.from === "button") {
+      let item = ops.target.dataset.item;
+      return {
+        title: item.name,
+        imageUrl: item.cover,
+        path: "/page/live/pages/liveDetail/liveDetail?lessonId=" +
+        item.id
+      };
+    }
+  },
   checkCurrent(e) {
     this.setData({
       current: e.currentTarget.dataset.index
+    }, () => {
+      this.getUserLessons(e.currentTarget.dataset.index, this.data.weeks[e.currentTarget.dataset.index].week)
     })
   }
 });

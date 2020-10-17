@@ -97,7 +97,7 @@ page {
   height: calc(100vh - 126px);
 }
 .itemBox {
-  padding-top: 20rpx;
+  margin-bottom: 20rpx;
 }
 
 .itemBox:last-child {

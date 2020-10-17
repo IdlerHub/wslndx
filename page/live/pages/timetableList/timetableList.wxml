@@ -1,17 +1,18 @@
 <!-- pages/timetableList/timetableList.wxml -->
 <view class="top">
   <view class="topOne">
-    <text class="month">2020年10月</text>
-    <navigator hover-class="none" url="/pages/timetable/timetable" open-type="switchTab" class="topRight"> 
+    <text class="month">{{month}}</text>
+    <navigator hover-class="none" url="/pages/timetable/timetable" open-type="switchTab" class="topRight">
       <text>全部课程</text>
       <image src="../../images/rightNow.png"></image>
     </navigator>
   </view>
   <view class="dateBox">
-    <view class="dateItem {{current == index ? 'active' : ''}}" wx:for="{{7}}" wx:key="index" bindtap="checkCurrent" data-index="{{index}}">
+    <view class="dateItem {{current == index ? 'active' : ''}}" wx:for="{{7}}" wx:key="index" bindtap="checkCurrent"
+      data-index="{{index}}">
       <text>{{weekList[index]}}</text>
-      <text>0{{index}}</text>
-      <view class="now" wx:if="{{isToday == index}}"></view>
+      <text>{{weeks[index].day}}</text>
+      <view class="now" wx:if="{{weeks[index].is_today}}"></view>
     </view>
   </view>
 </view>
@@ -24,13 +25,13 @@
       <br />
       快去课程表选课吧~
     </text>
-    <navigator open-type="navigateBack" hover-class="none" class="choose">去选课</navigator>
+    <navigator open-type="switchTab" hover-class="none" url="/pages/timetable/timetable" class="choose">去选课</navigator>
   </view>
   <!-- 列表 -->
   <view wx:else class="contariner">
-    <view class="item" wx:for="{{courseList}}" wx:for-item="lesson" wx:key="index" bindtap="toDetail" data-lesson-id="{{lesson.id}}">
+    <view class="item" wx:for="{{courseList}}" wx:for-item="lesson" wx:key="index" bindtap="toDetail"
+      data-lesson-id="{{lesson.id}}">
       <view class="imgBox">
-        <view class="img-week" wx:if="{{lesson.is_end == 0}}">{{weekList[lesson.week-1]}}</view>
         <image src="{{lesson.cover}}" class="img"></image>
         <image class="icon" mode="aspectFill" src="{{ $state.imgHost }}/play.png"></image>
       </view>
@@ -45,8 +46,14 @@
             <image src="../../images/userImg.png"></image>
             <view>{{ lesson.teacher }}</view>
           </view>
-          <view class="btn end" wx:if="{{lesson.is_end}}">观看回放</view>
-          <view class="btn" wx:else>进入学习</view>
+          <view class="btn end" wx:if="{{lesson.is_end}}">
+            <image src="../../images/endIcon.png"></image>
+            看回放
+          </view>
+          <button hover-class="none" class="btn" catchtap="os" open-type="share" data-item="{{lesson}}" wx:else>
+            <image src="../../images/shareIcon.png"></image>
+            分享
+          </button>
         </view>
       </view>
     </view>
