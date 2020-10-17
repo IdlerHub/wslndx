@@ -528,7 +528,7 @@ page {
 }
 .vedioGuideBox {
   position: absolute;
-  bottom: 190rpx;
+  bottom: 55rpx;
   left: 30rpx;
 }
 .vedioGuideBox-title {
@@ -577,7 +577,7 @@ page {
 .vedioGuidefinal { 
   width: 100%;
   left: 108rpx;
-  bottom: -101rpx;
+  bottom: -191rpx;
   overflow:visible;
   height: 800rpx;
 }
