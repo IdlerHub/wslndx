@@ -60,8 +60,15 @@ Page({
         my_score: res.data.mypoints
       });
     });
-    
+    this.getUserOpenid()
     this.unreadNum();
+  },
+  getUserOpenid() {
+    app.user.myIndex().then(res => {
+      app.store.setState({
+        userIndex: res.data
+      })
+    })
   },
   onPullDownRefresh: function() {
     this.setData({
