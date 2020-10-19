@@ -38,7 +38,6 @@ page,
 
 .top .topOne .topRight text {
   font-size: 36rpx;
-  font-weight: 500;
   color: #666666;
 }
 
@@ -80,7 +79,6 @@ page,
 
 .top .dateBox .dateItem text:nth-child(1) {
   font-size: 28rpx;
-  font-weight: 500;
   color: #999999;
 }
 

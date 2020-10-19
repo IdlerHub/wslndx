@@ -46,7 +46,7 @@ Page({
         topT: 28
       }) :
       this.setData({
-        topT: 50
+        topT: 48
       });
     this.setData({
       top: pt + h
@@ -253,7 +253,7 @@ Page({
         app.liveData.recommendLessons().then(res =>{
           res.data.forEach((e, i) => {
             this.setData({
-              [`liveRecommend[${i}][live_status]`]: e.live_status
+              [`liveRecommend[${i}].live_status`]: e.live_status
             })
           })
         })

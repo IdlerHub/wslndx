@@ -53,10 +53,10 @@
     <view class="liveBox" wx:if="{{liveRecommend[0]}}">
       <view class="topTtile">
         <text>直播推荐</text>
-        <view class="topTtile-right">
+        <navigator class="topTtile-right" url="/page/live/pages/liveCenter/liveCenter" hover-class="none">
           <text>更多课程</text>
           <image src="/images/Return-black.png"></image>
-        </view>
+        </navigator>
       </view>
       <view class="comment">
         <view wx:for="{{liveRecommend}}" wx:key="index" class="liveItem"
@@ -147,7 +147,7 @@
         </formCode>
       </block>
     </scroll-view>
-    <navigator class="tabclassify" url="/page/index/pages/drag/drag?index={{currentTab}}">
+    <navigator hover-class="none" class="tabclassify" url="/page/index/pages/drag/drag?index={{currentTab}}">
       <image src="/images/indexIcon/tabclassify.png"></image>
     </navigator>
   </view>

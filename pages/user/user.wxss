@@ -203,6 +203,7 @@ page .navgationto .navgationBox .toInvite image {
   margin-right: 118rpx;
   margin-top: 40rpx;
   line-height: normal;
+  position: relative;
 }
 
 .myslef .moreList .iconItem {
@@ -235,15 +236,15 @@ page .navgationto .navgationBox .toInvite image {
   position: relative;
 }
 
-.myslef .iconBox .iconItem .news .smallred {
+.myslef .iconBox .iconItem .smallred {
   width:20rpx;
   height:20rpx;
   background:rgba(223,32,32,1);
-  border:1px solid rgba(247,247,247,1);
+  /* border:1px solid rgba(247,247,247,1); */
   border-radius: 50%;
   position: absolute;
-  top: -7rpx;
-  right: -14rpx;
+  top: -3rpx;
+  right: 22rpx;
 }
 
 .title {
