@@ -2,7 +2,7 @@
 <view class="container">
     <!-- 视频播放 -->
     <video id="myVideo" wx:if="{{playNow.record_url && playNow.record_url != '' }}" src="{{ playNow.record_url }}"
-        controls page-gesture enable-play-gesture bindended="ended" bindtimeupdate="timeupdate" bindplay="played"
+        controls page-gesture enable-play-gesture bindended="ended" bindplay="played"
         bindpause="videoPause">
         <cover-image wx:if="{{ !playFlag }}" mode="widthFix" src="{{ playNow.cover }}" class="poster"
             bindtap="recordAddVedio"></cover-image>
