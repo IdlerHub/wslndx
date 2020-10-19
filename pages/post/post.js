@@ -75,7 +75,7 @@ Page({
     systemInfo.system.search('Android') >= 0 ? this.setData({
       isAndroid: 1
     }) : ''
-    wx.uma.trackEvent("menu, ", {
+    wx.uma.trackEvent("menu", {
       pageName: "风采展示"
     });
   },
@@ -232,7 +232,7 @@ Page({
         }
       });
       wx.uma.trackEvent('totalShare', {
-        'shareName': '秀风采分享'
+        shareName: '秀风采分享'
       });
       return {
         title: app.util.delHtmlTag(article.content),

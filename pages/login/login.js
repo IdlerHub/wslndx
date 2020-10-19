@@ -1,6 +1,6 @@
 // pages/login/login.js
 const app = getApp()
-
+import { wxp } from "../../utils/service";
 Page({
   /**
    * 页面的初始数据
@@ -11,7 +11,8 @@ Page({
     authenable: false,
     check: false,
     btnName: "获取验证码",
-    showintegral: false
+    showintegral: false,
+    loginCode: ''
   },
   pageName: '登陆页',
   params: { tel: "", authCode: "", telFormat: false, codeFormat: false, mode: 1, tempCode: null },
@@ -30,6 +31,15 @@ Page({
     option.check ? this.setData({
       check: true
     }) : ''
+    wxp.login({}).then((res) => {
+      if (res.code) {
+        this.setData({
+          loginCode: res.code
+        })
+      } else {
+        console.log("wx.login登录失败！" + res.errMsg);
+      }
+    });
   },
   /**
    * 生命周期函数--监听页面初次渲染完成
@@ -70,13 +80,14 @@ Page({
         mobileEncryptedData: e.detail.encryptedData,
         mobileiv: e.detail.iv,
         tempCode: app.globalData.tempCode,
+        code: this.data.loginCode,
         // [app.globalData.query.activity || app.globalData.shareObj.t == 4 ? 'master_uid' : 'invite_uid']: wx.getStorageSync("invite")
         [app.globalData.query.com ? 'source' : '']: app.globalData.query.com ? app.globalData.query.com : '',
         master_uid: wx.getStorageSync("invite") /* 邀请码 */
       }
       this.login(param)
       wx.uma.trackEvent('video_historyPlay', {
-        'signBtn': '授权'
+        signBtn: '授权'
       });
     } else {
       return
@@ -164,13 +175,14 @@ Page({
         tempCode: app.globalData.tempCode,
         mobile: this.params.tel,
         captcha: this.params.authCode,
+        code: this.data.loginCode,
         // [app.globalData.query.activity || app.globalData.shareObj.t == 4 ? 'master_uid' : 'invite_uid']: wx.getStorageSync("invite")
         [app.globalData.query.com ? 'source' : '']: app.globalData.query.com ? app.globalData.query.com : '',
         master_uid: wx.getStorageSync("invite") /* 邀请码 */
       }
       this.login(params)
       wx.uma.trackEvent('video_historyPlay', {
-        'signBtn': '手机号'
+        signBtn: '手机号'
       });
     }
   },

@@ -332,7 +332,7 @@ Page({
           videoName: this.data.cur.title
         });
         wx.uma.trackEvent('totalShare', {
-          'shareName': '短视频转发'
+          shareName: '短视频转发'
         });
       });
       return {
@@ -483,5 +483,14 @@ Page({
         showintegral: false
       });
     }, 2000);
+  },
+  toBack() {
+    if(getCurrentPages().length > 1) {
+      wx.navigateBack()
+    } else {
+      wx.reLaunch({
+        url: '/pages/index/index',
+      })
+    }
   }
 });

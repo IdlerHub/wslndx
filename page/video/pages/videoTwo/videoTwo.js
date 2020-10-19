@@ -260,7 +260,7 @@ Page({
         wx.uma.trackEvent("sortVideo_play", {
           videoName: this.data.cur.title
         });
-        wx.uma.trackEvent('totalShare', { 'shareName': '短视频转发' });
+        wx.uma.trackEvent('totalShare', { shareName: '短视频转发' });
       });
       return {
         title: this.data.cur.title,

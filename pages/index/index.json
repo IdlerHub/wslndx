@@ -4,10 +4,12 @@
   "navigationBarTextStyle": "black",
   "navigationStyle": "custom",
   "enablePullDownRefresh": true,
-    "onReachBottomDistance": 0,
+  "onReachBottomDistance": 10,
   "usingComponents": {
     "navigationBar": "/components/navigationBar/navigationBar",
     "formCode": "/components/formCode/formCode",
-    "navBar": "/components/navBar/navBar"
+    "navBar": "/components/navBar/navBar",
+    "signinBox": "/components/signinBox/signinBox",
+    "integralAnimation": "/components/integralAni/integralAni"
   }
 }

@@ -57,7 +57,7 @@
 				</view>
 			</view>
 			<view class="content" wx:if="{{ detail.url && detail.duration == 0 }}">
-				<video wx:if="{{ !detail.pause }}" id="{{ detail.id }}" src="{{ detail.url }}" controls page-gesture
+				<video wx:if="{{ !detail.pause }}" id="{{ detail.id }}" src="{{detail.url}}" controls page-gesture
 					enable-play-gesture bindended="ended"></video>
 				<view wx:if="{{ detail.pause }}" class="bg" bindtap="play">
 					<image mode="aspectFill" src="{{ detail.auditing ? $state.imgHost + '/tip.jpg' : detail.image }}"

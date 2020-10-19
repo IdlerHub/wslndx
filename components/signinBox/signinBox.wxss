@@ -1,0 +1,167 @@
+/* components/siginBox/signinBox.wxss */
+/* 签到活动弹窗 */
+.signBox {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 99999;
+}
+
+.signBox .signBoxbg {
+  width: 604rpx;
+  min-height: 754rpx;
+  background: url("https://hwcdn.jinlingkeji.cn/images/dev/siginBigbng.png") no-repeat center;
+  background-size: 100% 754rpx;
+  background-position: top;
+  position: relative;
+  top: 138rpx;
+  left: 73rpx;
+  padding-top: 45rpx;
+  box-sizing: border-box;
+}
+
+.signBox .signBoxbg .signBox-title {
+  width: 100%;
+  text-align: center;
+  font-size: 54rpx;
+  background-image: -webkit-linear-gradient(top, rgba(254, 237, 217, 1), #fdd6ad, rgba(253, 164, 78, 1));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 800;
+  margin-bottom: 10rpx;
+  margin-top: 10rpx;
+}
+
+.signBox .signBoxbg .signBox-signNum {
+  width: 186rpx;
+  height: 52rpx;
+  background: rgba(254, 176, 100, 0.4);
+  border-radius: 26rpx;
+  text-align: center;
+  line-height: 50rpx;
+  font-size: 36rpx;
+  font-family: PingFang SC;
+  font-weight: 550;
+  color: rgba(252, 233, 214, 1);
+  margin: 0 209rpx;
+}
+
+.signBox .signBoxbg .signBox-daybox {
+  width: 100%;
+  margin: 0 40rpx;
+  margin-top: 82rpx;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.signBox .signBoxbg .signBox-daybox .signBox-day {
+  width: 116rpx;
+  height: 156rpx;
+  background: rgba(246, 246, 246, 1);
+  border-radius: 10rpx;
+  margin-left: 20rpx;
+  margin-bottom: 76rpx;
+  position: relative;
+}
+
+.signBox .signBoxbg .signBox-daybox .signBox-day .mask {
+  width: 100%;
+  height: 100%;
+  background: rgba(254, 155, 2, 0.75);
+  border-radius: 10rpx;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.signBox .signBoxbg .signBox-daybox .signBox-day .mask .maskCont {
+  width: 56rpx;
+  height: 40rpx;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-left: -28rpx;
+  margin-top: -20rpx;
+}
+
+.signBox .signBoxbg .signBox-daybox .signBox-day:nth-child(1) {
+  margin-left: 0;
+}
+
+.signBox .signBoxbg .signBox-daybox .signBox-day:nth-child(5) {
+  margin-left: 0;
+}
+
+.signBox .signBoxbg .signBox-daybox .signBox-day:nth-child(7) {
+  width: 252rpx;
+}
+
+.signBox .signBoxbg .signBox-daybox .signBox-daytxt {
+  width: 100%;
+  text-align: center;
+  font-size: 36rpx;
+  font-family: PingFang SC;
+  font-weight: 550;
+  color: rgba(254, 155, 2, 1);
+  line-height: 76rpx;
+}
+
+.signBox .signBoxbg .signBox-daybox .signBox-dayimg {
+  width: 66rpx;
+  height: 67rpx;
+  margin: 0 27rpx;
+}
+
+.signBox .signBoxbg .signBox-daybox .signBox-day:nth-child(7) .signBox-dayimg {
+  margin: 0 98rpx;
+}
+
+.signBox .signBoxbg .signBox-daybox .signBox-day .signBox-daynum {
+  width: 100%;
+  font-size: 28rpx;
+  font-family: PingFang SC;
+  font-weight: 400;
+  color: rgba(179, 179, 179, 1);
+  text-align: center;
+  position: absolute;
+  bottom: -53rpx;
+  letter-spacing: 1rpx;
+  padding-left: 4rpx;
+}
+
+.signBox .signBoxbg .signBox-cancel {
+  position: absolute;
+  left: 50%;
+  margin-left: -50rpx;
+  bottom: -124rpx;
+}
+
+.signBox .signBoxbg .btnBox {
+  width: 100%;
+  padding: 25rpx 0 42rpx 0;
+  background-color: #fff;
+  margin-top: -15rpx;
+  display: flex;
+  justify-content: center;
+  border-radius: 0px 0px 30rpx 30rpx;
+}
+
+.signBox .signBoxbg .btnBox .btn {
+  width: 504rpx;
+  height: 88rpx;
+  background: linear-gradient(360deg, #FF183F 0%, #FF5454 100%);
+  box-shadow: 0px 3rpx 10rpx 0rpx rgba(255, 0, 0, 0.43);
+  border-radius: 44rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 42rpx;
+  font-weight: 600;
+  color: #FFFFFF;
+}

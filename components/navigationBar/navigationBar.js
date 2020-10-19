@@ -7,7 +7,7 @@ Component({
         },
         background: { //导航栏背景色
             type: String,
-            value: '#ffffff', //默认
+            value: '#F5F5F5', //默认
             observer: function (newVal, oldVal, changedPath) {
                 if (!newVal) {
                     let obj = {};

@@ -82,7 +82,8 @@ Page({
           showStatus: {
             name: "day_shortvideo_praise_status",
             status: false
-          }
+          },
+          isNotab: 1
         },
         {
           title: "每日看完十个短视频",
@@ -93,7 +94,8 @@ Page({
           showStatus: {
             name: "day_shortvideo_read_10_status",
             status: false
-          }
+          },
+          isNotab: 1
         },
         {
           title: "每日秀风采首次发帖",
@@ -182,7 +184,8 @@ Page({
           showStatus: {
             name: "shortvideo_guide_status",
             status: false
-          }
+          },
+          isNotab: 1
         },
         {
           title: "短视频首次点赞",
@@ -193,7 +196,8 @@ Page({
           showStatus: {
             name: "first_shortvideo_parise_status",
             status: false
-          }
+          },
+          isNotab: 1
         },
         {
           title: "完成[秀风采]新手指引",
@@ -506,11 +510,6 @@ Page({
       this.setData({
         sources: this.data.sources
       });
-      this.setData({
-        showSignbox: true,
-        singnow: true,
-        singafter: false
-      });
       this.params = {
         page: 1,
         pageSize: 10
@@ -527,7 +526,7 @@ Page({
         });
       });
     } else {
-      if (i != 0) {
+      if (i != 0 && !this.data.sources[i].isNotab) {
         app.globalData.currentTab = 1;
         wx.switchTab({
           url: this.data.sources[i].page
@@ -542,7 +541,7 @@ Page({
   tabnav(e) {
     let i = e.currentTarget.dataset.index;
     let name = e.currentTarget.dataset.title;
-    if (name == "完善资料") {
+    if (name == "完善资料" || this.data.newbie[i].isNotab) {
       wx.navigateTo({
         url: this.data.newbie[i].page
       });
