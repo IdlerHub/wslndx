@@ -233,7 +233,7 @@
       <icon type="cancel" size="37" color="white" data-id="0" catchtap="closeSignIn"></icon>
     </view>
   </view>
-  <!-- <signinBox wx:if="{{ !$state.signStatus.count && recommend[0] && !dialog[0].image && showSignbox}}" state="{{$state}}" isIndex="{{true}}" bind:closesignBox="closesignBox" bind:showIntegral="showIntegral" bind:sigin="sigin"/> -->
+  <signinBox wx:if="{{ !$state.signStatus.count && recommend[0] && !dialog[0].image && showSignbox}}" state="{{$state}}" top="{{topT}}" isIndex="{{true}}" bind:closesignBox="closesignBox" bind:showIntegral="showIntegral" bind:sigin="sigin"/>
 </view>
 <navigator url="/page/index/pages/assistant/assistant" hover-class="none">
   <image src="/images/xiaolin.png" class="xiaolin"></image>
@@ -241,23 +241,23 @@
 <!-- wx:if="{{ $state.newGuide.index == 0 }}" -->
 <cover-view class="getGuideBox" wx:if="{{ $state.newGuide.index == 0 }}">
   <cover-view class="numberbox" wx:if="{{guideNum == 1}}">
-    <cover-image src="{{$state.imgHost}}/indexguidsearch.png" class="guidsearch"></cover-image>
-    <cover-view class="numberbox-box" catchtap="nextGuide">
+    <cover-image src="{{$state.imgHost}}/indexguidsearch.png" class="guidsearch" style="top:{{topT + 132}}rpx"></cover-image>
+    <cover-view class="numberbox-box" catchtap="nextGuide" style="top:{{topT + 200}}rpx">
       <cover-image src="{{$state.imgHost}}/indexguidsearchlabel.png" class="searchlabel"></cover-image>
     </cover-view>
   </cover-view>
   <cover-view class="numberbox" wx:if="{{guideNum == 2}}">
-    <cover-image src="{{$state.imgHost}}/indexguidtab.png" class="guidtab"></cover-image>
-    <cover-view class="gesture">
+    <cover-image src="{{$state.imgHost}}/indexguidtab.png" class="guidtab" style="top:{{topT + 244}}rpx"></cover-image>
+    <cover-view class="gesture" style="top:{{topT + 500}}rpx">
       <cover-image src="{{$state.imgHost}}/videoheng.png" class="indexGuide-img"></cover-image>
       <cover-image src="/images/handleRight.gif" class="indexGuide-imgactive"></cover-image>
     </cover-view>
-    <cover-view class="numberbox-boxt" catchtap="nextGuide">
+    <cover-view class="numberbox-boxt" catchtap="nextGuide" style="top:{{topT + 800}}rpx">
       <cover-image src="{{$state.imgHost}}/indexguidtablable.png" class="indexLeft"></cover-image>
     </cover-view>
   </cover-view>
   <cover-view class="numberbox" wx:if="{{guideNum == 3}}">
-    <cover-image src="{{$state.imgHost}}/categoryicon.png" class="indexSocre"></cover-image>
+    <cover-image src="{{$state.imgHost}}/categoryicon.png" class="indexSocre" style="top:{{topT + 265}}rpx"></cover-image>
     <cover-view class="numberbox-boxr" catchtap="nextGuide">
       <cover-image src="{{$state.imgHost}}/categoryicontxt.png" class="indexsocermsg"></cover-image>
     </cover-view>

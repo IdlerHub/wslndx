@@ -1,6 +1,6 @@
 <!--components/siginBox/signinBox.wxml-->
 <view class="signBox">
-  <view class="signBoxbg" style="top: {{isIndex ? '192' : ''}}rpx">
+  <view class="signBoxbg" style="top: {{isIndex ? top + 196 : ''}}rpx">
     <!-- <image class="signBox-title" src="/images/signBox-title.png"></image> -->
     <!-- <view class="signBox-title" wx:if="{{singnow}}">已签到</view> -->
     <view class="signBox-title">已连签{{state.signdays}}天</view>

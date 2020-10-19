@@ -8,6 +8,10 @@ Component({
     isIndex: {
       type: Boolean,
       value: false
+    },
+    top: {
+      type: Number,
+      value: 192
     }
   },
   methods: {
