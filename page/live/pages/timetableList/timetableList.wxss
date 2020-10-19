@@ -219,7 +219,7 @@ page,
   margin-left: 15rpx;
 }
 
-.contariner .item .txtBox .textBottom .btn image{
+.contariner .item .txtBox .textBottom .btn image {
   width: 40rpx;
   height: 33rpx;
   margin-right: 8rpx;
@@ -247,26 +247,27 @@ page,
 }
 
 .qstBox image {
-  width: 490rpx;
-  height: 310rpx;
+  width: 452rpx;
+  height: 288rpx;
+  margin-left: -13rpx;
 }
 
 .qstBox text {
   text-align: center;
-  font-size: 34rpx;
+  font-size: 36rpx;
   font-weight: 400;
-  color: rgba(126, 126, 126, 1);
-  line-height: 48rpx;
+  color: #999999;
+  margin-top: -62rpx;
 }
 
 .qstBox .choose {
   margin-top: 40rpx;
-  width: 330rpx;
-  height: 90rpx;
-  background: rgba(223, 32, 32, 1);
-  border-radius: 6rpx;
-  font-size: 38rpx;
-  font-weight: 500;
+  width: 200rpx;
+  height: 80rpx;
+  background: linear-gradient(90deg, #FF572F 1%, #F2323A 100%);
+  border-radius: 40rpx;
+  font-size: 36rpx;
+  font-weight: 400;
   color: rgba(255, 255, 255, 1);
   display: flex;
   justify-content: center;

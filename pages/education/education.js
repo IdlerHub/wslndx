@@ -10,6 +10,7 @@ Page({
   },
   pageName: "外链页（开心农场&amp;老年电台&amp;早报）",
   onLoad: function (options) {
+    console.log(options)
     if (options.classId) {
       // let webURL = "http://192.168.1.68:8080/#/order-detail";
       let webURL = "https://elsmallpro.jinlingkeji.cn/#/order-detail";
@@ -80,6 +81,11 @@ Page({
         });
       } else if (options.type === "lottery") {
         this.webJump();
+      } else if(options.type === "sign") {
+        let webURL = `https://authorization.jinlingkeji.cn/#/?uid=${797716}&type=sign`;
+        this.setData({
+          url: webURL
+        })
       } else {
         if (options.login) {
           if (options.login == 0) {

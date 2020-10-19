@@ -1,0 +1,27 @@
+<!--components/siginBox/signinBox.wxml-->
+<view class="signBox">
+  <view class="signBoxbg" style="top: {{isIndex ? '192' : ''}}rpx">
+    <!-- <image class="signBox-title" src="/images/signBox-title.png"></image> -->
+    <!-- <view class="signBox-title" wx:if="{{singnow}}">已签到</view> -->
+    <view class="signBox-title">已连签{{state.signdays}}天</view>
+    <!-- <view class="signBox-signNum" wx:if="{{$state.signdays  != 7 && singnow}}">学分+20</view>
+    <view class="signBox-signNum" wx:if="{{$state.signdays  == 7 && singnow}}">学分+120</view> -->
+    <view class="signBox-signNum" wx:if="{{state.signdays  != 7}}">学分+{{ state.signdays * 20}}</view>
+    <view class="signBox-signNum" wx:else>学分+120</view>
+    <view class="signBox-daybox">
+      <view class="signBox-day" wx:for="{{ 7 }}" wx:key="index">
+        <view class="signBox-daytxt">{{index == 6 ? '+120' : '+20'}}</view>
+        <image class="signBox-dayimg" src="{{$state.imgHost}}/signgold.png"></image>
+        <view class="signBox-daynum" style="{{state.signdays >= (index + 1) ? 'color:rgba(254,155,2,1);' : ''}}">
+          第{{index + 1}}天</view>
+        <view class="mask" wx:if="{{state.signdays >= (index + 1)}}">
+          <image class="maskCont" src="{{state.imgHost}}/sigincancel.png"></image>
+        </view>
+      </view>
+    </view>
+    <view class="btnBox" wx:if="{{isIndex}}">
+      <view class="btn" bindtap="signin">签 到</view>
+    </view>
+    <icon type="cancel" size="46" color="white" data-id="0" catchtap="closesignBox" class="signBox-cancel"></icon>
+  </view>
+</view>

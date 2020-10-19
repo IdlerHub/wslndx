@@ -94,7 +94,7 @@ page {
 }
 
 .scrollView{
-  height: calc(100vh - 126px);
+  height: calc(100vh - 110px);
 }
 .itemBox {
   margin-bottom: 20rpx;

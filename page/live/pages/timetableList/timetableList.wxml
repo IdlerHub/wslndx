@@ -19,11 +19,9 @@
 <view class="timetableList">
   <!-- 缺省 -->
   <view class="qstBox" wx:if="{{courseList.length == 0}}">
-    <image src="{{$state.imgHost}}/courseqs.png"></image>
+    <image src="../../images/liveqs.png"></image>
     <text>
-      您还没有课程，
-      <br />
-      快去课程表选课吧~
+      暂无课程
     </text>
     <navigator open-type="switchTab" hover-class="none" url="/pages/timetable/timetable" class="choose">去选课</navigator>
   </view>

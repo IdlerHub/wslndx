@@ -151,8 +151,8 @@
           "scene": null
         },
         {
-          "name": "page/live/pages/timetableList/timetableList",
-          "pathName": "page/live/pages/timetableList/timetableList",
+          "name": "page/index/pages/hotActivity/hotActivity",
+          "pathName": "page/index/pages/hotActivity/hotActivity",
           "query": "",
           "scene": 1035,
           "referrerInfo": {

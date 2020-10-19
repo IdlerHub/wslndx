@@ -23,7 +23,8 @@
     "pages/gamePage/gamePage",
     "pages/webPay/webPay",
     "pages/timetable/timetable",
-    "components/playRrecord/playRrecord"
+    "components/playRrecord/playRrecord",
+    "components/signinBox/signinBox"
   ],
   "permission": {
     "scope.userLocation": {

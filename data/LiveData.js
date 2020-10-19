@@ -176,6 +176,16 @@ function newUserLessons(params) {
   return httpService.post("schedule/newUserLessons", params);
 }
 
+/**
+ * @description: 首页直播课推荐
+
+ * @param {}
+ * @return:  promise
+ * **/
+function recommendLessons(params) {
+  return httpService.post("schedule/recommendLessons", params);
+}
+
 module.exports = {
   getLiveLessons,
   getApplyDetail,
@@ -196,5 +206,6 @@ module.exports = {
   getLessonCenter,
   getLessonCenterClass,
   getLessonWeeks,
-  newUserLessons
+  newUserLessons,
+  recommendLessons
 };

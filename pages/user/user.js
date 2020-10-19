@@ -60,6 +60,7 @@ Page({
         my_score: res.data.mypoints
       });
     });
+    
     this.unreadNum();
   },
   onPullDownRefresh: function() {

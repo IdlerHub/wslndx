@@ -3,11 +3,10 @@ const app = getApp()
 Page({
   data: {
     current: 0,
-    swiperList:[],
+    swiperList: [],
     activityList: []
   },
-  onLoad: function (options) {
-  },
+  onLoad: function (options) {},
   onShow: function () {
     Promise.all([this.getHost(), this.getHostbanner()])
   },
@@ -64,5 +63,17 @@ Page({
       path: url,
       // envVersion: 'trial',
     })
+  },
+  onGotUserInfo(e) {
+    if (e.detail.errMsg === "getUserInfo:ok") {
+      app.updateBase(e)
+      let item = e.currentTarget.dataset.item;
+      setTimeout(() => {
+        wx.navigateTo({
+          url: `/pages/education/education?url=${item.extra.url}&type=1`
+        })
+      }, 500);
+
+    }
   },
 })

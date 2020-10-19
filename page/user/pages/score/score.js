@@ -506,11 +506,6 @@ Page({
       this.setData({
         sources: this.data.sources
       });
-      this.setData({
-        showSignbox: true,
-        singnow: true,
-        singafter: false
-      });
       this.params = {
         page: 1,
         pageSize: 10

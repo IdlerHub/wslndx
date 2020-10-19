@@ -32,7 +32,7 @@
     </view>
     <view class="navgationBox" bindtap="toInvite">
       <text class="navTitle">邀请好友</text>
-      <text class="num">已邀请100个好友</text>
+      <text class="num">已邀请{{$state.userIndex.prentice_count}}个好友</text>
       <image src="/images/userIcon/invitebg.png"></image>
     </view>
   </view>
@@ -83,11 +83,11 @@
   </view>
   <navBar path="user" />
   <!-- wx:if="{{$state.newGuide.user == 0}}" -->
-  <cover-view class="userGuide" wx:if="{{$state.newGuide.user == 0}}">
+  <!-- <cover-view class="userGuide" wx:if="{{$state.newGuide.user == 0}}">
     <cover-view class="userGuide-msg" bindtap="closeGuide">
       <cover-image class="userGuide-msgimg" src="{{$state.imgHost}}/userMsg.png"></cover-image>
       <cover-image src="{{$state.imgHost}}/know.png" class="nextGude"></cover-image>
     </cover-view>
     <cover-image class="userGuide-img" src="{{$state.imgHost}}/experienceApply.png"></cover-image>
-  </cover-view>
+  </cover-view> -->
 </view>

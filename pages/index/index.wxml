@@ -215,15 +215,14 @@
     <image src="{{$state.imgHost}}/nowcancle.png" catchtap="closenow"></image>
   </view>
   <!-- 签到拿学分 -->
-  <view class="integration" wx:if="{{ !$state.signStatus.count && recommend[0] && !dialog[0].image}}"
+  <!-- <view class="integration" wx:if="{{ !$state.signStatus.count && recommend[0] && !dialog[0].image}}"
     catchtouchmove="return">
     <view class="dialog">
       <image class="bg" src="{{$state.imgHost}}/integrationBg.png" mode="aspectFill"></image>
       <view class="ani" catchtap="signIn" data-id="1"></view>
-      <!-- <button catchtap="signIn" data-id="1">签到领学分</button> -->
       <icon type="cancel" size="37" color="white" data-id="0" catchtap="signIn"></icon>
     </view>
-  </view>
+  </view> -->
   <!-- 活动弹窗 -->
   <view class="integration" wx:if="{{ recommend[0] && dialog[0].image && showdialog}}" catchtouchmove="return">
     <view class="dialog">
@@ -231,10 +230,10 @@
         style="background: url('{{dialog[0].image}}') no-repeat center; background-size: 100% 100%;border-radius:10px"
         src="{{dialog[0].image}}" mode="aspectFill" catchtap="jumpPeper" data-peper="{{dialog[0]}}" data-type="dialog">
       </view>
-      <!-- <button catchtap="signIn" data-id="1">签到领学分</button> -->
       <icon type="cancel" size="37" color="white" data-id="0" catchtap="closeSignIn"></icon>
     </view>
   </view>
+  <signinBox wx:if="{{ !$state.signStatus.count && recommend[0] && !dialog[0].image && showSignbox}}" state="{{$state}}" isIndex="{{true}}" bind:closesignBox="closesignBox" bind:showIntegral="showIntegral" bind:sigin="sigin"/>
 </view>
 <navigator url="/page/index/pages/assistant/assistant" hover-class="none">
   <image src="/images/xiaolin.png" class="xiaolin"></image>
@@ -275,3 +274,7 @@
     </view>
   </view>
 </view>
+
+<!-- 学分动画 -->
+<integralAnimation integral="{{integral}}" integralContent="{{integralContent}}" wx:if="{{showintegral}}">
+</integralAnimation>

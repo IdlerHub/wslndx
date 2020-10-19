@@ -12,7 +12,7 @@ Page({
       class: "#recommend1",
       unMove: true
     }],
-    height:1000,
+    height: 1000,
     isRefreshing: false,
     currentTab: 0,
     showReco: false,
@@ -22,12 +22,13 @@ Page({
     shownow: true,
     shownowt: true,
     showdialog: true,
+    showSignbox: true
   },
   navHeightList: [],
   pageName: '首页',
   guide: 0,
   onLoad: async function (e) {
-    !getApp().globalData.tempCode ? '' :  wx.reLaunch({
+    !getApp().globalData.tempCode ? '' : wx.reLaunch({
       url: "/pages/sign/sign"
     });
     e.type != undefined ? this.pageType = e.type : ''
@@ -94,9 +95,13 @@ Page({
     /* 更新用户的视频浏览历史 */
     if (app.store.$state.userInfo.mobile)[this.getHistory(), app.getUserOpenData()]
     setTimeout(wx.hideLoading, 500)
+    this.setData({
+      showSignbox: true
+    })
+    this.data.isSign ? this.signIn() : ''
   },
   init() {
-    return Promise.all([this.getactivite(), this.getRecommend(), this.getCategory(), this.getBanner(), this.getPaper(), this.getDialog(), this.getGuide()]).then(values => {
+    return Promise.all([this.getactivite(), this.getRecommend(), this.getCategory(), this.getBanner(), this.getPaper(), this.getDialog(), this.getGuide(), this.getRecommendLessons(), this.getUserOpenid()]).then(values => {
       if (this.data.$state.newGuide.index == 0) {
         this.setData({
           guideNum: 1,
@@ -112,8 +117,8 @@ Page({
         })
       }
       console.log(app.globalData.query)
-      if(app.globalData.query.categoryId) {
-        this.data.nav.forEach((v,i) => {
+      if (app.globalData.query.categoryId) {
+        this.data.nav.forEach((v, i) => {
           v.id == app.globalData.query.categoryId ? this.setData({
             currentTab: i
           }) : ''
@@ -129,6 +134,13 @@ Page({
       let newGuide = res.data
       app.store.setState({
         newGuide
+      })
+    })
+  },
+  getUserOpenid() {
+    app.user.myIndex().then(res => {
+      app.store.setState({
+        userIndex: res.data
       })
     })
   },
@@ -233,6 +245,9 @@ Page({
       wx.hideLoading()
     })
   },
+  getRecommendLessons() {
+    app.liveData.recommendLessons()
+  },
   geteCatrcommend(id, currtab) {
     if (this.data.catrecommend[id]) {
       if (this.data.catrecommend[id][0]) return
@@ -248,7 +263,7 @@ Page({
         [`catrecommend[${id}]`]: temp.concat(msg.data)
       })
       temp.concat(msg.data).length < 10 ? this.setData({
-        [`nav[${this.data.currentTab}].showBtoom`]: true 
+        [`nav[${this.data.currentTab}].showBtoom`]: true
       }) : ''
       setTimeout(() => {
         currtab != this.data.currentTab ? '' : this.setHeight()
@@ -417,46 +432,17 @@ Page({
     })
   },
   signIn(data) {
-    let sign = data.currentTarget.dataset.id == 1
     app.setSignIn({
       status: true,
       count: 1
     }, true)
-    if (sign) {
-      app.user.sign().then(res => {
-        /* 前往学分页面 */
-        wx.navigateTo({
-          url: "../../page/user/pages/score/score?type=index"
-        })
-        app.store.setState({
-          signdays: res.data.sign_days
-        })
-      }).catch(err => {
-        wx.showToast({
-          title: err.msg,
-          icon: "none",
-          duration: 1500,
-          mask: true
-        })
-        let timer = setTimeout(() => {
-          wx.hideToast({
-            success: () => {
-              wx.navigateTo({
-                url: "../../page/user/pages/score/score"
-              })
-            }
-          })
-          clearTimeout(timer)
-        }, 1500)
+    app.user.sign().then(res => {
+      console.log('签到成功')
+      app.store.setState({
+        signdays: res.data.sign_days
       })
-    } else {
-      app.user.sign().then(res => {
-        console.log('签到成功')
-        app.store.setState({
-          signdays: res.data.sign_days
-        })
-      })
-    }
+      this.showIntegral()
+    })
   },
   onPullDownRefresh() {
     wx.stopPullDownRefresh()
@@ -574,7 +560,7 @@ Page({
     });
   },
   minigo(url) {
-    console.log(JSON.parse(url),url)
+    console.log(JSON.parse(url), url)
     let system = JSON.parse(url)
     wx.navigateToMiniProgram({
       appId: system.appid,
@@ -671,5 +657,37 @@ Page({
       recommend: this.data.recommend,
       catrecommend: this.data.catrecommend
     })
+  },
+  closesignBox() {
+    this.setData({
+      showSignbox: false
+    });
+  },
+  showIntegral() {
+    this.setData({
+      showSignbox: false,
+      integral: "+20 学分",
+      integralContent: "签到成功",
+      showintegral: true,
+      isSign: false
+    });
+    setTimeout(() => {
+      this.setData({
+        showintegral: false
+      });
+    }, 2000);
+  },
+  sigin() {
+    console.log(4324234)
+    if (!this.data.$state.userIndex.has_mp_openid) {
+      wx.navigateTo({
+        url: '/pages/education/education?type=sign&url=https://authorization.jinlingkeji.cn/#/',
+      })
+      this.setData({
+        isSign: true
+      })
+    } else {
+      this.signIn()
+    }
   }
 })
