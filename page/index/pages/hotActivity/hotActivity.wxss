@@ -22,6 +22,7 @@ page {
   height: 100%;
   border-radius: 16rpx;
   overflow: hidden;
+  border: 1px solid #EDEDED;
 }
 
 .swiperBox .swiperitem image {
@@ -52,6 +53,7 @@ page {
 
 .moreBox {
   padding: 30rpx;
+  padding-top: 40rpx;
 }
 
 .moreBox .moreTitle {

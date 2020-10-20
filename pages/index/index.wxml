@@ -111,7 +111,7 @@
   </view>
   <view class="top" style="padding-top:{{ topT }}px" wx:if="{{recommend[0]}}" bindtap="toInfo">
     <view class="avatarBox" catchtap="toUser" wx:if="{{$state.authUserInfo}}">
-      <open-data class="img" type="userAvatarUrl"></open-data>
+      <image class="img" src="{{$state.userInfo.avatar}}" alt=""></image>
     </view>
     <button class="avatarBox" wx:else open-type="getUserInfo" bindgetuserinfo="onGotUserInfo" data-role="user"
       catchtap="getSomthin">
