@@ -1,0 +1,2 @@
+<!--components/signBox/siginBox.wxml-->
+<navigator url="/pages/sign/sign"></navigator>

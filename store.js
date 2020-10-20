@@ -4,35 +4,35 @@
  * @LastEditTime: 2020-08-11 18:00:20
  */
 import Store from "wxministore";
-let env = "develop";
+let env = "pro";
 let mpVersion = "v23"; /* 版本管理 */
 /* 图片等静态资源服务器 */
 let imgBase = {
-  develop: 'https://hwcdn.jinlingkeji.cn/images/dev',
+  dev: 'https://hwcdn.jinlingkeji.cn/images/dev',
   test: 'https://hwcdn.jinlingkeji.cn/images/dev',
-  production: 'https://hwcdn.jinlingkeji.cn/images/pro',
-  center: 'https://hwcdn.jinlingkeji.cn/images/pro'
+  pro: 'https://hwcdn.jinlingkeji.cn/images/pro',
+  testpro: 'https://hwcdn.jinlingkeji.cn/images/pro'
 }
 /* 国情教育链接 */
 let activityBase = {
-  develop: 'https://gqjydev.jinlingkeji.cn/?',
+  dev: 'https://gqjydev.jinlingkeji.cn/?',
   test: 'https://gqjydev.jinlingkeji.cn/?',
-  production: 'https://gqjy.jinlingkeji.cn/?',
-  center: 'https://gqjy.jinlingkeji.cn/?'
+  pro: 'https://gqjy.jinlingkeji.cn/?',
+  testpro: 'https://gqjy.jinlingkeji.cn/?'
 }
 /* 数据服务器 */
 let API_URLBASE = {
-  develop: `https://lndxdev.jinlingkeji.cn/api/${mpVersion}/`,
+  dev: `https://lndxdev.jinlingkeji.cn/api/${mpVersion}/`,
   test: `https://lndxtest.jinlingkeji.cn/api/${mpVersion}/`,
-  production: `https://apielb.jinlingkeji.cn/api/${mpVersion}/`,
-  center: `https://lndxpre.jinlingkeji.cn/api/${mpVersion}/`
+  pro: `https://apielb.jinlingkeji.cn/api/${mpVersion}/`,
+  testpro: `https://lndxpre.jinlingkeji.cn/api/${mpVersion}/`
 }
 /* webSocket服务 */
 let socetBase = {
-  develop: "develop.jinlingkeji.cn:8182",
+  dev: "develop.jinlingkeji.cn:8182",
   test: "testlop.jinlingkeji.cn:8182",
-  production: "api.jinlingkeji.cn:8182",
-  center: "api.jinlingkeji.cn:8182"
+  pro: "api.jinlingkeji.cn:8182",
+  testpro: "api.jinlingkeji.cn:8182"
 }
 
 Store.prototype.process = env;
