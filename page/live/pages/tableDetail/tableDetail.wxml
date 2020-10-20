@@ -69,3 +69,14 @@
   </button>
   <view class="right" bindtap="rightNow">立即学习</view>
 </view>
+<view class="attentionBox" wx:if="{{showAtention}}">
+  <view class="attentionBottom">
+    <view class="contentBox">
+      <text>报名成功</text>
+      <text>关注公众号获取上课提醒</text>
+    </view>
+    <view class="btnBox">
+      <view class="btn" bindtap="toAtention">关注公众号</view>
+    </view>
+  </view>
+</view>

@@ -8,16 +8,16 @@
   <view wx:if="{{ isRefreshing }}" class="weui-loadmore indexdrop">
     <view class="weui-loading"></view>
   </view>
-  <navigator hover-class="none" class="top" url="/page/user/pages/info/info" open-type="navigate">
+  <navigator hover-class="none" class="top" url="/page/user/pages/info/info" open-type="navigate"
+    style="padding-top:{{statusBarHeight}}px">
     <image class="bg" mode="widthFix" src="{{ $state.userInfo.avatar }}"></image>
     <view class="box">
       <view class="left">
         <image class="img" mode="widthFix" src="{{ $state.userInfo.avatar }}"></image>
         <view class="info">
           <text class="line name">{{ $state.userInfo.nickname }}</text>
-          <view class="line" style="margin-top: 10rpx;">
-            <text class="city">{{ $state.userInfo.addressCity || "暂无" }}</text>
-            <text class="school">{{ $state.userInfo.school || $state.userInfo.university || "+添加学校标签" }}</text>
+          <view class="line">
+            <text class="school">{{ $state.userInfo.school || $state.userInfo.university || "网上老年大学" }}</text>
           </view>
         </view>
       </view>
@@ -26,89 +26,53 @@
   </navigator>
   <view class="navgationto">
     <view class="navgationBox" bindtap="toScore">
-      <image src="{{ $state.imgHost }}/integralbg.png"></image>
-      <text class="navTitle">学分兑礼品</text>
+      <text class="navTitle">我的学分</text>
       <text class="num">{{ my_score }}可用学分</text>
-      <view class="toScore">
-        <image src="{{ $state.imgHost }}/Return.png"></image>
-      </view>
+      <image src="/images/userIcon/integralbg.png"></image>
     </view>
     <view class="navgationBox" bindtap="toInvite">
-      <image src="{{ $state.imgHost }}/invitebg.png"></image>
-      <text class="navTitle">邀请新学员</text>
-      <text class="num">一起来学习</text>
-      <view class="toInvite">
-        <image src="{{ $state.imgHost }}/Return.png"></image>
-      </view>
+      <text class="navTitle">邀请好友</text>
+      <text class="num">已邀请{{$state.userIndex.prentice_count}}个好友</text>
+      <image src="/images/userIcon/invitebg.png"></image>
     </view>
   </view>
-  <view class="list">
-    <navigator hover-class="none" class="nav" url="/page/user/pages/collection/collection" open-type="navigate">
-      <image src="{{ $state.imgHost }}/usershoucang.png" class="iconfont"></image>
-      <text>我的收藏</text>
-    </navigator>
-    <navigator hover-class="none" class="nav" url="/page/user/pages/history/history" open-type="navigate">
-      <image src="{{ $state.imgHost }}/userhistory.png" class="iconfont"></image>
-      <text>学习历史</text>
-    </navigator>
-    <navigator hover-class="none" class="nav" url="/page/user/pages/myCircle/myCircle" open-type="navigate">
-      <image src="{{ $state.imgHost }}/userfengcai.png" class="iconfont"></image>
-      <text>风采展示</text>
-    </navigator>
-    <navigator hover-class="none" class="nav" url="/page/user/pages/circle/circle?type=1" open-type="navigate">
-      <image src="/images/userIcon/useraddquan.png" class="iconfont"></image>
-      <text>加入圈子</text>
-    </navigator>
-    <navigator hover-class="none" class="nav" url="/page/user/pages/usermesseage/usermesseage" open-type="navigate"
-      bindtap="drawPage">
-      <image src="/images/userIcon/messeageicon.png" class="iconfont"></image>
-      <view class="news">我的消息 <view class="smallred" wx:if="{{showMes > 0}}"></view>
-      </view>
-    </navigator>
-    <navigator hover-class="none" class="nav" url="/page/user/pages/attentionPage/attentionPage" open-type="navigate"
-      bindtap="drawPage">
-      <image src="/images/userIcon/attentionicon.png" class="iconfont"></image>
-      <text>我的关注</text>
-    </navigator>
-    <navigator hover-class="none" class="nav"
-      url="/pages/education/education?type=0&url=https://mp.weixin.qq.com/s/vSd8XBQDQkvqVX_kt_YyTQ" open-type="navigate"
-      bindtap="drawPage">
-      <image src="/images/userIcon/appIcon.png" class="iconfont"></image>
-      <text>APP下载</text>
-    </navigator>
-    <navigator hover-class="none" class="nav" url="/pages/education/education?type=0&url=https://mp.weixin.qq.com/s/RBZMIupOHPjb5PeYioy8NQ"
-      open-type="navigate" bindtap="drawPage">
-      <image src="/images/userIcon/ShapeIcon.png" class="iconfont"></image>
-      <text>商务合作</text>
-    </navigator>
-    <navigator hover-class="none" class="nav" url="/pages/education/education?type=0&url=https://mp.weixin.qq.com/s/bdGLXj6u6aOGVNh2owTjgA"
-      open-type="navigate" bindtap="drawPage">
-      <image src="/images/userIcon/accountsIcon.png" class="iconfont"></image>
-      <text>关注公众号</text>
-    </navigator>
-    <navigator hover-class="none" class="nav" url="/page/user/pages/drawPage/drawPage" open-type="navigate"
-      bindtap="drawPage">
-      <image src="/images/userIcon/draw.png" class="iconfont"></image>
-      <text>学分抽奖</text>
-    </navigator>
-    <navigator hover-class="none" class="nav" url="/page/user/pages/experience/experience" open-type="navigate">
-      <image src="/images/userIcon/experience.png" class="iconfont"></image>
-      <text>体验官申请</text>
-    </navigator>
-    <button class="nav" open-type="contact" bindcontact="handleContact"
-      session-from='{"name": "{{$state.userInfo.nickname}}","avatarUrl":"{{$state.userInfo.avatar}}","nickName":"{{$state.userInfo.nickname}}"}'>
-      <image src="/images/userIcon/userkefu.png" class="iconfont"></image>
-      <text>联系客服</text>
-    </button>
-
+  <view class="myslef">
+    <view class="title">
+      我的服务
+    </view>
+    <view class="iconBox">
+      <navigator class="iconItem" wx:for="{{myList}}" wx:key="index" hover-class="none" url="{{item.page}}"
+        target="{{ item.isMini ? 'miniProgram': 'self' }}" app-id="{{item.appId}}" path="">
+        <image src="{{item.icon}}"></image>
+        <text>{{item.name}}</text>
+        <view class="smallred" wx:if="{{showMes > 0 && item.isNews}}"></view>
+      </navigator>
+    </view>
+  </view>
+  <view class="myslef">
+    <view class="title">
+      更多服务
+    </view>
+    <view class="iconBox moreList">
+      <navigator class="iconItem" wx:for="{{moreList}}" wx:key="index" hover-class="none" url="{{item.page}}" wx:if="{{!item.isContact}}"
+        >
+        <image src="{{item.icon}}"></image>
+        <text>{{item.name}}</text>
+      </navigator>
+      <button wx:for="{{moreList}}" wx:key="index" class="iconItem" open-type="contact" bindcontact="handleContact" data-index='{{index}}'
+      session-from='{"name": "{{$state.userInfo.nickname}}","avatarUrl":"{{$state.userInfo.avatar}}","nickName":"{{$state.userInfo.nickname}}"}' wx:if="{{item.isContact}}">
+      <image src="{{item.icon}}" class="iconfont"></image>
+      <text>{{item.name}}</text>
+    </button> 
+    </view>
   </view>
   <navBar path="user" />
   <!-- wx:if="{{$state.newGuide.user == 0}}" -->
-  <cover-view class="userGuide" wx:if="{{$state.newGuide.user == 0}}">
+  <!-- <cover-view class="userGuide" wx:if="{{$state.newGuide.user == 0}}">
     <cover-view class="userGuide-msg" bindtap="closeGuide">
       <cover-image class="userGuide-msgimg" src="{{$state.imgHost}}/userMsg.png"></cover-image>
       <cover-image src="{{$state.imgHost}}/know.png" class="nextGude"></cover-image>
     </cover-view>
     <cover-image class="userGuide-img" src="{{$state.imgHost}}/experienceApply.png"></cover-image>
-  </cover-view>
+  </cover-view> -->
 </view>

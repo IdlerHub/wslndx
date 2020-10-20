@@ -100,6 +100,9 @@ Page({
   },
   subscribe() {
     //上课通知
+    wx.uma.trackEvent('liveClick', {
+      name: '上课通知'
+    });
     if (this.data.is_subscribe) {
       console.log("你已经订阅了");
       wx.showToast({
@@ -231,6 +234,9 @@ Page({
     let link = this.data.lessonDetail.mp_url,
       that = this;
     console.log(link);
+    wx.uma.trackEvent('liveClick', {
+      name: '进班群'
+    });
     // link = `http://mp.weixin.qq.com/s?__biz=Mzg3OTA0NjU0Mg==&mid=100011260&idx=2&sn=93cc742e508ef7e0de553d8c3be44220&chksm=4f08d61d787f5f0b4ec81964a4e49656907e4d1`;
     // wx.navigateTo({
     //   url: `/pages/education/education?url=${link}&type=live`,
@@ -361,6 +367,9 @@ Page({
   switchTab(event) {
     //滑动切换
     let cur = event.detail.current;
+    wx.uma.trackEvent('liveClick', {
+      name: cur == 0 ? '剧集' : cur == 1 ? '讨论' : '简介'
+    });
     this.setData({
       currentTab: cur,
     });
@@ -369,6 +378,9 @@ Page({
   switchNav(event) {
     //点击切换
     let cur = event.currentTarget.dataset.index;
+    wx.uma.trackEvent('liveClick', {
+      name: cur == 0 ? '剧集' : cur == 1 ? '讨论' : '简介'
+    });
     if (this.data.currentTab === cur) {
       return;
     } else {
@@ -389,9 +401,15 @@ Page({
       sublessons.sort((a, b) => {
         return b.index - a.index;
       });
+      wx.uma.trackEvent('liveClick', {
+        name: '倒叙'
+      });
     } else {
       sublessons.sort((a, b) => {
         return a.index - b.index;
+      });
+      wx.uma.trackEvent('liveClick', {
+        name: '正序'
       });
     }
     this.setData({
@@ -452,6 +470,9 @@ Page({
     !this.data.current.live_type
       ? this.toLiveRoom(this.data.current)
       : this.select(e);
+    this.setData({
+      currentTab: 1
+    })
   },
   // 选择剧集
   toLiveRoom(item) {

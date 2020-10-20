@@ -237,3 +237,68 @@ page {
   font-weight: 400;
   color: rgba(126, 126, 126, 1);
 }
+
+.attentionBox {
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: flex-end;
+  position: fixed;
+  top: 0;
+  z-index: 88;
+}
+
+.attentionBox .attentionBottom {
+  width: 100%;
+  height: 409rpx;
+  background: #FFFFFF;
+  border-radius: 40rpx 40rpx 0px 0px;
+  display: flex;
+  flex-direction: column;
+}
+
+.attentionBox .attentionBottom .contentBox {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  height: 249rpx;
+}
+
+
+.attentionBox .attentionBottom .contentBox text:nth-child(1) {
+  font-size: 42rpx;
+  font-weight: 500;
+  color: #333333;
+}
+
+.attentionBox .attentionBottom .contentBox text:nth-child(2) {
+  font-size: 36rpx;
+  font-weight: 400;
+  color: #333333;
+  margin-top: 10rpx;
+}
+
+.attentionBox .attentionBottom .btnBox {
+  width: 100%;
+  flex: 1;
+  border-top: 1px solid #E9E9E9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.attentionBox .attentionBottom .btnBox .btn {
+  width: 670rpx;
+  height: 98rpx;
+  background: #F2323A;
+  border-radius: 49rpx;
+  font-size: 40rpx;
+  font-weight: 500;
+  color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

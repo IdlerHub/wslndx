@@ -257,6 +257,11 @@ function getUserOpenData(params) {
   return httpService.post("user/getUserOpenData", params);
 }
 
+//POST /schedule/getUserOpenid 获取openid/个人邀请数
+function myIndex(params) {
+  return httpService.post("user/myIndex", params);
+}
+
 module.exports = {
   wxLoginCode,
   getAuthCode,
@@ -303,4 +308,5 @@ module.exports = {
   getLearnTimeProportion,
   putEmail,
   getUserOpenData,
+  myIndex
 };

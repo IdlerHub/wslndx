@@ -6,6 +6,6 @@
   "disableScroll": true,
   "usingComponents": {
     "integralAnimation": "/components/integralAni/integralAni",
-    "mp-video-swiper": "../../components/video-swiper/index"
+    "mp-video-swiper": "/components/video-swiper/index"
   }
 }

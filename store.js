@@ -67,6 +67,7 @@ let store = new Store({
     },
     blackShow: false,
     openId: "",
+    userIndex: {}
   },
   pageLisener: {
     onLoad(opts) {

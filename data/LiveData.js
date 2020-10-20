@@ -158,6 +158,33 @@ function getLessonCenterClass(params) {
   return httpService.post("schedule/getLessonCenterClass", params);
 }
 
+/**
+ * @description: 获取课程星期列表
+ * @param {}
+ * @return:  promise
+ * **/
+function getLessonWeeks(params) {
+  return httpService.post("schedule/getLessonWeeks", params);
+}
+
+/**
+ * @description: 获取课程星期列表
+ * @param {}
+ * @return:  promise
+ * **/
+function newUserLessons(params) {
+  return httpService.post("schedule/newUserLessons", params);
+}
+
+/**
+ * @description: 首页直播课推荐
+
+ * @param {}
+ * @return:  promise
+ * **/
+function recommendLessons(params) {
+  return httpService.post("schedule/recommendLessons", params);
+}
 
 module.exports = {
   getLiveLessons,
@@ -178,4 +205,7 @@ module.exports = {
   getSendMessage,
   getLessonCenter,
   getLessonCenterClass,
+  getLessonWeeks,
+  newUserLessons,
+  recommendLessons
 };

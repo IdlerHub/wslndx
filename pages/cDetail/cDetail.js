@@ -38,7 +38,7 @@ Page({
       wx.setNavigationBarTitle({
         title: this.data.circle.title
       })
-      wx.uma.trackEvent('circleClick', { 'circleName': this.data.circle.title });
+      wx.uma.trackEvent('circleClick', { circleName: this.data.circle.title });
     })
     getCurrentPages().forEach(item => {
       item.route == 'pages/post/post' ? this.postPages = item : ''
@@ -251,7 +251,7 @@ Page({
           list: list
         })
       })
-      wx.uma.trackEvent('totalShare', { 'shareName': '秀风采分享' });
+      wx.uma.trackEvent('totalShare', { shareName: '秀风采分享' });
       return {
         title: app.util.delHtmlTag(article.content),
         imageUrl: article.image || article.images[0] || "../../images/sharemessage.jpg",

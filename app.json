@@ -22,7 +22,9 @@
     "pages/liveList/liveList",
     "pages/gamePage/gamePage",
     "pages/webPay/webPay",
-    "components/playRrecord/playRrecord"
+    "pages/timetable/timetable",
+    "components/playRrecord/playRrecord",
+    "components/signinBox/signinBox"
   ],
   "permission": {
     "scope.userLocation": {
@@ -49,8 +51,8 @@
         "text": "云课堂"
       },
       {
-        "pagePath": "pages/video/video",
-        "text": "短视频"
+        "pagePath": "pages/timetable/timetable",
+        "text": "直播课"
       },
       {
         "pagePath": "pages/post/post",
@@ -71,7 +73,8 @@
         "pages/detail/detail",
         "pages/rankingList/rankingList",
         "pages/search/search",
-        "pages/assistant/assistant"
+        "pages/assistant/assistant",
+        "pages/hotActivity/hotActivity"
       ]
     },
     {
@@ -147,7 +150,7 @@
       "provider": "wx069ba97219f66d99"
     },
     "live-player-plugin": {
-      "version": "1.1.8",
+      "version": "1.2.1",
       "provider": "wx2b03c6e691cd7370"
     }
   }

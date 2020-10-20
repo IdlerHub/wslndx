@@ -12,7 +12,7 @@ Page({
       class: "#recommend1",
       unMove: true
     }],
-    height: 0,
+    height: 1000,
     isRefreshing: false,
     currentTab: 0,
     showReco: false,
@@ -22,12 +22,14 @@ Page({
     shownow: true,
     shownowt: true,
     showdialog: true,
+    showSignbox: true
   },
   navHeightList: [],
   pageName: '首页',
   guide: 0,
+  liveTimer: '',
   onLoad: async function (e) {
-    !getApp().globalData.tempCode ? '' :  wx.reLaunch({
+    !getApp().globalData.tempCode ? '' : wx.reLaunch({
       url: "/pages/sign/sign"
     });
     e.type != undefined ? this.pageType = e.type : ''
@@ -39,6 +41,13 @@ Page({
     if (!reg.test(systemInfo.system)) {
       h = 48
     }
+    systemInfo.statusBarHeight < 30 ?
+      this.setData({
+        topT: 28
+      }) :
+      this.setData({
+        topT: 48
+      });
     this.setData({
       top: pt + h
     })
@@ -55,6 +64,7 @@ Page({
     })
     this.setData({
       recommend: [],
+      liveRecommend: [],
       category: [],
       history: {},
       navScrollLeft: 0,
@@ -87,9 +97,13 @@ Page({
     /* 更新用户的视频浏览历史 */
     if (app.store.$state.userInfo.mobile)[this.getHistory(), app.getUserOpenData()]
     setTimeout(wx.hideLoading, 500)
+    this.setData({
+      showSignbox: true
+    })
+    this.data.isSign ? this.signIn() : ''
   },
   init() {
-    return Promise.all([this.getactivite(), this.getRecommend(), this.getCategory(), this.getBanner(), this.getPaper(), this.getDialog(), this.getGuide()]).then(values => {
+    return Promise.all([this.getactivite(), this.getRecommendLessons(), this.getRecommend(), this.getCategory(), this.getBanner(), this.getPaper(), this.getDialog(), this.getGuide(), this.getUserOpenid()]).then(values => {
       if (this.data.$state.newGuide.index == 0) {
         this.setData({
           guideNum: 1,
@@ -104,6 +118,14 @@ Page({
           guideNum: 5
         })
       }
+      console.log(app.globalData.query)
+      if (app.globalData.query.categoryId) {
+        this.data.nav.forEach((v, i) => {
+          v.id == app.globalData.query.categoryId ? this.setData({
+            currentTab: i
+          }) : ''
+        })
+      }
       this.navHeightList = []
       this.setHeight()
     })
@@ -114,6 +136,13 @@ Page({
       let newGuide = res.data
       app.store.setState({
         newGuide
+      })
+    })
+  },
+  getUserOpenid() {
+    app.user.myIndex().then(res => {
+      app.store.setState({
+        userIndex: res.data
       })
     })
   },
@@ -154,6 +183,11 @@ Page({
       })
     }
   },
+  centerTab(e) {
+    this.setData({
+      bannercurrentTab: e.detail.current
+    })
+  },
   switchTab(event) {
     let cur = event.detail.current,
       that = this,
@@ -169,7 +203,7 @@ Page({
       let id = this.data.nav[cur].id
       this.geteCatrcommend(id, cur)
       wx.uma.trackEvent('classify_btnClick', {
-        'name': this.data.nav[cur].name
+        name: this.data.nav[cur].name
       });
     }
     setTimeout(() => {
@@ -213,6 +247,28 @@ Page({
       wx.hideLoading()
     })
   },
+  getRecommendLessons() {
+    if (this.data.liveRecommend[0]) {
+      setInterval(() => {
+        app.liveData.recommendLessons().then(res =>{
+          res.data.forEach((e, i) => {
+            this.setData({
+              [`liveRecommend[${i}].live_status`]: e.live_status
+            })
+          })
+        })
+      }, 60000);
+    } else {
+      app.liveData.recommendLessons().then(res => {
+        this.setData({
+          liveRecommend: res.data
+        },() => {
+          res.data.length > 0 ? this.getRecommendLessons() : ''
+        })
+      })
+    }
+
+  },
   geteCatrcommend(id, currtab) {
     if (this.data.catrecommend[id]) {
       if (this.data.catrecommend[id][0]) return
@@ -227,6 +283,9 @@ Page({
       this.setData({
         [`catrecommend[${id}]`]: temp.concat(msg.data)
       })
+      temp.concat(msg.data).length < 10 ? this.setData({
+        [`nav[${this.data.currentTab}].showBtoom`]: true
+      }) : ''
       setTimeout(() => {
         currtab != this.data.currentTab ? '' : this.setHeight()
       }, 600)
@@ -288,15 +347,6 @@ Page({
       url: "../../page/user/pages/info/info"
     })
   },
-  toScore() {
-    wx.navigateTo({
-      url: "../../page/user/pages/makeMoney/makeMoney"
-      // url: "/pages/score/score?type=index"
-    })
-    wx.uma.trackEvent('index_btnClick', {
-      'btnName': '邀请学员'
-    });
-  },
   touchstart() {
     this.shownow = true
   },
@@ -330,7 +380,7 @@ Page({
       url: `/page/index/pages/detail/detail?id=${e.currentTarget.dataset.id}&name=${e.currentTarget.dataset.title}&play=true`
     })
     wx.uma.trackEvent('video_historyPlay', {
-      'lessonsName': e.currentTarget.dataset.title
+      lessonsName: e.currentTarget.dataset.title
     });
   },
   closenow() {
@@ -350,7 +400,7 @@ Page({
       });
     } else {
       wx.uma.trackEvent('index_recommendLessons', {
-        'lessonsName': e.currentTarget.dataset.item.title
+        lessonsName: e.currentTarget.dataset.item.title
       });
     }
   },
@@ -365,7 +415,9 @@ Page({
       } else if (e.currentTarget.dataset.role == "post") {
         this.toPost()
       } else if (e.currentTarget.dataset.type == "score") {
-        this.toScore()
+        wx.navigateTo({
+          url: '/page/user/pages/score/score',
+        })
       } else if (e.currentTarget.dataset.type == "banner") {
         let item = e.currentTarget.dataset.item;
         if (item.jump_type == '5') {
@@ -380,7 +432,7 @@ Page({
           }, 500);
         }
         wx.uma.trackEvent('index_bannerClick', {
-          'bannerTencent': item.title
+          bannerTencent: item.title
         });
       }
     }
@@ -394,53 +446,26 @@ Page({
   closeSignIn() {
     app.setSignIn({
       status: 0,
-      count: 1
+      count: 0
     }, true)
     this.setData({
-      showdialog: false
+      showdialog: false,
+      showSignbox: false,
+      dialog: []
     })
   },
   signIn(data) {
-    let sign = data.currentTarget.dataset.id == 1
     app.setSignIn({
       status: true,
       count: 1
     }, true)
-    if (sign) {
-      app.user.sign().then(res => {
-        /* 前往学分页面 */
-        wx.navigateTo({
-          url: "../../page/user/pages/score/score?type=index"
-        })
-        app.store.setState({
-          signdays: res.data.sign_days
-        })
-      }).catch(err => {
-        wx.showToast({
-          title: err.msg,
-          icon: "none",
-          duration: 1500,
-          mask: true
-        })
-        let timer = setTimeout(() => {
-          wx.hideToast({
-            success: () => {
-              wx.navigateTo({
-                url: "../../page/user/pages/score/score"
-              })
-            }
-          })
-          clearTimeout(timer)
-        }, 1500)
+    app.user.sign().then(res => {
+      console.log('签到成功')
+      app.store.setState({
+        signdays: res.data.sign_days
       })
-    } else {
-      app.user.sign().then(res => {
-        console.log('签到成功')
-        app.store.setState({
-          signdays: res.data.sign_days
-        })
-      })
-    }
+      this.showIntegral()
+    })
   },
   onPullDownRefresh() {
     wx.stopPullDownRefresh()
@@ -516,7 +541,7 @@ Page({
         url: `../education/education?type=0&url=${item.clickurl}&login=${item.is_login}`
       })
       wx.uma.trackEvent('index_bannerClick', {
-        'bannerTencent': item.title
+        bannerTencent: item.title
       });
     } else if (item.jump_type == 2) {
       /* 视频 */
@@ -524,19 +549,19 @@ Page({
         url: `../../page/index/pages/detail/detail?id=${item.video_id}&name=${item.title}`
       })
       wx.uma.trackEvent('index_bannerClick', {
-        'bannerVideo': item.title
+        bannerVideo: item.title
       });
     } else if (item.jump_type == 4) {
       this.minigo(item.clickurl)
       wx.uma.trackEvent('index_bannerClick', {
-        'bannerMini': item.title
+        bannerMini: item.title
       });
     } else if (item.jump_type == 5) {
       wx.navigateTo({
         url: item.clickurl,
       })
       wx.uma.trackEvent('index_bannerClick', {
-        'bannerActivity': item.title
+        bannerActivity: item.title
       });
     } else if (item.jump_type == 6) {
       this.toLive(item.clickurl)
@@ -546,18 +571,19 @@ Page({
         url: "../../page/post/pages/pDetail/pDetail?id=" + item.article_id
       })
       wx.uma.trackEvent('index_bannerClick', {
-        'bannerBlog': item.title
+        bannerBlog: item.title
       });
     }
   },
   // 跳友方小程序
   jumpmini() {
-    this.minigo('{"appid":"wx1433e92dcf1d0343","url":"?wxgamecid=CCBgAAoXkpQY8X-4JNwfG3&from=jinling_lndx"}')
+    this.minigo('{"appid":"wx7d6c683879173db6","url":""}')
     wx.uma.trackEvent('index_btnClick', {
-      'btnName': '斗地主'
+      btnName: '斗地主'
     });
   },
   minigo(url) {
+    console.log(JSON.parse(url), url)
     let system = JSON.parse(url)
     wx.navigateToMiniProgram({
       appId: system.appid,
@@ -593,7 +619,7 @@ Page({
       wx.uma.trackEvent('index_activityClick');
     } else {
       wx.uma.trackEvent('index_bannerClick', {
-        'bannerTencent': this.data.paperMsg.title
+        bannerTencent: this.data.paperMsg.title
       });
       wx.navigateTo({
         url: `../education/education?url=${e.currentTarget.dataset.peper}&type=0}`
@@ -654,5 +680,44 @@ Page({
       recommend: this.data.recommend,
       catrecommend: this.data.catrecommend
     })
+  },
+  closesignBox() {
+    this.setData({
+      showSignbox: false
+    });
+  },
+  showIntegral() {
+    this.setData({
+      showSignbox: false,
+      integral: "+20 学分",
+      integralContent: "签到成功",
+      showintegral: true,
+      isSign: false
+    });
+    setTimeout(() => {
+      this.setData({
+        showintegral: false
+      });
+    }, 2000);
+  },
+  sigin() {
+    console.log(4324234)
+    if (!this.data.$state.userIndex.has_mp_openid) {
+      wx.navigateTo({
+        url: '/pages/education/education?type=sign&url=https://authorization.jinlingkeji.cn/#/',
+      })
+      this.setData({
+        isSign: true
+      })
+    } else {
+      this.signIn()
+    }
+  },
+  toLivelesson(e) {
+    let item =  e.currentTarget.dataset.item
+    wx.navigateTo({
+      url : "/page/live/pages/liveDetail/liveDetail?lessonId=" +
+      item.id
+    });
   }
 })

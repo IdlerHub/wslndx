@@ -63,6 +63,8 @@ var circle = require("data/Circle.js");
 var lottery = require("data/Lottery.js");
 var tutor = require("data/Tutor.js");
 var vote = require("data/Vote.js"); //票选活动接口
+var activity = require("data/Activity.js");
+var liveData = require("data/LiveData.js");
 //app.js
 App({
   API_URL: store.API_URL,
@@ -76,6 +78,8 @@ App({
   lottery,
   tutor,
   vote,
+  activity,
+  liveData,
   socket,
   store,
   fundebug,
@@ -92,6 +96,7 @@ App({
   },
   /*埋点统计*/
   onLaunch: async function (opts) {
+    console.log(opts, this.globalData.scenes.indexOf(opts.scene) >= 0)
     this.getSecureToken();
     let optsStr = decodeURIComponent(opts.query.scene).split("&");
     let opstObj = {};
@@ -545,7 +550,7 @@ App({
     /* 卡片参数 */
     query: {},
     /* 卡片进入的场景值 */
-    scenes: [1001, 1007, 1008, 1047, 1048, 1049, 1037],
+    scenes: [1001, 1007, 1008, 1047, 1048, 1049, 1037, 1035, 1074],
     /* 后台模式*/
     backstage: false,
     rlSuc: false,
@@ -561,5 +566,6 @@ App({
       type: 0,
     },
     uma,
+    categoryId: 0
   },
 });
