@@ -2,8 +2,7 @@
 <view class="container">
     <!-- 视频播放 -->
     <video id="myVideo" wx:if="{{playNow.record_url && playNow.record_url != '' }}" src="{{ playNow.record_url }}"
-        controls page-gesture enable-play-gesture bindended="ended" bindplay="played"
-        bindpause="videoPause">
+        controls page-gesture enable-play-gesture bindended="ended" bindplay="played" bindpause="videoPause">
         <cover-image wx:if="{{ !playFlag }}" mode="widthFix" src="{{ playNow.cover }}" class="poster"
             bindtap="recordAddVedio"></cover-image>
         <cover-image wx:if="{{ !playFlag }}" mode="aspectFill" src="{{ $state.imgHost }}/play.png" class="play"
@@ -25,7 +24,9 @@
     <view id="myVideo" wx:else>
         <image wx:if="{{ !playFlag }}" src="{{ lessonDetail.cover }}" class="poster"></image>
         <!-- <image wx:if="{{ !playFlag }}" mode="aspectFill" src="{{ $state.imgHost }}/play.png" class="play"></image> -->
-        <navigator class="noticeBox" hove-class="none" url="/pages/education/education?type=0&url={{lessonDetail.notice_url}}" wx:if="{{lessonDetail.notice.length > 0}}">
+        <navigator class="noticeBox" hove-class="none"
+            url="/pages/education/education?type=0&url={{lessonDetail.notice_url}}"
+            wx:if="{{lessonDetail.notice.length > 0}}">
             <image src="../../images/noticeIcon.png"></image>
             <view>{{lessonDetail.notice}}</view>
             <image src="../../images/noticeRight.png"></image>
@@ -70,7 +71,10 @@
                 <image src="../../images/userImg.png"></image>
                 <text>{{current.teacher}}</text>
             </view>
-            <image class="livingNow" src="../../images/living.png"></image>
+            <view class="livingNow">
+                <view wx:for="{{3}}" wx:key="index" class="statusWite"></view>
+                <text>直播</text>
+            </view>
         </view>
     </view>
     <!-- 课程以及讨论 -->

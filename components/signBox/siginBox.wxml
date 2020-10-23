@@ -1,2 +1,4 @@
 <!--components/signBox/siginBox.wxml-->
-<navigator url="/pages/sign/sign"></navigator>
+<button hover-class="none" plain open-type="getPhoneNumber" mut-bind:getphonenumber="getphonenumber">
+  <slot></slot>
+</button>

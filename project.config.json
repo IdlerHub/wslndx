@@ -71,7 +71,7 @@
     "minifyWXSS": true
   },
   "compileType": "miniprogram",
-  "libVersion": "2.13.1",
+  "libVersion": "2.12.2",
   "appid": "wx756d04f5d669cef0",
   "projectname": "%E4%B8%AD%E5%9B%BD%E7%BD%91%E4%B8%8A%E8%80%81%E5%B9%B4%E5%A4%A7%E5%AD%A6",
   "isGameTourist": false,
@@ -153,8 +153,8 @@
           "scene": null
         },
         {
-          "name": "page/user/pages/invitation/invitation",
-          "pathName": "page/user/pages/invitation/invitation",
+          "name": "/plugin-private://wx2b03c6e691cd7370/pages/live-player-plugin?room_id=7",
+          "pathName": "__plugin__/wx2b03c6e691cd7370/pages/live-player-plugin?room_id=7",
           "query": "lessonId=28",
           "scene": 1035,
           "referrerInfo": {
