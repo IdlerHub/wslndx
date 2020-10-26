@@ -114,13 +114,13 @@
     </view>
   </swiper-item>
 </swiper>
-<view class="footer" wx:if="{{showHome}}">
+<!-- <view class="footer" wx:if="{{showHome}}">
   <navigator url="/pages/index/index" hover-class="none" open-type="reLaunch" class="write">
     <view class="write">
       <icon class="iconfont icon-shouye"></icon>
       <text>首页</text>
     </view>
   </navigator>
-</view>
+</view> -->
 <signinBox wx:if="{{showSignbox}}" state="{{$state}}" bind:closesignBox="closesignBox" />
 <address style="position: fixed;z-index: 99;" giftInfo="{{giftInfo}}" show-card="{{getAddress}}" bind:change="stockChange"></address>
