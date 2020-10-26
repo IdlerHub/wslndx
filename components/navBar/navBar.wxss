@@ -4,7 +4,7 @@
   height: 128rpx;
   width: 100%;
   bottom: 0;
-  background: rgba(248, 248, 248, 0.99);
+  background: #F5F5F5;
   display: flex;
   justify-content: space-around;
   z-index: 1;
@@ -45,7 +45,7 @@
 .tabbar .name {
   display: block;
   font-size: 42rpx;
-  color:rgba(151,151,151,1);
+  color:#96A8BB;
   padding-top: 30rpx;
   line-height: 45rpx; }
 .tabbar .active {
@@ -53,10 +53,10 @@
   font-weight: 550;
 }
 .tabbar .resRow {
-  width:40rpx;
+  width:36rpx;
   height:6rpx;
   background:rgba(223,32,32,1);
-  border-radius:3px;
+  border-radius:6rpx;
   margin: 15rpx 43rpx;
 }
 

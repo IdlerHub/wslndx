@@ -37,7 +37,7 @@
     ]
   },
   "setting": {
-    "urlCheck": false,
+    "urlCheck": true,
     "es6": true,
     "enhance": true,
     "postcss": true,
@@ -61,15 +61,17 @@
       "disablePlugins": [],
       "outputPath": ""
     },
+    "enableEngineNative": false,
     "bundle": true,
     "useIsolateContext": true,
     "useCompilerModule": false,
     "userConfirmedUseCompilerModuleSwitch": true,
     "packNpmManually": false,
-    "packNpmRelationList": []
+    "packNpmRelationList": [],
+    "minifyWXSS": true
   },
   "compileType": "miniprogram",
-  "libVersion": "2.12.0",
+  "libVersion": "2.12.2",
   "appid": "wx756d04f5d669cef0",
   "projectname": "%E4%B8%AD%E5%9B%BD%E7%BD%91%E4%B8%8A%E8%80%81%E5%B9%B4%E5%A4%A7%E5%AD%A6",
   "isGameTourist": false,
@@ -80,16 +82,9 @@
       "list": []
     },
     "game": {
-      "currentL": -1,
       "list": []
     },
     "gamePlugin": {
-      "list": []
-    },
-    "search": {
-      "list": []
-    },
-    "conversation": {
       "list": []
     },
     "miniprogram": {
@@ -158,10 +153,9 @@
           "scene": null
         },
         {
-          "id": 9,
-          "name": "pages/index/index",
-          "pathName": "pages/index/index",
-          "query": "categoryId=29",
+          "name": "/plugin-private://wx2b03c6e691cd7370/pages/live-player-plugin?room_id=7",
+          "pathName": "__plugin__/wx2b03c6e691cd7370/pages/live-player-plugin?room_id=7",
+          "query": "lessonId=28",
           "scene": 1035,
           "referrerInfo": {
             "appId": "wx756d04f5d669cef0"

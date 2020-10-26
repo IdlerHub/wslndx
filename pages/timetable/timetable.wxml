@@ -1,0 +1,51 @@
+<!--pages/timetable/timetable.wxml-->
+<view class="pageTop">
+  <!-- <view class="search-box">
+    <navigator class="search-left" url="/page/live/pages/liveSearch/liveSearch" hover-class="none">
+      <image src="{{$state.imgHost}}/searchp.png"></image>
+      <text>搜索课程名称</text>
+    </navigator>
+    <navigator hover-class="none" class="search-right" url="/page/live/pages/timetableList/timetableList" open-type="navigate">
+      <image src="{{ $state.imgHost }}/timetebleIcon.png" class="iconfont"></image>
+      <text>我的课表</text>
+    </navigator>
+  </view> -->
+  <view class="nav" style="padding: 0 30rpx;">
+    <scroll-view class="nav" style="display:flex;" scroll-x="true" scroll-left="{{ navScrollLeft }}"
+      scroll-with-animation="true" enable-flex scroll-into-view="item{{currentTab < 4 ? 0 : currentTab - 3}}">
+      <block wx:for="{{ nav }}" wx:for-index="id" wx:for-item="item" wx:key="id">
+        <formCode bind:handler="switchNav" data-current="{{ id }}" data-id="{{item.id}}" data-itemId="{{item.index}}">
+          <view class="weekItem {{ [currentTab == id ? 'active' : '',id == 0 ? 'itemone' : ''] }}"
+            style="" id="item{{id}}">{{ item.name }}</view>
+        </formCode>
+      </block>
+    </scroll-view>
+  </view>
+</view>
+
+<!-- 页面列表 -->
+<scroll-view bindrefresherrefresh="pullDown" scroll-into-view="{{toView}}" scroll-y wx:if="{{lessons.length != 0}}" class="scrollView" id="contentView" bindscroll="controlScroll">
+  <view wx:for="{{nav}}" id="{{'week'+index}}" wx:key="index" class="itemBox">
+    <view class="week-title">
+      <view class="title-left">{{item.name}}</view>
+      <view class="title-sum">共{{lessons[index].length}}节</view>
+    </view>
+    <view class="contariner" wx:if="{{lessons[index].length != 0}}">
+        <liveLesson id="{{'weeks-'+index}}" lessons="{{lessons[index]}}" weeksIndex="{{index}}"></liveLesson>
+    </view>
+    <view class="contariner" wx:else>
+      <view class="week-none">今日没有课程~</view>
+    </view>
+  </view>
+</scroll-view>
+
+<!-- 缺省 -->
+<view class="none-lesson" wx:else>
+  <image src="{{$state.imgHost}}/courseqs.png"></image>
+  <text>
+    暂无排课
+    去浏览其他内容吧~
+  </text>
+</view>
+
+<navBar path="video" />

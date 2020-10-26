@@ -75,7 +75,7 @@ Page({
     systemInfo.system.search('Android') >= 0 ? this.setData({
       isAndroid: 1
     }) : ''
-    wx.uma.trackEvent("menu, ", {
+    wx.uma.trackEvent("menu", {
       pageName: "风采展示"
     });
   },

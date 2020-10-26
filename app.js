@@ -63,6 +63,8 @@ var circle = require("data/Circle.js");
 var lottery = require("data/Lottery.js");
 var tutor = require("data/Tutor.js");
 var vote = require("data/Vote.js"); //票选活动接口
+var activity = require("data/Activity.js");
+var liveData = require("data/LiveData.js");
 //app.js
 App({
   API_URL: store.API_URL,
@@ -76,6 +78,8 @@ App({
   lottery,
   tutor,
   vote,
+  activity,
+  liveData,
   socket,
   store,
   fundebug,

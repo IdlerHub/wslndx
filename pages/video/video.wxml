@@ -1,4 +1,7 @@
 <view class="container">
+  <view class="back" style="top: {{top + 8}}px;" bindtap="toBack">
+    <image src="/images/back.png"/>
+  </view>
   <view class="tabnav" style="padding-top:{{ top }}px">
     <view class="{{ currentTab == 1 ? 'lose' : ''}} tabnav-item" bindtap="switchNav" data-current="0">
       <text>推荐</text>
@@ -19,11 +22,6 @@
   </view>
   <swiper class="swiper" current="{{ currentTab }}" duration="300" bindchange="switchTab">
     <swiper-item>
-        <!-- 完整视频 -->
-        <!-- <cover-view class="complete" catchtap="complete" wx:if="{{ cur.target_id }}">
-          <cover-image mode="aspectFill" src="/images/video-white.png" class="icon"></cover-image>
-          <cover-view class="text">完整视频</cover-view>
-        </cover-view> -->
         <!-- 授权 -->
         <cover-view wx:if="{{ cur && $state.baseInfo }}" class="dropback  frontdrop">
           <cover-view class="userInfo-mask">
@@ -104,7 +102,6 @@
       <cover-image src="{{$state.imgHost}}/know.png" class="nextGudet"></cover-image>
     </cover-view>
   </cover-view>
-  <navBar path="video" />
 </view>
 <!-- 学分动画 -->
 <integralAnimation integral="{{integral}}" integralContent="{{integralContent}}" wx:if="{{showintegral}}">

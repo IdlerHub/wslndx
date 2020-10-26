@@ -5,6 +5,7 @@
   "enablePullDownRefresh": true,
   "onReachBottomDistance": 0,
   "usingComponents": {
-    "address": "/components/address/address"
+    "address": "/components/address/address",
+    "signinBox": "/components/signinBox/signinBox"
   }
 }

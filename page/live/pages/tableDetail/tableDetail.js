@@ -1,6 +1,8 @@
 // pages/tableDetail/tableDetail.js
 const LiveData = require("../../../../data/LiveData");
+const user = require("../../../../data/User");
 var htmlparser = require("../../../../utils/htmlparser");
+
 Page({
   data: {
     days: 0,
@@ -10,6 +12,7 @@ Page({
     lessonId: null,
     avatarList: [], //邀请用户头像
     showMoreAvatar: false, //是否展示更多头像
+    userMsg: {},
     weekList: [
       "每周一",
       "每周二",
@@ -21,8 +24,16 @@ Page({
     ],
     lessonDetail: {}, //课程详情
     flag: false, //倒计时结束
+    showAtention: false
   },
   timer: "",
+  toEducation: false,
+  onShow() {
+    if(this.toEducation) {
+      this.toLivedetail()
+      this.toEducation = false
+    }
+  },
   onLoad: function (options) {
     let inviter = 0;
     if (options.inviter && this.data.$state.userInfo.id != options.inviter) {
@@ -30,6 +41,7 @@ Page({
     }
     this.data.lessonId = options.lessonId;
     this.getLiveDetailDate(options.lessonId, inviter);
+    this.getUserOpenid()
     this.timer = setInterval(() => {
       let countdown = this.data.lessonDetail.countdown - 1;
       this.leftTimer(countdown);
@@ -37,6 +49,13 @@ Page({
   },
   onUnload() {
     clearInterval(this.timer);
+  },
+  getUserOpenid() {
+    user.myIndex().then(res => {
+      this.setData({
+        userMsg: res.data
+      })
+    })
   },
   getLiveDetailDate(lesson_id, inviter = 0) {
     //获取邀请记录,报名详情
@@ -47,9 +66,11 @@ Page({
     };
     let flag = false;
     return Promise.all([
-      LiveData.getApplyDetail(params),
-      LiveData.getInviteRecord({ lesson_id }),
-    ])
+        LiveData.getApplyDetail(params),
+        LiveData.getInviteRecord({
+          lesson_id
+        }),
+      ])
       .then((res) => {
         wx.setNavigationBarTitle({
           title: res[0].data.name || "",
@@ -113,41 +134,30 @@ Page({
     return i < 10 ? "0" + i : i;
   },
   rightNow() {
-    let { conditions, invite_num, is_own } = this.data.lessonDetail;
+    let {
+      conditions,
+      invite_num,
+      is_own
+    } = this.data.lessonDetail;
     if (conditions > invite_num) {
       wx.showModal({
         content: `再邀请${conditions - invite_num}位好友就可以学习啦`,
         confirmColor: "#DF2020",
         cancelColor: "#999999",
       });
+    } else if(!this.data.userMsg.has_mp_openid){
+      this.setData({
+        showAtention: true
+      })
     } else {
-      let lesson_id = this.data.lessonDetail.id;
-      if (!is_own) {
-        //未拥有
-        LiveData.getReceiveLesson({ lesson_id })
-          .then((res) => {
-            this.data.lessonDetail.is_own = 1;
-            wx.navigateTo({
-              url: `/page/live/pages/liveDetail/liveDetail?lessonId=${lesson_id}&isFirst=1`,
-            });
-          })
-          .catch((err) => {
-            wx.showToast({
-              title: err.msg,
-              image: "/images/warn.png",
-              duration: 1000,
-            });
-          });
-      } else {
-        //已拥有就不再领取,从分享进去详情页,不展示客服盒子
-        wx.navigateTo({
-          url: `/page/live/pages/liveDetail/liveDetail?lessonId=${lesson_id}&isFirst=0`,
-        });
-      }
+      this.toLivedetail()
     }
   },
   showAllAvatar() {
-    let { conditions, invite_num } = this.data.lessonDetail;
+    let {
+      conditions,
+      invite_num
+    } = this.data.lessonDetail;
     if (conditions > 5 || invite_num > 5) {
       //展示所有头像
       this.setData({
@@ -157,7 +167,9 @@ Page({
   },
   shareLesson(lesson_id) {
     //分享成功
-    LiveData.shareLesson({ lesson_id });
+    LiveData.shareLesson({
+      lesson_id
+    });
   },
   onPullDownRefresh() {
     this.getLiveDetailDate(this.data.lessonId).then((res) => {
@@ -179,4 +191,45 @@ Page({
       imageUrl: cover,
     };
   },
+  toLivedetail() {
+    let lesson_id = this.data.lessonDetail.id;
+    let {
+      conditions,
+      invite_num,
+      is_own
+    } = this.data.lessonDetail;
+    if (!is_own) {
+      //未拥有
+      LiveData.getReceiveLesson({
+          lesson_id
+        })
+        .then((res) => {
+          this.data.lessonDetail.is_own = 1;
+          wx.redirectTo({
+            url: `/page/live/pages/liveDetail/liveDetail?lessonId=${lesson_id}&isFirst=1`,
+          });
+        })
+        .catch((err) => {
+          wx.showToast({
+            title: err.msg,
+            image: "/images/warn.png",
+            duration: 1000,
+          });
+        });
+    } else {
+      //已拥有就不再领取,从分享进去详情页,不展示客服盒子
+      wx.navigateTo({
+        url: `/page/live/pages/liveDetail/liveDetail?lessonId=${lesson_id}&isFirst=0`,
+      });
+    }
+  },
+  toAtention() {
+    let uid = wx.getStorageSync("userInfo").id;
+    // wx.setStorageSync("AccountsId", ops.accounts_openid);
+    //liveTyp标识从哪里跳转
+    wx.navigateTo({
+      url: `/pages/education/education?liveType=liveTable&uid=${uid}`,
+    });
+    this.toEducation = true
+  }
 });

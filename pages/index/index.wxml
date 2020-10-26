@@ -3,6 +3,17 @@
  * @LastEditors: hxz
  * @LastEditTime: 2019-08-13 12:01:10
  -->
+<template name="skeletonTop">
+  <view class="top" style="padding-top:{{ topT }}px">
+    <view class="avatarBox skeletonaAtive"></view>
+    <text class="skeletonaAtive"></text>
+  </view>
+</template>
+<template name="skeletonSwiper">
+  <view class="skeletonSwiper">
+    <view class="skeletonaAtive"></view>
+  </view>
+</template>
 <template name="skeleton">
   <view class="skeleton" wx:for="{{5}}" wx:key="index">
     <view class="skeletonBox">
@@ -37,87 +48,88 @@
     </view>
   </view>
 </template>
+<template name="liveBox">
+  <view wx:if="{{recommend[0]}}">
+    <view class="liveBox" wx:if="{{liveRecommend[0]}}">
+      <view class="topTtile">
+        <text>直播推荐</text>
+        <navigator class="topTtile-right" url="/page/live/pages/liveCenter/liveCenter" hover-class="none">
+          <text>更多课程</text>
+          <image src="/images/Return-black.png"></image>
+        </navigator>
+      </view>
+      <view class="comment">
+        <view wx:for="{{liveRecommend}}" wx:key="index" class="liveItem"
+          style="{{index + 1 > 6 - 2 ? 'border:none' : '' }}" bindtap="toLivelesson" data-item="{{item}}">
+          <view class="liveImgBox">
+            <image src="{{item.cover}}">
+            </image>
+            <view class="liveStatus"
+              style="background: {{ item.live_status == 101 ? '' : 'linear-gradient(270deg, #44A2FF 0%, #007CF7 100%);' }}">
+              <view class="statusLeft" wx:if="{{item.live_status == 101}}">
+                <view wx:for="{{3}}" wx:key="index" class="statusWite"></view>
+                <view class="statusTxt">直播</view>
+              </view>
+              <view class="statusLeft" wx:else>
+                <view class="statusTxt" style="margin: 0">未开始</view>
+              </view>
+            </view>
+          </view>
+          <text>{{item.name}}</text>
+          <text>{{item.date}} {{item.time}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+  <view class="liveBox" wx:else>
+    <view class="topTtile">
+      <text>直播推荐</text>
+      <view class="topTtile-right">
+        <text>更多课程</text>
+        <image src="/images/Return-black.png"></image>
+      </view>
+    </view>
+    <view class="comment">
+      <view wx:for="{{6}}" wx:key="index" class="liveItem" style="{{index + 1 > 6 - 2 ? 'border:none' : '' }}">
+        <view class="img skeletonaAtive"></view>
+        <text class="skeletonaAtive"></text>
+        <text class="skeletonaAtive"></text>
+      </view>
+    </view>
+  </view>
+</template>
+<template name="nomore">
+  <view class="nomore">
+    <image src="/images/nomore.png"></image>
+    <text>没有更多了</text>
+  </view>
+</template>
 <view class="container">
   <!-- 下拉刷新 -->
   <view wx:if="{{ isRefreshing }}" class="weui-loadmore indexdrop">
     <view class="weui-loading"></view>
-    <!-- <view class='weui-loadmore-tips'>加载中...</view> -->
   </view>
-  <view class="top topOne topskeleton" wx:if="{{ !recommend[0] }}">
-    <image class="bg" mode="widthFix"></image>
-    <view class="box">
-      <view class="left">
-        <image class="img" mode="aspectFill"></image>
-        <view class="info">
-          <text class="line name"></text>
-          <view class="line">
-            <view class="city" catchtap="toInfo"></view>
-            <view class="school" catchtap="toInfo"></view>
-          </view>
-        </view>
-      </view>
-      <!-- <image class="right" mode="aspectFill" src="{{ $state.imgHost }}/Return.png"></image> -->
+  <view class="top" style="padding-top:{{ topT }}px" wx:if="{{recommend[0]}}" bindtap="toInfo">
+    <view class="avatarBox" catchtap="toUser" wx:if="{{$state.authUserInfo}}">
+      <image class="img" src="{{$state.userInfo.avatar}}" alt=""></image>
     </view>
+    <button class="avatarBox" wx:else open-type="getUserInfo" bindgetuserinfo="onGotUserInfo" data-role="user"
+      catchtap="getSomthin">
+      <open-data class="img" type="userAvatarUrl"></open-data>
+    </button>
+    <text>{{$state.userInfo.school || "网上老年大学"}}</text>
   </view>
-  <view wx:else>
-    <view class="top">
-      <view wx:if="{{ $state.authUserInfo }}" bindtap="toInfo">
-        <image class="bg" mode="widthFix" src="{{  $state.userInfo.avatar }}"></image>
-        <view class="box">
-          <view class="left">
-            <image class="img" mode="aspectFill" src="{{ $state.userInfo.avatar }}" catchtap="toUser"></image>
-            <view class="info">
-              <text class="line name">{{  $state.userInfo.nickname }}的老年大学</text>
-              <view class="line" wx:if="{{ guideNum != 1 }}" style="margin-top: 10rpx;">
-                <view class="city" catchtap="toInfo">{{ $state.userInfo.addressCity || "暂无" }}</view>
-                <view class="school" catchtap="toInfo">
-                  {{ $state.userInfo.school || $state.userInfo.university || "+添加学校标签" }}</view>
-              </view>
-              <view wx:else class="line" style="height:50rpx"></view>
-            </view>
-          </view>
-          <!-- <image class="right" mode="aspectFill" src="{{ $state.imgHost }}/Return.png"></image> -->
-        </view>
-      </view>
-      <!-- open-type="getUserInfo" bindgetuserinfo="onGotUserInfo" -->
-      <button class="authorize" wx:else bindtap="toInfo">
-        <open-data class="bg" type="userAvatarUrl"></open-data>
-        <view class="box">
-          <view class="left">
-            <button open-type="getUserInfo" bindgetuserinfo="onGotUserInfo" data-role="user" class="img left-btn"
-              catchtap="getSomthin">
-            </button>
-            <open-data class="img" type="userAvatarUrl" catchtap="toUser"></open-data>
-            <view class="info">
-              <view class="line name">
-                <!-- <open-data type="userNickName"></open-data> -->
-                {{ $state.userInfo.nickname }}的老年大学
-              </view>
-              <view class="line" wx:if="{{ guideNum != 1 }}">
-                <view class="city" catchtap="toInfo">{{ $state.userInfo.addressCity || "暂无" }}</view>
-                <view class="school" catchtap="toInfo">
-                  {{ $state.userInfo.school || $state.userInfo.university || "+添加学校标签" }}</view>
-              </view>
-              <view wx:else class="line" style="height:50rpx"></view>
-            </view>
-          </view>
-          <!-- <image class="right" mode="aspectFill" src="{{ $state.imgHost }}/Return.png"></image> -->
-        </view>
-      </button>
-    </view>
-  </view>
+  <template is="skeletonTop" data="{{topT}}" wx:else></template>
   <!-- 搜索/学分 -->
   <view class="search-box">
     <navigator class="search-left" url="/page/index/pages/search/search">
-      <image src="{{$state.imgHost}}/searchp.png"></image>
+      <image src="/images/indexIcon/searchp.png"></image>
       <text>搜索课程名称</text>
     </navigator>
-    <view class="integral" bindtap="toScore" wx:if="{{$state.authUserInfo}}">
-      <view class="integralImg"></view>
-    </view>
-    <button open-type="getUserInfo" bindgetuserinfo="onGotUserInfo" class="integral" data-type="score" wx:else>
-      <view class="integralImg"></view>
-    </button>
+    <navigator class="search-right" url="/page/live/pages/timetableList/timetableList" hover-class="none">
+      <image src="/images/indexIcon/timetableIcon.png"></image>
+      <text>我的课程</text>
+    </navigator>
   </view>
   <navigationBar wx:if="{{ scroll }}" id="navigationBar" placeholderBg="#F8F8F8" color="#000000" title="网上老年大学"
     back="{{ false }}" background="#F8F8F8"></navigationBar>
@@ -128,89 +140,86 @@
   <view class="nav {{ scroll ? 'fixed' : '' }}" style="top:{{ top }}px;padding-right:20px;overflow: hidden;" wx:else>
     <scroll-view class="nav" style="display:flex;padding-right: 20px" scroll-x="true" scroll-left="{{ navScrollLeft }}"
       scroll-with-animation="true" enable-flex scroll-into-view="item{{currentTab < 4 ? 0 : currentTab - 3}}">
-      <block wx:for="{{ nav }}" wx:for-index="id" wx:for-item="item" wx:key="index">
+      <block wx:for="{{ nav }}" wx:for-index="id" wx:for-item="item" wx:key="index" class="navitem">
         <formCode bind:handler="switchNav" data-current="{{ id }}" data-id="{{item.id}}">
           <view class="item {{ [currentTab == id ? 'active' : '',id == 0 ? 'itemone' : ''] }}"
             style="margin-right:{{id + 1 == nav.length ? '40rpx' : ''}}" id="item{{id}}">{{ item.name }}</view>
         </formCode>
       </block>
     </scroll-view>
-    <navigator class="tabclassify" url="/page/index/pages/drag/drag?index={{currentTab}}">
-      <image src="{{$state.imgHost}}/tabclassify.png"></image>
+    <navigator hover-class="none" class="tabclassify" url="/page/index/pages/drag/drag?index={{currentTab}}">
+      <image src="/images/indexIcon/tabclassify.png"></image>
     </navigator>
   </view>
-  <template is="skeleton" wx:if="{{ !recommend[0]}}"></template>
   <swiper class="tab" style="height:{{ height }}px" current="{{ currentTab }}" duration="300" bindchange="switchTab"
     bindtouchstart="touchstart" bindtouchend="touchend">
     <swiper-item class="tab-item">
       <!--推荐  -->
       <view class="wrap recommend" id="recommend1">
         <!-- 广告位banner -->
-        <swiper indicator-dots="{{imgUrls.length > 1 ? true : false}}" autoplay interval="3500" duration="1000" circular
-          class="swiper" wx:if="{{imgUrls[0].image}}" current="{{bannercurrentTab}}">
-          <block wx:for="{{imgUrls}}" wx:key="index">
-            <swiper-item>
-              <image src="{{item.image}}" class="slide-image" width="355" height="150" catchtap="bannerGo"
-                data-item="{{ item }}" wx:if="{{!item.is_login}}" />
-              <image src="{{item.image}}" class="slide-image" width="355" height="150" catchtap="bannerGo"
-                data-item="{{ item }}" wx:if="{{item.is_login && $state.authUserInfo}}" />
-              <button class="slide-image" style="background:url({{item.image}});background-size: 100% 100%;"
-                open-type="getUserInfo" bindgetuserinfo="onGotUserInfo" data-type="banner" data-item="{{item}}"
-                wx:else></button>
-            </swiper-item>
-          </block>
-        </swiper>
-        <!-- 农场和电台 -->
-        <scroll-view class="jumpout" scroll-x enable-flex>
-          <navigator class="jumpoutBox" url="../../page/live/pages/timetable/timetable" hover-class="none">
-            <image class="img" mode="widthFix" src="{{  !recommend ? '' : '/images/liveBtn.png' }}">
-            </image>
-          </navigator>
-          <navigator class="jumpoutBox" url="/page/index/pages/rankingList/rankingList" hover-class="none">
-            <image class="img" mode="widthFix" src="{{  !recommend ? '' : $state.imgHost + '/rankingDoor2.png' }}">
-            </image>
-          </navigator>
-          <view class="jumpoutBox" bindtap="jumpmini">
-            <image class="img" mode="widthFix" src="{{  !recommend ? '' : $state.imgHost + '/pastureImg3.png'}}">
-            </image>
-          </view>
-          <navigator class="jumpoutBox" url="/pages/education/education?type=farm" hover-class="none">
-            <image class="img" mode="widthFix" src="{{  !recommend ? '' : $state.imgHost + '/nonghcangDoor.png' }}">
-            </image>
-          </navigator>
-          <!-- <view class="jumpoutBox" bindtap="jumpmini">
-            <image class="img" mode="widthFix" src="{{  !recommend ? '' : $state.imgHost + '/minigame.png'}}">
-            </image>
-          </view> -->
-          <!-- <navigator class="jumpoutBox" url="/pages/education/education?type=station" hover-class="none">
-            <image class="img" mode="widthFix" src="{{  !recommend ? '' : $state.imgHost + '/diantaiDoor.png'}}">
-            </image>
-          </navigator> -->
-          <view style="width: 30rpx;height: 100%;display: block;color: white;">
-            孙菲菲结果来看g
-          </view>
-        </scroll-view>
-        <view class="item" bindtap="jumpPeper" data-peper="{{paperMsg.url}}" wx:if="{{paperMsg.image}}">
-          <view class="content">
-            <view class="left">
-              <image class="poster" mode="aspectFill" src="{{ paperMsg.image}}" lazy-load="true"></image>
-            </view>
-            <view class="right">
-              <text class="title">{{ paperMsg.title }}</text>
-              <text class="line info">
-                <text class="createtime">{{ paperMsg.createtime }}</text>
-              </text>
-            </view>
+        <view class="swiperBox" wx:if="{{recommend[0]}}">
+          <swiper autoplay interval="3500" duration="200" circular class="swiper" wx:if="{{imgUrls[0].image}}"
+            current="{{bannercurrentTab}}" bindanimationfinish="centerTab">
+            <block wx:for="{{imgUrls}}" wx:key="index">
+              <swiper-item>
+                <image src="{{item.image}}" class="slide-image" width="355" height="150" catchtap="bannerGo"
+                  data-item="{{ item }}" wx:if="{{!item.is_login}}" />
+                <image src="{{item.image}}" class="slide-image" width="355" height="150" catchtap="bannerGo"
+                  data-item="{{ item }}" wx:if="{{item.is_login && $state.authUserInfo}}" />
+                <button class="slide-image" style="background:url({{item.image}});background-size: 100% 100%;"
+                  open-type="getUserInfo" bindgetuserinfo="onGotUserInfo" data-type="banner" data-item="{{item}}"
+                  wx:else></button>
+              </swiper-item>
+            </block>
+          </swiper>
+          <view class="indicatorBox">
+            <view class="indicatorItem {{bannercurrentTab == index ? 'indicatorActive' : ''}}" wx:for="{{imgUrls}}"
+              wx:key="index" wx:if="{{imgUrls.length > 1}}"></view>
           </view>
         </view>
-        <template is="recommend" data="{{recommend, $state}}"></template>
+        <template is="skeletonSwiper" wx:else></template>
+        <!-- 中间icon -->
+        <view class="centerIcon">
+          <navigator class="iconBox" hover-class="none" url="/pages/video/video">
+            <image src="/images/indexIcon/sortVideoicon.png"></image>
+            <text>短视频</text>
+          </navigator>
+          <navigator class="iconBox" hover-class="none" url="/page/index/pages/rankingList/rankingList">
+            <image src="/images/indexIcon/studyIcon.png"></image>
+            <text>学习榜</text>
+          </navigator>
+          <navigator class="iconBox" hover-class="none" url="/page/user/pages/score/score"
+            wx:if="{{$state.authUserInfo}}">
+            <image src="/images/indexIcon/scroeIcon.png"></image>
+            <text>学分兑换</text>
+          </navigator>
+          <button open-type="getUserInfo" bindgetuserinfo="onGotUserInfo" class="iconBox" data-type="score" wx:else>
+            <image src="/images/indexIcon/scroeIcon.png"></image>
+            <text>学分兑换</text>
+          </button>
+          <navigator class="iconBox" hover-class="none" url="/page/index/pages/hotActivity/hotActivity">
+            <image src="/images/indexIcon/hotActivityIcon.png"></image>
+            <text>热门活动</text>
+          </navigator>
+        </view>
+        <template is="liveBox" data="{{recommend, liveRecommend}}"></template>
+        <view>
+        </view>
+        <view class="liveBox">
+          <view class="topTtile">
+            <text>课程推荐</text>
+          </view>
+          <template is="skeleton" wx:if="{{ !recommend[0]}}"></template>
+          <template is="recommend" data="{{recommend, $state}}" wx:else></template>
+        </view>
+        <template is="nomore"></template>
       </view>
     </swiper-item>
     <swiper-item class="tab-item" wx:for="{{nav}}" wx:key="index" wx:if="{{!index == 0}}" item-id="{{item.name}}">
       <view class="wrap recommend" id="recommend{{item.id}}">
         <template is="skeleton" wx:if="{{ !catrecommend[item.id][0] }}"></template>
         <template is="recommend" data="{{ recommend:catrecommend[item.id], $state, type: 1}}"></template>
-        <view class="upbottom" wx:if="{{nav[currentTab].showBtoom}}">已经到底咯~</view>
+        <template is="nomore" wx:if="{{nav[currentTab].showBtoom}}"></template>
       </view>
     </swiper-item>
   </swiper>
@@ -225,15 +234,14 @@
     <image src="{{$state.imgHost}}/nowcancle.png" catchtap="closenow"></image>
   </view>
   <!-- 签到拿学分 -->
-  <view class="integration" wx:if="{{ !$state.signStatus.count && recommend[0] && !dialog[0].image}}"
+  <!-- <view class="integration" wx:if="{{ !$state.signStatus.count && recommend[0] && !dialog[0].image}}"
     catchtouchmove="return">
     <view class="dialog">
       <image class="bg" src="{{$state.imgHost}}/integrationBg.png" mode="aspectFill"></image>
       <view class="ani" catchtap="signIn" data-id="1"></view>
-      <!-- <button catchtap="signIn" data-id="1">签到领学分</button> -->
       <icon type="cancel" size="37" color="white" data-id="0" catchtap="signIn"></icon>
     </view>
-  </view>
+  </view> -->
   <!-- 活动弹窗 -->
   <view class="integration" wx:if="{{ recommend[0] && dialog[0].image && showdialog}}" catchtouchmove="return">
     <view class="dialog">
@@ -241,10 +249,12 @@
         style="background: url('{{dialog[0].image}}') no-repeat center; background-size: 100% 100%;border-radius:10px"
         src="{{dialog[0].image}}" mode="aspectFill" catchtap="jumpPeper" data-peper="{{dialog[0]}}" data-type="dialog">
       </view>
-      <!-- <button catchtap="signIn" data-id="1">签到领学分</button> -->
       <icon type="cancel" size="37" color="white" data-id="0" catchtap="closeSignIn"></icon>
     </view>
   </view>
+  <signinBox wx:if="{{ !$state.signStatus.count && recommend[0] && !dialog[0].image && showSignbox}}" state="{{$state}}"
+    top="{{topT}}" isIndex="{{true}}" bind:closesignBox="closesignBox" bind:showIntegral="showIntegral"
+    bind:sigin="sigin" />
 </view>
 <navigator url="/page/index/pages/assistant/assistant" hover-class="none">
   <image src="/images/xiaolin.png" class="xiaolin"></image>
@@ -252,23 +262,25 @@
 <!-- wx:if="{{ $state.newGuide.index == 0 }}" -->
 <cover-view class="getGuideBox" wx:if="{{ $state.newGuide.index == 0 }}">
   <cover-view class="numberbox" wx:if="{{guideNum == 1}}">
-    <cover-image src="{{$state.imgHost}}/indexguidsearch.png" class="guidsearch"></cover-image>
-    <cover-view class="numberbox-box" catchtap="nextGuide">
+    <cover-image src="{{$state.imgHost}}/indexguidsearch.png" class="guidsearch" style="top:{{topT + 132}}rpx">
+    </cover-image>
+    <cover-view class="numberbox-box" catchtap="nextGuide" style="top:{{topT + 200}}rpx">
       <cover-image src="{{$state.imgHost}}/indexguidsearchlabel.png" class="searchlabel"></cover-image>
     </cover-view>
   </cover-view>
   <cover-view class="numberbox" wx:if="{{guideNum == 2}}">
-    <cover-image src="{{$state.imgHost}}/indexguidtab.png" class="guidtab"></cover-image>
-    <cover-view class="gesture">
+    <cover-image src="{{$state.imgHost}}/indexguidtab.png" class="guidtab" style="top:{{topT + 244}}rpx"></cover-image>
+    <cover-view class="gesture" style="top:{{topT + 500}}rpx">
       <cover-image src="{{$state.imgHost}}/videoheng.png" class="indexGuide-img"></cover-image>
       <cover-image src="/images/handleRight.gif" class="indexGuide-imgactive"></cover-image>
     </cover-view>
-    <cover-view class="numberbox-boxt" catchtap="nextGuide">
+    <cover-view class="numberbox-boxt" catchtap="nextGuide" style="top:{{topT + 800}}rpx">
       <cover-image src="{{$state.imgHost}}/indexguidtablable.png" class="indexLeft"></cover-image>
     </cover-view>
   </cover-view>
   <cover-view class="numberbox" wx:if="{{guideNum == 3}}">
-    <cover-image src="{{$state.imgHost}}/categoryicon.png" class="indexSocre"></cover-image>
+    <cover-image src="{{$state.imgHost}}/categoryicon.png" class="indexSocre" style="top:{{topT + 265}}rpx">
+    </cover-image>
     <cover-view class="numberbox-boxr" catchtap="nextGuide">
       <cover-image src="{{$state.imgHost}}/categoryicontxt.png" class="indexsocermsg"></cover-image>
     </cover-view>
@@ -285,3 +297,7 @@
     </view>
   </view>
 </view>
+
+<!-- 学分动画 -->
+<integralAnimation integral="{{integral}}" integralContent="{{integralContent}}" wx:if="{{showintegral}}">
+</integralAnimation>

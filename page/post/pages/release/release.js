@@ -142,7 +142,7 @@ Page({
     this.setData({
       "param.content": e.detail.value,
     });
-    if (this.data.replyparam.blog_id) {
+    if (this.data.replyparam) {
       e.detail.value.length >= 200 ? wx.showToast({
         title: "评论字数不能超过200字哦！",
         icon: "none",

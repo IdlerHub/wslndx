@@ -20,8 +20,6 @@ page{
 }
 .nameInput__title {
   font-size: 36rpx;
-  font-family:PingFangSC-Medium,PingFang SC;
-  font-weight:500;
   color:rgba(51,51,51,1);
 }
 .nameInput__name {

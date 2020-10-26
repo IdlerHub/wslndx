@@ -1,0 +1,170 @@
+/* page/index/pages/hotActivity/hotActivity.wxss */
+page {
+  background-color: #EDEDED;
+}
+
+.contariner {
+  min-height: 100vh;
+  background: #ffffff;
+  padding-bottom: 60rpx;
+}
+
+.swiperBox {
+  padding: 20rpx;
+  position: relative;
+}
+
+.swiperBox {
+  height: 280rpx;
+}
+
+.swiperBox .swiperitem {
+  height: 100%;
+  border-radius: 16rpx;
+  overflow: hidden;
+  border: 1px solid #EDEDED;
+}
+
+.swiperBox .swiperitem image {
+  width: 100%;
+  height: 100%;
+}
+
+.swiperBox .indicatorBox {
+  position: absolute;
+  left: 50%;
+  bottom: 30rpx;
+  transform: translateX(-50%);
+  z-index: 6666;
+  display: flex;
+  align-items: center;
+}
+
+.swiperBox .indicatorBox .indicatorItem {
+  width: 26rpx;
+  height: 4rpx;
+  background: rgba(248, 248, 248, 0.6);
+  margin-right: 10rpx;
+}
+
+.swiperBox .indicatorBox .indicatorActive {
+  background: #F73943;
+}
+
+.moreBox {
+  padding: 30rpx;
+  padding-top: 40rpx;
+}
+
+.moreBox .moreTitle {
+  padding-bottom: 20rpx;
+  border-bottom: 1px solid #E9E9E9;
+  font-size: 36rpx;
+  font-weight: 500;
+  color: #333333;
+}
+
+.moreBox .listItem {
+  padding: 30rpx 0;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #E9E9E9;
+}
+
+.moreBox .listItem .imgMask {
+  width: 240rpx;
+  height: 146rpx;
+  border-radius: 10rpx;
+  background: #D8D8D8;
+  overflow: hidden;
+  position: relative;
+}
+
+.moreBox .listItem .imgMask .cover {
+  width: 100%;
+  height: 100%;
+}
+
+.moreBox .listItem .imgMask .mask {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  background: rgba(0, 0, 0, 0.6);
+}
+
+.moreBox .listItem .imgMask .finish {
+  width: 110rpx;
+  height: 110rpx;
+  right: 0;
+  bottom: 0;
+  position: absolute;
+}
+
+.moreBox .listItem .centerBox {
+  width: 314rpx;
+  display: flex;
+  flex-direction: column;
+  margin: 0 20rpx;
+}
+
+.moreBox .listItem .centerBox text:nth-child(1) {
+  overflow: hidden;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  display: -webkit-box;
+  font-size: 36rpx;
+  font-weight: 400;
+  color: #333333;
+}
+
+.moreBox .listItem .centerBox text:nth-child(2) {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  font-size: 28rpx;
+  font-weight: 400;
+  color: #999999;
+}
+
+.moreBox .listItem .itemBtn {
+  width: 96rpx;
+  height: 60rpx;
+  background: #F2323A;
+  border-radius: 10rpx;
+  font-size: 28rpx;
+  font-weight: 500;
+  color: #FFFFFF;
+  text-align: center;
+  line-height: 60rpx;
+  position: relative;
+}
+
+.moreBox .listItem .itemBtn .mask {
+  width: 100%;
+  height: 100%;
+  background: #FFF;
+  opacity: 0.8;
+  position: absolute;
+  top: 0;
+}
+
+.qs {
+  height: 100vh;
+  padding-top: 182rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.qs image {
+  width: 452rpx;
+  height: 288rpx;
+}
+
+.qs text {
+  margin-top: 8rpx;
+  font-size: 36rpx;
+  font-weight: 400;
+  color: #999999;
+}
