@@ -5,7 +5,7 @@
  */
 import Store from "wxministore";
 let env = "dev";
-let mpVersion = "v23"; /* 版本管理 */
+let mpVersion = "v24"; /* 版本管理 */
 /* 图片等静态资源服务器 */
 let imgBase = {
   dev: 'https://hwcdn.jinlingkeji.cn/images/dev',
