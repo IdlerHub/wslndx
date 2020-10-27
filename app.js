@@ -262,6 +262,9 @@ App({
           /* 新用户未注册 */
           console.log("tempCode", msg.data.tempCode);
           this.globalData.tempCode = msg.data.tempCode;
+          wx.reLaunch({
+            url: "/pages/sign/sign",
+          });
         } else {
           /* 旧用户 */
           wx.setStorageSync("token", msg.data.token);
