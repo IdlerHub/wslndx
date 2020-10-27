@@ -5,7 +5,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    orientation: 'vertical'
   },
 
   /**
@@ -75,6 +75,11 @@ Page({
     wx.setStorage({
       key:"txtScroll",
       data: e.scrollTop
+    })
+  },
+  checkOrientation() {
+    this.setData({
+      orientation: 'horizontal'
     })
   }
 })

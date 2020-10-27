@@ -75,7 +75,8 @@ Page({
   },
   checkCurrent(e) {
     this.setData({
-      current: e.currentTarget.dataset.index
+      current: e.currentTarget.dataset.index,
+      month: e.currentTarget.dataset.month
     }, () => {
       wx.pageScrollTo({
         duration: 0,

@@ -9,7 +9,7 @@
   </view>
   <view class="dateBox">
     <view class="dateItem {{current == index ? 'active' : ''}}" wx:for="{{7}}" wx:key="index" bindtap="checkCurrent"
-      data-index="{{index}}">
+      data-index="{{index}}" data-month="{{weeks[index].title}}">
       <text>{{weekList[index]}}</text>
       <text>{{weeks[index].day}}</text>
       <view class="now" wx:if="{{weeks[index].is_today}}"></view>

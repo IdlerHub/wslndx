@@ -37,7 +37,7 @@
     ]
   },
   "setting": {
-    "urlCheck": true,
+    "urlCheck": false,
     "es6": true,
     "enhance": true,
     "postcss": true,
@@ -153,13 +153,10 @@
           "scene": null
         },
         {
-          "name": "/plugin-private://wx2b03c6e691cd7370/pages/live-player-plugin?room_id=7",
-          "pathName": "__plugin__/wx2b03c6e691cd7370/pages/live-player-plugin?room_id=7",
-          "query": "lessonId=28",
-          "scene": 1035,
-          "referrerInfo": {
-            "appId": "wx756d04f5d669cef0"
-          }
+          "name": "pages/education/education",
+          "pathName": "pages/education/education",
+          "query": "url=www.baidu.com&type=123",
+          "scene": 1011
         },
         {
           "id": 12,
@@ -167,6 +164,15 @@
           "pathName": "pages/rankingList/rankingList",
           "query": "uid=12661&type=invite&mode=0",
           "scene": null
+        },
+        {
+          "name": "pages/education/education",
+          "pathName": "pages/education/education",
+          "query": "url=www.baidu.com&type=123",
+          "scene": 1069,
+          "referrerInfo": {
+            "appId": "wx756d04f5d669cef0"
+          }
         }
       ]
     }
