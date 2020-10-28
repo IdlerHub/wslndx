@@ -250,11 +250,9 @@ Page({
   getRecommendLessons(type) {
     if (this.data.liveRecommend[0] && !type) {
       setInterval(() => {
-        app.liveData.recommendLessons().then(res =>{
-          res.data.forEach((e, i) => {
-            this.setData({
-              [`liveRecommend[${i}].live_status`]: e.live_status
-            })
+        app.liveData.recommendLessons().then(res => {
+          this.setData({
+            liveRecommend: res.data
           })
         })
       }, 60000);
@@ -262,7 +260,7 @@ Page({
       app.liveData.recommendLessons().then(res => {
         this.setData({
           liveRecommend: res.data
-        },() => {
+        }, () => {
           res.data.length > 0 ? this.getRecommendLessons() : ''
         })
       })
@@ -714,10 +712,10 @@ Page({
     }
   },
   toLivelesson(e) {
-    let item =  e.currentTarget.dataset.item
+    let item = e.currentTarget.dataset.item
     wx.navigateTo({
-      url : "/page/live/pages/liveDetail/liveDetail?lessonId=" +
-      item.id
+      url: "/page/live/pages/liveDetail/liveDetail?lessonId=" +
+        item.id
     });
   }
 })
