@@ -345,6 +345,14 @@ page {
   color: rgba(128, 128, 128, 1);
   line-height: 40rpx;
   margin-bottom: 20rpx;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.liveLesson .lessonInfo .lessonTeacher {
+  display: flex;
+  align-items: center;
 }
 
 .liveLesson .lessonInfo .lessonTeacher image {
@@ -354,11 +362,15 @@ page {
 }
 
 .liveLesson .lessonInfo .lessonTeacher text {
+  width: 200rpx;
   font-size: 28rpx;
   font-family: PingFangSC-Regular, PingFang SC;
   font-weight: 400;
   color: #808080;
   line-height: 40rpx;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 }
 
 .lessonInfo .livingNow {

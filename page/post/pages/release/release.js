@@ -235,6 +235,7 @@ Page({
             this.delRecord()
           },
           error: function (result) {
+            console.log(result)
             wx.showToast({
               title: '上传失败'
             })
