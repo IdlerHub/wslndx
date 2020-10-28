@@ -713,6 +713,7 @@ Page({
             blog_id: e.currentTarget.dataset.item.blog_id,
             id: e.currentTarget.dataset.item.id
           };
+          app.backgroundAudioManager.stop()
           app.circle
             .delComment(param)
             .then(msg => {

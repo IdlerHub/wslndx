@@ -60,7 +60,6 @@ Page({
   },
   init() {
     return this.getLiveLessons().then(() => {
-      console.log(new Date().getDay())
       let cur = new Date().getDay() > 0 ? new Date().getDay() - 1 : 6; //当前周几对应跳转
       this.setData({
         toView: "week" + cur,

@@ -154,6 +154,7 @@ Page({
       content: "是否删除帖子",
       success: res => {
         if (res.confirm) {
+          app.backgroundAudioManager.stop()
           app.circle.delPost(param).then(msg => {
             circle.splice(i, 1)
             this.setData({
