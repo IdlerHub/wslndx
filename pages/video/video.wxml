@@ -20,7 +20,7 @@
     <view>”添加到我的小程序 </view>
     <!--  <cover-image src="/images/shouzhi.png" class="iconfont" style="left:{{ rect.left + 10 }}px"></cover-image> -->
   </view>
-  <swiper class="swiper" current="{{ currentTab }}" duration="300" bindchange="switchTab">
+  <swiper class="swiper" current="{{ currentTab }}" duration="300" bindanimationfinish="switchTab">
     <swiper-item>
         <!-- 授权 -->
         <cover-view wx:if="{{ cur && $state.baseInfo }}" class="dropback  frontdrop">

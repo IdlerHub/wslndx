@@ -1,6 +1,6 @@
 <view class="container">
   <!-- wx:if="{{!showplece && !detail.school_dialog}}" -->
-  <video id="myVideo" src="{{ cur.url }}" controls page-gesture enable-play-gesture bindended="ended" bindtimeupdate="timeupdate" bindplay="played" bindpause="videoPause" wx:if="{{!showplece || !detail.school_dialog}}">
+  <video id="myVideo" src="{{ cur.url }}" controls page-gesture enable-play-gesture bindended="ended" bindplay="played" bindpause="videoPause" wx:if="{{!showplece || !detail.school_dialog}}">
     <cover-view wx:if="{{ vistor && tip }}" class="vistor-head">
       <cover-view>点击“</cover-view>
       <cover-image src="/images/xiaochengxu.png" class="iconfont"></cover-image>

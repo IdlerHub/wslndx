@@ -22,7 +22,7 @@ Page({
     })
   },
   getHost() {
-    app.activity.hots().then(res => {
+    app.activity.hots({page_size: 100}).then(res => {
       this.setData({
         activityList: res.data
       })

@@ -36,6 +36,9 @@ Page({
     let pages = getCurrentPages();
     this.beforePage = pages[0];
     this.getCategory()
+    wx.uma.trackEvent('index_btnClick', {
+      btnName: '分类菜单'
+    });
   },
   onShow() {
   },

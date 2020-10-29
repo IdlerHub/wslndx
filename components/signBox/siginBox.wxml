@@ -1,0 +1,4 @@
+<!--components/signBox/siginBox.wxml-->
+<button hover-class="none" plain open-type="getPhoneNumber" mut-bind:getphonenumber="getphonenumber">
+  <slot></slot>
+</button>

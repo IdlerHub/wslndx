@@ -53,10 +53,10 @@
     <view class="liveBox" wx:if="{{liveRecommend[0]}}">
       <view class="topTtile">
         <text>直播推荐</text>
-        <view class="topTtile-right">
+        <navigator class="topTtile-right" url="/page/live/pages/liveCenter/liveCenter" hover-class="none">
           <text>更多课程</text>
           <image src="/images/Return-black.png"></image>
-        </view>
+        </navigator>
       </view>
       <view class="comment">
         <view wx:for="{{liveRecommend}}" wx:key="index" class="liveItem"
@@ -111,7 +111,7 @@
   </view>
   <view class="top" style="padding-top:{{ topT }}px" wx:if="{{recommend[0]}}" bindtap="toInfo">
     <view class="avatarBox" catchtap="toUser" wx:if="{{$state.authUserInfo}}">
-      <open-data class="img" type="userAvatarUrl"></open-data>
+      <image class="img" src="{{$state.userInfo.avatar}}" alt=""></image>
     </view>
     <button class="avatarBox" wx:else open-type="getUserInfo" bindgetuserinfo="onGotUserInfo" data-role="user"
       catchtap="getSomthin">
@@ -147,7 +147,7 @@
         </formCode>
       </block>
     </scroll-view>
-    <navigator class="tabclassify" url="/page/index/pages/drag/drag?index={{currentTab}}">
+    <navigator hover-class="none" class="tabclassify" url="/page/index/pages/drag/drag?index={{currentTab}}">
       <image src="/images/indexIcon/tabclassify.png"></image>
     </navigator>
   </view>

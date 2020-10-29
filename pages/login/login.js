@@ -1,6 +1,8 @@
 // pages/login/login.js
 const app = getApp()
-import { wxp } from "../../utils/service";
+import {
+  wxp
+} from "../../utils/service";
 Page({
   /**
    * 页面的初始数据
@@ -15,7 +17,14 @@ Page({
     loginCode: ''
   },
   pageName: '登陆页',
-  params: { tel: "", authCode: "", telFormat: false, codeFormat: false, mode: 1, tempCode: null },
+  params: {
+    tel: "",
+    authCode: "",
+    telFormat: false,
+    codeFormat: false,
+    mode: 1,
+    tempCode: null
+  },
   /**
    * 生命周期函数--监听页面加载
    */
@@ -63,8 +72,8 @@ Page({
     })
   },
   /**
-  * 生命周期函数--监听页面卸载
-  */
+   * 生命周期函数--监听页面卸载
+   */
   onUnload: function () {
     if (!this.data.$state.userInfo.mobile) {
       this.params.mode = this.data.mode
@@ -110,7 +119,9 @@ Page({
   getCode() {
     if (this.params.telFormat) {
       /* send  code */
-      app.user.getAuthCode({ mobile: this.params.tel }).then(res => {
+      app.user.getAuthCode({
+        mobile: this.params.tel
+      }).then(res => {
         this.setData({
           btnName: "重新获取",
         })
@@ -190,7 +201,10 @@ Page({
   login(param) {
     app.user.register(param).then(res => {
       /* 新用户注册不用提示签到 */
-      app.setSignIn({ status: false, count: 1 })
+      app.setSignIn({
+        status: false,
+        count: 1
+      })
       wx.setStorageSync("token", res.data.token)
       wx.setStorageSync("uid", res.data.uid)
       wx.setStorageSync("authKey", res.data.authKey)
@@ -220,7 +234,11 @@ Page({
             params.push(attr + "=" + app.globalData.query[attr])
           }
           setTimeout(() => {
-            app.globalData.shareObj.type == 'lottery' ? wx.reLaunch({ url: "/pages/education/education?type=lottery&login=1&id=" + app.globalData.lotteryId }) : wx.reLaunch({ url: app.globalData.path + "?" + params.join("&") })
+            app.globalData.shareObj.type == 'lottery' ? wx.reLaunch({
+              url: "/pages/education/education?type=lottery&login=1&id=" + app.globalData.lotteryId
+            }) : wx.reLaunch({
+              url: app.globalData.path + "?" + params.join("&")
+            })
           }, 2000)
         } else if (app.globalData.query.liveShare) {
           let lessonId = app.globalData.query.lessonId;
@@ -230,32 +248,41 @@ Page({
               url: `/page/live/pages/tableDetail/tableDetail?lessonId=${lessonId}&inviter=${inviter}`,
             });
           }, 2000);
-        }else if (app.globalData.shareObj.p || app.globalData.query.vote) {
-          setTimeout(() => {
-            wx.reLaunch({
-              url:
-                "/page/vote/pages/voteArticle/voteArticle?voteid=" +
-                (app.globalData.shareObj.o
-                  ? app.globalData.shareObj.o
-                  : app.globalData.query.voteid),
+        } else if (app.globalData.shareObj.p || app.globalData.query.vote) {
+          setTimeout(() => {
+            wx.reLaunch({
+              url: "/page/vote/pages/voteArticle/voteArticle?voteid=" +
+                (app.globalData.shareObj.o ?
+                  app.globalData.shareObj.o :
+                  app.globalData.query.voteid),
             });
-          }, 2000);
-        }  else {
+          }, 2000);
+        } else if (app.globalData.query.type == "recruit" || app.globalData.shareObj.type == "recruit") {
+          setTimeout(() => {
+            wx.reLaunch({
+              url: "/pages/education/education?type=recruit&url=" + app.globalData.url || app.globalData.shareObj.url
+            });
+          }, 2000);
+        } else {
           /*跳转首页*/
           setTimeout(() => {
-            wx.reLaunch({ url: "/pages/index/index?type=login" })
+            wx.reLaunch({
+              url: "/pages/index/index?type=login"
+            })
           }, 2000)
         }
       }
     }).catch(err => {
-      if(err.msg == '您已经注册过') {
+      if (err.msg == '您已经注册过') {
         wx.setStorageSync("token", err.data.token)
         wx.setStorageSync("uid", err.data.uid)
         wx.setStorageSync("authKey", err.data.authKey)
         app.setUser(err.data.userInfo)
         app.setAuthKey(err.data.authKey)
         app.globalData.tempCode = null
-        wx.reLaunch({ url: "/pages/index/index?type=login" })
+        wx.reLaunch({
+          url: "/pages/index/index?type=login"
+        })
       } else {
         wx.showToast({
           title: err.msg,

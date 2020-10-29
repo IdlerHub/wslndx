@@ -44,10 +44,8 @@
       <navigator class="iconItem" wx:for="{{myList}}" wx:key="index" hover-class="none" url="{{item.page}}"
         target="{{ item.isMini ? 'miniProgram': 'self' }}" app-id="{{item.appId}}" path="">
         <image src="{{item.icon}}"></image>
-        <text wx:if="{{!item.isNews}}">{{item.name}}</text>
-        <view class="news" wx:else>我的消息
-          <view class="smallred" wx:if="{{showMes > 0}}"></view>
-        </view>
+        <text>{{item.name}}</text>
+        <view class="smallred" wx:if="{{showMes > 0 && item.isNews}}"></view>
       </navigator>
     </view>
   </view>

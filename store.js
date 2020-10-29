@@ -4,36 +4,41 @@
  * @LastEditTime: 2020-08-11 18:00:20
  */
 import Store from "wxministore";
-let env = "develop";
-let imgHost;
-let activityUrl;
-let API_URL;
-let socket_host;
-let mpVersion = "v23"; /* 版本管理 */
-if (env == "develop") {
-  /* 测试环境 */
-  imgHost =
-    "https://hwcdn.jinlingkeji.cn/images/dev"; /* 图片等静态资源服务器 */
-  activityUrl = "https://gqjydev.jinlingkeji.cn/?"; /* 国情教育链接 */
-  API_URL = `https://lndxdev.jinlingkeji.cn/api/${mpVersion}/`; /* 数据服务器 */
-  socket_host = "develop.jinlingkeji.cn:8182";
-} else if (env == "production") {
-  /* 发布环境 */
-  imgHost = "https://hwcdn.jinlingkeji.cn/images/pro";
-  activityUrl = "https://gqjy.jinlingkeji.cn/?";
-  API_URL = `https://apielb.jinlingkeji.cn/api/${mpVersion}/`;
-  socket_host = "api.jinlingkeji.cn:8182";
-} else {
-  imgHost = "https://hwcdn.jinlingkeji.cn/images/pro";
-  activityUrl = "https://gqjy.jinlingkeji.cn/?";
-  API_URL = `https://lndxpre.jinlingkeji.cn/api/${mpVersion}/`;
-  socket_host = "api.jinlingkeji.cn:8182";
+let env = "test";
+let mpVersion = "v24"; /* 版本管理 */
+/* 图片等静态资源服务器 */
+let imgBase = {
+  dev: 'https://hwcdn.jinlingkeji.cn/images/dev',
+  test: 'https://hwcdn.jinlingkeji.cn/images/dev',
+  pro: 'https://hwcdn.jinlingkeji.cn/images/pro',
+  testpro: 'https://hwcdn.jinlingkeji.cn/images/pro'
+}
+/* 国情教育链接 */
+let activityBase = {
+  dev: 'https://gqjydev.jinlingkeji.cn/?',
+  test: 'https://gqjydev.jinlingkeji.cn/?',
+  pro: 'https://gqjy.jinlingkeji.cn/?',
+  testpro: 'https://gqjy.jinlingkeji.cn/?'
+}
+/* 数据服务器 */
+let API_URLBASE = {
+  dev: `https://lndxdev.jinlingkeji.cn/api/${mpVersion}/`,
+  test: `https://lndxtest.jinlingkeji.cn/api/${mpVersion}/`,
+  pro: `https://apielb.jinlingkeji.cn/api/${mpVersion}/`,
+  testpro: `https://lndxpre.jinlingkeji.cn/api/${mpVersion}/`
+}
+/* webSocket服务 */
+let socetBase = {
+  dev: "lndxdev.jinlingkeji.cn:8182",
+  test: "lndxtest.jinlingkeji.cn:8182",
+  pro: "apielb.jinlingkeji.cn:8182",
+  testpro: "lndxpre.jinlingkeji.cn:8182"
 }
 
 Store.prototype.process = env;
-Store.prototype.API_URL = API_URL;
+Store.prototype.API_URL = API_URLBASE[env];
 Store.prototype.mpVersion = mpVersion;
-Store.prototype.socket_host = socket_host;
+Store.prototype.socket_host = socetBase[env];
 
 let store = new Store({
   state: {
@@ -44,9 +49,9 @@ let store = new Store({
     visitedNum: [] /* 最多10个未授权视频 */ ,
     baseInfo: false /* 提示已超过10个视频，要求授权 */ ,
     authKey: "" /* 小程序进入h5的身份标识 */ ,
-    activityUrl: activityUrl,
+    activityUrl: activityBase[env],
     signStatus: {} /* 签到状态及弹窗 */ ,
-    imgHost: imgHost,
+    imgHost: imgBase[env],
     title: "",
     path: "",
     imageUrl: "",
@@ -87,13 +92,11 @@ let store = new Store({
       wx.uma.trackEvent("join_page", {
         pageName: this.pageName,
       });
-      this.pageRecord ?
-        [this.getPlayerState(), wx.setKeepScreenOn({
-          keepScreenOn: true
-        })] :
-        [getApp().backgroundAudioManager.stop(), wx.setKeepScreenOn({
-          keepScreenOn: false
-        })];
+      this.pageRecord ? [this.getPlayerState(), wx.setKeepScreenOn({
+        keepScreenOn: true
+      })] : [getApp().backgroundAudioManager.stop(), wx.setKeepScreenOn({
+        keepScreenOn: false
+      })];
     },
     onHide() {
       wx.uma.trackEvent("move", {

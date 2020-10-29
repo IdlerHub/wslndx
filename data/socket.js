@@ -21,7 +21,11 @@ socket.prototype = {
     this.id = id;
     let token = wx.getStorageSync("token");
     let timestamp = parseInt(new Date().getTime() / 1000 + "");
-    let sign = md5("uid=" + id + "&token=" + token + "&timestamp=" + timestamp);
+    // let sign = md5("uid=" + id + "&token=" + token + "&timestamp=" + timestamp);
+    let header = {
+      "content-type": "application/json",
+      "Authorization": "Bearer " + token
+    }
     this.SocketTask = wx.connectSocket({
       url:
         "wss://" +
@@ -29,12 +33,8 @@ socket.prototype = {
         "?uid=" +
         id +
         "&timestamp=" +
-        timestamp +
-        "&sign=" +
-        sign,
-      header: {
-        "content-type": "application/json"
-      },
+        timestamp,
+      header,
       method: "GET"
     });
 

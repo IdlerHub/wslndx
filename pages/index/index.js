@@ -46,7 +46,7 @@ Page({
         topT: 28
       }) :
       this.setData({
-        topT: 50
+        topT: 48
       });
     this.setData({
       top: pt + h
@@ -103,7 +103,7 @@ Page({
     this.data.isSign ? this.signIn() : ''
   },
   init() {
-    return Promise.all([this.getactivite(), this.getRecommendLessons(), this.getRecommend(), this.getCategory(), this.getBanner(), this.getPaper(), this.getDialog(), this.getGuide(), this.getUserOpenid()]).then(values => {
+    return Promise.all([this.getactivite(), this.getRecommendLessons(1), this.getRecommend(), this.getCategory(), this.getBanner(), this.getPaper(), this.getDialog(), this.getGuide(), this.getUserOpenid()]).then(values => {
       if (this.data.$state.newGuide.index == 0) {
         this.setData({
           guideNum: 1,
@@ -247,14 +247,12 @@ Page({
       wx.hideLoading()
     })
   },
-  getRecommendLessons() {
-    if (this.data.liveRecommend[0]) {
+  getRecommendLessons(type) {
+    if (this.data.liveRecommend[0] && !type) {
       setInterval(() => {
-        app.liveData.recommendLessons().then(res =>{
-          res.data.forEach((e, i) => {
-            this.setData({
-              [`liveRecommend[${i}][live_status]`]: e.live_status
-            })
+        app.liveData.recommendLessons().then(res => {
+          this.setData({
+            liveRecommend: res.data
           })
         })
       }, 60000);
@@ -262,7 +260,7 @@ Page({
       app.liveData.recommendLessons().then(res => {
         this.setData({
           liveRecommend: res.data
-        },() => {
+        }, () => {
           res.data.length > 0 ? this.getRecommendLessons() : ''
         })
       })
@@ -714,10 +712,10 @@ Page({
     }
   },
   toLivelesson(e) {
-    let item =  e.currentTarget.dataset.item
+    let item = e.currentTarget.dataset.item
     wx.navigateTo({
-      url : "/page/live/pages/liveDetail/liveDetail?lessonId=" +
-      item.id
+      url: "/page/live/pages/liveDetail/liveDetail?lessonId=" +
+        item.id
     });
   }
 })

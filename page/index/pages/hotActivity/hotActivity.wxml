@@ -23,52 +23,60 @@
     <view class="moreTitle">
       更多活动
     </view>
-    <view wx:for="{{activityList}}" wx:key="index" data-item="{{item}}">
-      <view class="listItem" wx:if="{{!item.is_login}}" bindtap="bannerGo" data-item="{{item}}">
-        <view class="imgMask">
-          <image src="{{item.image}}" class="cover"></image>
-          <view class="mask" wx:if="{{item.is_finish}}"></view>
-          <image class="finish" src="../../images/finish.png" wx:if="{{item.is_finish}}"></image>
+    <view wx:if="{{activityList[0]}}">
+      <view wx:for="{{activityList}}" wx:key="index" data-item="{{item}}">
+        <view class="listItem" wx:if="{{!item.is_login}}" bindtap="bannerGo" data-item="{{item}}">
+          <view class="imgMask">
+            <image src="{{item.image}}" class="cover"></image>
+            <view class="mask" wx:if="{{item.is_finish}}"></view>
+            <image class="finish" src="../../images/finish.png" wx:if="{{item.is_finish}}"></image>
+          </view>
+          <view class="centerBox">
+            <text>{{item.name}}</text>
+            <text>{{item.description}}</text>
+          </view>
+          <view class="itemBtn">
+            {{ item.is_finish ? '结束' : '参与'}}
+            <view class="mask" wx:if="{{item.is_finish}}"></view>
+          </view>
         </view>
-        <view class="centerBox">
-          <text>{{item.name}}</text>
-          <text>{{item.description}}</text>
+        <view class="listItem" wx:elif="{{item.is_login && $state.authUserInfo }}" bindtap="bannerGo"
+          data-item="{{item}}">
+          <view class="imgMask">
+            <image src="{{item.image}}" class="cover"></image>
+            <view class="mask" wx:if="{{item.is_finish}}"></view>
+            <image class="finish" src="../../images/finish.png" wx:if="{{item.is_finish}}"></image>
+          </view>
+          <view class="centerBox">
+            <text>{{item.name}}</text>
+            <text>{{item.description}}</text>
+          </view>
+          <view class="itemBtn">
+            {{ item.is_finish ? '结束' : '参与'}}
+            <view class="mask" wx:if="{{item.is_finish}}"></view>
+          </view>
         </view>
-        <view class="itemBtn">
-          {{ item.is_finish ? '结束' : '参与'}}
-          <view class="mask" wx:if="{{item.is_finish}}"></view>
-        </view>
+        <button class="listItem" open-type="getUserInfo" bindgetuserinfo="onGotUserInfo" data-type="banner"
+          data-item="{{item}}" data-item="{{item}}" wx:else>
+          <view class="imgMask">
+            <image src="{{item.image}}" class="cover"></image>
+            <view class="mask" wx:if="{{item.is_finish}}"></view>
+            <image class="finish" src="../../images/finish.png" wx:if="{{item.is_finish}}"></image>
+          </view>
+          <view class="centerBox">
+            <text>{{item.name}}</text>
+            <text>{{item.description}}</text>
+          </view>
+          <view class="itemBtn">
+            {{ item.is_finish ? '结束' : '参与'}}
+            <view class="mask" wx:if="{{item.is_finish}}"></view>
+          </view>
+        </button>
       </view>
-      <view class="listItem" wx:elif="{{item.is_login && $state.authUserInfo }}" bindtap="bannerGo" data-item="{{item}}">
-        <view class="imgMask">
-          <image src="{{item.image}}" class="cover"></image>
-          <view class="mask" wx:if="{{item.is_finish}}"></view>
-          <image class="finish" src="../../images/finish.png" wx:if="{{item.is_finish}}"></image>
-        </view>
-        <view class="centerBox">
-          <text>{{item.name}}</text>
-          <text>{{item.description}}</text>
-        </view>
-        <view class="itemBtn">
-          {{ item.is_finish ? '结束' : '参与'}}
-          <view class="mask" wx:if="{{item.is_finish}}"></view>
-        </view>
-      </view>
-      <button class="listItem" open-type="getUserInfo" bindgetuserinfo="onGotUserInfo" data-type="banner" data-item="{{item}}" data-item="{{item}}" wx:else>
-        <view class="imgMask">
-          <image src="{{item.image}}" class="cover"></image>
-          <view class="mask" wx:if="{{item.is_finish}}"></view>
-          <image class="finish" src="../../images/finish.png" wx:if="{{item.is_finish}}"></image>
-        </view>
-        <view class="centerBox">
-          <text>{{item.name}}</text>
-          <text>{{item.description}}</text>
-        </view>
-        <view class="itemBtn">
-          {{ item.is_finish ? '结束' : '参与'}}
-          <view class="mask" wx:if="{{item.is_finish}}"></view>
-        </view>
-      </button>
+    </view>
+    <view wx:else class="qs" style="height: 600rpx;">
+      <image src="../../images/activityNo.png"></image>
+      <text>暂无活动</text>
     </view>
   </view>
 </view>

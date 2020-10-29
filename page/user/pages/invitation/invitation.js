@@ -37,6 +37,7 @@ Page({
     });
 
     app.user.userQr({ type: this.data.type }).then(res => {
+      console.log(res.data)
       wxp.getImageInfo({ src: res.data }).then(res => {
         if (res.errMsg == "getImageInfo:ok") {
           this.param.count += 1;

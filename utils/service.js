@@ -3,7 +3,9 @@
  * @LastEditors: hxz
  * @LastEditTime: 2020-03-06 10:11:55
  */
-import { promisifyAll } from "miniprogram-api-promise";
+import {
+  promisifyAll
+} from "miniprogram-api-promise";
 const wxp = {};
 import store from "../store";
 promisifyAll(wx, wxp);
@@ -47,7 +49,7 @@ function handle(req, res) {
 
 }
 
-function xhr(path, method, param = {}, noToken) {
+function xhr(path, method, param = {}, noToken, header) {
   wx.showNavigationBarLoading();
   //是否需要登录信息才能请求
   if (!noToken) {
@@ -55,15 +57,18 @@ function xhr(path, method, param = {}, noToken) {
     if (!token) return Promise.reject("请登录后再请求");
     param.uid = wx.getStorageSync("uid");
     param.timestamp = parseInt(new Date().getTime() / 1000 + "");
-    param.sign = md5(
-      "uid=" + param.uid + "&token=" + token + "&timestamp=" + param.timestamp
-    );
+    // param.sign = md5(
+    //   "uid=" + param.uid + "&token=" + token + "&timestamp=" + param.timestamp
+    // );
+    header = {}
+    header['Authorization'] = "Bearer " + token
   }
 
   let req = {
     method: method,
     data: param || {},
-    url: getApp().API_URL + path
+    url: getApp().API_URL + path,
+    header: header || {}
   };
 
   return new Promise((resolve, reject) => {
@@ -72,18 +77,18 @@ function xhr(path, method, param = {}, noToken) {
       success(res) {
         if (res.statusCode == 200 && res['data'] && res['data']['code'] == 1) {
           resolve(res.data);
-        } else if(res['data']['code'] == 110) {
+        } else if (res['data']['code'] == 110) {
           store.setState({
             blackShow: true
           })
           return
-        }else {
+        } else {
           handle(req, res);
           reject(res['data']);
         }
       },
       fail(err) {
-        if(!err.statusCode) {
+        if (!err.statusCode) {
           wx.showToast({
             title: '网络错误请退出小程序重试',
             icon: "none"
@@ -101,16 +106,16 @@ function xhr(path, method, param = {}, noToken) {
 }
 
 // post
-function post(path, param = {}, noToken) {
+function post(path, param = {}, noToken, header) {
   return xhr(path, "POST", param, noToken);
 }
 // delete
-function del(path, param = {}, noToken, type) {
+function del(path, param = {}, noToken, type, header) {
   return xhr(path, "DELETE", param, noToken);
 }
 
 //文件上传
-function upload(path, file, noLoading) {
+function upload(path, file, noLoading, header) {
   wx.showNavigationBarLoading();
   let url = getApp().API_URL + path;
   if (!noLoading) {
@@ -129,13 +134,13 @@ function upload(path, file, noLoading) {
     formData: {}
   };
   return wxp.uploadFile(req).then(
-    function(res) {
+    function (res) {
       handle(req, res);
       if (!noLoading) wx.hideLoading();
       wx.hideNavigationBarLoading();
       return res.data;
     },
-    function(res) {
+    function (res) {
       handle(req, res);
       if (!noLoading) wx.hideLoading();
       wx.hideNavigationBarLoading();

@@ -450,12 +450,14 @@ Page({
     }
   },
   switchTab(event) {
+    console.log(event)
     let cur = event.detail.current;
     this.setData({
       currentTab: cur
-    });
-    cur == 0 ? this.judgeWifi() : this.setData({
-      pause: true
+    }, () => {
+      cur == 0 ? this.judgeWifi() : this.setData({
+        pause: true
+      });
     });
   },
   showred() {
