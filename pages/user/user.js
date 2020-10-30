@@ -35,7 +35,7 @@ Page({
     let myList = [
       {id: 1, name: '我的课程', page: '/page/live/pages/timetableList/timetableList',icon: '/images/userIcon/courseIcon.png'},
       {id: 2, name: '我的作品', page: '/page/user/pages/myCircle/myCircle',icon: '/images/userIcon/myworkIcon.png'},
-      {id: 3, name: '我的关注', page: '/page/user/pages/attentionPage/attentionPage',icon: '/images/userIcon/attentionIcon.png'},
+      {id: 3, name: '我的关注', page: '../../page/user/pages/attentionPage/attentionPage',icon: '/images/userIcon/attentionIcon.png'},
       {id: 4, name: '加入圈子', page: '/page/user/pages/circle/circle?type=1',icon: '/images/userIcon/useraddquan.png'},
       {id: 5, name: '我的收藏', page: '/page/user/pages/collection/collection',icon: '/images/userIcon/usershoucang.png'},
       {id: 6, name: '学习历史', page: '/page/user/pages/history/history',icon: '/images/userIcon/historyicon.png'},

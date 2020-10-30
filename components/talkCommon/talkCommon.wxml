@@ -6,15 +6,15 @@
       wx:if="{{!item.share}}"></rich-text>
       <text class="shareTxt" wx:else>{{item.name}} 分享了课程</text>
       <button class="specalBox shareBox" hover-class="none" open-type="share" wx:if="{{item.share}}">
-        <view class="specalBox shareBox" >
+        <view class="specalBox" style="margin: 0;">
         <image src="../../images/weixin.png" class="weixin"></image>
         <text>去分享</text>
       </view>
       </button>
-      <view class="specalBox appBox" wx:if="{{item.fromApp}}">
+      <navigator class="specalBox appBox" wx:if="{{item.fromApp}}" hover-class="none" url="/pages/education/education?type=0&url=https://mp.weixin.qq.com/s/vSd8XBQDQkvqVX_kt_YyTQ">
         <image src="../../images/toAppIcon.png" class="weixin"></image>
         <text>去APP</text>
-      </view>
+      </navigator>
     </view>
     </view>
 </scroll-view>
