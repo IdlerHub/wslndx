@@ -2,9 +2,11 @@
 <live-player src="" class="player" autoplay>
   <image src='../../images/testBag.png' class="testBag"></image>
   <view class="topBox" style="top: {{ topT }}px">
-    <image src="../../images/liveBack.png" class="liveBack"></image>
+    <image src="../../images/liveBack.png" class="liveBack" bindtap="back"></image>
     <view class="tearchBox">
-      <image src="https://lndx-app.obs.cn-north-1.myhuaweicloud.com/myInfo/2020/6/01b8df725a774070ae4d17d90cdd41feF030F1ED-9C4A-4B27-9FAE-304E00722A28.jpg"></image>
+      <image
+        src="https://lndx-app.obs.cn-north-1.myhuaweicloud.com/myInfo/2020/6/01b8df725a774070ae4d17d90cdd41feF030F1ED-9C4A-4B27-9FAE-304E00722A28.jpg">
+      </image>
       <view class="txtCenter">
         <text>天山雪莲风格豆腐干</text>
         <text>1234人在看</text>
@@ -15,6 +17,30 @@
       </view>
     </view>
   </view>
-  <talkCommon talkList="{{talkList}}"/>
-  <view class="more" bindtap="add">+1</view>
+  <talkCommon talkList="{{talkList}}" wx:if="{{!close}}" />
+  <navigator class="downloadeApp"
+    url="/pages/education/education?type=0&url=https://mp.weixin.qq.com/s/vSd8XBQDQkvqVX_kt_YyTQ" hover-class="none">
+    <image src="../../images/dowloafeApp.png" bindtap="downloadeApp"></image>
+  </navigator>
+  <view class="bottomBox">
+    <view class="itemBox captionBox {{ close ? 'close' : '' }}" bindtap="checkCaption">
+      <image src="../../images/captionIcon.png"></image>
+      <text>字幕</text>
+    </view>
+    <view class="clickBox">说点什么～</view>
+    <view class="itemBox backBox">
+      <image src="../../images/endIcon.png"></image>
+      <text>回播</text>
+    </view>
+    <button class="itemBox shareBox" hover-class="none" open-type="share">
+      <view class="itemBox shareBox">
+        <image src="../../images/shareIcon.png"></image>
+        <text>分享</text>
+      </view>
+    </button>
+    <view class="itemBox praiseBox">
+      <text class="praiseNum">5</text>
+      <image src="../../images/praise.png"></image>
+    </view>
+  </view>
 </live-player>

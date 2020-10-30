@@ -1,30 +1,74 @@
 /* components/talkCommon/talkCommon.wxss */
 .scrollView {
-  width: 466rpx;
+  width: 506rpx;
   height: 480rpx;
   position: fixed;
   left: 30rpx;
   bottom: 150rpx;
-  display: flex;
-  flex-direction: column;
 }
 
-.scrollView .talkItem {
-  width: 100%;
+.talkItem {
+  display: inline-block;
+  max-width: 100%;
   padding: 20rpx;
+  box-sizing: border-box;
   box-sizing: border-box;
   color: #fff;
   background: rgba(0, 0, 0, 0.1);
   border-radius: 16rpx;
-  font-size: 36rpx;
-  line-height: 50rpx;
-  font-family: PingFangSC-Regular, PingFang SC;
-  font-weight: 400;
   margin-bottom: 10rpx;
 }
 
-.scrollView .talkItem text {
+.talkItem .contentBox {
+  display: flex;
+  font-size: 36rpx;
+  line-height: 50rpx;
+  font-weight: 400;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.talkItem .contentBox text {
   color: #E6E6E6;
+}
+
+.talkItem .contentBox .shareTxt {
+  color: #FFF000;
+}
+
+.talkItem .contentBox .specalBox {
+  width: 159rpx;
+  height: 68rpx;
+  margin-left: 20rpx;
+  border-radius: 40rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28rpx;
+  font-weight: 500;
+  color: #FFFFFF;
+}
+
+.talkItem .contentBox .shareBox {
+  background: linear-gradient(90deg, #43DE80 0%, #1CCA61 100%);
+  line-height: normal;
+  text-align: unset;
+}
+
+.talkItem .contentBox .appBox {
+  background: linear-gradient(90deg, #FFB441 0%, #FE7A02 100%);
+}
+
+.talkItem .contentBox .shareBox image {
+  width: 39rpx;
+  height: 39rpx;
+  margin-right: 6rpx;
+}
+
+.talkItem .contentBox .appBox image {
+  width: 25.25rpx;
+  height: 37.44rpx;
+  margin-right: 11rpx;
 }
 
 ::-webkit-scrollbar {

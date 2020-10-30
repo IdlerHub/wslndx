@@ -4,11 +4,11 @@ import TIM from 'tim-wx-sdk'
 Page({
   data: {
     topT: 28,
-    talkList: []
+    talkList: [],
+    close: 0
   },
   onLoad: function () {
     let systemInfo = wx.getSystemInfoSync()
-    console.log(systemInfo.statusBarHeight)
     systemInfo.statusBarHeight < 30 ?
     this.setData({
       topT: systemInfo.statusBarHeight + 4
@@ -18,20 +18,30 @@ Page({
     });
     let talkList = [
       {
-        name: '李思',
+        name: '李思:  ',
         content: '交互往上消失'
       },
       {
-        name: '李思',
+        name: '李思:  ',
         content: '交互往上消失'
       },
       {
-        name: '我爱割韭菜',
+        name: '我爱割韭菜:  ',
         content: '好的，等待开始'
       },
       {
-        name: '李思',
+        name: '李思:  ',
         content: '老师讲的这个要点非常好！'
+      },
+      {
+        name: '李思:  ',
+        content: '分享了课程',
+        share: 1
+      },
+      {
+        name: '李思:  ',
+        content: '讲得很棒！',
+        fromApp: 1
       },
     ]
     this.setData({
@@ -54,18 +64,29 @@ Page({
 
   },
   onShareAppMessage: function () {
-
+    return {
+      imageUrl: "../../../../images/sharemessage.jpg",
+      title: '案件大会的恢复',
+      path: "/page/live/pages/liveVideo/liveVideo?id=" +
+        123 +
+        "&type=share&uid=" +
+        this.data.$state.userInfo.id
+    };
   },
-  checkOrientation() {
-    this.setData({
-      orientation: 'horizontal'
-    })
+  back() {
+    let pages = getCurrentPages()
+    console.log(pages)
+    if(pages.length > 1) {
+      wx.navigateBack()
+    } else {
+      wx.switchTab({
+        url: '/pages/index/index'
+      })
+    }
   },
-  add() {
-    let arr = this.data.talkList
-    arr.push({name: '成都小燕子', content: '深刻理解还是发看见对方韩国可接受的和给快乐圣诞节高科技的是给看见对方韩国可接受对方和概括来讲都是废话给卢卡斯的积分'})
+  checkCaption() {
     this.setData({
-      talkList: arr
+      close: !this.data.close
     })
   }
 })
