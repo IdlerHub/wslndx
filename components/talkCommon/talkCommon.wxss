@@ -1,0 +1,32 @@
+/* components/talkCommon/talkCommon.wxss */
+.scrollView {
+  width: 466rpx;
+  height: 480rpx;
+  position: fixed;
+  left: 30rpx;
+  bottom: 150rpx;
+  display: flex;
+  flex-direction: column;
+}
+
+.scrollView .talkItem {
+  width: 100%;
+  padding: 20rpx;
+  box-sizing: border-box;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 16rpx;
+  font-size: 36rpx;
+  line-height: 50rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  margin-bottom: 10rpx;
+}
+
+.scrollView .talkItem text {
+  color: #E6E6E6;
+}
+
+::-webkit-scrollbar {
+  display: none;
+}

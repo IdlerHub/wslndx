@@ -1,0 +1,4 @@
+<!--components/talkCommon/talkCommon.wxml-->
+<scroll-view scroll-y enhanced show-scrollbar="false" scroll-top="{{scrollTop}}" class="scrollView" enable-flex>
+  <view class="talkItem" wx:for="{{talkList}}" wx:key="index"> <text>{{item.name}}</text>: {{item.content}}</view>
+</scroll-view>

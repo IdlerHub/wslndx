@@ -1,5 +1,7 @@
 {
-  "usingComponents": {},
+  "usingComponents": {
+    "talkCommon": "/components/talkCommon/talkCommon"
+  },
   "disableScroll": true,
   "navigationStyle": "custom"
 }

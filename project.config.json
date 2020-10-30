@@ -153,8 +153,8 @@
           "scene": null
         },
         {
-          "name": "pages/education/education",
-          "pathName": "pages/education/education",
+          "name": "page/live/pages/liveVideo/liveVideo",
+          "pathName": "page/live/pages/liveVideo/liveVideo",
           "query": "url=www.baidu.com&type=123",
           "scene": 1011
         },

@@ -73,7 +73,7 @@
      <!-- 电子邮箱 -->
      <view class="nameInput" style="border: 0;">
       <view class="nameInput__title">电子邮箱</view>
-      <input placeholder="{{ userInfo.name == '' ? '请填写' : userInfo.name }}" class="nameInput__name"
+      <input placeholder="{{ userInfo.email == '' ? '请填写' : userInfo.email }}" class="nameInput__name"
         placeholder-style="color:#B6B5B5" value="{{userAddress.email}}" bindblur="upEmail" bindfocus="focus"
         style="padding-right:{{padding || param.school != '' ? '24' : '24'}}px"></input>
     </view>
