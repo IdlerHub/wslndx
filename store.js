@@ -4,7 +4,7 @@
  * @LastEditTime: 2020-08-11 18:00:20
  */
 import Store from "wxministore";
-let env = "dev";
+let env = "pro";
 let mpVersion = "v24"; /* 版本管理 */
 /* 图片等静态资源服务器 */
 let imgBase = {
@@ -31,15 +31,9 @@ let API_URLBASE = {
 let socetBase = {
   dev: "lndxdev.jinlingkeji.cn:8182",
   test: "lndxtest.jinlingkeji.cn:8182",
-<<<<<<< HEAD
-  pro: "apielb.jinlingkeji.cn:8182",
-  testpro: "lndxpre.jinlingkeji.cn:8182",
-};
-=======
   pro: "api.jinlingkeji.cn:8182",
   testpro: "lndxpre.jinlingkeji.cn:8182"
 }
->>>>>>> dev
 
 Store.prototype.process = env;
 Store.prototype.API_URL = API_URLBASE[env];
