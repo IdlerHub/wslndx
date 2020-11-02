@@ -31,7 +31,7 @@ let API_URLBASE = {
 let socetBase = {
   dev: "lndxdev.jinlingkeji.cn:8182",
   test: "lndxtest.jinlingkeji.cn:8182",
-  pro: "apielb.jinlingkeji.cn:8182",
+  pro: "api.jinlingkeji.cn:8182",
   testpro: "lndxpre.jinlingkeji.cn:8182"
 }
 
