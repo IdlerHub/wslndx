@@ -117,10 +117,16 @@
   border: 1rpx solid #FFFFFF;
 }
 
-.inputBox {
+.fullBox {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+}
+
+.fullBox .inputBox {
   width: 100vw;
   background: #161823;
-  position: fixed;
+  position: absolute;
   z-index: 999;
   padding: 20rpx;
   box-sizing: border-box;
@@ -128,7 +134,7 @@
   align-items: center;
 }
 
-.inputBox .textarea {
+.fullBox .inputBox .textarea {
   flex: 1;
   min-height: 80rpx;
   border-radius: 10rpx;
@@ -141,7 +147,7 @@
   line-height: 50rpx;
 }
 
-.inputBox .send {
+.fullBox .inputBox .send {
   width: 136rpx;
   height: 80rpx;
   border-radius: 10rpx;

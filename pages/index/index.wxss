@@ -432,6 +432,7 @@ page {
 .now .line {
   min-width: 510rpx;
   height: 100%;
+  flex: 1;
 }
 
 @keyframes nowshow {

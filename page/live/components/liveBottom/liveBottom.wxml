@@ -20,7 +20,11 @@
     <image src="../../images/praise.png"></image>
   </view>
 </view>
-<view class="inputBox" style="bottom: {{keyHeight}}px">
-  <textarea maxlength="50" focus="{{focus}}" fixed class="textarea" placeholder="我要发言..." placeholder-class="placeholder" cursor-spacing="20" adjust-position="{{false}}" show-confirm-bar="{{false}}" auto-height style="padding-top: {{ system == 'ios' ? '4' : '20' }}rpx;"></textarea>
-  <view class="send">发送</view>
+<view class="fullBox" wx:if="{{showBox}}" bindtap="showBox">
+  <view class="inputBox" style="bottom: {{keyHeight}}px" catchtap=" ">
+    <textarea maxlength="50" auto-focus class="textarea" placeholder="我要发言..." placeholder-class="placeholder"
+      cursor-spacing="20" adjust-position="{{false}}" show-confirm-bar="{{false}}" auto-height
+      style="padding-top: {{ system == 'ios' ? '4' : '20' }}rpx;" ></textarea>
+    <view class="send" catchtap=" ">发送</view>
+  </view>
 </view>

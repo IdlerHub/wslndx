@@ -19,7 +19,7 @@ Component({
         keyHeight: res.height
       }, () => {
         this.data.keyHeight == 0 ? this.setData({
-          keyHeight: '-50'
+          keyHeight: '-100'
         }) : ''
       })
     })
@@ -27,12 +27,12 @@ Component({
   data: {
     showBox: 0,
     focus: false,
-    keyHeight: '-50',
+    keyHeight: '-100',
   },
   methods: {
     showBox() {
       this.setData({
-        focus: !this.data.focus
+        showBox: !this.data.showBox
       })
     }
   }
