@@ -5,19 +5,24 @@ Page({
   data: {
     topT: 28,
     talkList: [],
-    close: 0
+    close: 0,
+    userInfo: {},
+    lessonDetail: {},
+    liveDetail: {},
+    liveCount: {}
   },
-  onLoad: function () {
+  onLoad: function (ops) {
+    this.liveOps = ops
     let systemInfo = wx.getSystemInfoSync()
     systemInfo.statusBarHeight < 30 ?
-    this.setData({
-      topT: systemInfo.statusBarHeight + 4
-    }) :
-    this.setData({
-      topT: systemInfo.statusBarHeight
-    });
-    let talkList = [
-      {
+      this.setData({
+        topT: systemInfo.statusBarHeight + 4
+      }) :
+      this.setData({
+        topT: systemInfo.statusBarHeight
+      });
+    this.pages = getCurrentPages()
+    let talkList = [{
         name: '李思:  ',
         content: '交互往上消失'
       },
@@ -47,21 +52,12 @@ Page({
     this.setData({
       talkList
     })
-    // 创建 SDK 实例，TIM.create() 方法对于同一个 SDKAppID 只会返回同一份实例
-    let options = {
-      SDKAppID: 1400442469 // 接入时需要将0替换为您的即时通信应用的 SDKAppID
-    };
-    this.tim = TIM.create(options); // SDK 实例通常用 tim 表示
-    // 设置 SDK 日志输出级别，详细分级请参见 setLogLevel 接口的说明
-    this.tim.setLogLevel(0); // 普通级别，日志量较多，接入时建议使用
+    this.liveInit()
   },
-  onShow: function () {
-  },
-  onHide: function () {
-
-  },
+  onShow: function () {},
+  onHide: function () {},
   onUnload: function () {
-
+    this.quitGroup()
   },
   onShareAppMessage: function () {
     return {
@@ -73,14 +69,61 @@ Page({
         this.data.$state.userInfo.id
     };
   },
+  liveInit() {
+    Promise.all([this.getTimSign(), this.getLiveBySpecialColumnId(this.liveOps.id), this.liveCount()]).then(values => {
+      let options = {
+        SDKAppID: this.data.$state.sdkAppid
+      };
+      this.tim = TIM.create(options);
+      this.tim.setLogLevel(1);
+      this.tim.on(TIM.EVENT.SDK_READY, (event) => {
+        // 收到离线消息和会话列表同步完毕通知，接入侧可以调用 sendMessage 等需要鉴权的接口
+        this.joinGroup()
+      });
+      this.timLogin({
+        uid: values[0].uid,
+        userSig: values[0].userSig
+      })
+    })
+  },
+  getLiveBySpecialColumnId(id) {
+    return app.liveData.getLiveBySpecialColumnId({
+      specialColumnId: id
+    }).then(res => {
+      this.setData({
+        lessonDetail: res.data
+      })
+      res.data.liverVOS.forEach(e => {
+        e.id == this.liveOps.liveId ? this.setData({
+          liveDetail: e
+        }) : ''
+      })
+      return this.data.liveDetail
+    })
+  },
+  getTimSign() {
+    return app.liveData.getTimSign({}).then(res => {
+      this.setData({
+        userInfo: res.data
+      })
+      return res.data
+    })
+  },
+  liveCount() {
+    // app.liveData.liveCount({
+    //   liveId: this.liveOps.liveId
+    // }).then(res => {
+    //   this.setData({
+    //     liveCount: res.data.timToken
+    //   })
+    // })
+  },
   back() {
-    let pages = getCurrentPages()
-    console.log(pages)
-    if(pages.length > 1) {
+    if (this.pages.length > 1) {
       wx.navigateBack()
     } else {
       wx.switchTab({
-        url: '/pages/index/index'
+        url: '/pages/timetable/timetable'
       })
     }
   },
@@ -88,5 +131,73 @@ Page({
     this.setData({
       close: !this.data.close
     })
-  }
+  },
+  timLogin(params) {
+    this.tim.login({
+      userID: String(params.uid),
+      userSig: params.userSig
+    }).then((imResponse) => {
+      console.log(imResponse.data, '登录成功');
+      if (imResponse.data.repeatLogin === true) {
+        console.log(imResponse.data.errorInfo, '重复登录');
+      }
+    }).catch(function (imError) {
+      console.warn('登录失败', imError); // 登录失败的相关信息
+    });
+  },
+  timGetmessage(roomId) {
+    this.tim.getMessageList({
+      conversationID: `GROUP${roomId}`,
+      count: 20
+    }).then(function (imResponse) {
+      const messageList = imResponse.data.messageList; // 消息列表。
+      const nextReqMessageID = imResponse.data.nextReqMessageID; // 用于续拉，分页续拉时需传入该字段。
+      const isCompleted = imResponse.data.isCompleted; // 表示是否已经拉完所有消息。
+      console.log(messageList, nextReqMessageID, isCompleted, '消息会话')
+    });
+  },
+  joinGroup() {
+    this.tim.joinGroup({
+      groupID: '1228794976',
+      type: TIM.TYPES.GRP_MEETING
+    }).then((imResponse) => {
+      switch (imResponse.data.status) {
+        case TIM.TYPES.JOIN_STATUS_WAIT_APPROVAL:
+          break;
+        case TIM.TYPES.JOIN_STATUS_SUCCESS:
+          console.log(imResponse.data.group, '加群成功');
+          this.timGetmessage('1228794976')
+          break;
+        case TIM.TYPES.JOIN_STATUS_ALREADY_IN_GROUP:
+          console.log("已入群")
+          this.timGetmessage('1228794976')
+          break;
+        default:
+          break;
+      }
+    }).catch(function (imError) {
+      console.warn('joinGroup error:', imError); // 申请加群失败的相关信息
+    });
+  },
+  quitGroup() {
+    this.tim.quitGroup('1228794976').then(function (imResponse) {
+      console.log(imResponse.data.groupID, '退出成功的群'); // 退出成功的群 ID
+    }).catch(function (imError) {
+      console.warn('quitGroup error:', '退群失败'); // 退出群组失败的相关信息
+    });
+  },
+  getDates() { //JS获取当前周从星期一到星期天的日期
+    const dateOfToday = Date.now()
+    const dayOfToday = (new Date().getDay() + 7 - 1) % 7
+    const daysOfThisWeek = Array.from(new Array(7))
+      .map((_, i) => {
+        const date = new Date(dateOfToday + (i - dayOfToday) * 1000 * 60 * 60 * 24)
+        return date.getFullYear() +
+          '-' +
+          String(date.getMonth() + 1).padStart(2, '0') +
+          '-' +
+          String(date.getDate()).padStart(2, '0')
+      })
+    // console.log(daysOfThisWeek)
+  },
 })

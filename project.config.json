@@ -37,7 +37,7 @@
     ]
   },
   "setting": {
-    "urlCheck": false,
+    "urlCheck": true,
     "es6": true,
     "enhance": true,
     "postcss": true,
@@ -155,7 +155,7 @@
         {
           "name": "page/live/pages/liveVideo/liveVideo",
           "pathName": "page/live/pages/liveVideo/liveVideo",
-          "query": "url=www.baidu.com&type=123",
+          "query": "id=5&liveId=553",
           "scene": 1011
         },
         {

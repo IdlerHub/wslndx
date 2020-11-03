@@ -1,6 +1,6 @@
 <!--page/live/pages/liveVideo/liveVideo.wxml-->
-<live-player src="" class="player" autoplay>
-  <image src='../../images/testBag.png' class="testBag"></image>
+<live-player src="{{liveDetail.liveUrl}}" class="player" autoplay>
+  <!-- <image src='{{liveDetail.cover}}' class="testBag"></image> -->
   <view class="topBox" style="top: {{ topT }}px">
     <image src="../../images/liveBack.png" class="liveBack" bindtap="back"></image>
     <view class="tearchBox">
@@ -8,7 +8,7 @@
         src="https://lndx-app.obs.cn-north-1.myhuaweicloud.com/myInfo/2020/6/01b8df725a774070ae4d17d90cdd41feF030F1ED-9C4A-4B27-9FAE-304E00722A28.jpg">
       </image>
       <view class="txtCenter">
-        <text>天山雪莲风格豆腐干</text>
+        <text>{{liveDetail.nickname}}</text>
         <text>1234人在看</text>
       </view>
       <view class="attention">

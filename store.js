@@ -4,7 +4,7 @@
  * @LastEditTime: 2020-08-11 18:00:20
  */
 import Store from "wxministore";
-let env = "pro";
+let env = "dev";
 let mpVersion = "v24"; /* 版本管理 */
 /* 图片等静态资源服务器 */
 let imgBase = {
@@ -34,11 +34,27 @@ let socetBase = {
   pro: "api.jinlingkeji.cn:8182",
   testpro: "lndxpre.jinlingkeji.cn:8182"
 }
+/* IMSDKAPPID */
+let sdkAppid = {
+  dev: "1400346137",
+  test: "1400390948",
+  pro: "1400358896",
+  testpro: "1400358896"
+}
+/* 过渡接口域名 */
+let API_URLBASECHECK = {
+  dev: `https://smallgwdev.jinlingkeji.cn/mini/`,
+  test: `https://smallgwtest.jinlingkeji.cn/mini/`,
+  pro: `https://smallgwpro.jinlingkeji.cn/mini/`,
+  testpro: `https://smallgwpro.jinlingkeji.cn/mini/`,
+}
 
 Store.prototype.process = env;
 Store.prototype.API_URL = API_URLBASE[env];
+Store.prototype.API_URLBASECHECK = API_URLBASECHECK[env];
 Store.prototype.mpVersion = mpVersion;
 Store.prototype.socket_host = socetBase[env];
+
 
 let store = new Store({
   state: {
@@ -52,6 +68,7 @@ let store = new Store({
     activityUrl: activityBase[env],
     signStatus: {} /* 签到状态及弹窗 */,
     imgHost: imgBase[env],
+    sdkAppid: sdkAppid[env],
     title: "",
     path: "",
     imageUrl: "",

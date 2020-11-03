@@ -252,16 +252,16 @@ Page({
       setInterval(() => {
         app.liveData.recommendLessons().then(res => {
           this.setData({
-            liveRecommend: res.data
+            liveRecommend: res.dataList
           })
         })
       }, 60000);
     } else {
       app.liveData.recommendLessons().then(res => {
         this.setData({
-          liveRecommend: res.data
+          liveRecommend: res.dataList
         }, () => {
-          res.data.length > 0 ? this.getRecommendLessons() : ''
+          res.dataList.length > 0 ? this.getRecommendLessons() : ''
         })
       })
     }
