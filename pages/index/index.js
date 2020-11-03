@@ -127,7 +127,9 @@ Page({
         })
       }
       this.navHeightList = []
-      this.setHeight()
+      setTimeout(() => {
+        this.setHeight()
+      }, 500);
     })
   },
   // 获取新手指引
@@ -714,8 +716,8 @@ Page({
   toLivelesson(e) {
     let item = e.currentTarget.dataset.item
     wx.navigateTo({
-      url: "/page/live/pages/liveDetail/liveDetail?lessonId=" +
-        item.id
+      url: "/page/live/pages/tableDetail/tableDetail?specialColumnId=" +
+        item.specialColumnId
     });
   }
 })

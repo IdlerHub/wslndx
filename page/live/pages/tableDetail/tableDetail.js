@@ -40,15 +40,16 @@ Page({
       inviter = options.inviter;
     }
     this.data.lessonId = options.lessonId;
-    this.getLiveDetailDate(options.lessonId, inviter);
+    // this.getLiveDetailDate(options.lessonId, inviter);
+    this.getLiveBySpecialColumnId(options.specialColumnId)
     this.getUserOpenid()
-    this.timer = setInterval(() => {
-      let countdown = this.data.lessonDetail.countdown - 1;
-      this.leftTimer(countdown);
-    }, 1000);
+    // this.timer = setInterval(() => {
+    //   let countdown = this.data.lessonDetail.countdown - 1;
+    //   this.leftTimer(countdown);
+    // }, 1000);
   },
   onUnload() {
-    clearInterval(this.timer);
+    // clearInterval(this.timer);
   },
   getUserOpenid() {
     user.myIndex().then(res => {
@@ -100,6 +101,18 @@ Page({
       .catch((err) => {
         console.log(err);
       });
+  },
+  getLiveBySpecialColumnId(id) {
+    return LiveData.getLiveBySpecialColumnId({
+      specialColumnId: id
+    }).then(res => {
+      res.data.liveLecturerUserDTOS.forEach(e => {
+        res.data['teacher'] ?  res.data.teacher = res.data.teacher + ' ' + e.nickname : res.data.teacher = e.nickname
+      })
+      this.setData({
+        lessonDetail: res.data
+      })
+    })
   },
   leftTimer(leftTime) {
     this.data.lessonDetail.countdown = leftTime;

@@ -2,7 +2,7 @@
 <view class="contariner">
   <view class="imgBox">
     <image src="{{lessonDetail.cover}}"></image>
-    <view class="timeBox">
+    <!-- <view class="timeBox">
       <text class="txt">{{flag ? '已开课' : '报名倒计时'}}</text>
       <view class="timer" wx:if="{{!flag}}">
         <text>{{days}}</text>
@@ -14,16 +14,17 @@
         <text>{{seconds}}</text>
         <text>秒</text>
       </view>
-    </view>
+    </view> -->
   </view>
   <view class="titleBox">
     <view>{{lessonDetail.name}}</view>
     <view>
-      {{lessonDetail.start_day}}-{{lessonDetail.end_day}} · {{weekList[lessonDetail.week-1]}} ·
-      {{lessonDetail.start_time}}-{{lessonDetail.end_time}}
+      <!-- {{lessonDetail.start_day}}-{{lessonDetail.end_day}} · {{weekList[lessonDetail.week-1]}} ·
+      {{lessonDetail.start_time}}-{{lessonDetail.end_time}} -->
+      {{lessonDetail.description}}
     </view>
   </view>
-  <view class="inviteBox" wx:if="{{ lessonDetail.conditions != 0 }}">
+  <!-- <view class="inviteBox" wx:if="{{ lessonDetail.conditions != 0 }}">
     <view class="inviteShow" bindtap="showAllAvatar">
       <view class="inviteTip">
         邀请
@@ -44,7 +45,7 @@
       去邀请
     </button>
     <button bindtap="rightNow" wx:else>立即学习</button>
-  </view>
+  </view> -->
   <view class="tabList">
     <view class="tab">
       <text>总课时数</text>
