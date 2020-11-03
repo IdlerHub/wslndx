@@ -1,0 +1,26 @@
+<!--page/live/components/liveBottom/liveBottom.wxml-->
+<view class="bottomBox">
+  <view class="itemBox captionBox {{ close ? 'close' : '' }}" bindtap="checkCaption">
+    <image src="../../images/captionIcon.png"></image>
+    <text>字幕</text>
+  </view>
+  <view class="clickBox" catchtap="showBox">说点什么～</view>
+  <view class="itemBox backBox">
+    <image src="../../images/endIcon.png"></image>
+    <text>回播</text>
+  </view>
+  <button class="itemBox shareBox" hover-class="none" open-type="share">
+    <view class="itemBox shareBox">
+      <image src="../../images/shareIcon.png"></image>
+      <text>分享</text>
+    </view>
+  </button>
+  <view class="itemBox praiseBox">
+    <text class="praiseNum">5</text>
+    <image src="../../images/praise.png"></image>
+  </view>
+</view>
+<view class="inputBox" style="bottom: {{keyHeight}}px">
+  <textarea maxlength="50" focus="{{focus}}" fixed class="textarea" placeholder="我要发言..." placeholder-class="placeholder" cursor-spacing="20" adjust-position="{{false}}" show-confirm-bar="{{false}}" auto-height style="padding-top: {{ system == 'ios' ? '4' : '20' }}rpx;"></textarea>
+  <view class="send">发送</view>
+</view>

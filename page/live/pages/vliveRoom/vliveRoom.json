@@ -1,0 +1,8 @@
+{
+  "usingComponents": {
+    "talkCommon": "/components/talkCommon/talkCommon",
+    "liveBottom": "../../components/liveBottom/liveBottom"
+  },
+  "disableScroll": true,
+  "navigationStyle": "custom"
+}

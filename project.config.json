@@ -153,8 +153,8 @@
           "scene": null
         },
         {
-          "name": "page/live/pages/liveRoom/liveRoom",
-          "pathName": "page/live/pages/liveRoom/liveRoom",
+          "name": "page/live/pages/vliveRoom/vliveRoom",
+          "pathName": "page/live/pages/vliveRoom/vliveRoom",
           "query": "id=5&liveId=553",
           "scene": 1011
         },

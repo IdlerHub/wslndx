@@ -9,18 +9,21 @@ Page({
     userInfo: {},
     lessonDetail: {},
     liveDetail: {},
-    liveCount: {}
+    liveCount: {},
   },
   onLoad: function (ops) {
     this.liveOps = ops
     let systemInfo = wx.getSystemInfoSync()
     systemInfo.statusBarHeight < 30 ?
       this.setData({
-        topT: systemInfo.statusBarHeight + 4
+        topT: systemInfo.statusBarHeight + 4,
+        system: systemInfo.platform
       }) :
       this.setData({
-        topT: systemInfo.statusBarHeight
+        topT: systemInfo.statusBarHeight,
+        system: systemInfo.platform
       });
+    console.log(systemInfo.platform)
     this.pages = getCurrentPages()
     let talkList = [{
         name: '网上老年大学小助手：',
@@ -61,6 +64,7 @@ Page({
   onHide: function () {},
   onUnload: function () {
     this.quitGroup()
+    wx.offKeyboardHeightChange()
   },
   onShareAppMessage: function () {
     return {

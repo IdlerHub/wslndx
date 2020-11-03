@@ -1,109 +1,4 @@
-/* page/live/pages/liveVideo/liveVideo.wxss */
-.player {
-  width: 100vw;
-  height: 100vh;
-}
-
-.testBag {
-  width: 100vw;
-  height: 100vh;
-  position: fixed;
-  top: 0;
-}
-
-/* 顶部栏 */
-.topBox {
-  display: flex;
-  align-items: center;
-  position: absolute;
-  left: 30rpx;
-}
-
-.topBox .liveBack {
-  width: 20rpx;
-  height: 35rpx;
-}
-
-.tearchBox {
-  height: 82rpx;
-  display: flex;
-  align-items: center;
-  margin-left: 24rpx;
-  background: rgba(0, 0, 0, 0.3);
-  border-radius: 70rpx;
-}
-
-.tearchBox image {
-  width: 82rpx;
-  height: 82rpx;
-  border-radius: 50%;
-}
-
-.tearchBox .txtCenter {
-  display: flex;
-  width: 140rpx;
-  height: 100%;
-  align-items: flex-start;
-  flex-wrap: wrap;
-  margin: 0 20rpx 0 10rpx;
-  overflow: hidden;
-}
-
-.tearchBox .txtCenter text:nth-child(1) {
-  width: 100%;
-  height: 30rpx;
-  line-height: 30rpx;
-  font-size: 28rpx;
-  font-weight: 500;
-  color: #FFFFFF;
-  text-overflow: ellipsis;
-  overflow: hidden;
-  white-space: nowrap;
-  margin-top: 10rpx;
-}
-
-.tearchBox .txtCenter text:nth-child(2) {
-  font-size: 26rpx;
-  font-weight: 400;
-  color: #FFFFFF;
-  display: flex;
-  align-items: center;
-}
-
-.tearchBox .attention {
-  width: 118rpx;
-  height: 62rpx;
-  background: linear-gradient(360deg, #FF5E2B 0%, #F2323A 100%);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 70rpx;
-  margin-right: 10rpx;
-  font-size: 30rpx;
-  font-weight: 500;
-  color: #FFFFFF;
-}
-
-.tearchBox .attention image {
-  width: 22rpx;
-  height: 22rpx;
-  margin-right: 7rpx;
-}
-
-.downloadeApp {
-  width: 102rpx;
-  height: 100.81rpx;
-  position: fixed;
-  bottom: 199rpx;
-  right: 20rpx;
-}
-
-/* 下载app */
-.downloadeApp image {
-  width: 100%;
-  height: 100%;
-}
-
+/* page/live/components/liveBottom/liveBottom.wxss */
 /* 底部按钮 */
 .bottomBox {
   width: 100vw;
@@ -220,4 +115,41 @@
   background: rgba(0, 0, 0, 0.3);
   border-radius: 10rpx;
   border: 1rpx solid #FFFFFF;
+}
+
+.inputBox {
+  width: 100vw;
+  background: #161823;
+  position: fixed;
+  z-index: 999;
+  padding: 20rpx;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+}
+
+.inputBox .textarea {
+  flex: 1;
+  min-height: 80rpx;
+  border-radius: 10rpx;
+  background: rgba(244, 244, 244, 0.1);
+  padding-left: 30rpx;
+  box-sizing: border-box;
+  font-size: 36rpx;
+  font-weight: 400;
+  color: #FFFFFF;
+  line-height: 50rpx;
+}
+
+.inputBox .send {
+  width: 136rpx;
+  height: 80rpx;
+  border-radius: 10rpx;
+  background: rgba(244, 244, 244, 0.3);
+  margin-left: 20rpx;
+  text-align: center;
+  line-height: 80rpx;
+  font-size: 32rpx;
+  font-weight: 400;
+  color: #FFFFFF;
 }
