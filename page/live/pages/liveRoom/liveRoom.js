@@ -23,6 +23,9 @@ Page({
       });
     this.pages = getCurrentPages()
     let talkList = [{
+        name: '网上老年大学小助手：',
+        content: '欢迎来到直播间：1、请自行调节手机音量至合适的状态。2、听众发言可以在讨论区进行查看。'
+      }, {
         name: '李思:  ',
         content: '交互往上消失'
       },

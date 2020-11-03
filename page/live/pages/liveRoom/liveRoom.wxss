@@ -134,6 +134,7 @@
 
 .bottomBox .captionBox {
   background: rgba(0, 0, 0, 0.3);
+  border: 1rpx solid #FFFFFF;
 }
 
 .bottomBox .close::before {
@@ -218,4 +219,5 @@
   color: #C2C3C2;
   background: rgba(0, 0, 0, 0.3);
   border-radius: 10rpx;
+  border: 1rpx solid #FFFFFF;
 }

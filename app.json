@@ -125,7 +125,7 @@
         "pages/timetableList/timetableList",
         "pages/liveDetail/liveDetail",
         "pages/liveSearch/liveSearch",
-        "pages/liveVideo/liveVideo",
+        "pages/liveRoom/liveRoom",
         "pages/liveCenter/liveCenter",
         "pages/liveCenterList/liveCenterList"
       ]
