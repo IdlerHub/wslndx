@@ -1,7 +1,11 @@
 // page/live/components/liveTop/liveTop.js
+const app = getApp()
 Component({
   properties: {
-
+    liveDetail: {
+      type: Object,
+      value: {}
+    }
   },
   data: {
     top: 0,
@@ -36,6 +40,15 @@ Component({
         moveBox: 1
       }) : this.setData({
         moveBox: 0
+      })
+    },
+    attention() {
+      app.liveData.follow({ followerUid: this.data.liveDetail.lecturerUserId }).then(() => {
+        wx.showToast({
+          title: '关注成功',
+          icon: 'none'
+        })
+        this.triggerEvent('checkFollow')
       })
     }
   }

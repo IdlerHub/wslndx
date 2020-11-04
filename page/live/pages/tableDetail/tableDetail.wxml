@@ -1,8 +1,9 @@
 <!-- pages/tableDetail/tableDetail.wxml -->
-<view class="contariner">
-  <view class="imgBox">
-    <image src="{{lessonDetail.cover}}"></image>
-    <!-- <view class="timeBox">
+<view wx:if="{{showAll}}">
+  <view class="contariner">
+    <view class="imgBox">
+      <image src="{{lessonDetail.cover}}"></image>
+      <!-- <view class="timeBox">
       <text class="txt">{{flag ? '已开课' : '报名倒计时'}}</text>
       <view class="timer" wx:if="{{!flag}}">
         <text>{{days}}</text>
@@ -15,16 +16,16 @@
         <text>秒</text>
       </view>
     </view> -->
-  </view>
-  <view class="titleBox">
-    <view>{{lessonDetail.name}}</view>
-    <view>
-      <!-- {{lessonDetail.start_day}}-{{lessonDetail.end_day}} · {{weekList[lessonDetail.week-1]}} ·
-      {{lessonDetail.start_time}}-{{lessonDetail.end_time}} -->
-      {{lessonDetail.description}}
     </view>
-  </view>
-  <!-- <view class="inviteBox" wx:if="{{ lessonDetail.conditions != 0 }}">
+    <view class="titleBox">
+      <view>{{lessonDetail.name}}</view>
+      <view>
+        <!-- {{lessonDetail.start_day}}-{{lessonDetail.end_day}} · {{weekList[lessonDetail.week-1]}} ·
+      {{lessonDetail.start_time}}-{{lessonDetail.end_time}} -->
+        {{lessonDetail.description}}
+      </view>
+    </view>
+    <!-- <view class="inviteBox" wx:if="{{ lessonDetail.conditions != 0 }}">
     <view class="inviteShow" bindtap="showAllAvatar">
       <view class="inviteTip">
         邀请
@@ -46,38 +47,39 @@
     </button>
     <button bindtap="rightNow" wx:else>立即学习</button>
   </view> -->
-  <view class="tabList">
-    <view class="tab">
-      <text>总课时数</text>
-      <text>{{lessonDetail.chapter_num}}课时</text>
+    <view class="tabList">
+      <view class="tab">
+        <text>总课时数</text>
+        <text>{{lessonDetail.liveCount}}课时</text>
+      </view>
+      <view class="tab">
+        <text>授课老师</text>
+        <text>{{lessonDetail.teacher}}</text>
+      </view>
     </view>
-    <view class="tab">
-      <text>授课老师</text>
-      <text>{{lessonDetail.teacher}}</text>
+    <view class="content">
+      <view class="title">课程简介</view>
+      <rich-text nodes="{{lessonDetail.introduction}}"></rich-text>
     </view>
   </view>
-  <view class="content">
-    <view class="title">课程简介</view>
-    <rich-text nodes="{{lessonDetail.introduction}}"></rich-text>
+  <view class="bottomBox">
+    <button open-type="share" class="left">
+      <view class="leftBox">
+        <image src="../../images/share-wx.png"></image>
+        <text>邀请好友</text>
+      </view>
+    </button>
+    <view class="right" bindtap="rightNow">立即学习</view>
   </view>
-</view>
-<view class="bottomBox">
-  <button open-type="share" class="left">
-    <view class="leftBox">
-      <image src="../../images/share-wx.png"></image>
-      <text>邀请好友</text>
-    </view>
-  </button>
-  <view class="right" bindtap="rightNow">立即学习</view>
-</view>
-<view class="attentionBox" wx:if="{{showAtention}}">
-  <view class="attentionBottom">
-    <view class="contentBox">
-      <text>报名成功</text>
-      <text>关注公众号获取上课提醒</text>
-    </view>
-    <view class="btnBox">
-      <view class="btn" bindtap="toAtention">关注公众号</view>
+  <view class="attentionBox" wx:if="{{showAtention}}">
+    <view class="attentionBottom">
+      <view class="contentBox">
+        <text>报名成功</text>
+        <text>关注公众号获取上课提醒</text>
+      </view>
+      <view class="btnBox">
+        <view class="btn" bindtap="toAtention">关注公众号</view>
+      </view>
     </view>
   </view>
 </view>

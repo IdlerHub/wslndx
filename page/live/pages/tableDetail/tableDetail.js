@@ -24,7 +24,8 @@ Page({
     ],
     lessonDetail: {}, //课程详情
     flag: false, //倒计时结束
-    showAtention: false
+    showAtention: false,
+    showAll: 0
   },
   timer: "",
   toEducation: false,
@@ -109,8 +110,12 @@ Page({
       res.data.liveLecturerUserDTOS.forEach(e => {
         res.data['teacher'] ?  res.data.teacher = res.data.teacher + ' ' + e.nickname : res.data.teacher = e.nickname
       })
+      res.data.isAddSubscribe ? wx.redirectTo({
+        url: `/page/live/pages/liveDetail/liveDetail?lessonId=${res.data.columnId}`
+      }) : 
       this.setData({
-        lessonDetail: res.data
+        lessonDetail: res.data,
+        showAll: 1
       })
     })
   },
@@ -147,18 +152,19 @@ Page({
     return i < 10 ? "0" + i : i;
   },
   rightNow() {
-    let {
-      conditions,
-      invite_num,
-      is_own
-    } = this.data.lessonDetail;
-    if (conditions > invite_num) {
-      wx.showModal({
-        content: `再邀请${conditions - invite_num}位好友就可以学习啦`,
-        confirmColor: "#DF2020",
-        cancelColor: "#999999",
-      });
-    } else if(!this.data.userMsg.has_mp_openid){
+    // let {
+    //   conditions,
+    //   invite_num,
+    //   is_own
+    // } = this.data.lessonDetail;
+    // if (conditions > invite_num) {
+    //   wx.showModal({
+    //     content: `再邀请${conditions - invite_num}位好友就可以学习啦`,
+    //     confirmColor: "#DF2020",
+    //     cancelColor: "#999999",
+    //   });
+    // } else 
+    if(!this.data.userMsg.has_mp_openid){
       this.setData({
         showAtention: true
       })
@@ -205,21 +211,19 @@ Page({
     };
   },
   toLivedetail() {
-    let lesson_id = this.data.lessonDetail.id;
+    let columnId = this.data.lessonDetail.columnId;
     let {
-      conditions,
-      invite_num,
-      is_own
+      isAddSubscribe
     } = this.data.lessonDetail;
-    if (!is_own) {
+    if (!isAddSubscribe) {
       //未拥有
-      LiveData.getReceiveLesson({
-          lesson_id
+      LiveData.addSubscribe({
+        columnId
         })
         .then((res) => {
-          this.data.lessonDetail.is_own = 1;
+          this.data.lessonDetail.isAddSubscribe = 1;
           wx.redirectTo({
-            url: `/page/live/pages/liveDetail/liveDetail?lessonId=${lesson_id}&isFirst=1`,
+            url: `/page/live/pages/liveDetail/liveDetail?lessonId=${columnId}&isFirst=1`,
           });
         })
         .catch((err) => {
@@ -232,7 +236,7 @@ Page({
     } else {
       //已拥有就不再领取,从分享进去详情页,不展示客服盒子
       wx.navigateTo({
-        url: `/page/live/pages/liveDetail/liveDetail?lessonId=${lesson_id}&isFirst=0`,
+        url: `/page/live/pages/liveDetail/liveDetail?lessonId=${columnId}&isFirst=0`,
       });
     }
   },

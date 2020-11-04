@@ -7,13 +7,12 @@ Page({
     talkList: [],
     close: 0,
     userInfo: {},
-    lessonDetail: {},
     liveDetail: {},
     liveCount: {},
   },
   onLoad: function (ops) {
+    console.log(this.data.$state.userInfo.id)
     this.liveOps = ops
-    let systemInfo = wx.getSystemInfoSync()
     let talkList = [{
         name: '网上老年大学小助手：',
         content: '欢迎来到直播间：1、请自行调节手机音量至合适的状态。2、听众发言可以在讨论区进行查看。'
@@ -53,6 +52,7 @@ Page({
   onHide: function () {},
   onUnload: function () {
     this.quitGroup()
+    this.timLoginout()
     wx.offKeyboardHeightChange()
   },
   onShareAppMessage: function () {
@@ -66,7 +66,7 @@ Page({
     };
   },
   liveInit() {
-    Promise.all([this.getTimSign(), this.getLiveBySpecialColumnId(this.liveOps.id), this.liveCount()]).then(values => {
+    Promise.all([this.getTimSign(), this.getLiveById(this.liveOps.roomId), this.liveCount()]).then(values => {
       let options = {
         SDKAppID: this.data.$state.sdkAppid
       };
@@ -82,23 +82,19 @@ Page({
       })
     })
   },
-  getLiveBySpecialColumnId(id) {
-    return app.liveData.getLiveBySpecialColumnId({
-      specialColumnId: id
+  getLiveById(liveId) {
+    return app.liveData.getLiveById({
+      liveId
     }).then(res => {
       this.setData({
-        lessonDetail: res.data
-      })
-      res.data.liverVOS.forEach(e => {
-        e.id == this.liveOps.liveId ? this.setData({
-          liveDetail: e
-        }) : ''
+        liveDetail: res.data
       })
       return this.data.liveDetail
     })
   },
   getTimSign() {
     return app.liveData.getTimSign({}).then(res => {
+      console.log(res)
       this.setData({
         userInfo: res.data
       })
@@ -106,13 +102,13 @@ Page({
     })
   },
   liveCount() {
-    // app.liveData.liveCount({
-    //   liveId: this.liveOps.liveId
-    // }).then(res => {
-    //   this.setData({
-    //     liveCount: res.data.timToken
-    //   })
-    // })
+    app.liveData.liveCount({
+      liveId: this.liveOps.roomId
+    }).then(res => {
+      this.setData({
+        liveCount: res.data.timToken
+      })
+    })
   },
   checkCaption() {
     this.setData({
@@ -132,6 +128,13 @@ Page({
       console.warn('登录失败', imError); // 登录失败的相关信息
     });
   },
+  timLoginout() {
+    this.tim.logout().then(function (imResponse) {
+      console.log(imResponse.data, '登出成功'); // 
+    }).catch(function (imError) {
+      console.warn('登出失败', imError);
+    });
+  },
   timGetmessage(roomId) {
     this.tim.getMessageList({
       conversationID: `GROUP${roomId}`,
@@ -145,7 +148,7 @@ Page({
   },
   joinGroup() {
     this.tim.joinGroup({
-      groupID: '1228794976',
+      groupID: String(this.data.liveDetail.chatGroup),
       type: TIM.TYPES.GRP_MEETING
     }).then((imResponse) => {
       switch (imResponse.data.status) {
@@ -153,11 +156,11 @@ Page({
           break;
         case TIM.TYPES.JOIN_STATUS_SUCCESS:
           console.log(imResponse.data.group, '加群成功');
-          this.timGetmessage('1228794976')
+          this.timGetmessage(this.data.liveDetail.chatGroup)
           break;
         case TIM.TYPES.JOIN_STATUS_ALREADY_IN_GROUP:
           console.log("已入群")
-          this.timGetmessage('1228794976')
+          this.timGetmessage(this.data.liveDetail.chatGroup)
           break;
         default:
           break;
@@ -176,7 +179,7 @@ Page({
   sendMsg(e) {
     console.log(e.detail)
     // 1. 创建文本消息
-    let message =  this.tim.createTextMessage({
+    let message = this.tim.createTextMessage({
       to: '1228794976',
       conversationType: TIM.TYPES.CONV_GROUP,
       payload: {
@@ -184,11 +187,16 @@ Page({
       }
     });
     // 2. 发送消息
-    this.tim.sendMessage(message).then(function(imResponse) {
+    this.tim.sendMessage(message).then(function (imResponse) {
       console.log(imResponse, '发送成功');
-    }).catch(function(imError) {
+    }).catch(function (imError) {
       console.warn('发送失败', imError);
     });
+  },
+  checkFollow() {
+    this.setData({
+      'liveDetail.follow': 1
+    })
   },
   getDates() { //JS获取当前周从星期一到星期天的日期
     const dateOfToday = Date.now()
