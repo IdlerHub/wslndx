@@ -1,7 +1,8 @@
 {
   "usingComponents": {
     "talkCommon": "/components/talkCommon/talkCommon",
-    "liveBottom": "../../components/liveBottom/liveBottom"
+    "liveBottom": "../../components/liveBottom/liveBottom",
+    "liveTop": "../../components/liveTop/liveTop"
   },
   "disableScroll": true,
   "navigationStyle": "custom"

@@ -1,6 +1,6 @@
 <!--components/talkCommon/talkCommon.wxml-->
 <scroll-view scroll-y scroll-top="{{scrollTop}}" class="scrollView" enable-flex>
-  <view class="talkItem" wx:for="{{talkList}}" wx:key="index" style="padding: {{item.share || item.fromApp ? '11rpx' : '20rpx'}} 20rpx;">
+  <view class="talkItem" wx:for="{{talkList}}" wx:key="index" style="padding: {{item.share || item.fromApp ? 'calc(11vmin / 7.5)' : 'calc(20vmin / 7.5)'}} calc(20vmin / 7.5);">
     <view class="contentBox">
       <rich-text nodes="{{ '<span style=color:#E6E6E6;>' + item.name + '<span>' + item.content}}"
       wx:if="{{!item.share && !item.fromApp}}"></rich-text>

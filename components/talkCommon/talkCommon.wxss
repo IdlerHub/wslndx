@@ -1,28 +1,28 @@
 /* components/talkCommon/talkCommon.wxss */
 .scrollView {
-  width: 506rpx;
-  height: 480rpx;
+  width: calc(506vmin / 7.5);
+  height: calc(480vmin / 7.5);
   position: fixed;
-  left: 30rpx;
-  bottom: 150rpx;
+  left: calc(30vmin / 7.5);
+  bottom: calc(150vmin / 7.5);
 }
 
 .talkItem {
   display: inline-block;
   max-width: 100%;
-  padding: 20rpx;
+  padding: calc(20vmin / 7.5);
   box-sizing: border-box;
   box-sizing: border-box;
   color: #fff;
   background: rgba(0, 0, 0, 0.1);
-  border-radius: 16rpx;
-  margin-bottom: 10rpx;
+  border-radius: calc(16vmin / 7.5);
+  margin-bottom: calc(10vmin / 7.5);
 }
 
 .talkItem .contentBox {
   display: flex;
-  font-size: 36rpx;
-  line-height: 50rpx;
+  font-size: calc(36vmin / 7.5);
+  line-height: calc(50vmin / 7.5);
   font-weight: 400;
   align-items: center;
   flex-wrap: wrap;
@@ -37,14 +37,14 @@
 }
 
 .talkItem .contentBox .specalBox {
-  width: 159rpx;
-  height: 68rpx;
-  margin-left: 20rpx;
-  border-radius: 40rpx;
+  width: calc(159vmin / 7.5);
+  height: calc(68vmin / 7.5);
+  margin-left: calc(20vmin / 7.5);
+  border-radius: calc(40vmin / 7.5);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 28rpx;
+  font-size: calc(28vmin / 7.5);
   font-weight: 500;
   color: #FFFFFF;
 }
@@ -60,15 +60,15 @@
 }
 
 .talkItem .contentBox .shareBox image {
-  width: 39rpx;
-  height: 39rpx;
-  margin-right: 6rpx;
+  width: calc(39vmin / 7.5);
+  height: calc(39vmin / 7.5);
+  margin-right: calc(6vmin / 7.5);
 }
 
 .talkItem .contentBox .appBox image {
-  width: 25.25rpx;
-  height: 37.44rpx;
-  margin-right: 11rpx;
+  width: calc(25.25vmin / 7.5);
+  height: calc(37.44vmin / 7.5);
+  margin-right: calc(11vmin / 7.5);
 }
 
 ::-webkit-scrollbar {

@@ -14,17 +14,6 @@ Page({
   onLoad: function (ops) {
     this.liveOps = ops
     let systemInfo = wx.getSystemInfoSync()
-    systemInfo.statusBarHeight < 30 ?
-      this.setData({
-        topT: systemInfo.statusBarHeight + 4,
-        system: systemInfo.platform
-      }) :
-      this.setData({
-        topT: systemInfo.statusBarHeight,
-        system: systemInfo.platform
-      });
-    console.log(systemInfo.platform)
-    this.pages = getCurrentPages()
     let talkList = [{
         name: '网上老年大学小助手：',
         content: '欢迎来到直播间：1、请自行调节手机音量至合适的状态。2、听众发言可以在讨论区进行查看。'
@@ -125,15 +114,6 @@ Page({
     //   })
     // })
   },
-  back() {
-    if (this.pages.length > 1) {
-      wx.navigateBack()
-    } else {
-      wx.switchTab({
-        url: '/pages/timetable/timetable'
-      })
-    }
-  },
   checkCaption() {
     this.setData({
       close: !this.data.close
@@ -191,6 +171,23 @@ Page({
       console.log(imResponse.data.groupID, '退出成功的群'); // 退出成功的群 ID
     }).catch(function (imError) {
       console.warn('quitGroup error:', '退群失败'); // 退出群组失败的相关信息
+    });
+  },
+  sendMsg(e) {
+    console.log(e.detail)
+    // 1. 创建文本消息
+    let message =  this.tim.createTextMessage({
+      to: '1228794976',
+      conversationType: TIM.TYPES.CONV_GROUP,
+      payload: {
+        text: e.detail
+      }
+    });
+    // 2. 发送消息
+    this.tim.sendMessage(message).then(function(imResponse) {
+      console.log(imResponse, '发送成功');
+    }).catch(function(imError) {
+      console.warn('发送失败', imError);
     });
   },
   getDates() { //JS获取当前周从星期一到星期天的日期

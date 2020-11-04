@@ -1,0 +1,26 @@
+<!--page/live/components/liveTop/liveTop.wxml-->
+<view class="topBox" style="top: {{ top }}px">
+  <image src="../../images/liveBack.png" class="liveBack" bindtap="back"></image>
+  <view class="tearchBox" bindtap="showBox" data-top="1">
+    <image
+      src="https://lndx-app.obs.cn-north-1.myhuaweicloud.com/myInfo/2020/6/01b8df725a774070ae4d17d90cdd41feF030F1ED-9C4A-4B27-9FAE-304E00722A28.jpg">
+    </image>
+    <view class="txtCenter">
+      <text>豆腐干豆腐干分隔符</text>
+      <text>1234人在看</text>
+    </view>
+    <view class="attention">
+      <image src="../../images/attentionicon.png"></image>
+      关注
+    </view>
+  </view>
+</view>
+<view class="teacherBox {{!moveBox ? 'teacherMove' : ''}}" wx:if="{{showBox}}">
+  <image src="/images/icon-del.png" class="icondel" bindtap="showBox"></image>
+  <image
+    src="https://lndx-app.obs.cn-north-1.myhuaweicloud.com/myInfo/2020/6/01b8df725a774070ae4d17d90cdd41feF030F1ED-9C4A-4B27-9FAE-304E00722A28.jpg"
+    class="avatar"></image>
+  <text>李老师很帅</text>
+  <text>关注老师，更多好课不错过</text>
+  <view class="addBtn">关注</view>
+</view>

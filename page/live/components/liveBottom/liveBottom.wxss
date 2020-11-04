@@ -2,7 +2,7 @@
 /* 底部按钮 */
 .bottomBox {
   width: 100vw;
-  padding: 0 20rpx 43rpx 30rpx;
+  padding: 0 calc(20vmin / 7.5) calc(42vmin / 7.5) calc(30vmin / 7.5);
   box-sizing: border-box;
   display: flex;
   align-items: center;
@@ -12,9 +12,9 @@
 }
 
 .bottomBox .itemBox {
-  width: 80rpx;
-  height: 90rpx;
-  border-radius: 10rpx;
+  width: calc(80vmin / 7.5);
+  height: calc(90vmin / 7.5);
+  border-radius: calc(10vmin / 7.5);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -48,7 +48,7 @@
 }
 
 .bottomBox .shareBox {
-  margin: 0 10rpx;
+  margin: 0 calc(10vmin / 7.5);
   background: linear-gradient(90deg, #43DE80 0%, #1CCA61 100%);
   line-height: normal;
 }
@@ -60,29 +60,29 @@
 
 
 .bottomBox .captionBox image {
-  width: 38rpx;
-  height: 34.83rpx;
+  width: calc(38vmin / 7.5);
+  height: calc(34.83vmin / 7.5);
 }
 
 .bottomBox .backBox image {
-  width: 36rpx;
-  height: 36rpx;
+  width: calc(36vmin / 7.5);
+  height: calc(36vmin / 7.5);
 }
 
 .bottomBox .shareBox image {
-  width: 44rpx;
-  height: 36.28rpx;
+  width: calc(44vmin / 7.5);
+  height: calc(36.28vmin / 7.5);
 }
 
 .bottomBox .praiseBox image {
-  width: 80rpx;
-  height: 80rpx;
+  width: calc(80vmin / 7.5);
+  height: calc(80vmin / 7.5);
 }
 
 .bottomBox .itemBox text {
-  height: 35rpx;
-  line-height: 40rpx;
-  font-size: 28rpx;
+  height: calc(35vmin / 7.5);
+  line-height: calc(40vmin / 7.5);
+  font-size: calc(28vmin / 7.5);
   font-weight: 400;
   color: #FFFFFF;
 }
@@ -90,12 +90,12 @@
 .bottomBox .itemBox .praiseNum {
   display: block;
   height: auto;
-  padding: 1rpx 5rpx 3rpx 6rpx;
+  padding: 1rpx calc(5vmin / 7.5) calc(3vmin / 7.5) calc(6vmin / 7.5);
   background-color: #fff;
-  font-size: 22rpx;
+  font-size: calc(22vmin / 7.5);
   font-weight: 400;
-  border-radius: 13rpx;
-  line-height: 22rpx;
+  border-radius: calc(13vmin / 7.5);
+  line-height: calc(22vmin / 7.5);
   color: #F2323A;
   position: absolute;
   top: 0;
@@ -105,57 +105,51 @@
 
 .bottomBox .clickBox {
   flex: 1;
-  height: 90rpx;
-  line-height: 90rpx;
-  margin: 0 10rpx;
-  padding: 0 20rpx;
-  font-size: 28rpx;
+  height: calc(90vmin / 7.5);
+  line-height: calc(90vmin / 7.5);
+  margin: 0 calc(10vmin / 7.5);
+  padding: 0 calc(20vmin / 7.5);
+  font-size: calc(28vmin / 7.5);
   font-weight: 400;
   color: #C2C3C2;
   background: rgba(0, 0, 0, 0.3);
-  border-radius: 10rpx;
+  border-radius: calc(10vmin / 7.5);
   border: 1rpx solid #FFFFFF;
 }
 
-.fullBox {
-  width: 100vw;
-  height: 100vh;
-  position: relative;
-}
-
-.fullBox .inputBox {
+.inputBox {
   width: 100vw;
   background: #161823;
-  position: absolute;
+  position: fixed;
   z-index: 999;
-  padding: 20rpx;
+  padding: calc(20vmin / 7.5);
   box-sizing: border-box;
   display: flex;
   align-items: center;
 }
 
-.fullBox .inputBox .textarea {
+.inputBox .textarea {
   flex: 1;
-  min-height: 80rpx;
-  border-radius: 10rpx;
+  min-height: calc(80vmin / 7.5);
+  border-radius: calc(10vmin / 7.5);
   background: rgba(244, 244, 244, 0.1);
-  padding-left: 30rpx;
+  padding-left: calc(30vmin / 7.5);
   box-sizing: border-box;
-  font-size: 36rpx;
+  font-size: calc(36vmin / 7.5);
   font-weight: 400;
   color: #FFFFFF;
-  line-height: 50rpx;
+  line-height: calc(50vmin / 7.5);
 }
 
-.fullBox .inputBox .send {
-  width: 136rpx;
-  height: 80rpx;
-  border-radius: 10rpx;
+.inputBox .send {
+  width: calc(136vmin / 7.5);
+  height: calc(80vmin / 7.5);
+  border-radius: calc(10vmin / 7.5);
   background: rgba(244, 244, 244, 0.3);
-  margin-left: 20rpx;
+  margin-left: calc(20vmin / 7.5);
   text-align: center;
-  line-height: 80rpx;
-  font-size: 32rpx;
+  line-height: calc(80vmin / 7.5);
+  font-size: calc(32vmin / 7.5);
   font-weight: 400;
   color: #FFFFFF;
 }

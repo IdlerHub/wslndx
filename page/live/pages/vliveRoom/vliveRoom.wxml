@@ -1,26 +1,13 @@
 <!--page/live/pages/liveVideo/liveVideo.wxml-->
 <live-player src="{{liveDetail.liveUrl}}" class="player" autoplay>
-  <image src='{{liveDetail.cover || "https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=2170124706,2579447508&fm=26&gp=0.jpg"}}' class="testBag"></image>
-  <view class="topBox" style="top: {{ topT }}px">
-    <image src="../../images/liveBack.png" class="liveBack" bindtap="back"></image>
-    <view class="tearchBox">
-      <image
-        src="https://lndx-app.obs.cn-north-1.myhuaweicloud.com/myInfo/2020/6/01b8df725a774070ae4d17d90cdd41feF030F1ED-9C4A-4B27-9FAE-304E00722A28.jpg">
-      </image>
-      <view class="txtCenter">
-        <text>{{liveDetail.nickname}}</text>
-        <text>1234人在看</text>
-      </view>
-      <view class="attention">
-        <image src="../../images/attentionicon.png"></image>
-        关注
-      </view>
-    </view>
-  </view>
+  <image
+    src='{{liveDetail.cover || "https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=2170124706,2579447508&fm=26&gp=0.jpg"}}'
+    class="testBag"></image>
+  <liveTop />
   <talkCommon talkList="{{talkList}}" wx:if="{{!close}}" />
   <navigator class="downloadeApp"
     url="/pages/education/education?type=0&url=https://mp.weixin.qq.com/s/vSd8XBQDQkvqVX_kt_YyTQ" hover-class="none">
     <image src="../../images/dowloafeApp.png" bindtap="downloadeApp"></image>
   </navigator>
-  <liveBottom system="{{system}}"/>
+  <liveBottom bind:sendMsg="sendMsg" />
 </live-player>
