@@ -715,10 +715,13 @@ Page({
   },
   toLivelesson(e) {
     let item = e.currentTarget.dataset.item
+    console.log(item)
     if (item.status == 0) {
       item.direction ? wx.navigateTo({
         url: `/page/live/pages/vliveRoom/vliveRoom?roomId=${item.liveId}`,
-      }) : ''
+      }) : wx.navigateTo({
+        url: `/page/live/pages/vliveRoom/vliveRoom?roomId=${item.liveId}`,
+      })
     } else {
       wx.navigateTo({
         url: "/page/live/pages/tableDetail/tableDetail?specialColumnId=" +

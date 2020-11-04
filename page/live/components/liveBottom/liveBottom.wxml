@@ -15,7 +15,7 @@
       <text>分享</text>
     </view>
   </button>
-  <view class="itemBox praiseBox">
+  <view class="itemBox praiseBox" bindtap="praise">
     <text class="praiseNum">5</text>
     <image src="../../images/praise.png"></image>
   </view>

@@ -1,7 +1,6 @@
 // page/live/components/liveBottom/liveBottom.js
 Component({
-  properties: {
-  },
+  properties: {},
   lifetimes: {
     // 生命周期函数，可以为函数，或一个在methods段中定义的方法名
     attached: () => {
@@ -23,6 +22,7 @@ Component({
         }) : ''
       })
     })
+    this.praiseNum = 0
   },
   data: {
     focus: false,
@@ -43,6 +43,15 @@ Component({
     },
     send() {
       this.triggerEvent('sendMsg', this.data.txt)
+    },
+    praise() {
+      this.praiseNum += 1
+      this.timer ? clearTimeout(this.timer) : ''
+      this.timer = setTimeout(() => {
+        console.log(this.praiseNum)
+        this.triggerEvent('praise', this.praiseNum)
+        this.praiseNum = 0
+      }, 3000);
     }
   }
 })

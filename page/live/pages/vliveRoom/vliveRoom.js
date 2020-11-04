@@ -1,6 +1,6 @@
 // page/live/pages/liveVideo/liveVideo.js
 const app = getApp()
-import TIM from 'tim-wx-sdk'
+import timsdk from "../../utils/timsdk";
 Page({
   data: {
     topT: 28,
@@ -11,7 +11,6 @@ Page({
     liveCount: {},
   },
   onLoad: function (ops) {
-    console.log(this.data.$state.userInfo.id)
     this.liveOps = ops
     let talkList = [{
         name: '网上老年大学小助手：',
@@ -51,11 +50,12 @@ Page({
   onShow: function () {},
   onHide: function () {},
   onUnload: function () {
-    this.quitGroup()
-    this.timLoginout()
+    timsdk.quitGroup(this)
+    timsdk.timLoginout(this)
     wx.offKeyboardHeightChange()
   },
   onShareAppMessage: function () {
+    this.setCustommessag('MD5_AUDIENCE_SHARE_LIVE_ROOM')
     return {
       imageUrl: "../../../../images/sharemessage.jpg",
       title: '案件大会的恢复',
@@ -67,19 +67,7 @@ Page({
   },
   liveInit() {
     Promise.all([this.getTimSign(), this.getLiveById(this.liveOps.roomId), this.liveCount()]).then(values => {
-      let options = {
-        SDKAppID: this.data.$state.sdkAppid
-      };
-      this.tim = TIM.create(options);
-      this.tim.setLogLevel(1);
-      this.tim.on(TIM.EVENT.SDK_READY, (event) => {
-        // 收到离线消息和会话列表同步完毕通知，接入侧可以调用 sendMessage 等需要鉴权的接口
-        this.joinGroup()
-      });
-      this.timLogin({
-        uid: values[0].uid,
-        userSig: values[0].userSig
-      })
+      timsdk.timInit(this, values[0])
     })
   },
   getLiveById(liveId) {
@@ -94,7 +82,6 @@ Page({
   },
   getTimSign() {
     return app.liveData.getTimSign({}).then(res => {
-      console.log(res)
       this.setData({
         userInfo: res.data
       })
@@ -115,101 +102,25 @@ Page({
       close: !this.data.close
     })
   },
-  timLogin(params) {
-    this.tim.login({
-      userID: String(params.uid),
-      userSig: params.userSig
-    }).then((imResponse) => {
-      console.log(imResponse.data, '登录成功');
-      if (imResponse.data.repeatLogin === true) {
-        console.log(imResponse.data.errorInfo, '重复登录');
-      }
-    }).catch(function (imError) {
-      console.warn('登录失败', imError); // 登录失败的相关信息
-    });
-  },
-  timLoginout() {
-    this.tim.logout().then(function (imResponse) {
-      console.log(imResponse.data, '登出成功'); // 
-    }).catch(function (imError) {
-      console.warn('登出失败', imError);
-    });
-  },
-  timGetmessage(roomId) {
-    this.tim.getMessageList({
-      conversationID: `GROUP${roomId}`,
-      count: 20
-    }).then(function (imResponse) {
-      const messageList = imResponse.data.messageList; // 消息列表。
-      const nextReqMessageID = imResponse.data.nextReqMessageID; // 用于续拉，分页续拉时需传入该字段。
-      const isCompleted = imResponse.data.isCompleted; // 表示是否已经拉完所有消息。
-      console.log(messageList, nextReqMessageID, isCompleted, '消息会话')
-    });
-  },
-  joinGroup() {
-    this.tim.joinGroup({
-      groupID: String(this.data.liveDetail.chatGroup),
-      type: TIM.TYPES.GRP_MEETING
-    }).then((imResponse) => {
-      switch (imResponse.data.status) {
-        case TIM.TYPES.JOIN_STATUS_WAIT_APPROVAL:
-          break;
-        case TIM.TYPES.JOIN_STATUS_SUCCESS:
-          console.log(imResponse.data.group, '加群成功');
-          this.timGetmessage(this.data.liveDetail.chatGroup)
-          break;
-        case TIM.TYPES.JOIN_STATUS_ALREADY_IN_GROUP:
-          console.log("已入群")
-          this.timGetmessage(this.data.liveDetail.chatGroup)
-          break;
-        default:
-          break;
-      }
-    }).catch(function (imError) {
-      console.warn('joinGroup error:', imError); // 申请加群失败的相关信息
-    });
-  },
-  quitGroup() {
-    this.tim.quitGroup('1228794976').then(function (imResponse) {
-      console.log(imResponse.data.groupID, '退出成功的群'); // 退出成功的群 ID
-    }).catch(function (imError) {
-      console.warn('quitGroup error:', '退群失败'); // 退出群组失败的相关信息
-    });
-  },
   sendMsg(e) {
-    console.log(e.detail)
-    // 1. 创建文本消息
-    let message = this.tim.createTextMessage({
-      to: '1228794976',
-      conversationType: TIM.TYPES.CONV_GROUP,
-      payload: {
-        text: e.detail
-      }
-    });
-    // 2. 发送消息
-    this.tim.sendMessage(message).then(function (imResponse) {
-      console.log(imResponse, '发送成功');
-    }).catch(function (imError) {
-      console.warn('发送失败', imError);
-    });
+    timsdk.sendTextMsg(e.detail)
   },
   checkFollow() {
     this.setData({
       'liveDetail.follow': 1
     })
+    this.setCustommessag('MD5_AUDIENCE_FOLLOW_LIVE_ROOM_ANCHOR')
   },
-  getDates() { //JS获取当前周从星期一到星期天的日期
-    const dateOfToday = Date.now()
-    const dayOfToday = (new Date().getDay() + 7 - 1) % 7
-    const daysOfThisWeek = Array.from(new Array(7))
-      .map((_, i) => {
-        const date = new Date(dateOfToday + (i - dayOfToday) * 1000 * 60 * 60 * 24)
-        return date.getFullYear() +
-          '-' +
-          String(date.getMonth() + 1).padStart(2, '0') +
-          '-' +
-          String(date.getDate()).padStart(2, '0')
-      })
-    // console.log(daysOfThisWeek)
+  setCustommessag(customText, type, values) {
+    let params = {
+      customText: customText,
+      customType: '0',
+      isShow: 'show',
+      attachContent: type == 'praise' ? values : ''
+    }
+    timsdk.customParams(params)
   },
+  praise(e) {
+    this.setCustommessag('MD5_AUDIENCE_PRAISE_ANCHOR', "praise", e.detail)
+  }
 })
