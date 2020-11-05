@@ -4,18 +4,19 @@ Component({
     talkList: {
       type: Array,
       value: [],
-      observer: function(newVal, oldVal) {
+      observer: function (newVal, oldVal) {
         // 属性值变化时执行
-        if(newVal.length == 0) return
+        if (newVal.length == 0) return
         console.log(newVal)
-        if(newVal.length > oldVal.length) {
+        if (newVal.length > oldVal.length) {
           this.toBottom()
         }
       }
     }
   },
   data: {
-    scrollTop: 0
+    scrollTop: 99999999999999999,
+    inScroll: 1
   },
   ready() {
     this.toBottom()
@@ -23,8 +24,18 @@ Component({
   methods: {
     toBottom() {
       this.setData({
-        scrollTop: 99999999999999999
+        scrollTop: this.data.scrollTop,
+        inScroll: 0
       })
+    },
+    bindscroll(e) {
+      this.data.inScroll ?
+        this.setData({
+          scrollTop: e.detail.scrollTop
+        }) :
+        this.setData({
+          inScroll: 1
+        })
     }
   }
 })

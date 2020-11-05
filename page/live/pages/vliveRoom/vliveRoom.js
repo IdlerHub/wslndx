@@ -12,39 +12,6 @@ Page({
   },
   onLoad: function (ops) {
     this.liveOps = ops
-    let talkList = [{
-        name: '网上老年大学小助手：',
-        content: '欢迎来到直播间：1、请自行调节手机音量至合适的状态。2、听众发言可以在讨论区进行查看。'
-      }, {
-        name: '李思:  ',
-        content: '交互往上消失'
-      },
-      {
-        name: '李思:  ',
-        content: '交互往上消失'
-      },
-      {
-        name: '我爱割韭菜:  ',
-        content: '好的，等待开始'
-      },
-      {
-        name: '李思:  ',
-        content: '老师讲的这个要点非常好！'
-      },
-      {
-        name: '李思:  ',
-        content: '分享了课程',
-        share: 1
-      },
-      {
-        name: '李思:  ',
-        content: '讲得很棒！',
-        fromApp: 1
-      },
-    ]
-    this.setData({
-      talkList
-    })
     this.liveInit()
   },
   onShow: function () {},

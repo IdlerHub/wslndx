@@ -155,7 +155,7 @@
         {
           "name": "page/live/pages/vliveRoom/vliveRoom",
           "pathName": "page/live/pages/vliveRoom/vliveRoom",
-          "query": "roomId=560",
+          "query": "roomId=562",
           "scene": 1011
         },
         {

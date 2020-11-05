@@ -1,6 +1,7 @@
 import TIM from 'tim-wx-sdk'
 
 var then = null
+var nextReqMessageID = ''
 var customText = {
   /** 小助手进入房间*/
   MD5_HELPER_ENTER_LIVE: "3ba15067d362f56fbfd21406b0218ce1",
@@ -85,23 +86,16 @@ function joinGroup() {
     groupID: String(then.data.liveDetail.chatGroup),
     type: TIM.TYPES.GRP_MEETING
   }).then((imResponse) => {
-    let params = {
-      customText: 'MD5_AUDIENCE_ENTER_LIVE',
-      customType: '0',
-      isShow: 'show',
-    }
     switch (imResponse.data.status) {
       case TIM.TYPES.JOIN_STATUS_WAIT_APPROVAL:
         break;
       case TIM.TYPES.JOIN_STATUS_SUCCESS:
         console.log(imResponse.data.group, '加群成功');
-        timGetmessage(then.data.liveDetail.chatGroup)
-        customParams(params)
+        timGetmessage(then.data.liveDetail.chatGroup, 1)
         break;
       case TIM.TYPES.JOIN_STATUS_ALREADY_IN_GROUP:
         console.log("已入群")
-        timGetmessage(then.data.liveDetail.chatGroup)
-        customParams(params)
+        timGetmessage(then.data.liveDetail.chatGroup, 1)
         break;
       default:
         break;
@@ -120,15 +114,93 @@ function quitGroup() {
   });
 }
 
+//首次获取消息过滤
+
+function messageFilter(params) {
+  switch (params.customText) {
+    case '0008043cc6f0647e061acf18dac98ef3': //进入直播
+      return 0
+      break;
+    case 'b6b7bc2d01bcb555795e9ed7ca5f84f5': //分享直播
+      return 2
+      break;
+    case 'b13ace4737652a74ef2ff02349eab853': //关注直播
+      return 3
+      break;
+    case '751e68f208e65780d52c1a0d53c6c8d4': //点赞直播
+      return 4
+      break;
+    default:
+      return 0
+      break;
+  }
+}
+
 //获取消息列表
-function timGetmessage(roomId) {
+function timGetmessage(roomId, isFirst) {
   then.tim.getMessageList({
-    conversationID: `GROUP${roomId}`
+    conversationID: `GROUP${roomId}`,
+    nextReqMessageID: nextReqMessageID
   }).then(function (imResponse) {
     const messageList = imResponse.data.messageList; // 消息列表。
-    const nextReqMessageID = imResponse.data.nextReqMessageID; // 用于续拉，分页续拉时需传入该字段。
+    nextReqMessageID = imResponse.data.nextReqMessageID; // 用于续拉，分页续拉时需传入该字段。
     const isCompleted = imResponse.data.isCompleted; // 表示是否已经拉完所有消息。
+    const params = {
+      customText: 'MD5_AUDIENCE_ENTER_LIVE',
+      customType: '0',
+      isShow: 'show',
+    }
     console.log(messageList, nextReqMessageID, isCompleted, '消息会话')
+    if (isFirst) {
+      const talkList = [{
+        nick: '网上老年大学小助手',
+        payload: {
+          text: '欢迎来到直播间：1、请自行调节手机音量至合适的状态。2、听众发言可以在讨论区进行查看。'
+        }
+      }]
+      messageList.forEach(e => {
+        let {
+          nick,
+          payload,
+        } = e
+        messageFilter(JSON.parse(payload.data)) ? '' : talkList.unshift({
+          nick,
+          payload: payload.text ? payload : JSON.parse(payload.data),
+        })
+      })
+      then.data.talkList = talkList
+      if(messageList.length < 15) {
+        then.setData({
+          talkList
+        },() => {
+          customParams(params)
+        })
+      }
+      timGetmessage(roomId)
+    } else {
+      const talkList = then.data.talkList
+      messageList.forEach(e => {
+        let {
+          nick,
+          payload,
+        } = e
+        talkList.unshift({
+          nick,
+          payload: payload.text ? payload : JSON.parse(payload.data),
+          unshow: payload.text || messageFilter(JSON.parse(payload.data)) ? 0 : 1
+        })
+      })
+      then.data.talkList = talkList
+      if(messageList.length < 15 || then.data.talkList.length > 100) {
+        then.setData({
+          talkList
+        },() => {
+          customParams(params)
+        })
+        return
+      }
+      timGetmessage(roomId)
+    }
   });
 }
 
@@ -139,13 +211,22 @@ function sendTextMsg(detail) {
     to: String(then.data.liveDetail.chatGroup),
     conversationType: TIM.TYPES.CONV_GROUP,
     payload: {
-      text: detail,
-      From: 'wechat'
+      text: detail
     }
   });
   // 2. 发送消息
   then.tim.sendMessage(message).then(function (imResponse) {
     console.log(imResponse, '发送成功');
+    const talkList = then.data.talkList
+    talkList.push({
+      nick: then.data.$state.userInfo.nickname,
+      payload: {
+        text: detail
+      }
+    })
+    then.setData({
+      talkList
+    })
   }).catch(function (imError) {
     console.warn('发送失败', imError);
   });
@@ -179,6 +260,14 @@ function sendCustomMessage(params) {
   then.tim.sendMessage(message).then(function (imResponse) {
     // 发送成功
     console.log(imResponse, '发送成功');
+    const talkList = then.data.talkList
+    talkList.push({
+      nick: then.data.$state.userInfo.nickname,
+      payload: params,
+    })
+    then.setData({
+      talkList
+    })
   }).catch(function (imError) {
     // 发送失败
     console.warn('发送失败', imError);
@@ -192,6 +281,20 @@ function messageUp() {
     // event.name - TIM.EVENT.MESSAGE_RECEIVED
     // event.data - 存储 Message 对象的数组 - [Message]
     console.log(event)
+    const talkList = then.data.talkList
+    event.data.forEach(e => {
+      let {
+        nick,
+        payload,
+      } = e
+      talkList.push({
+        nick,
+        payload: payload.text ? payload : JSON.parse(payload.data)
+      })
+      then.setData({
+        talkList
+      })
+    })
   });
 }
 

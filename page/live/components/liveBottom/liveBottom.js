@@ -51,7 +51,7 @@ Component({
         console.log(this.praiseNum)
         this.triggerEvent('praise', this.praiseNum)
         this.praiseNum = 0
-      }, 3000);
+      }, 1500);
     }
   }
 })

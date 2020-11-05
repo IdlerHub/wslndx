@@ -19,6 +19,10 @@
   margin-bottom: calc(10vmin / 7.5);
 }
 
+.joinItem {
+  border-radius: calc(40vmin / 7.5);
+}
+
 .talkItem .contentBox {
   display: flex;
   font-size: calc(36vmin / 7.5);
@@ -34,6 +38,21 @@
 
 .talkItem .contentBox .shareTxt {
   color: #FFF000;
+  display: flex;
+  align-items: center;
+}
+
+.talkItem .contentBox .shareTxt text {
+  display: inline-block;
+  max-width: calc(85vmin / 7.5);
+  text-overflow: ellipsis;
+  overflow: hidden;
+  color: #FFF000;
+  white-space: nowrap;
+}
+
+.talkItem .contentBox .shareTxt button {
+  display: inline-block;
 }
 
 .talkItem .contentBox .specalBox {
@@ -71,6 +90,27 @@
   margin-right: calc(11vmin / 7.5);
 }
 
+.talkItem .contentBox .joinTxt {
+  font-size: calc(28vmin / 7.5);
+  font-weight: 400;
+  display: flex;
+  align-items: center;
+}
+
+.talkItem .contentBox .joinTxt text:nth-child(1) {
+  display: inline-block;
+  max-width: calc(288vmin / 7.5);
+  color: #EBC170;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  margin-right: calc(10vmin / 7.5);
+}
+
 ::-webkit-scrollbar {
   display: none;
+}
+
+.richtext {
+  word-break: break-all;
 }

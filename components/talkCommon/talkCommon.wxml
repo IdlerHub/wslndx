@@ -1,22 +1,57 @@
 <!--components/talkCommon/talkCommon.wxml-->
-<scroll-view scroll-y scroll-top="{{scrollTop}}" class="scrollView" enable-flex>
-  <view class="talkItem" wx:for="{{talkList}}" wx:key="index" style="padding: {{item.share || item.fromApp ? 'calc(11vmin / 7.5)' : 'calc(20vmin / 7.5)'}} calc(20vmin / 7.5);">
+<wxs module="fn">
+  module.exports = {
+  showType: function(params) {
+  switch(params.customText) {
+  case '0008043cc6f0647e061acf18dac98ef3'://进入直播
+  return 1
+  break;
+  case 'b6b7bc2d01bcb555795e9ed7ca5f84f5'://分享直播
+  return 2
+  break;
+  case 'b13ace4737652a74ef2ff02349eab853'://关注直播
+  return 3
+  break;
+  case '751e68f208e65780d52c1a0d53c6c8d4'://点赞直播
+  return 4
+  break;
+  break;
+  case 'b13ace4737652a74ef2ff02349eab853'://关注直播
+  return 5
+  break;
+  default:
+  return 0
+  break;
+  }
+  }
+  }
+</wxs>
+<scroll-view scroll-y scroll-top="{{scrollTop}}" class="scrollView" bindscroll="bindscroll" enable-flex>
+  <view class="talkItem {{ fn.showType(item.payload) != 0 && fn.showType(item.payload) != 2 && !item.payload.text ? 'joinItem' : ''}}"
+    wx:for="{{talkList}}" wx:key="index"
+    style="padding: {{ fn.showType(item.payload) == 2 ? 'calc(13vmin / 7.5)' : fn.showType(item.payload) == 1 || fn.showType(item.payload) == 4 ? 'calc(10vmin / 7.5)' : 'calc(20vmin / 7.5)'}} calc(20vmin / 7.5);"
+    wx:if="{{ (item.payload.isShow == 'show' && fn.showType(item.payload) > 0) || item.payload.text }}">
     <view class="contentBox">
-      <rich-text nodes="{{ '<span style=color:#E6E6E6;>' + item.name + '<span>' + item.content}}"
-      wx:if="{{!item.share && !item.fromApp}}"></rich-text>
-      <rich-text nodes="{{ '<span style=color:#FECECE;>' + item.name + item.content + '<span>'}}"
-        wx:elif="{{item.fromApp}}"></rich-text>
-      <text class="shareTxt" wx:else>{{item.name}} 分享了课程</text>
-      <button class="specalBox shareBox" hover-class="none" open-type="share" wx:if="{{item.share}}">
-        <view class="specalBox" style="margin: 0;">
-        <image src="../../images/weixin.png" class="weixin"></image>
-        <text>去分享</text>
+      <rich-text nodes="{{ '<span style=color:#E6E6E6;>' + item.nick + ': </span>' + item.payload.text}}"
+        wx:if="{{item.payload.text}}" class="richtext"></rich-text>
+      <view class="shareTxt" wx:elif="{{fn.showType(item.payload) == 2}}"> <text>{{item.nick}}</text>: 分享了课程
+        <button class="specalBox shareBox" hover-class="none" open-type="share">
+          <view class="specalBox" style="margin: 0;">
+            <image src="../../images/weixin.png" class="weixin"></image>
+            <text>去分享</text>
+          </view>
+        </button>
       </view>
-      </button>
-      <navigator class="specalBox appBox" wx:if="{{item.fromApp}}" hover-class="none" url="/pages/education/education?type=0&url=https://mp.weixin.qq.com/s/vSd8XBQDQkvqVX_kt_YyTQ">
+      <view class="joinTxt" wx:elif="{{fn.showType(item.payload) == 1}}">
+        <text>{{item.nick}} </text>进入了直播间
+      </view>
+      <view class="joinTxt" wx:elif="{{fn.showType(item.payload) == 4}}">
+        <text>{{item.nick}}</text> 给主播点了<text>{{item.payload.attachContent}}</text>个赞
+      </view>
+      <!-- <navigator class="specalBox appBox" wx:if="{{item.fromApp}}" hover-class="none" url="/pages/education/education?type=0&url=https://mp.weixin.qq.com/s/vSd8XBQDQkvqVX_kt_YyTQ">
         <image src="../../images/toAppIcon.png" class="weixin"></image>
         <text>去APP</text>
-      </navigator>
+      </navigator> -->
     </view>
-    </view>
+  </view>
 </scroll-view>
