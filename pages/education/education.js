@@ -10,7 +10,7 @@ Page({
   },
   pageName: "外链页（开心农场&amp;老年电台&amp;早报）",
   onLoad: function (options) {
-    console.log(options)
+    console.log(11111,options)
     setTimeout(() => {
       if (options.classId) {
         // let webURL = "http://192.168.1.68:8080/#/order-detail";
@@ -101,7 +101,8 @@ Page({
       url: webURL +
         "?openId=" +
         this.data.$state.openId +
-        "&token=" + token,
+        "&token=" + token +
+        "&terminal=miniprogram",
       pay: true
     });
   },
