@@ -10,11 +10,10 @@ Page({
   },
   pageName: "外链页（开心农场&amp;老年电台&amp;早报）",
   onLoad: function (options) {
-    console.log(11111,options)
     setTimeout(() => {
       if (options.classId) {
         // let webURL = "http://192.168.1.68:8080/#/order-detail";
-        let webURL = "https://globalh5dev.jinlingkeji.cn/enrollmenth_small/#/order-detail";
+        let webURL = "https://globalh5pro.jinlingkeji.cn/enrollmenth_small/#/order-detail";
         let id = options.classId;
         this.setData({
           url: webURL + "?id=" + id,
@@ -95,7 +94,7 @@ Page({
       url,
     });
   },
-  webJump(webURL) { //H5跳转
+  webJump(webURL) { //H5跳转enrollmenth_small
     let token = wx.getStorageSync("token");
     this.setData({
       url: webURL +
@@ -106,7 +105,11 @@ Page({
       pay: true
     });
   },
+  setPostData(e) {
+    console.log(e)
+  },
   onShareAppMessage(ops) {
+    console.log(ops)
     if (this.data.pay) {
       return {
         title: '我已入学【网上老年大学】,你也快来一起学习吧',
