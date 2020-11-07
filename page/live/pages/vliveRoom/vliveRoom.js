@@ -8,7 +8,9 @@ Page({
     close: 0,
     userInfo: {},
     liveDetail: {},
-    liveCount: {},
+    liveCount: 0,
+    newMessage: 0,
+    praiseCount: 0
   },
   onLoad: function (ops) {
     this.liveOps = ops
@@ -60,8 +62,13 @@ Page({
       liveId: this.liveOps.roomId
     }).then(res => {
       this.setData({
-        liveCount: res.data.timToken
+        liveCount: res.data.popularity
       })
+    })
+  },
+  addliveCount() {
+    this.setData({
+      liveCount: this.data.liveCount += 1
     })
   },
   checkCaption() {
@@ -89,5 +96,18 @@ Page({
   },
   praise(e) {
     this.setCustommessag('MD5_AUDIENCE_PRAISE_ANCHOR', "praise", e.detail)
+  },
+  setNewmessagenum(e) {
+    e.detail.type ?
+      this.setData({
+        newMessage: e.detail.num + this.data.newMessage
+      }) : this.setData({
+        newMessage: e.detail.num
+      })
+  },
+  clickHandler() {
+    this.setData({
+      praiseCount: this.data.praiseCount += 1
+    });
   }
 })

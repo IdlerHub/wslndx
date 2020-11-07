@@ -48,7 +48,7 @@
 }
 
 .bottomBox .shareBox {
-  margin: 0 calc(10vmin / 7.5);
+  margin: 0 calc(16vmin / 7.5);
   background: linear-gradient(90deg, #43DE80 0%, #1CCA61 100%);
   line-height: normal;
 }
@@ -75,8 +75,8 @@
 }
 
 .bottomBox .praiseBox image {
-  width: calc(80vmin / 7.5);
-  height: calc(80vmin / 7.5);
+  width: calc(90vmin / 7.5);
+  height: calc(90vmin / 7.5);
 }
 
 .bottomBox .itemBox text {
@@ -107,7 +107,7 @@
   flex: 1;
   height: calc(90vmin / 7.5);
   line-height: calc(90vmin / 7.5);
-  margin: 0 calc(10vmin / 7.5);
+  margin: 0 calc(16vmin / 7.5);
   padding: 0 calc(20vmin / 7.5);
   font-size: calc(28vmin / 7.5);
   font-weight: 400;

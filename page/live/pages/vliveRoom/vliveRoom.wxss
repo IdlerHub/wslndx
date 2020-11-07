@@ -24,4 +24,8 @@
   width: 100%;
   height: 100%;
 }
-
+.mini-btn{
+  position: absolute;
+  right: 15px;
+  bottom: 25px
+}

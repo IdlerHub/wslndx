@@ -1,6 +1,11 @@
 // page/live/components/liveBottom/liveBottom.js
 Component({
-  properties: {},
+  properties: {
+    close: {
+      type: Boolean,
+      value: 1
+    }
+  },
   lifetimes: {
     // 生命周期函数，可以为函数，或一个在methods段中定义的方法名
     attached: () => {
@@ -28,7 +33,8 @@ Component({
     focus: false,
     keyHeight: '-500',
     txt: '',
-    system: 'ios'
+    system: 'ios',
+    praiseCount: 0
   },
   methods: {
     showBox() {
@@ -52,6 +58,15 @@ Component({
         this.triggerEvent('praise', this.praiseNum)
         this.praiseNum = 0
       }, 1500);
+    },
+    clickHandler() {
+      this.triggerEvent('clickHandler')
+      // this.setData({
+      //   praiseCount: this.data.praiseCount += 1
+      // })
+    },
+    checkCaption() {
+      this.triggerEvent('checkCaption')
     }
   }
 })

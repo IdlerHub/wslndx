@@ -5,6 +5,10 @@ Component({
     liveDetail: {
       type: Object,
       value: {}
+    },
+    liveCount: {
+      type: Number,
+      value: 0
     }
   },
   data: {

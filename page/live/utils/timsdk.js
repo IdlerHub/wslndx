@@ -91,15 +91,14 @@ function joinGroup() {
         break;
       case TIM.TYPES.JOIN_STATUS_SUCCESS:
         console.log(imResponse.data.group, '加群成功');
-        timGetmessage(then.data.liveDetail.chatGroup, 1)
         break;
       case TIM.TYPES.JOIN_STATUS_ALREADY_IN_GROUP:
         console.log("已入群")
-        timGetmessage(then.data.liveDetail.chatGroup, 1)
         break;
       default:
         break;
     }
+    timGetmessage(then.data.liveDetail.chatGroup, 1)
   }).catch(function (imError) {
     console.warn('joinGroup error:', imError); // 申请加群失败的相关信息
   });
@@ -114,12 +113,13 @@ function quitGroup() {
   });
 }
 
-//首次获取消息过滤
+//消息过滤
 
 function messageFilter(params) {
-  switch (params.customText) {
+  if(params.text) return 1
+  switch (JSON.parse(params.data).customText) {
     case '0008043cc6f0647e061acf18dac98ef3': //进入直播
-      return 0
+      return -1
       break;
     case 'b6b7bc2d01bcb555795e9ed7ca5f84f5': //分享直播
       return 2
@@ -149,6 +149,7 @@ function timGetmessage(roomId, isFirst) {
       customText: 'MD5_AUDIENCE_ENTER_LIVE',
       customType: '0',
       isShow: 'show',
+            
     }
     console.log(messageList, nextReqMessageID, isCompleted, '消息会话')
     if (isFirst) {
@@ -157,45 +158,41 @@ function timGetmessage(roomId, isFirst) {
         payload: {
           text: '欢迎来到直播间：1、请自行调节手机音量至合适的状态。2、听众发言可以在讨论区进行查看。'
         }
-      }]
+      }], arr = []
       messageList.forEach(e => {
         let {
           nick,
           payload,
         } = e
-        messageFilter(JSON.parse(payload.data)) ? '' : talkList.unshift({
+        messageFilter(payload) > 0 ? arr.push({
           nick,
           payload: payload.text ? payload : JSON.parse(payload.data),
-        })
+        }) : ''
       })
-      then.data.talkList = talkList
+      then.data.talkList = arr.concat(talkList)
       if(messageList.length < 15) {
         then.setData({
-          talkList
-        },() => {
-          customParams(params)
+          talkList: then.data.talkList
         })
       }
+      customParams(params)
       timGetmessage(roomId)
     } else {
-      const talkList = then.data.talkList
+      const talkList = then.data.talkList, arr = []
       messageList.forEach(e => {
         let {
           nick,
           payload,
         } = e
-        talkList.unshift({
+        messageFilter(payload) > 0 ? arr.push({
           nick,
           payload: payload.text ? payload : JSON.parse(payload.data),
-          unshow: payload.text || messageFilter(JSON.parse(payload.data)) ? 0 : 1
-        })
+        }) : ''
       })
-      then.data.talkList = talkList
+      then.data.talkList = arr.concat(talkList)
       if(messageList.length < 15 || then.data.talkList.length > 100) {
         then.setData({
-          talkList
-        },() => {
-          customParams(params)
+          talkList: then.data.talkList
         })
         return
       }
@@ -280,7 +277,6 @@ function messageUp() {
     // 收到推送的单聊、群聊、群提示、群系统通知的新消息，可通过遍历 event.data 获取消息列表数据并渲染到页面
     // event.name - TIM.EVENT.MESSAGE_RECEIVED
     // event.data - 存储 Message 对象的数组 - [Message]
-    console.log(event)
     const talkList = then.data.talkList
     event.data.forEach(e => {
       let {
@@ -291,6 +287,7 @@ function messageUp() {
         nick,
         payload: payload.text ? payload : JSON.parse(payload.data)
       })
+      payload.text ? '' : messageFilter(payload) == -1 ? then.addliveCount() : ''
       then.setData({
         talkList
       })

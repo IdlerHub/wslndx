@@ -99,12 +99,16 @@
 
 .talkItem .contentBox .joinTxt text:nth-child(1) {
   display: inline-block;
-  max-width: calc(288vmin / 7.5);
+  max-width: calc(200vmin / 7.5);
   color: #EBC170;
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
   margin-right: calc(10vmin / 7.5);
+}
+
+.talkItem .contentBox .langTxt text:nth-child(1) {
+  max-width: calc(250vmin / 7.5);
 }
 
 ::-webkit-scrollbar {
@@ -113,4 +117,27 @@
 
 .richtext {
   word-break: break-all;
+}
+
+.viewMore {
+  position: fixed;
+  bottom: calc(150vmin / 7.5);
+  left: calc(30vmin / 7.5);
+  width: calc(186vmin / 7.5);
+  height: calc(50vmin / 7.5);
+  background: #FFFFFF;
+  border-radius: calc(25vmin / 7.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(24vmin / 7.5);
+  font-weight: 400;
+  color: #333333;
+}
+
+.viewMore image {
+  width: calc(20vmin / 7.5);
+  height: calc(10vmin / 7.5);
+  margin-left:calc(10vmin / 7.5);
+  margin-top:calc(3vmin / 7.5);
 }
