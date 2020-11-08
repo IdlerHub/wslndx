@@ -1,10 +1,10 @@
 <!--page/live/components/liveBottom/liveBottom.wxml-->
 <view class="bottomBox">
-  <view class="itemBox captionBox {{ close ? 'close' : '' }}" style="margin-right: {{!direction && !vliveRoom ? 'calc(16vmin / 7.5)' : ''}};" bindtap="checkCaption">
+  <view class="itemBox captionBox {{ close ? 'close' : '' }}" style="margin-right: {{ !vliveRoom ? 'calc(16vmin / 7.5)' : ''}};" bindtap="checkCaption">
     <image src="../../images/captionIcon.png"></image>
     <text>字幕</text>
   </view>
-  <view class="clickBox" catchtap="showBox" wx:if="{{direction || vliveRoom}}">说点什么～</view>
+  <view class="clickBox" catchtap="showBox" wx:if="{{vliveRoom}}">说点什么～</view>
   <view class="itemBox backBox">
     <image src="../../images/endIcon.png"></image>
     <text>回播</text>

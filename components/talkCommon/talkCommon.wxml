@@ -26,8 +26,11 @@
   }
   }
 </wxs>
-<scroll-view scroll-y scroll-top="{{scrollTop}}" class="scrollView" bindscroll="bindscroll" enable-flex bindscrolltolower="bindscrolltolower" bindtouchstart="touchstart" style="opacity: {{close ? 0 : 1}};"> 
-  <view class="talkItem {{ fn.showType(item.payload) != 0 && fn.showType(item.payload) != 2 && !item.payload.text ? 'joinItem' : ''}}"
+<scroll-view scroll-y scroll-top="{{scrollTop}}" class="scrollView" bindscroll="bindscroll" enable-flex
+  bindscrolltolower="bindscrolltolower" bindtouchstart="touchstart"
+  style="opacity: {{close ? 0 : 1}};bottom: {{!vliveRoom ? 'calc(30vmin / 7.5)' : ''}};left: {{!vliveRoom ? statusBarHeight : ''}}px">
+  <view
+    class="talkItem {{ fn.showType(item.payload) != 0 && fn.showType(item.payload) != 2 && !item.payload.text ? 'joinItem' : ''}}"
     wx:for="{{talkList}}" wx:key="index"
     style="padding: {{ fn.showType(item.payload) == 2 ? 'calc(13vmin / 7.5)' : fn.showType(item.payload) == 1 || fn.showType(item.payload) == 4 ? 'calc(10vmin / 7.5)' : 'calc(20vmin / 7.5)'}} calc(20vmin / 7.5);"
     wx:if="{{ (item.payload.isShow == 'show' && fn.showType(item.payload) > 0) || item.payload.text }}">
@@ -56,8 +59,8 @@
         <text>去APP</text>
       </navigator> -->
     </view>
-    <view class="viewMore" wx:if="{{ newMessage > 0 && showNum }}" bindtap="niewMore">
-      <text>{{ newMessage >= 99 ? newMessage + '+' : newMessage }}新消息</text> 
+    <view class="viewMore" wx:if="{{ newMessage > 0 && showNum }}" bindtap="niewMore" style="left: {{!vliveRoom ? statusBarHeight : ''}}px; bottom: {{!vliveRoom ? 'calc(30vmin / 7.5)' : '' }}">
+      <text>{{ newMessage >= 99 ? newMessage + '+' : newMessage }}新消息</text>
       <image src="/images/messageMore.png"></image>
     </view>
   </view>

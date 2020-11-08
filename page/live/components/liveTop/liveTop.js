@@ -10,25 +10,20 @@ Component({
       type: Number,
       value: 0
     },
-    direction: {
+    vliveRoom: {
       type: Boolean,
-      value: 1
+      value: 0
+    },
+    statusBarHeight: {
+      type: Number,
+      value: 30
     }
   },
   data: {
-    top: 0,
     moveBox: 0,
     showBox:0
   },
   ready() {
-    let systemInfo = wx.getSystemInfoSync()
-    systemInfo.statusBarHeight < 30 ?
-      this.setData({
-        top: systemInfo.statusBarHeight + 4
-      }) :
-      this.setData({
-        top: systemInfo.statusBarHeight
-      });
     this.pages = getCurrentPages()
   },
   methods: {

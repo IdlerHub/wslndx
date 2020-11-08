@@ -4,6 +4,7 @@ import timsdk from "../../utils/timsdk";
 Page({
   data: {
     topT: 28,
+    statusBarHeight: 30,
     talkList: [],
     close: 0,
     userInfo: {},
@@ -12,9 +13,13 @@ Page({
     newMessage: 0,
     praiseCount: 0,
     showCanvans: 1,
-    liveStatus: 1
+    liveStatus: 1,
+    showCommont: 1
   },
   onLoad: function (ops) {
+    this.setData({
+      statusBarHeight: ops.statusBarHeight
+    })
     this.liveOps = ops
     this.liveInit()
   },
@@ -39,7 +44,7 @@ Page({
     return {
       imageUrl: this.data.liveDetail.indexCover,
       title: this.data.liveDetail.name,
-      path: "/page/live/pages/liveVideo/liveVideo?id=" +
+      path: "/page/live/pages/vliveRoom/vliveRoom?id=" +
         this.data.liveDetail.id +
         "&type=share&uid=" +
         this.data.$state.userInfo.id
@@ -136,5 +141,10 @@ Page({
   },
   bindstatechange(e) {
     console.log(e)
+  },
+  closeCommont() {
+    this.setData({
+      showCommont: !this.data.showCommont
+    })
   }
-})
+}) 

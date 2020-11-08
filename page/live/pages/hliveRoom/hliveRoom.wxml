@@ -1,5 +1,5 @@
 <!--page/live/pages/hliveRoom/hliveRoom.wxml-->
-<live-player src="{{liveDetail.liveUrl}}" class="h-player" autoplay bindstatechange="bindstatechange" wx:if="{{liveStatus == 1}}" orientation="vertical">
+<live-player src="{{liveDetail.liveUrl}}" class="h-player" autoplay bindstatechange="bindstatechange" wx:if="{{liveStatus == 1}}" orientation="vertical" bindtap="closeCommont">
 </live-player>
 <view class="statusBox" wx:if="{{liveStatus != 1}}">
   <text wx:if="{{liveStatus == 3}}">讲师暂时离开,请稍等</text>
@@ -9,13 +9,13 @@
     <image src="../../images/liveShare.png"></image>
   </button>
 </view>
-<liveTop liveDetail="{{liveDetail}}" liveCount="{{liveCount}}" direction="{{liveDetail.direction}}" bind:checkFollow="checkFollow" />
+<liveTop liveDetail="{{liveDetail}}" liveCount="{{liveCount}}" direction="{{liveDetail.direction}}" bind:checkFollow="checkFollow" wx:if="{{showCommont}}"/>
 <talkCommon talkList="{{talkList}}" close="{{close}}" newMessage="{{newMessage}}"
-  bind:setNewmessagenum="setNewmessagenum" />
+  bind:setNewmessagenum="setNewmessagenum"/>
 <navigator class="downloadeApp"
   url="/pages/education/education?type=0&url=https://mp.weixin.qq.com/s/vSd8XBQDQkvqVX_kt_YyTQ" hover-class="none">
   <image src="../../images/dowloafeApp.png" bindtap="downloadeApp"></image>
 </navigator>
-<liveBottom close="{{close}}" direction="{{liveDetail.direction}}" bind:sendMsg="sendMsg" bind:praise="praise" bind:checkCaption="checkCaption"
-  bind:clickHandler="clickHandler" />
+<liveBottom close="{{close}}" bind:sendMsg="sendMsg" bind:praise="praise" bind:checkCaption="checkCaption"
+  bind:clickHandler="clickHandler" wx:if="{{showCommont}}"/>
 <like-fx count="{{praiseCount}}" wx:if="{{showCanvans}}"></like-fx>

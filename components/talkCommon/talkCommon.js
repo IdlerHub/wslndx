@@ -25,12 +25,21 @@ Component({
     close: {
       type: Boolean,
       value: 0
+    },
+    vliveRoom: {
+      type: Boolean,
+      value: 0
+    },
+    statusBarHeight: {
+      type: Number,
+      value: 30
     }
   },
   data: {
     scrollTop: 99999999999999999,
     inScroll: 1,
-    showNum: 0
+    showNum: 0,
+    top: 0
   },
   ready() {
     this.toBottom()
@@ -53,6 +62,7 @@ Component({
       this.triggerEvent('setNewmessagenum', {
         num: 0
       })
+      console.log(32423432423)
     },
     bindscroll(e) {
       this.data.inScroll ? [
@@ -66,11 +76,11 @@ Component({
         })
     },
     setCrollTop(scrollTop) {
-      if(this.timer) clearTimeout(this.timer)
+      if (this.timer) clearTimeout(this.timer)
       this.timer = setTimeout(() => {
         this.setData({
           scrollTop: this.data.showNum ? scrollTop : 999999999999999
-        },() => {
+        }, () => {
           this.touch = 0
         })
       }, 800);

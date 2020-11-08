@@ -4,6 +4,7 @@ import timsdk from "../../utils/timsdk";
 Page({
   data: {
     topT: 28,
+    statusBarHeight: 30,
     talkList: [],
     close: 0,
     userInfo: {},
@@ -17,6 +18,15 @@ Page({
   onLoad: function (ops) {
     this.liveOps = ops
     this.liveInit()
+    let systemInfo = wx.getSystemInfoSync()
+    console.log(systemInfo.statusBarHeight, '系统栏高度')
+    systemInfo.statusBarHeight < 30 ?
+      this.setData({
+        statusBarHeight: systemInfo.statusBarHeight + 4
+      }) :
+      this.setData({
+        statusBarHeight: systemInfo.statusBarHeight
+      });
   },
   onShow: function () {
     this.setData({
@@ -45,7 +55,7 @@ Page({
     return {
       imageUrl: this.data.liveDetail.indexCover,
       title: this.data.liveDetail.name,
-      path: "/page/live/pages/liveVideo/liveVideo?id=" +
+      path: "/page/live/pages/vliveRoom/vliveRoom?id=" +
         this.data.liveDetail.id +
         "&type=share&uid=" +
         this.data.$state.userInfo.id
@@ -150,7 +160,7 @@ Page({
     this.toHliveRomm = 1
     setTimeout(() => {
       wx.navigateTo({
-        url: '../hliveRoom/hliveRoom?roomId=' + this.data.liveDetail.id,
+        url: `../hliveRoom/hliveRoom?roomId=${this.data.liveDetail.id}&statusBarHeight=${this.data.statusBarHeight}`,
       })
     }, 1000);
   }

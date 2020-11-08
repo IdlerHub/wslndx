@@ -138,6 +138,9 @@ function messageFilter(params) {
     case '01ff35f1f878fe1ef0a1501707664b32': //主播暂时离开
       return -3
       break;
+    case '5ef8580c35a92ce22aaad6154b186948': //后台结束直播解散房间
+      return -4
+      break;  
     default:
       return 0
       break;

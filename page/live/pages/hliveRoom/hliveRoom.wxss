@@ -36,7 +36,7 @@ page {
 .statusBox {
   width: 100vw;
   position: fixed;
-  top: calc(50vmin / 7.5);
+  top: calc(100vmin / 7.5);
   left: 50%;
   transform: translateX(-50%);
   display: flex;

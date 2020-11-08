@@ -5,6 +5,7 @@
   position: fixed;
   left: calc(30vmin / 7.5);
   bottom: calc(150vmin / 7.5);
+  z-index: 99999999;
 }
 
 .scrollMask {

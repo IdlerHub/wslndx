@@ -4,19 +4,20 @@
   display: flex;
   align-items: center;
   position: absolute;
-  left: calc(30vmin / 7.5);
+  left: calc(18vmin / 7.5);
 }
 
 .topBox .liveBack {
   width: calc(20vmin / 7.5);
   height: calc(35vmin / 7.5);
+  padding: calc(12vmin / 7.5);
 }
 
 .tearchBox {
   height: calc(82vmin / 7.5);
   display: flex;
   align-items: center;
-  margin-left: calc(24vmin / 7.5);
+  margin-left: calc(12vmin / 7.5);
   background: rgba(0, 0, 0, 0.3);
   border-radius: calc(70vmin / 7.5);
 }

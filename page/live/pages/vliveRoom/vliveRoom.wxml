@@ -14,13 +14,13 @@
     <image src="../../images/liveShare.png"></image>
   </button>
 </view>
-<liveTop liveDetail="{{liveDetail}}" liveCount="{{liveCount}}" direction="{{liveDetail.direction}}" bind:checkFollow="checkFollow" />
-<talkCommon talkList="{{talkList}}" close="{{close}}" newMessage="{{newMessage}}"
+<liveTop liveDetail="{{liveDetail}}" liveCount="{{liveCount}}" direction="{{liveDetail.direction}}" statusBarHeight="{{statusBarHeight}}" vliveRoom="1" bind:checkFollow="checkFollow" />
+<talkCommon talkList="{{talkList}}" close="{{close}}" vliveRoom="1" newMessage="{{newMessage}}" statusBarHeight="{{statusBarHeight}}"
   bind:setNewmessagenum="setNewmessagenum" />
 <navigator class="downloadeApp"
   url="/pages/education/education?type=0&url=https://mp.weixin.qq.com/s/vSd8XBQDQkvqVX_kt_YyTQ" hover-class="none">
   <image src="../../images/dowloafeApp.png" bindtap="downloadeApp"></image>
 </navigator>
-<liveBottom close="{{close}}" direction="{{liveDetail.direction}}" vliveRoom="1" bind:sendMsg="sendMsg" bind:praise="praise" bind:checkCaption="checkCaption"
+<liveBottom close="{{close}}" vliveRoom="1" bind:sendMsg="sendMsg" bind:praise="praise" bind:checkCaption="checkCaption"
   bind:clickHandler="clickHandler" />
 <like-fx count="{{praiseCount}}" wx:if="{{showCanvans}}"></like-fx>
