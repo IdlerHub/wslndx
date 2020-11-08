@@ -22,16 +22,19 @@ Component({
       this.setData({
         keyHeight: res.height
       }, () => {
-        this.data.keyHeight == 0 && !this.data.focus ? this.setData({
-          keyHeight: '-60'
-        }) : ''
+        setTimeout(() => {
+          console.log(this.data.focus)
+          this.data.keyHeight == 0 && !this.data.focus ? this.setData({
+            keyHeight: '-60'
+          }) : ''
+        }, 200);
       })
     })
     this.praiseNum = 0
   },
   data: {
     focus: false,
-    keyHeight: '-500',
+    keyHeight: '-60',
     txt: '',
     system: 'ios',
     praiseCount: 0
