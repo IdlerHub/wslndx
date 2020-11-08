@@ -114,9 +114,8 @@ function quitGroup() {
 }
 
 //消息过滤
-
 function messageFilter(params) {
-  if(params.text) return 1
+  if (params.text) return 1
   switch (JSON.parse(params.data).customText) {
     case '0008043cc6f0647e061acf18dac98ef3': //进入直播
       return -1
@@ -129,6 +128,15 @@ function messageFilter(params) {
       break;
     case '751e68f208e65780d52c1a0d53c6c8d4': //点赞直播
       return 4
+      break;
+    case 'ee07a26161938852c3bc78d8aa02479b': //直播重新进入直播间
+      return -2
+      break;
+    case '79a5325920cb27c97654e65da37f5408': //主播结束直播
+      return -4
+      break;
+    case '01ff35f1f878fe1ef0a1501707664b32': //主播暂时离开
+      return -3
       break;
     default:
       return 0
@@ -149,16 +157,17 @@ function timGetmessage(roomId, isFirst) {
       customText: 'MD5_AUDIENCE_ENTER_LIVE',
       customType: '0',
       isShow: 'show',
-            
+
     }
     console.log(messageList, nextReqMessageID, isCompleted, '消息会话')
     if (isFirst) {
       const talkList = [{
-        nick: '网上老年大学小助手',
-        payload: {
-          text: '欢迎来到直播间：1、请自行调节手机音量至合适的状态。2、听众发言可以在讨论区进行查看。'
-        }
-      }], arr = []
+          nick: '网上老年大学小助手',
+          payload: {
+            text: '欢迎来到直播间：1、请自行调节手机音量至合适的状态。2、听众发言可以在讨论区进行查看。'
+          }
+        }],
+        arr = []
       messageList.forEach(e => {
         let {
           nick,
@@ -170,7 +179,7 @@ function timGetmessage(roomId, isFirst) {
         }) : ''
       })
       then.data.talkList = arr.concat(talkList)
-      if(messageList.length < 15) {
+      if (messageList.length < 15) {
         then.setData({
           talkList: then.data.talkList
         })
@@ -178,7 +187,8 @@ function timGetmessage(roomId, isFirst) {
       customParams(params)
       timGetmessage(roomId)
     } else {
-      const talkList = then.data.talkList, arr = []
+      const talkList = then.data.talkList,
+        arr = []
       messageList.forEach(e => {
         let {
           nick,
@@ -190,7 +200,7 @@ function timGetmessage(roomId, isFirst) {
         }) : ''
       })
       then.data.talkList = arr.concat(talkList)
-      if(messageList.length < 15 || then.data.talkList.length > 100) {
+      if (messageList.length < 15 || then.data.talkList.length > 100) {
         then.setData({
           talkList: then.data.talkList
         })
@@ -284,14 +294,28 @@ function messageUp() {
         nick,
         payload,
       } = e
-      talkList.push({
-        nick,
-        payload: payload.text ? payload : JSON.parse(payload.data)
-      })
-      payload.text ? '' : messageFilter(payload) == -1 ? then.addliveCount() : ''
-      then.setData({
-        talkList
-      })
+      if (messageFilter(payload) > 0) {
+        talkList.push({
+          nick,
+          payload: payload.text ? payload : JSON.parse(payload.data)
+        })
+        payload.text ? '' : messageFilter(payload) == -1 ? then.addliveCount() : ''
+        then.setData({
+          talkList
+        })
+      } else if(messageFilter(payload) == -4){
+        then.setData({
+          liveStatus: 4
+        })
+      } else if(messageFilter(payload) == -2){
+        then.setData({
+          liveStatus: 1
+        })
+      } else if(messageFilter(payload) == -3) {
+        then.setData({
+          liveStatus: 3
+        })
+      }
     })
   });
 }

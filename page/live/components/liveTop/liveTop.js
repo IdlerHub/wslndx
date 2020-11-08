@@ -9,6 +9,10 @@ Component({
     liveCount: {
       type: Number,
       value: 0
+    },
+    direction: {
+      type: Boolean,
+      value: 1
     }
   },
   data: {
@@ -30,7 +34,9 @@ Component({
   methods: {
     back() {
       if (this.pages.length > 1) {
-        wx.navigateBack()
+        this.data.direction ? wx.navigateBack() : setTimeout(() => {
+          wx.navigateBack()
+        }, 1000);
       } else {
         wx.switchTab({
           url: '/pages/timetable/timetable'

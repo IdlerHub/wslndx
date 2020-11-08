@@ -4,6 +4,14 @@ Component({
     close: {
       type: Boolean,
       value: 1
+    },
+    direction: {
+      type: Boolean,
+      value: 1
+    },
+    vliveRoom: {
+      type: Boolean,
+      value: 0
     }
   },
   lifetimes: {

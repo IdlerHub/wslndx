@@ -127,7 +127,8 @@
         "pages/liveSearch/liveSearch",
         "pages/vliveRoom/vliveRoom",
         "pages/liveCenter/liveCenter",
-        "pages/liveCenterList/liveCenterList"
+        "pages/liveCenterList/liveCenterList",
+        "pages/hliveRoom/hliveRoom"
       ]
     },
     {

@@ -1,31 +1,15 @@
-/* page/live/pages/liveVideo/liveVideo.wxss */
+/* page/live/pages/hliveRoom/hliveRoom.wxss */
 page {
   width: 100vw;
   height: 100vh;
   background-color: #000;
 }
 
-.v-player {
-  width: 100vw;
-  height: 100vh;
-}
 
 .h-player {
   width: 100vw;
-  height: 422rpx;
-  position: fixed;
-  top: 220rpx;
+  height: 100vh;
 }
-
-.h-player image {
-  width: 64rpx;
-  height: 64rpx;
-  position: absolute;
-  right: 0;
-  bottom: 13rpx;
-  padding: 30rpx;
-  z-index: 99999;
-} 
 
 .testBag {
   width: 100vw;
@@ -52,7 +36,7 @@ page {
 .statusBox {
   width: 100vw;
   position: fixed;
-  top: 400rpx;
+  top: calc(50vmin / 7.5);
   left: 50%;
   transform: translateX(-50%);
   display: flex;
@@ -63,21 +47,21 @@ page {
 }
 
 .statusBox text:nth-child(1) {
-  font-size: 36rpx;
+  font-size: calc(36vmin / 7.5);
   font-weight: 400;
   color: #FFFFFF;
 }
 
 .statusBox text:nth-child(2) {
-  font-size: 28rpx;
+  font-size: calc(28vmin / 7.5);
   font-weight: 400;
   color: #FFFFFF;
   margin: 10rpx 0 40rpx 0;
 }
 
 .statusBox button {
-  width: 200rpx;
-  height: 80rpx;
+  width: calc(200vmin / 7.5);
+  height: calc(80vmin / 7.5);
 }
 
 .statusBox button image{

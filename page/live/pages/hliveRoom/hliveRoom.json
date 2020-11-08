@@ -7,5 +7,5 @@
   },
   "disableScroll": true,
   "navigationStyle": "custom",
-  "backgroundColor": "#000000"
+  "pageOrientation": "landscape"
 }

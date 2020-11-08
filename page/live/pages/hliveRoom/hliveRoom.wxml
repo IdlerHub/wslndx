@@ -1,10 +1,5 @@
-<!--page/live/pages/liveVideo/liveVideo.wxml-->
-<live-player src="{{liveDetail.liveUrl}}" class="v-player" autoplay bindstatechange="bindstatechange"
-  wx:if="{{liveStatus == 1 && liveDetail.direction}}">
-</live-player>
-<live-player src="{{liveDetail.liveUrl}}" class="h-player" autoplay bindstatechange="bindstatechange"
-  wx:if="{{liveStatus == 1 && !liveDetail.direction}}">
-  <image src="../../images/full.png" bindtap="toHliveRoom"></image>
+<!--page/live/pages/hliveRoom/hliveRoom.wxml-->
+<live-player src="{{liveDetail.liveUrl}}" class="h-player" autoplay bindstatechange="bindstatechange" wx:if="{{liveStatus == 1}}" orientation="vertical">
 </live-player>
 <view class="statusBox" wx:if="{{liveStatus != 1}}">
   <text wx:if="{{liveStatus == 3}}">讲师暂时离开,请稍等</text>
@@ -21,6 +16,6 @@
   url="/pages/education/education?type=0&url=https://mp.weixin.qq.com/s/vSd8XBQDQkvqVX_kt_YyTQ" hover-class="none">
   <image src="../../images/dowloafeApp.png" bindtap="downloadeApp"></image>
 </navigator>
-<liveBottom close="{{close}}" direction="{{liveDetail.direction}}" vliveRoom="1" bind:sendMsg="sendMsg" bind:praise="praise" bind:checkCaption="checkCaption"
+<liveBottom close="{{close}}" direction="{{liveDetail.direction}}" bind:sendMsg="sendMsg" bind:praise="praise" bind:checkCaption="checkCaption"
   bind:clickHandler="clickHandler" />
 <like-fx count="{{praiseCount}}" wx:if="{{showCanvans}}"></like-fx>

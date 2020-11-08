@@ -1,4 +1,4 @@
-// page/live/pages/liveVideo/liveVideo.js
+// page/live/pages/hliveRoom/hliveRoom.js
 const app = getApp()
 import timsdk from "../../utils/timsdk";
 Page({
@@ -22,12 +22,7 @@ Page({
     this.setData({
       showCanvans: 1
     })
-    if(this.toHliveRomm) {
-      this.liveInit()
-      this.toHliveRomm = 0
-    } else {
-      this.getLiveById(this.liveOps.roomId)
-    }
+    this.getLiveById(this.liveOps.roomId)
   },
   onHide: function () {
     this.setData({
@@ -38,7 +33,6 @@ Page({
   onUnload: function () {
     timsdk.quitGroup(this)
     timsdk.timLoginout(this)
-    wx.offKeyboardHeightChange()
   },
   onShareAppMessage: function () {
     this.setCustommessag('MD5_AUDIENCE_SHARE_LIVE_ROOM')
@@ -142,16 +136,5 @@ Page({
   },
   bindstatechange(e) {
     console.log(e)
-  },
-  toHliveRoom() {
-    if(this.toHliveRomm) return
-    timsdk.quitGroup(this)
-    timsdk.timLoginout(this)
-    this.toHliveRomm = 1
-    setTimeout(() => {
-      wx.navigateTo({
-        url: '../hliveRoom/hliveRoom?roomId=' + this.data.liveDetail.id,
-      })
-    }, 1000);
   }
 })
