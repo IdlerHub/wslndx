@@ -7,6 +7,10 @@
   bottom: calc(150vmin / 7.5);
 }
 
+.scrollMask {
+  z-index: 99999;
+}
+
 .talkItem {
   display: inline-block;
   max-width: 100%;

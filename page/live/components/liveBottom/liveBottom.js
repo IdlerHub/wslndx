@@ -57,7 +57,7 @@ Component({
         console.log(this.praiseNum)
         this.triggerEvent('praise', this.praiseNum)
         this.praiseNum = 0
-      }, 1500);
+      }, 1000);
     },
     clickHandler() {
       this.triggerEvent('clickHandler')

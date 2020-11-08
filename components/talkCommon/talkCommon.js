@@ -21,6 +21,10 @@ Component({
     newMessage: {
       type: Number,
       value: 0
+    },
+    close: {
+      type: Boolean,
+      value: 0
     }
   },
   data: {
