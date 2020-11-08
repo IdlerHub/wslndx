@@ -277,6 +277,7 @@ function messageUp() {
     // 收到推送的单聊、群聊、群提示、群系统通知的新消息，可通过遍历 event.data 获取消息列表数据并渲染到页面
     // event.name - TIM.EVENT.MESSAGE_RECEIVED
     // event.data - 存储 Message 对象的数组 - [Message]
+    console.log(event)
     const talkList = then.data.talkList
     event.data.forEach(e => {
       let {

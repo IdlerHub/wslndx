@@ -21,8 +21,8 @@
   </view>
 </view>
 <view class="inputBox" style="bottom: {{keyHeight}}px">
-  <textarea maxlength="50" focus="{{focus}}" class="textarea" placeholder="我要发言..." placeholder-class="placeholder"
+  <textarea maxlength="50" focus="{{focus}}" value="{{txt}}" class="textarea" placeholder="我要发言..." placeholder-class="placeholder"
     cursor-spacing="20" adjust-position="{{false}}" show-confirm-bar="{{false}}" auto-height
     style="padding-top: {{ system == 'ios' ? '4' : '20' }}rpx;" bindinput="bindinput" bindblur="showBox"></textarea>
-  <view class="send" bindtap="send">发送</view>
+  <view class="send" bindtap="send" style="background-color: {{txt.length > 0 ? '#F2323A' : ''}};">发送</view>
 </view>

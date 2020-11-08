@@ -17,6 +17,7 @@
   position: fixed;
   bottom: calc(199vmin / 7.5);
   right: calc(20vmin / 7.5);
+  z-index: 9999999999999999999;
 }
 
 /* 下载app */

@@ -52,6 +52,9 @@ Component({
     },
     send() {
       this.triggerEvent('sendMsg', this.data.txt)
+      this.setData({
+        txt: ''
+      })
     },
     praise() {
       this.praiseNum += 1

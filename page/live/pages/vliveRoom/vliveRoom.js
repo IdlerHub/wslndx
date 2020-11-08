@@ -10,14 +10,23 @@ Page({
     liveDetail: {},
     liveCount: 0,
     newMessage: 0,
-    praiseCount: 0
+    praiseCount: 0,
+    showCanvans: 1
   },
   onLoad: function (ops) {
     this.liveOps = ops
     this.liveInit()
   },
-  onShow: function () {},
-  onHide: function () {},
+  onShow: function () {
+    this.setData({
+      showCanvans: 1
+    })
+  },
+  onHide: function () {
+    this.setData({
+      showCanvans: 0
+    })
+  },
   onUnload: function () {
     timsdk.quitGroup(this)
     timsdk.timLoginout(this)
@@ -109,5 +118,8 @@ Page({
     this.setData({
       praiseCount: this.data.praiseCount += 1
     });
+  },
+  bindstatechange(e) {
+    console.log(e)
   }
 })
