@@ -217,7 +217,7 @@ function getTimSign(params) {
 }
 
 /**
- * @description: 获取专栏直播详情
+ * @description: 获取专栏详情
  * @param {}
  * @return:  promise
  * **/

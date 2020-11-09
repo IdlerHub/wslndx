@@ -715,18 +715,27 @@ Page({
   },
   toLivelesson(e) {
     let item = e.currentTarget.dataset.item
-    console.log(item)
     if (item.status == 0) {
-      item.direction ? wx.navigateTo({
-        url: `/page/live/pages/vliveRoom/vliveRoom?roomId=${item.liveId}`,
-      }) : wx.navigateTo({
+      wx.navigateTo({
         url: `/page/live/pages/vliveRoom/vliveRoom?roomId=${item.liveId}`,
       })
     } else {
-      wx.navigateTo({
-        url: "/page/live/pages/tableDetail/tableDetail?specialColumnId=" +
-          item.specialColumnId
-      });
+      app.liveData.getLiveBySpecialColumnId({
+        specialColumnId: item.specialColumnId
+      }).then(res => {
+        if (res.data.isAddSubscribe) {
+          wx.navigateTo({
+            url: "/page/live/pages/liveDetail/liveDetail?specialColumnId=" +
+              item.specialColumnId
+          });
+        } else {
+          wx.navigateTo({
+            url: "/page/live/pages/tableDetail/tableDetail?specialColumnId=" +
+              item.specialColumnId
+          });
+        }
+      })
+
     }
   }
 })

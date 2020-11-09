@@ -153,9 +153,9 @@
           "scene": null
         },
         {
-          "name": "page/live/pages/hliveRoom/hliveRoom",
-          "pathName": "page/live/pages/hliveRoom/hliveRoom",
-          "query": "roomId=592",
+          "name": "page/live/pages/vliveRoom/vliveRoom",
+          "pathName": "page/live/pages/vliveRoom/vliveRoom",
+          "query": "roomId=600",
           "scene": 1011
         },
         {

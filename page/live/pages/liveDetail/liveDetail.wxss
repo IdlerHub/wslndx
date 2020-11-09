@@ -457,48 +457,6 @@ page {
   background: #df2020;
 }
 
-/* 排序 */
-.nav .order {
-  position: absolute;
-  right: 30rpx;
-  top: 0;
-  margin: auto;
-}
-
-.nav .order .box {
-  line-height: 104rpx;
-  font-size: 36rpx;
-  color: #7e7e7e;
-  display: flex;
-  align-items: center;
-}
-
-.nav .order .icon {
-  display: block;
-  width: 30rpx;
-  height: 30rpx;
-  margin: 0 8rpx;
-}
-
-.order .order_box {
-  display: flex;
-  align-items: center;
-  margin-top: 6rpx;
-}
-
-.order .order_box image {
-  width: 34rpx;
-  height: 34rpx;
-  margin-right: 10rpx;
-}
-
-.order .order_box test {
-  font-size: 30rpx;
-  font-family: PingFangSC-Regular, PingFang SC;
-  font-weight: 400;
-  color: rgba(126, 126, 126, 1);
-}
-
 /* 简介 */
 rich-text {
   display: block;

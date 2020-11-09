@@ -85,20 +85,15 @@
                     {{ item.name }}
                 </view>
             </block>
-            <!-- 排序 -->
-            <view class="order" wx:if="{{ currentTab == 0 }}" bindtap="order">
-                <view wx:if="{{ sort == 0 }}" class="box">
-                    <image class="icon" mode="aspectFill" src="{{ $state.imgHost }}/order.png"></image>
-                    正序
-                </view>
-                <view wx:if="{{ sort == 1 }}" class="box">
-                    <image class="icon" mode="aspectFill" src="{{ $state.imgHost }}/order-fall.png"></image>
-                    倒序
-                </view>
-            </view>
         </scroll-view>
         <swiper class="tab" style="height:{{ height }}px" current="{{ currentTab }}" duration="300"
             bindchange="switchTab">
+            <swiper-item class="tab-item">
+                <!-- 简介 -->
+                <scroll-view scroll-y="true" class="wrap synopsis">
+                    <rich-text class="introduction" nodes="{{lessonDetail.introduction}}"></rich-text>
+                </scroll-view>
+            </swiper-item>
             <swiper-item class="tab-item">
                 <!-- 剧集 -->
                 <view class="none-live" wx:if="{{sublessons.length == 0}}">
@@ -207,16 +202,10 @@
                     </view>
                 </view>
             </swiper-item>
-            <swiper-item class="tab-item">
-                <!-- 简介 -->
-                <scroll-view scroll-y="true" class="wrap synopsis">
-                    <rich-text class="introduction" nodes="{{lessonDetail.introduction}}"></rich-text>
-                </scroll-view>
-            </swiper-item>
         </swiper>
     </view>
     <!-- 语音评论等 -->
-    <button class="issueBox" wx:if="{{write&&currentTab == 1&& !$state.authUserInfo}}" hover-class="none"
+    <button class="issueBox" wx:if="{{write&&currentTab == 2&& !$state.authUserInfo}}" hover-class="none"
         open-type="getUserInfo" bindgetuserinfo="onGotUserInfo" style="text-align: left;line-height:0;">
         <image src="{{$state.imgHost}}/voicebig.png" class="bigvoice" catchtap="showvoice" data-type="content"></image>
         <view class="issueBox-txt" style="color:{{content != '' ? 'rgba(46,46,46,1)': ''}}">
@@ -227,7 +216,7 @@
             发布
         </view>
     </button>
-    <view class="issueBox" wx:if="{{write&&currentTab == 1&&$state.authUserInfo}}" bindtap="showWrite"
+    <view class="issueBox" wx:if="{{write&&currentTab == 2&&$state.authUserInfo}}" bindtap="showWrite"
         data-type="reply">
         <image src="{{$state.imgHost}}/voicebig.png" class="bigvoice" catchtap="showvoice" data-type="content"></image>
         <view class="issueBox-txt" style="color:{{content != '' ? 'rgba(46,46,46,1)': ''}}">

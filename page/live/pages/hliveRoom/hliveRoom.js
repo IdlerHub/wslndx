@@ -14,7 +14,8 @@ Page({
     praiseCount: 0,
     showCanvans: 1,
     liveStatus: 1,
-    showCommont: 1
+    showCommont: 1,
+    showVideo: 1
   },
   onLoad: function (ops) {
     this.setData({
@@ -32,7 +33,8 @@ Page({
   onHide: function () {
     this.setData({
       showCanvans: 0,
-      liveStatus: 0
+      liveStatus: 0,
+      showVideo: 0
     })
   },
   onUnload: function () {
@@ -60,7 +62,8 @@ Page({
       liveId
     }).then(res => {
       this.setData({
-        liveDetail: res.data
+        liveDetail: res.data,
+        showVideo: 1
       })
       if(res.data.status == 3) {
         this.setData({

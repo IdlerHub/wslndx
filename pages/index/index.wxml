@@ -76,7 +76,7 @@
               </view>
             </view>
           </view>
-          <text>{{item.name}}</text>
+          <text>{{item.liveName}}</text>
           <text>{{item.dayTime}} {{item.startTime}}</text>
         </view>
       </view>

@@ -13,7 +13,8 @@ Page({
     newMessage: 0,
     praiseCount: 0,
     showCanvans: 1,
-    liveStatus: 1
+    liveStatus: 1,
+    showVideo: 1
   },
   onLoad: function (ops) {
     this.liveOps = ops
@@ -32,7 +33,7 @@ Page({
     this.setData({
       showCanvans: 1
     })
-    if(this.toHliveRomm) {
+    if(this.toHliveRomm ) {
       this.liveInit()
       this.toHliveRomm = 0
     } else {
@@ -42,7 +43,8 @@ Page({
   onHide: function () {
     this.setData({
       showCanvans: 0,
-      liveStatus: 0
+      liveStatus: 0,
+      showVideo: 0
     })
   },
   onUnload: function () {
@@ -71,7 +73,8 @@ Page({
       liveId
     }).then(res => {
       this.setData({
-        liveDetail: res.data
+        liveDetail: res.data,
+        showVideo: 1
       })
       if(res.data.status == 3) {
         this.setData({
@@ -159,6 +162,9 @@ Page({
     timsdk.timLoginout(this)
     this.toHliveRomm = 1
     setTimeout(() => {
+      this.setData({
+        showVideo: 0
+      })
       wx.navigateTo({
         url: `../hliveRoom/hliveRoom?roomId=${this.data.liveDetail.id}&statusBarHeight=${this.data.statusBarHeight}`,
       })
