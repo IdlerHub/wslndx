@@ -74,20 +74,20 @@ function toLiveSearch(params) {
 
 // 讨论模块接口
 /**
- * @description: 课程评论列表
- * @param {lesson_id,page_size,page}  --- {课程ID}
+ * @description: 课程讨论列表 新
+ * @param {}  --- {课程ID}
  * @return:  promise
  * **/
 function getCommentList(params) {
-  return httpService.post("schedule/commentList", params);
+  return httpService.post("comment/list", params, null ,true);
 }
 /**
- * @description: 发布课程评论
+ * @description: 发布专栏评论
  * @param {lesson_id,content}  --- {课程ID,评论内容}
  * @return:  promise
  * **/
 function putComment(params) {
-  return httpService.post("schedule/putComment", params);
+  return httpService.post("comment/add", params, null ,true);
 }
 /**
  * @description: 删除课程评论
@@ -95,7 +95,7 @@ function putComment(params) {
  * @return:  promise
  * **/
 function delComment(params) {
-  return httpService.post("schedule/delComment", params);
+  return httpService.post("comment/delete", params, null ,true);
 }
 /**
  * @description: 提交二级/三级评论
@@ -103,7 +103,7 @@ function delComment(params) {
  * @return:  promise
  * **/
 function putReply(params) {
-  return httpService.post("schedule/putReply", params);
+  return httpService.post("comment/reply/add", params, null ,true);
 }
 /**
  * @description: 删除二级/三级评论
@@ -111,7 +111,7 @@ function putReply(params) {
  * @return:  promise
  * **/
 function delReply(params) {
-  return httpService.post("schedule/delReply", params);
+  return httpService.post("comment/delete", params, null ,true);
 }
 /**
  * @description: 评论回复详细列表
@@ -253,6 +253,16 @@ function follow(params) {
   return httpService.post("user/follow", params, null ,true);
 }
 
+
+/**
+ * @description: 获取回播
+ * @param {}
+ * @return:  promise
+ * **/
+function getLiveBackById(params) {
+  return httpService.post("live/getLiveBackById", params, null ,true);
+}
+
 module.exports = {
   getLiveLessons,
   getApplyDetail,
@@ -282,4 +292,5 @@ module.exports = {
   addSubscribe,
   getLiveById,
   follow,
+  getLiveBackById
 };

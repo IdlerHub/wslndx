@@ -74,7 +74,7 @@ function xhr(path, method, param = {}, noToken, checkAPI) {
     wx.request({
       ...req,
       success(res) {
-        if (res.statusCode == 200 && res['data'] && (res['data']['code'] == 1 || res['data']['code'] == 200)) {
+        if (res.statusCode == 200 && res['data'] && (res['data']['code'] == 1 || res['data']['code'] == 200) || res.code == 200) {
           resolve(res.data);
         } else if (res['data']['code'] == 110) {
           store.setState({

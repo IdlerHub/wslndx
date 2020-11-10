@@ -24,7 +24,7 @@
     <view class="liveInfo">
         <view class="liveName">{{lessonDetail.name}}</view>
         <view class="liveSubtitle">
-            共{{lessonDetail.chapter_num}}讲 · {{lessonDetail.description}}
+            共{{lessonDetail.liveCount}}讲 · {{lessonDetail.description}}
         </view>
         <view class="share-joinClass">
             <view class="live-info">
@@ -46,31 +46,33 @@
         </view>
     </view>
     <!-- 直播信息 -->
-    <view class="liveLesson" wx:if="{{current.room_id && current.live_status == 101}}" bindtap="toWatch"
+    <navigator></navigator>
+    <navigator url="/page/live/pages/vliveRoom/vliveRoom?roomId={{current.id}}" hover-class="none" class="liveLesson" wx:if="{{current.id}}" bindtap="toWatch"
         data-item="{{current}}">
         <view class="liveImg">
-            <image class="coverImg" mode="widthFix" src="{{current.cover}}"></image>
-            <image class="playImg" src="{{ $state.imgHost }}/play.png"></image>
+            <image class="coverImg" mode="widthFix" src="{{lessonDetail.cover}}"></image>
+            <image class="playImg" src="/images/recomonPlay.png"></image>
         </view>
         <view class="lessonInfo">
             <view class="lessonName">{{current.name}}</view>
             <view class="lessonSubtitle">{{current.description}}</view>
             <view class="lessonTeacher">
                 <image src="../../images/userImg.png"></image>
-                <text>{{current.teacher}}</text>
+                <text>{{current.nickname}}</text>
             </view>
             <view class="livingNow">
                 <view wx:for="{{3}}" wx:key="index" class="statusWite"></view>
                 <text>直播</text>
             </view>
         </view>
-    </view>
+    </navigator>
     <!-- 课程以及讨论 -->
     <view class="content">
-        <scroll-view scroll-x="true" class="nav" scroll-left="{{ 0 }}" scroll-with-animation="{{ true }}">
+        <scroll-view scroll-x="true" class="nav" enable-flex scroll-left="{{ 0 }}" scroll-with-animation="{{ true }}">
             <block wx:for="{{ nav }}" wx:for-index="id" wx:for-item="item" wx:key="id">
                 <view class="item {{ currentTab == id ? 'active' : '' }}" data-index="{{ id }}" bindtap="switchNav">
                     {{ item.name }}
+                    <text class="activeBox" wx:if="{{currentTab == id}}"></text>
                 </view>
             </block>
         </scroll-view>
@@ -92,8 +94,7 @@
                 <scroll-view wx:else scroll-y="true" class="wrap drama" scroll-with-animation="true"
                     scroll-top="{{scrollviewtop}}">
                     <view wx:for="{{ sublessons }}" catchtap="select" data-item="{{item}}" data-index="{{ index }}"
-                        wx:key="index"
-                        class="item {{ playNow.id==item.id ?'active' : ''}} {{'sublessonsd' + item.id}}"
+                        wx:key="index" class="item {{ playNow.id==item.id ?'active' : ''}} {{'sublessonsd' + item.id}}"
                         id="{{'sublessonsd'+item.id}}">
                         <view class="left">
                             <text class="name">{{ index+1 }}. {{ item.name }}</text>
@@ -139,7 +140,7 @@
                                     <rich-text nodes="{{ item.content }}" catchlongpress="copythat"
                                         data-content="{{ item.content }}" data-type="comment" data-index="{{index}}">
                                     </rich-text>
-                                    <button wx:if="{{ $state.userInfo.id != item.uid && !$state.authUserInfo }}"
+                                    <button wx:if="{{ !$state.authUserInfo }}"
                                         class="reply-btn" data-reply="{{ item }}" open-type="getUserInfo"
                                         bindgetuserinfo="onGotUserInfo">
                                         回复
@@ -149,17 +150,17 @@
                                     </button>
                                 </view>
                             </view>
-                            <view class="children" wx:for="{{ item.reply_array }}" wx:key="index" wx:for-item="child"
+                            <view class="children" wx:for="{{ item.replyList }}" wx:key="index" wx:for-item="child"
                                 wx:for-index="number">
                                 <view class="from_user">
                                     <view class="user_info">
-                                        <image class="img" mode="aspectFill" src="{{ child.from_user_avatar }}"
+                                        <image class="img" mode="aspectFill" src="{{ child.fromUserAvatar }}"
                                             catchtap="toUser" data-item="{{child}}" data-type="true"></image>
-                                        <text class="line name">{{ child.from_user }}</text>
+                                        <text class="line name">{{ child.fromUser }}</text>
                                     </view>
                                     <view class="time-del">
                                         <text class="line time">{{ child.create_time }}</text>
-                                        <view class="del" wx:if="{{ $state.userInfo.id == child.reply_user_id }}"
+                                        <view class="del" wx:if="{{ $state.userInfo.id == child.replyUserId }}"
                                             catchtap="delReply" data-item="{{ child }}" data-parentid="{{ item.id }}">
                                             <image src="{{ $state.imgHost }}/delete.png" mode="aspectFill"
                                                 class="icon-del"></image>
@@ -167,23 +168,23 @@
                                         </view>
                                     </view>
                                 </view>
-                                <rich-text nodes="{{ child.rtext + child.reply_content }}" catchlongpress="copythat"
-                                    data-content="{{ child.reply_content }}" data-index="{{index}}"
+                                <rich-text nodes="{{ child.rtext + child.replyContent }}" catchlongpress="copythat"
+                                    data-content="{{ child.replyContent }}" data-index="{{index}}"
                                     data-chilindex="{{number}}"></rich-text>
-                                <button wx:if="{{ $state.userInfo.id != child.reply_user_id && !$state.authUserInfo }}"
-                                    class="reply-btn" data-reply="{{ child }}" data-parent="{{ item.id }}"
+                                <button wx:if="{{ !$state.authUserInfo }}"
+                                    class="reply-btn"  data-parent="{{ child}}"
                                     open-type="getUserInfo" bindgetuserinfo="onGotUserInfo">
                                     回复
                                 </button>
-                                <button wx:elif="{{ $state.userInfo.id != child.reply_user_id }}" class="reply-btn"
-                                    data-reply="{{ child }}" data-parent="{{ item.id }}" catchtap="show">
+                                <button wx:else class="reply-btn"
+                                     data-parent="{{ child }}" catchtap="show">
                                     回复
                                 </button>
                             </view>
-                            <view class="reply_all" wx:if="{{ item.reply_num > 3 }}" data-parentid="{{ item.id }}"
+                            <!-- <view class="reply_all" wx:if="{{ item.reply_num > 3 }}" data-parentid="{{ item.id }}"
                                 catchtap="toCommentDetail">
                                 查看全部{{ item.reply_num }}条
-                            </view>
+                            </view> -->
                         </view>
                     </view>
                     <view class="nodata" wx:if="{{ comment.length <= 0 }}">
@@ -219,7 +220,7 @@
     <!-- 评论输入 -->
     <view class="issueBoxTow"
         style="bottom :{{ keyheight != 0 ? keyheight : 0}}px;height:{{replyplaceholder != '' ? '181' : ''}}px"
-        wx:if="{{writeTow&&currentTab == 1}}">
+        wx:if="{{writeTow&&currentTab == 2}}">
         <view class="replayplaceholder" wx:if="{{replyplaceholder != ''}}">
             {{replyplaceholder}}
         </view>

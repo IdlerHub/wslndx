@@ -21,7 +21,7 @@ Page({
       },
     ],
     showServise: false, //展示客服盒子
-    currentTab: 0, //分类
+    currentTab: 1, //分类
     sort: 0, //排序
     height: 0,
     keyheight: 0,
@@ -61,7 +61,7 @@ Page({
       comment: [],
       playFlag: false,
     });
-    this.comParam.page = 1;
+    this.comParam.pageNum = 1;
     Promise.all([
       this.getLessonDetail(this.data.lessonDetail.id)
     ]).then((res) => {
@@ -79,7 +79,7 @@ Page({
   },
   onReachBottom() {
     if (this.data.currentTab == 1) {
-      this.comParam.page++;
+      this.comParam.pageNum++;
       this.getComment();
     }
   },
@@ -93,6 +93,7 @@ Page({
   },
   onUnload() {
     clearInterval(this.timer);
+    clearInterval(this.Timeout);
   },
   subscribe() {
     //上课通知
@@ -162,23 +163,6 @@ Page({
           url: `/page/live/pages/tableDetail/tableDetail?specialColumnId=${specialColumnId}`,
         });
       }
-      // if (
-      //   res.data.current.room_id != undefined &&
-      //   !res.data.current.live_type
-      // ) {
-      //   //当天有直播
-      //   _this.getLiveStatus(res.data.current);
-      //   if (flag) {
-      //     console.log("拿不到直播状态咯");
-      //     _this.setData({
-      //       current: res.data.current,
-      //     });
-      //   }
-      // } else {
-      //   _this.setData({
-      //     current: res.data.current,
-      //   });
-      // }
       res.data.introduction = htmlparser.default(
         res.data.introduction
       );
@@ -190,19 +174,31 @@ Page({
     });
   },
   getSublesson(lessons) {
-    let playNow = {};
+    let playNow = {}, liveNow = 0;
     this.setData({
       sublessons: lessons,
     }, () => {
       this.data.sublessons.forEach((item) => {
         //如果是已经结束的课,就把第一个放到当前播放中
+        item.state == 1 && JSON.stringify(playNow) == "{}" ? [playNow = item, liveNow = 1] : ''
         item.state == 3 && JSON.stringify(playNow) == "{}" ?
-          (playNow = item) :
+          this.getLiveBackById(item.id) :
           "";
       });
-      this.setData({
+      this.data.playNow.length > 0 ? this.setData({
+        current: liveNow ? playNow : {}
+      }) : this.setData({
         playNow: playNow,
+        current: liveNow ? playNow : {}
       });
+      if(this.Timeout) return
+      this.Timeout = setInterval(() => {
+        LiveData.getLiveBySpecialColumnId({
+          specialColumnId: this.data.lessonDetail.columnId,
+        }).then(res => {
+          this.getSublesson(res.data.liverVOS)
+        })
+      }, 60000);
     });
   },
   //展示客服页面
@@ -248,8 +244,9 @@ Page({
     }
     //请求参数
     this.comParam = {
-      lesson_id: options.specialColumnId || this.data.lessonDetail.id,
-      page: 1,
+      subjectId: options.specialColumnId || this.data.lessonDetail.columnId,
+      commentType: 1,
+      pageNum: 1,
       pageSize: 10,
     };
     //监听键盘变化
@@ -297,7 +294,7 @@ Page({
       }
       that.setData({
         height: 306,
-        currentTab: 0,
+        currentTab: 1,
       });
     });
   },
@@ -355,8 +352,9 @@ Page({
     });
     this.setData({
       currentTab: cur,
+    }, () => {
+      this.setHeight();
     });
-    this.setHeight();
   },
   switchNav(event) {
     //点击切换
@@ -369,15 +367,16 @@ Page({
     } else {
       this.setData({
         currentTab: cur,
+      }, () => {
+         this.setHeight();
       });
     }
-    this.setHeight();
   },
   setHeight() {
     let that = this;
     if (this.data.currentTab != 0) {
       let query = wx.createSelectorQuery().in(this);
-      if (this.data.currentTab == 2) {
+      if (this.data.currentTab == 0) {
         query.select(".introduction").boundingClientRect();
       } else {
         query.select(".comment").boundingClientRect();
@@ -385,12 +384,12 @@ Page({
       query.exec((res) => {
         let height =
           this.data.currentTab == 1 ? res[0].height : res[0].height - -110;
-        height <= 100 ?
+        height <= 110 ?
           that.setData({
-            height: 700,
+            height: this.data.currentTab == 2  ? 350 : 700,
           }) :
           that.setData({
-            height: height,
+            height
           });
       });
     } else {
@@ -415,95 +414,63 @@ Page({
       });
     }
   },
-  toWatch(e) {
-    !this.data.current.live_type ?
-      this.toLiveRoom(this.data.current) :
-      this.select(e);
-    this.setData({
-      currentTab: 1
-    })
-  },
-  // 选择剧集
-  toLiveRoom(item) {
-    let roomId = item.room_id;
-    let customParams = encodeURIComponent(
-      JSON.stringify({
-        path: "pages/index/index",
-        uid: this.data.$state.userInfo.id,
-      })
-    );
-    wx.navigateTo({
-      url: `plugin-private://wx2b03c6e691cd7370/pages/live-player-plugin?room_id=${roomId}&custom_params=${customParams}`,
-    });
-  },
   select(e) {
     let item = e.currentTarget.dataset.item;
-    if (item.live_type && (item.is_end == 0 || item.live_status == 101)) {
-      LiveData.getLessonDetail({
-        lesson_id: this.data.lessonDetail.id,
-      }).then((res) => {
-        if (res.data.current.live_status != 101) {
-          wx.showToast({
-            title: "直播还未开始",
-            icon: "none",
-          });
-          return;
-        } else {
-          this.setData({
-            playNow: item,
-          });
-          this.liveplayer = wx.createLivePlayerContext("myVideo");
-        }
-      });
-    } else {
-      if (item.is_end == 1 && item.record_url != "") {
-        this.setData({
-          playNow: item,
-        });
-        wx.nextTick(() => {
-          this.recordAddVedio();
-        });
-      } else if (!item.live_type) {
-        this.toLiveRoom(item);
-      }
+    if(item.state == 0) {
+      LiveData.getLiveById({ liveId: item.id }).then(res => {
+        res.data.state == 0 ?  wx.showToast({
+          title: "直播还未开始",
+          icon: "none",
+        }) :  res.data.state == 1 ? wx.navigateTo({
+          url: '/page/live/pages/vliveRoom/vliveRoom?roomId=' + item.id,
+        }) : ''
+      })
+    } else if(item.state == 1) {
+      wx.navigateTo({
+        url: '/page/live/pages/vliveRoom/vliveRoom?roomId=' + item.id,
+      })
+    } else if(item.state == 2) {
+      wx.showToast({
+        title: "课程视频正在加紧上传中",
+        icon: "none",
+      })
+    } else if(item.state == 3) {
+      this.getLiveBackById(item.id)
     }
+    // if (item.live_type && (item.is_end == 0 || item.live_status == 101)) {
+    //   LiveData.getLessonDetail({
+    //     lesson_id: this.data.lessonDetail.id,
+    //   }).then((res) => {
+    //     if (res.data.current.live_status != 101) {
+    //       wx.showToast({
+    //         title: "直播还未开始",
+    //         icon: "none",
+    //       });
+    //       return;
+    //     } else {
+    //       this.setData({
+    //         playNow: item,
+    //       });
+    //       this.liveplayer = wx.createLivePlayerContext("myVideo");
+    //     }
+    //   });
+    // } else {
+    //   if (item.is_end == 1 && item.record_url != "") {
+        
+    //   } else if (!item.live_type) {
+    //     this. this.toLiveRoom(item);(item);
+    //   }
+    // }
   },
-  //获取直播状态
-  getLiveStatus(current) {
-    //直播插件
-    const livePlayer = requirePlugin("live-player-plugin");
-    // 首次获取立马返回直播状态
-    livePlayer
-      .getLiveStatus({
-        room_id: current.room_id,
+  //获取回播
+  getLiveBackById(liveId) {
+    LiveData.getLiveBackById({ liveId }).then(res => {
+      this.setData({
+        playNow: res.data
+      }, () => {
+        this.recordAddVedio();
       })
-      .then((res) => {
-        // 101: 直播中, 102: 未开始, 103: 已结束, 104: 禁播, 105: 暂停中, 106: 异常，107：已过期
-        console.log("直播状态", res.liveStatus);
-        current["live_status"] = res.liveStatus;
-        this.setData({
-          current,
-        });
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-    // 往后间隔1分钟或更慢的频率去轮询获取直播状态
-    this.timer = setInterval(() => {
-      livePlayer
-        .getLiveStatus({
-          room_id: current.room_id,
-        })
-        .then((res) => {
-          console.log("定时获取状态", res);
-          // 101: 直播中, 102: 未开始, 103: 已结束, 104: 禁播, 105: 暂停中, 106: 异常，107：已过期
-          current["live_status"] = res.liveStatus;
-          this.setData({
-            current,
-          });
-        })
-        .catch((err) => {});
-    }, 60000);
+    })
   },
   //评论模块
   // 获取讨论
@@ -511,22 +478,22 @@ Page({
     let comment = list || this.data.comment;
     return LiveData.getCommentList(this.comParam)
       .then((msg) => {
-        if (msg.data.length == 0 && !options) {
-          this.comParam.page--;
+        if (msg.dataList.length == 0 && !options) {
+          this.comParam.pageNum--;
           return;
         } else {
-          msg.data.forEach(function (item) {
-            item.reply_array.forEach((v) => {
-              v.rtext = `回复<span  class="respond">${v.to_user}</span>:&nbsp;&nbsp;`;
-            });
+          msg.dataList.forEach((item) => {
+            item.replyList ? item.replyList.forEach((v) => {
+              v.rtext = `回复<span  class="respond">${v.toUser}</span>:&nbsp;&nbsp;`;
+            }) : ''
             comment.push(item);
           });
           this.comment = JSON.parse(JSON.stringify(comment));
-          console.log(comment)
           this.setData({
             comment: comment,
+          }, () => {
+            this.setHeight();
           });
-          this.setHeight();
         }
       })
       .catch((err) => {
@@ -542,7 +509,7 @@ Page({
   input(e) {
     //输入
     let lessDiscussion = this.data.$state.lessDiscussion;
-    let lessonId = this.data.lessonDetail.id;
+    let lessonId = this.data.lessonDetail.columnId;
     if (this.data.replyshow) {
       this.setData({
         replycontent: e.detail.value,
@@ -561,7 +528,7 @@ Page({
           "" :
           (lessDiscussion[lessonId]["replyInfo"] = {});
         lessDiscussion[lessonId]["replyInfo"][
-          this.replyInfo.id
+          this.replyInfo.commentId
         ] = this.data.replycontent;
       }
     } else {
@@ -674,7 +641,7 @@ Page({
         "&is_live=1",
       events: {
         refreshComments: (data) => {
-          this.comParam.page = 1;
+          this.comParam.pageNum = 1;
           this.getComment([]);
         },
       },
@@ -688,26 +655,26 @@ Page({
       });
     } else {
       this.setscrollto();
-      if (e && e.target.dataset.reply) {
+      if (e && (e.target.dataset.reply || e.target.dataset.parent)) {
         /* 回复别人的评论 或者 回复别人的回复  */
-        this.replyParent = e.target.dataset.parent;
-        this.replyInfo = e.target.dataset.reply;
+        this.replyParent = e.target.dataset.parent || null;
+        this.replyInfo = e.target.dataset.reply || null;
         if (this.replyParent == null) {
-          if (this.data.$state.lessDiscussion[this.data.lessonDetail.id]) {
+          if (this.data.$state.lessDiscussion[this.data.lessonDetail.columnId]) {
             if (
-              this.data.$state.lessDiscussion[this.data.lessonDetail.id]
+              this.data.$state.lessDiscussion[this.data.lessonDetail.columnId]
               .replyInfo
             ) {
-              this.data.$state.lessDiscussion[this.data.lessonDetail.id]
-                .replyInfo[this.replyInfo.id] ?
+              this.data.$state.lessDiscussion[this.data.lessonDetail.columnId]
+                .replyInfo[this.replyInfo.commentId] ?
                 this.setData({
                   replycontent: this.data.$state.lessDiscussion[
-                    this.data.lessonDetail.id
-                  ].replyInfo[this.replyInfo.id],
+                    this.data.lessonDetail.columnId
+                  ].replyInfo[this.replyInfo.commentId],
                   replyplaceholder: "回复 " + e.currentTarget.dataset.reply.nickname,
                   replycontenLength: this.data.$state.lessDiscussion[
-                    this.data.lessonDetail.id
-                  ].replyInfo[this.replyInfo.id].length,
+                    this.data.lessonDetail.columnId
+                  ].replyInfo[this.replyInfo.commentId].length,
                 }) :
                 this.setData({
                   replycontent: "",
@@ -728,38 +695,38 @@ Page({
               replycontenLength: 0,
             });
           }
-        } else if (this.data.$state.lessDiscussion[this.data.lessonDetail.id]) {
+        } else if (this.data.$state.lessDiscussion[this.data.lessonDetail.columnId]) {
           if (
-            this.data.$state.lessDiscussion[this.data.lessonDetail.id]
+            this.data.$state.lessDiscussion[this.data.lessonDetail.columnId]
             .replyParent
           ) {
-            this.data.$state.lessDiscussion[this.data.lessonDetail.id]
+            this.data.$state.lessDiscussion[this.data.lessonDetail.columnId]
               .replyParent[this.replyParent] ?
               this.setData({
                 replycontent: this.data.$state.lessDiscussion[
-                  this.data.lessonDetail.id
+                  this.data.lessonDetail.columnId
                 ].replyParent[this.replyParent],
-                replyplaceholder: "回复 " + e.currentTarget.dataset.reply.from_user,
+                replyplaceholder: "回复 " + this.replyParent == null ? e.target.dataset.reply.nickname : e.target.dataset.parent.fromUser,
                 replycontenLength: this.data.$state.lessDiscussion[
-                  this.data.lessonDetail.id
+                  this.data.lessonDetail.columnId
                 ].replyParent[this.replyParent].length,
               }) :
               this.setData({
                 replycontent: "",
-                replyplaceholder: "回复 " + e.currentTarget.dataset.reply.from_user,
+                replyplaceholder: "回复 " + this.replyParent == null ? e.target.dataset.reply.nickname : e.target.dataset.parent.fromUser,
                 replycontenLength: 0,
               });
           } else {
             this.setData({
               replycontent: "",
-              replyplaceholder: "回复 " + e.currentTarget.dataset.reply.from_user,
+              replyplaceholder: "回复 " + this.replyParent == null ? e.target.dataset.reply.nickname : e.target.dataset.parent.fromUser,
               replycontenLength: 0,
             });
           }
         } else {
           this.setData({
             replycontent: "",
-            replyplaceholder: "回复 " + e.currentTarget.dataset.reply.from_user,
+            replyplaceholder: "回复 " + this.replyParent == null ? e.target.dataset.reply.nickname : e.target.dataset.parent.fromUser,
           });
         }
       } else {
@@ -780,36 +747,40 @@ Page({
     if (!!this.data.content.trim() || !!this.data.replycontent.trim()) {
       if (e.currentTarget.dataset.type) {
         let param = {
-          lesson_id: this.data.lessonDetail.id,
+          commentType: 1,
+          subjectId: this.data.lessonDetail.columnId,
           content: this.data.content,
         };
         this.addComment(param);
       } else if (this.replyParent) {
         /* 回复别人的回复 */
         let params = {
-          // lesson_id: +this.data.lessonDetail.id,
-          comment_id: this.replyParent,
-          // reply_type: 2,
-          reply_id: this.replyInfo.reply_id,
-          reply_content: this.data.replycontent,
-          to_user: this.replyInfo.reply_user_id,
+          commentType: 1,
+          replyType: 2,
+          subjectId: this.data.lessonDetail.columnId,
+          commentId: this.replyParent.commentId,
+          replyId: this.replyParent.replyId,
+          content: this.data.replycontent,
+          toUser: this.replyParent.replyUserId,
         };
         this.reply(params);
       } else if (this.replyInfo) {
         /* 回复评论 */
         let params = {
-          // lesson_id: +this.replyInfo.lesson_id,
-          comment_id: this.replyInfo.id,
-          // reply_type: 1,
-          // reply_id: -1,
-          reply_content: this.data.replycontent,
-          to_user: this.replyInfo.uid,
+          commentType: 1,
+          replyType: 1,
+          replyId: '',
+          subjectId: this.data.lessonDetail.columnId,
+          commentId: this.replyInfo.commentId,
+          content: this.data.replycontent,
+          toUser: this.replyInfo.uid,
         };
         this.reply(params);
       } else {
         let param = {
-          lesson_id: this.data.lessonDetail.id,
-          content: this.data.content,
+          commentType: 1,
+          subjectId: this.data.lessonDetail.columnId,
+          comment: this.data.content,
         };
         this.addComment(param);
       }
@@ -837,7 +808,7 @@ Page({
           icon: "none",
           duration: 800,
         });
-        this.comParam.page = 1;
+        this.comParam.pageNum = 1;
         this.getComment([]);
         let lessDiscussion = this.data.$state.lessDiscussion;
         lessDiscussion[this.data.lessonDetail.id].replycontent = "";
@@ -861,6 +832,7 @@ Page({
     });
     LiveData.putReply(params)
       .then((msg) => {
+        console.log(msg)
         wx.hideLoading();
         this.setData({
           write: false,
@@ -882,21 +854,21 @@ Page({
         });
         let lessDiscussion = this.data.$state.lessDiscussion;
         if (this.replyParent) {
-          lessDiscussion[this.data.lessonDetail.id].replyParent[
+          lessDiscussion[this.data.lessonDetail.columnId].replyParent[
             this.replyParent
           ] = "";
           app.store.setState({
             lessDiscussion,
           });
         } else {
-          lessDiscussion[this.data.lessonDetail.id].replyInfo[
-            this.replyInfo.id
+          lessDiscussion[this.data.lessonDetail.columnId].replyInfo[
+            this.replyInfo.commentId
           ] = "";
           app.store.setState({
             lessDiscussion,
           });
         }
-        this.comParam.page = 1;
+        this.comParam.pageNum = 1;
         this.getComment([]);
         this.replyInfo = null;
         this.replyParent = null;
@@ -915,7 +887,7 @@ Page({
             icon: "none",
             duration: 1500,
           });
-          this.comParam.page = 1;
+          this.comParam.pageNum = 1;
           this.getComment([]);
         } else {
           wx.showToast({
@@ -934,9 +906,9 @@ Page({
       success: (res) => {
         if (res.confirm) {
           let params = {
-            // lesson_id: this.data.lessonDetail.id,
-            // comment_id: e.currentTarget.dataset.parentid,
-            reply_id: e.currentTarget.dataset.item.reply_id,
+            commentType: 1,
+            type:2,
+            id: e.currentTarget.dataset.item.replyId,
           };
           LiveData.delReply(params)
             .then((msg) => {
@@ -946,7 +918,7 @@ Page({
                 icon: "none",
                 duration: 1500,
               });
-              this.comParam.page = 1;
+              this.comParam.pageNum = 1;
               this.getComment([], 1);
             })
             .catch((err) => {
@@ -976,8 +948,9 @@ Page({
       success: (res) => {
         if (res.confirm) {
           let param = {
-            lesson_id: this.data.lessonDetail.id,
-            comment_id: e.currentTarget.dataset.item.id,
+            commentType: 1,
+            type:1,
+            id: e.currentTarget.dataset.item.commentId,
           };
           LiveData.delComment(param)
             .then((msg) => {
@@ -987,7 +960,7 @@ Page({
                 icon: "none",
                 duration: 1500,
               });
-              this.comParam.page = 1;
+              this.comParam.pageNum = 1;
               this.getComment([], 1);
             })
             .catch((err) => {
