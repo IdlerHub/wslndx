@@ -1,0 +1,30 @@
+<!--page/live/pages/liveVideo/liveVideo.wxml-->
+<live-player src="{{liveDetail.liveUrl}}" class="v-player" autoplay bindstatechange="bindstatechange"
+  wx:if="{{liveStatus == 1 && liveDetail.direction && !liveDetail.liveType}}">
+</live-player>
+<live-player src="{{liveDetail.liveUrl}}" class="h-player" autoplay bindstatechange="bindstatechange"
+  wx:if="{{liveStatus == 1 && !liveDetail.direction && !liveDetail.liveType}}">
+  <image src="../../images/full.png" bindtap="toHliveRoom"></image>
+</live-player>
+<video src="{{liveDetail.videoUrl}}" class="v-player" initial-time="{{liveDetail.now}}" show-center-play-btn="{{false}}" enable-progress-gesture="{{false}}" show-progress="{{false}}" show-fullscreen-btn="{{false}}"  show-play-btn="{{false}}" autoplay object-fit="fill" wx:if="{{liveStatus == 1 && liveDetail.direction && liveDetail.liveType && showVideo}}"></video>
+<video src="{{liveDetail.videoUrl}}" class="h-player" initial-time="{{liveDetail.now}}" show-center-play-btn="{{false}}" enable-progress-gesture="{{false}}" show-progress="{{false}}" show-fullscreen-btn="{{false}}"  show-play-btn="{{false}}" autoplay object-fit="fill" wx:if="{{liveStatus == 1 && !liveDetail.direction && liveDetail.liveType && showVideo}}">
+  <image src="../../images/full.png" bindtap="toHliveRoom"></image>
+</video>
+<view class="statusBox" wx:if="{{liveStatus != 1}}">
+  <text wx:if="{{liveStatus == 3}}">讲师暂时离开,请稍等</text>
+  <text wx:if="{{liveStatus == 4}}">直播结束，15分钟内生成回播</text>
+  <text wx:if="{{liveStatus == 4}}">观看 {{liveCount}}人</text>
+  <button class="share" hover-class="none" open-type="share" wx:if="{{liveStatus == 4}}">
+    <image src="../../images/liveShare.png"></image>
+  </button>
+</view>
+<liveTop liveDetail="{{liveDetail}}" liveCount="{{liveCount}}" direction="{{liveDetail.direction}}" statusBarHeight="{{statusBarHeight}}" vliveRoom="1" bind:checkFollow="checkFollow" />
+<talkCommon talkList="{{talkList}}" close="{{close}}" vliveRoom="1" newMessage="{{newMessage}}" statusBarHeight="{{statusBarHeight}}"
+  bind:setNewmessagenum="setNewmessagenum" />
+<navigator class="downloadeApp"
+  url="/pages/education/education?type=0&url=https://mp.weixin.qq.com/s/vSd8XBQDQkvqVX_kt_YyTQ" hover-class="none">
+  <image src="../../images/dowloafeApp.png" bindtap="downloadeApp"></image>
+</navigator>
+<liveBottom close="{{close}}" vliveRoom="1" bind:sendMsg="sendMsg" bind:praise="praise" bind:checkCaption="checkCaption"
+  bind:clickHandler="clickHandler" />
+<like-fx count="{{praiseCount}}" wx:if="{{showCanvans}}"></like-fx>

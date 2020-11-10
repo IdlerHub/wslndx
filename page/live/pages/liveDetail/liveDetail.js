@@ -11,13 +11,13 @@ Page({
     nav: [
       //课程部分
       {
-        name: "剧集",
+        name: "简介",
+      },
+      {
+        name: "目录",
       },
       {
         name: "讨论",
-      },
-      {
-        name: "简介",
       },
     ],
     showServise: false, //展示客服盒子
@@ -42,8 +42,6 @@ Page({
     current: {}, //当前直播信息
     playNow: {},
     lessonDetail: {}, //课程详情信息
-    mp_openid: "", //公众号的openid
-    is_subscribe: 0, //是否订阅消息
     sublessons: [], //回放课程列表
     comment: [], //  讨论
     playFlag: false, //视频播放状态
@@ -54,8 +52,7 @@ Page({
     this.videoContext = wx.createVideoContext("myVideo");
     this.init(options);
     this.heightInit(options);
-    this.getLessonDetail(options.lessonId, true);
-    this.getSublesson(options.lessonId);
+    this.getLessonDetail(options.specialColumnId, true);
   },
   onPullDownRefresh: function () {
     this.setData({
@@ -66,8 +63,7 @@ Page({
     });
     this.comParam.page = 1;
     Promise.all([
-      this.getLessonDetail(this.data.lessonDetail.id),
-      this.getSublesson(this.data.lessonDetail.id),
+      this.getLessonDetail(this.data.lessonDetail.id)
     ]).then((res) => {
       wx.stopPullDownRefresh();
       wx.showToast({
@@ -90,7 +86,7 @@ Page({
   onShow: function () {
     this.initRecord();
     this.getRecordAuth();
-    this.data.lessonDetail.id ? this.getLessonDetail(this.data.lessonDetail.id) : '';
+    this.data.lessonDetail.columnId ? this.getLessonDetail(this.data.lessonDetail.columnId) : '';
     // wx.onNetworkStatusChange((res) => {
     //   res.networkType == "wifi" ? app.playVedio("wifi") : "";
     // });
@@ -153,75 +149,61 @@ Page({
       });
   },
   //获取数据
-  getLessonDetail(lesson_id, flag = false) {
+  getLessonDetail(specialColumnId, flag = false) {
     let _this = this;
-    LiveData.getLessonDetail({
-      lesson_id,
+    LiveData.getLiveBySpecialColumnId({
+      specialColumnId,
     }).then((res) => {
       wx.setNavigationBarTitle({
-        title: res.data.lesson.name || "",
+        title: res.data.name || "",
       });
-      if (res.data.lesson.is_own == 0) {
+      if (res.data.isAddSubscribe == 0) {
         wx.redirectTo({
-          url: `/page/live/pages/tableDetail/tableDetail?lessonId=${res.data.lesson.id}`,
+          url: `/page/live/pages/tableDetail/tableDetail?specialColumnId=${specialColumnId}`,
         });
       }
-      if (
-        res.data.current.room_id != undefined &&
-        !res.data.current.live_type
-      ) {
-        //当天有直播
-        _this.getLiveStatus(res.data.current);
-        if (flag) {
-          console.log("拿不到直播状态咯");
-          _this.setData({
-            current: res.data.current,
-          });
-        }
-      } else {
-        _this.setData({
-          current: res.data.current,
-        });
-      }
-      res.data.lesson.introduction = htmlparser.default(
-        res.data.lesson.introduction
+      // if (
+      //   res.data.current.room_id != undefined &&
+      //   !res.data.current.live_type
+      // ) {
+      //   //当天有直播
+      //   _this.getLiveStatus(res.data.current);
+      //   if (flag) {
+      //     console.log("拿不到直播状态咯");
+      //     _this.setData({
+      //       current: res.data.current,
+      //     });
+      //   }
+      // } else {
+      //   _this.setData({
+      //     current: res.data.current,
+      //   });
+      // }
+      res.data.introduction = htmlparser.default(
+        res.data.introduction
       );
       _this.setData({
-        lessonDetail: res.data.lesson,
-        is_subscribe: res.data.is_subscribe,
-        mp_openid: res.data.mp_openid,
+        lessonDetail: res.data
       });
+      _this.getSublesson(res.data.liverVOS)
       _this.getComment();
     });
   },
-  getSublesson(lesson_id) {
-    let _this = this;
-    LiveData.getSublesson({
-      lesson_id,
-    })
-      .then((res) => {
-        let playNow = {};
-        res.data.forEach((item, index) => {
-          item.minute = (item.film_length / 60).toFixed(0);
-          item["index"] = index + 1;
-        });
-        _this.setData({
-          sublessons: res.data,
-        });
-        _this.order();
-        _this.data.sublessons.forEach((item) => {
-          //如果是已经结束的课,就把第一个放到当前播放中
-          item.is_end == 1 && JSON.stringify(playNow) == "{}"
-            ? (playNow = item)
-            : "";
-        });
-        _this.setData({
-          playNow: playNow,
-        });
-      })
-      .catch((err) => {
-        console.log(err);
+  getSublesson(lessons) {
+    let playNow = {};
+    this.setData({
+      sublessons: lessons,
+    }, () => {
+      this.data.sublessons.forEach((item) => {
+        //如果是已经结束的课,就把第一个放到当前播放中
+        item.state == 3 && JSON.stringify(playNow) == "{}" ?
+          (playNow = item) :
+          "";
       });
+      this.setData({
+        playNow: playNow,
+      });
+    });
   },
   //展示客服页面
   showServise() {
@@ -245,12 +227,14 @@ Page({
       url: "/pages/education/education?type=live",
       success: function (res) {
         // 通过eventChannel向被打开页面传送数据
-        res.eventChannel.emit("liveCode", { url: link });
-        that.data.showServise
-          ? that.setData({
-              showServise: false,
-            })
-          : "";
+        res.eventChannel.emit("liveCode", {
+          url: link
+        });
+        that.data.showServise ?
+          that.setData({
+            showServise: false,
+          }) :
+          "";
       },
     });
   },
@@ -264,7 +248,7 @@ Page({
     }
     //请求参数
     this.comParam = {
-      lesson_id: options.lessonId || this.data.lessonDetail.id,
+      lesson_id: options.specialColumnId || this.data.lessonDetail.id,
       page: 1,
       pageSize: 10,
     };
@@ -292,11 +276,11 @@ Page({
     let that = this;
     let windowHeight = wx.getSystemInfoSync().windowHeight;
     let system = wx.getSystemInfoSync().model.indexOf("iPhone");
-    system == -1
-      ? this.setData({
-          paddingTop: true,
-        })
-      : "";
+    system == -1 ?
+      this.setData({
+        paddingTop: true,
+      }) :
+      "";
     let query = wx.createSelectorQuery().in(this);
     query.select("#myVideo").boundingClientRect();
     query.select(".liveInfo").boundingClientRect();
@@ -324,8 +308,7 @@ Page({
     });
     if (this.data.$state.authRecordfail) {
       wx.showModal({
-        content:
-          "您已拒绝授权使用麦克风录音权限，请打开获取麦克风授权！否则无法使用小程序部分功能",
+        content: "您已拒绝授权使用麦克风录音权限，请打开获取麦克风授权！否则无法使用小程序部分功能",
         confirmText: "去授权",
         confirmColor: "#df2020",
         success: (res) => {
@@ -390,35 +373,6 @@ Page({
     }
     this.setHeight();
   },
-  //排序
-  order() {
-    this.setData({
-      sort: this.data.sort === 0 ? 1 : 0,
-      scrollviewtop: 0,
-    });
-    let sublessons = this.data.sublessons;
-    if (this.data.sort) {
-      sublessons.sort((a, b) => {
-        return b.index - a.index;
-      });
-      wx.uma.trackEvent('liveClick', {
-        name: '倒叙'
-      });
-    } else {
-      sublessons.sort((a, b) => {
-        return a.index - b.index;
-      });
-      wx.uma.trackEvent('liveClick', {
-        name: '正序'
-      });
-    }
-    this.setData({
-      sublessons,
-    });
-    setTimeout(() => {
-      this.tolesson();
-    }, 800);
-  },
   setHeight() {
     let that = this;
     if (this.data.currentTab != 0) {
@@ -430,19 +384,14 @@ Page({
       }
       query.exec((res) => {
         let height =
-          this.data.currentTab == 2 ? res[0].height : res[0].height - -110;
-        height < 100
-          ? that.setData({
-              height: 700,
-            })
-          : that.setData({
-              height: height,
-            });
-        if (height == 110) {
+          this.data.currentTab == 1 ? res[0].height : res[0].height - -110;
+        height <= 100 ?
           that.setData({
-            height: 400,
+            height: 700,
+          }) :
+          that.setData({
+            height: height,
           });
-        }
       });
     } else {
       this.setData({
@@ -458,18 +407,18 @@ Page({
       let query = wx.createSelectorQuery().in(this);
       query.select(id).boundingClientRect();
       query.exec((res) => {
-        res[0]
-          ? this.setData({
-              scrollviewtop: res[0].top - 520,
-            })
-          : "";
+        res[0] ?
+          this.setData({
+            scrollviewtop: res[0].top - 520,
+          }) :
+          "";
       });
     }
   },
   toWatch(e) {
-    !this.data.current.live_type
-      ? this.toLiveRoom(this.data.current)
-      : this.select(e);
+    !this.data.current.live_type ?
+      this.toLiveRoom(this.data.current) :
+      this.select(e);
     this.setData({
       currentTab: 1
     })
@@ -601,16 +550,16 @@ Page({
       });
       lessDiscussion[lessonId] ? "" : (lessDiscussion[lessonId] = {});
       if (this.replyParent) {
-        lessDiscussion[lessonId]["replyParent"]
-          ? ""
-          : (lessDiscussion[lessonId]["replyParent"] = {});
+        lessDiscussion[lessonId]["replyParent"] ?
+          "" :
+          (lessDiscussion[lessonId]["replyParent"] = {});
         lessDiscussion[lessonId]["replyParent"][
           this.replyParent
         ] = this.data.replycontent;
       } else if (this.replyInfo) {
-        lessDiscussion[lessonId]["replyInfo"]
-          ? ""
-          : (lessDiscussion[lessonId]["replyInfo"] = {});
+        lessDiscussion[lessonId]["replyInfo"] ?
+          "" :
+          (lessDiscussion[lessonId]["replyInfo"] = {});
         lessDiscussion[lessonId]["replyInfo"][
           this.replyInfo.id
         ] = this.data.replycontent;
@@ -638,8 +587,7 @@ Page({
   showWrite(e) {
     if (this.data.$state.userInfo.status !== "normal") {
       wx.showModal({
-        content:
-          "由于您近期不合规操作，您的账户已被管理员禁止发帖留言，如有疑问请在个人中心联系客服处理",
+        content: "由于您近期不合规操作，您的账户已被管理员禁止发帖留言，如有疑问请在个人中心联系客服处理",
         confirmColor: "#df2020",
       });
     } else {
@@ -692,8 +640,7 @@ Page({
     this.setscrollto();
     if (this.data.$state.userInfo.status !== "normal") {
       wx.showModal({
-        content:
-          "由于您近期不合规操作，您的账户已被管理员禁止发帖留言，如有疑问请在个人中心联系客服处理",
+        content: "由于您近期不合规操作，您的账户已被管理员禁止发帖留言，如有疑问请在个人中心联系客服处理",
         confirmColor: "#df2020",
       });
     } else {
@@ -719,8 +666,7 @@ Page({
   toCommentDetail(e) {
     let vm = this;
     wx.navigateTo({
-      url:
-        "/pages/commentDetail/commentDetail?" +
+      url: "/pages/commentDetail/commentDetail?" +
         "lesson_id=" +
         this.data.lessonDetail.id +
         "&comment_id=" +
@@ -738,8 +684,7 @@ Page({
   show(e) {
     if (this.data.$state.userInfo.status !== "normal") {
       wx.showModal({
-        content:
-          "由于您近期不合规操作，您的账户已被管理员禁止发帖留言，如有疑问请在个人中心联系客服处理",
+        content: "由于您近期不合规操作，您的账户已被管理员禁止发帖留言，如有疑问请在个人中心联系客服处理",
       });
     } else {
       this.setscrollto();
@@ -751,70 +696,63 @@ Page({
           if (this.data.$state.lessDiscussion[this.data.lessonDetail.id]) {
             if (
               this.data.$state.lessDiscussion[this.data.lessonDetail.id]
-                .replyInfo
+              .replyInfo
             ) {
               this.data.$state.lessDiscussion[this.data.lessonDetail.id]
-                .replyInfo[this.replyInfo.id]
-                ? this.setData({
-                    replycontent: this.data.$state.lessDiscussion[
-                      this.data.lessonDetail.id
-                    ].replyInfo[this.replyInfo.id],
-                    replyplaceholder:
-                      "回复 " + e.currentTarget.dataset.reply.nickname,
-                    replycontenLength: this.data.$state.lessDiscussion[
-                      this.data.lessonDetail.id
-                    ].replyInfo[this.replyInfo.id].length,
-                  })
-                : this.setData({
-                    replycontent: "",
-                    replyplaceholder:
-                      "回复 " + e.currentTarget.dataset.reply.nickname,
-                    replycontenLength: 0,
-                  });
+                .replyInfo[this.replyInfo.id] ?
+                this.setData({
+                  replycontent: this.data.$state.lessDiscussion[
+                    this.data.lessonDetail.id
+                  ].replyInfo[this.replyInfo.id],
+                  replyplaceholder: "回复 " + e.currentTarget.dataset.reply.nickname,
+                  replycontenLength: this.data.$state.lessDiscussion[
+                    this.data.lessonDetail.id
+                  ].replyInfo[this.replyInfo.id].length,
+                }) :
+                this.setData({
+                  replycontent: "",
+                  replyplaceholder: "回复 " + e.currentTarget.dataset.reply.nickname,
+                  replycontenLength: 0,
+                });
             } else {
               this.setData({
                 replycontent: "",
-                replyplaceholder:
-                  "回复 " + e.currentTarget.dataset.reply.nickname,
+                replyplaceholder: "回复 " + e.currentTarget.dataset.reply.nickname,
                 replycontenLength: 0,
               });
             }
           } else {
             this.setData({
               replycontent: "",
-              replyplaceholder:
-                "回复 " + e.currentTarget.dataset.reply.nickname,
+              replyplaceholder: "回复 " + e.currentTarget.dataset.reply.nickname,
               replycontenLength: 0,
             });
           }
         } else if (this.data.$state.lessDiscussion[this.data.lessonDetail.id]) {
           if (
             this.data.$state.lessDiscussion[this.data.lessonDetail.id]
-              .replyParent
+            .replyParent
           ) {
             this.data.$state.lessDiscussion[this.data.lessonDetail.id]
-              .replyParent[this.replyParent]
-              ? this.setData({
-                  replycontent: this.data.$state.lessDiscussion[
-                    this.data.lessonDetail.id
-                  ].replyParent[this.replyParent],
-                  replyplaceholder:
-                    "回复 " + e.currentTarget.dataset.reply.from_user,
-                  replycontenLength: this.data.$state.lessDiscussion[
-                    this.data.lessonDetail.id
-                  ].replyParent[this.replyParent].length,
-                })
-              : this.setData({
-                  replycontent: "",
-                  replyplaceholder:
-                    "回复 " + e.currentTarget.dataset.reply.from_user,
-                  replycontenLength: 0,
-                });
+              .replyParent[this.replyParent] ?
+              this.setData({
+                replycontent: this.data.$state.lessDiscussion[
+                  this.data.lessonDetail.id
+                ].replyParent[this.replyParent],
+                replyplaceholder: "回复 " + e.currentTarget.dataset.reply.from_user,
+                replycontenLength: this.data.$state.lessDiscussion[
+                  this.data.lessonDetail.id
+                ].replyParent[this.replyParent].length,
+              }) :
+              this.setData({
+                replycontent: "",
+                replyplaceholder: "回复 " + e.currentTarget.dataset.reply.from_user,
+                replycontenLength: 0,
+              });
           } else {
             this.setData({
               replycontent: "",
-              replyplaceholder:
-                "回复 " + e.currentTarget.dataset.reply.from_user,
+              replyplaceholder: "回复 " + e.currentTarget.dataset.reply.from_user,
               replycontenLength: 0,
             });
           }
@@ -1107,9 +1045,9 @@ Page({
         voicetime: 0,
         filePath: "",
       });
-      lessDiscussion[this.data.lessonDetail.id]
-        ? (lessDiscussion[this.data.lessonDetail.id].replycontent = text)
-        : "";
+      lessDiscussion[this.data.lessonDetail.id] ?
+        (lessDiscussion[this.data.lessonDetail.id].replycontent = text) :
+        "";
       app.store.setState({
         lessDiscussion,
       });
@@ -1172,9 +1110,9 @@ Page({
       clearInterval(this.timer);
       if (!this.data.showvoiceauto) return;
       let text = res.result;
-      this.data.replyshow
-        ? (text = this.data.replycontent + text)
-        : (text = this.data.content + text);
+      this.data.replyshow ?
+        (text = this.data.replycontent + text) :
+        (text = this.data.content + text);
       // 获取音频文件临时地址
       let filePath = res.tempFilePath;
       let duration = res.duration;
@@ -1185,29 +1123,29 @@ Page({
         });
         return;
       }
-      this.data.replyshow
-        ? this.setData({
-            replycontent: text,
-          })
-        : this.setData({
-            content: text,
-          });
+      this.data.replyshow ?
+        this.setData({
+          replycontent: text,
+        }) :
+        this.setData({
+          content: text,
+        });
       if (this.data.replyshow) {
         let lessDiscussion = this.data.$state.lessDiscussion;
-        lessDiscussion[this.data.lessonDetail.id]
-          ? ""
-          : (lessDiscussion[this.data.lessonDetail.id] = {});
+        lessDiscussion[this.data.lessonDetail.id] ?
+          "" :
+          (lessDiscussion[this.data.lessonDetail.id] = {});
         if (this.replyParent) {
-          lessDiscussion[this.data.lessonDetail.id]["replyParent"]
-            ? ""
-            : (lessDiscussion[this.data.lessonDetail.id]["replyParent"] = {});
+          lessDiscussion[this.data.lessonDetail.id]["replyParent"] ?
+            "" :
+            (lessDiscussion[this.data.lessonDetail.id]["replyParent"] = {});
           lessDiscussion[this.data.lessonDetail.id]["replyParent"][
             this.replyParent
           ] = this.data.replycontent;
         } else if (this.replyInfo) {
-          lessDiscussion[this.data.lessonDetail.id]["replyInfo"]
-            ? ""
-            : (lessDiscussion[this.data.lessonDetail.id]["replyInfo"] = {});
+          lessDiscussion[this.data.lessonDetail.id]["replyInfo"] ?
+            "" :
+            (lessDiscussion[this.data.lessonDetail.id]["replyInfo"] = {});
           lessDiscussion[this.data.lessonDetail.id]["replyInfo"][
             this.replyInfo.id
           ] = this.data.replycontent;
@@ -1217,9 +1155,9 @@ Page({
         });
       } else {
         let lessDiscussion = this.data.$state.lessDiscussion;
-        lessDiscussion[this.data.lessonDetail.id]
-          ? ""
-          : (lessDiscussion[this.data.lessonDetail.id] = {});
+        lessDiscussion[this.data.lessonDetail.id] ?
+          "" :
+          (lessDiscussion[this.data.lessonDetail.id] = {});
         lessDiscussion[this.data.lessonDetail.id][
           "replycontent"
         ] = this.data.content;
@@ -1272,7 +1210,6 @@ Page({
       voiceActon: false,
     });
   },
-
   //视频播放功能块
   recordAddVedio() {
     this.videoContext.play();
@@ -1308,9 +1245,9 @@ Page({
     };
   },
   liveFull() {
-    !this.data.fullScreen
-      ? this.liveplayer.requestFullScreen()
-      : this.liveplayer.exitFullScreen();
+    !this.data.fullScreen ?
+      this.liveplayer.requestFullScreen() :
+      this.liveplayer.exitFullScreen();
   },
   fullscreenchange(e) {
     console.log(e);

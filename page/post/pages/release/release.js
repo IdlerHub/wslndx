@@ -221,10 +221,11 @@ Page({
         VodUploader.start({
           mediaFile: res,
           getSignature: that.getSignature,
-          mediaName: '视频',
+          mediaName: 'postVideo',
           coverFile: res.coverFile,
           progress: function (result) {},
           finish: (result) => {
+            console.log(result)
             wx.hideLoading()
             this.setData({
               "param.video": result.videoUrl,

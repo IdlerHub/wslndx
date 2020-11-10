@@ -1,4 +1,5 @@
 @charset "UTF-8";
+
 page {
   background: #EDEDED;
 }
@@ -297,7 +298,6 @@ page {
   height: 50rpx;
   right: 10rpx;
   bottom: 10rpx;
-  opacity: 0.7;
 }
 
 .recommend .right {
@@ -431,6 +431,7 @@ page {
 .now .line {
   min-width: 510rpx;
   height: 100%;
+  flex: 1;
 }
 
 @keyframes nowshow {
@@ -1010,6 +1011,7 @@ page .getGuideBox .nextBtn {
   background-color: #fff;
   border-radius: 20rpx;
   margin-right: 5rpx;
+  position: relative;
 }
 
 .liveItem .liveImgBox .liveStatus .statusLeft .statusTxt {
@@ -1018,6 +1020,21 @@ page .getGuideBox .nextBtn {
   color: #FFFFFF;
   line-height: 22rpx;
   margin-left: 5rpx;
+}
+
+.liveItem .liveImgBox .liveStatus .statusLeft .viewNum {
+  position: absolute;
+  top: 0;
+  right: -100rpx;
+  width: 100rpx;
+  height: 44rpx;
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: 6rpx;
+  text-align: center;
+  line-height: 44rpx;
+  font-size: 26rpx;
+  font-weight: 400;
+  color: #FFFFFF;
 }
 
 .liveItem .liveImgBox .liveStatus .statusLeft .statusWite:nth-child(1) {

@@ -1,0 +1,23 @@
+<!--page/live/components/liveTop/liveTop.wxml-->
+<view class="topBox" style="top: {{ !vliveRoom ? 'calc(10vmin / 7.5)' : statusBarHeight + 'px' }};left:{{!vliveRoom ? statusBarHeight : ''}}px">
+  <image src="../../images/liveBack.png" class="liveBack" bindtap="back"></image>
+  <view class="tearchBox">
+    <image src="{{liveDetail.avatar}}">
+    </image>
+    <view class="txtCenter">
+      <text>{{liveDetail.nickname}}</text>
+      <text>{{liveCount}}人在看</text>
+    </view>
+    <view class="attention" catchtap="attention" wx:if="{{!liveDetail.follow}}">
+      <image src="../../images/attentionicon.png"></image>
+      关注
+    </view>
+  </view>
+</view>
+<view class="teacherBox {{!moveBox ? 'teacherMove' : ''}}" wx:if="{{showBox}}">
+  <image src="/images/icon-del.png" class="icondel" bindtap="showBox"></image>
+  <image src="{{ liveDetail.avatar }}" class="avatar"></image>
+  <text>{{ liveDetail.nickname }}</text>
+  <text>关注老师，更多好课不错过</text>
+  <view class="addBtn">关注</view>
+</view>

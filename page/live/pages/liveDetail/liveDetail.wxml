@@ -3,24 +3,12 @@
     <!-- 视频播放 -->
     <video id="myVideo" wx:if="{{playNow.record_url && playNow.record_url != '' }}" src="{{ playNow.record_url }}"
         controls page-gesture enable-play-gesture bindended="ended" bindplay="played" bindpause="videoPause">
-        <cover-image wx:if="{{ !playFlag }}" mode="widthFix" src="{{ playNow.cover }}" class="poster"
+        <cover-image wx:if="{{ !playFlag }}" mode="widthFix" src="{{ lessonDetail.cover }}" class="poster"
             bindtap="recordAddVedio"></cover-image>
         <cover-image wx:if="{{ !playFlag }}" mode="aspectFill" src="{{ $state.imgHost }}/play.png" class="play"
             bindtap="recordAddVedio"></cover-image>
         <view class="videomask" wx:if="{{showintegral}}"></view>
     </video>
-    <view wx:elif="{{playNow.live_type && current.live_status == 101}}" class="liveBox">
-        <live-player id="myVideo" src="{{current.live_url}}" autoplay bindfullscreenchange="fullscreenchange"
-            catchtouchmove>
-            <cover-view wx:if="{{fullScreen}}" class="liveBack">
-                <cover-view class="imgBox" bindtap="liveFull">
-                    <cover-image src="../../images/liveBack.png" class="liveBackImg"></cover-image>
-                </cover-view>
-            </cover-view>
-            <cover-image src="../../images/full.png" class="fullImg" bindtap="liveFull" wx:if="{{!fullScreen}}">
-            </cover-image>
-        </live-player>
-    </view>
     <view id="myVideo" wx:else>
         <image wx:if="{{ !playFlag }}" src="{{ lessonDetail.cover }}" class="poster"></image>
         <!-- <image wx:if="{{ !playFlag }}" mode="aspectFill" src="{{ $state.imgHost }}/play.png" class="play"></image> -->
@@ -85,20 +73,15 @@
                     {{ item.name }}
                 </view>
             </block>
-            <!-- 排序 -->
-            <view class="order" wx:if="{{ currentTab == 0 }}" bindtap="order">
-                <view wx:if="{{ sort == 0 }}" class="box">
-                    <image class="icon" mode="aspectFill" src="{{ $state.imgHost }}/order.png"></image>
-                    正序
-                </view>
-                <view wx:if="{{ sort == 1 }}" class="box">
-                    <image class="icon" mode="aspectFill" src="{{ $state.imgHost }}/order-fall.png"></image>
-                    倒序
-                </view>
-            </view>
         </scroll-view>
         <swiper class="tab" style="height:{{ height }}px" current="{{ currentTab }}" duration="300"
             bindchange="switchTab">
+            <swiper-item class="tab-item">
+                <!-- 简介 -->
+                <scroll-view scroll-y="true" class="wrap synopsis">
+                    <rich-text class="introduction" nodes="{{lessonDetail.introduction}}"></rich-text>
+                </scroll-view>
+            </swiper-item>
             <swiper-item class="tab-item">
                 <!-- 剧集 -->
                 <view class="none-live" wx:if="{{sublessons.length == 0}}">
@@ -110,21 +93,22 @@
                     scroll-top="{{scrollviewtop}}">
                     <view wx:for="{{ sublessons }}" catchtap="select" data-item="{{item}}" data-index="{{ index }}"
                         wx:key="index"
-                        class="item {{ (playNow.id==item.id&&playNow.is_end==1) || (playNow.id==item.id&&playNow.live_type == 1 && current.live_status == 101) ? 'active' : ''}} {{'sublessonsd' + item.id}}"
+                        class="item {{ playNow.id==item.id ?'active' : ''}} {{'sublessonsd' + item.id}}"
                         id="{{'sublessonsd'+item.id}}">
                         <view class="left">
-                            <text class="name">{{ item.index }}. {{ item.name }}</text>
+                            <text class="name">{{ index+1 }}. {{ item.name }}</text>
                             <!-- <text class="time">{{ item.minute }}分钟</text> -->
                         </view>
-                        <view class="right" wx:if="{{item.is_end == 1}}">观看回播</view>
-                        <view class="right" wx:elif="{{item.is_end == 2}}">暂未开始</view>
-                        <view class="right"
+                        <view class="right" wx:if="{{item.state == 0}}">暂未开始</view>
+                        <view class="right" wx:elif="{{item.state == 3}}">观看回播</view>
+                        <view class="right" wx:elif="{{item.state == 2}}">正在上传</view>
+                        <!-- <view class="right"
                             wx:elif="{{current.id == item.id && (current.live_status == 104 ||  current.live_status == 107)}}">
                             观看回播
-                        </view>
-                        <view class="right" wx:elif="{{current.id == item.id && current.live_status == 102}}">
+                        </view> -->
+                        <!-- <view class="right" wx:elif="{{item.state == 3}}">
                             即将开播
-                        </view>
+                        </view> -->
                         <view class="right" wx:else>正在直播</view>
                     </view>
                 </scroll-view>
@@ -207,16 +191,10 @@
                     </view>
                 </view>
             </swiper-item>
-            <swiper-item class="tab-item">
-                <!-- 简介 -->
-                <scroll-view scroll-y="true" class="wrap synopsis">
-                    <rich-text class="introduction" nodes="{{lessonDetail.introduction}}"></rich-text>
-                </scroll-view>
-            </swiper-item>
         </swiper>
     </view>
     <!-- 语音评论等 -->
-    <button class="issueBox" wx:if="{{write&&currentTab == 1&& !$state.authUserInfo}}" hover-class="none"
+    <button class="issueBox" wx:if="{{write&&currentTab == 2&& !$state.authUserInfo}}" hover-class="none"
         open-type="getUserInfo" bindgetuserinfo="onGotUserInfo" style="text-align: left;line-height:0;">
         <image src="{{$state.imgHost}}/voicebig.png" class="bigvoice" catchtap="showvoice" data-type="content"></image>
         <view class="issueBox-txt" style="color:{{content != '' ? 'rgba(46,46,46,1)': ''}}">
@@ -227,7 +205,7 @@
             发布
         </view>
     </button>
-    <view class="issueBox" wx:if="{{write&&currentTab == 1&&$state.authUserInfo}}" bindtap="showWrite"
+    <view class="issueBox" wx:if="{{write&&currentTab == 2&&$state.authUserInfo}}" bindtap="showWrite"
         data-type="reply">
         <image src="{{$state.imgHost}}/voicebig.png" class="bigvoice" catchtap="showvoice" data-type="content"></image>
         <view class="issueBox-txt" style="color:{{content != '' ? 'rgba(46,46,46,1)': ''}}">

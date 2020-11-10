@@ -1,0 +1,156 @@
+/* page/live/components/liveBottom/liveBottom.wxss */
+/* 底部按钮 */
+.bottomBox {
+  width: 100vw;
+  padding: 0 calc(20vmin / 7.5) calc(42vmin / 7.5) calc(30vmin / 7.5);
+  box-sizing: border-box;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+}
+
+.bottomBox .itemBox {
+  width: calc(80vmin / 7.5);
+  height: calc(90vmin / 7.5);
+  border-radius: calc(10vmin / 7.5);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+
+.bottomBox .close {
+  position: relative;
+  overflow: hidden;
+}
+
+.bottomBox .captionBox {
+  background: rgba(0, 0, 0, 0.3);
+  border: 1rpx solid #FFFFFF;
+}
+
+.bottomBox .close::before {
+  width: 100%;
+  height: 1px;
+  background: #fff;
+  content: " ";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotateZ(45deg) scale(2);
+}
+
+.bottomBox .backBox {
+  background: linear-gradient(92deg, #FFB441 0%, #FE7A02 100%);
+}
+
+.bottomBox .shareBox {
+  margin: 0 calc(16vmin / 7.5);
+  background: linear-gradient(90deg, #43DE80 0%, #1CCA61 100%);
+  line-height: normal;
+}
+
+.bottomBox .praiseBox {
+  position: relative;
+  justify-content: flex-end;
+}
+
+
+.bottomBox .captionBox image {
+  width: calc(34vmin / 7.5);
+  height: calc(30.83vmin / 7.5);
+}
+
+.bottomBox .backBox image {
+  width: calc(36vmin / 7.5);
+  height: calc(36vmin / 7.5);
+}
+
+.bottomBox .shareBox image {
+  width: calc(44vmin / 7.5);
+  height: calc(36.28vmin / 7.5);
+}
+
+.bottomBox .praiseBox image {
+  width: calc(90vmin / 7.5);
+  height: calc(90vmin / 7.5);
+}
+
+.bottomBox .itemBox text {
+  height: calc(35vmin / 7.5);
+  line-height: calc(40vmin / 7.5);
+  font-size: calc(28vmin / 7.5);
+  font-weight: 400;
+  color: #FFFFFF;
+}
+
+.bottomBox .itemBox .praiseNum {
+  display: block;
+  height: auto;
+  padding: 1rpx calc(5vmin / 7.5) calc(3vmin / 7.5) calc(6vmin / 7.5);
+  background-color: #fff;
+  font-size: calc(22vmin / 7.5);
+  font-weight: 400;
+  border-radius: calc(13vmin / 7.5);
+  line-height: calc(22vmin / 7.5);
+  color: #F2323A;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%);
+}
+
+.bottomBox .clickBox {
+  flex: 1;
+  height: calc(90vmin / 7.5);
+  line-height: calc(90vmin / 7.5);
+  margin: 0 calc(16vmin / 7.5);
+  padding: 0 calc(20vmin / 7.5);
+  font-size: calc(28vmin / 7.5);
+  font-weight: 400;
+  color: #C2C3C2;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: calc(10vmin / 7.5);
+  border: 1rpx solid #FFFFFF;
+}
+
+.inputBox {
+  width: 100vw;
+  background: #161823;
+  position: fixed;
+  z-index: 999;
+  padding: calc(20vmin / 7.5);
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+}
+
+.inputBox .textarea {
+  flex: 1;
+  min-height: calc(80vmin / 7.5);
+  border-radius: calc(10vmin / 7.5);
+  background: rgba(244, 244, 244, 0.1);
+  padding-left: calc(30vmin / 7.5);
+  box-sizing: border-box;
+  font-size: calc(36vmin / 7.5);
+  font-weight: 400;
+  color: #FFFFFF;
+  line-height: calc(50vmin / 7.5);
+}
+
+.inputBox .send {
+  width: calc(136vmin / 7.5);
+  height: calc(80vmin / 7.5);
+  border-radius: calc(10vmin / 7.5);
+  background: rgba(244, 244, 244, 0.3);
+  margin-left: calc(20vmin / 7.5);
+  text-align: center;
+  line-height: calc(80vmin / 7.5);
+  font-size: calc(32vmin / 7.5);
+  font-weight: 400;
+  color: #FFFFFF;
+}

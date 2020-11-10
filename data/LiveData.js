@@ -183,7 +183,74 @@ function newUserLessons(params) {
  * @return:  promise
  * **/
 function recommendLessons(params) {
-  return httpService.post("schedule/recommendLessons", params);
+  return httpService.post("live/recommend/list", params, null ,true);
+}
+
+/**
+ * @description: 加入学习（新）
+ * @param {}
+ * @return:  promise
+ * **/
+function addSubscribe(params) {
+  return httpService.post("live/addSubscribe", params, null ,true);
+}
+
+
+// 直播间接口
+
+/**
+ * @description: 直播用户信息及签名
+ * @param {}
+ * @return:  promise
+ * **/
+function getUserSig(params) {
+  return httpService.post("live/getUserSig", params, null ,true);
+}
+
+/**
+ * @description: 获取腾讯云IM签名
+ * @param {}
+ * @return:  promise
+ * **/
+function getTimSign(params) {
+  return httpService.post("live/getTimSign", params, null ,true);
+}
+
+/**
+ * @description: 获取专栏详情
+ * @param {}
+ * @return:  promise
+ * **/
+function getLiveBySpecialColumnId(params) {
+  return httpService.post("live/getLiveBySpecialColumnId", params, null ,true);
+}
+
+
+/**
+ * @description: 获取专栏直播详情
+ * @param {}
+ * @return:  promise
+ * **/
+function getLiveById(params) {
+  return httpService.post("live/getById", params, null ,true);
+}
+
+/**
+ * @description: 直播人气计数
+ * @param {}
+ * @return:  promise
+ * **/
+function liveCount(params) {
+  return httpService.post("live/count", params, null ,true);
+}
+
+/**
+ * @description: 直播教师关注
+ * @param {}
+ * @return:  promise
+ * **/
+function follow(params) {
+  return httpService.post("user/follow", params, null ,true);
 }
 
 module.exports = {
@@ -207,5 +274,12 @@ module.exports = {
   getLessonCenterClass,
   getLessonWeeks,
   newUserLessons,
-  recommendLessons
+  recommendLessons,
+  getUserSig,
+  getTimSign,
+  getLiveBySpecialColumnId,
+  liveCount,
+  addSubscribe,
+  getLiveById,
+  follow,
 };

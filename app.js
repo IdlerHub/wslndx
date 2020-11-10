@@ -68,6 +68,7 @@ var liveData = require("data/LiveData.js");
 //app.js
 App({
   API_URL: store.API_URL,
+  API_URLBASECHECK: store.API_URLBASECHECK,
   //工具库
   util,
   //http请求接口
