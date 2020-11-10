@@ -13,7 +13,7 @@ Page({
     setTimeout(() => {
       if (options.classId) {
         // let webURL = "http://192.168.1.68:8080/#/order-detail";
-        let webURL = "https://globalh5pro.jinlingkeji.cn/enrollmenth_small/#/order-detail";
+        let webURL = "https://globalh5pro.jinlingkeji.cn/enrollment_small/#/order-detail";
         let id = options.classId;
         this.setData({
           url: webURL + "?id=" + id,
@@ -94,7 +94,7 @@ Page({
       url,
     });
   },
-  webJump(webURL) { //H5跳转enrollmenth_small
+  webJump(webURL) { //H5跳转
     let token = wx.getStorageSync("token");
     this.setData({
       url: webURL +
@@ -109,14 +109,14 @@ Page({
     console.log(e)
   },
   onShareAppMessage(ops) {
-    console.log(ops)
-    if (this.data.pay) {
+    let shareUrl = ops.webViewUrl.split('#')[0]
+    if(shareUrl.indexOf('enrollment_small') != -1) {
       return {
         title: '我已入学【网上老年大学】,你也快来一起学习吧',
-        path: "/pages/education/education?type=0&login=1",
+        path: `/pages/education/education?type=0&url=${shareUrl+ '/#/login'}&login=1`,
         imageUrl: "https://hwcdn.jinlingkeji.cn/app/zsxtshare.jpg"
       }
-    } else {
+    }else {
       return this.menuAppShare();
     }
   }
