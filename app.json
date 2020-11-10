@@ -23,6 +23,7 @@
     "pages/gamePage/gamePage",
     "pages/webPay/webPay",
     "pages/timetable/timetable",
+    "pages/timetableList/timetableList",
     "components/playRrecord/playRrecord",
     "components/signinBox/signinBox"
   ],
@@ -51,7 +52,7 @@
         "text": "云课堂"
       },
       {
-        "pagePath": "pages/timetable/timetable",
+        "pagePath": "pages/timetableList/timetableList",
         "text": "直播课"
       },
       {

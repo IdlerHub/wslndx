@@ -173,7 +173,7 @@ function getLessonWeeks(params) {
  * @return:  promise
  * **/
 function newUserLessons(params) {
-  return httpService.post("schedule/newUserLessons", params);
+  return httpService.post("live/recommend/date", params, null ,true);
 }
 
 /**
@@ -262,6 +262,7 @@ function follow(params) {
 function getLiveBackById(params) {
   return httpService.post("live/getLiveBackById", params, null ,true);
 }
+
 
 module.exports = {
   getLiveLessons,

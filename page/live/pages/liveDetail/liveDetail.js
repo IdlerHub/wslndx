@@ -49,6 +49,7 @@ Page({
   },
   timer: null,
   onLoad: function (options) {
+    console.log(options)
     this.videoContext = wx.createVideoContext("myVideo");
     this.init(options);
     this.heightInit(options);
