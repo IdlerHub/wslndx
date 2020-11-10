@@ -86,6 +86,10 @@ Page({
       pageSize: 20,
       pageNum: 1
     }
+    this.setData({
+      courseList: [],
+      pageEnd: 0
+    })
     this.getUserLessons(this.data.weeks[this.data.current].date).then(() => {
       wx.stopPullDownRefresh();
       wx.showToast({
