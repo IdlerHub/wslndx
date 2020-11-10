@@ -53,7 +53,6 @@ Page({
     this.init(options);
     this.heightInit(options);
     this.getLessonDetail(options.specialColumnId, true);
-    // this.getSublesson(options.specialColumnId);
   },
   onPullDownRefresh: function () {
     this.setData({
@@ -64,8 +63,7 @@ Page({
     });
     this.comParam.page = 1;
     Promise.all([
-      this.getLessonDetail(this.data.lessonDetail.id),
-      this.getSublesson(this.data.lessonDetail.id),
+      this.getLessonDetail(this.data.lessonDetail.id)
     ]).then((res) => {
       wx.stopPullDownRefresh();
       wx.showToast({
@@ -88,7 +86,7 @@ Page({
   onShow: function () {
     this.initRecord();
     this.getRecordAuth();
-    this.data.lessonDetail.id ? this.getLessonDetail(this.data.lessonDetail.id) : '';
+    this.data.lessonDetail.columnId ? this.getLessonDetail(this.data.lessonDetail.columnId) : '';
     // wx.onNetworkStatusChange((res) => {
     //   res.networkType == "wifi" ? app.playVedio("wifi") : "";
     // });
@@ -161,7 +159,7 @@ Page({
       });
       if (res.data.isAddSubscribe == 0) {
         wx.redirectTo({
-          url: `/page/live/pages/tableDetail/tableDetail?specialColumnId=${res.data.columnId}`,
+          url: `/page/live/pages/tableDetail/tableDetail?specialColumnId=${specialColumnId}`,
         });
       }
       // if (
@@ -193,10 +191,6 @@ Page({
   },
   getSublesson(lessons) {
     let playNow = {};
-    // res.data.forEach((item, index) => {
-    //   item.minute = (item.film_length / 60).toFixed(0);
-    //   item["index"] = index + 1;
-    // });
     this.setData({
       sublessons: lessons,
     }, () => {

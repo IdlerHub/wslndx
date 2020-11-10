@@ -153,10 +153,10 @@
           "scene": null
         },
         {
-          "name": "page/live/pages/vliveRoom/vliveRoom",
-          "pathName": "page/live/pages/vliveRoom/vliveRoom",
-          "query": "roomId=600",
-          "scene": 1011
+          "name": "page/live/pages/liveDetail/liveDetail",
+          "pathName": "page/live/pages/liveDetail/liveDetail",
+          "query": "specialColumnId=5",
+          "scene": 1000
         },
         {
           "id": 12,

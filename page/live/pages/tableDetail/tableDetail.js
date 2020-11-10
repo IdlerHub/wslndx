@@ -36,11 +36,12 @@ Page({
     }
   },
   onLoad: function (options) {
+    console.log(options)
     let inviter = 0;
     if (options.inviter && this.data.$state.userInfo.id != options.inviter) {
       inviter = options.inviter;
     }
-    this.data.lessonId = options.lessonId;
+    this.data.lessonId = options.specialColumnId;
     // this.getLiveDetailDate(options.lessonId, inviter);
     this.getLiveBySpecialColumnId(options.specialColumnId)
     this.getUserOpenid()
@@ -113,6 +114,7 @@ Page({
       res.data.isAddSubscribe ? wx.redirectTo({
         url: `/page/live/pages/liveDetail/liveDetail?lessonId=${res.data.columnId}`
       }) : 
+      res.data.introduction = htmlparser.default(res.data.introduction);
       this.setData({
         lessonDetail: res.data,
         showAll: 1
@@ -223,7 +225,7 @@ Page({
         .then((res) => {
           this.data.lessonDetail.isAddSubscribe = 1;
           wx.redirectTo({
-            url: `/page/live/pages/liveDetail/liveDetail?lessonId=${columnId}&isFirst=1`,
+            url: `/page/live/pages/liveDetail/liveDetail?specialColumnId=${columnId}&isFirst=1`,
           });
         })
         .catch((err) => {

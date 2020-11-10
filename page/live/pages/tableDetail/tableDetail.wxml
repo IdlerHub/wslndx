@@ -22,6 +22,7 @@
       <view>
         <!-- {{lessonDetail.start_day}}-{{lessonDetail.end_day}} · {{weekList[lessonDetail.week-1]}} ·
       {{lessonDetail.start_time}}-{{lessonDetail.end_time}} -->
+         共{{lessonDetail.liveCount}}讲 ·
         {{lessonDetail.description}}
       </view>
     </view>
@@ -59,7 +60,7 @@
     </view>
     <view class="content">
       <view class="title">课程简介</view>
-      <rich-text nodes="{{lessonDetail.introduction}}"></rich-text>
+      <rich-text nodes="{{lessonDetail.introduction}}" class="richText"></rich-text>
     </view>
   </view>
   <view class="bottomBox">

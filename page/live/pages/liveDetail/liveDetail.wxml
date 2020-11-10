@@ -3,24 +3,12 @@
     <!-- 视频播放 -->
     <video id="myVideo" wx:if="{{playNow.record_url && playNow.record_url != '' }}" src="{{ playNow.record_url }}"
         controls page-gesture enable-play-gesture bindended="ended" bindplay="played" bindpause="videoPause">
-        <cover-image wx:if="{{ !playFlag }}" mode="widthFix" src="{{ playNow.cover }}" class="poster"
+        <cover-image wx:if="{{ !playFlag }}" mode="widthFix" src="{{ lessonDetail.cover }}" class="poster"
             bindtap="recordAddVedio"></cover-image>
         <cover-image wx:if="{{ !playFlag }}" mode="aspectFill" src="{{ $state.imgHost }}/play.png" class="play"
             bindtap="recordAddVedio"></cover-image>
         <view class="videomask" wx:if="{{showintegral}}"></view>
     </video>
-    <view wx:elif="{{playNow.live_type && current.live_status == 101}}" class="liveBox">
-        <live-player id="myVideo" src="{{current.live_url}}" autoplay bindfullscreenchange="fullscreenchange"
-            catchtouchmove>
-            <cover-view wx:if="{{fullScreen}}" class="liveBack">
-                <cover-view class="imgBox" bindtap="liveFull">
-                    <cover-image src="../../images/liveBack.png" class="liveBackImg"></cover-image>
-                </cover-view>
-            </cover-view>
-            <cover-image src="../../images/full.png" class="fullImg" bindtap="liveFull" wx:if="{{!fullScreen}}">
-            </cover-image>
-        </live-player>
-    </view>
     <view id="myVideo" wx:else>
         <image wx:if="{{ !playFlag }}" src="{{ lessonDetail.cover }}" class="poster"></image>
         <!-- <image wx:if="{{ !playFlag }}" mode="aspectFill" src="{{ $state.imgHost }}/play.png" class="play"></image> -->
@@ -105,21 +93,22 @@
                     scroll-top="{{scrollviewtop}}">
                     <view wx:for="{{ sublessons }}" catchtap="select" data-item="{{item}}" data-index="{{ index }}"
                         wx:key="index"
-                        class="item {{ (playNow.id==item.id&&playNow.is_end==1) || (playNow.id==item.id&&playNow.live_type == 1 && current.live_status == 101) ? 'active' : ''}} {{'sublessonsd' + item.id}}"
+                        class="item {{ playNow.id==item.id ?'active' : ''}} {{'sublessonsd' + item.id}}"
                         id="{{'sublessonsd'+item.id}}">
                         <view class="left">
-                            <text class="name">{{ item.index }}. {{ item.name }}</text>
+                            <text class="name">{{ index+1 }}. {{ item.name }}</text>
                             <!-- <text class="time">{{ item.minute }}分钟</text> -->
                         </view>
-                        <view class="right" wx:if="{{item.is_end == 1}}">观看回播</view>
-                        <view class="right" wx:elif="{{item.is_end == 2}}">暂未开始</view>
-                        <view class="right"
+                        <view class="right" wx:if="{{item.state == 0}}">暂未开始</view>
+                        <view class="right" wx:elif="{{item.state == 3}}">观看回播</view>
+                        <view class="right" wx:elif="{{item.state == 2}}">正在上传</view>
+                        <!-- <view class="right"
                             wx:elif="{{current.id == item.id && (current.live_status == 104 ||  current.live_status == 107)}}">
                             观看回播
-                        </view>
-                        <view class="right" wx:elif="{{current.id == item.id && current.live_status == 102}}">
+                        </view> -->
+                        <!-- <view class="right" wx:elif="{{item.state == 3}}">
                             即将开播
-                        </view>
+                        </view> -->
                         <view class="right" wx:else>正在直播</view>
                     </view>
                 </scroll-view>

@@ -61,8 +61,8 @@
 
 
 .bottomBox .captionBox image {
-  width: calc(38vmin / 7.5);
-  height: calc(34.83vmin / 7.5);
+  width: calc(34vmin / 7.5);
+  height: calc(30.83vmin / 7.5);
 }
 
 .bottomBox .backBox image {

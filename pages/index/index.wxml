@@ -32,7 +32,7 @@
         <image class="poster" mode="aspectFill"
           src="{{ item.show_big ? item.big_image + '?x-image-process=image/resize,m_fixed,w_690,h_360/quality,Q_80' : item.image + '?x-image-process=image/resize,m_fixed,w_260,h_160/quality,Q_80'  }}"
           lazy-load="true"></image>
-        <image class="icon" mode="aspectFill" src="{{ $state.imgHost }}/play.png"></image>
+        <image class="icon" wx:if="{{!item.show_big}}" mode="aspectFill" src="/images/recomonPlay.png"></image>
         <image src="/images/coursestautes.png" class="status" mode="aspectFill" wx:if="{{item.is_finish}}"
           style="{{item.show_big ? 'width:130rpx;height:72rpx' : ''}}"></image>
       </view>

@@ -721,21 +721,20 @@ Page({
       })
     } else {
       app.liveData.getLiveBySpecialColumnId({
-        specialColumnId: item.specialColumnId
+        specialColumnId: item.columnId
       }).then(res => {
         if (res.data.isAddSubscribe) {
           wx.navigateTo({
             url: "/page/live/pages/liveDetail/liveDetail?specialColumnId=" +
-              item.specialColumnId
+              item.columnId
           });
         } else {
           wx.navigateTo({
             url: "/page/live/pages/tableDetail/tableDetail?specialColumnId=" +
-              item.specialColumnId
+              item.columnId
           });
         }
       })
-
     }
   }
 })

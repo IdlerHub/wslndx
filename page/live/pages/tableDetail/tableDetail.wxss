@@ -66,7 +66,7 @@ page {
 
 .imgBox {
   width: 750rpx;
-  height: 580rpx;
+  height: 422rpx;
   position: relative;
 }
 .imgBox image {
@@ -237,6 +237,12 @@ page {
   font-family: PingFangSC-Regular, PingFang SC;
   font-weight: 400;
   color: rgba(126, 126, 126, 1);
+}
+.content .richText {
+  font-size: 36rpx;
+  font-weight: 400;
+  color: #7E7E7E;
+  line-height: 54rpx;
 }
 
 .attentionBox {

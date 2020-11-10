@@ -6,10 +6,24 @@
   left: calc(30vmin / 7.5);
   bottom: calc(150vmin / 7.5);
   z-index: 99999999;
+  overflow: hidden;
 }
 
 .scrollMask {
-  z-index: 99999;
+  z-index: 999999999;
+}
+
+.topmarsk {
+  width: 100%;
+  height: calc(41vmin / 7.5);
+  background: linear-gradient(to bottom, rgba(244,244,244,1) 0%,rgba(244,244,244,0)  80%);
+  position: absolute;
+  top: calc(-20vmin / 7.5);
+  top: 0;
+  z-index: 999999998;
+  opacity: 0.3;
+  /* border-radius: calc(40vmin / 7.5) calc(40vmin / 7.5) 0 0; */
+  /* opacity: 0.1; */
 }
 
 .talkItem {
