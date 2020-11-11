@@ -30,6 +30,7 @@
   <!-- <view class="topmarsk"></view> -->
   <scroll-view scroll-y scroll-top="{{scrollTop}}" class="scrollView" bindscroll="bindscroll" enable-flex
     bindscrolltolower="bindscrolltolower" bindtouchstart="touchstart"
+    enhanced
     style="opacity: {{close ? 0 : 1}};bottom: {{!vliveRoom ? 'calc(30vmin / 7.5)' : ''}};left: {{!vliveRoom ? statusBarHeight : ''}}px">
     <view
       class="talkItem {{ fn.showType(item.payload) != 0 && fn.showType(item.payload) != 2 && !item.payload.text ? 'joinItem' : ''}}"

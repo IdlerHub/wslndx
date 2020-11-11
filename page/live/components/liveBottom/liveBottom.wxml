@@ -5,7 +5,7 @@
     <text>字幕</text>
   </view>
   <view class="clickBox" catchtap="showBox" wx:if="{{vliveRoom}}">说点什么～</view>
-  <view class="itemBox backBox">
+  <view class="itemBox backBox" bindtap="toLessons">
     <image src="../../images/endIcon.png"></image>
     <text>回播</text>
   </view>

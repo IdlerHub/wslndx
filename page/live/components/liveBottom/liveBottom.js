@@ -8,6 +8,10 @@ Component({
     vliveRoom: {
       type: Boolean,
       value: 0
+    },
+    columnId: {
+      type: Number,
+      value: 0
     }
   },
   lifetimes: {
@@ -77,6 +81,11 @@ Component({
     },
     checkCaption() {
       this.triggerEvent('checkCaption')
+    },
+    toLessons() {
+      wx.navigateTo({
+        url: '/page/live/pages/liveDetail/liveDetail?specialColumnId=' + this.data.columnId,
+      })
     }
   }
 })

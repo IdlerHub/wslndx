@@ -169,5 +169,11 @@ Page({
         url: `../hliveRoom/hliveRoom?roomId=${this.data.liveDetail.id}&statusBarHeight=${this.data.statusBarHeight}`,
       })
     }, 1000);
+  },
+  bindleavepictureinpicture() {
+    this.setData({
+      showCanvans: 1
+    })
+    console.log(this.data.showCanvans, 3489573485734875834589)
   }
 })

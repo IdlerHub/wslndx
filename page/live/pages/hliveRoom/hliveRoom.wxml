@@ -1,5 +1,5 @@
 <!--page/live/pages/hliveRoom/hliveRoom.wxml-->
-<live-player src="{{liveDetail.liveUrl}}" class="h-player" autoplay bindstatechange="bindstatechange" wx:if="{{liveStatus == 1 && !liveDetail.liveType}}" orientation="vertical" bindtap="closeCommont">
+<live-player src="{{liveDetail.liveUrl}}" class="h-player" autoplay bindstatechange="bindstatechange" wx:if="{{liveStatus == 1 && !liveDetail.liveType}}" orientation="vertical" bindtap="closeCommont" bindleavepictureinpicture="bindleavepictureinpicture">
 </live-player>
 <video src="{{liveDetail.videoUrl}}" class="h-player" initial-time="{{liveDetail.now}}" show-center-play-btn="{{false}}" enable-progress-gesture="{{false}}" show-progress="{{false}}" show-fullscreen-btn="{{false}}"  show-play-btn="{{false}}" autoplay object-fit="fill" wx:if="{{liveStatus == 1 && liveDetail.liveType && showVideo}}"></video>
 <view class="statusBox" wx:if="{{liveStatus != 1}}">
@@ -17,6 +17,6 @@
   url="/pages/education/education?type=0&url=https://mp.weixin.qq.com/s/vSd8XBQDQkvqVX_kt_YyTQ" hover-class="none">
   <image src="../../images/dowloafeApp.png" bindtap="downloadeApp"></image>
 </navigator>
-<liveBottom close="{{close}}" bind:sendMsg="sendMsg" bind:praise="praise" bind:checkCaption="checkCaption"
+<liveBottom close="{{close}}" columnId="{{liveDetail.columnId}}" bind:sendMsg="sendMsg" bind:praise="praise" bind:checkCaption="checkCaption"
   bind:clickHandler="clickHandler" wx:if="{{showCommont}}"/>
 <like-fx count="{{praiseCount}}" wx:if="{{showCanvans}}"></like-fx>

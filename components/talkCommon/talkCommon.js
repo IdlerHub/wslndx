@@ -91,6 +91,7 @@ Component({
     bindscrolltolower() {
       this.setData({
         showNum: 0,
+        scrollTop: 999999999999999
       })
       this.triggerEvent('setNewmessagenum', {
         num: 0

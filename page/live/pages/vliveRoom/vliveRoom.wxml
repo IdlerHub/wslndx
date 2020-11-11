@@ -1,5 +1,5 @@
 <!--page/live/pages/liveVideo/liveVideo.wxml-->
-<live-player src="{{liveDetail.liveUrl}}" class="v-player" autoplay bindstatechange="bindstatechange"
+<live-player src="{{liveDetail.liveUrl}}" class="v-player" autoplay bindstatechange="bindstatechange" bindleavepictureinpicture="bindleavepictureinpicture"
   wx:if="{{liveStatus == 1 && liveDetail.direction && !liveDetail.liveType}}">
 </live-player>
 <live-player src="{{liveDetail.liveUrl}}" class="h-player" autoplay bindstatechange="bindstatechange"
@@ -25,6 +25,6 @@
   url="/pages/education/education?type=0&url=https://mp.weixin.qq.com/s/vSd8XBQDQkvqVX_kt_YyTQ" hover-class="none">
   <image src="../../images/dowloafeApp.png" bindtap="downloadeApp"></image>
 </navigator>
-<liveBottom close="{{close}}" vliveRoom="1" bind:sendMsg="sendMsg" bind:praise="praise" bind:checkCaption="checkCaption"
+<liveBottom close="{{close}}" columnId="{{liveDetail.columnId}}" vliveRoom="1" bind:sendMsg="sendMsg" bind:praise="praise" bind:checkCaption="checkCaption"
   bind:clickHandler="clickHandler" />
 <like-fx count="{{praiseCount}}" wx:if="{{showCanvans}}"></like-fx>
