@@ -17,6 +17,7 @@ Page({
     showCommont: 1,
     showVideo: 1
   },
+  pageName: 'live',
   onLoad: function (ops) {
     this.setData({
       statusBarHeight: ops.statusBarHeight

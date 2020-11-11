@@ -16,6 +16,7 @@ Page({
     liveStatus: 1,
     showVideo: 1
   },
+  pageName: 'live',
   onLoad: function (ops) {
     this.liveOps = ops
     this.liveInit()

@@ -83,7 +83,11 @@ Component({
       this.triggerEvent('checkCaption')
     },
     toLessons() {
-      wx.navigateTo({
+      let pages = getCurrentPages(), back = 0
+      pages.forEach(e => {
+        e.pageName ? e.pageName == 'liveDetail' ? back = 1 : '' : ''
+      })
+      back ? wx.navigateBack() : wx.navigateTo({
         url: '/page/live/pages/liveDetail/liveDetail?specialColumnId=' + this.data.columnId,
       })
     }

@@ -48,6 +48,7 @@ Page({
     fullScreen: 0,
   },
   timer: null,
+  pageName: 'liveDetail',
   onLoad: function (options) {
     console.log(options)
     this.videoContext = wx.createVideoContext("myVideo");
@@ -175,23 +176,23 @@ Page({
     });
   },
   getSublesson(lessons) {
-    let playNow = {}, liveNow = 0;
+    let playNow = {},
+      liveNow = 0;
     this.setData({
       sublessons: lessons,
     }, () => {
-      if(this.data.playNow.state == 1) return
+      if (this.data.playNow.state == 1) return
       this.data.sublessons.forEach((item) => {
         //如果是已经结束的课,就把第一个放到当前播放中
         item.state == 1 && JSON.stringify(playNow) == "{}" ? [playNow = item, liveNow = 1] : ''
-        item.state == 3 && JSON.stringify(playNow) == "{}" && !liveNow && JSON.stringify(this.data.playNow) == "{}"?
-          [this.getLiveBackById(item.id), playNow = item]:
+        item.state == 3 && JSON.stringify(playNow) == "{}" && !liveNow && JSON.stringify(this.data.playNow) == "{}" ? [this.getLiveBackById(item.id), playNow = item] :
           "";
       });
       liveNow ? this.setData({
         playNow,
         current: playNow
       }) : ''
-      if(this.Timeout) return
+      if (this.Timeout) return
       this.Timeout = setInterval(() => {
         LiveData.getLiveBySpecialColumnId({
           specialColumnId: this.data.lessonDetail.columnId,
@@ -368,7 +369,7 @@ Page({
       this.setData({
         currentTab: cur,
       }, () => {
-         this.setHeight();
+        this.setHeight();
       });
     }
   },
@@ -386,7 +387,7 @@ Page({
           this.data.currentTab == 1 ? res[0].height : res[0].height - -110;
         height <= 110 ?
           that.setData({
-            height: this.data.currentTab == 2  ? 350 : 700,
+            height: this.data.currentTab == 2 ? 350 : 700,
           }) :
           that.setData({
             height
@@ -415,26 +416,38 @@ Page({
     }
   },
   select(e) {
-    let item = e.currentTarget.dataset.item;
-    if(item.state == 0) {
-      LiveData.getLiveById({ liveId: item.id }).then(res => {
-        res.data.state == 0 ?  wx.showToast({
+    let item = e.currentTarget.dataset.item,
+      pages = getCurrentPages(), back = 0;
+    if (item.state == 0) {
+      LiveData.getLiveById({
+        liveId: item.id
+      }).then(res => {
+        res.data.state == 0 ? wx.showToast({
           title: "直播还未开始",
           icon: "none",
-        }) :  res.data.state == 1 ? wx.navigateTo({
-          url: '/page/live/pages/vliveRoom/vliveRoom?roomId=' + item.id,
         }) : ''
+        if (res.data.state == 1) {
+          pages.forEach(e => {
+            e.pageName ? e.pageName == 'live' ? back = 1 : '' : ''
+          })
+          back ? wx.navigateBack() : wx.navigateTo({
+            url: '/page/live/pages/vliveRoom/vliveRoom?roomId=' + item.id,
+          })
+        }
       })
-    } else if(item.state == 1) {
-      wx.navigateTo({
+    } else if (item.state == 1) {
+      pages.forEach(e => {
+        e.pageName ? e.pageName == 'live' ? back = 1 : '' : ''
+      })
+      back ? wx.navigateBack() : wx.navigateTo({
         url: '/page/live/pages/vliveRoom/vliveRoom?roomId=' + item.id,
       })
-    } else if(item.state == 2) {
+    } else if (item.state == 2) {
       wx.showToast({
         title: "课程视频正在加紧上传中",
         icon: "none",
       })
-    } else if(item.state == 3) {
+    } else if (item.state == 3) {
       this.getLiveBackById(item.id)
     }
     // if (item.live_type && (item.is_end == 0 || item.live_status == 101)) {
@@ -456,7 +469,7 @@ Page({
     //   });
     // } else {
     //   if (item.is_end == 1 && item.record_url != "") {
-        
+
     //   } else if (!item.live_type) {
     //     this. this.toLiveRoom(item);(item);
     //   }
@@ -464,7 +477,9 @@ Page({
   },
   //获取回播
   getLiveBackById(liveId) {
-    LiveData.getLiveBackById({ liveId }).then(res => {
+    LiveData.getLiveBackById({
+      liveId
+    }).then(res => {
       this.setData({
         playNow: res.data
       }, () => {
@@ -907,7 +922,7 @@ Page({
         if (res.confirm) {
           let params = {
             commentType: 1,
-            type:2,
+            type: 2,
             id: e.currentTarget.dataset.item.replyId,
           };
           LiveData.delReply(params)
@@ -949,7 +964,7 @@ Page({
         if (res.confirm) {
           let param = {
             commentType: 1,
-            type:1,
+            type: 1,
             id: e.currentTarget.dataset.item.commentId,
           };
           LiveData.delComment(param)

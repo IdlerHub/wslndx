@@ -47,8 +47,7 @@
     </view>
     <!-- 直播信息 -->
     <navigator></navigator>
-    <navigator url="/page/live/pages/vliveRoom/vliveRoom?roomId={{current.id}}" hover-class="none" class="liveLesson" wx:if="{{current.id}}" bindtap="toWatch"
-        data-item="{{current}}">
+    <view class="liveLesson" wx:if="{{current.id}}" bindtap="select" data-item="{{current}}" data-item="{{current}}">
         <view class="liveImg">
             <image class="coverImg" mode="widthFix" src="{{lessonDetail.cover}}"></image>
             <image class="playImg" src="/images/recomonPlay.png"></image>
@@ -65,7 +64,7 @@
                 <text>直播</text>
             </view>
         </view>
-    </navigator>
+    </view>
     <!-- 课程以及讨论 -->
     <view class="content">
         <scroll-view scroll-x="true" class="nav" enable-flex scroll-left="{{ 0 }}" scroll-with-animation="{{ true }}">
@@ -140,9 +139,8 @@
                                     <rich-text nodes="{{ item.content }}" catchlongpress="copythat"
                                         data-content="{{ item.content }}" data-type="comment" data-index="{{index}}">
                                     </rich-text>
-                                    <button wx:if="{{ !$state.authUserInfo }}"
-                                        class="reply-btn" data-reply="{{ item }}" open-type="getUserInfo"
-                                        bindgetuserinfo="onGotUserInfo">
+                                    <button wx:if="{{ !$state.authUserInfo }}" class="reply-btn" data-reply="{{ item }}"
+                                        open-type="getUserInfo" bindgetuserinfo="onGotUserInfo">
                                         回复
                                     </button>
                                     <button wx:else class="reply-btn" data-reply="{{ item }}" catchtap="show">
@@ -171,13 +169,11 @@
                                 <rich-text nodes="{{ child.rtext + child.replyContent }}" catchlongpress="copythat"
                                     data-content="{{ child.replyContent }}" data-index="{{index}}"
                                     data-chilindex="{{number}}"></rich-text>
-                                <button wx:if="{{ !$state.authUserInfo }}"
-                                    class="reply-btn"  data-parent="{{ child}}"
+                                <button wx:if="{{ !$state.authUserInfo }}" class="reply-btn" data-parent="{{ child}}"
                                     open-type="getUserInfo" bindgetuserinfo="onGotUserInfo">
                                     回复
                                 </button>
-                                <button wx:else class="reply-btn"
-                                     data-parent="{{ child }}" catchtap="show">
+                                <button wx:else class="reply-btn" data-parent="{{ child }}" catchtap="show">
                                     回复
                                 </button>
                             </view>
