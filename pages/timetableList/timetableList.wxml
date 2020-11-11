@@ -50,7 +50,7 @@
           </view>
           <view class="btn living" wx:else>
             <view wx:for="{{3}}" wx:key="index" class="statusWite"></view>
-            <text>直播</text>
+            <text>直播中</text>
           </view>
           <!-- <button hover-class="none" class="btn" catchtap="os" open-type="share" data-item="{{lesson}}" wx:else>
             <image src="/images/shareIcon.png"></image>

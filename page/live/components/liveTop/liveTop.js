@@ -34,7 +34,7 @@ Component({
         }, 1000);
       } else {
         wx.switchTab({
-          url: '/pages/timetable/timetable'
+          url: '/pages/timetableList/timetableList'
         })
       }
     },

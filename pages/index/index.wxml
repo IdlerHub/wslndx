@@ -53,7 +53,7 @@
     <view class="liveBox" wx:if="{{liveRecommend[0]}}">
       <view class="topTtile">
         <text>直播推荐</text>
-        <navigator class="topTtile-right" url="/page/live/pages/liveCenter/liveCenter" hover-class="none">
+        <navigator open-type="switchTab" class="topTtile-right" url="/pages/timetableList/timetableList" hover-class="none">
           <text>更多课程</text>
           <image src="/images/Return-black.png"></image>
         </navigator>

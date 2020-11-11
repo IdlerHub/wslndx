@@ -221,7 +221,7 @@ page,
 .contariner .item .txtBox .textBottom .living {
   background: linear-gradient(90deg, #FF572F 0%, #F2323A 100%);
   align-items: flex-end;
-  padding: 13rpx 20rpx;
+  padding: 13rpx 0;
   box-sizing: border-box;
 }
 

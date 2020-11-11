@@ -62,22 +62,27 @@ Component({
       this.triggerEvent('setNewmessagenum', {
         num: 0
       })
-      console.log(32423432423)
     },
     bindscroll(e) {
+      console.log('scroll')
+      console.log(e.detail.scrollHeight- e.detail.scrollTop)
       this.data.inScroll ? [
           this.setData({
-            showNum: 1
+            showNum: e.detail.scrollHeight- e.detail.scrollTop <= 240 ? 0 : 1
           }),
-          this.setCrollTop(e.detail.scrollTop)
+          this.setCrollTop(e.detail.scrollTop, e.detail.scrollHeight)
         ] :
         this.setData({
           inScroll: 1
         })
     },
-    setCrollTop(scrollTop) {
+    setCrollTop(scrollTop, scrollHeight) {
       if (this.timer) clearTimeout(this.timer)
       this.timer = setTimeout(() => {
+        if(scrollHeight- scrollTop <= 240) {
+          this.touch = 0
+          return
+        }
         this.setData({
           scrollTop: this.data.showNum ? scrollTop : 999999999999999
         }, () => {
@@ -89,10 +94,7 @@ Component({
       this.touch = 1
     },
     bindscrolltolower() {
-      this.setData({
-        showNum: 0,
-        scrollTop: 999999999999999
-      })
+      this.niewMore()
       this.triggerEvent('setNewmessagenum', {
         num: 0
       })

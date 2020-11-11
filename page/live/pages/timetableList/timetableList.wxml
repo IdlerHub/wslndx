@@ -24,7 +24,7 @@
         <image class="icon" mode="aspectFill" src="/images/recomonPlay.png"></image>
       </view>
       <view class="txtBox">
-        <view class="title">疯狂进攻和对方进攻和发记得发货即可收到看见对方韩国的科技孵化给看的肌肤光滑看的肌肤光滑扩大解放韩国空间点法国 看的肌肤光滑思考的结果和扣税的肌肤光滑的空间规划懂接口给</view>
+        <view class="title">{{lesson.name}}</view>
         <view class="textBottom" wx:if="{{fn.width(lesson.liveCount,lesson.studyLiveCount) < 100 && lesson.liveCount > 0}}">
           <text>已学 {{lesson.liveCount}}/{{lesson.studyLiveCount}}课时</text>
           <view class="progress">

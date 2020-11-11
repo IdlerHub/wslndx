@@ -30,7 +30,7 @@
 
 .bottomBox .captionBox {
   background: rgba(0, 0, 0, 0.3);
-  border: 1rpx solid #FFFFFF;
+  border: 1rpx solid rgba(255,255,255, 0.3);
 }
 
 .bottomBox .close::before {
@@ -42,6 +42,7 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%) rotateZ(45deg) scale(2);
+  border-radius: calc(2vmin / 7.5);
 }
 
 .bottomBox .backBox {
@@ -115,7 +116,7 @@
   color: #C2C3C2;
   background: rgba(0, 0, 0, 0.3);
   border-radius: calc(10vmin / 7.5);
-  border: 1rpx solid #FFFFFF;
+  border: 1rpx solid rgba(255,255,255, 0.3);
 }
 
 .inputBox {

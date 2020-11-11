@@ -47,7 +47,7 @@ Page({
     return {
       imageUrl: this.data.liveDetail.indexCover,
       title: this.data.liveDetail.name,
-      path: "/page/live/pages/vliveRoom/vliveRoom?id=" +
+      path: "/page/live/pages/vliveRoom/vliveRoom?roomId=" +
         this.data.liveDetail.id +
         "&type=share&uid=" +
         this.data.$state.userInfo.id
