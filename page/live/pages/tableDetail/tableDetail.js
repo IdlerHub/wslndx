@@ -222,8 +222,7 @@ Page({
     if (!isAddSubscribe) {
       //未拥有
       LiveData.addSubscribe({
-        columnId,
-        mpOpenid: this.data.userMsg.prentice_count
+        columnId
         })
         .then((res) => {
           this.data.lessonDetail.isAddSubscribe = 1;
