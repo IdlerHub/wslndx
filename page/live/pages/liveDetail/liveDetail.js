@@ -179,19 +179,18 @@ Page({
     this.setData({
       sublessons: lessons,
     }, () => {
+      if(this.data.playNow.state == 1) return
       this.data.sublessons.forEach((item) => {
         //如果是已经结束的课,就把第一个放到当前播放中
         item.state == 1 && JSON.stringify(playNow) == "{}" ? [playNow = item, liveNow = 1] : ''
-        item.state == 3 && JSON.stringify(playNow) == "{}" ?
-          this.getLiveBackById(item.id) :
+        item.state == 3 && JSON.stringify(playNow) == "{}" && !liveNow && JSON.stringify(this.data.playNow) == "{}"?
+          [this.getLiveBackById(item.id), playNow = item]:
           "";
       });
-      this.data.playNow.length > 0 ? this.setData({
-        current: liveNow ? playNow : {}
-      }) : this.setData({
-        playNow: playNow,
-        current: liveNow ? playNow : {}
-      });
+      liveNow ? this.setData({
+        playNow,
+        current: playNow
+      }) : ''
       if(this.Timeout) return
       this.Timeout = setInterval(() => {
         LiveData.getLiveBySpecialColumnId({

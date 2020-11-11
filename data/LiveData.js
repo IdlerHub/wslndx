@@ -264,6 +264,15 @@ function getLiveBackById(params) {
 }
 
 
+/**
+ * @description: 获取我的课程专栏
+ * @param {}
+ * @return:  promise
+ * **/
+function studyCenterspecial(params) {
+  return httpService.post("study/center/special", params, null ,true);
+}
+
 module.exports = {
   getLiveLessons,
   getApplyDetail,
@@ -293,5 +302,6 @@ module.exports = {
   addSubscribe,
   getLiveById,
   follow,
-  getLiveBackById
+  getLiveBackById,
+  studyCenterspecial
 };

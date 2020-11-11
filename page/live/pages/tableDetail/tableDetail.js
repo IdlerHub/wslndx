@@ -31,7 +31,7 @@ Page({
   toEducation: false,
   onShow() {
     if(this.toEducation) {
-      this.toLivedetail()
+      this.getUserOpenid(1)
       this.toEducation = false
     }
   },
@@ -53,10 +53,12 @@ Page({
   onUnload() {
     // clearInterval(this.timer);
   },
-  getUserOpenid() {
+  getUserOpenid(type) {
     user.myIndex().then(res => {
       this.setData({
         userMsg: res.data
+      }, () => {
+        type ? this.toLivedetail() : ''
       })
     })
   },
@@ -108,9 +110,9 @@ Page({
     return LiveData.getLiveBySpecialColumnId({
       specialColumnId: id
     }).then(res => {
-      res.data.liveLecturerUserDTOS.forEach(e => {
+      res.data.liveLecturerUserDTOS ? res.data.liveLecturerUserDTOS.forEach(e => {
         res.data['teacher'] ?  res.data.teacher = res.data.teacher + ' ' + e.nickname : res.data.teacher = e.nickname
-      })
+      }) : ''
       res.data.isAddSubscribe ? wx.redirectTo({
         url: `/page/live/pages/liveDetail/liveDetail?lessonId=${res.data.columnId}`
       }) : 
@@ -220,7 +222,8 @@ Page({
     if (!isAddSubscribe) {
       //未拥有
       LiveData.addSubscribe({
-        columnId
+        columnId,
+        mpOpenid: this.data.userMsg.prentice_count
         })
         .then((res) => {
           this.data.lessonDetail.isAddSubscribe = 1;

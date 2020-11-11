@@ -2,8 +2,9 @@
 page,
 .timetableList,
 .contariner {
-  height: 100%;
   padding-top: 112rpx;
+  margin-bottom: 150rpx;
+  box-sizing: border-box;
 }
 
 .top {

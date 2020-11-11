@@ -3,63 +3,57 @@ const LiveData = require("../../../../data/LiveData");
 Page({
   data: {
     courseList: [],
-    weekList: ["周一", "周二", "周三", "周四", "周五", "周六", "周日"],
-    weeks: [],
     page: 1,
-    current: 0,
-    month: '',
     page_end: false
   },
   onLoad: function (options) {
-    this.getLessonWeeks()
+    this.params = {
+      type: 0,
+      pageSize: 20,
+      pageNum: 1
+    }
+    this.getUserLessons()
   },
   toDetail(e) {
     let url =
-      "/page/live/pages/liveDetail/liveDetail?lessonId=" +
+      "/page/live/pages/liveDetail/liveDetail?specialColumnId=" +
       e.currentTarget.dataset.lessonId;
     wx.navigateTo({
       url,
     });
   },
-  getUserLessons(current, week) {
-    return LiveData.newUserLessons({
-      page_size: 100,
-      week
-    }).then((res) => {
+  getUserLessons() {
+    let list = this.data.courseList
+    return LiveData.studyCenterspecial(this.params).then((res) => {
+      list.push(...res.dataList)
       this.setData({
-        courseList: res.data
+        courseList: list,
+        page_end: res.total < 10 ? 1 : 0
       });
     });
   },
-  getLessonWeeks() {
-    LiveData.getLessonWeeks().then(res => {
-      this.setData({
-        weeks: res.data
-      })
-      res.data.forEach((e, i) => {
-        e.is_today ? [this.setData({
-          current: i,
-          month: e.title
-        }), this.getUserLessons(i, e.week)] : ''
-      })
-    })
-  },
-  onReachBottom() {},
-  onPullDownRefresh() {
+  onReachBottom() {
+    if (this.data.page_end) return
+    this.params.pageNum++
     this.getUserLessons()
-      .then(() => {
-        this.setData({
-          page_end: false,
-        });
+  },
+  onPullDownRefresh() {
+    this.params = {
+      type: 0,
+      pageSize: 20,
+      pageNum: 1
+    }
+    this.setData({
+      courseList: []
+    }, () => {
+      this.getUserLessons().then(() => {
         wx.stopPullDownRefresh();
         wx.showToast({
           title: "刷新完成",
           duration: 1000,
         });
       })
-      .catch((err) => {
-        console.log(err);
-      });
+    })
   },
   onShareAppMessage: function (ops) {
     console.log(ops)
@@ -69,20 +63,8 @@ Page({
         title: item.name,
         imageUrl: item.cover,
         path: "/page/live/pages/liveDetail/liveDetail?lessonId=" +
-        item.id
+          item.id
       };
     }
-  },
-  checkCurrent(e) {
-    this.setData({
-      current: e.currentTarget.dataset.index,
-      month: e.currentTarget.dataset.month
-    }, () => {
-      wx.pageScrollTo({
-        duration: 0,
-        scrollTop: 0
-      })
-      this.getUserLessons(e.currentTarget.dataset.index, this.data.weeks[e.currentTarget.dataset.index].week)
-    })
   }
 });
