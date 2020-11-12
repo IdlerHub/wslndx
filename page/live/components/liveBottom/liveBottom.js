@@ -59,6 +59,11 @@ Component({
     bindinput(e) {
       this.setData({
         txt: e.detail.value
+      }, () => {
+        this.data.txt.length >= 50 ? wx.showToast({
+          title: '内容仅限50字哦',
+          icon: 'none'
+        }) : ''
       })
     },
     send() {
