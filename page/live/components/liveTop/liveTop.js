@@ -42,7 +42,7 @@ Component({
           title: '关注成功',
           icon: 'none'
         })
-        this.triggerEvent('checkFollow')
+        this.triggerEvent('checkFollow', 1)
       })
     },
   }

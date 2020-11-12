@@ -122,8 +122,8 @@ Page({
   checkFollow() {
     this.setData({
       'liveDetail.follow': 1,
-    }, () => {
-      this.showBox()
+      showBox: false,
+      moveBox: false
     })
     this.setCustommessag('MD5_AUDIENCE_FOLLOW_LIVE_ROOM_ANCHOR')
   },
