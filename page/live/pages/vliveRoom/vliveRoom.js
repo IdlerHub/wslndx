@@ -17,7 +17,8 @@ Page({
     showVideo: 1,
     showBox: 0,
     moveBox: 0,
-    viewNum: 0
+    viewNum: 0,
+    keyHeight: '-60'
   },
   pageName: 'live',
   liveInterval: null,
@@ -38,12 +39,24 @@ Page({
     this.setData({
       showCanvans: 1
     })
+    this.textHeight = 0
     if (this.toHliveRomm) {
       this.liveInit()
       this.toHliveRomm = 0
     } else {
       this.getLiveById(this.liveOps.roomId)
     }
+    wx.onKeyboardHeightChange(res => {
+      this.setData({
+        keyHeight: res.height
+      }, () => {
+        console.log(this.data.textHeight, this.textHeight,  this.data.textHeight - this.textHeight >= 0)
+        this.data.keyHeight - this.textHeight >= 0 ? '' : this.setData({
+          keyHeight: '-60'
+        });
+        this.textHeight = res.height
+      })
+    })
   },
   onHide: function () {
     this.setData({
@@ -134,7 +147,7 @@ Page({
     this.setData({
       'liveDetail.follow': 1
     }, () => {
-      this.showBox()
+      this.showTentionBox()
     })
     this.setCustommessag('MD5_AUDIENCE_FOLLOW_LIVE_ROOM_ANCHOR')
   },
@@ -193,7 +206,7 @@ Page({
         viewNum: this.data.viewNum += 1
       }, () => {
         if (this.data.viewNum >= 600) {
-          this.data.liveDetail.follow ? '' : [this.showBox(), this.setData({
+          this.data.liveDetail.follow ? '' : [this.showTentionBox(), this.setData({
             viewNum: 0
           })]
           clearInterval(this.liveInterval)
@@ -202,7 +215,7 @@ Page({
       })
     }, 1000);
   },
-  showBox(e) {
+  showTentionBox(e) {
     this.setData({
       showBox: !this.data.showBox,
       moveBox: !this.data.moveBox
@@ -220,5 +233,5 @@ Page({
         icon: 'none'
       })
     })
-  }
+  },
 })

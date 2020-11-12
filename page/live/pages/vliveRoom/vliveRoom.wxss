@@ -5,6 +5,14 @@ page {
   background-color: #000;
 }
 
+.backgroundlive {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  opacity: 0;
+  top: 0;
+}
+
 .v-player {
   width: 100vw;
   height: 100vh;
@@ -165,4 +173,15 @@ page {
   to {
     bottom: -500rpx;
   }
+}
+
+
+.textarea {
+  width: 100vw;
+  height: 120rpx;
+  background: #ededed;
+  padding: 30rpx;
+  box-sizing: border-box;
+  position: fixed;
+  bottom: -120rpx;
 }

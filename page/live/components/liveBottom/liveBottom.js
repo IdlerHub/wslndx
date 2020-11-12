@@ -12,6 +12,10 @@ Component({
     columnId: {
       type: Number,
       value: 0
+    },
+    keyHeight: {
+      type: String || Number,
+      value: '-60'
     }
   },
   lifetimes: {
@@ -25,18 +29,18 @@ Component({
     this.setData({
       system: systemInfo.platform
     })
-    wx.onKeyboardHeightChange(res => {
-      console.log(res.height)
-      this.setData({
-        keyHeight: res.height
-      }, () => {
-        setTimeout(() => {
-          this.data.keyHeight == 0 && !this.data.focus ? this.setData({
-            keyHeight: '-60'
-          }) : ''
-        }, 200);
-      })
-    })
+    // wx.onKeyboardHeightChange(res => {
+    //   console.log(res.height)
+    //   this.setData({
+    //     keyHeight: res.height
+    //   }, () => {
+    //     setTimeout(() => {
+    //       this.data.keyHeight == 0 && !this.data.focus ? this.setData({
+    //         keyHeight: '-60'
+    //       }) : ''
+    //     }, 200);
+    //   })
+    // })
     this.praiseNum = 0
   },
   data: {

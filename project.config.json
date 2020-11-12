@@ -62,10 +62,11 @@
       "outputPath": ""
     },
     "enableEngineNative": false,
-    "bundle": true,
+    "bundle": false,
     "useIsolateContext": true,
     "useCompilerModule": false,
     "userConfirmedUseCompilerModuleSwitch": true,
+    "userConfirmedBundleSwitch": false,
     "packNpmManually": false,
     "packNpmRelationList": [],
     "minifyWXSS": true
@@ -153,9 +154,9 @@
           "scene": null
         },
         {
-          "name": "page/live/pages/hliveRoom/hliveRoom",
-          "pathName": "page/live/pages/hliveRoom/hliveRoom",
-          "query": "roomId=635",
+          "name": "page/live/pages/liveDetail/liveDetail",
+          "pathName": "page/live/pages/liveDetail/liveDetail",
+          "query": "specialColumnId=9",
           "scene": 1000
         },
         {

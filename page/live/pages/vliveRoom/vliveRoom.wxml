@@ -2,12 +2,12 @@
 <live-player src="{{liveDetail.liveUrl}}" class="v-player" autoplay bindstatechange="bindstatechange" bindleavepictureinpicture="bindleavepictureinpicture"
   wx:if="{{liveStatus == 1 && liveDetail.direction && !liveDetail.liveType}}">
 </live-player>
-<live-player src="{{liveDetail.liveUrl}}" class="h-player" autoplay bindstatechange="bindstatechange"
+<live-player src="{{liveDetail.liveUrl}}" class="v-player h-player" autoplay bindstatechange="bindstatechange"
   wx:if="{{liveStatus == 1 && !liveDetail.direction && !liveDetail.liveType}}">
   <image src="../../images/full.png" bindtap="toHliveRoom"></image>
 </live-player>
 <video src="{{liveDetail.videoUrl}}" class="v-player" initial-time="{{liveDetail.now}}" show-center-play-btn="{{false}}" enable-progress-gesture="{{false}}" show-progress="{{false}}" show-fullscreen-btn="{{false}}"  show-play-btn="{{false}}" autoplay object-fit="fill" wx:if="{{liveStatus == 1 && liveDetail.direction && liveDetail.liveType && showVideo}}"></video>
-<video src="{{liveDetail.videoUrl}}" class="h-player" initial-time="{{liveDetail.now}}" show-center-play-btn="{{false}}" enable-progress-gesture="{{false}}" show-progress="{{false}}" show-fullscreen-btn="{{false}}"  show-play-btn="{{false}}" autoplay object-fit="fill" wx:if="{{liveStatus == 1 && !liveDetail.direction && liveDetail.liveType && showVideo}}">
+<video src="{{liveDetail.videoUrl}}" class="v-player h-player" initial-time="{{liveDetail.now}}" show-center-play-btn="{{false}}" enable-progress-gesture="{{false}}" show-progress="{{false}}" show-fullscreen-btn="{{false}}"  show-play-btn="{{false}}" autoplay object-fit="fill" wx:if="{{liveStatus == 1 && !liveDetail.direction && liveDetail.liveType && showVideo}}">
   <image src="../../images/full.png" bindtap="toHliveRoom"></image>
 </video>
 <view class="statusBox" wx:if="{{liveStatus != 1}}">
@@ -25,7 +25,7 @@
   url="/pages/education/education?type=0&url=https://mp.weixin.qq.com/s/vSd8XBQDQkvqVX_kt_YyTQ" hover-class="none">
   <image src="../../images/dowloafeApp.png" bindtap="downloadeApp"></image>
 </navigator>
-<liveBottom close="{{close}}" columnId="{{liveDetail.columnId}}" vliveRoom="1" bind:sendMsg="sendMsg" bind:praise="praise" bind:checkCaption="checkCaption"
+<liveBottom close="{{close}}" columnId="{{liveDetail.columnId}}" keyHeight="{{keyHeight}}" vliveRoom="1" bind:sendMsg="sendMsg" bind:praise="praise" bind:checkCaption="checkCaption"
   bind:clickHandler="clickHandler" />
 <like-fx count="{{praiseCount}}" wx:if="{{showCanvans}}"></like-fx>
 <view class="teacherBox {{!moveBox ? 'teacherMove' : ''}}" wx:if="{{showBox}}">
@@ -35,3 +35,5 @@
   <text>关注老师，更多好课不错过</text>
   <view class="addBtn" bindtap="attention">关注</view>
 </view>
+
+<textarea class="textarea" placeholder="文字" focus="{{false}}" fixed show-confirm-bar adjust-position="{{false}}" bindblur="showBox"></textarea>
