@@ -75,8 +75,7 @@
                 </view>
             </block>
         </scroll-view>
-        <swiper class="tab" style="height:{{ height }}px" current="{{ currentTab }}" duration="300"
-            bindchange="switchTab">
+        <swiper class="tab" style="height:{{ height }}px" current="{{ currentTab }}" duration="300" bindchange="switchTab" scroll-top="{{scrollviewtop}}">
             <swiper-item class="tab-item">
                 <!-- 简介 -->
                 <scroll-view scroll-y="true" class="wrap synopsis">

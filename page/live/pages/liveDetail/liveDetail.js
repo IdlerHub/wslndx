@@ -46,11 +46,12 @@ Page({
     comment: [], //  讨论
     playFlag: false, //视频播放状态
     fullScreen: 0,
+    scrollviewtop: 0
   },
   timer: null,
   pageName: 'liveDetail',
   onLoad: function (options) {
-    console.log(options)
+    this.options = options
     this.videoContext = wx.createVideoContext("myVideo");
     this.init(options);
     this.heightInit(options);
@@ -64,15 +65,9 @@ Page({
       playFlag: false,
     });
     this.comParam.pageNum = 1;
-    Promise.all([
-      this.getLessonDetail(this.data.lessonDetail.id)
-    ]).then((res) => {
-      wx.stopPullDownRefresh();
-      wx.showToast({
-        title: "刷新完成",
-        duration: 1000,
-      });
-    });
+    this.init(this.options);
+    this.heightInit(this.options);
+    this.getLessonDetail(this.options.specialColumnId, true);
   },
   onGotUserInfo(e) {
     if (e.detail.errMsg == "getUserInfo:ok") {
@@ -185,12 +180,17 @@ Page({
       this.data.sublessons.forEach((item) => {
         //如果是已经结束的课,就把第一个放到当前播放中
         item.state == 1 && JSON.stringify(playNow) == "{}" ? [playNow = item, liveNow = 1] : ''
+      });
+      this.data.sublessons.forEach((item) => {
+        //如果是已经结束的课,就把第一个放到当前播放中
         item.state == 3 && JSON.stringify(playNow) == "{}" && !liveNow && JSON.stringify(this.data.playNow) == "{}" ? [this.getLiveBackById(item.id), playNow = item] :
           "";
       });
       liveNow ? this.setData({
         playNow,
         current: playNow
+      }, () => {
+        this.tolesson()
       }) : ''
       if (this.Timeout) return
       this.Timeout = setInterval(() => {
@@ -402,14 +402,15 @@ Page({
   tolesson() {
     let that = this,
       // id = ".sublessonsd" + this.data.lessonDetail.current_sublesson_id;
-      id = ".sublessonsd";
-    if (this.data.currentTab == 0) {
+      id = ".active";
+    if (this.data.currentTab == 1) {
       let query = wx.createSelectorQuery().in(this);
       query.select(id).boundingClientRect();
       query.exec((res) => {
+        console.log(res)
         res[0] ?
           this.setData({
-            scrollviewtop: res[0].top - 520,
+            scrollviewtop: res[0].top - 300,
           }) :
           "";
       });
@@ -450,30 +451,6 @@ Page({
     } else if (item.state == 3) {
       this.getLiveBackById(item.id)
     }
-    // if (item.live_type && (item.is_end == 0 || item.live_status == 101)) {
-    //   LiveData.getLessonDetail({
-    //     lesson_id: this.data.lessonDetail.id,
-    //   }).then((res) => {
-    //     if (res.data.current.live_status != 101) {
-    //       wx.showToast({
-    //         title: "直播还未开始",
-    //         icon: "none",
-    //       });
-    //       return;
-    //     } else {
-    //       this.setData({
-    //         playNow: item,
-    //       });
-    //       this.liveplayer = wx.createLivePlayerContext("myVideo");
-    //     }
-    //   });
-    // } else {
-    //   if (item.is_end == 1 && item.record_url != "") {
-
-    //   } else if (!item.live_type) {
-    //     this. this.toLiveRoom(item);(item);
-    //   }
-    // }
   },
   //获取回播
   getLiveBackById(liveId) {
