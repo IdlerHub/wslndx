@@ -188,7 +188,8 @@ Page({
       });
       liveNow ? this.setData({
         playNow,
-        current: playNow
+        current: playNow,
+        playFlag: false
       }, () => {
         this.tolesson()
       }) : ''
