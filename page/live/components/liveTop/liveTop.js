@@ -17,11 +17,9 @@ Component({
     statusBarHeight: {
       type: Number,
       value: 30
-    }
+    },
   },
   data: {
-    moveBox: 0,
-    showBox:0
   },
   ready() {
     this.pages = getCurrentPages()
@@ -38,15 +36,6 @@ Component({
         })
       }
     },
-    showBox(e) {
-      e.currentTarget.dataset.top ? 
-      this.setData({
-        showBox: 1,
-        moveBox: 1
-      }) : this.setData({
-        moveBox: 0
-      })
-    },
     attention() {
       app.liveData.follow({ followerUid: this.data.liveDetail.lecturerUserId }).then(() => {
         wx.showToast({
@@ -55,6 +44,6 @@ Component({
         })
         this.triggerEvent('checkFollow')
       })
-    }
+    },
   }
 })

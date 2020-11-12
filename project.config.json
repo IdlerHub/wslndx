@@ -153,9 +153,9 @@
           "scene": null
         },
         {
-          "name": "page/live/pages/timetableList/timetableList",
-          "pathName": "page/live/pages/timetableList/timetableList",
-          "query": "specialColumnId=49",
+          "name": "page/live/pages/hliveRoom/hliveRoom",
+          "pathName": "page/live/pages/hliveRoom/hliveRoom",
+          "query": "roomId=635",
           "scene": 1000
         },
         {

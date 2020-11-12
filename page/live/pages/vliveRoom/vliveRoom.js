@@ -14,9 +14,13 @@ Page({
     praiseCount: 0,
     showCanvans: 1,
     liveStatus: 1,
-    showVideo: 1
+    showVideo: 1,
+    showBox: 0,
+    moveBox: 0,
+    viewNum: 0
   },
   pageName: 'live',
+  liveInterval: null,
   onLoad: function (ops) {
     this.liveOps = ops
     this.liveInit()
@@ -34,7 +38,7 @@ Page({
     this.setData({
       showCanvans: 1
     })
-    if(this.toHliveRomm ) {
+    if (this.toHliveRomm) {
       this.liveInit()
       this.toHliveRomm = 0
     } else {
@@ -47,10 +51,12 @@ Page({
       liveStatus: 0,
       showVideo: 0
     })
+    this.liveInterval ? [clearInterval(this.liveInterval), this.liveInterval = null] : ''
   },
   onUnload: function () {
     timsdk.quitGroup(this)
     timsdk.timLoginout(this)
+    this.liveInterval ? [clearInterval(this.liveInterval), this.liveInterval = null] : ''
     wx.offKeyboardHeightChange()
   },
   onShareAppMessage: function () {
@@ -77,11 +83,11 @@ Page({
         liveDetail: res.data,
         showVideo: 1
       })
-      if(res.data.status == 3) {
+      if (res.data.status == 3) {
         this.setData({
           liveStatus: 3
         })
-      } else if(res.data.status > 1) {
+      } else if (res.data.status > 1) {
         this.setData({
           liveStatus: 4
         })
@@ -90,6 +96,7 @@ Page({
           liveStatus: 1
         })
       }
+      this.liveInterVal()
       return this.data.liveDetail
     })
   },
@@ -126,6 +133,8 @@ Page({
   checkFollow() {
     this.setData({
       'liveDetail.follow': 1
+    }, () => {
+      this.showBox()
     })
     this.setCustommessag('MD5_AUDIENCE_FOLLOW_LIVE_ROOM_ANCHOR')
   },
@@ -158,7 +167,7 @@ Page({
     console.log(e)
   },
   toHliveRoom() {
-    if(this.toHliveRomm) return
+    if (this.toHliveRomm) return
     timsdk.quitGroup(this)
     timsdk.timLoginout(this)
     this.toHliveRomm = 1
@@ -167,7 +176,7 @@ Page({
         showVideo: 0
       })
       wx.navigateTo({
-        url: `../hliveRoom/hliveRoom?roomId=${this.data.liveDetail.id}&statusBarHeight=${this.data.statusBarHeight}`,
+        url: `../hliveRoom/hliveRoom?roomId=${this.data.liveDetail.id}&statusBarHeight=${this.data.statusBarHeight}&viewNum=${this.data.viewNum}`,
       })
     }, 1000);
   },
@@ -176,5 +185,40 @@ Page({
       showCanvans: 1
     })
     console.log(this.data.showCanvans, 3489573485734875834589)
+  },
+  //计时器
+  liveInterVal() {
+    this.liveInterval || this.data.liveDetail.follow ? '' : this.liveInterval = setInterval(() => {
+      this.setData({
+        viewNum: this.data.viewNum += 1
+      }, () => {
+        if (this.data.viewNum >= 600) {
+          this.data.liveDetail.follow ? '' : [this.showBox(), this.setData({
+            viewNum: 0
+          })]
+          clearInterval(this.liveInterval)
+          this.liveInterval = null
+        }
+      })
+    }, 1000);
+  },
+  showBox(e) {
+    this.setData({
+      showBox: !this.data.showBox,
+      moveBox: !this.data.moveBox
+    }, () => {
+      if (e) {
+        this.liveInterVal()
+      }
+    })
+  },
+  attention() {
+    app.liveData.follow({ followerUid: this.data.liveDetail.lecturerUserId }).then(() => {
+      this.checkFollow()
+      wx.showToast({
+        title: '关注成功',
+        icon: 'none'
+      })
+    })
   }
 })

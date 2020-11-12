@@ -28,3 +28,10 @@
 <liveBottom close="{{close}}" columnId="{{liveDetail.columnId}}" vliveRoom="1" bind:sendMsg="sendMsg" bind:praise="praise" bind:checkCaption="checkCaption"
   bind:clickHandler="clickHandler" />
 <like-fx count="{{praiseCount}}" wx:if="{{showCanvans}}"></like-fx>
+<view class="teacherBox {{!moveBox ? 'teacherMove' : ''}}" wx:if="{{showBox}}">
+  <image src="/images/icon-del.png" class="icondel" bindtap="showBox" data-type="1"></image>
+  <image src="{{ liveDetail.avatar }}" class="avatar"></image>
+  <text>{{ liveDetail.nickname }}</text>
+  <text>关注老师，更多好课不错过</text>
+  <view class="addBtn" bindtap="attention">关注</view>
+</view>

@@ -31,7 +31,6 @@ Component({
         keyHeight: res.height
       }, () => {
         setTimeout(() => {
-          console.log(this.data.focus)
           this.data.keyHeight == 0 && !this.data.focus ? this.setData({
             keyHeight: '-60'
           }) : ''

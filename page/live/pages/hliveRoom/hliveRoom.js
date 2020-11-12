@@ -15,15 +15,21 @@ Page({
     showCanvans: 1,
     liveStatus: 1,
     showCommont: 1,
-    showVideo: 1
+    showVideo: 1,
+    showBox: 0,
+    moveBox: 0,
+    viewNum: 0
   },
   pageName: 'live',
+  liveInterval: null,
   onLoad: function (ops) {
-    this.setData({
-      statusBarHeight: ops.statusBarHeight
-    })
     this.liveOps = ops
-    this.liveInit()
+    this.setData({
+      statusBarHeight: ops.statusBarHeight,
+      viewNum: Number(ops.viewNum)
+    }, () => {
+      this.liveInit()
+    })
   },
   onShow: function () {
     this.setData({
@@ -79,6 +85,7 @@ Page({
           liveStatus: 1
         })
       }
+      this.liveInterVal()
       return this.data.liveDetail
     })
   },
@@ -114,7 +121,9 @@ Page({
   },
   checkFollow() {
     this.setData({
-      'liveDetail.follow': 1
+      'liveDetail.follow': 1,
+    }, () => {
+      this.showBox()
     })
     this.setCustommessag('MD5_AUDIENCE_FOLLOW_LIVE_ROOM_ANCHOR')
   },
@@ -149,6 +158,40 @@ Page({
   closeCommont() {
     this.setData({
       showCommont: !this.data.showCommont
+    })
+  },
+  liveInterVal() {
+    this.liveInterval || this.data.liveDetail.follow ? '' : this.liveInterval = setInterval(() => {
+      this.setData({
+        viewNum: this.data.viewNum += 1
+      }, () => {
+        if (this.data.viewNum >= 600) {
+          this.data.liveDetail.follow ? '' : [this.showBox(), this.setData({
+            viewNum: 0
+          })]
+          clearInterval(this.liveInterval)
+          this.liveInterval = null
+        }
+      })
+    }, 1000);
+  },
+  showBox(e) {
+    this.setData({
+      showBox: !this.data.showBox,
+      moveBox: !this.data.moveBox
+    }, () => {
+      if (e) {
+        this.liveInterVal()
+      }
+    })
+  },
+  attention() {
+    app.liveData.follow({ followerUid: this.data.liveDetail.lecturerUserId }).then(() => {
+      this.checkFollow()
+      wx.showToast({
+        title: '关注成功',
+        icon: 'none'
+      })
     })
   }
 }) 

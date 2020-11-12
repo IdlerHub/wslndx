@@ -68,3 +68,61 @@ page {
   width: 100%;
   height: 100%;
 }
+
+.teacherBox {
+  width: calc(540vmin / 7.5);
+  background: #FFFFFF;
+  border-radius:calc(16vmin / 7.5);
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 9999999999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: calc(30vmin / 7.5) 0;
+  box-sizing: border-box;
+}
+
+.teacherBox .icondel {
+  width: calc(32vmin / 7.5);
+  height: calc(32vmin / 7.5);
+  padding: calc(20vmin / 7.5);
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.teacherBox .avatar {
+  width: calc(100vmin / 7.5);
+  height: calc(100vmin / 7.5);
+  border-radius: 50%;
+  border: calc(2vmin / 7.5) solid #EEE;
+}
+
+.teacherBox text:nth-child(3) {
+  font-size: calc(40vmin / 7.5);
+  font-weight: 500;
+  color: #333333;
+  margin: calc(5vmin / 7.5) 0;
+}
+
+.teacherBox text:nth-child(4) {
+  font-size: calc(36vmin / 7.5);
+  font-weight: 400;
+  color: #666666;
+  margin-bottom: calc(40vmin / 7.5);
+}
+
+.teacherBox .addBtn {
+  width: calc(460vmin / 7.5);
+  height: calc(88vmin / 7.5);
+  background: #F2323A;
+  border-radius: calc(48vmin / 7.5);
+  line-height: calc(88vmin / 7.5);
+  text-align: center;
+  font-size: calc(42vmin / 7.5);
+  font-weight: 500;
+  color: #FFFFFF;
+}
