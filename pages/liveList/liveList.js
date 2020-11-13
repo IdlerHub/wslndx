@@ -1,6 +1,5 @@
 // pages/liveList/liveLIst.js
 const app = getApp()
-const livePlayer = requirePlugin('live-player-plugin')
 Page({
   data: {
     roomList: [],
@@ -76,18 +75,6 @@ Page({
   },
   getRoomstatus() {
     this.data.roomList.forEach((item, index) => {
-      livePlayer.getLiveStatus({
-          room_id: item.roomid
-        })
-        .then(res => {
-          // 101: 直播中, 102: 未开始, 103: 已结束, 104: 禁播, 105: 暂停中, 106: 异常，107：已过期 
-          this.setData({
-            [`roomList[${index}].live_status`]: res.liveStatus
-          })
-        })
-        .catch(err => {
-          console.log('get live status', err)
-        })
     })
   },
   changeActive(e) {
