@@ -10,11 +10,10 @@ Page({
   },
   pageName: "外链页（开心农场&amp;老年电台&amp;早报）",
   onLoad: function (options) {
-    console.log(options)
     setTimeout(() => {
       if (options.classId) {
         // let webURL = "http://192.168.1.68:8080/#/order-detail";
-        let webURL = "https://elsmallpro.jinlingkeji.cn/#/order-detail";
+        let webURL = "https://globalh5pro.jinlingkeji.cn/enrollment_small/#/order-detail";
         let id = options.classId;
         this.setData({
           url: webURL + "?id=" + id,
@@ -65,23 +64,6 @@ Page({
           wx.uma.trackEvent("index_btnClick", {
             btnName: "开心农场"
           });
-        } else if (options.type === "station") {
-          this.junmpOut(
-            "https://open.ximalaya.com/site/index/174/ca5492cf55806b41713dada77a1d2ed5"
-          );
-          wx.uma.trackEvent("index_btnClick", {
-            btnName: "老年电台"
-          });
-        } else if (options.type === "doudizhu") {
-          let openID = "";
-          wx.getStorage({
-            key: "openId",
-            success: (res) => {
-              this.junmpOut(`https://lnddz.293k.com/?openid=${res.data}`);
-            },
-          });
-        } else if (options.type === "lottery") {
-          this.webJump();
         } else if (options.type === "sign") {
           let webURL = `https://authorization.jinlingkeji.cn/#/?uid=${this.data.$state.userInfo.id}&type=sign`;
           this.setData({
@@ -96,7 +78,7 @@ Page({
             if (options.login == 0) {
               this.junmpOut(options.url);
             } else {
-              this.webJump();
+              this.webJump(options.url);
             }
           } else {
             this.junmpOut(options.url);
@@ -112,41 +94,29 @@ Page({
       url,
     });
   },
-  webJump() { //H5跳转
-
-    // https://elsmalldev.jinlingkeji.cn   开发
-    // https://elsmalltest.jinlingkeji.cn   测试
-    // https://elsmallpro.jinlingkeji.cn   生产
-
-    // let webURL = "http://192.168.1.68:8080/#/login";
-    let webURL = "https://elsmallpro.jinlingkeji.cn/#/login";
-    let uid = this.data.$state.userInfo.id;
+  webJump(webURL) { //H5跳转
     let token = wx.getStorageSync("token");
-    let timestamp = parseInt(new Date().getTime() / 1000 + "");
-    let sign = md5(
-      "uid=" + uid + "&token=" + token + "&timestamp=" + timestamp
-    );
     this.setData({
       url: webURL +
         "?openId=" +
         this.data.$state.openId +
-        "&uid=" +
-        this.data.$state.userInfo.id +
-        "&sign=" +
-        sign +
-        "&timestamp=" +
-        timestamp,
+        "&token=" + token +
+        "&terminal=miniprogram",
       pay: true
     });
   },
+  setPostData(e) {
+    console.log(e)
+  },
   onShareAppMessage(ops) {
-    if (this.data.pay) {
+    let shareUrl = ops.webViewUrl.split('#')[0]
+    if(shareUrl.indexOf('enrollment_small') != -1) {
       return {
         title: '我已入学【网上老年大学】,你也快来一起学习吧',
-        path: "/pages/education/education?type=0&login=1",
+        path: `/pages/education/education?type=0&url=${shareUrl+ '/#/login'}&login=1`,
         imageUrl: "https://hwcdn.jinlingkeji.cn/app/zsxtshare.jpg"
       }
-    } else {
+    }else {
       return this.menuAppShare();
     }
   }
