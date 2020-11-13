@@ -65,7 +65,7 @@
             <image src="{{item.indexCover}}">
             </image>
             <view class="liveStatus"
-              style="background: {{ item.status == 0 ? '' : 'linear-gradient(270deg, #44A2FF 0%, #007CF7 100%);' }}">
+              style="background: {{ item.status == 0 ? '' : 'linear-gradient(270deg, #44A2FF 0%, #007CF7 100%);border-radius: 10rpx 6rpx 6rpx 0px;' }}">
               <view class="statusLeft" wx:if="{{item.status == 0}}">
                 <view wx:for="{{3}}" wx:key="index" class="statusWite"></view>
                 <view class="statusTxt">直播</view>

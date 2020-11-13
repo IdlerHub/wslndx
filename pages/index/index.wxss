@@ -989,7 +989,7 @@ page .getGuideBox .nextBtn {
   width: 100rpx;
   height: 44rpx;
   background: linear-gradient(270deg, #FF565D 0%, #F2323A 100%);
-  border-radius: 10rpx 6rpx 6rpx 0px;
+  border-radius: 10rpx 0rpx 0rpx 0px;
   position: absolute;
   top: 0;
   left: 0;

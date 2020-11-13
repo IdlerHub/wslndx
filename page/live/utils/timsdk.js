@@ -38,7 +38,7 @@ var customText = {
   MD5_AUDIENCE_PRAISE_ANCHOR: "751e68f208e65780d52c1a0d53c6c8d4",
 }
 
-let messageUplisten = function(event) {
+let messageUplisten = function (event) {
   // 收到推送的单聊、群聊、群提示、群系统通知的新消息，可通过遍历 event.data 获取消息列表数据并渲染到页面
   // event.name - TIM.EVENT.MESSAGE_RECEIVED
   // event.data - 存储 Message 对象的数组 - [Message]
@@ -48,6 +48,7 @@ let messageUplisten = function(event) {
     let {
       nick,
       payload,
+      from
     } = e
     if (messageFilter(payload, 1) > 0) {
       talkList.push({
@@ -136,6 +137,17 @@ function joinGroup() {
         break;
     }
     timGetmessage(then.data.liveDetail.chatGroup, 1)
+    then.tim.updateMyProfile({
+      nick: then.data.userInfo.nickname,
+      avatar: then.data.userInfo.avatar,
+      gender: TIM.TYPES.GENDER_MALE,
+      selfSignature: '',
+      allowType: TIM.TYPES.ALLOW_TYPE_ALLOW_ANY
+    }).then(function(imResponse) {
+      console.log(imResponse.data, '更新资料成功'); // 更新资料成功
+    }).catch(function(imError) {
+      console.warn('updateMyProfile error:', imError); // 更新资料失败的相关信息
+    });
   }).catch(function (imError) {
     console.warn('joinGroup error:', imError); // 申请加群失败的相关信息
   });
@@ -268,7 +280,7 @@ function sendTextMsg(detail) {
     console.log(imResponse, '发送成功');
     const talkList = then.data.talkList
     talkList.push({
-      nick: then.data.$state.userInfo.nickname,
+      nick: then.data.userInfo.nickname,
       payload: {
         text: detail
       }
@@ -325,7 +337,7 @@ function sendCustomMessage(params) {
 
 //更新消息列表 
 function messageUp() {
-  if(app.store.$state.messageReceived) return
+  if (app.store.$state.messageReceived) return
   app.store.setState({
     messageReceived: 1
   })
