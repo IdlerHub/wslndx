@@ -2,6 +2,7 @@ import TIM from 'tim-wx-sdk'
 
 var then = null
 var nextReqMessageID = ''
+var app = getApp()
 var customText = {
   /** 小助手进入房间*/
   MD5_HELPER_ENTER_LIVE: "3ba15067d362f56fbfd21406b0218ce1",
@@ -35,6 +36,42 @@ var customText = {
   MD5_AUDIENCE_FOLLOW_LIVE_ROOM_ANCHOR: "b13ace4737652a74ef2ff02349eab853",
   /** 观众点赞直播间主播 **/
   MD5_AUDIENCE_PRAISE_ANCHOR: "751e68f208e65780d52c1a0d53c6c8d4",
+}
+
+let messageUplisten = function(event) {
+  // 收到推送的单聊、群聊、群提示、群系统通知的新消息，可通过遍历 event.data 获取消息列表数据并渲染到页面
+  // event.name - TIM.EVENT.MESSAGE_RECEIVED
+  // event.data - 存储 Message 对象的数组 - [Message]
+  console.log(event)
+  const talkList = then.data.talkList
+  event.data.forEach(e => {
+    let {
+      nick,
+      payload,
+    } = e
+    if (messageFilter(payload, 1) > 0) {
+      talkList.push({
+        nick,
+        payload: payload.text ? payload : JSON.parse(payload.data)
+      })
+      payload.text ? '' : messageFilter(payload) == -1 ? then.addliveCount() : ''
+      then.setData({
+        talkList
+      })
+    } else if (messageFilter(payload) == -4) {
+      then.setData({
+        liveStatus: 4
+      })
+    } else if (messageFilter(payload) == -2) {
+      then.setData({
+        liveStatus: 1
+      })
+    } else if (messageFilter(payload) == -3) {
+      then.setData({
+        liveStatus: 3
+      })
+    }
+  })
 }
 
 //tim初始化
@@ -108,17 +145,19 @@ function joinGroup() {
 function quitGroup() {
   then.tim.quitGroup(String(then.data.liveDetail.chatGroup)).then(function (imResponse) {
     console.log(imResponse.data.groupID, '退出成功的群'); // 退出成功的群 ID
+    // then.tim.off(TIM.EVENT.MESSAGE_RECEIVED, messageUplisten);
   }).catch(function (imError) {
     console.warn('quitGroup error:', '退群失败'); // 退出群组失败的相关信息
+    // then.tim.off(TIM.EVENT.MESSAGE_RECEIVED, messageUplisten);
   });
 }
 
 //消息过滤
-function messageFilter(params) {
+function messageFilter(params, type) {
   if (params.text) return 1
   switch (JSON.parse(params.data).customText) {
     case '0008043cc6f0647e061acf18dac98ef3': //进入直播
-      return -1
+      return type ? 1 : -1
       break;
     case 'b6b7bc2d01bcb555795e9ed7ca5f84f5': //分享直播
       return 2
@@ -140,7 +179,7 @@ function messageFilter(params) {
       break;
     case '5ef8580c35a92ce22aaad6154b186948': //后台结束直播解散房间
       return -4
-      break;  
+      break;
     default:
       return 0
       break;
@@ -286,42 +325,14 @@ function sendCustomMessage(params) {
 
 //更新消息列表 
 function messageUp() {
-  then.tim.on(TIM.EVENT.MESSAGE_RECEIVED, (event) => {
-    // 收到推送的单聊、群聊、群提示、群系统通知的新消息，可通过遍历 event.data 获取消息列表数据并渲染到页面
-    // event.name - TIM.EVENT.MESSAGE_RECEIVED
-    // event.data - 存储 Message 对象的数组 - [Message]
-    console.log(event)
-    const talkList = then.data.talkList
-    event.data.forEach(e => {
-      let {
-        nick,
-        payload,
-      } = e
-      if (messageFilter(payload) > 0) {
-        talkList.push({
-          nick,
-          payload: payload.text ? payload : JSON.parse(payload.data)
-        })
-        payload.text ? '' : messageFilter(payload) == -1 ? then.addliveCount() : ''
-        then.setData({
-          talkList
-        })
-      } else if(messageFilter(payload) == -4){
-        then.setData({
-          liveStatus: 4
-        })
-      } else if(messageFilter(payload) == -2){
-        then.setData({
-          liveStatus: 1
-        })
-      } else if(messageFilter(payload) == -3) {
-        then.setData({
-          liveStatus: 3
-        })
-      }
-    })
-  });
+  if(app.store.$state.messageReceived) return
+  app.store.setState({
+    messageReceived: 1
+  })
+  then.tim.on(TIM.EVENT.MESSAGE_RECEIVED, messageUplisten);
 }
+
+
 
 module.exports = {
   timInit,

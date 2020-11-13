@@ -10,8 +10,9 @@ import store from "./store";
 // const vodwxsdk = require('vod-wx-sdk-v2')
 /* sse */
 const socket = require("data/socket.js");
-const backgroundAudioManager = wx.getBackgroundAudioManager()
+const backgroundAudioManager = wx.getBackgroundAudioManager();
 /* 小程序直播组件 */
+var livePlayer = requirePlugin("live-player-plugin");
 /* 接入bug平台 */
 var fundebug = require("fundebug-wxjs");
 fundebug.init({
@@ -82,6 +83,7 @@ App({
   liveData,
   socket,
   store,
+  livePlayer,
   fundebug,
   backgroundAudioManager,
   umengConfig: {
@@ -95,7 +97,7 @@ App({
   },
   /*埋点统计*/
   onLaunch: async function (opts) {
-    console.log(opts, this.globalData.scenes.indexOf(opts.scene) >= 0)
+    console.log(opts, this.globalData.scenes.indexOf(opts.scene) >= 0);
     this.getSecureToken();
     let optsStr = decodeURIComponent(opts.query.scene).split("&");
     let opstObj = {};
@@ -127,6 +129,21 @@ App({
           wx.setStorageSync("invite", opstObj.u); /* 邀请码记录 */
         }
       }
+      livePlayer
+        .getShareParams()
+        .then((res) => {
+          // 开发者在跳转进入直播间页面时，页面路径上携带的自定义参数，这里传回给开发者
+          console.log("get custom params", res.custom_params);
+          res.custom_params
+            ? [
+                wx.setStorageSync("invite", res.custom_params.uid),
+                (this.globalData.shareObj = res.custom_params),
+              ]
+            : "";
+        })
+        .catch((err) => {
+          console.log("get share params", err);
+        });
     }
     let userInfo = wx.getStorageSync("userInfo") || {};
     let mpVersion = wx.getStorageSync("mpVersion");
@@ -155,7 +172,7 @@ App({
       wx.reLaunch({
         url: "/pages/sign/sign",
       });
-    } else if(opstObj.p){
+    } else if (opstObj.p) {
       wx.reLaunch({
         url: `/page/vote/pages/voteArticle/voteArticle?voteid=${opstObj.o}&uid=${opstObj.u}`,
       });
@@ -186,6 +203,21 @@ App({
           wx.setStorageSync("invite", opts.query.uid); /* 邀请码存储 */
         }
       }
+      livePlayer
+        .getShareParams()
+        .then((res) => {
+          // 开发者在跳转进入直播间页面时，页面路径上携带的自定义参数，这里传回给开发者
+          console.log("get custom params", res.custom_params);
+          res.custom_params
+            ? [
+                wx.setStorageSync("invite", res.custom_params.uid),
+                (this.globalData.shareObj = res.custom_params),
+              ]
+            : "";
+        })
+        .catch((err) => {
+          console.log("get share params", err);
+        });
       if (!this.store.$state.userInfo.mobile) {
         wx.reLaunch({
           url: "/pages/sign/sign",
@@ -538,6 +570,6 @@ App({
       type: 0,
     },
     uma,
-    categoryId: 0
+    categoryId: 0,
   },
 });

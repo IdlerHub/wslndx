@@ -64,8 +64,6 @@ Component({
       })
     },
     bindscroll(e) {
-      console.log('scroll')
-      console.log(e.detail.scrollHeight- e.detail.scrollTop)
       this.data.inScroll ? [
           this.setData({
             showNum: e.detail.scrollHeight- e.detail.scrollTop <= 240 ? 0 : 1
