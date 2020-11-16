@@ -28,7 +28,7 @@ Page({
       list.push(...res.dataList)
       this.setData({
         courseList: list,
-        page_end: res.total < 10 ? 1 : 0
+        page_end: res.total < 20 ? 1 : 0
       });
     });
   },

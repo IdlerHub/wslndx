@@ -26,7 +26,7 @@
       <view class="txtBox">
         <view class="title">{{lesson.name}}</view>
         <view class="textBottom" wx:if="{{fn.width(lesson.liveCount,lesson.studyLiveCount) < 100 && lesson.studyLiveCount > 0}}">
-          <text>已学 {{lesson.liveCount}}/{{lesson.studyLiveCount}}课时</text>
+          <text>已学 {{lesson.studyLiveCount}}/{{lesson.liveCount}}课时</text>
           <view class="progress">
             <view class="inro" style="width: {{fn.width(lesson.liveCount,lesson.studyLiveCount)}}%;"></view>
           </view>
