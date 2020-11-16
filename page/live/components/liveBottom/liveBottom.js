@@ -94,8 +94,11 @@ Component({
       let pages = getCurrentPages(), back = 0
       pages.forEach(e => {
         e.pageName ? e.pageName == 'liveDetail' ? back = 1 : '' : ''
+        e.pagetype ? back = 2 : ''
       })
-      back ? wx.navigateBack() : wx.navigateTo({
+      back ? wx.navigateBack({
+        delta: back
+      }) : wx.navigateTo({
         url: '/page/live/pages/liveDetail/liveDetail?specialColumnId=' + this.data.columnId,
       })
     }

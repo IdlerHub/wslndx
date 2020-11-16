@@ -22,6 +22,7 @@ Page({
     showList: 1
   },
   pageName: 'live',
+  pagetype: 'hlive',
   liveInterval: null,
   onLoad: function (ops) {
     this.liveOps = ops
