@@ -76,12 +76,13 @@ let messageUplisten = function (event) {
 }
 
 //tim初始化
-function timInit(that, values) {
+function timInit(that, values, type) {
   then = that
   let options = {
     SDKAppID: then.data.$state.sdkAppid
   };
   then.tim = TIM.create(options);
+  if(type) return
   then.tim.setLogLevel(1);
   then.tim.on(TIM.EVENT.SDK_READY, (event) => {
     // 收到离线消息和会话列表同步完毕通知，接入侧可以调用 sendMessage 等需要鉴权的接口
@@ -136,7 +137,6 @@ function joinGroup() {
       default:
         break;
     }
-    timGetmessage(then.data.liveDetail.chatGroup, 1)
     then.tim.updateMyProfile({
       nick: then.data.userInfo.nickname,
       avatar: then.data.userInfo.avatar,
@@ -148,6 +148,7 @@ function joinGroup() {
     }).catch(function(imError) {
       console.warn('updateMyProfile error:', imError); // 更新资料失败的相关信息
     });
+    timGetmessage(then.data.liveDetail.chatGroup, 1)
   }).catch(function (imError) {
     console.warn('joinGroup error:', imError); // 申请加群失败的相关信息
   });
@@ -323,7 +324,7 @@ function sendCustomMessage(params) {
     console.log(imResponse, '发送成功');
     const talkList = then.data.talkList
     talkList.push({
-      nick: then.data.$state.userInfo.nickname,
+      nick: then.data.userInfo.nickname,
       payload: params,
     })
     then.setData({

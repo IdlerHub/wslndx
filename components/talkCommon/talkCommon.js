@@ -66,7 +66,7 @@ Component({
     bindscroll(e) {
       this.data.inScroll ? [
           this.setData({
-            showNum: e.detail.scrollHeight- e.detail.scrollTop <= 240 ? 0 : 1
+            showNum: e.detail.scrollHeight- e.detail.scrollTop <= 255 ? 0 : 1
           }),
           this.setCrollTop(e.detail.scrollTop, e.detail.scrollHeight)
         ] :
@@ -77,7 +77,7 @@ Component({
     setCrollTop(scrollTop, scrollHeight) {
       if (this.timer) clearTimeout(this.timer)
       this.timer = setTimeout(() => {
-        if(scrollHeight- scrollTop <= 240) {
+        if(scrollHeight- scrollTop <= 255) {
           this.touch = 0
           return
         }

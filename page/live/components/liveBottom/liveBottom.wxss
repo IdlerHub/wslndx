@@ -30,7 +30,7 @@
 
 .bottomBox .captionBox {
   background: rgba(0, 0, 0, 0.3);
-  border: 1rpx solid rgba(255,255,255, 0.3);
+  border: 1rpx solid rgba(255, 255, 255, 0.3);
 }
 
 .bottomBox .close::before {
@@ -57,7 +57,8 @@
 
 .bottomBox .praiseBox {
   position: relative;
-  justify-content: flex-end;
+  /* justify-content: flex-end; */
+  background: linear-gradient(90deg, #FF4B79 0%, #FE0241 100%);
 }
 
 
@@ -77,8 +78,10 @@
 }
 
 .bottomBox .praiseBox image {
-  width: calc(90vmin / 7.5);
-  height: calc(90vmin / 7.5);
+  /* width: calc(90vmin / 7.5);
+  height: calc(90vmin / 7.5); */
+  width: calc(34vmin / 7.5);
+  height: calc(28.46vmin / 7.5);
 }
 
 .bottomBox .itemBox text {
@@ -116,7 +119,7 @@
   color: #C2C3C2;
   background: rgba(0, 0, 0, 0.3);
   border-radius: calc(10vmin / 7.5);
-  border: 1rpx solid rgba(255,255,255, 0.3);
+  border: 1rpx solid rgba(255, 255, 255, 0.3);
 }
 
 .inputBox {

@@ -36,6 +36,7 @@
   flex-wrap: wrap;
   margin: 0 calc(20vmin / 7.5) 0 calc(10vmin / 7.5);
   overflow: hidden;
+  opacity: 0.8;
 }
 
 .tearchBox .txtCenter text:nth-child(1) {

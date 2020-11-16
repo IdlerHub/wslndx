@@ -45,8 +45,8 @@ Page({
     })
   },
   onUnload: function () {
-    timsdk.quitGroup(this)
-    timsdk.timLoginout(this)
+    // timsdk.quitGroup(this)
+    // timsdk.timLoginout(this)
   },
   onShareAppMessage: function () {
     this.setCustommessag('MD5_AUDIENCE_SHARE_LIVE_ROOM')
@@ -61,7 +61,14 @@ Page({
   },
   liveInit() {
     Promise.all([this.getTimSign(), this.getLiveById(this.liveOps.roomId), this.liveCount()]).then(values => {
-      timsdk.timInit(this, values[0])
+      timsdk.timInit(this, values[0], 1)
+      let pages = ''
+      getCurrentPages().forEach(e => {
+        e.route == 'page/live/pages/vliveRoom/vliveRoom' ? pages = e : ''
+      })
+      this.setData({
+        talkList: pages.data.talkList
+      })
     })
   },
   getLiveById(liveId) {
@@ -157,7 +164,8 @@ Page({
   },
   closeCommont() {
     this.setData({
-      showCommont: !this.data.showCommont
+      showCommont: !this.data.showCommont,
+      close: !this.data.close ? 1 : this.data.close
     })
   },
   liveInterVal() {

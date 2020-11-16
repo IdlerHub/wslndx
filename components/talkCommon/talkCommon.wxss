@@ -131,7 +131,7 @@
 .talkItem .contentBox .joinTxt text:nth-child(1) {
   display: inline-block;
   max-width: calc(200vmin / 7.5);
-  color: #EBC170;
+  color: #E4A004;
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;

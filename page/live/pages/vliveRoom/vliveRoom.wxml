@@ -6,8 +6,8 @@
   wx:if="{{liveStatus == 1 && !liveDetail.direction && !liveDetail.liveType}}">
   <image src="../../images/full.png" bindtap="toHliveRoom"></image>
 </live-player>
-<video src="{{liveDetail.videoUrl}}" class="v-player" initial-time="{{liveDetail.now}}" show-center-play-btn="{{false}}" enable-progress-gesture="{{false}}" show-progress="{{false}}" show-fullscreen-btn="{{false}}"  show-play-btn="{{false}}" autoplay object-fit="fill" wx:if="{{liveStatus == 1 && liveDetail.direction && liveDetail.liveType && showVideo}}"></video>
-<video src="{{liveDetail.videoUrl}}" class="v-player h-player" initial-time="{{liveDetail.now}}" show-center-play-btn="{{false}}" enable-progress-gesture="{{false}}" show-progress="{{false}}" show-fullscreen-btn="{{false}}"  show-play-btn="{{false}}" autoplay object-fit="fill" wx:if="{{liveStatus == 1 && !liveDetail.direction && liveDetail.liveType && showVideo}}">
+<video src="{{liveDetail.videoUrl}}" class="v-player" controls="{{false}}" initial-time="{{liveDetail.now}}" show-center-play-btn="{{false}}" enable-progress-gesture="{{false}}" show-progress="{{false}}" show-fullscreen-btn="{{false}}"  show-play-btn="{{false}}" autoplay object-fit="fill" wx:if="{{liveStatus == 1 && liveDetail.direction && liveDetail.liveType && showVideo}}"></video>
+<video src="{{liveDetail.videoUrl}}" class="v-player h-player" controls="{{false}}" initial-time="{{liveDetail.now}}" show-center-play-btn="{{false}}" enable-progress-gesture="{{false}}" show-progress="{{false}}" show-fullscreen-btn="{{false}}"  show-play-btn="{{false}}" autoplay object-fit="fill" wx:if="{{liveStatus == 1 && !liveDetail.direction && liveDetail.liveType && showVideo}}">
   <image src="../../images/full.png" bindtap="toHliveRoom"></image>
 </video>
 <view class="statusBox" wx:if="{{liveStatus != 1}}">

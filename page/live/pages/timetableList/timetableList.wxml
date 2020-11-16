@@ -2,7 +2,7 @@
 <wxs module="fn">
   module.exports = {
   width: function(liveCount, studyLiveCount) {
-  return (liveCount / studyLiveCount) * 100
+  return (studyLiveCount / liveCount) * 100
   }
   }
 </wxs>
@@ -25,18 +25,18 @@
       </view>
       <view class="txtBox">
         <view class="title">{{lesson.name}}</view>
-        <view class="textBottom" wx:if="{{fn.width(lesson.liveCount,lesson.studyLiveCount) < 100 && lesson.liveCount > 0}}">
+        <view class="textBottom" wx:if="{{fn.width(lesson.liveCount,lesson.studyLiveCount) < 100 && lesson.studyLiveCount > 0}}">
           <text>已学 {{lesson.liveCount}}/{{lesson.studyLiveCount}}课时</text>
           <view class="progress">
             <view class="inro" style="width: {{fn.width(lesson.liveCount,lesson.studyLiveCount)}}%;"></view>
           </view>
         </view>
-        <view class="textBottom textBottomsp" wx:elif="{{lesson.liveCount == 0}}">
-          <text>共{{lesson.studyLiveCount}}课时</text>
+        <view class="textBottom textBottomsp" wx:elif="{{lesson.studyLiveCount == 0}}">
+          <text>共{{lesson.liveCount}}课时</text>
           <text class="toStudy">去学习</text>
         </view>
         <view class="textBottom textBottomsp" wx:else>
-          <text>共{{lesson.studyLiveCount}}课时</text>
+          <text>共{{lesson.liveCount}}课时</text>
           <text class="toStudy over">已学完</text>
         </view>
       </view>

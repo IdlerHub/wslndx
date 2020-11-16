@@ -155,7 +155,7 @@ Page({
       wx.setNavigationBarTitle({
         title: res.data.name || "",
       });
-      if (res.data.isAddSubscribe == 0) {
+      if (res.data.isAddSubscribe == 0 && !(res.data.price > 0)) {
         wx.redirectTo({
           url: `/page/live/pages/tableDetail/tableDetail?specialColumnId=${specialColumnId}`,
         });

@@ -16,8 +16,12 @@
     </view>
   </button>
   <!-- bindtap="praise" -->
-  <view class="itemBox praiseBox" bindtap="praise">
+  <!-- <view class="itemBox praiseBox" bindtap="praise">
     <image src="../../images/praise.png" bindtap="clickHandler"></image>
+  </view> -->
+  <view class="itemBox praiseBox" bindtap="praise">
+    <image src="../../images/praiseImg.png" bindtap="clickHandler"></image>
+    <text bindtap="clickHandler">点赞</text>
   </view>
 </view>
 <view class="inputBox" style="bottom: {{keyHeight}}px">

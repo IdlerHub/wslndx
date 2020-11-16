@@ -41,7 +41,7 @@ Page({
     })
     this.textHeight = 0
     if (this.toHliveRomm) {
-      this.liveInit()
+      this.liveInit(1)
       this.toHliveRomm = 0
     } else {
       this.getLiveById(this.liveOps.roomId)
@@ -83,9 +83,16 @@ Page({
         this.data.$state.userInfo.id
     };
   },
-  liveInit() {
+  liveInit(type) {
     Promise.all([this.getTimSign(), this.getLiveById(this.liveOps.roomId), this.liveCount()]).then(values => {
-      timsdk.timInit(this, values[0])
+      if(type) {
+        timsdk.timInit(this, values[0], 1)
+        this.setData({
+          talkList: this.data.talkList
+        })
+      } else {
+        timsdk.timInit(this, values[0])
+      }
     })
   },
   getLiveById(liveId) {
@@ -181,8 +188,8 @@ Page({
   },
   toHliveRoom() {
     if (this.toHliveRomm) return
-    timsdk.quitGroup(this)
-    timsdk.timLoginout(this)
+    // timsdk.quitGroup(this)
+    // timsdk.timLoginout(this)
     this.toHliveRomm = 1
     setTimeout(() => {
       this.setData({
@@ -191,7 +198,7 @@ Page({
       wx.navigateTo({
         url: `../hliveRoom/hliveRoom?roomId=${this.data.liveDetail.id}&statusBarHeight=${this.data.statusBarHeight}&viewNum=${this.data.viewNum}`,
       })
-    }, 1000);
+    }, 200);
   },
   bindleavepictureinpicture() {
     this.setData({

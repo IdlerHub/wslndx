@@ -1,7 +1,7 @@
 <!--page/live/pages/hliveRoom/hliveRoom.wxml-->
 <live-player src="{{liveDetail.liveUrl}}" class="h-player" autoplay bindstatechange="bindstatechange" wx:if="{{liveStatus == 1 && !liveDetail.liveType}}" orientation="vertical" bindtap="closeCommont" bindleavepictureinpicture="bindleavepictureinpicture">
 </live-player>
-<video src="{{liveDetail.videoUrl}}" class="h-player" initial-time="{{liveDetail.now}}" show-center-play-btn="{{false}}" enable-progress-gesture="{{false}}" show-progress="{{false}}" show-fullscreen-btn="{{false}}"  show-play-btn="{{false}}" autoplay object-fit="fill" wx:if="{{liveStatus == 1 && liveDetail.liveType && showVideo}}"></video>
+<video src="{{liveDetail.videoUrl}}" class="h-player" controls="{{false}}" initial-time="{{liveDetail.now}}" show-center-play-btn="{{false}}" enable-progress-gesture="{{false}}" show-progress="{{false}}" show-fullscreen-btn="{{false}}"  show-play-btn="{{false}}" autoplay object-fit="fill" wx:if="{{liveStatus == 1 && liveDetail.liveType && showVideo}}" bindtap="closeCommont"></video>
 <view class="statusBox" wx:if="{{liveStatus != 1}}">
   <text wx:if="{{liveStatus == 3}}">讲师暂时离开,请稍等</text>
   <text wx:if="{{liveStatus == 4}}">直播结束，15分钟内生成回播</text>

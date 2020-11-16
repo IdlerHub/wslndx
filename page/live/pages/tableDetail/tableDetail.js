@@ -113,7 +113,7 @@ Page({
       res.data.liveLecturerUserDTOS ? res.data.liveLecturerUserDTOS.forEach(e => {
         res.data['teacher'] ?  res.data.teacher = res.data.teacher + ' ' + e.nickname : res.data.teacher = e.nickname
       }) : ''
-      res.data.isAddSubscribe ? wx.redirectTo({
+      res.data.isAddSubscribe || res.data.price > 0 ? wx.redirectTo({
         url: `/page/live/pages/liveDetail/liveDetail?lessonId=${res.data.columnId}`
       }) : 
       res.data.introduction = htmlparser.default(res.data.introduction);
