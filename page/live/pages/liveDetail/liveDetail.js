@@ -211,7 +211,7 @@ Page({
   },
   joinClass() {
     //跳转推文链接
-    let link = this.data.lessonDetail.mp_url,
+    let link = this.data.lessonDetail.mpUrl,
       that = this;
     console.log(link);
     wx.uma.trackEvent('liveClick', {

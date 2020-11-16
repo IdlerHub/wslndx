@@ -162,7 +162,7 @@ Page({
     let params = {
       customText: customText,
       customType: '0',
-      isShow: 'show',
+      isShow: 'notShow ',
       attachContent: type == 'praise' ? values : ''
     }
     timsdk.customParams(params)

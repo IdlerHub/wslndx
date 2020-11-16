@@ -13,7 +13,7 @@
         <image wx:if="{{ !playFlag }}" src="{{ lessonDetail.cover }}" class="poster"></image>
         <!-- <image wx:if="{{ !playFlag }}" mode="aspectFill" src="{{ $state.imgHost }}/play.png" class="play"></image> -->
         <navigator class="noticeBox" hove-class="none"
-            url="/pages/education/education?type=0&url={{lessonDetail.notice_url}}"
+            url="/pages/education/education?type=0&url={{lessonDetail.noticeUrl}}"
             wx:if="{{lessonDetail.notice.length > 0}}">
             <image src="../../images/noticeIcon.png"></image>
             <view>{{lessonDetail.notice}}</view>
@@ -79,7 +79,7 @@
             <swiper-item class="tab-item">
                 <!-- 简介 -->
                 <scroll-view scroll-y="true" class="wrap synopsis">
-                    <rich-text class="introduction" nodes="{{lessonDetail.introduction}}"></rich-text>
+                    <rich-text class="introduction" nodes="{{lessonDetail.description}}"></rich-text>
                 </scroll-view>
             </swiper-item>
             <swiper-item class="tab-item">
