@@ -13,7 +13,7 @@
     <text>
       暂无课程
     </text>
-    <navigator open-type="switchTab" hover-class="none" url="/pages/timetable/timetable" class="choose">去选课</navigator>
+    <navigator open-type="switchTab" hover-class="none" url="/pages/timetableList/timetableList" class="choose">去选课</navigator>
   </view>
   <!-- 列表 -->
   <view wx:else class="contariner">
