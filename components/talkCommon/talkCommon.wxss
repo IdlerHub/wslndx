@@ -60,7 +60,7 @@
 }
 
 .talkItem .contentBox .shareTxt {
-  color: #FFF000;
+  color: #E4A004;
   display: flex;
   align-items: center;
 }
@@ -70,8 +70,16 @@
   max-width: calc(85vmin / 7.5);
   text-overflow: ellipsis;
   overflow: hidden;
-  color: #FFF000;
+  color: #E4A004;
   white-space: nowrap;
+}
+
+.talkItem .contentBox .shareTxt text:nth-child(1) {
+  max-width: calc(75vmin / 7.5);
+}
+
+.talkItem .contentBox .shareBox text {
+  color: #fff;
 }
 
 .talkItem .contentBox .shareTxt button {
