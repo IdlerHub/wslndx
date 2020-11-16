@@ -114,7 +114,7 @@ Page({
         res.data['teacher'] ?  res.data.teacher = res.data.teacher + ' ' + e.nickname : res.data.teacher = e.nickname
       }) : ''
       res.data.isAddSubscribe || res.data.price > 0 ? wx.redirectTo({
-        url: `/page/live/pages/liveDetail/liveDetail?lessonId=${res.data.columnId}`
+        url: `/page/live/pages/liveDetail/liveDetail?specialColumnId=${res.data.columnId}`
       }) : 
       res.data.introduction = htmlparser.default(res.data.introduction);
       this.setData({
