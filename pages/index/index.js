@@ -254,14 +254,14 @@ Page({
       setInterval(() => {
         app.liveData.recommendLessons().then(res => {
           this.setData({
-            liveRecommend: res.dataList
+            liveRecommend: res.dataList.slice(0,6)
           })
         })
       }, 60000);
     } else {
       app.liveData.recommendLessons().then(res => {
         this.setData({
-          liveRecommend: res.dataList
+          liveRecommend: res.dataList.slice(0,6)
         }, () => {
           res.dataList.length > 0 ? this.getRecommendLessons() : ''
         })
