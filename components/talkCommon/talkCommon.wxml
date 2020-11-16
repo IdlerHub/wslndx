@@ -32,7 +32,7 @@
 <!-- <view class="scrollView"> -->
   <!-- <view class="topmarsk"></view> -->
   <scroll-view scroll-y scroll-top="{{scrollTop}}" class="scrollView" bounces="{{false}}" bindscroll="bindscroll" enable-flex bindscrolltolower="bindscrolltolower"
-    style="opacity: {{close ? 0 : 1}};bottom: {{!vliveRoom ? 'calc(30vmin / 7.5)' : ''}};left: {{!vliveRoom ? statusBarHeight : ''}}px">
+    style="opacity: {{close || !showList ? 0 : 1}};bottom: {{!vliveRoom ? 'calc(30vmin / 7.5)' : ''}};left: {{!vliveRoom ? statusBarHeight : ''}}px">
     <view
       class="talkItem {{ fn.showType(item.payload) != 0 && fn.showType(item.payload) != 2 && !item.payload.text ? 'joinItem' : ''}}"
       wx:for="{{talkList}}" wx:key="index"
@@ -72,4 +72,4 @@
   </scroll-view>
 <!-- </view> -->
 
-<view class="scrollView scrollMask" wx:if="{{close}}"></view>
+<view class="scrollView scrollMask" wx:if="{{close || !showList}}"></view>

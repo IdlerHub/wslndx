@@ -18,7 +18,8 @@ Page({
     showVideo: 1,
     showBox: 0,
     moveBox: 0,
-    viewNum: 0
+    viewNum: 0,
+    showList: 1
   },
   pageName: 'live',
   liveInterval: null,
@@ -165,7 +166,7 @@ Page({
   closeCommont() {
     this.setData({
       showCommont: !this.data.showCommont,
-      close: !this.data.close ? 1 : this.data.close
+      showList: !this.data.showList
     })
   },
   liveInterVal() {

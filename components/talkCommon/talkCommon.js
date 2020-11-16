@@ -26,6 +26,10 @@ Component({
       type: Boolean,
       value: 0
     },
+    showList: {
+      type: Boolean,
+      value: 1
+    },
     vliveRoom: {
       type: Boolean,
       value: 0
