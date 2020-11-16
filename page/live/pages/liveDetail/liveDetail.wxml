@@ -1,7 +1,7 @@
 <!-- pages/liveDetail/liveDetail.wxml -->
 <view class="container">
     <!-- 视频播放 -->
-    <video id="myVideo" wx:if="{{playNow.record_url && playNow.record_url != '' }}" src="{{ playNow.record_url }}"
+    <video id="myVideo" wx:if="{{playNow.recordUrl && playNow.recordUrl != '' }}" src="{{ playNow.recordUrl }}"
         controls page-gesture enable-play-gesture bindended="ended" bindplay="played" bindpause="videoPause">
         <cover-image wx:if="{{ !playFlag }}" mode="widthFix" src="{{ lessonDetail.cover }}" class="poster"
             bindtap="recordAddVedio"></cover-image>
