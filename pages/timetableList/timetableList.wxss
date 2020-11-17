@@ -3,7 +3,7 @@ page,
 .timetableList,
 .contariner {
   padding-top: 112rpx;
-  margin-bottom: 150rpx;
+  padding-bottom: 100rpx;
   box-sizing: border-box;
 }
 

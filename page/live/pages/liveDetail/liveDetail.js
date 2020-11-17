@@ -380,10 +380,13 @@ Page({
       let query = wx.createSelectorQuery().in(this);
       if (this.data.currentTab == 0) {
         query.select(".introduction").boundingClientRect();
-      } else {
+      } else if(this.data.currentTab == 2) {
         query.select(".comment").boundingClientRect();
+      } else {
+        query.select(".drama").boundingClientRect();
       }
       query.exec((res) => {
+        console.log(res)
         let height =
           this.data.currentTab == 1 ? res[0].height : res[0].height - -110;
         height <= 110 ?
