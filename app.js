@@ -10,7 +10,7 @@ import store from "./store";
 // const vodwxsdk = require('vod-wx-sdk-v2')
 /* sse */
 const socket = require("data/socket.js");
-const backgroundAudioManager = wx.getBackgroundAudioManager()
+const backgroundAudioManager = wx.getBackgroundAudioManager();
 /* 小程序直播组件 */
 var livePlayer = requirePlugin("live-player-plugin");
 /* 接入bug平台 */
@@ -68,6 +68,7 @@ var liveData = require("data/LiveData.js");
 //app.js
 App({
   API_URL: store.API_URL,
+  API_URLBASECHECK: store.API_URLBASECHECK,
   //工具库
   util,
   //http请求接口
@@ -82,8 +83,8 @@ App({
   liveData,
   socket,
   store,
-  fundebug,
   livePlayer,
+  fundebug,
   backgroundAudioManager,
   umengConfig: {
     appKey:
@@ -96,7 +97,7 @@ App({
   },
   /*埋点统计*/
   onLaunch: async function (opts) {
-    console.log(opts, this.globalData.scenes.indexOf(opts.scene) >= 0)
+    console.log(opts, this.globalData.scenes.indexOf(opts.scene) >= 0);
     this.getSecureToken();
     let optsStr = decodeURIComponent(opts.query.scene).split("&");
     let opstObj = {};
@@ -171,7 +172,7 @@ App({
       wx.reLaunch({
         url: "/pages/sign/sign",
       });
-    } else if(opstObj.p){
+    } else if (opstObj.p) {
       wx.reLaunch({
         url: `/page/vote/pages/voteArticle/voteArticle?voteid=${opstObj.o}&uid=${opstObj.u}`,
       });
@@ -569,6 +570,6 @@ App({
       type: 0,
     },
     uma,
-    categoryId: 0
+    categoryId: 0,
   },
 });

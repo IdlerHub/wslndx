@@ -1,3 +1,0 @@
-<!--page/live/pages/liveVideo/liveVideo.wxml-->
-<live-player  src="https://applive.jinlingkeji.cn/live/stream_pro_3675.flv" class="player" autoplay>
-</live-player>

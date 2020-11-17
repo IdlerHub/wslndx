@@ -49,8 +49,9 @@ function handle(req, res) {
 
 }
 
-function xhr(path, method, param = {}, noToken, header) {
+function xhr(path, method, param = {}, noToken, checkAPI) {
   wx.showNavigationBarLoading();
+  let header = {}
   //是否需要登录信息才能请求
   if (!noToken) {
     let token = wx.getStorageSync("token");
@@ -60,14 +61,12 @@ function xhr(path, method, param = {}, noToken, header) {
     // param.sign = md5(
     //   "uid=" + param.uid + "&token=" + token + "&timestamp=" + param.timestamp
     // );
-    header = {}
-    header['Authorization'] = "Bearer " + token
+    header['Authorization'] =  checkAPI ? token :  "Bearer " + token
   }
-
   let req = {
     method: method,
     data: param || {},
-    url: getApp().API_URL + path,
+    url: checkAPI ? getApp().API_URLBASECHECK + path : getApp().API_URL + path,
     header: header || {}
   };
 
@@ -75,7 +74,7 @@ function xhr(path, method, param = {}, noToken, header) {
     wx.request({
       ...req,
       success(res) {
-        if (res.statusCode == 200 && res['data'] && res['data']['code'] == 1) {
+        if (res.statusCode == 200 && res['data'] && (res['data']['code'] == 1 || res['data']['code'] == 200) || res.code == 200) {
           resolve(res.data);
         } else if (res['data']['code'] == 110) {
           store.setState({
@@ -106,8 +105,8 @@ function xhr(path, method, param = {}, noToken, header) {
 }
 
 // post
-function post(path, param = {}, noToken, header) {
-  return xhr(path, "POST", param, noToken);
+function post(path, param = {}, noToken, checkAPI) {
+  return xhr(path, "POST", param, noToken, checkAPI);
 }
 // delete
 function del(path, param = {}, noToken, type, header) {

@@ -127,7 +127,9 @@ Page({
         })
       }
       this.navHeightList = []
-      this.setHeight()
+      setTimeout(() => {
+        this.setHeight()
+      }, 500);
     })
   },
   // 获取新手指引
@@ -252,16 +254,16 @@ Page({
       setInterval(() => {
         app.liveData.recommendLessons().then(res => {
           this.setData({
-            liveRecommend: res.data
+            liveRecommend: res.dataList.slice(0,6)
           })
         })
       }, 60000);
     } else {
       app.liveData.recommendLessons().then(res => {
         this.setData({
-          liveRecommend: res.data
+          liveRecommend: res.dataList.slice(0,6)
         }, () => {
-          res.data.length > 0 ? this.getRecommendLessons() : ''
+          res.dataList.length > 0 ? this.getRecommendLessons() : ''
         })
       })
     }
@@ -713,9 +715,26 @@ Page({
   },
   toLivelesson(e) {
     let item = e.currentTarget.dataset.item
-    wx.navigateTo({
-      url: "/page/live/pages/liveDetail/liveDetail?lessonId=" +
-        item.id
-    });
+    if (item.status == 0) {
+      wx.navigateTo({
+        url: `/page/live/pages/vliveRoom/vliveRoom?roomId=${item.liveId}`,
+      })
+    } else {
+      app.liveData.getLiveBySpecialColumnId({
+        specialColumnId: item.columnId
+      }).then(res => {
+        if (res.data.isAddSubscribe) {
+          wx.navigateTo({
+            url: "/page/live/pages/liveDetail/liveDetail?specialColumnId=" +
+              item.columnId
+          });
+        } else {
+          wx.navigateTo({
+            url: "/page/live/pages/tableDetail/tableDetail?specialColumnId=" +
+              item.columnId
+          });
+        }
+      })
+    }
   }
 })

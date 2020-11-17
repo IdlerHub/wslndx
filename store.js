@@ -4,29 +4,29 @@
  * @LastEditTime: 2020-08-11 18:00:20
  */
 import Store from "wxministore";
-let env = "dev";
+let env = "pro";
 let mpVersion = "v24"; /* 版本管理 */
 /* 图片等静态资源服务器 */
 let imgBase = {
-  dev: 'https://hwcdn.jinlingkeji.cn/images/dev',
-  test: 'https://hwcdn.jinlingkeji.cn/images/dev',
-  pro: 'https://hwcdn.jinlingkeji.cn/images/pro',
-  testpro: 'https://hwcdn.jinlingkeji.cn/images/pro'
-}
+  dev: "https://hwcdn.jinlingkeji.cn/images/dev",
+  test: "https://hwcdn.jinlingkeji.cn/images/dev",
+  pro: "https://hwcdn.jinlingkeji.cn/images/pro",
+  testpro: "https://hwcdn.jinlingkeji.cn/images/pro",
+};
 /* 国情教育链接 */
 let activityBase = {
-  dev: 'https://gqjydev.jinlingkeji.cn/?',
-  test: 'https://gqjydev.jinlingkeji.cn/?',
-  pro: 'https://gqjy.jinlingkeji.cn/?',
-  testpro: 'https://gqjy.jinlingkeji.cn/?'
-}
+  dev: "https://gqjydev.jinlingkeji.cn/?",
+  test: "https://gqjydev.jinlingkeji.cn/?",
+  pro: "https://gqjy.jinlingkeji.cn/?",
+  testpro: "https://gqjy.jinlingkeji.cn/?",
+};
 /* 数据服务器 */
 let API_URLBASE = {
   dev: `https://lndxdev.jinlingkeji.cn/api/${mpVersion}/`,
   test: `https://lndxtest.jinlingkeji.cn/api/${mpVersion}/`,
   pro: `https://apielb.jinlingkeji.cn/api/${mpVersion}/`,
-  testpro: `https://lndxpre.jinlingkeji.cn/api/${mpVersion}/`
-}
+  testpro: `https://lndxpre.jinlingkeji.cn/api/${mpVersion}/`,
+};
 /* webSocket服务 */
 let socetBase = {
   dev: "lndxdev.jinlingkeji.cn:8182",
@@ -34,24 +34,41 @@ let socetBase = {
   pro: "api.jinlingkeji.cn:8182",
   testpro: "lndxpre.jinlingkeji.cn:8182"
 }
+/* IMSDKAPPID */
+let sdkAppid = {
+  dev: "1400346137",
+  test: "1400390948",
+  pro: "1400358896",
+  testpro: "1400358896"
+}
+/* 过渡接口域名 */
+let API_URLBASECHECK = {
+  dev: `https://smallgwdev.jinlingkeji.cn/mini/`,
+  test: `https://smallgwtest.jinlingkeji.cn/mini/`,
+  pro: `https://smallgwpro.jinlingkeji.cn/mini/`,
+  testpro: `https://smallgwpro.jinlingkeji.cn/mini/`,
+}
 
 Store.prototype.process = env;
 Store.prototype.API_URL = API_URLBASE[env];
+Store.prototype.API_URLBASECHECK = API_URLBASECHECK[env];
 Store.prototype.mpVersion = mpVersion;
 Store.prototype.socket_host = socetBase[env];
 
+
 let store = new Store({
   state: {
-    userInfo: {} /* 用户信息 */ ,
-    authUserInfo: false /* （微信用户信息）授权状态 */ ,
-    authRecord: false /* （微信用户录音）授权状态 */ ,
-    authRecordfail: false /* （微信用户录音）授权拒绝状态 */ ,
-    visitedNum: [] /* 最多10个未授权视频 */ ,
-    baseInfo: false /* 提示已超过10个视频，要求授权 */ ,
-    authKey: "" /* 小程序进入h5的身份标识 */ ,
+    userInfo: {} /* 用户信息 */,
+    authUserInfo: false /* （微信用户信息）授权状态 */,
+    authRecord: false /* （微信用户录音）授权状态 */,
+    authRecordfail: false /* （微信用户录音）授权拒绝状态 */,
+    visitedNum: [] /* 最多10个未授权视频 */,
+    baseInfo: false /* 提示已超过10个视频，要求授权 */,
+    authKey: "" /* 小程序进入h5的身份标识 */,
     activityUrl: activityBase[env],
-    signStatus: {} /* 签到状态及弹窗 */ ,
+    signStatus: {} /* 签到状态及弹窗 */,
     imgHost: imgBase[env],
+    sdkAppid: sdkAppid[env],
     title: "",
     path: "",
     imageUrl: "",
@@ -72,7 +89,8 @@ let store = new Store({
     },
     blackShow: false,
     openId: "",
-    userIndex: {}
+    userIndex: {},
+    messageReceived: 0
   },
   pageLisener: {
     onLoad(opts) {
@@ -92,11 +110,19 @@ let store = new Store({
       wx.uma.trackEvent("join_page", {
         pageName: this.pageName,
       });
-      this.pageRecord ? [this.getPlayerState(), wx.setKeepScreenOn({
-        keepScreenOn: true
-      })] : [getApp().backgroundAudioManager.stop(), wx.setKeepScreenOn({
-        keepScreenOn: false
-      })];
+      this.pageRecord
+        ? [
+            this.getPlayerState(),
+            wx.setKeepScreenOn({
+              keepScreenOn: true,
+            }),
+          ]
+        : [
+            getApp().backgroundAudioManager.stop(),
+            wx.setKeepScreenOn({
+              keepScreenOn: false,
+            }),
+          ];
     },
     onHide() {
       wx.uma.trackEvent("move", {
@@ -113,11 +139,14 @@ let store = new Store({
         shareName: "tab三个点",
       });
       return {
-        title: this.data.$state.shareTitle || "福利！老年大学十万集免费课程在线学习",
-        path: "/pages/index/index?uid=" +
+        title:
+          this.data.$state.shareTitle || "福利！老年大学十万集免费课程在线学习",
+        path:
+          "/pages/index/index?uid=" +
           this.data.$state.userInfo.id +
           "&type=invite",
-        imageUrl: this.data.$state.shareImgurl || "../../images/sharemessage.jpg",
+        imageUrl:
+          this.data.$state.shareImgurl || "../../images/sharemessage.jpg",
       };
     },
     getPlayerState() {

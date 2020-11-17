@@ -1,0 +1,133 @@
+<!--components/talkCommon/talkCommon.wxml-->
+<wxs module="fn">
+  module.exports = {
+  showType: function(params) {
+  switch(params.customText) {
+  case '0008043cc6f0647e061acf18dac98ef3'://进入直播
+  return 1
+  break;
+  case 'b6b7bc2d01bcb555795e9ed7ca5f84f5'://分享直播
+  return 2
+  break;
+  case 'b13ace4737652a74ef2ff02349eab853'://关注直播
+  return 3
+  break;
+  case '751e68f208e65780d52c1a0d53c6c8d4'://点赞直播
+  return 4
+  break;
+  case 'b13ace4737652a74ef2ff02349eab853'://关注直播
+  return 5
+  break;
+  default:
+  return 0
+  break;
+  }
+  },
+  showNick: function(nick) {
+  return nick.length > 7 ? nick.slice(0, 3) + '...' : nick
+  },
+  fliter: function(txt) {
+  switch(txt) {
+  case '3ba15067d362f56fbfd21406b0218ce1':
+  return 0
+  break;
+  case '9700e115d29edd06b160b6ccddac4418':
+  return 0
+  break;
+  case 'ee07a26161938852c3bc78d8aa02479b':
+  return 0
+  break;
+  case '751e68f208e65780d52c1a0d53c6c8d4':
+  return 0
+  break;
+  case '79a5325920cb27c97654e65da37f5408':
+  return 0
+  break;
+  case '01ff35f1f878fe1ef0a1501707664b32':
+  return 0
+  break;
+  case '0008043cc6f0647e061acf18dac98ef3':
+  return 0
+  break;
+  case '5392aa930b707969f4d363cd196947a9':
+  return 0
+  break;
+  case '5ef8580c35a92ce22aaad6154b186948':
+  return 0
+  break;
+  case '284233f17394a683f39f835ef0bad98b':
+  return 0
+  break;
+  case '7f5b59116e367f7ce23c32e414230707':
+  return 0
+  break;
+  case '2bf1cc66521677f099916283cb43c459':
+  return 0
+  break;
+  case 'd9fa71b2ff1d238aafa9c02710b6233f':
+  return 0
+  break;
+  case '4c87b45c4ea258907bfd161db7e5893a':
+  return 0
+  break;
+  case 'b6b7bc2d01bcb555795e9ed7ca5f84f5':
+  return 0
+  break;
+  case 'b13ace4737652a74ef2ff02349eab853':
+  return 0
+  break;
+  case '751e68f208e65780d52c1a0d53c6c8d4':
+  return 0
+  break;
+  default:
+  return 1
+  break;
+  }
+  }
+  }
+</wxs>
+<!-- <view class="scrollView"> -->
+<!-- <view class="topmarsk"></view> -->
+<scroll-view scroll-y scroll-top="{{scrollTop}}" class="scrollView" bounces="{{false}}" bindscroll="bindscroll"
+  enable-flex bindscrolltolower="bindscrolltolower"
+  style="opacity: {{close || !showList ? 0 : 1}};bottom: {{!vliveRoom ? 'calc(30vmin / 7.5)' : ''}};left: {{!vliveRoom ? statusBarHeight : ''}}px">
+  <view
+    class="talkItem {{ fn.showType(item.payload) != 0 && fn.showType(item.payload) != 2 && !item.payload.text ? 'joinItem' : ''}}"
+    wx:for="{{talkList}}" wx:key="index"
+    style="padding: {{ fn.showType(item.payload) == 2 ? 'calc(13vmin / 7.5)' : fn.showType(item.payload) == 1 || fn.showType(item.payload) == 4 ? 'calc(10vmin / 7.5)' : 'calc(20vmin / 7.5)'}} calc(20vmin / 7.5);"
+    wx:if="{{ fn.showType(item.payload) > 0 || item.payload.text }}">
+    <view class="contentBox">
+      <rich-text nodes="{{ '<span style=color:#E6E6E6;>' + fn.showNick(item.nick) + ': </span>' + item.payload.text}}"
+        wx:if="{{item.payload.text && fn.fliter(item.payload.text)}}" class="richtext"></rich-text>
+      <view class="shareTxt" wx:elif="{{fn.showType(item.payload) == 2}}"> <text>{{item.nick}}</text>: 分享了课程
+        <button class="specalBox shareBox" hover-class="none" open-type="share">
+          <view class="specalBox" style="margin: 0;">
+            <image src="../../images/weixin.png" class="weixin"></image>
+            <text>去分享</text>
+          </view>
+        </button>
+      </view>
+      <view class="joinTxt langTxt" wx:elif="{{fn.showType(item.payload) == 1}}">
+        <text>{{item.nick}} </text>进入了直播间
+      </view>
+      <view class="joinTxt langTxt" wx:elif="{{fn.showType(item.payload) == 3}}">
+        <text>{{item.nick}}</text> 关注了老师
+      </view>
+      <view class="joinTxt" wx:elif="{{fn.showType(item.payload) == 4}}">
+        <text>{{item.nick}}</text> 给主播点了<text>{{item.payload.attachContent}}</text>个赞
+      </view>
+      <!-- <navigator class="specalBox appBox" wx:if="{{item.fromApp}}" hover-class="none" url="/pages/education/education?type=0&url=https://mp.weixin.qq.com/s/vSd8XBQDQkvqVX_kt_YyTQ">
+        <image src="../../images/toAppIcon.png" class="weixin"></image>
+        <text>去APP</text>
+      </navigator> -->
+    </view>
+    <view class="viewMore" wx:if="{{ newMessage > 0 && showNum }}" bindtap="niewMore"
+      style="left: {{!vliveRoom ? statusBarHeight : ''}}px; bottom: {{!vliveRoom ? 'calc(30vmin / 7.5)' : '' }}">
+      <text>{{ newMessage >= 99 ? newMessage + '+' : newMessage }}新消息</text>
+      <image src="/images/messageMore.png"></image>
+    </view>
+  </view>
+</scroll-view>
+<!-- </view> -->
+
+<view class="scrollView scrollMask" wx:if="{{close || !showList}}"></view>

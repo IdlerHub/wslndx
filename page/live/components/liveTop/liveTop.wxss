@@ -1,0 +1,81 @@
+/* page/live/components/liveTop/liveTop.wxss */
+/* 顶部栏 */
+.topBox {
+  display: flex;
+  align-items: center;
+  position: absolute;
+  left: calc(18vmin / 7.5);
+}
+
+.topBox .liveBack {
+  width: calc(20vmin / 7.5);
+  height: calc(35vmin / 7.5);
+  padding: calc(12vmin / 7.5);
+}
+
+.tearchBox {
+  height: calc(82vmin / 7.5);
+  display: flex;
+  align-items: center;
+  margin-left: calc(12vmin / 7.5);
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: calc(70vmin / 7.5);
+}
+
+.tearchBox image {
+  width: calc(82vmin / 7.5);
+  height: calc(82vmin / 7.5);
+  border-radius: 50%;
+}
+
+.tearchBox .txtCenter {
+  display: flex;
+  width: calc(140vmin / 7.5);
+  height: 100%;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  margin: 0 calc(20vmin / 7.5) 0 calc(10vmin / 7.5);
+  overflow: hidden;
+  opacity: 0.8;
+}
+
+.tearchBox .txtCenter text:nth-child(1) {
+  width: 100%;
+  height: calc(30vmin / 7.5);
+  line-height: calc(30vmin / 7.5);
+  font-size: calc(28vmin / 7.5);
+  font-weight: 500;
+  color: #FFFFFF;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  margin-top: calc(10vmin / 7.5);
+}
+
+.tearchBox .txtCenter text:nth-child(2) {
+  font-size: calc(26vmin / 7.5);
+  font-weight: 400;
+  color: #FFFFFF;
+  display: flex;
+  align-items: center;
+}
+
+.tearchBox .attention {
+  width: calc(118vmin / 7.5);
+  height: calc(62vmin / 7.5);
+  background: linear-gradient(360deg, #FF5E2B 0%, #F2323A 100%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: calc(70vmin / 7.5);
+  margin-right: calc(10vmin / 7.5);
+  font-size: calc(30vmin / 7.5);
+  font-weight: 500;
+  color: #FFFFFF;
+}
+
+.tearchBox .attention image {
+  width: calc(22vmin / 7.5);
+  height: calc(22vmin / 7.5);
+  margin-right: calc(7vmin / 7.5);
+}

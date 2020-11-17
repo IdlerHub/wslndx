@@ -37,7 +37,7 @@
     ]
   },
   "setting": {
-    "urlCheck": false,
+    "urlCheck": true,
     "es6": true,
     "enhance": true,
     "postcss": true,
@@ -54,18 +54,19 @@
     "checkSiteMap": true,
     "uploadWithSourceMap": true,
     "compileHotReLoad": false,
+    "useMultiFrameRuntime": false,
+    "useApiHook": true,
     "babelSetting": {
       "ignore": [],
       "disablePlugins": [],
       "outputPath": ""
     },
-    "bundle": true,
+    "enableEngineNative": false,
+    "bundle": false,
     "useIsolateContext": true,
     "useCompilerModule": false,
     "userConfirmedUseCompilerModuleSwitch": true,
-    "useMultiFrameRuntime": false,
-    "useApiHook": true,
-    "enableEngineNative": false,
+    "userConfirmedBundleSwitch": false,
     "packNpmManually": false,
     "packNpmRelationList": [],
     "minifyWXSS": true
@@ -153,10 +154,10 @@
           "scene": null
         },
         {
-          "name": "pages/education/education",
-          "pathName": "pages/education/education",
-          "query": "url=www.baidu.com&type=123",
-          "scene": 1011
+          "name": "page/live/pages/liveDetail/liveDetail",
+          "pathName": "page/live/pages/liveDetail/liveDetail",
+          "query": "specialColumnId=378",
+          "scene": 1000
         },
         {
           "id": 12,

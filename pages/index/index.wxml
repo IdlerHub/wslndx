@@ -32,7 +32,7 @@
         <image class="poster" mode="aspectFill"
           src="{{ item.show_big ? item.big_image + '?x-image-process=image/resize,m_fixed,w_690,h_360/quality,Q_80' : item.image + '?x-image-process=image/resize,m_fixed,w_260,h_160/quality,Q_80'  }}"
           lazy-load="true"></image>
-        <image class="icon" mode="aspectFill" src="{{ $state.imgHost }}/play.png"></image>
+        <image class="icon" wx:if="{{!item.show_big}}" mode="aspectFill" src="/images/recomonPlay.png"></image>
         <image src="/images/coursestautes.png" class="status" mode="aspectFill" wx:if="{{item.is_finish}}"
           style="{{item.show_big ? 'width:130rpx;height:72rpx' : ''}}"></image>
       </view>
@@ -53,7 +53,7 @@
     <view class="liveBox" wx:if="{{liveRecommend[0]}}">
       <view class="topTtile">
         <text>直播推荐</text>
-        <navigator class="topTtile-right" url="/page/live/pages/liveCenter/liveCenter" hover-class="none">
+        <navigator open-type="switchTab" class="topTtile-right" url="/pages/timetableList/timetableList" hover-class="none">
           <text>更多课程</text>
           <image src="/images/Return-black.png"></image>
         </navigator>
@@ -62,21 +62,22 @@
         <view wx:for="{{liveRecommend}}" wx:key="index" class="liveItem"
           style="{{index + 1 > 6 - 2 ? 'border:none' : '' }}" bindtap="toLivelesson" data-item="{{item}}">
           <view class="liveImgBox">
-            <image src="{{item.cover}}">
+            <image src="{{item.indexCover}}">
             </image>
             <view class="liveStatus"
-              style="background: {{ item.live_status == 101 ? '' : 'linear-gradient(270deg, #44A2FF 0%, #007CF7 100%);' }}">
-              <view class="statusLeft" wx:if="{{item.live_status == 101}}">
+              style="background: {{ item.status == 0 ? '' : 'linear-gradient(270deg, #44A2FF 0%, #007CF7 100%);border-radius: 10rpx 6rpx 6rpx 0px;' }}">
+              <view class="statusLeft" wx:if="{{item.status == 0}}">
                 <view wx:for="{{3}}" wx:key="index" class="statusWite"></view>
                 <view class="statusTxt">直播</view>
+                <view class="viewNum">{{item.viewNum}}人</view>
               </view>
               <view class="statusLeft" wx:else>
                 <view class="statusTxt" style="margin: 0">未开始</view>
               </view>
             </view>
           </view>
-          <text>{{item.name}}</text>
-          <text>{{item.date}} {{item.time}}</text>
+          <text>{{item.liveName}}</text>
+          <text>{{item.dayTime}} {{item.startTime}}</text>
         </view>
       </view>
     </view>

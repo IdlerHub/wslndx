@@ -1,0 +1,16 @@
+<!--page/live/components/liveTop/liveTop.wxml-->
+<view class="topBox" style="top: {{ !vliveRoom ? 'calc(10vmin / 7.5)' : statusBarHeight + 'px' }};left:{{!vliveRoom ? statusBarHeight : ''}}px">
+  <image src="../../images/liveBack.png" class="liveBack" bindtap="back"></image>
+  <view class="tearchBox">
+    <image src="{{liveDetail.avatar}}">
+    </image>
+    <view class="txtCenter">
+      <text>{{liveDetail.nickname}}</text>
+      <text>{{liveCount}}人在看</text>
+    </view>
+    <view class="attention" catchtap="attention" wx:if="{{!liveDetail.follow}}">
+      <image src="../../images/attentionicon.png"></image>
+      关注
+    </view>
+  </view>
+</view>

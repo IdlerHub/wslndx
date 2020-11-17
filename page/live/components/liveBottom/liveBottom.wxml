@@ -1,0 +1,32 @@
+<!--page/live/components/liveBottom/liveBottom.wxml-->
+<view class="bottomBox">
+  <view class="itemBox captionBox {{ close ? 'close' : '' }}" style="margin-right: {{ !vliveRoom ? 'calc(16vmin / 7.5)' : ''}};" bindtap="checkCaption">
+    <image src="../../images/captionIcon.png"></image>
+    <text>字幕</text>
+  </view>
+  <view class="clickBox" catchtap="showBox" wx:if="{{vliveRoom}}">说点什么～</view>
+  <view class="itemBox backBox" bindtap="toLessons">
+    <image src="../../images/endIcon.png"></image>
+    <text>回播</text>
+  </view>
+  <button class="itemBox shareBox" hover-class="none" open-type="share">
+    <view class="itemBox shareBox">
+      <image src="../../images/shareIcon.png"></image>
+      <text>分享</text>
+    </view>
+  </button>
+  <!-- bindtap="praise" -->
+  <!-- <view class="itemBox praiseBox" bindtap="praise">
+    <image src="../../images/praise.png" bindtap="clickHandler"></image>
+  </view> -->
+  <view class="itemBox praiseBox" bindtap="praise">
+    <image src="../../images/praiseImg.png" bindtap="clickHandler"></image>
+    <text bindtap="clickHandler">点赞</text>
+  </view>
+</view>
+<view class="inputBox" style="bottom: {{keyHeight}}px">
+  <textarea maxlength="50" focus="{{focus}}" value="{{txt}}" class="textarea" placeholder="我要发言..." placeholder-class="placeholder"
+    cursor-spacing="20" adjust-position="{{false}}" show-confirm-bar="{{false}}" auto-height
+    style="padding-top: {{ system == 'ios' ? '4' : '20' }}rpx;" bindinput="bindinput" bindblur="showBox"></textarea>
+  <view class="send" bindtap="send" style="background-color: {{txt.length > 0 ? '#F2323A' : ''}};">发送</view>
+</view>
