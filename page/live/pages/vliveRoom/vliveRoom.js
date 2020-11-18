@@ -129,7 +129,7 @@ Page({
           let min = parseInt(afterHour / 60);
           this.setData({
             'downTime.m': hour,
-            'downTime.s': min + 1
+            'downTime.s': min + 1 >= 0 ?  min + 1 : 0
           }, () => {
             if(this.downTimer) return
             this.downTimer = setInterval(() => {
@@ -141,7 +141,7 @@ Page({
                 'downTime.s': this.data.downTime.s - 1
               }) 
               if(this.data.downTime.m == 0 && this.data.downTime.s == 0) {
-                this.getLiveById(this.data.liveDetail.id)
+                this.getLiveById(this.liveOps.roomId)
                 clearInterval(this.downTimer)
               }
             }, 60000)
