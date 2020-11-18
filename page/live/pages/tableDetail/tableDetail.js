@@ -204,13 +204,13 @@ Page({
     });
   },
   onShareAppMessage: function () {
-    let lesson_id = this.data.lessonDetail.id,
+    let lesson_id = this.data.lessonDetail.columnId,
       cover = this.data.lessonDetail.cover;
     let id = this.data.$state.userInfo.id;
     this.shareLesson(lesson_id);
     return {
       title: `快来和我一起报名,免费好课天天学!`,
-      path: `/page/live/pages/tableDetail/tableDetail?lessonId=${lesson_id}&inviter=${id}&liveShare=1`,
+      path: `/page/live/pages/tableDetail/tableDetail?specialColumnId=${lesson_id}&inviter=${id}&liveShare=1`,
       imageUrl: cover,
     };
   },

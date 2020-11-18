@@ -18,7 +18,11 @@ Page({
     showBox: 0,
     moveBox: 0,
     viewNum: 0,
-    keyHeight: '-60'
+    keyHeight: '-60',
+    downTime: {
+      m: 0,
+      s: 0
+    }
   },
   pageName: 'live',
   liveInterval: null,
@@ -50,7 +54,7 @@ Page({
       this.setData({
         keyHeight: res.height
       }, () => {
-        console.log(this.data.textHeight, this.textHeight,  this.data.textHeight - this.textHeight >= 0)
+        console.log(this.data.textHeight, this.textHeight, this.data.textHeight - this.textHeight >= 0)
         this.data.keyHeight - this.textHeight >= 0 ? '' : this.setData({
           keyHeight: '-60'
         });
@@ -85,7 +89,7 @@ Page({
   },
   liveInit(type) {
     Promise.all([this.getTimSign(), this.getLiveById(this.liveOps.roomId), this.liveCount()]).then(values => {
-      if(type) {
+      if (type) {
         timsdk.timInit(this, values[0], 1)
         this.setData({
           talkList: this.data.talkList
@@ -110,6 +114,38 @@ Page({
       } else if (res.data.status > 1) {
         this.setData({
           liveStatus: 4
+        })
+      } else if (res.data.status == 0) {
+        this.setData({
+          liveStatus: 0
+        }, () => {
+          let date = new Date()
+          let dataTime = date.getFullYear() + '-' + this.data.liveDetail.dayTime.slice(0, 2) + '-' + this.data.liveDetail.dayTime.slice(3, 5) + ' ' + this.data.liveDetail.startTime.slice(0, 2) + ':' + this.data.liveDetail.startTime.slice(3, 5) + ':00'
+          let total = ((new Date(dataTime)).getTime() - date.getTime()) / 1000
+          let day = parseInt(total / (24 * 60 * 60))
+          let afterDay = total - day * 24 * 60 * 60;
+          let hour = parseInt(afterDay / (60 * 60));
+          let afterHour = total - day * 24 * 60 * 60 - hour * 60 * 60;
+          let min = parseInt(afterHour / 60);
+          this.setData({
+            'downTime.m': hour,
+            'downTime.s': min + 1
+          }, () => {
+            if(this.downTimer) return
+            this.downTimer = setInterval(() => {
+              this.data.downTime.s - 1 < 0 ? this.setData({
+                'downTime.m': this.data.downTime.m - 1,
+                'downTime.s': 59
+              }) : this.setData({
+                'downTime.m': this.data.downTime.m,
+                'downTime.s': this.data.downTime.s - 1
+              }) 
+              if(this.data.downTime.m == 0 && this.data.downTime.s == 0) {
+                this.getLiveById(this.data.liveDetail.id)
+                clearInterval(this.downTimer)
+              }
+            }, 60000)
+          })
         })
       } else {
         this.setData({
@@ -233,7 +269,9 @@ Page({
     })
   },
   attention() {
-    app.liveData.follow({ followerUid: this.data.liveDetail.lecturerUserId }).then(() => {
+    app.liveData.follow({
+      followerUid: this.data.liveDetail.lecturerUserId
+    }).then(() => {
       this.checkFollow()
       wx.showToast({
         title: '关注成功',
