@@ -51,6 +51,7 @@ Page({
   timer: null,
   pageName: 'liveDetail',
   onLoad: function (options) {
+    options.lessonId ? options.specialColumnId = options.lessonId - -614 : ''
     this.options = options
     this.videoContext = wx.createVideoContext("myVideo");
     this.init(options);

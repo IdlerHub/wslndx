@@ -37,6 +37,7 @@ Page({
   },
   onLoad: function (options) {
     console.log(options)
+    options.lessonId ? options.specialColumnId = options.lessonId - -614 : ''
     let inviter = 0;
     if (options.inviter && this.data.$state.userInfo.id != options.inviter) {
       inviter = options.inviter;

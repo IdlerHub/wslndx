@@ -156,7 +156,7 @@
         {
           "name": "page/live/pages/liveDetail/liveDetail",
           "pathName": "page/live/pages/liveDetail/liveDetail",
-          "query": "specialColumnId=378",
+          "query": "lessonId=62",
           "scene": 1000
         },
         {
