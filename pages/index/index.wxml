@@ -3,6 +3,13 @@
  * @LastEditors: hxz
  * @LastEditTime: 2019-08-13 12:01:10
  -->
+<wxs module="fn">
+  module.exports = {
+  num: function(num) {
+  return num > 10000 ? (num / 10000).toFixed(1) + 'W' : num
+  }
+  }
+</wxs>
 <template name="skeletonTop">
   <view class="top" style="padding-top:{{ topT }}px">
     <view class="avatarBox skeletonaAtive"></view>
@@ -53,7 +60,8 @@
     <view class="liveBox" wx:if="{{liveRecommend[0]}}">
       <view class="topTtile">
         <text>直播推荐</text>
-        <navigator open-type="switchTab" class="topTtile-right" url="/pages/timetableList/timetableList" hover-class="none">
+        <navigator open-type="switchTab" class="topTtile-right" url="/pages/timetableList/timetableList"
+          hover-class="none">
           <text>更多课程</text>
           <image src="/images/Return-black.png"></image>
         </navigator>
@@ -69,7 +77,7 @@
               <view class="statusLeft" wx:if="{{item.status == 0}}">
                 <view wx:for="{{3}}" wx:key="index" class="statusWite"></view>
                 <view class="statusTxt">直播</view>
-                <view class="viewNum">{{item.viewNum}}人</view>
+                <view class="viewNum">{{fn.num(item.viewNum)}}人</view>
               </view>
               <view class="statusLeft" wx:else>
                 <view class="statusTxt" style="margin: 0">未开始</view>
@@ -287,7 +295,6 @@
     </cover-view>
   </cover-view>
 </cover-view>
-
 <!-- 黑名单提示框 -->
 <view class="blackBox" wx:if="{{$state.blackShow}}">
   <view class="blackToast">
@@ -298,7 +305,9 @@
     </view>
   </view>
 </view>
-
 <!-- 学分动画 -->
 <integralAnimation integral="{{integral}}" integralContent="{{integralContent}}" wx:if="{{showintegral}}">
 </integralAnimation>
+
+<!-- 登录 -->
+<!-- <loginBox/> -->

@@ -10,6 +10,7 @@
     "formCode": "/components/formCode/formCode",
     "navBar": "/components/navBar/navBar",
     "signinBox": "/components/signinBox/signinBox",
-    "integralAnimation": "/components/integralAni/integralAni"
+    "integralAnimation": "/components/integralAni/integralAni",
+    "loginBox": "/components/loginBox/loginBox"
   }
 }

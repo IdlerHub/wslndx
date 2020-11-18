@@ -254,14 +254,14 @@ Page({
       setInterval(() => {
         app.liveData.recommendLessons().then(res => {
           this.setData({
-            liveRecommend: res.dataList.slice(0,6)
+            liveRecommend: res.dataList.slice(0, 6)
           })
         })
       }, 60000);
     } else {
       app.liveData.recommendLessons().then(res => {
         this.setData({
-          liveRecommend: res.dataList.slice(0,6)
+          liveRecommend: res.dataList.slice(0, 6)
         }, () => {
           res.dataList.length > 0 ? this.getRecommendLessons() : ''
         })
@@ -715,26 +715,19 @@ Page({
   },
   toLivelesson(e) {
     let item = e.currentTarget.dataset.item
-    if (item.status == 0) {
-      wx.navigateTo({
-        url: `/page/live/pages/vliveRoom/vliveRoom?roomId=${item.liveId}`,
-      })
-    } else {
-      app.liveData.getLiveBySpecialColumnId({
-        specialColumnId: item.columnId
-      }).then(res => {
-        if (res.data.isAddSubscribe) {
-          wx.navigateTo({
-            url: "/page/live/pages/liveDetail/liveDetail?specialColumnId=" +
-              item.columnId
-          });
-        } else {
-          wx.navigateTo({
-            url: "/page/live/pages/tableDetail/tableDetail?specialColumnId=" +
-              item.columnId
-          });
-        }
-      })
-    }
+    app.liveData.getLiveBySpecialColumnId({
+      specialColumnId: item.columnId
+    }).then(res => {
+      if (res.data.isAddSubscribe) {
+        wx.navigateTo({
+          url: `/page/live/pages/vliveRoom/vliveRoom?roomId=${item.liveId}`,
+        })
+      } else {
+        wx.navigateTo({
+          url: "/page/live/pages/tableDetail/tableDetail?specialColumnId=" +
+            item.columnId
+        });
+      }
+    })
   }
 })
