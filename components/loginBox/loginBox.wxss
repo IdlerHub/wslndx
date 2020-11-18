@@ -9,8 +9,8 @@
 }
 
 .loginContariner .loginBox {
-  width: 540rpx;
-  height: 604rpx;
+  width: 518rpx;
+  height: 426rpx;
   background: #FFFFFF;
   border-radius: 20rpx;
   position: absolute;
@@ -29,7 +29,7 @@
   font-size: 42rpx;
   font-weight: 600;
   color: #333333;
-  margin-bottom: 42rpx;
+  margin-bottom: 9rpx;
 }
 
 .loginContariner .loginBox .loginItem {
