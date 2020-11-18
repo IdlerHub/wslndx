@@ -4,33 +4,32 @@ Page({
    */
   data: {
     list: [
+      // {
+      //   id: 1,
+      //   name: "选课中心",
+      // },
       {
         id: 1,
-        name: "选课中心",
-      },
-      {
-        id: 2,
         name: "公益课报名",
       },
       {
-        id: 3,
+        id: 2,
         name: "查看本周课程安排",
       },
       {
-        id: 4,
+        id: 3,
         name: "下载网上老年大学APP",
       },
       {
-        id: 5,
+        id: 4,
         name: "找最近看过的课程",
       },
       {
-        id: 6,
+        id: 5,
         name: "问题反馈",
       },
     ],
     mpurlList: [
-      "",
       "https://mp.weixin.qq.com/s/y3mAB8Kws2mkdGZQEjxBKQ",
       "",
       "https://mp.weixin.qq.com/s/vSd8XBQDQkvqVX_kt_YyTQ",
@@ -96,17 +95,17 @@ Page({
     } else {
       console.log(item.index);
       switch (item.index) {
-        case 0:
-          wx.navigateTo({
-            url: "/page/live/pages/liveCenter/liveCenter",
+        // case 0:
+        //   wx.navigateTo({
+        //     url: "/page/live/pages/liveCenter/liveCenter",
+        //   });
+        //   break;
+        case 1:
+          wx.switchTab({
+            url: '/pages/timetableList/timetableList',
           });
           break;
-        case 2:
-          wx.navigateTo({
-            url: "/page/live/pages/timetable/timetable",
-          });
-          break;
-        case 4:
+        case 3:
           wx.navigateTo({
             url: "/page/user/pages/history/history",
           });
