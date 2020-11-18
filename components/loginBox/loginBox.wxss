@@ -1,0 +1,86 @@
+/* components/loginBox/loginBox.wxss */
+.loginContariner {
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  position: fixed;
+  top: 0;
+  z-index: 99999999;
+}
+
+.loginContariner .loginBox {
+  width: 540rpx;
+  height: 604rpx;
+  background: #FFFFFF;
+  border-radius: 20rpx;
+  position: absolute;
+  top: 25%;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 0 40rpx;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.loginContariner .loginBox .loginTitle {
+  font-size: 42rpx;
+  font-weight: 600;
+  color: #333333;
+  margin-bottom: 42rpx;
+}
+
+.loginContariner .loginBox .loginItem {
+  width: 460rpx;
+  height: 168rpx;
+  background: #F5F6FA;
+  border-radius: 16rpx;
+  display: flex;
+  align-items: center;
+  margin-bottom: 20rpx;
+}
+
+.loginContariner .loginBox .loginItem image {
+  width: 108rpx;
+  height: 108rpx;
+  border-radius: 50%;
+  margin-left: 101rpx;
+  margin-right: 30rpx;
+}
+
+.loginContariner .loginBox .loginItem text {
+  font-size: 40rpx;
+  font-weight: 400;
+  color: #333333;
+}
+
+.loginContariner .loginBox .issuse {
+  display: flex;
+  align-items: center;
+  margin-top: 10rpx;
+}
+
+.loginContariner .loginBox .issuse image {
+  width: 28rpx;
+  height: 28rpx;
+  margin-right: 10rpx;
+  margin-top: 5rpx;
+}
+
+.loginContariner .loginBox .issuse .circle {
+  width: 27rpx;
+  height: 27rpx;
+  margin-right: 10rpx;
+  margin-top: 5rpx;
+  border: 1rpx solid #9E7E6B;
+  border-radius: 50%;
+}
+ 
+.loginContariner .loginBox .issuse .text {
+  font-size: 28rpx;
+  font-weight: 400;
+  color: #9E7E6B;
+}
+

@@ -167,8 +167,8 @@
           "scene": null
         },
         {
-          "name": "pages/education/education",
-          "pathName": "pages/education/education",
+          "name": "pages/login/login",
+          "pathName": "pages/login/login",
           "query": "url=www.baidu.com&type=123",
           "scene": 1069,
           "referrerInfo": {

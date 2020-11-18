@@ -1,0 +1,19 @@
+<!--components/loginBox/loginBox.wxml-->
+<view class="loginContariner">
+  <view class="loginBox" wx:if="!phoneLogin">
+    <text class="loginTitle">请选择登陆方式</text>
+    <button class="loginItem" hover-class="none" open-type="getPhoneNumber" bindgetphonenumber="getphonenumber">
+      <image src="../loginBox/images/wechat.png"></image>
+      <text>微 信</text>
+    </button>
+    <view class="loginItem">
+      <image src="../loginBox/images/phone.png"></image>
+      <text>手机号</text>
+    </view>
+    <view class="issuse">
+      <image src="../loginBox/images/radio.png" wx:if="{{check}}" bindtap="checkRadio"></image>
+      <view class="circle" wx:else bindtap="checkRadio"></view>
+      <navigator hover-class="none" url="/pages/agreement/agreement" class="text">已阅读《用户协议》，登录即注册</navigator>
+    </view>
+  </view>
+</view>

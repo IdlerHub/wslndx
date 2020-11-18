@@ -287,7 +287,6 @@
     </cover-view>
   </cover-view>
 </cover-view>
-
 <!-- 黑名单提示框 -->
 <view class="blackBox" wx:if="{{$state.blackShow}}">
   <view class="blackToast">
@@ -298,7 +297,9 @@
     </view>
   </view>
 </view>
-
 <!-- 学分动画 -->
 <integralAnimation integral="{{integral}}" integralContent="{{integralContent}}" wx:if="{{showintegral}}">
 </integralAnimation>
+
+<!-- 登录 -->
+<loginBox/>
