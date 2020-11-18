@@ -44,16 +44,16 @@ page {
 
 .h-player .liveRemind {
   width: 414rpx;
-  height: 126rpx;
+  height: 130rpx;
   background: linear-gradient(360deg, #FF7E56 0%, #F2323A 100%);
   position: absolute;
-  bottom: -130rpx;
+  bottom: -140rpx;
   left: 20rpx;
   border-radius: 0 100rpx 100rpx 30rpx;
   display: flex;
   align-items: flex-start;
-  justify-content: center;
   padding-top: 20rpx;
+  padding-left: 20rpx;
   box-sizing: border-box;
 }
 
@@ -86,7 +86,7 @@ page {
 
 .h-player .liveRemind .remindTxt text .time {
   display: inline-block;
-  padding:5rpx 6rpx;
+  padding:3rpx 6rpx;
   text-align: center;
   line-height: 40rpx;
   font-size: 28rpx;

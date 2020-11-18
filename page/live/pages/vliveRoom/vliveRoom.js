@@ -120,18 +120,19 @@ Page({
           liveStatus: 0
         }, () => {
           let date = new Date()
-          let dataTime = date.getFullYear() + '-' + this.data.liveDetail.dayTime.slice(0, 2) + '-' + this.data.liveDetail.dayTime.slice(3, 5) + ' ' + this.data.liveDetail.startTime.slice(0, 2) + ':' + this.data.liveDetail.startTime.slice(3, 5) + ':00'
+          let dataTime = date.getFullYear() + '/' + this.data.liveDetail.dayTime.slice(0, 2) + '/' + this.data.liveDetail.dayTime.slice(3, 5) + ' ' + this.data.liveDetail.startTime.slice(0, 2) + ':' + this.data.liveDetail.startTime.slice(3, 5) + ':00'
           let total = ((new Date(dataTime)).getTime() - date.getTime()) / 1000
           let day = parseInt(total / (24 * 60 * 60))
           let afterDay = total - day * 24 * 60 * 60;
           let hour = parseInt(afterDay / (60 * 60));
           let afterHour = total - day * 24 * 60 * 60 - hour * 60 * 60;
           let min = parseInt(afterHour / 60);
+          if(hour == 0 && min == 0) return
           this.setData({
             'downTime.m': hour,
-            'downTime.s': min + 1 >= 0 ?  min + 1 : 0
+            'downTime.s': min + 1 >= 0 ? min + 1 : 0
           }, () => {
-            if(this.downTimer) return
+            if (this.downTimer) return
             this.downTimer = setInterval(() => {
               this.data.downTime.s - 1 < 0 ? this.setData({
                 'downTime.m': this.data.downTime.m - 1,
@@ -139,8 +140,8 @@ Page({
               }) : this.setData({
                 'downTime.m': this.data.downTime.m,
                 'downTime.s': this.data.downTime.s - 1
-              }) 
-              if(this.data.downTime.m == 0 && this.data.downTime.s == 0) {
+              })
+              if (this.data.downTime.m == 0 && this.data.downTime.s == 0) {
                 this.getLiveById(this.liveOps.roomId)
                 clearInterval(this.downTimer)
               }
@@ -198,7 +199,7 @@ Page({
     let params = {
       customText: customText,
       customType: '0',
-      isShow: 'notShow ',
+      isShow: 'notShow',
       attachContent: type == 'praise' ? values : ''
     }
     timsdk.customParams(params)
