@@ -415,7 +415,7 @@ Page({
         console.log(res)
         res[0] ?
           this.setData({
-            scrollviewtop: res[0].top - 300,
+            scrollviewtop: res[0].top - 500,
           }) :
           "";
       });
