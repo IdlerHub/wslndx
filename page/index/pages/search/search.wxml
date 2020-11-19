@@ -21,7 +21,7 @@
       <view class="left">
         <image class="poster" mode="aspectFill"
           src="{{ item.image + '?x-image-process=image/resize,m_fixed,w_260,h_160/quality,Q_80' }}"></image>
-        <image class="icon" mode="aspectFill" src="{{ $state.imgHost }}/play.png"></image>
+        <image class="icon" mode="aspectFill" src="/images/recomonPlay.png"></image>
         <image src="/images/coursestautes.png" class="status" wx:if="{{item.is_finish}}"></image>
       </view>
       <view class="right">

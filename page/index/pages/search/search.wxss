@@ -166,14 +166,10 @@ page {
 }
 .wrap .left .icon {
   position: absolute;
-  width: 52rpx;
-  height: 52rpx;
-  margin: auto;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  opacity: 0.7;
+  width: 50rpx;
+  height: 50rpx;
+  right: 10rpx;
+  bottom: 10rpx;
 }
 .wrap .right {
   flex: 1;
