@@ -132,8 +132,8 @@ Page({
           if (day == 0 && hour == 0 && min == 0) return
           this.setData({
             'downTime.d': day,
-            'downTime.m': hour,
-            'downTime.s': min + 1 >= 0 ? min + 1 : 0
+            'downTime.m': min + 1 >= 60 ? hour + 1 : hour,
+            'downTime.s': min + 1 >= 0 ? min + 1 >= 60 ? 0 : min + 1 : 0
           }, () => {
             if (this.downTimer) return
             this.downTimer = setInterval(() => {
