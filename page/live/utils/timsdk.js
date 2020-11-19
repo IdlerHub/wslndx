@@ -50,8 +50,8 @@ let messageUplisten = function (event) {
     let {
       nick,
       payload,
-      from
     } = e
+    // && messageFilter(payload, 1) != 1 && messageFilter(payload, 1) != 4
     if (messageFilter(payload, 1) > 0) {
       talkList.push({
         nick,
