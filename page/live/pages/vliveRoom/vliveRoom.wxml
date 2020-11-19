@@ -17,14 +17,20 @@
   wx:if="{{liveStatus == 1 && !liveDetail.direction && liveDetail.liveType && showVideo}}">
   <image src="../../images/full.png" bindtap="toHliveRoom"></image>
 </video>
-<view class="v-player h-player playCover" wx:if="{{liveStatus == 0}}">
+<view class="v-player h-player playCover" style="top:{{ statusBarHeight + 150 }}rpx" wx:if="{{liveStatus == 0}}">
   <image src="{{liveDetail.indexCover}}"></image>
-  <view class="liveRemind">
+  <view class="liveRemind" style="bottom: {{downTime.d > 0 || downTime.m > 0 || downTime.s > 0 ? 'calc(-128vmin / 7.5)' : 'calc(-118vmin / 7.5)' }}">
     <image src="../../images/ling.png" alt=""></image>
     <view class="remindTxt">
       <text class="liveName">{{liveDetail.name}}</text>
-      <text>距离开播 <text class="time">{{downTime.m >= 10 ? downTime.m : '0' + downTime.m}}</text> 时 <text
+      <text wx:if="{{downTime.d > 0 || downTime.m > 0 || downTime.s > 0}}">距离开播 <text class="time"
+          wx:if="{{downTime.d > 0}}">{{downTime.d >= 10 ? downTime.d : '0' + downTime.d}}</text> <text
+          wx:if="{{downTime.d > 0}}"> 天 </text><text
+          class="time">{{downTime.m >= 10 ? downTime.m : '0' + downTime.m}}</text> 时 <text
           class="time">{{downTime.s >= 10 ? downTime.s : '0' + downTime.s}}</text> 分</text>
+      <view class="text" wx:else>
+        即将开播
+      </view>
     </view>
   </view>
 </view>

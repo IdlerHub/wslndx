@@ -94,10 +94,10 @@
   <view
     class="talkItem {{ fn.showType(item.payload) != 0 && fn.showType(item.payload) != 2 && !item.payload.text ? 'joinItem' : ''}}"
     wx:for="{{talkList}}" wx:key="index"
-    style="padding: {{ fn.showType(item.payload) == 2 ? 'calc(13vmin / 7.5)' : fn.showType(item.payload) == 1 || fn.showType(item.payload) == 4 ? 'calc(10vmin / 7.5)' : 'calc(20vmin / 7.5)'}} calc(20vmin / 7.5);"
+    style="padding: {{ fn.showType(item.payload) == 2 ? 'calc(13vmin / 7.5)' : fn.showType(item.payload) == 1 || fn.showType(item.payload) == 4 ? 'calc(10vmin / 7.5)' : 'calc(10vmin / 7.5)'}} calc(20vmin / 7.5);"
     wx:if="{{ fn.showType(item.payload) > 0 || item.payload.text }}">
     <view class="contentBox">
-      <rich-text nodes="{{ '<span style=color:#E6E6E6;>' + fn.showNick(item.nick) + ': </span>' + item.payload.text}}"
+      <rich-text class="richtext" nodes="{{ '<span style=color:#E6E6E6;>' + fn.showNick(item.nick) + ': </span>' + item.payload.text}}"
         wx:if="{{item.payload.text && fn.fliter(item.payload.text)}}" class="richtext"></rich-text>
       <view class="shareTxt" wx:elif="{{fn.showType(item.payload) == 2}}"> <text>{{item.nick}}</text>: 分享了课程
         <button class="specalBox shareBox" hover-class="none" open-type="share">

@@ -20,6 +20,7 @@ Page({
     viewNum: 0,
     keyHeight: '-60',
     downTime: {
+      d: 0,
       m: 0,
       s: 0
     }
@@ -99,7 +100,7 @@ Page({
       }
     })
   },
-  getLiveById(liveId) {
+  getLiveById(liveId, type) {
     return app.liveData.getLiveById({
       liveId
     }).then(res => {
@@ -119,6 +120,7 @@ Page({
         this.setData({
           liveStatus: 0
         }, () => {
+          if (type) return
           let date = new Date()
           let dataTime = date.getFullYear() + '/' + this.data.liveDetail.dayTime.slice(0, 2) + '/' + this.data.liveDetail.dayTime.slice(3, 5) + ' ' + this.data.liveDetail.startTime.slice(0, 2) + ':' + this.data.liveDetail.startTime.slice(3, 5) + ':00'
           let total = ((new Date(dataTime)).getTime() - date.getTime()) / 1000
@@ -127,22 +129,37 @@ Page({
           let hour = parseInt(afterDay / (60 * 60));
           let afterHour = total - day * 24 * 60 * 60 - hour * 60 * 60;
           let min = parseInt(afterHour / 60);
-          if(hour == 0 && min == 0) return
+          if (day == 0 && hour == 0 && min == 0) return
           this.setData({
+            'downTime.d': day,
             'downTime.m': hour,
             'downTime.s': min + 1 >= 0 ? min + 1 : 0
           }, () => {
             if (this.downTimer) return
             this.downTimer = setInterval(() => {
-              this.data.downTime.s - 1 < 0 ? this.setData({
-                'downTime.m': this.data.downTime.m - 1,
-                'downTime.s': 59
-              }) : this.setData({
-                'downTime.m': this.data.downTime.m,
-                'downTime.s': this.data.downTime.s - 1
-              })
-              if (this.data.downTime.m == 0 && this.data.downTime.s == 0) {
-                this.getLiveById(this.liveOps.roomId)
+              if (this.data.downTime.s - 1 < 0) {
+                if (this.data.downTime.m - 1 < 0 && this.data.downTime.d > 0) {
+                  this.setData({
+                    'downTime.d': this.data.downTime.d - 1,
+                    'downTime.m': 23,
+                    'downTime.s': 59
+                  })
+                } else {
+                  this.setData({
+                    'downTime.d': this.data.downTime.d,
+                    'downTime.m': this.data.downTime.m - 1,
+                    'downTime.s': 59
+                  })
+                }
+              } else {
+                this.setData({
+                  'downTime.d': this.data.downTime.d,
+                  'downTime.m': this.data.downTime.m,
+                  'downTime.s': this.data.downTime.s - 1
+                })
+              }
+              if (this.data.downTime.d == 0 && this.data.downTime.m == 0 && this.data.downTime.s == 0) {
+                this.getLiveById(this.liveOps.roomId, 1)
                 clearInterval(this.downTimer)
               }
             }, 60000)

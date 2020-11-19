@@ -381,7 +381,7 @@ Page({
       let query = wx.createSelectorQuery().in(this);
       if (this.data.currentTab == 0) {
         query.select(".introduction").boundingClientRect();
-      } else if(this.data.currentTab == 2) {
+      } else if (this.data.currentTab == 2) {
         query.select(".comment").boundingClientRect();
       } else {
         query.select(".drama").boundingClientRect();
@@ -423,24 +423,25 @@ Page({
   },
   select(e) {
     let item = e.currentTarget.dataset.item,
-      pages = getCurrentPages(), back = 0;
+      pages = getCurrentPages(),
+      back = 0;
     if (item.state == 0) {
-      LiveData.getLiveById({
-        liveId: item.id
-      }).then(res => {
-        res.data.state == 0 ? wx.showToast({
-          title: "直播还未开始",
-          icon: "none",
-        }) : ''
-        if (res.data.state == 1) {
-          pages.forEach(e => {
-            e.pageName ? e.pageName == 'live' ? back = 1 : '' : ''
-          })
-          back ? wx.navigateBack() : wx.navigateTo({
-            url: '/page/live/pages/vliveRoom/vliveRoom?roomId=' + item.id,
-          })
-        }
+      // LiveData.getLiveById({
+      //   liveId: item.id
+      // }).then(res => {
+      //   res.data.state == 0 ? wx.showToast({
+      //     title: "直播还未开始",
+      //     icon: "none",
+      //   }) : ''
+      //   if (res.data.state == 1) {
+      pages.forEach(e => {
+        e.pageName ? e.pageName == 'live' ? back = 1 : '' : ''
       })
+      back ? wx.navigateBack() : wx.navigateTo({
+        url: '/page/live/pages/vliveRoom/vliveRoom?roomId=' + item.id,
+      })
+      // }
+      // })
     } else if (item.state == 1) {
       pages.forEach(e => {
         e.pageName ? e.pageName == 'live' ? back = 1 : '' : ''

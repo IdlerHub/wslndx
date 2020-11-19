@@ -50,7 +50,7 @@
           </view>
           <view class="btn end waite" wx:elif="{{lesson.status == 1 }}">
             <image src="/images/naoling.png"></image>
-            待直播
+            待开始
           </view>
           <view class="btn living" wx:else>
             <view wx:for="{{3}}" wx:key="index" class="statusWite"></view>

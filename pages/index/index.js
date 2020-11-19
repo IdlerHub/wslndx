@@ -725,7 +725,7 @@ Page({
       // } else {
       //   wx.navigateTo({
       //     url: "/page/live/pages/tableDetail/tableDetail?specialColumnId=" +
-      //       item.columnId
+      //       item.columnId + "liveRoom=1"
       //   });
       // }
     })
