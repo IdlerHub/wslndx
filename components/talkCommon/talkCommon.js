@@ -18,6 +18,23 @@ Component({
         }
       }
     },
+    specialList: {
+      type: Array,
+      value: [],
+      observer: function (newVal, oldVal) {
+        // 属性值变化时执行
+        // if (newVal.length == 0) return
+        // if (newVal.length > oldVal.length) {
+        //   !this.touch || !this.data.showNum ? this.toBottom() : ''
+        //   if (this.data.showNum) {
+        //     this.triggerEvent('setNewmessagenum', {
+        //       num: newVal.length - oldVal.length,
+        //       type: 1
+        //     })
+        //   }
+        // }
+      }
+    },
     newMessage: {
       type: Number,
       value: 0
