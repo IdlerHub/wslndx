@@ -324,6 +324,9 @@ function sendCustomMessage(params) {
   then.tim.sendMessage(message).then(function (imResponse) {
     // 发送成功
     console.log(imResponse, '发送成功');
+    // if (messageFilter(payload, 1) == 1 && messageFilter(payload, 1) == 4) {
+    //   return
+    // }
     const talkList = then.data.talkList
     talkList.push({
       nick: then.data.userInfo.nickname,
