@@ -6,6 +6,7 @@ Page({
     topT: 28,
     statusBarHeight: 30,
     talkList: [],
+    specialList: [],
     close: 0,
     userInfo: {},
     liveDetail: {},

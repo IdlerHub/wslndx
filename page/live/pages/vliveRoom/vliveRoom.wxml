@@ -3,7 +3,7 @@
   bindleavepictureinpicture="bindleavepictureinpicture"
   wx:if="{{liveStatus == 1 && liveDetail.direction && !liveDetail.liveType}}">
 </live-player>
-<live-player src="{{liveDetail.liveUrl}}" class="v-player h-player" autoplay bindstatechange="bindstatechange"
+<live-player src="{{liveDetail.liveUrl}}" style="top:{{ statusBarHeight + 150 }}rpx" class="v-player h-player" autoplay bindstatechange="bindstatechange"
   wx:if="{{liveStatus == 1 && !liveDetail.direction && !liveDetail.liveType}}">
   <image src="../../images/full.png" bindtap="toHliveRoom"></image>
 </live-player>
@@ -11,7 +11,7 @@
   show-center-play-btn="{{false}}" enable-progress-gesture="{{false}}" show-progress="{{false}}"
   show-fullscreen-btn="{{false}}" show-play-btn="{{false}}" autoplay object-fit="fill"
   wx:if="{{liveStatus == 1 && liveDetail.direction && liveDetail.liveType && showVideo}}"></video>
-<video src="{{liveDetail.videoUrl}}" class="v-player h-player" controls="{{false}}" initial-time="{{liveDetail.now}}"
+<video src="{{liveDetail.videoUrl}}" style="top:{{ statusBarHeight + 150 }}rpx" class="v-player h-player" controls="{{false}}" initial-time="{{liveDetail.now}}"
   show-center-play-btn="{{false}}" enable-progress-gesture="{{false}}" show-progress="{{false}}"
   show-fullscreen-btn="{{false}}" show-play-btn="{{false}}" autoplay object-fit="fill"
   wx:if="{{liveStatus == 1 && !liveDetail.direction && liveDetail.liveType && showVideo}}">
