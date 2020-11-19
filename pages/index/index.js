@@ -718,16 +718,16 @@ Page({
     app.liveData.getLiveBySpecialColumnId({
       specialColumnId: item.columnId
     }).then(res => {
-      if (res.data.isAddSubscribe) {
+      // if (res.data.isAddSubscribe) {
         wx.navigateTo({
           url: `/page/live/pages/vliveRoom/vliveRoom?roomId=${item.liveId}`,
         })
-      } else {
-        wx.navigateTo({
-          url: "/page/live/pages/tableDetail/tableDetail?specialColumnId=" +
-            item.columnId
-        });
-      }
+      // } else {
+      //   wx.navigateTo({
+      //     url: "/page/live/pages/tableDetail/tableDetail?specialColumnId=" +
+      //       item.columnId + "liveRoom=1"
+      //   });
+      // }
     })
   }
 })

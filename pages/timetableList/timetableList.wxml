@@ -44,9 +44,13 @@
             <image src="../../images/userImg.png"></image>
             <view>{{ lesson.nickname }}</view>
           </view>
-          <view class="btn end" wx:if="{{lesson.status != 0 }}">
+          <view class="btn end" wx:if="{{lesson.status == 2 }}">
             <image src="/images/endIcon.png"></image>
             看回放
+          </view>
+          <view class="btn end waite" wx:elif="{{lesson.status == 1 }}">
+            <image src="/images/naoling.png"></image>
+            待开始
           </view>
           <view class="btn living" wx:else>
             <view wx:for="{{3}}" wx:key="index" class="statusWite"></view>

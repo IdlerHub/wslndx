@@ -13,7 +13,7 @@
     </image>
     <view class="txtCenter">
       <text>{{fn.num(liveDetail.nickname)}}</text>
-      <text>{{liveCount}}人在看</text>
+      <text wx:if="{{liveDetail.state > 0}}">{{liveCount}}人在看</text>
     </view>
     <view class="attention" catchtap="attention" wx:if="{{!liveDetail.follow}}">
       <image src="../../images/attentionicon.png"></image>

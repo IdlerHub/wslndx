@@ -23,6 +23,7 @@ page {
   height: 422rpx;
   position: fixed;
   top: 220rpx;
+  z-index: 999999999;
 }
 
 
@@ -43,18 +44,16 @@ page {
 }
 
 .h-player .liveRemind {
-  width: 414rpx;
-  height: 126rpx;
+  /* width: 414rpx; */
   background: linear-gradient(360deg, #FF7E56 0%, #F2323A 100%);
   position: absolute;
-  bottom: -130rpx;
+  bottom: -108rpx;
   left: 20rpx;
   border-radius: 0 100rpx 100rpx 30rpx;
   display: flex;
   align-items: flex-start;
-  justify-content: center;
-  padding-top: 20rpx;
-  box-sizing: border-box;
+  padding: 20rpx 40rpx 20rpx 20rpx;
+  z-index: 999999999;
 }
 
 .h-player .liveRemind image {
@@ -77,6 +76,12 @@ page {
   color: #FFFFFF;
 }
 
+.h-player .liveRemind .remindTxt .text {
+  font-size: 28rpx;
+  font-weight: 500;
+  color: #FFFFFF;
+}
+
 .h-player .liveRemind .remindTxt .liveName {
   max-width: 300rpx;
   text-overflow: ellipsis;
@@ -86,9 +91,9 @@ page {
 
 .h-player .liveRemind .remindTxt text .time {
   display: inline-block;
-  padding:5rpx 6rpx;
+  padding:0rpx 6rpx;
   text-align: center;
-  line-height: 40rpx;
+  /* line-height: 40rpx; */
   font-size: 28rpx;
   font-weight: 500;
   color: #F2323A;

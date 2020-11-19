@@ -51,7 +51,7 @@ Page({
   },
   toDetail(e) {
     let url = ''
-    if (!e.currentTarget.dataset.status) {
+    if (!e.currentTarget.dataset.status || e.currentTarget.dataset.status == 1) {
       url =
         "/page/live/pages/vliveRoom/vliveRoom?roomId=" +
         e.currentTarget.dataset.liveid;
@@ -68,6 +68,7 @@ Page({
     this.params.date = new Date(date).valueOf()
     let list = this.data.courseList
     return LiveData.newUserLessons(this.params).then((res) => {
+      let date = new Date(), dataTime = ''
       list.push(...res.dataList)
       this.setData({
         courseList: list,

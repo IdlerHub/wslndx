@@ -49,10 +49,13 @@
 .talkItem .contentBox {
   display: flex;
   font-size: calc(36vmin / 7.5);
-  line-height: calc(50vmin / 7.5);
   font-weight: 400;
   align-items: center;
   flex-wrap: wrap;
+}
+
+.talkItem .richtext {
+  line-height: calc(50vmin / 7.5);
 }
 
 .talkItem .contentBox text {

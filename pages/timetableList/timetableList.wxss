@@ -258,8 +258,14 @@ page,
   margin-right: 8rpx;
 }
 
+
+
 .contariner .item .txtBox .textBottom .end {
   background: linear-gradient(90deg, #FFAB00 0%, #FF9200 100%);
+}
+
+.contariner .item .txtBox .textBottom .waite {
+  background: linear-gradient(270deg, #44A2FF 0%, #007CF7 100%);
 }
 
 
@@ -269,6 +275,11 @@ page,
   margin-right: 6rpx;
 }
 
+.contariner .item .txtBox .textBottom .waite image {
+  width: 24rpx;
+  height: 24rpx;
+  margin-right: 8rpx;
+}
 
 .qstBox {
   height: 100vh;

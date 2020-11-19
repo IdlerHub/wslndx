@@ -221,7 +221,7 @@ function timGetmessage(roomId, isFirst) {
       const talkList = [{
           nick: '网上老年大学小助手',
           payload: {
-            text: '欢迎来到直播间：1、请自行调节手机音量至合适的状态。2、听众发言可以在讨论区进行查看。'
+            text: '欢迎来到直播间：<p> 1、请自行调节手机音量至合适的状态。</p> <p>2、听众发言可以在讨论区进行查看。</p>'
           }
         }],
         arr = []
