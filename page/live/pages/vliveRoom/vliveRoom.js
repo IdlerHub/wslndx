@@ -216,8 +216,8 @@ Page({
   setCustommessag(customText, type, values) {
     let params = {
       customText: customText,
-      customType: '0',
-      isShow: 'notShow',
+      customType: type == 'praise' ? '2' : '0',
+      isShow: type == 'praise' ? 'praiseShow' : 'show',
       attachContent: type == 'praise' ? values : ''
     }
     timsdk.customParams(params)
@@ -298,4 +298,10 @@ Page({
       })
     })
   },
+  animationCheck() {
+    this.data.specialList.splice(0, 1)
+    this.setData({
+      specialList: this.data.specialList
+    })
+  }
 })

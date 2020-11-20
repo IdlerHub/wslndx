@@ -117,6 +117,9 @@ Component({
       this.triggerEvent('setNewmessagenum', {
         num: 0
       })
+    },
+    animationiteration() {
+      this.triggerEvent('animationCheck')
     }
   }
 })

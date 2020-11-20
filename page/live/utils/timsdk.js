@@ -84,7 +84,7 @@ function timInit(that, values, type) {
     SDKAppID: then.data.$state.sdkAppid
   };
   then.tim = TIM.create(options);
-  if(type) return
+  if (type) return
   then.tim.setLogLevel(1);
   then.tim.on(TIM.EVENT.SDK_READY, (event) => {
     // 收到离线消息和会话列表同步完毕通知，接入侧可以调用 sendMessage 等需要鉴权的接口
@@ -145,9 +145,9 @@ function joinGroup() {
       gender: TIM.TYPES.GENDER_MALE,
       selfSignature: '',
       allowType: TIM.TYPES.ALLOW_TYPE_ALLOW_ANY
-    }).then(function(imResponse) {
+    }).then(function (imResponse) {
       console.log(imResponse.data, '更新资料成功'); // 更新资料成功
-    }).catch(function(imError) {
+    }).catch(function (imError) {
       console.warn('updateMyProfile error:', imError); // 更新资料失败的相关信息
     });
     timGetmessage(then.data.liveDetail.chatGroup, 1)
@@ -311,20 +311,29 @@ function customParams(params) {
 //发送自定义文本消息
 function sendCustomMessage(params) {
   console.log(params, 354234234234)
+  let payload = {
+    data: JSON.stringify(params),
+    description: '',
+    extension: ''
+  }
   let message = then.tim.createCustomMessage({
     to: String(then.data.liveDetail.chatGroup),
     conversationType: TIM.TYPES.CONV_GROUP,
-    payload: {
-      data: JSON.stringify(params),
-      description: '',
-      extension: ''
-    }
+    payload
   });
   // 3. 发送消息
   then.tim.sendMessage(message).then(function (imResponse) {
     // 发送成功
     console.log(imResponse, '发送成功');
-    if (messageFilter(payload, 1) == 1 && messageFilter(payload, 1) == 4) {
+    if (messageFilter(payload, 1) == 1 || messageFilter(payload, 1) == 4) {
+      const specialList= then.data.specialList
+      specialList.push({
+        nick: then.data.userInfo.nickname,
+        payload: params,
+      })
+      then.setData({
+        specialList
+      })
       return
     }
     const talkList = then.data.talkList

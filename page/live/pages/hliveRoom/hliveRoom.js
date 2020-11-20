@@ -6,6 +6,7 @@ Page({
     topT: 28,
     statusBarHeight: 30,
     talkList: [],
+    specialList: [],
     close: 0,
     userInfo: {},
     liveDetail: {},
@@ -202,6 +203,12 @@ Page({
         title: '关注成功',
         icon: 'none'
       })
+    })
+  },
+  animationCheck() {
+    this.data.specialList.splice(0, 1)
+    this.setData({
+      specialList: this.data.specialList
     })
   }
 }) 

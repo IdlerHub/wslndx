@@ -6,10 +6,13 @@
   left: calc(30vmin / 7.5);
   bottom: calc(150vmin / 7.5);
   z-index: 99999999;
-  overflow: hidden;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
+}
+
+.scrollBox {
+  width: 100vw;
 }
 
 .scrollMask {
@@ -19,7 +22,7 @@
 .topmarsk {
   width: 100%;
   height: calc(41vmin / 7.5);
-  background: linear-gradient(to bottom, rgba(244,244,244,1) 0%,rgba(244,244,244,0)  80%);
+  background: linear-gradient(to bottom, rgba(244, 244, 244, 1) 0%, rgba(244, 244, 244, 0) 80%);
   position: absolute;
   top: calc(-20vmin / 7.5);
   top: 0;
@@ -172,6 +175,81 @@
 .viewMore image {
   width: calc(20vmin / 7.5);
   height: calc(10vmin / 7.5);
-  margin-left:calc(10vmin / 7.5);
-  margin-top:calc(3vmin / 7.5);
+  margin-left: calc(10vmin / 7.5);
+  margin-top: calc(3vmin / 7.5);
+}
+
+.specialItem {
+  /* max-width: calc(580vmin / 7.5); */
+  max-height: calc(60vmin / 7.5);
+  padding: calc(11vmin / 7.5) calc(20vmin / 7.5);
+  background: linear-gradient(90deg, rgba(242, 50, 58, 0.85) 45%, rgba(255, 126, 86, 0.85) 100%);
+  border-radius: 100rpx;
+  position: absolute;
+  top: calc(-90vmin / 7.5);
+  left: calc(-1000vmin / 7.5);
+  animation: showAnimation 2s infinite;
+  z-index: 999999999;
+  opacity: 0;
+}
+
+.specialItem .joinRoom {
+  font-size: calc(36vmin / 7.5);
+  font-weight: 400;
+  color: #FFFFFF;
+}
+
+.specialItem .praiseText {
+  display: flex;
+  line-height: calc(60vmin / 7.5);
+  /* align-items: center; */
+}
+
+.specialItem .praiseText text:nth-child(1) {
+  font-size: calc(32vmin / 7.5);
+  font-weight: 400;
+  color: #FFFFFF;
+}
+
+.specialItem .praiseText image {
+  width: calc(75.43vmin / 7.5);
+  height: calc(88vmin / 7.5);
+  margin-left: calc(30vmin / 7.5);
+  margin-top: calc(-30vmin / 7.5);
+}
+
+.specialItem .praiseText text:nth-child(3) {
+  font-size: calc(30vmin / 7.5);
+  font-weight: 600;
+  color: #FFFFFF;
+  margin: 0 calc(8vmin / 7.5) 0 calc(17vmin / 7.5);
+}
+
+.specialItem .praiseText text:nth-child(4) {
+  font-size: calc(60vmin / 7.5);
+  font-weight: 600;
+  color: #FFFFFF;
+}
+
+@keyframes showAnimation {
+  
+  8% {
+    left: calc(-1000vmin / 7.5);
+    opacity: 0;
+  }
+
+  30% {
+    left: calc(10vmin / 7.5);
+    opacity: 1;
+  }
+
+  80% {
+    left: calc(10vmin / 7.5);
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+    left: calc(10vmin / 7.5);
+  }
 }
