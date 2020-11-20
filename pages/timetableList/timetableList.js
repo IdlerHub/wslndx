@@ -5,6 +5,7 @@ Page({
     courseList: [],
     weekList: ["周一", "周二", "周三", "周四", "周五", "周六", "周日"],
     weeks: [],
+    today: '',
     page: 1,
     current: 0,
     month: '',
@@ -44,7 +45,8 @@ Page({
       weeks.forEach((e, i) => {
         e.is_today ? [this.setData({
           current: i,
-          month: e.title
+          month: e.title,
+          today: e.date
         }), this.getUserLessons(e.date)] : ''
       })
     })
@@ -68,7 +70,8 @@ Page({
     this.params.date = new Date(date).valueOf()
     let list = this.data.courseList
     return LiveData.newUserLessons(this.params).then((res) => {
-      let date = new Date(), dataTime = ''
+      let date = new Date(),
+        dataTime = ''
       list.push(...res.dataList)
       this.setData({
         courseList: list,
@@ -130,25 +133,51 @@ Page({
   },
   getPewWeeks(date) {
     // 一天里一共的毫秒数
-    let oneDayTime = 1000 * 60 * 60 * 24 
-    let today = new Date(input_day)
+    let oneDayTime = 1000 * 60 * 60 * 24
+    let today = new Date(date)
     // 若那一天是周末时，则强制赋值为7
-    let todayDay = today.getDay() || 7 
+    let todayDay = today.getDay() || 7
     let startDate = new Date(
-        today.getTime() - oneDayTime * (todayDay - 1)
+      today.getTime() - oneDayTime * (todayDay - 1)
     )
-    let dateList = new Array()
-    for(let i = 0; i < 7; i++){
-        temp = new Date(startDate.getTime() + i * oneDayTime)
-        let year = temp.getFullYear()
-        let month = temp.getMonth() + 1
-        let day = temp.getDate()
-        dateList[i] = `${year}-${month}-${day}` 
-    }
-    return dateList
+    let weeks = Array.from(new Array(7))
+      .map((_, i) => {
+        let temp = new Date(startDate.getTime() + i * oneDayTime)
+        let date = temp.getFullYear() +
+          '-' +
+          ((temp.getMonth() + 1) < 10 ? '0' + (temp.getMonth() + 1) : (temp.getMonth() + 1)) +
+          '-' +
+          (temp.getDate() < 10 ? '0' + temp.getDate() : temp.getDate())
+        return {
+          name: this.data.weekList[i],
+          week: i + 1,
+          title: temp.getFullYear() + '年' + ((temp.getMonth() + 1) < 10 ? '0' + (temp.getMonth() + 1) : temp.getMonth() + 1),
+          day: temp.getDate() < 10 ? '0' + temp.getDate() : temp.getDate(),
+          date,
+          is_today: date == this.data.today ? 1 : 0
+        }
+      })
+    return weeks
   },
   pickerChange(e) {
-    console.log(this.getPewWeeks(String(e.detail.value)))
+    let date = e.detail.value
+    this.setData({
+      weeks: this.getPewWeeks(String(date)),
+      courseList: [],
+      pageEnd: 0
+    }, () => {
+      this.params = {
+        date: '',
+        pageSize: 20,
+        pageNum: 1
+      }
+      this.data.weeks.forEach((e, i) => {
+        date == e.date ? [this.setData({
+          current: i,
+          month: e.title,
+        }), this.getUserLessons(e.date)] : ''
+      })
+    })
   },
   pickerCancel() {
     console.log('picker取消')
