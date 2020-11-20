@@ -79,7 +79,7 @@
             <swiper-item class="tab-item">
                 <!-- 简介 -->
                 <scroll-view scroll-y="true" class="wrap synopsis">
-                    <rich-text class="introduction" nodes="{{lessonDetail.description}}"></rich-text>
+                    <rich-text class="introduction" nodes="{{lessonDetail.introduction}}"></rich-text>
                 </scroll-view>
             </swiper-item>
             <swiper-item class="tab-item">

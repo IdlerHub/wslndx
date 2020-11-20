@@ -261,7 +261,7 @@ Page({
     } else {
       app.liveData.recommendLessons().then(res => {
         this.setData({
-          liveRecommend: res.dataList.slice(0, 6)
+          liveRecommend: res.dataList.slice(0, 8)
         }, () => {
           res.dataList.length > 0 ? this.getRecommendLessons() : ''
         })
@@ -354,7 +354,7 @@ Page({
     this.shownow = false
   },
   onPageScroll(e) {
-    if (e.scrollTop >= this.headerHeight - this.navHeight) {
+    if (e.scrollTop >= this.headerHeight) {
       !this.data.scroll &&
         this.setData({
           scroll: true

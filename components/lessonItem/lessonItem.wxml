@@ -1,0 +1,24 @@
+<!--components/lessonItem/lessonItem.wxml-->
+<view class="itemBox">
+  <view class="item" wx:for="{{3}}" wx:key="index">
+    <view class="coverBox">
+      <image src="https://hwcdn.jinlingkeji.cn/uploads/images/0111024b59e436c97a5ee09b58901eb2.jpg"></image>
+      <image src="/images/recomonPlay.png"></image>
+    </view>
+    <view class="contentBox">
+      <text class="title">老年权益维护纠纷问题</text>
+      <view class="tabLine"> 
+        <text>零基础</text>
+        <text>国家一级艺术家</text>
+      </view>
+      <view class="bottom">
+        <view class="left">
+          <text>免费</text>
+          <text>|</text>
+          <text>1.4万人在学</text>
+        </view>
+        <view class="right">报名</view>
+      </view>
+    </view>
+  </view>
+</view>

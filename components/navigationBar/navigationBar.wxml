@@ -5,4 +5,4 @@
   </view>
   <view class="title">{{ title != "none" ? title : "" }}</view>
 </view>
-<view class="navigation-bar-holder" wx:if="{{ fixed && show }}" style="background:{{ placeholderBg }};padding-top:{{ paddingTop }}px;height:{{ height }}px;line-height:{{ height }}px;width:750rpx;"></view>
+<!-- <view class="navigation-bar-holder" wx:if="{{ fixed && show }}" style="background:{{ placeholderBg }};padding-top:{{ paddingTop }}px;height:{{ height }}px;line-height:{{ height }}px;width:750rpx;"></view> -->

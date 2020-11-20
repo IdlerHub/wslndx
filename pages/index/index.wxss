@@ -119,7 +119,7 @@ page {
   padding: 32rpx 20rpx;
   align-items: center;
   justify-content: space-around;
-  background: #fff;
+  background: linear-gradient(180deg, #FFFFFF 0%, #F7F7F7 100%);
 }
 
 .centerIcon .iconBox {
@@ -166,11 +166,9 @@ page {
 }
 
 .swiper {
-  height: 280rpx;
+  height: 240rpx;
   overflow: hidden;
-  padding: 20rpx 20rpx 0 20rpx;
   background: #fff;
-  border-radius: 8rpx;
   background: #fff;
 }
 
@@ -195,15 +193,9 @@ page {
   background: #F73943;
 }
 
-.swiper swiper-item {
-  border-radius: 8rpx;
-}
-
 .swiper .slide-image {
   width: 100%;
   height: 100%;
-  border-radius: 16rpx;
-  border: 1px solid #ededed;
 }
 
 
@@ -801,8 +793,8 @@ page .getGuideBox .nextBtn {
 }
 
 .search-box .search-left {
-  width: 556rpx;
-  height: 84rpx;
+  width: 558rpx;
+  height: 88rpx;
   padding: 0 20rpx;
   box-sizing: border-box;
   background: #fff;
@@ -831,15 +823,14 @@ page .getGuideBox .nextBtn {
 }
 
 .search-box .search-right image {
-  width: 46rpx;
-  height: 45rpx;
+  width: 52rpx;
+  height: 52rpx;
 }
 
 .search-box .search-right text {
   font-size: 28rpx;
-  font-family: PingFangSC-Medium, PingFang SC;
+  font-weight: 500;
   color: #666666;
-  margin-top: 7rpx;
 }
 
 .dragsort {
@@ -907,19 +898,10 @@ page .getGuideBox .nextBtn {
   color: #DF2020;
 }
 
-.xiaolin {
-  width: 168rpx;
-  height: 178rpx;
-  position: fixed;
-  bottom: 295rpx;
-  right: 18rpx;
-  z-index: 9999;
-}
-
 /* 直播推荐 */
 .liveBox {
-  margin: 20rpx 0;
   background: #fff;
+  margin-bottom: 20rpx;
 }
 
 .topTtile {
@@ -1119,15 +1101,12 @@ page .getGuideBox .nextBtn {
 }
 
 .skeletonSwiper {
-  height: 282rpx;
-  padding: 20rpx 20rpx 0 20rpx;
-  background: #fff;
+  height: 240rpx;
 }
 
 .skeletonSwiper .skeletonaAtive {
   width: 100%;
   height: 100%;
-  border-radius: 16rpx;
 }
 
 .skeleton {

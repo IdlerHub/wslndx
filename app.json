@@ -75,7 +75,9 @@
         "pages/rankingList/rankingList",
         "pages/search/search",
         "pages/assistant/assistant",
-        "pages/hotActivity/hotActivity"
+        "pages/hotActivity/hotActivity",
+        "pages/allLesson/allLesson",
+        "pages/schoolLesson/schoolLesson"
       ]
     },
     {

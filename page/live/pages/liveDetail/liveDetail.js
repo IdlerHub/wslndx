@@ -377,32 +377,26 @@ Page({
   },
   setHeight() {
     let that = this;
-    if (this.data.currentTab != 0) {
-      let query = wx.createSelectorQuery().in(this);
-      if (this.data.currentTab == 0) {
-        query.select(".introduction").boundingClientRect();
-      } else if (this.data.currentTab == 2) {
-        query.select(".comment").boundingClientRect();
-      } else {
-        query.select(".drama").boundingClientRect();
-      }
-      query.exec((res) => {
-        console.log(res)
-        let height =
-          this.data.currentTab == 1 ? res[0].height : res[0].height - -110;
-        height <= 110 ?
-          that.setData({
-            height: this.data.currentTab == 2 ? 350 : 700,
-          }) :
-          that.setData({
-            height
-          });
-      });
+    let query = wx.createSelectorQuery().in(this);
+    if (this.data.currentTab == 0) {
+      query.select(".introduction").boundingClientRect();
+    } else if (this.data.currentTab == 2) {
+      query.select(".comment").boundingClientRect();
     } else {
-      this.setData({
-        height: 306,
-      });
+      query.select(".drama").boundingClientRect();
     }
+    query.exec((res) => {
+      console.log(res)
+      let height =
+        this.data.currentTab == 1 ? res[0].height : res[0].height - -110;
+      height <= 110 ?
+        that.setData({
+          height: this.data.currentTab == 2 ? 350 : 700,
+        }) :
+        that.setData({
+          height
+        });
+    });
   },
   tolesson() {
     let that = this,

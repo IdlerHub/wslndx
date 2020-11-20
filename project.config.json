@@ -154,8 +154,8 @@
           "scene": null
         },
         {
-          "name": "pages/timetableList/timetableList",
-          "pathName": "pages/timetableList/timetableList",
+          "name": "page/index/pages/schoolLesson/schoolLesson",
+          "pathName": "page/index/pages/schoolLesson/schoolLesson",
           "query": "roomId=1336",
           "scene": 1000
         },
