@@ -1,12 +1,14 @@
 <!-- pages/timetableList/timetableList.wxml -->
 <view class="top">
-  <view class="topOne">
-    <text class="month">{{month}}</text>
-    <!-- <navigator hover-class="none" url="/pages/timetable/timetable" open-type="switchTab" class="topRight">
+  <picker mode="date" value="{{weeks[current].date}}" start="2018-01-01" bindchange="pickerChange" bindcancel="pickerCancel">
+    <view class="topOne">
+      <text class="month">{{month}}</text>
+      <!-- <navigator hover-class="none" url="/pages/timetable/timetable" open-type="switchTab" class="topRight">
       <text>全部课程</text>
       <image src="../../images/rightNow.png"></image>
     </navigator> -->
-  </view>
+    </view>
+  </picker>
   <view class="dateBox">
     <view class="dateItem {{current == index ? 'active' : ''}}" wx:for="{{7}}" wx:key="index" bindtap="checkCurrent"
       data-index="{{index}}" data-month="{{weeks[index].title}}">

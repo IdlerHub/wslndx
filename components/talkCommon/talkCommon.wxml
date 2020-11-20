@@ -107,9 +107,9 @@
             </view>
           </button>
         </view>
-        <view class="joinTxt langTxt" wx:elif="{{fn.showType(item.payload) == 1}}">
+        <!-- <view class="joinTxt langTxt" wx:elif="{{fn.showType(item.payload) == 1}}">
           <text>{{item.nick}} </text>进入了直播间
-        </view>
+        </view> -->
         <view class="joinTxt langTxt" wx:elif="{{fn.showType(item.payload) == 3}}">
           <text>{{item.nick}}</text> 关注了老师
         </view>
@@ -128,7 +128,7 @@
       <image src="/images/messageMore.png"></image>
     </view>
   </scroll-view>
-  <view class="specialItem" bindanimationiteration="animationiteration" wx:if="{{specialList[0]}}" style="padding-right: {{fn.showType(specialList[0].payload) == 4 ? 'calc(30vmin / 7.5)' : ''}}; top: {{!vliveRoom ? 'calc(15vmin / 7.5)' : ''}}">
+  <view class="specialItem" bindanimationiteration="animationiteration" wx:if="{{specialList[0] && talkList[0] && !close}}" style="padding-right: {{fn.showType(specialList[0].payload) == 4 ? 'calc(30vmin / 7.5)' : ''}}; top: {{!vliveRoom ? 'calc(15vmin / 7.5)' : ''}}">
     <text class="joinRoom"
       wx:if="{{fn.showType(specialList[0].payload) == 1}}">{{specialList[0].nick.length > 4 ? fn.showNick(specialList[0].nick) : specialList[0].nick}}进入了直播间</text>
     <view class="praiseText" wx:else>

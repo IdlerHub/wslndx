@@ -127,5 +127,30 @@ Page({
       }
       this.getUserLessons(this.data.weeks[this.data.current].date)
     })
+  },
+  getPewWeeks(date) {
+    // 一天里一共的毫秒数
+    let oneDayTime = 1000 * 60 * 60 * 24 
+    let today = new Date(input_day)
+    // 若那一天是周末时，则强制赋值为7
+    let todayDay = today.getDay() || 7 
+    let startDate = new Date(
+        today.getTime() - oneDayTime * (todayDay - 1)
+    )
+    let dateList = new Array()
+    for(let i = 0; i < 7; i++){
+        temp = new Date(startDate.getTime() + i * oneDayTime)
+        let year = temp.getFullYear()
+        let month = temp.getMonth() + 1
+        let day = temp.getDate()
+        dateList[i] = `${year}-${month}-${day}` 
+    }
+    return dateList
+  },
+  pickerChange(e) {
+    console.log(this.getPewWeeks(String(e.detail.value)))
+  },
+  pickerCancel() {
+    console.log('picker取消')
   }
 });

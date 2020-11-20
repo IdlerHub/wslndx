@@ -154,8 +154,8 @@
           "scene": null
         },
         {
-          "name": "page/live/pages/vliveRoom/vliveRoom",
-          "pathName": "page/live/pages/vliveRoom/vliveRoom",
+          "name": "pages/timetableList/timetableList",
+          "pathName": "pages/timetableList/timetableList",
           "query": "roomId=1336",
           "scene": 1000
         },
