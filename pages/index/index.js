@@ -6,15 +6,7 @@ const Tutor = require("../../data/Tutor")
 const app = getApp()
 Page({
   data: {
-    nav: [{
-      id: 1,
-      name: "推荐",
-      class: "#recommend1",
-      unMove: true
-    }],
-    height: 1000,
     isRefreshing: false,
-    currentTab: 0,
     showReco: false,
     guideNum: 0,
     guidetxt: '下一步',
@@ -24,7 +16,6 @@ Page({
     showdialog: true,
     showSignbox: true
   },
-  navHeightList: [],
   pageName: '首页',
   guide: 0,
   liveTimer: '',
@@ -56,19 +47,13 @@ Page({
     let that = this
     let query = wx.createSelectorQuery().in(this)
     query.select(".top").boundingClientRect()
-    query.select(".nav").boundingClientRect()
     query.exec(res => {
       that.headerHeight = res[0].height + pt + h
-      that.navHeight = res[1].height
-      that.navWidth = res[1].width
     })
     this.setData({
-      recommend: [],
       liveRecommend: [],
       category: [],
       history: {},
-      navScrollLeft: 0,
-      catrecommend: []
     })
     if (this.data.$state.userInfo.mobile) {
       await app.user.signed().then(res => {
@@ -103,7 +88,7 @@ Page({
     this.data.isSign ? this.signIn() : ''
   },
   init() {
-    return Promise.all([this.getactivite(), this.getRecommendLessons(1), this.getRecommend(), this.getCategory(), this.getBanner(), this.getPaper(), this.getDialog(), this.getGuide(), this.getUserOpenid()]).then(values => {
+    return Promise.all([this.getactivite(), this.getRecommendLessons(1), this.getBanner(), this.getPaper(), this.getDialog(), this.getGuide(), this.getUserOpenid()]).then(values => {
       if (this.data.$state.newGuide.index == 0) {
         this.setData({
           guideNum: 1,
@@ -126,10 +111,11 @@ Page({
           }) : ''
         })
       }
-      this.navHeightList = []
-      setTimeout(() => {
-        this.setHeight()
-      }, 500);
+    })
+  },
+  centerTab(e) {
+    this.setData({
+      bannercurrentTab: e.detail.current
     })
   },
   // 获取新手指引
@@ -147,56 +133,6 @@ Page({
         userIndex: res.data
       })
     })
-  },
-  setHeight() {
-    let nav = this.data.nav
-    let currentTab = this.data.currentTab
-    if (this.navHeightList[currentTab]) {
-      this.navHeightList[currentTab] < 300 ? this.getheight(nav, currentTab) : this.setData({
-        height: this.navHeightList[currentTab]
-      })
-    } else {
-      this.getheight(nav, currentTab)
-    }
-  },
-  getheight(nav, currentTab) {
-    let query = wx.createSelectorQuery().in(this)
-    let that = this
-    query.select(nav[currentTab].class).boundingClientRect()
-    query.exec(res => {
-      let height = res[0].height
-      that.navHeightList[currentTab] = height
-      that.setData({
-        height: height
-      })
-    })
-  },
-  centerTab(e) {
-    this.setData({
-      bannercurrentTab: e.detail.current
-    })
-  },
-  switchTab(event) {
-    let cur = event.detail.current,
-      that = this,
-      currren = this.data.currentTab
-    this.timer ? clearTimeout(this.timer) : ''
-    this.timer = setTimeout(() => {
-      this.data.currentTab != cur ? cur == that.setData({
-        currentTab: cur,
-      }) : ''
-      wx.hideLoading()
-    }, 300)
-    if (cur != 0) {
-      let id = this.data.nav[cur].id
-      this.geteCatrcommend(id, cur)
-      wx.uma.trackEvent('classify_btnClick', {
-        name: this.data.nav[cur].name
-      });
-    }
-    setTimeout(() => {
-      this.setHeight()
-    }, 500)
   },
   lastswitchTab(event) {
     if (!event) {
@@ -219,22 +155,6 @@ Page({
       }
     }
   },
-  getRecommend() {
-    let param = {
-      page: 1,
-      pageSize: 10,
-      province: this.data.$state.userInfo.university.split(',')[0]
-    }
-    return app.classroom.recommend(param).then(msg => {
-      msg.data.forEach(function (item) {
-        item.bw = app.util.tow(item.browse)
-      })
-      this.setData({
-        recommend: msg.data
-      })
-      wx.hideLoading()
-    })
-  },
   getRecommendLessons(type) {
     if (this.data.liveRecommend[0] && !type) {
       setInterval(() => {
@@ -254,50 +174,6 @@ Page({
       })
     }
 
-  },
-  geteCatrcommend(id, currtab) {
-    if (this.data.catrecommend[id]) {
-      if (this.data.catrecommend[id][0]) return
-    }
-    let temp = []
-    return app.classroom.lessons(this.categoryParams[id]).then(msg => {
-      msg.data.forEach(function (item) {
-        item.thousand = app.util.tow(item.browse)
-      })
-      let catrecommend = this.data.catrecommend
-      catrecommend[id] = temp.concat(msg.data)
-      this.setData({
-        [`catrecommend[${id}]`]: temp.concat(msg.data)
-      })
-      temp.concat(msg.data).length < 10 ? this.setData({
-        [`nav[${this.data.currentTab}].showBtoom`]: true
-      }) : ''
-      setTimeout(() => {
-        currtab != this.data.currentTab ? '' : this.setHeight()
-      }, 600)
-    })
-  },
-  getCategory() {
-    this.setData({
-      currentTab: 0,
-    })
-    this.categoryParams = {}
-    return app.user.getLessonCategory().then(msg => {
-      let arr = this.data.nav.slice(0, 1)
-      msg.data.user_lesson_category.forEach((i, index) => {
-        this.categoryParams[i.id] = {
-          category_id: i.id,
-          page: 1,
-          pageSize: 10
-        }
-        i['class'] = '#recommend' + i.id
-        i['showBtoom'] = false
-        arr.push(i)
-      })
-      this.setData({
-        nav: arr
-      })
-    })
   },
   getactivite() {
     // return app.user.activite()

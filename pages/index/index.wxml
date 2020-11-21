@@ -21,17 +21,6 @@
     <view class="skeletonaAtive"></view>
   </view>
 </template>
-<template name="skeleton">
-  <view class="skeleton" wx:for="{{5}}" wx:key="index">
-    <view class="skeletonBox">
-      <view class="skeletonImg"></view>
-      <view class="skeletonTitle"></view>
-      <view class="skeletonContent"></view>
-      <view class="skeletonDaram"></view>
-      <view class="skeletonDaram"></view>
-    </view>
-  </view>
-</template>
 <template name="recommend">
   <view catchtap="detailTap" wx:for="{{ recommend }}" wx:key="index" class="item" data-item="{{ item }}">
     <view class="content {{ type ? '': item.show_big ? 'big' : '' }}">
@@ -105,12 +94,6 @@
     </view>
   </view>
 </template>
-<template name="nomore">
-  <view class="nomore">
-    <image src="/images/nomore.png"></image>
-    <text>没有更多了</text>
-  </view>
-</template>
 <view class="container">
   <!-- 下拉刷新 -->
   <view wx:if="{{ isRefreshing }}" class="weui-loadmore indexdrop">
@@ -133,9 +116,9 @@
       <image src="/images/indexIcon/searchp.png"></image>
       <text>搜索课程名称</text>
     </navigator>
-    <navigator class="search-right" url="/page/index/pages/assistant/assistant" hover-class="none">
-      <image src="/images/indexIcon/xiaolin.png"></image>
-      <text>联系老师</text>
+    <navigator class="search-right" url="/page/live/pages/timetableList/timetableList" hover-class="none">
+      <image src="/images/indexIcon/timetableIcon.png"></image>
+      <text>我的课程</text>
     </navigator>
   </view>
   <view class="wrap recommend" id="recommend1">
@@ -222,6 +205,9 @@
     top="{{topT}}" isIndex="{{true}}" bind:closesignBox="closesignBox" bind:showIntegral="showIntegral"
     bind:sigin="sigin" />
 </view>
+<navigator url="/page/index/pages/assistant/assistant" hover-class="none">
+  <image src="/images/xiaolin.png" class="xiaolin"></image>
+</navigator>
 <!-- wx:if="{{ $state.newGuide.index == 0 }}" -->
 <cover-view class="getGuideBox" wx:if="{{ $state.newGuide.index == 0 }}">
   <cover-view class="numberbox" wx:if="{{guideNum == 1}}">
@@ -269,15 +255,3 @@
   <view class="integral navintegral">
   </view>
 </view> -->
-<!-- <swiper class="tab" style="height:{{ height }}px" current="{{ currentTab }}" duration="300" bindchange="switchTab"
-  bindtouchstart="touchstart" bindtouchend="touchend">
-  <swiper-item class="tab-item">
-  </swiper-item>
-  <swiper-item class="tab-item" wx:for="{{nav}}" wx:key="index" wx:if="{{!index == 0}}" item-id="{{item.name}}">
-    <view class="wrap recommend" id="recommend{{item.id}}">
-      <template is="skeleton" wx:if="{{ !catrecommend[item.id][0] }}"></template>
-      <template is="recommend" data="{{ recommend:catrecommend[item.id], $state, type: 1}}"></template>
-      <template is="nomore" wx:if="{{nav[currentTab].showBtoom}}"></template>
-    </view>
-  </swiper-item>
-</swiper> -->

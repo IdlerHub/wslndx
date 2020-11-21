@@ -22,7 +22,24 @@
     </view>
   </view>
 </template>
-<view class="nav {{ scroll ? 'fixed' : '' }}" style="top:{{ top }}px;padding-right:20px;overflow: hidden;" >
+<template name="skeleton">
+  <view class="skeleton" wx:for="{{10}}" wx:key="index">
+    <view class="skeletonBox">
+      <view class="skeletonImg"></view>
+      <view class="skeletonTitle"></view>
+      <view class="skeletonContent"></view>
+      <view class="skeletonDaram"></view>
+      <view class="skeletonDaram"></view>
+    </view>
+  </view>
+</template>
+<template name="nomore">
+  <view class="nomore">
+    <image src="/images/nomore.png"></image>
+    <text>没有更多了</text>
+  </view>
+</template>
+<view class="nav {{ scroll ? 'fixed' : '' }}" style="top:0px;padding-right:20px;overflow: hidden;" >
   <scroll-view class="nav" style="display:flex;padding-right: 20px" scroll-x="true" scroll-left="{{ navScrollLeft }}"
     scroll-with-animation="true" enable-flex scroll-into-view="item{{currentTab < 4 ? 0 : currentTab - 3}}">
     <block wx:for="{{ nav }}" wx:for-index="id" wx:for-item="item" wx:key="index" class="navitem">
@@ -36,3 +53,13 @@
     <image src="/images/indexIcon/tabclassify.png"></image>
   </navigator>
 </view>
+<swiper class="tab" style="height:{{ height }}px" current="{{ currentTab }}" duration="300" bindchange="switchTab"
+  bindtouchstart="touchstart" bindtouchend="touchend">
+  <swiper-item class="tab-item" wx:for="{{nav}}" wx:key="index" item-id="{{item.name}}">
+    <view class="wrap recommend" id="recommend{{item.id}}">
+      <template is="skeleton" wx:if="{{ !catrecommend[item.id][0] }}"></template>
+      <lessonItem lessonList="{{catrecommend[item.id]}}" isSchool="{{true}}"  wx:else/>
+      <template is="nomore" wx:if="{{nav[currentTab].showBtoom}}"></template>
+    </view>
+  </swiper-item>
+</swiper>
