@@ -44,15 +44,20 @@ let messageUplisten = function (event) {
   // 收到推送的单聊、群聊、群提示、群系统通知的新消息，可通过遍历 event.data 获取消息列表数据并渲染到页面
   // event.name - TIM.EVENT.MESSAGE_RECEIVED
   // event.data - 存储 Message 对象的数组 - [Message]
-  console.log(event)
-  const talkList = then.data.talkList
+  console.log(event, '新消息')
   event.data.forEach(e => {
     let {
       nick,
       payload,
+      to
     } = e
+    console.log(to, then.data.liveDetail.chatGroup)
+    if (to != then.data.liveDetail.chatGroup) return
     // && messageFilter(payload, 1) != 1 && messageFilter(payload, 1) != 4
+    console.log(messageFilter(payload, 1))
     if (messageFilter(payload, 1) > 0 && messageFilter(payload, 1) != 1 && messageFilter(payload, 1) != 4) {
+      const talkList = then.data.talkList
+      console.log('新增消息列表消息')
       talkList.push({
         nick,
         payload: payload.text ? payload : JSON.parse(payload.data)
@@ -60,6 +65,16 @@ let messageUplisten = function (event) {
       payload.text ? '' : messageFilter(payload) == -1 ? then.addliveCount() : ''
       then.setData({
         talkList
+      })
+    } else if (messageFilter(payload, 1) == 1 || messageFilter(payload, 1) == 4) {
+      console.log('点赞消息/进入直播间')
+      const specialList = then.data.specialList
+      specialList.push({
+        nick: then.data.userInfo.nickname,
+        payload: JSON.parse(payload.data),
+      })
+      then.setData({
+        specialList
       })
     } else if (messageFilter(payload) == -4) {
       then.setData({
@@ -169,7 +184,7 @@ function quitGroup() {
 
 //消息过滤
 function messageFilter(params, type) {
-  if (params.text) return 1
+  if (params.text) return 2
   switch (JSON.parse(params.data).customText) {
     case '0008043cc6f0647e061acf18dac98ef3': //进入直播
       return type ? 1 : -1
@@ -216,7 +231,7 @@ function timGetmessage(roomId, isFirst) {
       isShow: 'show',
 
     }
-    console.log(messageList, nextReqMessageID, isCompleted, '消息会话')
+    // console.log(messageList, nextReqMessageID, isCompleted, '消息会话')
     if (isFirst) {
       const talkList = [{
           nick: '网上老年大学小助手',
@@ -326,7 +341,7 @@ function sendCustomMessage(params) {
     // 发送成功
     console.log(imResponse, '发送成功');
     if (messageFilter(payload, 1) == 1 || messageFilter(payload, 1) == 4) {
-      const specialList= then.data.specialList
+      const specialList = then.data.specialList
       specialList.push({
         nick: then.data.userInfo.nickname,
         payload: params,

@@ -5,7 +5,7 @@
   position: fixed;
   left: calc(30vmin / 7.5);
   bottom: calc(150vmin / 7.5);
-  z-index: 99999999;
+  z-index: 9999999999;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -189,7 +189,7 @@
   top: calc(-90vmin / 7.5);
   left: calc(-1000vmin / 7.5);
   animation: showAnimation 2s infinite;
-  z-index: 999999999;
+  z-index: 9999999999999;
   opacity: 0;
 }
 
