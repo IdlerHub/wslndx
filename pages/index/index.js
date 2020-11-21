@@ -171,20 +171,6 @@ Page({
       })
     })
   },
-  switchNav(event) {
-    let cur = event.currentTarget.dataset.current,
-      id = event.currentTarget.dataset.id
-    if (this.data.currentTab != cur) {
-      this.setData({
-        currentTab: cur
-      })
-    }
-    if (this.data.currentTab == 0) {
-      this.setData({
-        navScrollLeft: 0
-      })
-    }
-  },
   centerTab(e) {
     this.setData({
       bannercurrentTab: e.detail.current

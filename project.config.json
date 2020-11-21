@@ -154,8 +154,8 @@
           "scene": null
         },
         {
-          "name": "page/index/pages/schoolLesson/schoolLesson",
-          "pathName": "page/index/pages/schoolLesson/schoolLesson",
+          "name": "page/index/pages/allSchoollesson/allSchoollesson",
+          "pathName": "page/index/pages/allSchoollesson/allSchoollesson",
           "query": "roomId=1336",
           "scene": 1000
         },

@@ -1,2 +1,5 @@
 <!--page/index/pages/schoolLesson/schoolLesson.wxml-->
-<text>page/index/pages/schoolLesson/schoolLesson.wxml</text>
+<navigator class="item" wx:for="{{schoolList}}" wx:key="index" hover-class="none" url="/page/index/pages/allSchoollesson/allSchoollesson">
+  <image src="{{item.image || '../../images/schoolNone.png'}}"></image>
+  <text>{{item.name}}</text>
+</navigator>

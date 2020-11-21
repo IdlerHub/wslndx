@@ -1,65 +1,76 @@
 // page/index/pages/schoolLesson/schoolLesson.js
 Page({
-
-  /**
-   * 页面的初始数据
-   */
   data: {
 
   },
-
-  /**
-   * 生命周期函数--监听页面加载
-   */
   onLoad: function (options) {
+    this.setData({
+      schoolList: [
+        {
+          id: 1,
+          image: 'https://wx.qlogo.cn/mmhead/Kwg1Hs1pPD3ToRhmu5xiaMVkyhVDFE1X7priaZvpzH2farxKricRtJcxg/0',
+          name: '山东老年大学'
+        },
+        {
+          id: 1,
+          image: 'https://wx.qlogo.cn/mmhead/Kwg1Hs1pPD3ToRhmu5xiaMVkyhVDFE1X7priaZvpzH2farxKricRtJcxg/0',
+          name: '山东老年大学'
+        },
+        {
+          id: 1,
+          image: 'https://wx.qlogo.cn/mmhead/Kwg1Hs1pPD3ToRhmu5xiaMVkyhVDFE1X7priaZvpzH2farxKricRtJcxg/0',
+          name: '山东老年大学打开了发生的纠纷拉萨大家发和的说了句废话的实力'
+        },
+        {
+          id: 1,
+          name: '山东老年大学'
+        },
 
+        {
+          id: 1,
+          name: '山东老年大学'
+        },
+        {
+          id: 1,
+          image: 'https://wx.qlogo.cn/mmhead/Kwg1Hs1pPD3ToRhmu5xiaMVkyhVDFE1X7priaZvpzH2farxKricRtJcxg/0',
+          name: '山东老年大学'
+        },
+        {
+          id: 1,
+          name: '山东老年大学'
+        },
+
+        {
+          id: 1,
+          image: 'https://wx.qlogo.cn/mmhead/Kwg1Hs1pPD3ToRhmu5xiaMVkyhVDFE1X7priaZvpzH2farxKricRtJcxg/0',
+          name: '山东老年大学'
+        },
+        {
+          id: 1,
+          image: 'https://wx.qlogo.cn/mmhead/Kwg1Hs1pPD3ToRhmu5xiaMVkyhVDFE1X7priaZvpzH2farxKricRtJcxg/0',
+          name: '山东老年大学'
+        },
+      ]
+    })
   },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
   onReady: function () {
 
   },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
   onShow: function () {
 
   },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
   onHide: function () {
 
   },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
   onUnload: function () {
 
   },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
   onPullDownRefresh: function () {
 
   },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
   onReachBottom: function () {
 
   },
-
-  /**
-   * 用户点击右上角分享
-   */
   onShareAppMessage: function () {
 
   }

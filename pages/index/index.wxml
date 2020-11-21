@@ -56,37 +56,35 @@
   </view>
 </template>
 <template name="liveBox">
-  <view wx:if="{{recommend[0]}}">
-    <view class="liveBox" wx:if="{{liveRecommend[0]}}">
-      <view class="topTtile">
-        <text>免费直播</text>
-        <navigator open-type="switchTab" class="topTtile-right" url="/pages/timetableList/timetableList"
-          hover-class="none">
-          <text>本周课表</text>
-          <image src="/images/Return-black.png"></image>
-        </navigator>
-      </view>
-      <view class="comment">
-        <view wx:for="{{liveRecommend}}" wx:key="index" class="liveItem"
-          style="{{index + 1 > 6 - 2 ? 'border:none' : '' }}" bindtap="toLivelesson" data-item="{{item}}">
-          <view class="liveImgBox">
-            <image src="{{item.indexCover}}">
-            </image>
-            <view class="liveStatus"
-              style="background: {{ item.status == 0 ? '' : 'linear-gradient(270deg, #44A2FF 0%, #007CF7 100%);border-radius: 10rpx 6rpx 6rpx 0px;' }}">
-              <view class="statusLeft" wx:if="{{item.status == 0}}">
-                <view wx:for="{{3}}" wx:key="index" class="statusWite"></view>
-                <view class="statusTxt">直播</view>
-                <view class="viewNum">{{fn.num(item.viewNum)}}人</view>
-              </view>
-              <view class="statusLeft" wx:else>
-                <view class="statusTxt" style="margin: 0">未开始</view>
-              </view>
+  <view class="liveBox" wx:if="{{liveRecommend[0]}}">
+    <view class="topTtile">
+      <text>免费直播</text>
+      <navigator open-type="switchTab" class="topTtile-right" url="/pages/timetableList/timetableList"
+        hover-class="none">
+        <text>本周课表</text>
+        <image src="/images/Return-black.png"></image>
+      </navigator>
+    </view>
+    <view class="comment">
+      <view wx:for="{{liveRecommend}}" wx:key="index" class="liveItem"
+        style="{{index + 1 > 6 - 2 ? 'border:none' : '' }}" bindtap="toLivelesson" data-item="{{item}}">
+        <view class="liveImgBox">
+          <image src="{{item.indexCover}}">
+          </image>
+          <view class="liveStatus"
+            style="background: {{ item.status == 0 ? '' : 'linear-gradient(270deg, #44A2FF 0%, #007CF7 100%);border-radius: 10rpx 6rpx 6rpx 0px;' }}">
+            <view class="statusLeft" wx:if="{{item.status == 0}}">
+              <view wx:for="{{3}}" wx:key="index" class="statusWite"></view>
+              <view class="statusTxt">直播</view>
+              <view class="viewNum">{{fn.num(item.viewNum)}}人</view>
+            </view>
+            <view class="statusLeft" wx:else>
+              <view class="statusTxt" style="margin: 0">未开始</view>
             </view>
           </view>
-          <text>{{item.liveName}}</text>
-          <text>{{item.dayTime}} {{item.startTime}}</text>
         </view>
+        <text>{{item.liveName}}</text>
+        <text>{{item.dayTime}} {{item.startTime}}</text>
       </view>
     </view>
   </view>
@@ -118,7 +116,7 @@
   <view wx:if="{{ isRefreshing }}" class="weui-loadmore indexdrop">
     <view class="weui-loading"></view>
   </view>
-  <view class="top" style="padding-top:{{ topT }}px" wx:if="{{recommend[0]}}" bindtap="toInfo">
+  <view class="top" style="padding-top:{{ topT }}px" wx:if="{{liveRecommend[0]}}" bindtap="toInfo">
     <view class="avatarBox" catchtap="toUser" wx:if="{{$state.authUserInfo}}">
       <image class="img" src="{{$state.userInfo.avatar}}" alt=""></image>
     </view>
@@ -142,7 +140,7 @@
   </view>
   <view class="wrap recommend" id="recommend1">
     <!-- 广告位banner -->
-    <view class="swiperBox" wx:if="{{recommend[0]}}">
+    <view class="swiperBox" wx:if="{{liveRecommend[0]}}">
       <swiper autoplay interval="3500" duration="200" circular class="swiper" wx:if="{{imgUrls[0].image}}"
         current="{{bannercurrentTab}}" bindanimationfinish="centerTab">
         <block wx:for="{{imgUrls}}" wx:key="index">
@@ -171,7 +169,7 @@
       </navigator>
       <navigator class="iconBox" hover-class="none" url="/pages/video/video">
         <image src="/images/indexIcon/sortVideoicon.png"></image>
-        <text>短视频  </text>
+        <text>短视频 </text>
       </navigator>
       <navigator class="iconBox" hover-class="none" url="/page/index/pages/schoolLesson/schoolLesson">
         <image src="/images/indexIcon/shollLesson.png"></image>
@@ -271,21 +269,7 @@
   <view class="integral navintegral">
   </view>
 </view> -->
-<!-- <view class="nav {{ scroll ? 'fixed' : '' }}" style="top:{{ top }}px;padding-right:20px;overflow: hidden;" wx:else>
-  <scroll-view class="nav" style="display:flex;padding-right: 20px" scroll-x="true" scroll-left="{{ navScrollLeft }}"
-    scroll-with-animation="true" enable-flex scroll-into-view="item{{currentTab < 4 ? 0 : currentTab - 3}}">
-    <block wx:for="{{ nav }}" wx:for-index="id" wx:for-item="item" wx:key="index" class="navitem">
-      <formCode bind:handler="switchNav" data-current="{{ id }}" data-id="{{item.id}}">
-        <view class="item {{ [currentTab == id ? 'active' : '',id == 0 ? 'itemone' : ''] }}"
-          style="margin-right:{{id + 1 == nav.length ? '40rpx' : ''}}" id="item{{id}}">{{ item.name }}</view>
-      </formCode>
-    </block>
-  </scroll-view>
-  <navigator hover-class="none" class="tabclassify" url="/page/index/pages/drag/drag?index={{currentTab}}">
-    <image src="/images/indexIcon/tabclassify.png"></image>
-  </navigator>
-</view>
-<swiper class="tab" style="height:{{ height }}px" current="{{ currentTab }}" duration="300" bindchange="switchTab"
+<!-- <swiper class="tab" style="height:{{ height }}px" current="{{ currentTab }}" duration="300" bindchange="switchTab"
   bindtouchstart="touchstart" bindtouchend="touchend">
   <swiper-item class="tab-item">
   </swiper-item>

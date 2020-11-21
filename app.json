@@ -77,7 +77,8 @@
         "pages/assistant/assistant",
         "pages/hotActivity/hotActivity",
         "pages/allLesson/allLesson",
-        "pages/schoolLesson/schoolLesson"
+        "pages/schoolLesson/schoolLesson",
+        "pages/allSchoollesson/allSchoollesson"
       ]
     },
     {
