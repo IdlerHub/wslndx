@@ -146,7 +146,7 @@
     <template is="skeletonSwiper" wx:else></template>
     <!-- 中间icon -->
     <view class="centerIcon">
-      <navigator class="iconBox" hover-class="none" url="/page/index/pages/rankingList/rankingList">
+      <navigator class="iconBox" hover-class="none" url="/page/index/pages/allLesson/allLesson">
         <image src="/images/indexIcon/allLessonIcon.png"></image>
         <text>全部课程</text>
       </navigator>
