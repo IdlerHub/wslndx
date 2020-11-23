@@ -39,7 +39,7 @@
     <text>没有更多了</text>
   </view>
 </template>
-<view class="nav {{ scroll ? 'fixed' : '' }}" style="top:0px;padding-right:20px;overflow: hidden;" >
+<view class="nav {{ scroll ? 'fixed' : '' }}" style="top:0px;padding-right:20px;overflow: hidden;">
   <scroll-view class="nav" style="display:flex;padding-right: 20px" scroll-x="true" scroll-left="{{ navScrollLeft }}"
     scroll-with-animation="true" enable-flex scroll-into-view="item{{currentTab < 4 ? 0 : currentTab - 3}}">
     <block wx:for="{{ nav }}" wx:for-index="id" wx:for-item="item" wx:key="index" class="navitem">
@@ -49,17 +49,27 @@
       </formCode>
     </block>
   </scroll-view>
-  <navigator hover-class="none" class="tabclassify" url="/page/index/pages/drag/drag?index={{currentTab}}">
+  <view class="tabclassify" bindtap="showClassify">
     <image src="/images/indexIcon/tabclassify.png"></image>
-  </navigator>
+  </view>
 </view>
 <swiper class="tab" style="height:{{ height }}px" current="{{ currentTab }}" duration="300" bindchange="switchTab"
   bindtouchstart="touchstart" bindtouchend="touchend">
   <swiper-item class="tab-item" wx:for="{{nav}}" wx:key="index" item-id="{{item.name}}">
     <view class="wrap recommend" id="recommend{{item.id}}">
       <template is="skeleton" wx:if="{{ !catrecommend[item.id][0] }}"></template>
-      <lessonItem lessonList="{{catrecommend[item.id]}}" isSchool="{{true}}"  wx:else/>
+      <lessonItem lessonList="{{catrecommend[item.id]}}" isSchool="{{true}}" wx:else />
       <template is="nomore" wx:if="{{nav[currentTab].showBtoom}}"></template>
     </view>
   </swiper-item>
 </swiper>
+
+<view class="tabclassifyBox" wx:if="{{showClassify}}" bindtap="showClassify">
+  <view class="classifyContent" catchtap="return">
+    <view class="classifyTitle">点击进入课程分类<image src="../../images/icon-del.png" bindtap="showClassify"></image>
+    </view>
+    <view class="classifyitemBox">
+      <view class="classifyitem" wx:for="{{nav}}" wx:key="index" style="color: {{ currentTab == index ? '#F2323A' : ''}}" bindtap="switchNav" data-current="{{index}}" data-id="{{item.id}}">{{item.name}}</view>
+    </view>
+  </view>
+</view>

@@ -2,6 +2,7 @@
 page {
   padding-bottom: 60rpx;
 }
+
 .recommend .item {
   padding: 0 20rpx;
   box-sizing: border-box;
@@ -294,3 +295,81 @@ page {
     opacity: 1;
   }
 }
+
+.tabclassifyBox {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  background: rgba(0, 0, 0, 0.8);
+  top: 0;
+  z-index: 9999;
+}
+
+.tabclassifyBox .classifyContent {
+  width: 100%;
+  background-color: #fff;
+  border-radius: 30rpx 30rpx 0px 0px;
+  position: absolute;
+  bottom: 0;
+  animation: showClassify 0.5s;
+}
+
+.tabclassifyBox .classifyContent .classifyTitle {
+  width: 100%;
+  height: 120rpx;
+  border-bottom: 1rpx solid #E9E9E9;
+  text-align: center;
+  line-height: 120rpx;
+  font-size: 42rpx;
+  font-weight: 500;
+  color: #333333;
+  position: relative;
+}
+
+.tabclassifyBox .classifyContent image {
+  width: 32rpx;
+  height: 32rpx;
+  padding: 30rpx;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.tabclassifyBox .classifyContent .classifyitemBox {
+  width: 100%;
+  max-height: 790rpx;
+  overflow: hidden;
+  overflow-y: auto;
+  padding:30rpx 0 30rpx 30rpx;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+}
+
+.tabclassifyBox .classifyContent .classifyitemBox .classifyitem {
+  width: 210rpx;
+  height: 90rpx;
+  text-align: center;
+  line-height: 90rpx;
+  font-size: 38rpx;
+  font-weight: 400;
+  color: #333333;
+  background: #F5F6FA;
+  border-radius: 10rpx;
+  margin-right: 30rpx;
+  margin-bottom: 30rpx;
+}
+
+@keyframes showClassify {
+  from {
+    bottom: -920rpx;
+  }
+  to {
+    bottom: 0;
+  }
+}
+
+
+

@@ -8,7 +8,8 @@ Page({
     currentTab: 0,
     navScrollLeft: 0,
     height: 1000,
-    scroll: false
+    scroll: false,
+    showClassify: false
   },
   navHeightList: [],
   onLoad: function (options) {
@@ -127,7 +128,8 @@ Page({
       id = event.currentTarget.dataset.id
     if (this.data.currentTab != cur) {
       this.setData({
-        currentTab: cur
+        currentTab: cur,
+        showClassify: false
       })
     }
     if (this.data.currentTab == 0) {
@@ -191,5 +193,10 @@ Page({
           scroll: false
         })
     }
+  },
+  showClassify() {
+    this.setData({
+      showClassify: !this.data.showClassify
+    })
   }
 })
