@@ -1,7 +1,12 @@
 // page/index/pages/allLesson/allLesson.js
 Page({
   data: {
-    current: 0
+    current: 0,
+    tabCurrent: 1,
+    crumbs: {
+
+    },
+    lessonlist: []
   },
   onLoad: function (options) {
     let navList = [
@@ -79,6 +84,16 @@ Page({
     if(e.detail.current == this.data.current) return
     this.setData({
       current: e.detail.current
+    })
+  },
+  catchtouchmove() {
+    return false
+  },
+  checkTab() {
+    this.setData({
+      tabCurrent: this.data.tabCurrent ? 0 : 1
+    }, () => {
+
     })
   }
 })

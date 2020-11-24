@@ -344,47 +344,6 @@ Page({
     })
   },
   onReachBottom() {
-    if (this.data.currentTab != 0 && !this.data.nav[this.data.currentTab].showBtoom) {
-      let id = this.data.nav[this.data.currentTab].id
-      let temp = this.data.catrecommend[id]
-      this.categoryParams[id].page++
-      wx.showLoading({
-        title: '加载中'
-      })
-      app.classroom.lessons(this.categoryParams[id]).then(msg => {
-        let next = true
-        msg.data.forEach(function (item) {
-          item.thousand = app.util.tow(item.browse)
-          temp.forEach(i => {
-            i.id == item.id ? next = false : ''
-          })
-        })
-        if (!next) return
-        if (msg.data.length == 0) {
-          this.setData({
-            [`nav[${this.data.currentTab}].showBtoom`]: true
-          })
-        }
-        this.data.catrecommend[id] = temp.concat(msg.data)
-        this.setData({
-          [`catrecommend[${id}]`]: temp.concat(msg.data)
-        })
-        let query = wx.createSelectorQuery().in(this)
-        let that = this,
-          nav = this.data.nav,
-          currentTab = this.data.currentTab
-        query.select(nav[currentTab].class).boundingClientRect()
-        query.exec(res => {
-          let height = res[0].height
-          that.navHeightList[currentTab] = height
-          that.setData({
-            height: height,
-            showLoading: false
-          })
-          wx.hideLoading()
-        })
-      })
-    }
     this.setData({
       onReachBottom: true
     })

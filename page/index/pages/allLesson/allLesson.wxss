@@ -29,6 +29,8 @@
   display: flex;
 }
 
+
+
 .contrainer .scrollLeft {
   width: 220rpx;
   height: 100%;
@@ -113,10 +115,113 @@
   font-weight: 400;
   color: #999999;
   margin-top: 20rpx;
-  margin-bottom: 80rpx;
-
+  display: block;
+  height: 100rpx;
+  flex-shrink: 0;
 }
 
 ::-webkit-scrollbar {
   display: none;
+}
+
+.lessonListBox {
+  height: calc(100vh - 120rpx);
+  display: flex;
+  flex-direction: column;
+}
+
+.lessonListBox .lessonListTop {
+  width: 100%;
+  height: 100rpx;
+  background: #EEEEEE;
+  display: flex;
+}
+
+.lessonListBox .lessonListTop .left {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 172rpx;
+  height: 100%;
+  border-right: 1rpx solid #FE9B02;
+}
+
+.lessonListBox .lessonListTop .left image {
+  width: 18.72rpx;
+  height: 28.01rpx;
+}
+
+.lessonListBox .lessonListTop .left text {
+  width: 56rpx;
+  height: 64rpx;
+  font-size: 28rpx;
+  font-weight: 400;
+  color: #333333;
+  line-height: 35rpx;
+  margin-left: 22rpx;
+}
+
+.lessonListBox .lessonListTop .right {
+  flex: 1;
+  padding: 0 43rpx;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+}
+
+.lessonListBox .lessonListTop .right text:nth-child(1) {
+  font-size: 36rpx;
+  font-weight: 400;
+  color: #999999;
+}
+
+.lessonListBox .lessonListTop .right image {
+  width: 18.72rpx;
+  height: 28.01rpx;
+  margin: 0 51rpx 0 37rpx;
+}
+
+.lessonListBox .lessonListTop .right text:nth-child(3) {
+  font-size: 36rpx;
+  font-weight: 400;
+  color: #F2323A;
+}
+
+.lessonListBox .lessonScroll {
+  flex: 1;
+}
+
+.lessonListBox .qst {
+  width: 100%;
+  height: 100%;
+  padding-top: 117rpx;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.lessonListBox .qst image {
+  width: 452rpx;
+  height: 288rpx;
+}
+
+.lessonListBox .qst text:nth-child(2) {
+  font-size: 36rpx;
+  font-weight: 400;
+  color: #999999;
+  margin-top: -30rpx;
+}
+
+.lessonListBox .qst text:nth-child(3) {
+  width: 300rpx;
+  height: 80rpx;
+  background: #F2323A;
+  border-radius: 46rpx;
+  text-align: center;
+  line-height: 80rpx;
+  font-size: 36rpx;
+  font-weight: 400;
+  color: #FFFFFF;
+  margin-top: 48rpx;
 }

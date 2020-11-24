@@ -3,27 +3,56 @@
   <image src="/images/indexIcon/searchp.png"></image>
   <text>搜索课程名称</text>
 </navigator>
-<view class="contrainer">
-  <scroll-view scroll-y class="scrollLeft">
-    <view id="nav{{item.id}}" class="navItem {{ current == index ? 'active' : '' }}" wx:for="{{navList}}" wx:key="index"
-      bindtap="navChange" data-index="{{index}}">
-      {{item.name}}
-      <text wx:if="{{ current == index}}"></text>
-    </view>
-  </scroll-view>
-  <swiper class="scrollRight" vertical duration="100" current="{{current}}" bindanimationfinish="swiperChange">
-    <swiper-item wx:for="{{navList}}" wx:key="index" class="swiperItem">
-      <scroll-view class="scrollView" scroll-top="0" scroll-with-animation="{{false}}" scroll-y enable-flex>
-          <view class="lessonBox">
-            <image src="../../images/activityDemo.png" class="activity"></image>
-            <view class="lessonItem">
-              <image src="../../images/lessonDemo.png" wx:for="{{ index + 10 }}" wx:for-index="idx" wx:key="idx"></image>
-            </view>
-          </view>
-          <view class="down">
-            上拉切换下一个分类～
-          </view>
+<swiper class="contrainer" current="{{tabCurrent}}">
+  <swiper-item catchtouchmove="stopTouchMove">
+    <view class="contrainer">
+      <scroll-view scroll-y class="scrollLeft">
+        <view id="nav{{item.id}}" class="navItem {{ current == index ? 'active' : '' }}" wx:for="{{navList}}"
+          wx:key="index" bindtap="navChange" data-index="{{index}}">
+          {{item.name}}
+          <text wx:if="{{ current == index}}"></text>
+        </view>
       </scroll-view>
-    </swiper-item>
-  </swiper>
-</view>
+      <swiper class="scrollRight" vertical duration="100" current="{{current}}" bindanimationfinish="swiperChange">
+        <swiper-item wx:for="{{navList}}" wx:key="index" class="swiperItem">
+          <scroll-view class="scrollView" scroll-top="0" scroll-with-animation="{{false}}" scroll-y enable-flex>
+            <view class="lessonBox">
+              <image src="../../images/activityDemo.png" class="activity"></image>
+              <view class="lessonItem">
+                <image src="../../images/lessonDemo.png" wx:for="{{ index + 20 }}" wx:for-index="idx" wx:key="idx" bindtap="checkTab">
+                </image>
+              </view>
+            </view>
+            <view class="down">
+              上拉切换下一个分类～
+            </view>
+          </scroll-view>
+        </swiper-item>
+      </swiper>
+    </view>
+  </swiper-item>
+  <swiper-item catchtouchmove="stopTouchMove">
+    <view class="lessonListBox">
+      <view class="lessonListTop">
+        <view class="left" bindtap="checkTab">
+          <image src="../../images/lessonBack.png"></image>
+          <text>返回
+            上级</text>
+        </view>
+        <view class="right">
+          <text>旅游</text>
+          <image src="../../images/lessonTo.png"></image>
+          <text>舞蹈锻炼</text>
+        </view>
+      </view>
+      <scroll-view class="lessonScroll">
+        <lessonItem lessonlist="{{lessonlist}}" wx:if="{{lessonlist.length > 0}}" />
+        <view wx:else class="qst">
+          <image src="/images/liveqs.png"></image>
+          <text>暂无相关课程</text>
+          <text bindtap="checkTab">查看全部课程</text>
+        </view>
+      </scroll-view>
+    </view>
+  </swiper-item>
+</swiper>
