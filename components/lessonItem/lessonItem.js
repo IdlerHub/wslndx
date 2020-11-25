@@ -1,8 +1,5 @@
 // components/lessonItem/lessonItem.js
 Component({
-  /**
-   * 组件的属性列表
-   */
   properties: {
     lessonList: {
       type: Array,
@@ -13,18 +10,21 @@ Component({
       value: false
     }
   },
-
-  /**
-   * 组件的初始数据
-   */
   data: {
 
   },
-
-  /**
-   * 组件的方法列表
-   */
   methods: {
-
+    toLesson(e) {
+      let item = e.currentTarget.dataset.item
+      if(item.type == 1) {
+        wx.navigateTo({
+          url: '/page/live/pages/liveDetail/liveDetail?specialColumnId=' + item.id,
+        })
+      } else {
+        wx.navigateTo({
+          url: '/page/index/pages/detail/detail?id=' + item.id,
+        })
+      }
+    }
   }
 })

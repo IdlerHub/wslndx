@@ -1,71 +1,26 @@
 // page/index/pages/allLesson/allLesson.js
+const app = getApp()
 Page({
   data: {
     current: 0,
-    tabCurrent: 1,
+    tabCurrent: 0,
     crumbs: {
-
+      tab1: '',
+      tab2: ''
     },
-    lessonlist: []
+    lessonList: [],
+    scrollTop: 0
   },
+  pageEnd: 0,
   onLoad: function (options) {
-    let navList = [
-      {
-        id: 1,
-        name: '健康养生'
-      },
-      {
-        id: 2,
-        name: '语言系'
-      },
-      {
-        id: 3,
-        name: '美术书法'
-      },
-      {
-        id: 4,
-        name: '国学文化'
-      },
-      {
-        id: 5,
-        name: '生活艺术'
-      },
-      {
-        id: 6,
-        name: '手机电脑'
-      },
-      {
-        id: 7,
-        name: '形象管理'
-      },
-      {
-        id: 8,
-        name: '舞蹈形体'
-      },
-      {
-        id: 9,
-        name: '健康养生'
-      },
-      {
-        id: 10,
-        name: '体育保健'
-      },
-      {
-        id: 11,
-        name: '乐器系'
-      },
-    ]
-    this.setData({
-      navList
-    })
+    this.params = {
+      categoryId: '',
+      pageSize: 20, 
+      pageNum: 1
+    }
+    this.getAllCategory()
   },
   onHide: function () {
-
-  },
-  onUnload: function () {
-
-  },
-  onPullDownRefresh: function () {
 
   },
   onReachBottom: function () {
@@ -74,26 +29,65 @@ Page({
   onShareAppMessage: function () {
 
   },
+  getAllCategory() {
+    app.lessonNew.getAllCategory().then(res => {
+      this.setData({
+        navList: res.dataList
+      })
+    })
+  },
   navChange(e) {
     let index = e.currentTarget.dataset.index, id = e.currentTarget.id
     this.setData({
+      scrollTop: 0,
       current: index
     })
   },
   swiperChange(e) {
     if(e.detail.current == this.data.current) return
     this.setData({
+      scrollTop: 0,
       current: e.detail.current
     })
   },
   catchtouchmove() {
     return false
   },
-  checkTab() {
+  checkTab(e, i) {
+    let categoryId = e.currentTarget.dataset.id, tab1 = e.currentTarget.dataset.tab1, tab2 = e.currentTarget.dataset.tab2
     this.setData({
-      tabCurrent: this.data.tabCurrent ? 0 : 1
+      tabCurrent: this.data.tabCurrent ? 0 : 1,
+      'crumbs.tab1': tab1,
+      'crumbs.tab2': tab2,
+      lessonList: []
     }, () => {
-
+      this.params = {
+        pageSize: 20, 
+        pageNum: 1
+      }
+      this.pageEnd = 0
+      if(!categoryId) return
+      this.categoryLessonOrLive(categoryId)
     })
+  },
+  categoryLessonOrLive(categoryId) {
+    this.params.categoryId = categoryId
+    app.lessonNew.categoryLessonOrLive(this.params).then(res => {
+      let lessonList = this.data.lessonList
+      res.dataList.forEach(function (item) {
+        item.thousand = app.util.tow(item.browse)
+      })
+      lessonList.push(...res.dataList)
+      this.setData({
+        lessonList
+      }, () => {
+        res.dataList.length < 20 ? this.pageEnd = 1 : ''
+      })
+    })
+  },
+  scrolltolower() {
+    if(this.pageEnd) return
+    this.params.pageNum += 1
+    this.categoryLessonOrLive(this.params.categoryId)
   }
 })

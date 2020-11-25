@@ -1,27 +1,28 @@
 <!--components/lessonItem/lessonItem.wxml-->
 <view class="itemBox">
-  <view class="item" wx:for="{{lessonList}}" wx:key="index">
+  <view class="item" wx:for="{{lessonList}}" wx:key="index" bindtap="toLesson" data-item="{{item}}">
     <view class="coverBox">
-      <image src="https://hwcdn.jinlingkeji.cn/uploads/images/0111024b59e436c97a5ee09b58901eb2.jpg"></image>
+      <image src="{{item.image}}"></image>
       <image src="/images/recomonPlay.png"></image>
     </view>
     <view class="contentBox">
-      <text class="title">{{ item.title  || '老年权益维护纠纷问题'}}</text>
-      <view class="tabLine">
+      <text class="title">{{ item.title}}</text>
+      <view class="tabLine" wx:for="{{item.tags}}" wx:key="index">
         <text>零基础</text>
         <text>国家一级艺术家</text>
       </view>
-      <view class="bottom" wx:if="{{!isSchool}}">
+      <view class="bottom" wx:if="{{!isSchool && item.type == 1}}">
         <view class="left">
           <text>免费</text>
           <text>|</text>
-          <text>1.4万人在学</text>
+          <text>{{item.thousand || item.browse }}人在学</text>
         </view>
-        <view class="right">报名</view>
+        <!-- <view class="right">报名</view> -->
       </view>
       <view class="schoolBootem" wx:else>
-        <text class="left">剧集</text><text class="right">{{item.lesson_count}}集</text><text class="left">播放</text><text class="right">{{item.thousand || item.browse}}</text>
-        <text>查看全部课程</text>
+        <text class="left">剧集</text><text class="right">{{item.lesson_count || item.lessonCount}}集</text><text class="left">播放</text><text
+          class="right">{{item.thousand || item.browse}}</text>
+        <!-- <text>查看全部课程</text> -->
       </view>
     </view>
   </view>
