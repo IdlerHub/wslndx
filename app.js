@@ -65,6 +65,7 @@ var tutor = require("data/Tutor.js");
 var vote = require("data/Vote.js"); //票选活动接口
 var activity = require("data/Activity.js");
 var liveData = require("data/LiveData.js");
+var lessonNew = require("data/lessonNew.js");
 //app.js
 App({
   API_URL: store.API_URL,
@@ -82,6 +83,7 @@ App({
   activity,
   liveData,
   socket,
+  lessonNew,
   store,
   livePlayer,
   fundebug,

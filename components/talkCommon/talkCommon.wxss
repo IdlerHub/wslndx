@@ -90,6 +90,7 @@
 
 .talkItem .contentBox .shareTxt button {
   display: inline-block;
+  overflow: initial;
 }
 
 .talkItem .contentBox .specalBox {

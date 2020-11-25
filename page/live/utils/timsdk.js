@@ -70,7 +70,7 @@ let messageUplisten = function (event) {
       console.log('点赞消息/进入直播间')
       const specialList = then.data.specialList
       specialList.push({
-        nick: then.data.userInfo.nickname,
+        nick: nick,
         payload: JSON.parse(payload.data),
       })
       then.setData({
