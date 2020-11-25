@@ -78,7 +78,8 @@
         "pages/hotActivity/hotActivity",
         "pages/allLesson/allLesson",
         "pages/schoolLesson/schoolLesson",
-        "pages/allSchoollesson/allSchoollesson"
+        "pages/allSchoollesson/allSchoollesson",
+        "pages/interested/interested"
       ]
     },
     {

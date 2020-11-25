@@ -178,6 +178,11 @@
       </view>
       <lessonItem />
     </view>
+    <view class="interestedBox">
+      <text>调整学习兴趣</text>
+      <text>从此更懂你的学习需求</text>
+      <navigator hover-class="none" url="/page/index/pages/interested/interested">去调整</navigator>
+    </view>
   </view>
   <navigationBar wx:if="{{ scroll }}" id="navigationBar" placeholderBg="#F8F8F8" color="#000000" title="网上老年大学"
     back="{{ false }}" background="#F8F8F8"></navigationBar>
