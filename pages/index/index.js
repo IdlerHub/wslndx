@@ -166,9 +166,9 @@ Page({
     this.setData({
       bannercurrentTab: 0
     })
-    return app.classroom.banner({}).then(res => {
+    return app.lessonNew.getBannerList({}).then(res => {
       this.setData({
-        imgUrls: res.data
+        imgUrls: res.dataList
       })
     })
   },
@@ -340,7 +340,7 @@ Page({
   /* 广告位值跳转 */
   bannerGo(e) {
     let item = e.currentTarget.dataset.item;
-    if (item.jump_type == 1) {
+    if (item.jumpType == 1) {
       /* 外链 */
       wx.navigateTo({
         url: `../education/education?type=0&url=${item.clickurl}&login=${item.is_login}`
@@ -348,7 +348,7 @@ Page({
       wx.uma.trackEvent('index_bannerClick', {
         bannerTencent: item.title
       });
-    } else if (item.jump_type == 2) {
+    } else if (item.jumpType == 2) {
       /* 视频 */
       wx.navigateTo({
         url: `../../page/index/pages/detail/detail?id=${item.video_id}&name=${item.title}`
@@ -356,24 +356,24 @@ Page({
       wx.uma.trackEvent('index_bannerClick', {
         bannerVideo: item.title
       });
-    } else if (item.jump_type == 4) {
+    } else if (item.jumpType == 4) {
       this.minigo(item.clickurl)
       wx.uma.trackEvent('index_bannerClick', {
         bannerMini: item.title
       });
-    } else if (item.jump_type == 5) {
+    } else if (item.jumpType == 5) {
       wx.navigateTo({
         url: item.clickurl,
       })
       wx.uma.trackEvent('index_bannerClick', {
         bannerActivity: item.title
       });
-    } else if (item.jump_type == 6) {
+    } else if (item.jumpType == 6) {
       this.toLive(item.clickurl)
     } else {
       /* 文章 */
       wx.navigateTo({
-        url: "../../page/post/pages/pDetail/pDetail?id=" + item.article_id
+        url: "../../page/post/pages/pDetail/pDetail?id=" + item.articleId
       })
       wx.uma.trackEvent('index_bannerClick', {
         bannerBlog: item.title

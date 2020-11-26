@@ -1,6 +1,15 @@
 var httpService = require("../utils/service.js");
 
 /**
+ * @description: 首页banner
+ * @param {}
+ * @return:  promise
+ * **/
+function getBannerList(params) {
+  return httpService.post("index/getBannerList", params, null ,true);
+}
+
+/**
  * @description: 入门推荐温故知新
  * @param {}
  * @return:  promise
@@ -45,7 +54,10 @@ function categoryLesson(params) {
   return httpService.post("/university/categoryLesson", params, null ,true);
 }
 
+
+
 module.exports = {
+  getBannerList,
   interestList,
   getAllCategory,
   categoryLessonOrLive,
