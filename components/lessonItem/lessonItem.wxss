@@ -105,6 +105,18 @@
   letter-spacing: 3rpx;
 }
 
+.item .contentBox .bottom .righted {
+  width: 100rpx;
+  height: 46rpx;
+  background: #EDEFF7;
+  border-radius: 6rpx;
+  font-size: 28rpx;
+  font-weight: 400;
+  color: #808080;
+  line-height: 46rpx;
+  text-align: center;
+}
+
 .item .contentBox .schoolBootem {
   margin-top: 20rpx;
 }

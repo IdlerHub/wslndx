@@ -1,6 +1,15 @@
 var httpService = require("../utils/service.js");
 
 /**
+ * @description: 入门推荐温故知新
+ * @param {}
+ * @return:  promise
+ * **/
+function interestList(params) {
+  return httpService.post("index/interestList", params, null ,true);
+}
+
+/**
  * @description: 获取分类信息
  * @param {}
  * @return:  promise
@@ -37,6 +46,7 @@ function categoryLesson(params) {
 }
 
 module.exports = {
+  interestList,
   getAllCategory,
   categoryLessonOrLive,
   getSchollList,

@@ -8,9 +8,7 @@ Page({
   data: {
     isRefreshing: false,
     showReco: false,
-    guideNum: 0,
     guidetxt: '下一步',
-    guideNum: 1,
     shownow: true,
     shownowt: true,
     showdialog: true,
@@ -52,6 +50,8 @@ Page({
     })
     this.setData({
       liveRecommend: [],
+      sprogInterestList: [],
+      interestList: [],
       category: [],
       history: {},
     })
@@ -88,22 +88,7 @@ Page({
     this.data.isSign ? this.signIn() : ''
   },
   init() {
-    return Promise.all([this.getactivite(), this.getRecommendLessons(1), this.getBanner(), this.getPaper(), this.getDialog(), this.getGuide(), this.getUserOpenid()]).then(values => {
-      if (this.data.$state.newGuide.index == 0) {
-        this.setData({
-          guideNum: 1,
-          showdialog: false
-        })
-        app.setSignIn({
-          status: false,
-          count: 1
-        }, true)
-      } else {
-        this.setData({
-          guideNum: 5
-        })
-      }
-      console.log(app.globalData.query)
+    return Promise.all([this.getactivite(), this.getRecommendLessons(1), this.getinterestList(), this.getBanner(), this.getDialog(), this.getUserOpenid()]).then(values => {
       if (app.globalData.query.categoryId) {
         this.data.nav.forEach((v, i) => {
           v.id == app.globalData.query.categoryId ? this.setData({
@@ -118,12 +103,11 @@ Page({
       bannercurrentTab: e.detail.current
     })
   },
-  // 获取新手指引
-  getGuide() {
-    return app.user.guideRecord().then(res => {
-      let newGuide = res.data
-      app.store.setState({
-        newGuide
+  getinterestList() {
+    return app.lessonNew.interestList().then(res => {
+      this.setData({
+        interestList: res.data.interestList,
+        sprogInterestList: res.data.sprogInterestList
       })
     })
   },
@@ -412,13 +396,6 @@ Page({
       // envVersion: 'trial',
     })
   },
-  getPaper() {
-    app.classroom.paper({}).then(res => {
-      this.setData({
-        paperMsg: res.data
-      })
-    })
-  },
   /*获取首页活动弹框 */
   getDialog() {
     if (this.pageType) return
@@ -457,36 +434,6 @@ Page({
       url: `plugin-private://wx2b03c6e691cd7370/pages/live-player-plugin?room_id=${id}&custom_params=${customParams}`
     })
   },
-  /* 指引联动 */
-  nextGuide() {
-    if (this.data.guideNum == 1) {
-      this.setData({
-        guideNum: 2
-      })
-    } else if (this.data.guideNum == 2) {
-      this.setData({
-        guideNum: 3,
-        guidetxt: '我知道了'
-      })
-    } else {
-      if (this.guide) return
-      this.guide = true
-      let param = {
-        guide_name: 'index'
-      }
-      app.user.guideRecordAdd(param).then(res => {
-        app.getGuide()
-        this.setData({
-          guideNum: 5
-        })
-      }).catch(() => {
-        this.guide = 0
-        err.msg == '记录已增加' ? app.setState({
-          'newGuide.index': 1
-        }) : ''
-      })
-    }
-  },
   // 课程完成状态
   doneless(id) {
     this.data.recommend.forEach(item => {
@@ -522,7 +469,6 @@ Page({
     }, 2000);
   },
   sigin() {
-    console.log(4324234)
     if (!this.data.$state.userIndex.has_mp_openid) {
       wx.navigateTo({
         url: '/pages/education/education?type=sign&url=https://authorization.jinlingkeji.cn/#/',
@@ -549,6 +495,20 @@ Page({
       //       item.columnId + "liveRoom=1"
       //   });
       // }
+    })
+  },
+  addStudy(e) {
+    app.liveData.addSubscribe({columnId: e.detail.columnId}).then(() => {
+      this.data.interestList.forEach(i => {
+        i.columnId = e.detail.columnId ? i.isEnroll = 1 : ''
+      })
+      this.data.sprogInterestList.forEach(e => {
+        i.columnId = e.detail.columnId ? i.isEnroll = 1 : ''
+      })
+      this.setData({
+        interestList:  this.data.interestList,
+        sprogInterestList: this.data.sprogInterestList
+      })
     })
   }
 })

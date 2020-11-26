@@ -8,6 +8,10 @@ Component({
     isSchool: {
       type: Boolean,
       value: false
+    },
+    isIndex: {
+      type: Boolean,
+      value: false
     }
   },
   data: {
@@ -16,7 +20,15 @@ Component({
   methods: {
     toLesson(e) {
       let item = e.currentTarget.dataset.item
-      if(item.type == 1) {
+      if(item.type == 1 || item.columnId) {
+        if(item.columnId) {
+          item.isEnroll ? wx.navigateTo({
+            url: '/page/live/pages/liveDetail/liveDetail?specialColumnId=' + item.columnId,
+          }) : wx.navigateTo({
+            url: '/page/live/pages/tableDetail/tableDetail?specialColumnId=' + item.columnId,
+          })
+          return
+        }
         wx.navigateTo({
           url: '/page/live/pages/liveDetail/liveDetail?specialColumnId=' + item.id,
         })
@@ -25,6 +37,10 @@ Component({
           url: '/page/index/pages/detail/detail?id=' + item.id,
         })
       }
+    },
+    addStudy(e) {
+      let item = e.currentTarget.dataset.item
+      this.triggerEvent('addStudy', item)
     }
   }
 })

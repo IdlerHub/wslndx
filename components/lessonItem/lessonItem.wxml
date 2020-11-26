@@ -1,27 +1,37 @@
 <!--components/lessonItem/lessonItem.wxml-->
+<wxs module="fn">
+  module.exports = {
+  num: function(studyNum) {
+  return studyNum > 10000 ? (studyNum / 10000).toFixed(2) + 'w' : studyNum
+  },
+  }
+</wxs>
 <view class="itemBox">
   <view class="item" wx:for="{{lessonList}}" wx:key="index" bindtap="toLesson" data-item="{{item}}">
     <view class="coverBox">
-      <image src="{{item.image}}"></image>
+      <image src="{{item.image || item.indexCover}}"></image>
       <image src="/images/recomonPlay.png"></image>
     </view>
     <view class="contentBox">
-      <text class="title">{{ item.title}}</text>
+      <text class="title">{{ item.title || item.name}}</text>
       <view class="tabLine" wx:for="{{item.tags}}" wx:key="index">
         <text>零基础</text>
         <text>国家一级艺术家</text>
       </view>
-      <view class="bottom" wx:if="{{!isSchool && item.type == 1}}">
+      <view class="bottom" wx:if="{{(!isSchool && item.type == 1) || isIndex}}">
         <view class="left">
           <text>免费</text>
           <text>|</text>
-          <text>{{item.thousand || item.browse }}人在学</text>
+          <text>{{ fn.num(item.studyNum) }}人在学</text>
         </view>
-        <!-- <view class="right">报名</view> -->
+        <view class="right" wx:if="{{isIndex && !item.isEnroll}}" catchtap="addStudy" data-item="{{item}}">报名</view>
+        <view class="righted" wx:else>
+          已报名
+        </view>
       </view>
       <view class="schoolBootem" wx:else>
-        <text class="left">剧集</text><text class="right">{{item.lesson_count || item.lessonCount}}集</text><text class="left">播放</text><text
-          class="right">{{item.thousand || item.browse}}</text>
+        <text class="left">剧集</text><text class="right">{{item.lesson_count || item.lessonCount}}集</text><text
+          class="left">播放</text><text class="right">{{item.thousand || item.browse}}</text>
         <!-- <text>查看全部课程</text> -->
       </view>
     </view>
