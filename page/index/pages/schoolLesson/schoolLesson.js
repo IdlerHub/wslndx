@@ -1,65 +1,18 @@
-// page/index/pages/schoolLesson/schoolLesson.js
+// page/index/pages/schoolLesson/schoolLesson.jsccson
+const app = getApp()
 Page({
   data: {
-
+    schoolList: []
   },
+  params: {
+    pageNum: 1,
+    pageSize: 20
+  },
+  pageEnd: 0,
   onLoad: function (options) {
-    this.setData({
-      schoolList: [
-        {
-          id: 1,
-          image: 'https://wx.qlogo.cn/mmhead/Kwg1Hs1pPD3ToRhmu5xiaMVkyhVDFE1X7priaZvpzH2farxKricRtJcxg/0',
-          name: '山东老年大学'
-        },
-        {
-          id: 1,
-          image: 'https://wx.qlogo.cn/mmhead/Kwg1Hs1pPD3ToRhmu5xiaMVkyhVDFE1X7priaZvpzH2farxKricRtJcxg/0',
-          name: '山东老年大学'
-        },
-        {
-          id: 1,
-          image: 'https://wx.qlogo.cn/mmhead/Kwg1Hs1pPD3ToRhmu5xiaMVkyhVDFE1X7priaZvpzH2farxKricRtJcxg/0',
-          name: '山东老年大学打开了发生的纠纷拉萨大家发和的说了句废话的实力'
-        },
-        {
-          id: 1,
-          name: '山东老年大学'
-        },
-
-        {
-          id: 1,
-          name: '山东老年大学'
-        },
-        {
-          id: 1,
-          image: 'https://wx.qlogo.cn/mmhead/Kwg1Hs1pPD3ToRhmu5xiaMVkyhVDFE1X7priaZvpzH2farxKricRtJcxg/0',
-          name: '山东老年大学'
-        },
-        {
-          id: 1,
-          name: '山东老年大学'
-        },
-
-        {
-          id: 1,
-          image: 'https://wx.qlogo.cn/mmhead/Kwg1Hs1pPD3ToRhmu5xiaMVkyhVDFE1X7priaZvpzH2farxKricRtJcxg/0',
-          name: '山东老年大学'
-        },
-        {
-          id: 1,
-          image: 'https://wx.qlogo.cn/mmhead/Kwg1Hs1pPD3ToRhmu5xiaMVkyhVDFE1X7priaZvpzH2farxKricRtJcxg/0',
-          name: '山东老年大学'
-        },
-      ]
-    })
-  },
-  onReady: function () {
-
+    this.getSchollList()
   },
   onShow: function () {
-
-  },
-  onHide: function () {
 
   },
   onUnload: function () {
@@ -69,9 +22,21 @@ Page({
 
   },
   onReachBottom: function () {
-
+    if(this.pageEnd) return
+    this.params.pageNum += 1
+    this.getSchollList()
   },
   onShareAppMessage: function () {
 
+  },
+  getSchollList() {
+    app.lessonNew.getSchollList(this.params).then(res => {
+      res.dataList.length < 20 ? this.pageEnd = 1 : ''
+      let schoolList = this.data.schoolList
+      schoolList.push(...res.dataList)
+      this.setData({
+        schoolList
+      })
+    })
   }
 })

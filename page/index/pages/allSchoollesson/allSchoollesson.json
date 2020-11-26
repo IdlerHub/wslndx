@@ -1,6 +1,5 @@
 {
   "usingComponents": {
-    "formCode": "/components/formCode/formCode",
     "lessonItem": "/components/lessonItem/lessonItem"
   },
   "onReachBottomDistance": 10

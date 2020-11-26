@@ -154,12 +154,14 @@ page {
 .nav .item {
   line-height: 100rpx;
   display: inline-block;
-  width: 115rpx;
+  /* width: 115rpx; */
   text-align: center;
   font-family: PingFangSC-Regular;
   font-size: 36rpx;
   color: #999999;
   letter-spacing: 0;
+  padding: 0 20rpx;
+  flex-shrink: 0;
 }
 
 .nav .itemone {
@@ -370,6 +372,28 @@ page {
     bottom: 0;
   }
 }
+
+.qst {
+  width: 100%;
+  height: 500rpx;
+  display: flex;
+  flex-direction: column;
+  padding-top: 110rpx;
+  align-items: center;
+}
+
+.qst image {
+  width: 452rpx;
+  height: 288rpx;
+}
+
+.qst text:nth-child(2) {
+  font-size: 36rpx;
+  font-weight: 400;
+  color: #999999;
+  margin-top: -20rpx;
+}
+
 
 
 

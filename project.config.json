@@ -154,9 +154,9 @@
           "scene": null
         },
         {
-          "name": "page/index/pages/allLesson/allLesson",
-          "pathName": "page/index/pages/allLesson/allLesson",
-          "query": "roomId=1336",
+          "name": "page/index/pages/allSchoollesson/allSchoollesson",
+          "pathName": "page/index/pages/allSchoollesson/allSchoollesson",
+          "query": "id=12",
           "scene": 1000
         },
         {

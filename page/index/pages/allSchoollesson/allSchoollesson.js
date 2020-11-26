@@ -13,6 +13,7 @@ Page({
   },
   navHeightList: [],
   onLoad: function (options) {
+    this.universityId = options.id
     let query = wx.createSelectorQuery().in(this), that = this
     query.select(".nav").boundingClientRect()
     query.exec(res => {
@@ -82,16 +83,18 @@ Page({
       currentTab: 0,
     })
     this.categoryParams = {}
-    return app.user.getLessonCategory().then(msg => {
-      let arr = this.data.nav.slice(0, 1)
-      msg.data.user_lesson_category.forEach((i, index) => {
+    return app.lessonNew.getAllCategory().then(msg => {
+      let arr = []
+      msg.dataList.forEach((i, index) => {
         this.categoryParams[i.id] = {
-          category_id: i.id,
-          page: 1,
+          categoryId: i.id,
+          universityId: this.universityId,
+          pageNum: 1,
           pageSize: 10
         }
         i['class'] = '#recommend' + i.id
-        i['showBtoom'] = false
+        i['showBtoom'] = false,
+        i['showNone'] = false
         arr.push(i)
       })
       this.setData({
@@ -106,19 +109,23 @@ Page({
       if (this.data.catrecommend[id][0]) return
     }
     let temp = []
-    return app.classroom.lessons(this.categoryParams[id]).then(msg => {
-      msg.data.forEach(function (item) {
+    return app.lessonNew.categoryLesson(this.categoryParams[id]).then(msg => {
+      msg.dataList.forEach(function (item) {
         item.thousand = app.util.tow(item.browse)
       })
       let catrecommend = this.data.catrecommend
-      catrecommend[id] = temp.concat(msg.data)
+      catrecommend[id] = temp.concat(msg.dataList)
       this.setData({
-        [`catrecommend[${id}]`]: temp.concat(msg.data)
+        [`catrecommend[${id}]`]: temp.concat(msg.dataList)
       })
-      temp.concat(msg.data).length < 10 ? this.setData({
+      temp.concat(msg.dataList).length < 10 ? this.setData({
         [`nav[${this.data.currentTab}].showBtoom`]: true
       }) : ''
+      console.log(msg.dataList.length, this.categoryParams[id].pageNum)
       setTimeout(() => {
+        msg.dataList.length == 0 && this.categoryParams[id].pageNum == 1 ? this.setData({
+          [`nav[${this.data.currentTab}].showNone`]: true
+        }) : ''
         currtab != this.data.currentTab && !type ? '' : this.setHeight()
       }, 600)
     })

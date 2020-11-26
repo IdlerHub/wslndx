@@ -18,7 +18,27 @@ function categoryLessonOrLive(params) {
   return httpService.post("index/categoryLessonOrLive", params, null ,true);
 }
 
+/**
+ * @description: 学校列表
+ * @param { pageSize, pageNum, requestTime} 分页大小 - 当前页码 - 第一页请求时间（秒）解决下拉分页数据重复问题
+ * @return:  promise
+ * **/
+function getSchollList(params) {
+  return httpService.post("university/getList", params, null ,true);
+}
+
+/**
+ * @description: 根据分类查找课程
+ * @param { categoryId, universityId, pageSize, pageNum, requestTime} 分类ID - 学校ID - 分页大小 - 当前页码 - 第一页请求时间（秒）解决下拉分页数据重复问题
+ * @return:  promise
+ * **/
+function categoryLesson(params) {
+  return httpService.post("/university/categoryLesson", params, null ,true);
+}
+
 module.exports = {
   getAllCategory,
-  categoryLessonOrLive
+  categoryLessonOrLive,
+  getSchollList,
+  categoryLesson
 }
