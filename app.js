@@ -131,21 +131,6 @@ App({
           wx.setStorageSync("invite", opstObj.u); /* 邀请码记录 */
         }
       }
-      livePlayer
-        .getShareParams()
-        .then((res) => {
-          // 开发者在跳转进入直播间页面时，页面路径上携带的自定义参数，这里传回给开发者
-          console.log("get custom params", res.custom_params);
-          res.custom_params
-            ? [
-                wx.setStorageSync("invite", res.custom_params.uid),
-                (this.globalData.shareObj = res.custom_params),
-              ]
-            : "";
-        })
-        .catch((err) => {
-          console.log("get share params", err);
-        });
     }
     let userInfo = wx.getStorageSync("userInfo") || {};
     let mpVersion = wx.getStorageSync("mpVersion");
@@ -169,10 +154,6 @@ App({
     if (wxtype < 606) {
       wx.reLaunch({
         url: "/pages/upwxpage/upwxpage",
-      });
-    } else if (!this.store.$state.userInfo.mobile) {
-      wx.reLaunch({
-        url: "/pages/sign/sign",
       });
     } else if (opstObj.p) {
       wx.reLaunch({
@@ -205,26 +186,7 @@ App({
           wx.setStorageSync("invite", opts.query.uid); /* 邀请码存储 */
         }
       }
-      livePlayer
-        .getShareParams()
-        .then((res) => {
-          // 开发者在跳转进入直播间页面时，页面路径上携带的自定义参数，这里传回给开发者
-          console.log("get custom params", res.custom_params);
-          res.custom_params
-            ? [
-                wx.setStorageSync("invite", res.custom_params.uid),
-                (this.globalData.shareObj = res.custom_params),
-              ]
-            : "";
-        })
-        .catch((err) => {
-          console.log("get share params", err);
-        });
-      if (!this.store.$state.userInfo.mobile) {
-        wx.reLaunch({
-          url: "/pages/sign/sign",
-        });
-      } else if (opts.type == "lottery") {
+      if (opts.type == "lottery") {
         wx.reLaunch({
           url: "/pages/education/education?type=lottery&login=1",
         });
@@ -265,9 +227,6 @@ App({
           /* 新用户未注册 */
           console.log("tempCode", msg.data.tempCode);
           this.globalData.tempCode = msg.data.tempCode;
-          wx.reLaunch({
-            url: "/pages/sign/sign",
-          });
         } else {
           /* 旧用户 */
           wx.setStorageSync("token", msg.data.token);
@@ -291,10 +250,6 @@ App({
               : wx.reLaunch({
                   url: this.globalData.path + "?" + params.join("&"),
                 });
-          } else {
-            wx.reLaunch({
-              url: "/pages/index/index",
-            });
           }
         }
       });

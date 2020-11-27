@@ -12,15 +12,33 @@ Page({
     shownow: true,
     shownowt: true,
     showdialog: true,
-    showSignbox: true
+    showSignbox: false,
+    centerIcon: [{
+      url: '/page/index/pages/allLesson/allLesson',
+      icon: '/images/indexIcon/allLessonIcon.png',
+      name: '全部课程'
+    }, {
+      url: '/pages/video/video',
+      icon: '/images/indexIcon/sortVideoicon.png',
+      name: '短视频 '
+    }, {
+      url: '/page/index/pages/schoolLesson/schoolLesson',
+      icon: '/images/indexIcon/shollLesson.png',
+      name: '高校课程'
+    }, {
+      url: '/page/index/pages/hotActivity/hotActivity',
+      icon: '/images/indexIcon/hotActivityIcon.png',
+      name: '热门活动'
+    }, ]
   },
   pageName: '首页',
   guide: 0,
   liveTimer: '',
-  onLoad: async function (e) {
-    !getApp().globalData.tempCode ? '' : wx.reLaunch({
-      url: "/pages/sign/sign"
-    });
+  nextTapDetial: {
+    type: '',
+    detail: {}
+  },
+  onLoad: function (e) {
     e.type != undefined ? this.pageType = e.type : ''
     let reg = /ios/i
     let pt = 20 //导航状态栏上内边距
@@ -55,48 +73,44 @@ Page({
       category: [],
       history: {},
     })
-    if (this.data.$state.userInfo.mobile) {
-      await app.user.signed().then(res => {
-        let sign = res.data && res.data.signed
-        app.store.setState({
-          signdays: res.data.sign_days
-        })
-        app.setSignIn({
-          status: sign,
-          count: sign ? 1 : this.data.$state.signStatus.count
-        }, true)
+    this.init()
+  },
+  onShow() {
+    /* 更新用户的视频浏览历史 */
+    if (app.store.$state.userInfo.mobile) {
+      this.getHistory()
+      app.getUserOpenData()
+      setTimeout(wx.hideLoading, 500)
+      this.setData({
+        showSignbox: true
       })
-      await app.user.share({}).then(res => {
-        app.setShare(res)
-      })
-      this.init()
-      this.integrationTime()
+      this.data.isSign ? this.signIn() : ''
     }
   },
-  onReady: function () {},
-  onShow() {
-    app.globalData.currentTab == 1 ? this.setData({
-      currentTab: 1
-    }) : ''
-    app.globalData.currentTab = ''
-    /* 更新用户的视频浏览历史 */
-    if (app.store.$state.userInfo.mobile)[this.getHistory(), app.getUserOpenData()]
-    setTimeout(wx.hideLoading, 500)
-    this.setData({
-      showSignbox: true
-    })
-    this.data.isSign ? this.signIn() : ''
-  },
   init() {
-    return Promise.all([this.getactivite(), this.getRecommendLessons(1), this.getinterestList(), this.getBanner(), this.getDialog(), this.getUserOpenid()]).then(values => {
-      if (app.globalData.query.categoryId) {
-        this.data.nav.forEach((v, i) => {
-          v.id == app.globalData.query.categoryId ? this.setData({
-            currentTab: i
-          }) : ''
+    if (this.data.$state.userInfo.mobile) {
+      Promise.all([this.getRecommendLessons(1), this.getinterestList(), this.getBanner(), this.getDialog(), this.getUserOpenid()]).then(values => {
+        app.user.signed().then(res => {
+          let sign = res.data && res.data.signed
+          app.store.setState({
+            signdays: res.data.sign_days
+          })
+          app.setSignIn({
+            status: sign,
+            count: sign ? 1 : this.data.$state.signStatus.count
+          }, true)
+          this.setState({
+            showSignbox: !sign
+          }, () => {
+            app.user.share({}).then(res => {
+              app.setShare(res)
+            })
+          })
         })
-      }
-    })
+      })
+    } else {
+      Promise.all([this.getRecommendLessons(1), this.getinterestList(), this.getBanner()])
+    }
   },
   centerTab(e) {
     this.setData({
@@ -118,27 +132,6 @@ Page({
       })
     })
   },
-  lastswitchTab(event) {
-    if (!event) {
-      this.setData({
-        currentTab: 0
-      })
-    } else {
-      let arr = this.data.nav,
-        num = 0
-      arr.forEach((i, index) => {
-        i.id == event ? num = index : 0
-      })
-      this.setData({
-        currentTab: num
-      })
-      if (this.data.catrecommend[event]) {
-        if (!this.data.catrecommend[event][0]) this.geteCatrcommend(event, this.data.currentTab)
-      } else {
-        this.geteCatrcommend(event, this.data.currentTab)
-      }
-    }
-  },
   getRecommendLessons(type) {
     if (this.data.liveRecommend[0] && !type) {
       setInterval(() => {
@@ -158,9 +151,6 @@ Page({
       })
     }
 
-  },
-  getactivite() {
-    // return app.user.activite()
   },
   getBanner() {
     this.setData({
@@ -234,22 +224,6 @@ Page({
       shownowt: false
     })
   },
-  //点击推荐课堂
-  detailTap: function (e) {
-    wx.navigateTo({
-      url: `../../page/index/pages/detail/detail?id=${e.currentTarget.dataset.item.id}&name=${e.currentTarget.dataset.item.title}`
-    })
-    //用于数据统计
-    if (e.currentTarget.dataset.type) {
-      wx.uma.trackEvent('classify_lessonsClick', {
-        ['classifyID_' + this.data.nav[this.data.currentTab].id]: e.currentTarget.dataset.item.title
-      });
-    } else {
-      wx.uma.trackEvent('index_recommendLessons', {
-        lessonsName: e.currentTarget.dataset.item.title
-      });
-    }
-  },
   //用于数据统计
   onHide() {},
   // 用户昵称等信息授权
@@ -282,11 +256,6 @@ Page({
         });
       }
     }
-  },
-  integrationTime() {
-    let data = new Date();
-    let time = data.getDate();
-    let tomorowTime = wx.getStorageSync("closeInTime")
   },
   /* 签到 */
   closeSignIn() {
@@ -486,9 +455,9 @@ Page({
       specialColumnId: item.columnId
     }).then(res => {
       // if (res.data.isAddSubscribe) {
-        wx.navigateTo({
-          url: `/page/live/pages/vliveRoom/vliveRoom?roomId=${item.liveId}`,
-        })
+      wx.navigateTo({
+        url: `/page/live/pages/vliveRoom/vliveRoom?roomId=${item.liveId}`,
+      })
       // } else {
       //   wx.navigateTo({
       //     url: "/page/live/pages/tableDetail/tableDetail?specialColumnId=" +
@@ -498,7 +467,9 @@ Page({
     })
   },
   addStudy(e) {
-    app.liveData.addSubscribe({columnId: e.detail.columnId}).then(() => {
+    app.liveData.addSubscribe({
+      columnId: e.detail.columnId
+    }).then(() => {
       this.data.interestList.forEach(i => {
         i.columnId = e.detail.columnId ? i.isEnroll = 1 : ''
       })
@@ -506,9 +477,34 @@ Page({
         i.columnId = e.detail.columnId ? i.isEnroll = 1 : ''
       })
       this.setData({
-        interestList:  this.data.interestList,
+        interestList: this.data.interestList,
         sprogInterestList: this.data.sprogInterestList
       })
     })
+  },
+  checknextTap(e) {
+    this.nextTapDetial.type = e.currentTarget.dataset.type
+    e.currentTarget.dataset.detail ? this.nextTapDetial.detail = e.currentTarget.dataset.detail : this.nextTapDetial.detail = e
+    console.log(this.nextTapDetial.detail)
+  },
+  nextTap() {
+    switch (this.nextTapDetial.type) {
+      case 'top':
+        this.toInfo()
+        break;
+      case 'search':
+        wx.navigateTo({
+          url: this.nextTapDetial.detail,
+        })
+        break;
+      case 'myLesson':
+        wx.navigateTo({
+          url: this.nextTapDetial.detail,
+        })
+        break;
+      case 'swiper':
+        this.bannerGo(this.nextTapDetial.detail)
+        break;
+    }
   }
 })

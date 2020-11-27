@@ -24,8 +24,7 @@
     "pages/webPay/webPay",
     "pages/timetable/timetable",
     "pages/timetableList/timetableList",
-    "components/playRrecord/playRrecord",
-    "components/signinBox/signinBox"
+    "components/playRrecord/playRrecord"
   ],
   "permission": {
     "scope.userLocation": {

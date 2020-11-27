@@ -18,6 +18,9 @@ Component({
     },
     changeLoginstatus() {
       getApp().changeLoginstatus()
+    },
+    show() {
+      this.triggerEvent('nextTap')
     }
   }
 })

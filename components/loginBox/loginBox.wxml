@@ -1,6 +1,6 @@
 <!--components/loginBox/loginBox.wxml-->
-<view class="loginContariner">
-  <view class="loginBox" wx:if="!phoneLogin">
+<view class="loginContariner" bindtap="show">
+  <view class="loginBox">
     <text class="loginTitle">微信登陆</text>
     <view class="issuse">
       <image src="../loginBox/images/radio.png" wx:if="{{check}}" bindtap="checkRadio"></image>

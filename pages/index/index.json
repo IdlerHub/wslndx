@@ -12,6 +12,7 @@
     "signinBox": "/components/signinBox/signinBox",
     "integralAnimation": "/components/integralAni/integralAni",
     "loginBox": "/components/loginBox/loginBox",
-    "lessonItem": "/components/lessonItem/lessonItem"
+    "lessonItem": "/components/lessonItem/lessonItem",
+    "slotSign": "/components/slotSign/slotSign"
   }
 }

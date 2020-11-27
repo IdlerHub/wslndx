@@ -21,29 +21,6 @@
     <view class="skeletonaAtive"></view>
   </view>
 </template>
-<template name="recommend">
-  <view catchtap="detailTap" wx:for="{{ recommend }}" wx:key="index" class="item" data-item="{{ item }}">
-    <view class="content {{ type ? '': item.show_big ? 'big' : '' }}">
-      <view class="left">
-        <image class="poster" mode="aspectFill"
-          src="{{ item.show_big ? item.big_image + '?x-image-process=image/resize,m_fixed,w_690,h_360/quality,Q_80' : item.image + '?x-image-process=image/resize,m_fixed,w_260,h_160/quality,Q_80'  }}"
-          lazy-load="true"></image>
-        <image class="icon" wx:if="{{!item.show_big}}" mode="aspectFill" src="/images/recomonPlay.png"></image>
-        <image src="/images/coursestautes.png" class="status" mode="aspectFill" wx:if="{{item.is_finish}}"
-          style="{{item.show_big ? 'width:130rpx;height:72rpx' : ''}}"></image>
-      </view>
-      <view class="right">
-        <text class="line name">{{ item.title }}</text>
-        <text class="line actor" wx:if="{{ item.teacher_id == 0 }}">{{ item.subtitle }}</text>
-        <text class="line actor" wx:else>{{ item.name }}-{{ item.honor }}</text>
-        <text class="line info">
-          <text class="dramaNum"><text class="key">剧集</text>{{ item.lesson_count }}集</text>
-          <text class="playNum"><text class="key">播放</text>{{ item.bw || item.browse }}</text>
-        </text>
-      </view>
-    </view>
-  </view>
-</template>
 <template name="liveBox">
   <view class="liveBox" wx:if="{{liveRecommend[0]}}">
     <view class="topTtile">
@@ -55,26 +32,30 @@
       </navigator>
     </view>
     <view class="comment">
-      <view wx:for="{{liveRecommend}}" wx:key="index" class="liveItem"
-        style="{{index + 1 > 6 - 2 ? 'border:none' : '' }}" bindtap="toLivelesson" data-item="{{item}}">
-        <view class="liveImgBox">
-          <image src="{{item.indexCover}}">
-          </image>
-          <view class="liveStatus"
-            style="background: {{ item.status == 0 ? '' : 'linear-gradient(270deg, #44A2FF 0%, #007CF7 100%);border-radius: 10rpx 6rpx 6rpx 0px;' }}">
-            <view class="statusLeft" wx:if="{{item.status == 0}}">
-              <view wx:for="{{3}}" wx:key="index" class="statusWite"></view>
-              <view class="statusTxt">直播</view>
-              <view class="viewNum">{{fn.num(item.viewNum)}}人</view>
-            </view>
-            <view class="statusLeft" wx:else>
-              <view class="statusTxt" style="margin: 0">未开始</view>
+      <slotSign bindtap="checknextTap" data-type="toLivelesson" wx:for="{{liveRecommend}}" wx:key="index">
+        <view class="liveItem" style="{{index + 1 > 6 - 2 ? 'border:none' : '' }}" bindtap="toLivelesson"
+          data-item="{{item}}">
+          <view class="liveImgBox">
+            <image src="{{item.indexCover}}">
+            </image>
+            <view class="liveStatus"
+              style="background: {{ item.status == 0 ? '' : 'linear-gradient(270deg, #44A2FF 0%, #007CF7 100%);border-radius: 10rpx 6rpx 6rpx 0px;' }}">
+              <view class="statusLeft" wx:if="{{item.status == 0}}">
+                <view wx:for="{{3}}" wx:key="index" class="statusWite"></view>
+                <view class="statusTxt">直播</view>
+                <view class="viewNum">{{fn.num(item.viewNum)}}人</view>
+              </view>
+              <view class="statusLeft" wx:else>
+                <view class="statusTxt" style="margin: 0">未开始</view>
+              </view>
             </view>
           </view>
+          <text>{{item.liveName}}</text>
+          <text>{{item.dayTime}} {{item.startTime}}</text>
         </view>
-        <text>{{item.liveName}}</text>
-        <text>{{item.dayTime}} {{item.startTime}}</text>
-      </view>
+      </slotSign>
+
+
     </view>
   </view>
   <view class="liveBox" wx:else>
@@ -99,27 +80,33 @@
   <view wx:if="{{ isRefreshing }}" class="weui-loadmore indexdrop">
     <view class="weui-loading"></view>
   </view>
-  <view class="top" style="padding-top:{{ topT }}px" wx:if="{{liveRecommend[0]}}" bindtap="toInfo">
-    <view class="avatarBox" catchtap="toUser" wx:if="{{$state.authUserInfo}}">
-      <image class="img" src="{{$state.userInfo.avatar}}" alt=""></image>
+  <slotSign bindtap="checknextTap" data-type="top">
+    <view class="top" style="padding-top:{{ topT }}px" wx:if="{{liveRecommend[0]}}" bindtap="toInfo">
+      <view class="avatarBox" catchtap="toUser" wx:if="{{$state.authUserInfo}}">
+        <image class="img" src="{{$state.userInfo.avatar}}" alt=""></image>
+      </view>
+      <button class="avatarBox" wx:else open-type="getUserInfo" bindgetuserinfo="onGotUserInfo" data-role="user"
+        catchtap="getSomthin">
+        <open-data class="img" type="userAvatarUrl"></open-data>
+      </button>
+      <text>{{$state.userInfo.school || "网上老年大学"}}</text>
     </view>
-    <button class="avatarBox" wx:else open-type="getUserInfo" bindgetuserinfo="onGotUserInfo" data-role="user"
-      catchtap="getSomthin">
-      <open-data class="img" type="userAvatarUrl"></open-data>
-    </button>
-    <text>{{$state.userInfo.school || "网上老年大学"}}</text>
-  </view>
-  <template is="skeletonTop" data="{{topT}}" wx:else></template>
+    <template is="skeletonTop" data="{{topT}}" wx:else></template>
+  </slotSign>
   <!-- 搜索/学分 -->
   <view class="search-box">
-    <navigator class="search-left" url="/page/index/pages/search/search">
-      <image src="/images/indexIcon/searchp.png"></image>
-      <text>搜索课程名称</text>
-    </navigator>
-    <navigator class="search-right" url="/page/live/pages/timetableList/timetableList" hover-class="none">
-      <image src="/images/indexIcon/timetableIcon.png"></image>
-      <text>我的课程</text>
-    </navigator>
+    <slotSign bindtap="checknextTap" data-type="search" data-detail="/page/index/pages/search/search">
+      <navigator class="search-left" url="/page/index/pages/search/search">
+        <image src="/images/indexIcon/searchp.png"></image>
+        <text>搜索课程名称</text>
+      </navigator>
+    </slotSign>
+    <slotSign bindtap="checknextTap" data-type="search" data-detail="/page/live/pages/timetableList/timetableList">
+      <navigator class="search-right" url="/page/live/pages/timetableList/timetableList" hover-class="none">
+        <image src="/images/indexIcon/timetableIcon.png"></image>
+        <text>我的课程</text>
+      </navigator>
+    </slotSign>
   </view>
   <view class="wrap recommend" id="recommend1">
     <!-- 广告位banner -->
@@ -128,13 +115,15 @@
         current="{{bannercurrentTab}}" bindanimationfinish="centerTab">
         <block wx:for="{{imgUrls}}" wx:key="index">
           <swiper-item>
-            <image src="{{item.image}}" class="slide-image" width="355" height="150" catchtap="bannerGo"
-              data-item="{{ item }}" wx:if="{{!item.isLogin}}" />
-            <image src="{{item.image}}" class="slide-image" width="355" height="150" catchtap="bannerGo"
-              data-item="{{ item }}" wx:if="{{item.isLogin && $state.authUserInfo}}" />
-            <button class="slide-image" style="background:url({{item.image}});background-size: 100% 100%;"
-              open-type="getUserInfo" bindgetuserinfo="onGotUserInfo" data-type="banner" data-item="{{item}}"
-              wx:else></button>
+            <slotSign bindtap="checknextTap" data-type="swiper" data-item="{{ item }}">
+              <image src="{{item.image}}" class="slide-image" width="355" height="150" catchtap="bannerGo"
+                data-item="{{ item }}" wx:if="{{!item.isLogin}}" />
+              <image src="{{item.image}}" class="slide-image" width="355" height="150" catchtap="bannerGo"
+                data-item="{{ item }}" wx:if="{{item.isLogin && $state.authUserInfo}}" />
+              <button class="slide-image" style="background:url({{item.image}});background-size: 100% 100%;"
+                open-type="getUserInfo" bindgetuserinfo="onGotUserInfo" data-type="banner" data-item="{{item}}"
+                wx:else></button>
+            </slotSign>
           </swiper-item>
         </block>
       </swiper>
@@ -146,22 +135,13 @@
     <template is="skeletonSwiper" wx:else></template>
     <!-- 中间icon -->
     <view class="centerIcon">
-      <navigator class="iconBox" hover-class="none" url="/page/index/pages/allLesson/allLesson">
-        <image src="/images/indexIcon/allLessonIcon.png"></image>
-        <text>全部课程</text>
-      </navigator>
-      <navigator class="iconBox" hover-class="none" url="/pages/video/video">
-        <image src="/images/indexIcon/sortVideoicon.png"></image>
-        <text>短视频 </text>
-      </navigator>
-      <navigator class="iconBox" hover-class="none" url="/page/index/pages/schoolLesson/schoolLesson">
-        <image src="/images/indexIcon/shollLesson.png"></image>
-        <text>高校课程</text>
-      </navigator>
-      <navigator class="iconBox" hover-class="none" url="/page/index/pages/hotActivity/hotActivity">
-        <image src="/images/indexIcon/hotActivityIcon.png"></image>
-        <text>热门活动</text>
-      </navigator>
+      <slotSign bindtap="checknextTap" wx:for="{{centerIcon}}" wx:key="index" data-type="search"
+        data-detail="{{item.url}}">
+        <navigator class="iconBox" hover-class="none" url="{{item.url}}">
+          <image src="{{item.icon}}"></image>
+          <text>{{item.name}}</text>
+        </navigator>
+      </slotSign>
     </view>
     <template is="liveBox" data="{{recommend, liveRecommend}}"></template>
     <view>
@@ -170,13 +150,13 @@
       <view class="topTtile">
         <text>入门推荐</text>
       </view>
-      <lessonItem lessonList="{{sprogInterestList}}" isIndex="1" bind:addStudy="addStudy"/>
+      <lessonItem lessonList="{{sprogInterestList}}" isIndex="1" bind:addStudy="addStudy" />
     </view>
     <view class="liveBox">
       <view class="topTtile">
         <text>温故知新</text>
       </view>
-      <lessonItem lessonList="{{interestList}}" isIndex="1" bind:addStudy="addStudy"/>
+      <lessonItem lessonList="{{interestList}}" isIndex="1" bind:addStudy="addStudy" />
     </view>
     <view class="interestedBox">
       <text>调整学习兴趣</text>
@@ -206,9 +186,8 @@
       <icon type="cancel" size="37" color="white" data-id="0" catchtap="closeSignIn"></icon>
     </view>
   </view>
-  <signinBox wx:if="{{ !$state.signStatus.count && !dialog[0].image && showSignbox}}" state="{{$state}}"
-    top="{{topT}}" isIndex="{{true}}" bind:closesignBox="closesignBox" bind:showIntegral="showIntegral"
-    bind:sigin="sigin" />
+  <signinBox wx:if="{{ !$state.signStatus.count && !dialog[0].image && showSignbox}}" state="{{$state}}" top="{{topT}}"
+    isIndex="{{true}}" bind:closesignBox="closesignBox" bind:showIntegral="showIntegral" bind:sigin="sigin" />
 </view>
 <navigator url="/page/index/pages/assistant/assistant" hover-class="none">
   <image src="/images/xiaolin.png" class="xiaolin"></image>
@@ -228,4 +207,4 @@
 </integralAnimation>
 
 <!-- 登录 -->
-<loginBox wx:if="{{$state.showLogin}}" />
+<loginBox wx:if="{{$state.showLogin}}" bind:nextTap="nextTap" />
