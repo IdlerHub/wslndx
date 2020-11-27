@@ -2,14 +2,15 @@
 <view class="loginContariner">
   <view class="loginBox" wx:if="!phoneLogin">
     <text class="loginTitle">微信登陆</text>
-    <button class="loginItem" hover-class="none" open-type="getPhoneNumber" bindgetphonenumber="getphonenumber">
-      <image src="../loginBox/images/wechat.png"></image>
-      <text>微 信</text>
-    </button>
     <view class="issuse">
       <image src="../loginBox/images/radio.png" wx:if="{{check}}" bindtap="checkRadio"></image>
       <view class="circle" wx:else bindtap="checkRadio"></view>
       <navigator hover-class="none" url="/pages/agreement/agreement" class="text">已阅读《用户协议》，登录即注册</navigator>
     </view>
+    <button class="loginItem" hover-class="none" open-type="getPhoneNumber" bindgetphonenumber="getphonenumber">
+      <image src="../loginBox/images/wechat.png"></image>
+      <text>微 信</text>
+    </button>
+    <image src="../loginBox/images/close.png" class="close" bindtap="changeLoginstatus"></image>
   </view>
 </view>

@@ -546,6 +546,11 @@ App({
       });
     }, 1000);
   },
+  changeLoginstatus() {
+    this.store.setState({
+      showLogin: !this.store.$state.showLogin
+    })
+  },
   globalData: {
     /*wx.login 返回值 code */
     code: null,

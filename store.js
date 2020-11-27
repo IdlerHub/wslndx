@@ -90,7 +90,8 @@ let store = new Store({
     blackShow: false,
     openId: "",
     userIndex: {},
-    messageReceived: 0
+    messageReceived: 0,
+    showLogin: false
   },
   pageLisener: {
     onLoad(opts) {

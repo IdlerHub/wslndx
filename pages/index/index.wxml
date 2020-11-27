@@ -228,8 +228,4 @@
 </integralAnimation>
 
 <!-- 登录 -->
-<!-- <loginBox/> -->
-<!-- <view class="nav" wx:if="{{ !recommend }}">
-  <view class="integral navintegral">
-  </view>
-</view> -->
+<loginBox wx:if="{{$state.showLogin}}" />

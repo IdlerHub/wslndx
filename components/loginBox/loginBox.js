@@ -15,6 +15,9 @@ Component({
     },
     getphonenumber(e) {
       console.log(e)
+    },
+    changeLoginstatus() {
+      getApp().changeLoginstatus()
     }
   }
 })

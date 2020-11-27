@@ -9,20 +9,27 @@
 }
 
 .loginContariner .loginBox {
-  width: 518rpx;
-  height: 426rpx;
   background: #FFFFFF;
   border-radius: 20rpx;
-  position: absolute;
+  position:  fixed;
   top: 25%;
   left: 50%;
   transform: translateX(-50%);
-  padding: 0 40rpx;
+  padding-top: 40rpx;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+.loginContariner .loginBox .close {
+  width: 70rpx;
+  height: 70rpx;
+  position: absolute;
+  bottom: -120rpx;
+  left: 50%;
+  margin-left: -35rpx;
 }
 
 .loginContariner .loginBox .loginTitle {
@@ -33,21 +40,24 @@
 }
 
 .loginContariner .loginBox .loginItem {
-  width: 460rpx;
-  height: 168rpx;
+  width: 518rpx;
+  height: 240rpx;
   background: #F5F6FA;
-  border-radius: 16rpx;
+  border-radius: unset;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  margin-bottom: 20rpx;
+  justify-content: center;
+  margin-top: 40rpx;
+  line-height: normal;
+  border-radius: 0 0 20rpx 20rpx;
 }
 
 .loginContariner .loginBox .loginItem image {
   width: 108rpx;
   height: 108rpx;
   border-radius: 50%;
-  margin-left: 101rpx;
-  margin-right: 30rpx;
+  margin-bottom: 10rpx;
 }
 
 .loginContariner .loginBox .loginItem text {
