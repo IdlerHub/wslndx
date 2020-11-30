@@ -20,14 +20,17 @@ Page({
   },
   getAllCategory() {
     app.lessonNew.getAllCategory().then(res => {
+      let num = 0
       res.dataList.forEach((e, i) => {
         e.index = i
         e.categoryList.forEach(t => {
-          // t.color.length > 0 ? t.select = 1 : t.select = 0
+          this.data.$state.userInfo.recommendCategoryList.indexOf(t.id) >= 0 ? [t.select = 1, num += 1] : t.select = 0
         })
       })
       this.setData({
-        list: res.dataList
+        list: res.dataList,
+        selectNum: num,
+        select:  this.data.$state.userInfo.recommendCategoryList.split(",")
       })
     })
   },
@@ -35,7 +38,8 @@ Page({
     let index = e.currentTarget.dataset.index,
       idx = e.currentTarget.dataset.idx
     if (this.data.list[index].categoryList[idx].select) {
-      let i = this.data.select.includes(this.data.list[index].categoryList[idx].id)
+      let i = this.data.select.indexOf(String(this.data.list[index].categoryList[idx].id))
+      console.log(i)
       this.data.select.splice(i, 1)
       this.setData({
         [`list[${index}].categoryList[${idx}].select`]: 0,
@@ -54,7 +58,13 @@ Page({
   determine() {
     if (this.data.select.length > 0) {
       let str = this.data.select.toString()
-      console.log(str)
+      app.lessonNew.collectLessonCategory({
+        categoryStr: str
+      }).then(res => {
+        app.store.setState({
+          'userInfo.recommendCategoryList': str
+        })
+      })
     } else {
       wx.showToast({
         title: '请至少选择一个您感兴趣的内容',

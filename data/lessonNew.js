@@ -6,7 +6,7 @@ var httpService = require("../utils/service.js");
  * @return:  promise
  * **/
 function getBannerList(params) {
-  return httpService.post("index/getBannerList", params, null ,true);
+  return httpService.post("index/getBannerList", params, null, true);
 }
 
 /**
@@ -15,7 +15,7 @@ function getBannerList(params) {
  * @return:  promise
  * **/
 function interestList(params) {
-  return httpService.post("index/interestList", params, null ,true);
+  return httpService.post("index/interestList", params, null, true);
 }
 
 /**
@@ -24,7 +24,7 @@ function interestList(params) {
  * @return:  promise
  * **/
 function getAllCategory(params) {
-  return httpService.post("index/getAllCategory", params, null ,true);
+  return httpService.post("index/getAllCategory", params, null, true);
 }
 
 /**
@@ -33,7 +33,7 @@ function getAllCategory(params) {
  * @return:  promise
  * **/
 function categoryLessonOrLive(params) {
-  return httpService.post("index/categoryLessonOrLive", params, null ,true);
+  return httpService.post("index/categoryLessonOrLive", params, null, true);
 }
 
 /**
@@ -42,7 +42,7 @@ function categoryLessonOrLive(params) {
  * @return:  promise
  * **/
 function getSchollList(params) {
-  return httpService.post("university/getList", params, null ,true);
+  return httpService.post("university/getList", params, null, true);
 }
 
 /**
@@ -51,9 +51,17 @@ function getSchollList(params) {
  * @return:  promise
  * **/
 function categoryLesson(params) {
-  return httpService.post("/university/categoryLesson", params, null ,true);
+  return httpService.post("university/categoryLesson", params, null, true);
 }
 
+/**
+ * @description: 用户收藏课程分类
+ * @param { categoryStr } 
+ * @return:  promise
+ * **/
+function collectLessonCategory(params) {
+  return httpService.post("index/collectLessonCategory", params, null, true);
+}
 
 
 module.exports = {
@@ -62,5 +70,6 @@ module.exports = {
   getAllCategory,
   categoryLessonOrLive,
   getSchollList,
-  categoryLesson
+  categoryLesson,
+  collectLessonCategory
 }
