@@ -26,10 +26,16 @@
     <view class="topTtile">
       <text>免费直播</text>
       <navigator open-type="switchTab" class="topTtile-right" url="/pages/timetableList/timetableList"
-        hover-class="none">
+        hover-class="none" wx:if="{{$state.userInfo.id}}">
         <text>本周课表</text>
         <image src="/images/Return-black.png"></image>
       </navigator>
+      <slotSign bindtap="checknextTap" data-type="search" data-detail="/pages/timetableList/timetableList" wx:else>
+        <view class="topTtile-right">
+          <text>本周课表</text>
+          <image src="/images/Return-black.png"></image>
+        </view>
+      </slotSign>
     </view>
     <view class="comment">
       <slotSign bindtap="checknextTap" data-type="toLivelesson" data-type="live" data-item="{{item}}"
@@ -192,9 +198,13 @@
   <signinBox wx:if="{{ !$state.signStatus.count && !dialog[0].image && showSignbox}}" state="{{$state}}" top="{{topT}}"
     isIndex="{{true}}" bind:closesignBox="closesignBox" bind:showIntegral="showIntegral" bind:sigin="sigin" />
 </view>
-<navigator url="/page/index/pages/assistant/assistant" hover-class="none">
+<navigator url="/page/index/pages/assistant/assistant" hover-class="none" wx:if="{{$state.userInfo.id}}">
   <image src="/images/xiaolin.png" class="xiaolin"></image>
 </navigator>
+<slotSign class="xiaolin" bindtap="checknextTap" data-type="search" data-detail="/page/index/pages/assistant/assistant"
+  wx:else>
+  <image src="/images/xiaolin.png" style="width: 168rpx;height: 178rpx;"></image>
+</slotSign>
 <!-- 黑名单提示框 -->
 <view class="blackBox" wx:if="{{$state.blackShow}}">
   <view class="blackToast">

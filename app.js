@@ -168,6 +168,17 @@ App({
       opstObj[item.split("=")[0]] = item.split("=")[1];
     });
     let lists = ["share", "invite"];
+    if (this.store.$state.userInfo.id) {
+      setTimeout(() => {
+        socket.init(this.store.$state.userInfo.id);
+        socket.listen(this.prizemessage, "Prizemessage");
+        socket.listen(this.bokemessage, "Bokemessage");
+      }, 2000);
+    } else {
+      wx.reLaunch({
+        url: "/pages/index/index",
+      });
+    }
     /* 小程序(在后台运行中时)从分享卡片切到前台 */
     if (this.globalData.backstage) {
       this.globalData.backstage = false;
@@ -191,13 +202,6 @@ App({
           url: "/pages/education/education?type=lottery&login=1",
         });
       }
-    }
-    if (this.store.$state.userInfo.id) {
-      setTimeout(() => {
-        socket.init(this.store.$state.userInfo.id);
-        socket.listen(this.prizemessage, "Prizemessage");
-        socket.listen(this.bokemessage, "Bokemessage");
-      }, 2000);
     }
   },
   onHide() {
@@ -227,6 +231,9 @@ App({
           /* 新用户未注册 */
           console.log("tempCode", msg.data.tempCode);
           this.globalData.tempCode = msg.data.tempCode;
+          // wx.reLaunch({
+          //   url: "/pages/index/index",
+          // });
         } else {
           /* 旧用户 */
           wx.setStorageSync("token", msg.data.token);
