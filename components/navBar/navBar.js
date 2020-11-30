@@ -10,14 +10,15 @@ Component({
     }
   },
   methods: {
-    loginStauts() {
+    loginStauts(e) {
       if (!this.data.$state.userInfo.id) {
         app.changeLoginstatus()
+        app.checknextTap(e)
         return true
       }
     },
-    toIndex() {
-      if (this.loginStauts()) return
+    toIndex(e) {
+      if (this.loginStauts(e)) return
       if (this.data.path == 'index') {
         return
       } else {
@@ -27,8 +28,8 @@ Component({
         this.hideIndex()
       }
     },
-    toVideo() {
-      if (this.loginStauts()) return
+    toVideo(e) {
+      if (this.loginStauts(e)) return
       if (this.data.path == 'video') {
         return
       } else {
@@ -38,8 +39,8 @@ Component({
         this.hideIndex()
       }
     },
-    toPost() {
-      if (this.loginStauts()) return
+    toPost(e) {
+      if (this.loginStauts(e)) return
       if (this.data.path == 'post') {
         return
       } else {
@@ -58,8 +59,8 @@ Component({
         vistor: false
       })
     },
-    toUser() {
-      if (this.loginStauts()) return
+    toUser(e) {
+      if (this.loginStauts(e)) return
       if (this.data.path == 'user') {
         return
       } else {

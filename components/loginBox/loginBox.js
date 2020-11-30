@@ -20,9 +20,10 @@ Component({
       getApp().changeLoginstatus()
     },
     nextTap() {
+      let page = getCurrentPages()[getCurrentPages().length - 1]
       switch (this.data.$state.nextTapDetial.type) {
         case 'top':
-          this.toInfo()
+          page.toInfo()
           break;
         case 'search':
           wx.navigateTo({
@@ -35,16 +36,21 @@ Component({
           })
           break;
         case 'swiper':
-          this.bannerGo(this.data.$state.nextTapDetial.detail)
+          page.bannerGo(this.data.$state.nextTapDetial.detail)
           break;
         case 'live':
-          this.toLivelesson(this.data.$state.nextTapDetial.detail)
+          page.toLivelesson(this.data.$state.nextTapDetial.detail)
           break;
         case 'lesson':
-          this.selectComponent('#lessonItem').toLesson(this.data.$state.nextTapDetial.detail)
+          page.selectComponent('#lessonItem').toLesson(this.data.$state.nextTapDetial.detail)
           break;
         case 'addStudy':
-          this.selectComponent('#lessonItem').addStudy(this.data.$state.nextTapDetial.detail)
+          page.selectComponent('#lessonItem').addStudy(this.data.$state.nextTapDetial.detail)
+          break;
+        case 'navBar':
+          wx.switchTab({
+            url: this.data.$state.nextTapDetial.detail,
+          })
           break;
       }
     }

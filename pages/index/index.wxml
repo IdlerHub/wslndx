@@ -30,7 +30,7 @@
         <text>本周课表</text>
         <image src="/images/Return-black.png"></image>
       </navigator>
-      <slotSign bindtap="checknextTap" data-type="search" data-detail="/pages/timetableList/timetableList" wx:else>
+      <slotSign bindtap="checknextTap" data-type="navBar" data-detail="/pages/timetableList/timetableList" wx:else>
         <view class="topTtile-right">
           <text>本周课表</text>
           <image src="/images/Return-black.png"></image>

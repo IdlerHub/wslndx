@@ -4,13 +4,13 @@
       <text  class="{{ path === 'index' ? 'active name' : 'name'}}" >云课堂</text>
       <view class="resRow" wx:if="{{path === 'index'}}"></view>
     </view>
-    <view bindtap="toVideo">
+    <view bindtap="toVideo" data-type="navBar" data-detail="/pages/timetableList/timetableList">
       <view class="item">
         <text class="{{ path === 'video' ? 'active name' : 'name'}}">直播课</text>
       <view class="resRow" wx:if="{{path === 'video'}}"></view>
       </view>
     </view>
-    <button  class="item" bindtap="toPost" wx:if="{{ $state.authUserInfo }}">
+    <button  class="item" bindtap="toPost" data-type="navBar" data-detail="/pages/timetableList/timetableList" wx:if="{{ $state.authUserInfo || !$state.userInfo.id }}">
       <text class="{{ path === 'post' ? 'active name' : 'name'}} ">秀风采</text>
       <text class="badge" wx:if="{{ $state.unRead }}">{{ $state.surPass ? "···" : $state.unRead }}</text>
       <view class="resRow" wx:if="{{path === 'post'}}"></view>
