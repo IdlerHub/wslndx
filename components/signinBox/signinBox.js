@@ -23,6 +23,6 @@ Component({
     },
     signin: function(){
       this.triggerEvent('sigin');
-    },
+    }
   }
 })

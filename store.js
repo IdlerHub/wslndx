@@ -91,7 +91,8 @@ let store = new Store({
     openId: "",
     userIndex: {},
     messageReceived: 0,
-    showLogin: false
+    showLogin: false,
+    nextTapDetial: {}
   },
   pageLisener: {
     onLoad(opts) {

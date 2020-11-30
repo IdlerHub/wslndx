@@ -32,7 +32,8 @@
       </navigator>
     </view>
     <view class="comment">
-      <slotSign bindtap="checknextTap" data-type="toLivelesson" wx:for="{{liveRecommend}}" wx:key="index">
+      <slotSign bindtap="checknextTap" data-type="toLivelesson" data-type="live" data-item="{{item}}"
+        wx:for="{{liveRecommend}}" wx:key="index">
         <view class="liveItem" style="{{index + 1 > 6 - 2 ? 'border:none' : '' }}" bindtap="toLivelesson"
           data-item="{{item}}">
           <view class="liveImgBox">
@@ -54,8 +55,6 @@
           <text>{{item.dayTime}} {{item.startTime}}</text>
         </view>
       </slotSign>
-
-
     </view>
   </view>
   <view class="liveBox" wx:else>
@@ -150,18 +149,22 @@
       <view class="topTtile">
         <text>入门推荐</text>
       </view>
-      <lessonItem lessonList="{{sprogInterestList}}" isIndex="1" bind:addStudy="addStudy" />
+      <lessonItem id="lessonItem" lessonList="{{sprogInterestList}}" isIndex="1" bind:addStudy="addStudy" />
     </view>
     <view class="liveBox">
       <view class="topTtile">
         <text>温故知新</text>
       </view>
-      <lessonItem lessonList="{{interestList}}" isIndex="1" bind:addStudy="addStudy" />
+      <lessonItem id="lessonItem" lessonList="{{interestList}}" isIndex="1" bind:addStudy="addStudy" />
     </view>
     <view class="interestedBox">
       <text>调整学习兴趣</text>
       <text>从此更懂你的学习需求</text>
-      <navigator hover-class="none" url="/page/index/pages/interested/interested">去调整</navigator>
+      <navigator hover-class="none" url="/page/index/pages/interested/interested" class="navigator"
+        wx:if="{{$state.userInfo.id}}">去调整</navigator>
+      <slotSign bindtap="checknextTap" data-type="search" data-detail="/page/index/pages/interested/interested" wx:else>
+        <view class="navigator">去调整</view>
+      </slotSign>
     </view>
   </view>
   <navigationBar wx:if="{{ scroll }}" id="navigationBar" placeholderBg="#F8F8F8" color="#000000" title="网上老年大学"
@@ -207,4 +210,4 @@
 </integralAnimation>
 
 <!-- 登录 -->
-<loginBox wx:if="{{$state.showLogin}}" bind:nextTap="nextTap" />
+<loginBox wx:if="{{$state.showLogin}}" />

@@ -1,5 +1,5 @@
 <!--components/loginBox/loginBox.wxml-->
-<view class="loginContariner" bindtap="show">
+<view class="loginContariner" bindtap="nextTap">
   <view class="loginBox">
     <text class="loginTitle">微信登陆</text>
     <view class="issuse">

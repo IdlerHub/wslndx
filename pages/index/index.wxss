@@ -842,7 +842,7 @@ page {
   line-height: 40rpx;
 }
 
-.interestedBox navigator {
+.interestedBox .navigator {
   width: 124rpx;
   height: 50rpx;
   background: #F7F7F7;

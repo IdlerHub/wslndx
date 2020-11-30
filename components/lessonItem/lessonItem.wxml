@@ -7,7 +7,7 @@
   }
 </wxs>
 <view class="itemBox">
-  <view class="item" wx:for="{{lessonList}}" wx:key="index" bindtap="toLesson" data-item="{{item}}">
+  <view class="item" wx:for="{{lessonList}}" wx:key="index" bindtap="toLesson" data-type="lesson" data-item="{{item}}">
     <view class="coverBox">
       <image src="{{item.image || item.indexCover}}"></image>
       <image src="/images/recomonPlay.png"></image>
@@ -24,7 +24,7 @@
           <text>|</text>
           <text>{{ fn.num(item.studyNum) }}人在学</text>
         </view>
-        <view class="right" wx:if="{{isIndex && !item.isEnroll}}" catchtap="addStudy" data-item="{{item}}">报名</view>
+        <view class="right" wx:if="{{isIndex && !item.isEnroll}}" catchtap="addStudy" data-type="addStudy" data-item="{{item}}">报名</view>
         <view class="righted" wx:else>
           已报名
         </view>

@@ -506,6 +506,12 @@ App({
       showLogin: !this.store.$state.showLogin
     })
   },
+  checknextTap(e) {
+    this.store.setState({
+      'nextTapDetial.type': e.currentTarget.dataset.type,
+      'nextTapDetial.detail': e.currentTarget.dataset.detail ? e.currentTarget.dataset.detail : e
+    })
+  },
   globalData: {
     /*wx.login 返回值 code */
     code: null,

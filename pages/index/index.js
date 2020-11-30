@@ -453,17 +453,10 @@ Page({
     let item = e.currentTarget.dataset.item
     app.liveData.getLiveBySpecialColumnId({
       specialColumnId: item.columnId
-    }).then(res => {
-      // if (res.data.isAddSubscribe) {
+    }).then(() => {
       wx.navigateTo({
         url: `/page/live/pages/vliveRoom/vliveRoom?roomId=${item.liveId}`,
       })
-      // } else {
-      //   wx.navigateTo({
-      //     url: "/page/live/pages/tableDetail/tableDetail?specialColumnId=" +
-      //       item.columnId + "liveRoom=1"
-      //   });
-      // }
     })
   },
   addStudy(e) {
@@ -483,28 +476,6 @@ Page({
     })
   },
   checknextTap(e) {
-    this.nextTapDetial.type = e.currentTarget.dataset.type
-    e.currentTarget.dataset.detail ? this.nextTapDetial.detail = e.currentTarget.dataset.detail : this.nextTapDetial.detail = e
-    console.log(this.nextTapDetial.detail)
-  },
-  nextTap() {
-    switch (this.nextTapDetial.type) {
-      case 'top':
-        this.toInfo()
-        break;
-      case 'search':
-        wx.navigateTo({
-          url: this.nextTapDetial.detail,
-        })
-        break;
-      case 'myLesson':
-        wx.navigateTo({
-          url: this.nextTapDetial.detail,
-        })
-        break;
-      case 'swiper':
-        this.bannerGo(this.nextTapDetial.detail)
-        break;
-    }
+    app.checknextTap(e)
   }
 })
