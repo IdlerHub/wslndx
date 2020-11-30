@@ -65,7 +65,7 @@
   </view>
   <view class="liveBox" wx:else>
     <view class="topTtile">
-      <text>直播推荐</text>
+      <text>免费直播</text>
       <view class="topTtile-right">
         <text>更多课程</text>
         <image src="/images/Return-black.png"></image>
@@ -148,7 +148,7 @@
         </navigator>
       </slotSign>
     </view>
-    <template is="liveBox" data="{{recommend, liveRecommend}}"></template>
+    <template is="liveBox" data="{{recommend, liveRecommend, $state}}"></template>
     <view>
     </view>
     <view class="liveBox">
