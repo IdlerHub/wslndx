@@ -154,8 +154,8 @@
           "scene": null
         },
         {
-          "name": "page/index/pages/allSchoollesson/allSchoollesson",
-          "pathName": "page/index/pages/allSchoollesson/allSchoollesson",
+          "name": "pages/post/post",
+          "pathName": "pages/post/post",
           "query": "id=12",
           "scene": 1000
         },

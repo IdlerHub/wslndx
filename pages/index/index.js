@@ -464,10 +464,10 @@ Page({
       columnId: e.detail.columnId
     }).then(() => {
       this.data.interestList.forEach(i => {
-        i.columnId = e.detail.columnId ? i.isEnroll = 1 : ''
+        i.columnId == e.detail.columnId ? i.isEnroll = 1 : ''
       })
       this.data.sprogInterestList.forEach(e => {
-        i.columnId = e.detail.columnId ? i.isEnroll = 1 : ''
+        i.columnId == e.detail.columnId ? i.isEnroll = 1 : ''
       })
       this.setData({
         interestList: this.data.interestList,
