@@ -99,7 +99,6 @@ App({
   },
   /*埋点统计*/
   onLaunch: async function (opts) {
-    console.log(opts, this.globalData.scenes.indexOf(opts.scene) >= 0);
     this.getSecureToken();
     let optsStr = decodeURIComponent(opts.query.scene).split("&");
     let opstObj = {};
@@ -175,6 +174,7 @@ App({
         socket.listen(this.bokemessage, "Bokemessage");
       }, 2000);
     } else {
+      if(opts.path == 'pages/index/index') return
       wx.reLaunch({
         url: "/pages/index/index",
       });
@@ -227,37 +227,15 @@ App({
         code: this.globalData.code,
       })
       .then((msg) => {
-        if (msg.data.tempCode) {
+        if (!msg.data.userInfo) {
           /* 新用户未注册 */
-          console.log("tempCode", msg.data.tempCode);
-          this.globalData.tempCode = msg.data.tempCode;
-          // wx.reLaunch({
-          //   url: "/pages/index/index",
-          // });
+          this.globalData.loginDetail = msg.data;
         } else {
           /* 旧用户 */
           wx.setStorageSync("token", msg.data.token);
           wx.setStorageSync("uid", msg.data.uid);
           wx.setStorageSync("authKey", msg.data.authKey);
           this.setUser(msg.data.userInfo);
-          if (
-            this.globalData.query.type == "share" ||
-            this.globalData.shareObj.type == "lottery"
-          ) {
-            let params = [];
-            for (let attr in this.globalData.query) {
-              params.push(attr + "=" + this.globalData.query[attr]);
-            }
-            this.globalData.shareObj.type == "lottery"
-              ? wx.reLaunch({
-                  url:
-                    "/pages/education/education?type=lottery&login=1&id=" +
-                    this.globalData.lotteryId,
-                })
-              : wx.reLaunch({
-                  url: this.globalData.path + "?" + params.join("&"),
-                });
-          }
         }
       });
   },
@@ -280,7 +258,7 @@ App({
   },
   /* 更新store中的userInfo */
   setUser: function (data) {
-    let areaArray = data.university.split(",");
+    let areaArray = data.university ? data.university.split(",") : '';
     if ((!data.address || !data.school) && areaArray.length == 3) {
       data.address = areaArray.slice(0, 2);
       data.addressCity = areaArray[1];
@@ -524,6 +502,7 @@ App({
     code: null,
     /* 新用户临时code */
     tempCode: null,
+    logindetail: {},
     /* 卡片路径 */
     path: null,
     /* 卡片参数 */

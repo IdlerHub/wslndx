@@ -1,5 +1,5 @@
 <!--components/loginBox/loginBox.wxml-->
-<view class="loginContariner" bindtap="nextTap">
+<view class="loginContariner">
   <view class="loginBox">
     <text class="loginTitle">微信登陆</text>
     <view class="issuse">
@@ -7,7 +7,11 @@
       <view class="circle" wx:else bindtap="checkRadio"></view>
       <navigator hover-class="none" url="/pages/agreement/agreement" class="text">已阅读《用户协议》，登录即注册</navigator>
     </view>
-    <button class="loginItem" hover-class="none" open-type="getPhoneNumber" bindgetphonenumber="getphonenumber">
+    <view class="loginItem" wx:if="{{!check}}" bindtap="showToast">
+      <image src="../loginBox/images/wechat.png"></image>
+      <text>微 信</text>
+    </view>
+    <button class="loginItem" hover-class="none" open-type="getPhoneNumber" bindgetphonenumber="getphonenumber" wx:else>
       <image src="../loginBox/images/wechat.png"></image>
       <text>微 信</text>
     </button>

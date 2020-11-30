@@ -99,7 +99,7 @@ Page({
             status: sign,
             count: sign ? 1 : this.data.$state.signStatus.count
           }, true)
-          this.setState({
+          app.store.setState({
             showSignbox: !sign
           }, () => {
             app.user.share({}).then(res => {

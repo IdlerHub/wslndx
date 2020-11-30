@@ -75,8 +75,8 @@
 .loginContariner .loginBox .issuse image {
   width: 28rpx;
   height: 28rpx;
-  margin-right: 10rpx;
-  margin-top: 5rpx;
+  padding-right: 10rpx;
+  padding-top: 5rpx;
 }
 
 .loginContariner .loginBox .issuse .circle {
