@@ -89,7 +89,7 @@ Page({
   },
   init() {
     if (this.data.$state.userInfo.mobile) {
-      Promise.all([this.getRecommendLessons(1), this.getinterestList(), this.getBanner(), this.getDialog(), this.getUserOpenid()]).then(values => {
+     return Promise.all([this.getRecommendLessons(1), this.getinterestList(), this.getBanner(), this.getDialog(), this.getUserOpenid()]).then(values => {
         app.user.signed().then(res => {
           let sign = res.data && res.data.signed
           app.store.setState({
@@ -110,7 +110,7 @@ Page({
         })
       })
     } else {
-      Promise.all([this.getRecommendLessons(1), this.getinterestList(), this.getBanner()])
+      return Promise.all([this.getRecommendLessons(1), this.getinterestList(), this.getBanner()])
     }
   },
   centerTab(e) {
