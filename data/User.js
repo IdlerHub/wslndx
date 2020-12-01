@@ -75,6 +75,15 @@ function gift(param) {
 }
 
 /**
+ * @description: 获取礼品规格
+ * @param {giftId: 礼品id}
+ * @return: promise
+ */
+function getSpecification(param) {
+  return httpService.post("gift/quality/list", param , null ,true);
+}
+
+/**
  * @description:兑换物品
  * @param {*}
  * @return: promise
@@ -273,6 +282,7 @@ module.exports = {
   userQr,
   sign,
   gift,
+  getSpecification,
   exchange,
   pointsinfo,
   activite,

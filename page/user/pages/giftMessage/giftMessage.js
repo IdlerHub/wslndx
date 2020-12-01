@@ -5,8 +5,10 @@ Page({
    * 页面的初始数据
    */
   data: {
-    getAddress: false,
-    giftInfo: {},
+    getAddress: false,  //兑换地址卡片展示
+    giftInfo: {}, //兑换礼品信息
+    showModelCard: false,  //奖品规格兑换卡片
+    skuId: 0, //兑换礼品规格的id
   },
   pageName: "积分商品详情",
   /**
@@ -28,6 +30,7 @@ Page({
     });
   },
   gift() {
+    console.log("商品规格",this.data.gift)
     if (!this.data.gift.stock) {
       wx.showToast({
         title: "已经没货啦～",
@@ -49,14 +52,21 @@ Page({
             confirmColor: "#df2020",
             success: (res) => {
               if (res.confirm) {
-                this.setData({
-                  getAddress: true,
-                  giftInfo: param,
-                });
+                if(param.is_sku == 1) {  //有配置规格
+                  this.setData({
+                    showModelCard: true,
+                    giftInfo: param //礼品详情
+                  })
+                }else {
+                  this.setData({
+                    getAddress: true,
+                    giftInfo: param
+                  })
+                }
               }
             },
           });
-        } else {
+        } else {  //老用户
           wx.showModal({
             title: "兑换提示",
             content: "确定要兑换该物品吗?",
@@ -67,10 +77,17 @@ Page({
             confirmColor: "#df2020",
             success: (res) => {
               if (res.confirm) {
-                this.setData({
-                  getAddress: true,
-                  giftInfo: param,
-                });
+                if(param.is_sku == 1) {  //有配置规格
+                  this.setData({
+                    showModelCard: true,
+                    giftInfo: param
+                  })
+                }else {
+                  this.setData({
+                    getAddress: true,
+                    giftInfo: param,
+                  });
+                }
               }
             },
           });
@@ -83,6 +100,14 @@ Page({
         });
       }
     }
+  },
+  setSkuId(e) {  //展示地址填写卡片
+    //关闭当前卡片,显示地址卡片
+    this.setData({
+      showModelCard: false,
+      getAddress: true,
+      giftInfo: e.detail
+    })
   },
   stockChange() {
     this.data.gift.stock--;

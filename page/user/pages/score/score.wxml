@@ -91,9 +91,7 @@
           <text class="title">{{ item.title }}</text>
           <text class="score">{{ item.largePoint || item.need_points }}</text>
           <text class="unit">学分</text>
-          <button class="bt {{ item.stock ? '' : 'out' }}" size="mini" data-stock="{{ item.stock }}"
-            data-score="{{ item.need_points }}" data-id="{{ item.id }}" data-title="{{item.title}}"
-            data-image="{{item.image}}" data-receive_type="{{item.receive_type}}" catchtap="gift" data-type="{{item.is_new}}">兑换</button>
+          <button class="bt {{ item.stock ? '' : 'out' }}" size="mini" data-item="{{item}}" catchtap="gift">兑换</button>
           <image class="newperson" src="{{$state.imgHost}}/newperson.png" wx:if="{{item.is_new == 1}}"></image>
         </view>
       </view>
@@ -124,3 +122,4 @@
 </view> -->
 <signinBox wx:if="{{showSignbox}}" state="{{$state}}" bind:closesignBox="closesignBox" />
 <address style="position: fixed;z-index: 99;" giftInfo="{{giftInfo}}" show-card="{{getAddress}}" bind:change="stockChange"></address>
+<giftModels show-card="{{showModelCard}}" giftInfo="{{giftInfo}}" bind:setSkuId="setSkuId"></giftModels>
