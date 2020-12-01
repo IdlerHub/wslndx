@@ -6,6 +6,7 @@
   "onReachBottomDistance": 0,
   "usingComponents": {
     "address": "/components/address/address",
+    "giftModels": "/components/giftModels/giftModels",
     "signinBox": "/components/signinBox/signinBox"
   }
 }

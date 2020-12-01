@@ -95,7 +95,6 @@ Component({
           addressId: addressId,
           is_email: res.data.email.length > 0 ? false : true
         })
-        console.log(this.data.is_email)
       })
     },
     putGoodsaddress(){
@@ -134,9 +133,6 @@ Component({
         userInfo: userInfo
       })
     },
-    // changeInput(e){
-    //   console.log("输入改变",e)用下面的一样
-    // },
     changeAddress(e){
       let userInfo = this.data.userInfo;
       userInfo['address'] = e.detail.value;
@@ -249,13 +245,13 @@ Component({
           confirmColor: "#DF2020",
           success(res) {
             if (res.confirm) {
-              
               if(that.data.giftInfo.from == "winPrize"){  //从抽奖来的
                 param['id'] = that.data.giftInfo.id
                 that.triggerEvent('change', param.id)
                 app.lottery.finishGetPrize(param)
               }else{  //积分兑换
                 param['gift_id'] = that.data.giftInfo.id
+                param['sku_id'] = that.data.giftInfo.skuId
                 app.user.exchange(param).then(() => {
                   that.triggerEvent('change', that.data.giftInfo.id)
                 }).catch(err=>{
