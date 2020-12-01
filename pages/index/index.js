@@ -95,6 +95,7 @@ Page({
           app.store.setState({
             signdays: res.data.sign_days
           })
+          console.log(this.data.$state.signStatus.count)
           app.setSignIn({
             status: sign,
             count: sign ? 1 : this.data.$state.signStatus.count

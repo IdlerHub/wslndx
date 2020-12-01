@@ -274,10 +274,6 @@ App({
       socket.listen(this.prizemessage, "Prizemessage");
       socket.listen(this.bokemessage, "Bokemessage");
     }
-    getCurrentPages().forEach(e => {
-      console.log(e)
-      e.route == 'pages/index/index' ? e.init() : ''
-    })
   },
   /* 更新AuthKey */
   setAuthKey: function (data) {
@@ -340,7 +336,6 @@ App({
       this.setUser(msg.data.userInfo);
     });
   },
-
   playVedio(type) {
     type == "wifi"
       ? ""
