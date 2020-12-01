@@ -1,5 +1,5 @@
 // components/giftModels/giftModels.js
-// 奖品兑换规格卡片
+// 奖品兑换规格卡片,需要在兑换的接口处新增sku_id字段,score.js页带有规格字段位置的修改
 const app = getApp()
 Component({
   properties: {

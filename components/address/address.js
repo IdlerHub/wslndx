@@ -133,9 +133,6 @@ Component({
         userInfo: userInfo
       })
     },
-    // changeInput(e){
-    //   console.log("输入改变",e)用下面的一样
-    // },
     changeAddress(e){
       let userInfo = this.data.userInfo;
       userInfo['address'] = e.detail.value;

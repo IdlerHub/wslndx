@@ -470,10 +470,6 @@ Page({
             confirmColor: "#df2020",
             success: res => {
               if (res.confirm) {  //确认,如果是带规格的,则先展示规格选项
-                  // this.setData({
-                  //   getAddress: true,
-                  //   giftInfo: item
-                  // })
                 if(item.is_sku == 1) {  //有配置规格
                   this.setData({
                     showModelCard: true,
@@ -498,8 +494,7 @@ Page({
       }
     }
   },
-  setSkuId(e) {  //展示地址填写卡片
-    console.log("选完规格",e)
+  setSkuId(e) {  //关闭规格卡片,展示地址填写卡片
     //关闭当前卡片,显示地址卡片
     this.setData({
       showModelCard: false,
