@@ -17,7 +17,7 @@
         <swiper-item wx:for="{{navList}}" wx:key="index" class="swiperItem">
           <scroll-view class="scrollView" scroll-top="{{scrollTop}}" scroll-with-animation="{{false}}" scroll-y enable-flex>
             <view class="lessonBox">
-              <image src="{{item.topImage}}" class="activity"></image>
+              <image src="{{item.image}}" class="activity"></image>
               <view class="lessonItem">
                 <image src="{{lessonItem.image}}" wx:for="{{ item.categoryList }}" wx:for-item="lessonItem" wx:for-index="idx" wx:key="idx" bindtap="checkTab" data-id="{{lessonItem.id}}" data-tab1="{{item.name}}" data-tab2="{{lessonItem.name}}">
                 </image>
