@@ -47,6 +47,7 @@ Component({
     },
     nextTap() {
       let page = getCurrentPages()[getCurrentPages().length - 1]
+      page.route == 'pages/index/index' ? page.init() : ''
       switch (this.data.$state.nextTapDetial.type) {
         case 'top':
           page.toInfo()
@@ -84,10 +85,10 @@ Component({
     login(param) {
       app.user.register(param).then(res => {
         /* 新用户注册不用提示签到 */
-        app.setSignIn({
-          status: false,
-          count: 1
-        })
+        // app.setSignIn({
+        //   status: false,
+        //   count: 1
+        // })
         wx.setStorageSync("token", res.data.token)
         wx.setStorageSync("uid", res.data.uid)
         wx.setStorageSync("authKey", res.data.authKey)

@@ -600,6 +600,7 @@ page {
   width: 22rpx;
   height: 22rpx;
   margin-left: 10rpx;
+  margin-top: 2rpx;
 }
 
 .liveBox .comment {

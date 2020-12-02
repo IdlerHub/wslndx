@@ -14,9 +14,8 @@
     </view>
     <view class="contentBox">
       <text class="title">{{ item.title || item.name}}</text>
-      <view class="tabLine" wx:for="{{item.tags}}" wx:key="index">
-        <text>零基础</text>
-        <text>国家一级艺术家</text>
+      <view class="tabLine">
+        <text wx:for="{{item.tags}}" wx:key="index" wx:for-item="tagItem">{{tagItem.tagName}}</text>
       </view>
       <view class="bottom" wx:if="{{(!isSchool && item.type == 1) || isIndex}}">
         <view class="left">
@@ -24,7 +23,8 @@
           <text>|</text>
           <text>{{ fn.num(item.studyNum) }}人在学</text>
         </view>
-        <view class="right" wx:if="{{isIndex && !item.isEnroll}}" catchtap="addStudy" data-type="addStudy" data-item="{{item}}">报名</view>
+        <view class="right" wx:if="{{isIndex && !item.isEnroll}}" catchtap="addStudy" data-type="addStudy"
+          data-item="{{item}}">报名</view>
         <view class="righted" wx:else>
           已报名
         </view>
