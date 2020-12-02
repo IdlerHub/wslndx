@@ -1,9 +1,0 @@
-{
-  "navigationBarTitleText": "课程表",
-  "enablePullDownRefresh": true,
-  "usingComponents": {
-    "formCode": "/components/formCode/formCode",
-    "liveLesson": "/components/liveLesson/liveLesson",
-    "navBar": "/components/navBar/navBar"
-  }
-}
