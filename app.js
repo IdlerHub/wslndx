@@ -274,6 +274,9 @@ App({
       socket.listen(this.prizemessage, "Prizemessage");
       socket.listen(this.bokemessage, "Bokemessage");
     }
+    getCurrentPages().forEach(e => {
+      e.route == 'pages/index/index' ? e.init() : ''
+    })
   },
   /* 更新AuthKey */
   setAuthKey: function (data) {

@@ -90,24 +90,7 @@ Page({
   init() {
     if (this.data.$state.userInfo.mobile) {
      return Promise.all([this.getRecommendLessons(1), this.getinterestList(), this.getBanner(), this.getDialog(), this.getUserOpenid()]).then(values => {
-        app.user.signed().then(res => {
-          let sign = res.data && res.data.signed
-          app.store.setState({
-            signdays: res.data.sign_days
-          })
-          console.log(this.data.$state.signStatus.count)
-          app.setSignIn({
-            status: sign,
-            count: sign ? 1 : this.data.$state.signStatus.count
-          }, true)
-          app.store.setState({
-            showSignbox: !sign
-          }, () => {
-            app.user.share({}).then(res => {
-              app.setShare(res)
-            })
-          })
-        })
+        this.getSigns()
       })
     } else {
       return Promise.all([this.getRecommendLessons(1), this.getinterestList(), this.getBanner()])
@@ -171,6 +154,26 @@ Page({
     return app.user.history(historyParam).then(msg => {
       this.setData({
         "history.last_lesson": msg.data.last_lesson || ""
+      })
+    })
+  },
+  getSigns() {
+    app.user.signed().then(res => {
+      let sign = res.data && res.data.signed
+      app.store.setState({
+        signdays: res.data.sign_days
+      })
+      console.log(this.data.$state.signStatus.count)
+      app.setSignIn({
+        status: sign,
+        count: sign ? 1 : this.data.$state.signStatus.count
+      }, true)
+      app.store.setState({
+        showSignbox: !sign
+      }, () => {
+        app.user.share({}).then(res => {
+          app.setShare(res)
+        })
       })
     })
   },
