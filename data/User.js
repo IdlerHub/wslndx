@@ -30,7 +30,7 @@ function register(param) {
 
 //POST user/profile 更新用户资料
 function profile(param) {
-  return httpService.post("User/profile", param);
+  return httpService.post("wx/profile", param, null, true);
 }
 
 //POST User/collect 收藏课程
