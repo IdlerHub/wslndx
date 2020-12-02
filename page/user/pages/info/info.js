@@ -29,7 +29,7 @@ Page({
     this.init()
   },
   init() {
-    let cascade = this.data.userInfo.university.split(",") || ["", "", ""]
+    let cascade = this.data.userInfo.universityName ? this.data.userInfo.universityName.split(",") || ["", "", ""] : ["", "", ""]
     this.getGoodsAddress()
     this.getProvince().then(() => {
       this.getCity(cascade[0]).then(() => {

@@ -258,7 +258,7 @@ App({
   },
   /* 更新store中的userInfo */
   setUser: function (data) {
-    let areaArray = data.university ? data.university.split(",") : '';
+    let areaArray = data.universityName ? data.universityName.split(",") : '';
     if ((!data.address || !data.school) && areaArray.length == 3) {
       data.address = areaArray.slice(0, 2);
       data.addressCity = areaArray[1];
@@ -328,7 +328,7 @@ App({
     }
     this.getSets();
     let param = {
-      userInfo: JSON.stringify(e.detail.userInfo),
+      userInfo: e.detail.userInfo,
       encryptedData: e.detail.encryptedData,
       iv: e.detail.iv,
     };

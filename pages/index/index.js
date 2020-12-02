@@ -256,6 +256,7 @@ Page({
           bannerTencent: item.title
         });
       }
+      this.init()
     }
   },
   /* 签到 */
