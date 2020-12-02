@@ -80,7 +80,7 @@
     </view>
   </view>
 </template>
-<view class="container">
+<view class="container" bindtouchstart="touchstart" bindtouchend="touchend">
   <!-- 下拉刷新 -->
   <view wx:if="{{ isRefreshing }}" class="weui-loadmore indexdrop">
     <view class="weui-loading"></view>
