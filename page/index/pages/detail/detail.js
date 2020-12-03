@@ -137,7 +137,11 @@ Page({
           });
         });
       } else if (that.data.$state.userInfo.mobile) {
-        that.getDetail();
+        that.getDetail().then(() => {
+          setTimeout(() => {
+            that.recordAdd();
+          }, 800);
+        });
       }
     });
     this.sublessParam = {
@@ -610,48 +614,9 @@ Page({
     if (this.data.cur.id == lesson.id) {
       this.videoContext.seek(lesson.time);
     }
-    // if (lesson && lesson[this.data.cur.lesson_id]) {
-    //   for (let i in lesson[this.data.cur.lesson_id]) {
-    //     i == this.data.cur.id ? this.videoContext.seek(lesson[this.data.cur.lesson_id][i].time) : ''
-    //   }
-    // }
   },
   timeupdate(e) {
     let lesson = wx.getStorageSync("lessonProgress")
-    // if (lesson) {
-    //   if (lesson[this.data.cur.lesson_id]) {
-    //     if (lesson[this.data.cur.lesson_id][this.data.cur.lesson_id]) {
-    //       for (let i in lesson[this.data.cur.lesson_id]) {
-    //         i == this.data.cur.id ? lesson[this.data.cur.lesson_id][i].time = e.detail.currentTime : ''
-    //       }
-    //       wx.setStorage({
-    //         key: "lessonProgress",
-    //         data: lesson
-    //       })
-    //     }else {
-    //       lesson[this.data.cur.lesson_id][this.data.cur.id] = { id: this.data.cur.id, time: e.detail.currentTime }
-    //       wx.setStorage({
-    //         key: "lessonProgress",
-    //         data: lesson
-    //       })
-    //     }
-    //   } else {
-    //     lesson[this.data.cur.lesson_id] = {}
-    //     lesson[this.data.cur.lesson_id][this.data.cur.id] = { id: this.data.cur.id, time: e.detail.currentTime }
-    //     wx.setStorage({
-    //       key: "lessonProgress",
-    //       data: lesson
-    //     })
-    //   }
-    // } else {
-    //   let videoTime = {}
-    //   videoTime[this.data.cur.lesson_id] = {}
-    //   videoTime[this.data.cur.lesson_id][this.data.cur.id] = { id: this.data.cur.id, time: e.detail.currentTime}
-    //   wx.setStorage({
-    //     key: "lessonProgress",
-    //     data: videoTime
-    //   })
-    // }
     wx.setStorage({
       key: "lessonProgress",
       data: {

@@ -8,7 +8,7 @@
       <!-- <cover-image src="/images/shouzhi.png" class="iconfont" style="left:{{ rect.left + 10 }}px"></cover-image> -->
     </cover-view>
     <cover-image wx:if="{{ !playing }}" mode="widthFix" src="{{ detail.image }}" class="poster" bindtap="recordAdd"></cover-image>
-    <cover-image wx:if="{{ !playing }}" mode="aspectFill" src="{{ $state.imgHost }}/play.png" class="play" bindtap="recordAdd"></cover-image>
+    <!-- <cover-image wx:if="{{ !playing }}" mode="aspectFill" src="{{ $state.imgHost }}/play.png" class="play" bindtap="recordAdd"></cover-image> -->
     <cover-view class="videomask" wx:if="{{showintegral}}"></cover-view>
   </video>
   <view id="myVideo" style="overflow: hidden;" wx:else>
