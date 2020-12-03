@@ -570,29 +570,30 @@ Page({
   },
   setHeight() {
     let that = this;
-    // if (this.data.currentTab == 1) {
-    //   let query = wx.createSelectorQuery().in(this);
-    //   query.select(".comment").boundingClientRect();
-    //   query.exec(res => {
-    //     let height = res[0].height - -110;
-    //     height < 100
-    //       ? that.setData({
-    //         height: 700
-    //       })
-    //       : that.setData({
-    //         height: height
-    //       });
-    //     if (height == 110) {
-    //       that.setData({
-    //         height: 400
-    //       });
-    //     }
-    //   });
-    // } else {
+    if (this.data.currentTab == 1) {
+      let query = wx.createSelectorQuery().in(this);
+      // query.select(".comment").boundingClientRect();
+      query.select(".synopsis").boundingClientRect();
+      query.exec(res => {
+        let height = res[0].height - -110;
+        height < 100
+          ? that.setData({
+            height: 700
+          })
+          : that.setData({
+            height: height
+          });
+        if (height == 110) {
+          that.setData({
+            height: 400
+          });
+        }
+      });
+    } else {
       this.setData({
         height: 306
       });
-    // }
+    }
   },
   tolesson() {
     let that = this,
