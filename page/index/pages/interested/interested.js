@@ -30,7 +30,7 @@ Page({
       this.setData({
         list: res.dataList,
         selectNum: num,
-        select:  this.data.$state.userInfo.recommendCategoryList.split(",")
+        select: this.data.$state.userInfo.recommendCategoryList.split(",")
       })
     })
   },
@@ -64,6 +64,15 @@ Page({
         app.store.setState({
           'userInfo.recommendCategoryList': str
         })
+        wx.setStorageSync("userInfo", this.data.$state.userInfo);
+        wx.showToast({
+          title: '选择成功',
+          icon: 'none'
+        })
+        getCurrentPages().forEach(e => {
+          e.route == 'pages/index/index' ? e.getinterestList() : ''
+        })
+        wx.navigateBack()
       })
     } else {
       wx.showToast({
