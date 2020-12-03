@@ -14,6 +14,9 @@ Page({
   navHeightList: [],
   onLoad: function (options) {
     this.universityId = options.id
+    wx.setNavigationBarTitle({
+      title: options.title
+    })
     let query = wx.createSelectorQuery().in(this), that = this
     query.select(".nav").boundingClientRect()
     query.exec(res => {
