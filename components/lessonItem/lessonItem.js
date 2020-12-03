@@ -21,6 +21,7 @@ Component({
   },
   methods: {
     loginStatus(e) {
+      console.log(32423423)
       if (!this.data.$state.userInfo.id) {
         getApp().changeLoginstatus()
         getApp().checknextTap(e)
@@ -42,6 +43,7 @@ Component({
           url: '/page/live/pages/liveDetail/liveDetail?specialColumnId=' + item.id,
         })
       } else {
+        if(this.loginStatus(e)) return
         wx.navigateTo({
           url: '/page/index/pages/detail/detail?id=' + item.id,
         })

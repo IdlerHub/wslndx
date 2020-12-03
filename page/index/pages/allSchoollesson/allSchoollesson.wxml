@@ -59,7 +59,7 @@
   <swiper-item class="tab-item" wx:for="{{nav}}" wx:key="index" item-id="{{item.name}}">
     <view class="wrap recommend" id="recommend{{item.id}}">
       <template is="skeleton" wx:if="{{ !catrecommend[item.id][0] && !item.showNone}}"></template>
-      <lessonItem lessonList="{{catrecommend[item.id]}}" isSchool="{{true}}" wx:else />
+      <lessonItem id="lessonItem" lessonList="{{catrecommend[item.id]}}" isSchool="{{true}}" wx:else />
       <template is="nomore" wx:if="{{nav[currentTab].showBtoom && !item.showNone}}"></template>
       <view class="qst" wx:if="{{item.showNone}}">
         <image src="/images/liveqs.png"></image>
@@ -80,3 +80,6 @@
     </view>
   </view>
 </view>
+
+<!-- 登录 -->
+<loginBox wx:if="{{$state.showLogin}}"/>

@@ -92,13 +92,6 @@ Page({
         curid: options.curid || null,
         cur: {}
       });
-      if (that.data.$state.newGuide) {
-        that.data.$state.newGuide.lesson == 0
-          ? this.setData({
-            currentTab: 1
-          })
-          : "";
-      }
       if (that.data.vistor) {
         setTimeout(() => {
           that.setData({
