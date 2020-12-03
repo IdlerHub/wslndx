@@ -563,17 +563,17 @@ Page({
     });
   },
   onReachBottom() {
-    if (this.data.currentTab == 1) {
-      this.comParam.page++;
-      this.getComment();
-    }
+    // if (this.data.currentTab == 1) {
+    //   this.comParam.page++;
+    //   this.getComment();
+    // }
   },
   setHeight() {
     let that = this;
     if (this.data.currentTab == 1) {
       let query = wx.createSelectorQuery().in(this);
       // query.select(".comment").boundingClientRect();
-      query.select(".synopsis").boundingClientRect();
+      query.select(".wrap").boundingClientRect();
       query.exec(res => {
         let height = res[0].height - -110;
         height < 100
