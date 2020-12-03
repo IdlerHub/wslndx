@@ -50,9 +50,9 @@ page {
 
 .centerIcon {
   display: flex;
-  padding: 32rpx 20rpx;
+  padding: 32rpx 30rpx;
   align-items: center;
-  justify-content: space-around;
+  justify-content: space-between;
   background: linear-gradient(180deg, #FFFFFF 0%, #F7F7F7 100%);
 }
 

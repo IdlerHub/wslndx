@@ -20,7 +20,7 @@ Page({
     }, {
       url: '/pages/video/video',
       icon: '/images/indexIcon/sortVideoicon.png',
-      name: '短视频 '
+      name: '短视频'
     }, {
       url: '/page/index/pages/schoolLesson/schoolLesson',
       icon: '/images/indexIcon/shollLesson.png',

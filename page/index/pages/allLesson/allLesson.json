@@ -3,5 +3,6 @@
     "lessonItem": "/components/lessonItem/lessonItem"
   },
   "navigationBarTitleText": "全部课程",
-  "disableScroll": true
+  "disableScroll": true,
+  "navigationBarBackgroundColor": "#fff"
 }
