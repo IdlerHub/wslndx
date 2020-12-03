@@ -29,7 +29,7 @@
   },
   "window": {
     "backgroundTextStyle": "light",
-    "navigationBarBackgroundColor": "#F8F8F8",
+    "navigationBarBackgroundColor": "#fff",
     "navigationBarTitleText": "网上老年大学",
     "navigationBarTextStyle": "black",
     "backgroundColor": "#eeefef"

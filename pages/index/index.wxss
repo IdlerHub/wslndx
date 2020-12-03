@@ -844,14 +844,14 @@ page {
 }
 
 .interestedBox .navigator {
-  width: 124rpx;
-  height: 50rpx;
+  width: 160rpx;
+  height: 72rpx;
   background: #F7F7F7;
   border-radius: 6rpx;
   font-size: 28rpx;
   font-weight: 400;
   color: #F52D3A;
   text-align: center;
-  line-height: 50rpx;
+  line-height: 72rpx;
   margin-top: 16rpx;
 }
