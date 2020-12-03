@@ -123,15 +123,17 @@
         current="{{bannercurrentTab}}" bindanimationfinish="centerTab">
         <block wx:for="{{imgUrls}}" wx:key="index">
           <swiper-item>
-            <slotSign bindtap="checknextTap" data-type="swiper" data-item="{{ item }}">
-              <image src="{{item.image}}" class="slide-image" width="355" height="150" catchtap="bannerGo"
-                data-item="{{ item }}" wx:if="{{!item.isLogin}}" />
+            <slotSign bindtap="checknextTap" data-type="swiper" data-item="{{ item }}" wx:if="{{item.isLogin}}">
               <image src="{{item.image}}" class="slide-image" width="355" height="150" catchtap="bannerGo"
                 data-item="{{ item }}" wx:if="{{item.isLogin && $state.authUserInfo}}" />
               <button class="slide-image" style="background:url({{item.image}});background-size: 100% 100%;"
                 open-type="getUserInfo" bindgetuserinfo="onGotUserInfo" data-type="banner" data-item="{{item}}"
                 wx:else></button>
             </slotSign>
+            <view wx:else>
+              <image src="{{item.image}}" class="slide-image" width="355" height="150" catchtap="bannerGo"
+                data-item="{{ item }}"/>
+            </view>
           </swiper-item>
         </block>
       </swiper>
