@@ -22,7 +22,6 @@ Page({
     Promise.all([this.getCategory()])
   },
   onShow: function () {
-
   },
   onReachBottom: function () {
     if (!this.data.nav[this.data.currentTab].showBtoom) {
