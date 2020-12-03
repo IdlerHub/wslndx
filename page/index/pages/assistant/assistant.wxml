@@ -1,22 +1,26 @@
 <template name="talkItem">
   <view wx:if="{{!item.isRight}}">
     <view class="talkItem">
-      <image src="{{item.coverurl}}" class="logo"/>
+      <image src="{{item.coverurl}}" class="logo" />
       <view class="msgBox" style="padding-bottom: {{ item.reply ? '23rpx' : ''}};">
         <text>{{item.msg}}</text>
-        <view class="replyBox" wx:if="{{item.reply}}"  bindtap="toEducation" data-item="{{item}}">
-          <image src="../../images/replyIcon.png" ></image>
+        <view class="replyBox" wx:if="{{item.reply}}" bindtap="toEducation" data-item="{{item}}">
+          <image src="../../images/replyIcon.png"></image>
           {{item.reply}}＞＞
         </view>
-        <view wx:if="{{item.showBtn}}" class="attenBtn" bindtap="toEducation" data-item="{{item}}">
-          关注网上老年大学
-        </view>
+        <slotSign bindtap="checknextTap" data-type="attenBtn" data-item="{{item}}" wx:if="{{item.showBtn}}">
+          <view class="attenBtn" bindtap="toEducation" data-item="{{item}}">
+            关注网上老年大学
+          </view>
+        </slotSign>
         <view wx:if="{{item.list}}">
           <view wx:for="{{item.list}}" wx:for-item="listItem" wx:key="index">
-            <view class="listItem" bindtap="additem" wx:if="{{ index != 4}}" data-item="{{listItem}}" data-index="{{index}}">
+            <view class="listItem" bindtap="additem" wx:if="{{ index != 4}}" data-item="{{listItem}}"
+              data-index="{{index}}">
               {{listItem.name}}
             </view>
-            <button class="listItem" wx:else open-type="contact" send-message-img="../../images/dianwo.png" send-message-title="添加老师" show-message-card > {{listItem.name}}</button>
+            <button class="listItem" wx:else open-type="contact" send-message-img="../../images/dianwo.png"
+              send-message-title="添加老师" show-message-card> {{listItem.name}}</button>
           </view>
         </view>
       </view>
@@ -34,3 +38,6 @@
 <view class="contrainer">
   <template is="talkItem" wx:for="{{talkList}}" wx:key="index" data="{{item:item}}"></template>
 </view>
+
+<!-- 登录 -->
+<loginBox wx:if="{{$state.showLogin}}" />

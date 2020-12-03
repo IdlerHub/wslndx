@@ -87,9 +87,13 @@ Page({
       this.data.isSign ? this.signIn() : ''
     }
   },
-  init() {
-    if (this.data.$state.userInfo.mobile) {
-     return Promise.all([this.getRecommendLessons(1), this.getinterestList(), this.getBanner(), this.getDialog(), this.getUserOpenid()]).then(values => {
+  init(type) {
+    if(type) {
+      return Promise.all([this.getRecommendLessons(1), this.getBanner(), this.getDialog(), this.getUserOpenid()]).then(() => {
+        this.getSigns()
+      })
+    } else if (this.data.$state.userInfo.mobile) {
+      return Promise.all([this.getRecommendLessons(1), this.getinterestList(), this.getBanner(), this.getDialog(), this.getUserOpenid()]).then(() => {
         this.getSigns()
       })
     } else {
@@ -458,10 +462,16 @@ Page({
     let item = e.currentTarget.dataset.item
     app.liveData.getLiveBySpecialColumnId({
       specialColumnId: item.columnId
-    }).then(() => {
-      wx.navigateTo({
-        url: `/page/live/pages/vliveRoom/vliveRoom?roomId=${item.liveId}`,
-      })
+    }).then(res => {
+      if (!res.data.isAddSubscribe || !this.data.$state.userInfo.id) {
+        wx.navigateTo({
+          url: `/page/live/pages/tableDetail/tableDetail?specialColumnId=${item.columnId}`,
+        })
+      } else {
+        wx.navigateTo({
+          url: `/page/live/pages/vliveRoom/vliveRoom?roomId=${item.liveId}`,
+        })
+      }
     })
   },
   addStudy(e) {
@@ -471,8 +481,8 @@ Page({
       this.data.interestList.forEach(i => {
         i.columnId == e.detail.columnId ? i.isEnroll = 1 : ''
       })
-      this.data.sprogInterestList.forEach(e => {
-        i.columnId == e.detail.columnId ? i.isEnroll = 1 : ''
+      this.data.sprogInterestList.forEach(i => {
+       i.columnId == e.detail.columnId ? i.isEnroll = 1 : ''
       })
       this.setData({
         interestList: this.data.interestList,

@@ -275,7 +275,7 @@ App({
       socket.listen(this.bokemessage, "Bokemessage");
     }
     getCurrentPages().forEach(e => {
-      e.route == 'pages/index/index' ? e.init() : ''
+      e.route == 'pages/index/index' ? this.store.$state.nextTapDetial.type == 'addStudy' ? e.init(1) :  e.init() : ''
     })
   },
   /* 更新AuthKey */

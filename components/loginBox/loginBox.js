@@ -47,7 +47,7 @@ Component({
     },
     nextTap() {
       let page = getCurrentPages()[getCurrentPages().length - 1]
-      page.route == 'pages/index/index' ? page.init() : ''
+      // page.route == 'pages/index/index' ? page.init() : ''
       switch (this.data.$state.nextTapDetial.type) {
         case 'top':
           page.toInfo()
@@ -56,7 +56,7 @@ Component({
           page.setData({
             focus: true
           })
-          break;  
+          break;
         case 'search':
           wx.navigateTo({
             url: this.data.$state.nextTapDetial.detail,
@@ -83,6 +83,12 @@ Component({
           wx.switchTab({
             url: this.data.$state.nextTapDetial.detail,
           })
+          break;
+        case 'addSubscribe':
+          page.rightNow()
+          break;
+        case 'attenBtn':
+          page.toEducation(this.data.$state.nextTapDetial.detail)
           break;
       }
     },

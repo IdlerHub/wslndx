@@ -646,8 +646,9 @@ page {
 }
 
 .liveBox .comment .liveItem .liveImgBox .liveStatus {
-  width: 100rpx;
+  /* width: 100rpx; */
   height: 44rpx;
+  padding: 0 9rpx;
   background: linear-gradient(270deg, #FF565D 0%, #F2323A 100%);
   border-radius: 10rpx 0rpx 0rpx 0px;
   position: absolute;
@@ -672,6 +673,18 @@ page {
   border-radius: 20rpx;
   margin-right: 5rpx;
   position: relative;
+}
+
+.liveItem .liveImgBox .liveStatus .statusLeft .naoling {
+  width: 23rpx;
+  height: 23rpx;
+  margin-right: 8rpx;
+}
+
+.liveItem .liveImgBox .liveStatus .statusLeft .endIcon {
+  width: 24rpx;
+  height: 24rpx;
+  margin-right: 6rpx;
 }
 
 .liveItem .liveImgBox .liveStatus .statusLeft .statusTxt {

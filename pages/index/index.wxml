@@ -38,29 +38,32 @@
       </slotSign>
     </view>
     <view class="comment">
-      <slotSign bindtap="checknextTap" data-type="toLivelesson" data-type="live" data-item="{{item}}"
-        wx:for="{{liveRecommend}}" wx:key="index">
-        <view class="liveItem" style="{{index + 1 > 6 - 2 ? 'border:none' : '' }}" bindtap="toLivelesson"
-          data-item="{{item}}">
-          <view class="liveImgBox">
-            <image src="{{item.indexCover}}">
-            </image>
-            <view class="liveStatus"
-              style="background: {{ item.status == 0 ? '' : 'linear-gradient(270deg, #44A2FF 0%, #007CF7 100%);border-radius: 10rpx 6rpx 6rpx 0px;' }}">
-              <view class="statusLeft" wx:if="{{item.status == 0}}">
-                <view wx:for="{{3}}" wx:key="index" class="statusWite"></view>
-                <view class="statusTxt">直播</view>
-                <view class="viewNum">{{fn.num(item.viewNum)}}人</view>
-              </view>
-              <view class="statusLeft" wx:else>
-                <view class="statusTxt" style="margin: 0">未开始</view>
-              </view>
+      <view class="liveItem" style="{{index + 1 > 6 - 2 ? 'border:none' : '' }}" wx:for="{{liveRecommend}}"
+        wx:key="index" bindtap="toLivelesson" data-item="{{item}}">
+        <view class="liveImgBox">
+          <image src="{{item.indexCover}}">
+          </image>
+          <view class="liveStatus"
+            style="background: {{ item.status == 0 ? '' : item.status == 2 && item.reserveStatus ? 'linear-gradient(270deg, #FF8242 0%, #FF6010 100%)' : 'linear-gradient(270deg, #44A2FF 0%, #007CF7 100%);border-radius: 10rpx 6rpx 6rpx 0px;' }}">
+            <view class="statusLeft" wx:if="{{(!item.reserveStatus && item.status > 0) || !$state.userInfo.id}}">
+              <image src="/images/naoling.png" class="naoling"></image>
+              <view class="statusTxt" style="margin: 0">预约</view>
+            </view>
+            <view class="statusLeft" wx:elif="{{item.status == 0}}">
+              <view wx:for="{{3}}" wx:key="index" class="statusWite"></view>
+              <view class="statusTxt">直播</view>
+              <view class="viewNum">{{fn.num(item.viewNum)}}人</view>
+            </view>
+            <view class="statusLeft" wx:else>
+              <image src="/images/endIcon.png" class="endIcon"></image>
+              <view class="statusTxt" style="margin: 0">看回播</view>
+              <view class="viewNum">{{fn.num(item.viewNum)}}人</view>
             </view>
           </view>
-          <text>{{item.liveName}}</text>
-          <text>{{item.dayTime}} {{item.startTime}}</text>
         </view>
-      </slotSign>
+        <text>{{item.liveName}}</text>
+        <text>{{item.dayTime}} {{item.startTime}}</text>
+      </view>
     </view>
   </view>
   <view class="liveBox" wx:else>
@@ -141,17 +144,17 @@
     <!-- 中间icon -->
     <view class="centerIcon">
       <view wx:for="{{centerIcon}}" wx:key="index">
-        <slotSign bindtap="checknextTap"  data-type="search"
-        data-detail="{{item.url}}" wx:if="{{ index == 1 || index == 3}}">
-        <navigator class="iconBox" hover-class="none" url="{{item.url}}">
+        <slotSign bindtap="checknextTap" data-type="search" data-detail="{{item.url}}"
+          wx:if="{{ index == 1 || index == 3}}">
+          <navigator class="iconBox" hover-class="none" url="{{item.url}}">
+            <image src="{{item.icon}}"></image>
+            <text>{{item.name}}</text>
+          </navigator>
+        </slotSign>
+        <navigator class="iconBox" hover-class="none" url="{{item.url}}" wx:else>
           <image src="{{item.icon}}"></image>
           <text>{{item.name}}</text>
         </navigator>
-      </slotSign>
-      <navigator class="iconBox" hover-class="none" url="{{item.url}}" wx:else> 
-        <image src="{{item.icon}}"></image>
-        <text>{{item.name}}</text>
-      </navigator>
       </view>
     </view>
     <template is="liveBox" data="{{recommend, liveRecommend, $state}}"></template>
@@ -204,13 +207,9 @@
   <signinBox wx:if="{{ !$state.signStatus.count && !dialog[0].image && showSignbox}}" state="{{$state}}" top="{{topT}}"
     isIndex="{{true}}" bind:closesignBox="closesignBox" bind:showIntegral="showIntegral" bind:sigin="sigin" />
 </view>
-<navigator url="/page/index/pages/assistant/assistant" hover-class="none" wx:if="{{$state.userInfo.id}}">
+<navigator url="/page/index/pages/assistant/assistant" hover-class="none">
   <image src="/images/xiaolin.png" class="xiaolin"></image>
 </navigator>
-<slotSign class="xiaolin" bindtap="checknextTap" data-type="search" data-detail="/page/index/pages/assistant/assistant"
-  wx:else>
-  <image src="/images/xiaolin.png" style="width: 168rpx;height: 178rpx;"></image>
-</slotSign>
 <!-- 黑名单提示框 -->
 <view class="blackBox" wx:if="{{$state.blackShow}}">
   <view class="blackToast">

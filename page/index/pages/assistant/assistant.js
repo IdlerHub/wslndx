@@ -1,3 +1,4 @@
+const app = getApp()
 Page({
   /**
    * 页面的初始数据
@@ -159,4 +160,7 @@ Page({
       }
     );
   },
+  checknextTap(e) {
+    app.checknextTap(e)
+  }
 });

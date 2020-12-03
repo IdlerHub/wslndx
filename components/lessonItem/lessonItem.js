@@ -28,7 +28,6 @@ Component({
       }
     },
     toLesson(e) {
-      if(this.loginStatus(e)) return
       let item = e.currentTarget.dataset.item
       if (item.type == 1 || item.columnId) {
         if (item.columnId) {

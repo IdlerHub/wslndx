@@ -1202,7 +1202,7 @@ Page({
   },
   onShareAppMessage() {
     let lesson_id = this.data.lessonDetail.columnId,
-      cover = this.data.lessonDetail.cover;
+      cover = this.data.lessonDetail.shareCover || this.data.lessonDetail.cover;
     return {
       title: `快来和我一起报名,免费好课天天学!`,
       path: `/page/live/pages/liveDetail/liveDetail?specialColumnId=${lesson_id}&inviter=${this.data.$state.userInfo.id}&liveShare=1`,
