@@ -52,6 +52,11 @@ Component({
         case 'top':
           page.toInfo()
           break;
+        case 'searchBox':
+          page.setData({
+            focus: true
+          })
+          break;  
         case 'search':
           wx.navigateTo({
             url: this.data.$state.nextTapDetial.detail,

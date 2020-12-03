@@ -29,6 +29,11 @@ page {
   height: 100%;
 }
 
+.top .userNone {
+  width: 64rpx;
+  height: 64rpx;
+}
+
 .top text {
   display: block;
   width: 400rpx;
@@ -39,6 +44,12 @@ page {
   overflow: hidden;
   text-overflow: ellipsis;
   height: 56rpx;
+}
+
+.top .loginTxt {
+  font-size: 40rpx;
+  font-weight: 500;
+  color: #333333;
 }
 
 .left .left-btn {

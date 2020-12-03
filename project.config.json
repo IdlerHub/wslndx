@@ -152,8 +152,8 @@
           "scene": null
         },
         {
-          "name": "pages/post/post",
-          "pathName": "pages/post/post",
+          "name": "page/index/pages/search/search",
+          "pathName": "page/index/pages/search/search",
           "query": "id=12",
           "scene": 1000
         },
