@@ -17,7 +17,7 @@ function category() {
 
 //POST Classroom/lessons 筛选课程
 function lessons(param) {
-  return httpService.post("Classroom/lessons", param)
+  return httpService.post("university/categoryLesson", param, null, true)
 }
 
 //POST Classroom/recordAdd 添加播放记录课程

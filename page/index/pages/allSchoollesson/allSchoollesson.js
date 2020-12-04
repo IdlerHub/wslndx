@@ -30,27 +30,27 @@ Page({
     if (!this.data.nav[this.data.currentTab].showBtoom) {
       let id = this.data.nav[this.data.currentTab].id
       let temp = this.data.catrecommend[id]
-      this.categoryParams[id].page++
+      this.categoryParams[id].pageNum++
       wx.showLoading({
         title: '加载中'
       })
       app.classroom.lessons(this.categoryParams[id]).then(msg => {
         let next = true
-        msg.data.forEach(function (item) {
+        msg.dataList.forEach(function (item) {
           item.thousand = app.util.tow(item.browse)
           temp.forEach(i => {
             i.id == item.id ? next = false : ''
           })
         })
         if (!next) return
-        if (msg.data.length == 0) {
+        if (msg.dataList.length < 10) {
           this.setData({
             [`nav[${this.data.currentTab}].showBtoom`]: true
           })
         }
-        this.data.catrecommend[id] = temp.concat(msg.data)
+        this.data.catrecommend[id] = temp.concat(msg.dataList)
         this.setData({
-          [`catrecommend[${id}]`]: temp.concat(msg.data)
+          [`catrecommend[${id}]`]: this.data.catrecommend[id]
         })
         let query = wx.createSelectorQuery().in(this)
         let that = this,
@@ -189,19 +189,6 @@ Page({
         height: height
       })
     })
-  },
-  onPageScroll(e) {
-    if (e.scrollTop >= this.navHeight) {
-      !this.data.scroll &&
-        this.setData({
-          scroll: true
-        })
-    } else {
-      this.data.scroll &&
-        this.setData({
-          scroll: false
-        })
-    }
   },
   showClassify() {
     this.setData({
