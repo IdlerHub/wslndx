@@ -118,7 +118,7 @@ Page({
       res.data.lecturers ? res.data.lecturers.forEach(e => {
         res.data['teacher'] ? res.data.teacher = res.data.teacher + ' ' + e.lecturerName : res.data.teacher = e.lecturerName
       }) : ''
-      res.data.isAddSubscribe || res.data.price > 0 ? wx.redirectTo({
+      res.data.isAddSubscribe ? wx.redirectTo({
           url: `/page/live/pages/liveDetail/liveDetail?specialColumnId=${res.data.columnId}`
         }) :
         res.data.introduction = htmlparser.default(res.data.introduction);

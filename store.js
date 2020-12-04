@@ -133,6 +133,7 @@ let store = new Store({
     },
     onUnload() {
       this.pageName == "首页" ? clearInterval(this.timer) : "";
+      if(!this.data.$state.userInfo.id && this.data.$state.showLogin) getApp().changeLoginstatus()
     },
   },
   methods: {

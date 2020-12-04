@@ -47,7 +47,7 @@
             style="background: {{ item.status == 0 ? '' : item.status == 2 && item.reserveStatus ? 'linear-gradient(270deg, #FF8242 0%, #FF6010 100%)' : 'linear-gradient(270deg, #44A2FF 0%, #007CF7 100%);border-radius: 10rpx 6rpx 6rpx 0px;' }}">
             <view class="statusLeft" wx:if="{{(!item.reserveStatus && item.status > 0) || !$state.userInfo.id}}">
               <image src="/images/naoling.png" class="naoling"></image>
-              <view class="statusTxt" style="margin: 0">预约</view>
+              <view class="statusTxt" style="margin: 0">待开始</view>
             </view>
             <view class="statusLeft" wx:elif="{{item.status == 0}}">
               <view wx:for="{{3}}" wx:key="index" class="statusWite"></view>
@@ -99,7 +99,7 @@
       </button>
       <image src="/images/indexIcon/userNone.png" wx:else class="userNone"></image>
       <text wx:if="{{$state.userInfo.id}}">{{$state.userInfo.school || "请完善信息"}}</text>
-      <text wx:else class="loginTxt">登录注册</text>
+      <text wx:else class="loginTxt">注册登录</text>
     </view>
     <template is="skeletonTop" data="{{topT}}" wx:else></template>
   </slotSign>
