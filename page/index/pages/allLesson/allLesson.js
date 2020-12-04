@@ -23,6 +23,9 @@ Page({
   onHide: function () {
 
   },
+  onUnload() {
+    return
+  },
   onReachBottom: function () {
 
   },
