@@ -152,8 +152,8 @@
           "scene": null
         },
         {
-          "name": "page/live/pages/liveDetail/liveDetail",
-          "pathName": "page/live/pages/liveDetail/liveDetail",
+          "name": "page/index/pages/schoolLesson/schoolLesson",
+          "pathName": "page/index/pages/schoolLesson/schoolLesson",
           "query": "specialColumnId=253",
           "scene": 1000
         },

@@ -17,15 +17,15 @@ Page({
     wx.setNavigationBarTitle({
       title: options.title
     })
-    let query = wx.createSelectorQuery().in(this), that = this
+    let query = wx.createSelectorQuery().in(this),
+      that = this
     query.select(".nav").boundingClientRect()
     query.exec(res => {
       that.navHeight = res[0].height
     })
     Promise.all([this.getCategory()])
   },
-  onShow: function () {
-  },
+  onShow: function () {},
   onReachBottom: function () {
     if (!this.data.nav[this.data.currentTab].showBtoom) {
       let id = this.data.nav[this.data.currentTab].id
@@ -84,11 +84,23 @@ Page({
     this.setData({
       currentTab: 0,
     })
-    this.categoryParams = {}
+    this.categoryParams = [{
+      categoryId: null,
+      universityId: this.universityId,
+      pageNum: 1,
+      pageSize: 10
+    }]
     return app.lessonNew.getAllCategory().then(msg => {
-      let arr = []
+      let arr = [{
+        id: 0,
+        name: "全部",
+        class: "#recommend0",
+        unMove: true,
+        showBtoom: false,
+        showNone: false
+      }]
       msg.dataList.forEach((i, index) => {
-        this.categoryParams[i.id] = {
+        this.categoryParams[i .id] = {
           categoryId: i.id,
           universityId: this.universityId,
           pageNum: 1,
@@ -149,11 +161,10 @@ Page({
   },
   switchTab(event) {
     let cur = event.detail.current,
-      that = this,
-      currren = this.data.currentTab
+      that = this
     this.timer ? clearTimeout(this.timer) : ''
     this.timer = setTimeout(() => {
-      this.data.currentTab != cur ? cur == that.setData({
+      that.data.currentTab != cur ? cur == that.setData({
         currentTab: cur,
       }) : ''
       wx.hideLoading()

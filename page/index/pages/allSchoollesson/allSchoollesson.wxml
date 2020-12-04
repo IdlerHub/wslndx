@@ -46,8 +46,8 @@
       <view class="item {{ [currentTab == id ? 'active' : '',id == 0 ? 'itemone' : ''] }}"
         style="margin-right:{{id + 1 == nav.length ? '40rpx' : ''}}" id="item{{id}}" bindtap="switchNav"
         data-current="{{ id }}" data-id="{{item.id}}">{{ item.name }}</view>
-      <view class="item" style="opacity: 0;width: 20rpx;" wx:if="{{id == nav.length - 1}}">dfsdf</view> 
     </block>
+    <view class="item" style="opacity: 0;width: 20rpx;">dfsdf</view> 
   </scroll-view>
   <view class="tabclassify" bindtap="showClassify">
     <image src="/images/indexIcon/tabclassify.png"></image>

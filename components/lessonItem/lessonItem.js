@@ -14,6 +14,10 @@ Component({
     isIndex: {
       type: Boolean,
       value: false
+    },
+    isAllLesson: {
+      type: Boolean,
+      value: false
     }
   },
   data: {

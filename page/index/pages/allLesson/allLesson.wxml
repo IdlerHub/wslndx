@@ -46,7 +46,7 @@
         </view>
       </view>
       <scroll-view class="lessonScroll" scroll-y enable-flex bindscrolltolower="scrolltolower">
-        <lessonItem id="lessonItem" lessonList="{{lessonList}}" wx:if="{{lessonList.length > 0}}" />
+        <lessonItem id="lessonItem" isAllLesson="1" lessonList="{{lessonList}}" wx:if="{{lessonList.length > 0}}" />
         <view wx:else class="qst">
           <image src="/images/liveqs.png"></image>
           <text>暂无相关课程</text>

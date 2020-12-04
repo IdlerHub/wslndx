@@ -17,7 +17,7 @@
       <view class="tabLine" wx:if="{{ item.tags[0] }}">
         <text wx:for="{{item.tags}}" wx:key="index" wx:for-item="tagItem">{{tagItem.tagName || tagItem}}</text>
       </view>
-      <view class="tabLine" wx:else> 
+      <view class="tabLine" wx:else>
         <text>网上老年大学</text>
       </view>
       <view class="bottom" wx:if="{{(!isSchool && item.type == 1) || isIndex}}">
@@ -26,10 +26,12 @@
           <text>|</text>
           <text>{{ fn.num(item.studyNum) }}人在学</text>
         </view>
-        <view class="right" wx:if="{{isIndex && !item.isEnroll}}" catchtap="addStudy" data-type="addStudy"
-          data-item="{{item}}">报名</view>
-        <view class="righted" wx:else>
-          已报名
+        <view wx:if="{{!isAllLesson}}">
+          <view class="right" wx:if="{{isIndex && !item.isEnroll}}" catchtap="addStudy" data-type="addStudy"
+            data-item="{{item}}">报名</view>
+          <view class="righted" wx:else>
+            已报名
+          </view>
         </view>
       </view>
       <view class="schoolBootem" wx:else>
