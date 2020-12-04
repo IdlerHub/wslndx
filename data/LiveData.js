@@ -273,6 +273,15 @@ function studyCenterspecial(params) {
   return httpService.post("study/center/special", params, null ,true);
 }
 
+/**
+ * @description: 获取专栏直播列表数据
+ * @param { specialColumnId }
+ * @return:  promise
+ * **/
+function getSpecialLives(params) {
+  return httpService.post("live/getSpecialLives", params, null ,true);
+}
+
 module.exports = {
   getLiveLessons,
   getApplyDetail,
@@ -303,5 +312,6 @@ module.exports = {
   getLiveById,
   follow,
   getLiveBackById,
-  studyCenterspecial
+  studyCenterspecial,
+  getSpecialLives
 };

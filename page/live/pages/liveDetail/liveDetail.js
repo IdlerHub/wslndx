@@ -167,7 +167,9 @@ Page({
       _this.setData({
         lessonDetail: res.data
       });
-      _this.getSublesson(res.data.liverVOS)
+      LiveData.getSpecialLives({ specialColumnId }).then(msg => {
+         _this.getSublesson(msg.dataList)
+      })
       _this.getComment();
     });
   },
@@ -197,10 +199,10 @@ Page({
       }) : ''
       if (this.Timeout) return
       this.Timeout = setInterval(() => {
-        LiveData.getLiveBySpecialColumnId({
+        LiveData.getSpecialLives({
           specialColumnId: this.data.lessonDetail.columnId,
         }).then(res => {
-          this.getSublesson(res.data.liverVOS)
+          this.getSublesson(res.dataList)
         })
       }, 60000);
     });
