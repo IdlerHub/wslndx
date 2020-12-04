@@ -2,7 +2,7 @@
 <wxs module="fn">
   module.exports = {
   num: function(studyNum) {
-  return studyNum >= 10000 ? (studyNum / 10000).toFixed(2) + 'w' : studyNum
+  return studyNum >= 10000 ? (studyNum / 10000).toFixed(1) + 'w' : studyNum
   },
   }
 </wxs>

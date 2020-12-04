@@ -172,6 +172,7 @@ Page({
     });
   },
   getSublesson(lessons) {
+    if(!lessons) return
     let playNow = {},
       liveNow = 0;
     this.setData({
@@ -383,12 +384,12 @@ Page({
     } else if (this.data.currentTab == 2) {
       query.select(".comment").boundingClientRect();
     } else {
-      query.select(".drama").boundingClientRect();
+      this.data.sublessons.length > 0 ? query.select(".drama").boundingClientRect() : query.select(".none-live").boundingClientRect()
     }
     query.exec((res) => {
       console.log(res)
       let height =
-        this.data.currentTab == 1 ? res[0].height : res[0].height - -110;
+        this.data.currentTab == 1 && this.data.sublessons.length > 0 ? res[0].height : res[0].height - -110;
       height <= 110 ?
         that.setData({
           height: this.data.currentTab == 2 ? 350 : 700,

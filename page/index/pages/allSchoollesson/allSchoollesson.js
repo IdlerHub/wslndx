@@ -186,7 +186,7 @@ Page({
       let height = res[0].height
       that.navHeightList[currentTab] = height
       that.setData({
-        height: height
+        height: height < 300 ? 600 : height
       })
     })
   },

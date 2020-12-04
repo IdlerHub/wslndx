@@ -157,10 +157,10 @@ page {
   /* width: 115rpx; */
   text-align: center;
   font-family: PingFangSC-Regular;
-  font-size: 36rpx;
+  font-size: 34rpx;
   color: #999999;
   letter-spacing: 0;
-  padding: 0 20rpx;
+  padding: 0 18rpx;
   flex-shrink: 0;
 }
 
@@ -189,13 +189,13 @@ page {
 
 .nav .tabclassify {
   height: 100%;
-  width: 74rpx;
+  width: 64rpx;
   float: right;
   box-sizing: border-box;
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  background: linear-gradient(270deg, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0.9) 100%);
+  background: linear-gradient(270deg, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0.7) 100%);
   margin-top: -99rpx;
   position: relative;
 }
@@ -392,6 +392,10 @@ page {
   font-weight: 400;
   color: #999999;
   margin-top: -20rpx;
+}
+
+::-webkit-scrollbar {
+  display: none;
 }
 
 
