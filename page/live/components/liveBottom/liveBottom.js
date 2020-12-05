@@ -70,6 +70,12 @@ Component({
       this.triggerEvent('sendMsg', this.data.txt)
       this.setData({
         txt: ''
+      }, () => {
+        getCurrentPages().forEach(e => {
+          if (e.pageName == 'live') {
+            e.selectComponent('#talkCommon').niewMore()
+          }
+        })
       })
     },
     praise() {
@@ -91,7 +97,8 @@ Component({
       this.triggerEvent('checkCaption')
     },
     toLessons() {
-      let pages = getCurrentPages(), back = 0
+      let pages = getCurrentPages(),
+        back = 0
       pages.forEach(e => {
         e.pageName ? e.pageName == 'liveDetail' ? back = 1 : '' : ''
         e.pagetype ? back = 2 : ''

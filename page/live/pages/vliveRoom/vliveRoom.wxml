@@ -44,7 +44,7 @@
 </view>
 <liveTop liveDetail="{{liveDetail}}" liveCount="{{liveCount}}" direction="{{liveDetail.direction}}"
   statusBarHeight="{{statusBarHeight}}" vliveRoom="1" bind:checkFollow="checkFollow" />
-<talkCommon talkList="{{talkList}}" specialList="{{specialList}}" close="{{close}}" vliveRoom="1" newMessage="{{newMessage}}"
+<talkCommon id="talkCommon" talkList="{{talkList}}" specialList="{{specialList}}" close="{{close}}" vliveRoom="1" newMessage="{{newMessage}}"
   statusBarHeight="{{statusBarHeight}}" bind:setNewmessagenum="setNewmessagenum" bind:animationCheck="animationCheck" />
 <navigator class="downloadeApp"
   url="/pages/education/education?type=0&url=https://mp.weixin.qq.com/s/vSd8XBQDQkvqVX_kt_YyTQ" hover-class="none">

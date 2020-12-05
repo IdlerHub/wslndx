@@ -122,9 +122,9 @@
           "scene": null
         },
         {
-          "name": "page/live/pages/timetableList/timetableList",
-          "pathName": "page/live/pages/timetableList/timetableList",
-          "query": "specialColumnId=253",
+          "name": "page/live/pages/liveDetail/liveDetail",
+          "pathName": "page/live/pages/liveDetail/liveDetail",
+          "query": "specialColumnId=287",
           "scene": 1000
         },
         {
