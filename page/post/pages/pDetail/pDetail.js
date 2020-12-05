@@ -364,13 +364,15 @@ Page({
   touchStart() {
     setTimeout(() => {
       this.setData({
-        write: false
+        write: false,
+        focus: false
       });
     }, 200);
   },
   hide() {
     this.setData({
-      write: false
+      write: false,
+      focus: false
     });
   },
   input(e) {
