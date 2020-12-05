@@ -16,6 +16,8 @@ Page({
       {
         id: 2,
         name: "查看本周课程安排",
+        isLogin: 1,
+        url: '/pages/timetableList/timetableList'
       },
       {
         id: 3,
@@ -24,6 +26,8 @@ Page({
       {
         id: 4,
         name: "找最近看过的课程",
+        isLogin: 1,
+        url: '/page/user/pages/history/history'
       },
       {
         id: 5,
@@ -147,6 +151,8 @@ Page({
       mpurl: this.data.mpurlList[id - 1],
       reply: this.data.list[id - 1].name,
       index: index,
+      isLogin: this.data.list[id - 1].isLogin ? 1 : 0,
+      url: this.data.list[id - 1].url
     });
     this.setData(
       {

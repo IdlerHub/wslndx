@@ -213,7 +213,7 @@ App({
   onError: function (err) {
     fundebug.notifyError(err);
   },
-  wxLogin: async function () {
+  wxLogin: async function (e) {
     await wxp.login({}).then((res) => {
       if (res.code) {
         this.globalData.code = res.code;
@@ -235,7 +235,7 @@ App({
           wx.setStorageSync("token", msg.data.token);
           wx.setStorageSync("uid", msg.data.uid);
           wx.setStorageSync("authKey", msg.data.authKey);
-          this.setUser(msg.data.userInfo);
+          e ? this.updateBase(e) : this.setUser(msg.data.userInfo);
         }
       });
   },
@@ -337,6 +337,10 @@ App({
     };
     this.user.profile(param).then((msg) => {
       this.setUser(msg.data.userInfo);
+    }).catch(msg => {
+      if(msg.status == 401) {
+        this.wxLogin(e)
+      }
     });
   },
   playVedio(type) {

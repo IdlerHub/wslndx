@@ -14,7 +14,7 @@ import md5 from "./md5.js";
 //验证code
 function handle(req, res) {
   // getApp().fundebug.notifyHttpError(req, res);
-  switch (res.statusCode) {
+  switch (res.statusCode || res.status) {
     case 401:
       wx.clearStorage();
       getApp().wxLogin();

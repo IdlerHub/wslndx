@@ -4,15 +4,15 @@
       <image src="{{item.coverurl}}" class="logo" />
       <view class="msgBox" style="padding-bottom: {{ item.reply ? '23rpx' : ''}};">
         <text>{{item.msg}}</text>
-        <view class="replyBox" wx:if="{{item.reply}}" bindtap="toEducation" data-item="{{item}}">
-          <image src="../../images/replyIcon.png"></image>
-          {{item.reply}}＞＞
-        </view>
-        <slotSign bindtap="checknextTap" data-type="attenBtn" data-item="{{item}}" wx:if="{{item.showBtn}}">
-          <view class="attenBtn" bindtap="toEducation" data-item="{{item}}">
-            关注网上老年大学
+        <slotSign bindtap="checknextTap" data-type="{{ item.index == 1 ? 'navBar' : 'search' }}" data-detail="{{item.url}}">
+          <view class="replyBox" wx:if="{{item.reply}}" bindtap="toEducation" data-item="{{item}}">
+            <image src="../../images/replyIcon.png"></image>
+            {{item.reply}}＞＞
           </view>
         </slotSign>
+        <view class="attenBtn" bindtap="toEducation" data-item="{{item}}" wx:if="{{item.showBtn}}">
+          关注网上老年大学
+        </view>
         <view wx:if="{{item.list}}">
           <view wx:for="{{item.list}}" wx:for-item="listItem" wx:key="index">
             <view class="listItem" bindtap="additem" wx:if="{{ index != 4}}" data-item="{{listItem}}"
@@ -31,7 +31,7 @@
       <view class="msgBox">
         <text>{{item.msg}}</text>
       </view>
-      <image src="{{item.coverurl}}" />
+      <image src="{{item.coverurl || '/images/indexIcon/userNone.png'}}" />
     </view>
   </view>
 </template>
