@@ -181,7 +181,7 @@ page {
   bottom: 2rpx;
   left: 50%;
   width: 36rpx;
-  height: 5rpx;
+  height: 7rpx;
   margin-left: -18rpx;
   background: #df2020;
   border-radius: 3rpx;
