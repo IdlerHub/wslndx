@@ -44,7 +44,7 @@
           <image src="{{item.indexCover}}">
           </image>
           <view class="liveStatus"
-            style="background: {{ item.status == 0 ? '' : item.status == 2 && $state.userInfo.id ? 'linear-gradient(270deg, #FF8242 0%, #FF6010 100%)' : 'linear-gradient(270deg, #44A2FF 0%, #007CF7 100%);border-radius: 10rpx 6rpx 6rpx 0px;' }}">
+            style="background: {{ item.status == 0 ? '' : item.status == 2 ? 'linear-gradient(270deg, #FF8242 0%, #FF6010 100%)' : 'linear-gradient(270deg, #44A2FF 0%, #007CF7 100%);border-radius: 10rpx 6rpx 6rpx 0px;' }}">
             <view class="statusLeft" wx:if="{{(!item.reserveStatus && item.status == 1) || !$state.userInfo.id}}">
               <image src="/images/naoling.png" class="naoling"></image>
               <view class="statusTxt" style="margin: 0">待开始</view>
@@ -62,6 +62,12 @@
           </view>
         </view>
         <text>{{item.liveName}}</text>
+        <view class="tagsLine" wx:if="{{item.tags[0]}}">
+          <view wx:for="{{item.tags}}" wx:for-item="tag">{{tag.tagName}}</view>
+        </view>
+        <view class="tagsLine" wx:else>
+          <view>{{item.universityName}}</view>
+        </view>
         <text>{{item.dayTime}} {{item.startTime}}</text>
       </view>
     </view>
@@ -132,7 +138,7 @@
             </slotSign>
             <view wx:else>
               <image src="{{item.image}}" class="slide-image" width="355" height="150" catchtap="bannerGo"
-                data-item="{{ item }}"/>
+                data-item="{{ item }}" />
             </view>
           </swiper-item>
         </block>
