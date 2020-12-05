@@ -167,14 +167,16 @@ Page({
       _this.setData({
         lessonDetail: res.data
       });
-      LiveData.getSpecialLives({ specialColumnId }).then(msg => {
-         _this.getSublesson(msg.dataList)
+      LiveData.getSpecialLives({
+        specialColumnId
+      }).then(msg => {
+        _this.getSublesson(msg.dataList)
       })
       _this.getComment();
     });
   },
   getSublesson(lessons) {
-    if(!lessons) return
+    if (!lessons) return
     let playNow = {},
       liveNow = 0;
     this.setData({
@@ -194,9 +196,10 @@ Page({
         playNow,
         current: playNow,
         playFlag: false
-      }, () => {
-        this.tolesson()
       }) : ''
+      setTimeout(() => {
+        this.tolesson()
+      }, 800)
       if (this.Timeout) return
       this.Timeout = setInterval(() => {
         LiveData.getSpecialLives({
@@ -389,12 +392,12 @@ Page({
       this.data.sublessons.length > 0 ? query.select(".drama").boundingClientRect() : query.select(".none-live").boundingClientRect()
     }
     query.exec((res) => {
-      console.log(res)
       let height =
         this.data.currentTab == 1 && this.data.sublessons.length > 0 ? res[0].height : res[0].height - -110;
-      height <= 110 ?
+      console.log(height)
+      height <= 170 ?
         that.setData({
-          height: this.data.currentTab == 2 ? 350 : 700,
+          height: 350,
         }) :
         that.setData({
           height
@@ -409,10 +412,10 @@ Page({
       let query = wx.createSelectorQuery().in(this);
       query.select(id).boundingClientRect();
       query.exec((res) => {
-        console.log(res)
+        console.log(res, 'scrollviewtop')
         res[0] ?
           this.setData({
-            scrollviewtop: res[0].top - 500,
+            scrollviewtop: res[0].top,
           }) :
           "";
       });

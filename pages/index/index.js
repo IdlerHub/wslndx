@@ -125,7 +125,7 @@ Page({
       setInterval(() => {
         app.liveData.recommendLessons().then(res => {
           this.setData({
-            liveRecommend: res.dataList.slice(0, 6)
+            liveRecommend: res.dataList.slice(0, 8)
           })
         })
       }, 60000);
