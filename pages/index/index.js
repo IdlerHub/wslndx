@@ -125,14 +125,14 @@ Page({
       setInterval(() => {
         app.liveData.recommendLessons().then(res => {
           this.setData({
-            liveRecommend: res.dataList.slice(0, 8)
+            liveRecommend: res.dataList
           })
         })
       }, 60000);
     } else {
       app.liveData.recommendLessons().then(res => {
         this.setData({
-          liveRecommend: res.dataList.slice(0, 8)
+          liveRecommend: res.dataList
         }, () => {
           res.dataList.length > 0 ? this.getRecommendLessons() : ''
         })
