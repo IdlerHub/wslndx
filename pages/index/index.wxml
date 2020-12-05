@@ -63,7 +63,7 @@
         </view>
         <text>{{item.liveName}}</text>
         <view class="tagsLine" wx:if="{{item.tags[0]}}">
-          <view wx:for="{{item.tags}}" wx:for-item="tag">{{tag.tagName}}</view>
+          <view wx:for="{{item.tags}}" wx:for-item="tag" wx:key="index">{{tag.tagName}}</view>
         </view>
         <view class="tagsLine" wx:else>
           <view>{{item.universityName}}</view>
