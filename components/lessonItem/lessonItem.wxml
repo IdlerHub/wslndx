@@ -14,7 +14,7 @@
     </view>
     <view class="contentBox">
       <text class="title">{{ item.title || item.name}}</text>
-      <view wx:if="{{!isSchool}}">
+      <view wx:if="{{(!isSchool && item.columnId) || item.type == 1}}">
         <view class="tabLine" wx:if="{{ item.tags[0] }}">
           <text wx:for="{{item.tags}}" wx:key="index" wx:for-item="tagItem">{{tagItem.tagName || tagItem}}</text>
         </view>
