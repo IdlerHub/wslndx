@@ -234,6 +234,10 @@ page {
 .wrap>.item .top .date {
   font-size: 26rpx;
   color: #bdbdbd;
+  overflow: hidden;
+  text-overflow:ellipsis;
+  white-space: nowrap;
+  display: inline-block;
 }
 
 .wrap>.item .top .left {
@@ -267,8 +271,8 @@ page {
 .wrap>.item .top .text {
   margin-left: 20rpx;
   width: 400rpx;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  /* overflow: hidden;
+  text-overflow: ellipsis; */
   white-space: nowrap;
 }
 
@@ -284,6 +288,11 @@ page {
   margin-left: 21rpx;
   font-size: 26rpx;
   color: #bdbdbd;
+  overflow: hidden;
+  text-overflow:ellipsis;
+  white-space: nowrap;
+  width: 280rpx;
+  display: inline-block;
 }
 
 .wrap>.item .top .right {

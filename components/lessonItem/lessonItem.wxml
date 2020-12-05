@@ -14,11 +14,13 @@
     </view>
     <view class="contentBox">
       <text class="title">{{ item.title || item.name}}</text>
-      <view class="tabLine" wx:if="{{ item.tags[0] }}">
-        <text wx:for="{{item.tags}}" wx:key="index" wx:for-item="tagItem">{{tagItem.tagName || tagItem}}</text>
-      </view>
-      <view class="tabLine" wx:else>
-        <text>网上老年大学</text>
+      <view wx:if="{{!isSchool}}">
+        <view class="tabLine" wx:if="{{ item.tags[0] }}">
+          <text wx:for="{{item.tags}}" wx:key="index" wx:for-item="tagItem">{{tagItem.tagName || tagItem}}</text>
+        </view>
+        <view class="tabLine" wx:else>
+          <text>网上老年大学</text>
+        </view>
       </view>
       <view class="bottom" wx:if="{{(!isSchool && item.type == 1) || isIndex}}">
         <view class="left">
