@@ -115,8 +115,9 @@ Page({
     return LiveData.getLiveBySpecialColumnId({
       specialColumnId: id
     }).then(res => {
-      res.data.lecturers ? res.data.lecturers.forEach(e => {
-        res.data['teacher'] ? res.data.teacher = res.data.teacher + ' ' + e.lecturerName : res.data.teacher = e.lecturerName
+      res.data.lecturers ? res.data.lecturers.forEach((e, i) => {
+        if(i > 1) return
+        res.data['teacher'] ? res.data.teacher = res.data.teacher + ',' + e.lecturerName : res.data.teacher = e.lecturerName
       }) : ''
       res.data.isAddSubscribe ? wx.redirectTo({
           url: `/page/live/pages/liveDetail/liveDetail?specialColumnId=${res.data.columnId}`

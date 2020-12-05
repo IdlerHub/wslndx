@@ -55,7 +55,7 @@
       </view>
       <view class="tab">
         <text>授课老师</text>
-        <text>{{lessonDetail.teacher}}</text>
+        <text>{{lessonDetail.teacher}}{{ lessonDetail.lecturers[2] ? '等' : '' }} </text>
       </view>
     </view>
     <view class="content">
