@@ -172,7 +172,7 @@ Page({
     })
   },
   liveInterVal() {
-    this.liveInterval || this.data.liveDetail.follow ? '' : this.liveInterval = setInterval(() => {
+    (this.liveInterval || this.data.liveDetail.follow) || this.data.liveDetail.lecturerUserId == this.data.$state.userInfo.id ? '' : this.liveInterval = setInterval(() => {
       this.setData({
         viewNum: this.data.viewNum += 1
       }, () => {
