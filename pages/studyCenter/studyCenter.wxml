@@ -1,0 +1,3 @@
+<!--pages/studyCenter/studyCenter.wxml-->
+
+<navBar path="video" />
