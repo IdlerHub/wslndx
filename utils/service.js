@@ -14,7 +14,7 @@ import md5 from "./md5.js";
 //验证code
 function handle(req, res) {
   // getApp().fundebug.notifyHttpError(req, res);
-  switch (res.statusCode) {
+  switch (res.statusCode || res.status) {
     case 401:
       wx.clearStorage();
       getApp().wxLogin();
@@ -55,13 +55,12 @@ function xhr(path, method, param = {}, noToken, checkAPI) {
   //是否需要登录信息才能请求
   if (!noToken) {
     let token = wx.getStorageSync("token");
-    if (!token) return Promise.reject("请登录后再请求");
-    param.uid = wx.getStorageSync("uid");
-    param.timestamp = parseInt(new Date().getTime() / 1000 + "");
-    // param.sign = md5(
-    //   "uid=" + param.uid + "&token=" + token + "&timestamp=" + param.timestamp
-    // );
-    header['Authorization'] =  checkAPI ? token :  "Bearer " + token
+    // return Promise.reject("请登录后再请求");
+    if (token) {
+      param.uid = wx.getStorageSync("uid");
+      param.timestamp = parseInt(new Date().getTime() / 1000 + "");
+    }
+    header['Authorization'] = checkAPI ? token : "Bearer " + token
   }
   let req = {
     method: method,

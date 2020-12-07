@@ -59,6 +59,7 @@
   color: #FFFFFF;
   display: flex;
   align-items: center;
+  white-space: nowrap;
 }
 
 .tearchBox .attention {

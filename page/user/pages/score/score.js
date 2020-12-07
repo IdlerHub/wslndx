@@ -7,7 +7,9 @@ const app = getApp();
 //Page Object
 Page({
   data: {
-    getAddress: false,
+    getAddress: false,  //兑换地址卡片展示
+    showModelCard: false,  //奖品规格兑换卡片
+    skuId: 0, //兑换礼品规格的id
     giftInfo: {}, //兑换礼品信息
     currentTab: '1',
     scrollStatus: false,
@@ -423,22 +425,17 @@ Page({
       : "";
     this.setHeight()
   },
-  gift(e) {
-    if (!e.currentTarget.dataset.stock) {
+  gift(e) { //兑换
+    let item = e.currentTarget.dataset.item
+    if (!item.stock) {
       wx.showToast({
         title: "已经没货啦～",
         icon: "none",
         duration: 1500
       });
     } else {
-      if (this.data.totalPoints >= e.currentTarget.dataset.score) {
-        let param = {
-          id: e.currentTarget.dataset.id,
-          title: e.currentTarget.dataset.title,
-          image: e.currentTarget.dataset.image,
-          receive_type: e.currentTarget.dataset.receive_type
-        };
-        if (e.currentTarget.dataset.type == 1) {
+      if (this.data.totalPoints >= item.need_points) {
+        if (item.is_new == 1) {  //新用户
           wx.showModal({
             content: "新手专享只能兑换一次，是否选择该商品？",
             showCancel: true,
@@ -447,24 +444,22 @@ Page({
             confirmText: "确认",
             confirmColor: "#df2020",
             success: res => {
-              if (res.confirm) {
-                this.setData({
-                  getAddress: true,
-                  giftInfo: param
-                })
-                // app.user.exchange(param).then(res => {
-                //   wx.navigateTo({
-                //     url:
-                //       "/pages/gift/gift?name=" +
-                //       e.currentTarget.dataset.title +
-                //       "&image=" +
-                //       e.currentTarget.dataset.image
-                //   });
-                // });
+              if (res.confirm) {  //确认,如果是带规格的,则先展示规格选项
+                if(item.is_sku == 1) {  //有配置规格
+                  this.setData({
+                    showModelCard: true,
+                    giftInfo: item //礼品详情
+                  })
+                }else {
+                  this.setData({
+                    getAddress: true,
+                    giftInfo: item
+                  })
+                }
               }
             }
           });
-        } else {
+        } else {  //老用户
           wx.showModal({
             title: "兑换提示",
             content: "确定要兑换该物品吗?",
@@ -474,11 +469,18 @@ Page({
             confirmText: "确定兑换",
             confirmColor: "#df2020",
             success: res => {
-              if (res.confirm) {
-                this.setData({
-                  getAddress: true,
-                  giftInfo: param
-                })
+              if (res.confirm) {  //确认,如果是带规格的,则先展示规格选项
+                if(item.is_sku == 1) {  //有配置规格
+                  this.setData({
+                    showModelCard: true,
+                    giftInfo: item
+                  })
+                }else {
+                  this.setData({
+                    getAddress: true,
+                    giftInfo: item
+                  })
+                }
               }
             }
           });
@@ -491,6 +493,14 @@ Page({
         });
       }
     }
+  },
+  setSkuId(e) {  //关闭规格卡片,展示地址填写卡片
+    //关闭当前卡片,显示地址卡片
+    this.setData({
+      showModelCard: false,
+      getAddress: true,
+      giftInfo: e.detail
+    })
   },
   nav(e) {
     let i = e.currentTarget.dataset.index;

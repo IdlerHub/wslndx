@@ -5,27 +5,18 @@
     "pages/video/video",
     "pages/post/post",
     "pages/user/user",
-    "pages/login/login",
     "pages/gift/gift",
     "pages/education/education",
     "pages/commentDetail/commentDetail",
-    "pages/sign/sign",
     "pages/agreement/agreement",
     "components/navBar/navBar",
     "pages/upwxpage/upwxpage",
     "components/integralAni/integralAni",
-    "pages/myApprentice/myApprentice",
-    "pages/myEarnings/myEarnings",
     "components/recruitShare/recruitShare",
-    "pages/withdraw/withdraw",
-    "pages/withdrawalRecord/withdrawalRecord",
-    "pages/liveList/liveList",
     "pages/gamePage/gamePage",
     "pages/webPay/webPay",
-    "pages/timetable/timetable",
     "pages/timetableList/timetableList",
-    "components/playRrecord/playRrecord",
-    "components/signinBox/signinBox"
+    "components/playRrecord/playRrecord"
   ],
   "permission": {
     "scope.userLocation": {
@@ -38,7 +29,7 @@
   },
   "window": {
     "backgroundTextStyle": "light",
-    "navigationBarBackgroundColor": "#F8F8F8",
+    "navigationBarBackgroundColor": "#fff",
     "navigationBarTitleText": "网上老年大学",
     "navigationBarTextStyle": "black",
     "backgroundColor": "#eeefef"
@@ -75,7 +66,11 @@
         "pages/rankingList/rankingList",
         "pages/search/search",
         "pages/assistant/assistant",
-        "pages/hotActivity/hotActivity"
+        "pages/hotActivity/hotActivity",
+        "pages/allLesson/allLesson",
+        "pages/schoolLesson/schoolLesson",
+        "pages/allSchoollesson/allSchoollesson",
+        "pages/interested/interested"
       ]
     },
     {
@@ -152,7 +147,7 @@
       "provider": "wx069ba97219f66d99"
     },
     "live-player-plugin": {
-      "version": "1.2.2",
+      "version": "1.2.4",
       "provider": "wx2b03c6e691cd7370"
     }
   },

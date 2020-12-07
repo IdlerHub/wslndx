@@ -1,0 +1,403 @@
+/* page/index/pages/allSchoollesson/allSchoollesson.wxss */
+page {
+  padding-bottom: 60rpx;
+}
+
+.recommend .item {
+  padding: 0 20rpx;
+  box-sizing: border-box;
+  background: #fff;
+}
+
+.fixed {
+  position: sticky;
+  z-index: 999;
+}
+
+.item .right .title {
+  line-height: 50rpx;
+  font-size: 38rpx;
+  color: #3a3a3a;
+  letter-spacing: 0;
+  display: -webkit-box;
+  overflow: hidden;
+  word-break: break-all;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.item .right .createtime {
+  display: block;
+  margin-top: 14rpx;
+}
+
+.recommend .item .content {
+  display: flex;
+  align-items: center;
+  padding: 30rpx 0;
+  box-sizing: border-box;
+  border-bottom: 1rpx solid #e9e9e9;
+}
+
+.recommend .item .content.big {
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.recommend .item .content.big .left {
+  width: 100%;
+  height: 364rpx;
+}
+
+.recommend .item .content.big .left .poster {
+  width: 100%;
+  height: 364rpx;
+}
+
+.recommend .item .content.big .left .icon {
+  width: 100rpx;
+  height: 100rpx;
+}
+
+.recommend .item .content.big .right {
+  width: 100%;
+  margin-left: 0;
+  margin-top: 20rpx;
+}
+
+.recommend .item .content.big .right .actor {
+  margin-bottom: 0;
+}
+
+.recommend .item .content.big .right .info {
+  display: none;
+}
+
+.recommend .item:last-of-type .content {
+  border-bottom: none;
+}
+
+.recommend .item .left {
+  position: relative;
+  width: 260rpx;
+  height: 160rpx;
+}
+
+.recommend .item .left .status {
+  width: 90rpx !important;
+  height: 52rpx !important;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.recommend .left .poster {
+  width: 260rpx;
+  height: 160rpx;
+  border-radius: 12rpx;
+  background: #f5f6f8;
+  border: 1px solid #ededed;
+}
+
+.recommend .left .icon {
+  position: absolute;
+  width: 50rpx;
+  height: 50rpx;
+  right: 10rpx;
+  bottom: 10rpx;
+}
+
+.recommend .right {
+  flex: 1;
+  width: 410rpx;
+  margin-left: 30rpx;
+}
+
+.recommend .right .name {
+  line-height: 56rpx;
+  font-size: 38rpx;
+  color: #3a3a3a;
+  letter-spacing: 0;
+}
+
+.recommend .right .actor {
+  line-height: 40rpx;
+  font-size: 28rpx;
+  color: #8a8a8a;
+  letter-spacing: 0;
+  margin: 8rpx 0;
+}
+
+.recommend .right .info {
+  line-height: 40rpx;
+  font-size: 28rpx;
+  color: #bfbfbf;
+  letter-spacing: 0;
+}
+
+.recommend .right .info .key {
+  color: #8a8a8a;
+  margin-right: 12rpx;
+}
+
+.playNum {
+  margin-left: 40rpx;
+}
+
+.nav {
+  box-sizing: border-box;
+  border-bottom: 2rpx solid #e9e9e9;
+  background: #fff;
+  height: 100rpx;
+}
+
+.nav .item {
+  line-height: 100rpx;
+  display: inline-block;
+  /* width: 115rpx; */
+  text-align: center;
+  font-family: PingFangSC-Regular;
+  font-size: 34rpx;
+  color: #999999;
+  letter-spacing: 0;
+  padding: 0 15rpx;
+  flex-shrink: 0;
+}
+
+.nav .itemone {
+  margin-left: 14rpx;
+}
+
+.nav .item.active {
+  position: relative;
+  color: #df2020;
+  font-size: 36rpx;
+  font-weight: 800;
+}
+
+.nav .item.active::after {
+  content: "";
+  position: absolute;
+  bottom: 2rpx;
+  left: 50%;
+  width: 36rpx;
+  height: 7rpx;
+  margin-left: -18rpx;
+  background: #df2020;
+  border-radius: 3rpx;
+}
+
+.nav .tabclassify {
+  height: 100%;
+  width: 64rpx;
+  float: right;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  background: linear-gradient(270deg, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0.7) 100%);
+  margin-top: -99rpx;
+  position: relative;
+}
+
+.nav .tabclassify image {
+  width: 32rpx;
+  height: 26rpx;
+}
+
+.nav .integral {
+  height: 100%;
+  float: right;
+  padding: 10rpx 0 0 30rpx;
+  box-sizing: border-box;
+}
+
+.nomore {
+  position: relative;
+  width: 360rpx;
+  height: 40rpx;
+  left: 50%;
+  margin-left: -180rpx;
+}
+
+.nomore image {
+  width: 100%;
+  height: 3rpx;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  margin-top: -1.5rpx;
+}
+
+.nomore text {
+  display: block;
+  font-size: 28rpx;
+  font-weight: 500;
+  color: #999999;
+  line-height: 40rpx;
+  text-align: center;
+  margin-top: 30rpx;
+}
+
+
+.skeleton {
+  width: 100%;
+  padding: 20rpx;
+  background: white;
+  overflow: hidden;
+  box-sizing: border-box;
+  animation: skeleton 1.5s infinite;
+}
+
+.skeleton .skeletonImg {
+  width: 260rpx;
+  height: 160rpx;
+  background: #EDEDED;
+  float: left;
+  border-radius: 10rpx;
+}
+
+.skeleton .skeletonTitle {
+  width: 420rpx;
+  height: 32rpx;
+  background: #EDEDED;
+  border-radius: 3rpx;
+  float: right;
+  margin-top: 14rpx;
+}
+
+.skeleton .skeletonDaram {
+  width: 123rpx;
+  height: 32rpx;
+  background: #EDEDED;
+  border-radius: 3rpx;
+  float: left;
+  margin-left: 30rpx;
+}
+
+.skeleton .skeletonContent {
+  width: 420rpx;
+  height: 32rpx;
+  background: #EDEDED;
+  border-radius: 3rpx;
+  float: right;
+  margin: 15rpx 0 15rpx 0;
+}
+
+@keyframes skeleton {
+  0% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.5;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+.tabclassifyBox {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  background: rgba(0, 0, 0, 0.8);
+  top: 0;
+  z-index: 9999;
+}
+
+.tabclassifyBox .classifyContent {
+  width: 100%;
+  background-color: #fff;
+  border-radius: 30rpx 30rpx 0px 0px;
+  position: absolute;
+  bottom: 0;
+  animation: showClassify 0.5s;
+}
+
+.tabclassifyBox .classifyContent .classifyTitle {
+  width: 100%;
+  height: 120rpx;
+  border-bottom: 1rpx solid #E9E9E9;
+  text-align: center;
+  line-height: 120rpx;
+  font-size: 42rpx;
+  font-weight: 500;
+  color: #333333;
+  position: relative;
+}
+
+.tabclassifyBox .classifyContent image {
+  width: 32rpx;
+  height: 32rpx;
+  padding: 30rpx;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.tabclassifyBox .classifyContent .classifyitemBox {
+  width: 100%;
+  max-height: 790rpx;
+  overflow: hidden;
+  overflow-y: auto;
+  padding:30rpx 0 30rpx 30rpx;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+}
+
+.tabclassifyBox .classifyContent .classifyitemBox .classifyitem {
+  width: 210rpx;
+  height: 90rpx;
+  text-align: center;
+  line-height: 90rpx;
+  font-size: 38rpx;
+  font-weight: 400;
+  color: #333333;
+  background: #F5F6FA;
+  border-radius: 10rpx;
+  margin-right: 30rpx;
+  margin-bottom: 30rpx;
+}
+
+@keyframes showClassify {
+  from {
+    bottom: -920rpx;
+  }
+  to {
+    bottom: 0;
+  }
+}
+
+.qst {
+  width: 100%;
+  height: 500rpx;
+  display: flex;
+  flex-direction: column;
+  padding-top: 110rpx;
+  align-items: center;
+}
+
+.qst image {
+  width: 452rpx;
+  height: 288rpx;
+}
+
+.qst text:nth-child(2) {
+  font-size: 36rpx;
+  font-weight: 400;
+  color: #999999;
+  margin-top: -20rpx;
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+
+
+

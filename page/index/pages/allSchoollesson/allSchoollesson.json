@@ -1,0 +1,7 @@
+{
+  "usingComponents": {
+    "lessonItem": "/components/lessonItem/lessonItem",
+    "loginBox": "/components/loginBox/loginBox"
+  },
+  "onReachBottomDistance": 10
+}

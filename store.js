@@ -4,7 +4,7 @@
  * @LastEditTime: 2020-08-11 18:00:20
  */
 import Store from "wxministore";
-let env = "pro";
+let env = "test";
 let mpVersion = "v24"; /* 版本管理 */
 /* 图片等静态资源服务器 */
 let imgBase = {
@@ -90,7 +90,9 @@ let store = new Store({
     blackShow: false,
     openId: "",
     userIndex: {},
-    messageReceived: 0
+    messageReceived: 0,
+    showLogin: false,
+    nextTapDetial: {}
   },
   pageLisener: {
     onLoad(opts) {
@@ -131,6 +133,7 @@ let store = new Store({
     },
     onUnload() {
       this.pageName == "首页" ? clearInterval(this.timer) : "";
+      if(!this.data.$state.userInfo.id && this.data.$state.showLogin) getApp().changeLoginstatus()
     },
   },
   methods: {

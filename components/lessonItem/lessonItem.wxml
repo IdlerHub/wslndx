@@ -1,0 +1,46 @@
+<!--components/lessonItem/lessonItem.wxml-->
+<wxs module="fn">
+  module.exports = {
+  num: function(studyNum) {
+  return studyNum >= 10000 ? (studyNum / 10000).toFixed(1) + 'w' : studyNum
+  },
+  }
+</wxs>
+<view class="itemBox">
+  <view class="item" wx:for="{{lessonList}}" wx:key="index" bindtap="toLesson" data-type="lesson" data-item="{{item}}">
+    <view class="coverBox">
+      <image src="{{item.image || item.indexCover}}"></image>
+      <image src="/images/recomonPlay.png"></image>
+    </view>
+    <view class="contentBox">
+      <text class="title">{{ item.title || item.name}}</text>
+      <view wx:if="{{(!isSchool && item.columnId) || item.type == 1}}">
+        <view class="tabLine" wx:if="{{ item.tags[0] }}">
+          <text wx:for="{{item.tags}}" wx:key="index" wx:for-item="tagItem">{{tagItem.tagName || tagItem}}</text>
+        </view>
+        <view class="tabLine" wx:else>
+          <text>网上老年大学</text>
+        </view>
+      </view>
+      <view class="bottom" wx:if="{{(!isSchool && item.type == 1) || isIndex}}">
+        <view class="left">
+          <text>免费</text>
+          <text>|</text>
+          <text>{{ fn.num(item.studyNum) }}人在学</text>
+        </view>
+        <view wx:if="{{!isAllLesson}}">
+          <view class="right" wx:if="{{isIndex && !item.isEnroll}}" catchtap="addStudy" data-type="addStudy"
+            data-item="{{item}}">报名</view>
+          <view class="righted" wx:else>
+            已报名
+          </view>
+        </view>
+      </view>
+      <view class="schoolBootem" wx:else>
+        <text class="left">剧集</text><text class="right">{{item.lesson_count || item.lessonCount}}集</text><text
+          class="left">播放</text><text class="right">{{item.thousand || item.browse}}</text>
+        <!-- <text>查看全部课程</text> -->
+      </view>
+    </view>
+  </view>
+</view>

@@ -7,7 +7,7 @@ var httpService = require("../utils/service.js");
 
 //POST User/wxlogin 微信登录
 function wxLoginCode(param) {
-  return httpService.post("User/wxlogin", param, true);
+  return httpService.post("wx/login", param, true, true);
 }
 
 /**
@@ -25,12 +25,12 @@ function getAuthCode(mobile) {
  * @return: promise
  */
 function register(param) {
-  return httpService.post("User/register", param, true);
+  return httpService.post("wx/register", param, true, true);
 }
 
 //POST user/profile 更新用户资料
 function profile(param) {
-  return httpService.post("User/profile", param);
+  return httpService.post("wx/profile", param, null, true);
 }
 
 //POST User/collect 收藏课程
@@ -72,6 +72,15 @@ function pointsinfo(param) {
  */
 function gift(param) {
   return httpService.post("Gift/index", param);
+}
+
+/**
+ * @description: 获取礼品规格
+ * @param {giftId: 礼品id}
+ * @return: promise
+ */
+function getSpecification(param) {
+  return httpService.post("gift/quality/list", param , null ,true);
 }
 
 /**
@@ -273,6 +282,7 @@ module.exports = {
   userQr,
   sign,
   gift,
+  getSpecification,
   exchange,
   pointsinfo,
   activite,

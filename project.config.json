@@ -37,39 +37,7 @@
     ]
   },
   "setting": {
-    "urlCheck": true,
-    "es6": true,
-    "enhance": true,
-    "postcss": true,
-    "preloadBackgroundData": false,
-    "minified": true,
-    "newFeature": true,
-    "coverView": true,
-    "nodeModules": true,
-    "autoAudits": false,
-    "showShadowRootInWxmlPanel": true,
-    "scopeDataCheck": false,
-    "uglifyFileName": false,
-    "checkInvalidKey": true,
-    "checkSiteMap": true,
-    "uploadWithSourceMap": true,
-    "compileHotReLoad": false,
-    "useMultiFrameRuntime": false,
-    "useApiHook": true,
-    "babelSetting": {
-      "ignore": [],
-      "disablePlugins": [],
-      "outputPath": ""
-    },
-    "enableEngineNative": false,
-    "bundle": false,
-    "useIsolateContext": true,
-    "useCompilerModule": false,
-    "userConfirmedUseCompilerModuleSwitch": true,
-    "userConfirmedBundleSwitch": false,
-    "packNpmManually": false,
-    "packNpmRelationList": [],
-    "minifyWXSS": true
+    "useApiHostProcess": true
   },
   "compileType": "miniprogram",
   "libVersion": "2.12.2",
@@ -156,7 +124,7 @@
         {
           "name": "page/live/pages/liveDetail/liveDetail",
           "pathName": "page/live/pages/liveDetail/liveDetail",
-          "query": "lessonId=62",
+          "query": "specialColumnId=287",
           "scene": 1000
         },
         {
@@ -179,6 +147,12 @@
           "name": "page/live/pages/liveDetail/liveDetail",
           "pathName": "page/live/pages/liveDetail/liveDetail",
           "query": "specialColumnId=378",
+          "scene": null
+        },
+        {
+          "name": "page/user/pages/score/score",
+          "pathName": "page/user/pages/score/score",
+          "query": "",
           "scene": null
         }
       ]

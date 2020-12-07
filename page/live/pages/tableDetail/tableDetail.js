@@ -1,6 +1,7 @@
 // pages/tableDetail/tableDetail.js
 const LiveData = require("../../../../data/LiveData");
 const user = require("../../../../data/User");
+const app = getApp()
 var htmlparser = require("../../../../utils/htmlparser");
 
 Page({
@@ -30,13 +31,13 @@ Page({
   timer: "",
   toEducation: false,
   onShow() {
-    if(this.toEducation) {
+    if (this.toEducation) {
       this.getUserOpenid(1)
       this.toEducation = false
     }
   },
   onLoad: function (options) {
-    console.log(options)
+    this.options = options
     options.lessonId ? options.specialColumnId = options.lessonId - -614 : ''
     let inviter = 0;
     if (options.inviter && this.data.$state.userInfo.id != options.inviter) {
@@ -44,8 +45,7 @@ Page({
     }
     this.data.lessonId = options.specialColumnId;
     // this.getLiveDetailDate(options.lessonId, inviter);
-    this.getLiveBySpecialColumnId(options.specialColumnId)
-    this.getUserOpenid()
+    this.init()
     // this.timer = setInterval(() => {
     //   let countdown = this.data.lessonDetail.countdown - 1;
     //   this.leftTimer(countdown);
@@ -53,6 +53,10 @@ Page({
   },
   onUnload() {
     // clearInterval(this.timer);
+  },
+  init() {
+    this.getLiveBySpecialColumnId(this.options.specialColumnId)
+    this.data.$state.userInfo.id ? this.getUserOpenid() : ''
   },
   getUserOpenid(type) {
     user.myIndex().then(res => {
@@ -111,13 +115,14 @@ Page({
     return LiveData.getLiveBySpecialColumnId({
       specialColumnId: id
     }).then(res => {
-      res.data.liveLecturerUserDTOS ? res.data.liveLecturerUserDTOS.forEach(e => {
-        res.data['teacher'] ?  res.data.teacher = res.data.teacher + ' ' + e.nickname : res.data.teacher = e.nickname
+      res.data.lecturers ? res.data.lecturers.forEach((e, i) => {
+        if(i > 1) return
+        res.data['teacher'] ? res.data.teacher = res.data.teacher + ',' + e.lecturerName : res.data.teacher = e.lecturerName
       }) : ''
-      res.data.isAddSubscribe || res.data.price > 0 ? wx.redirectTo({
-        url: `/page/live/pages/liveDetail/liveDetail?specialColumnId=${res.data.columnId}`
-      }) : 
-      res.data.introduction = htmlparser.default(res.data.introduction);
+      res.data.isAddSubscribe ? wx.redirectTo({
+          url: `/page/live/pages/liveDetail/liveDetail?specialColumnId=${res.data.columnId}`
+        }) :
+        res.data.introduction = htmlparser.default(res.data.introduction);
       this.setData({
         lessonDetail: res.data,
         showAll: 1
@@ -169,7 +174,7 @@ Page({
     //     cancelColor: "#999999",
     //   });
     // } else 
-    if(!this.data.userMsg.has_mp_openid){
+    if (!this.data.userMsg.has_mp_openid) {
       this.setData({
         showAtention: true
       })
@@ -206,7 +211,7 @@ Page({
   },
   onShareAppMessage: function () {
     let lesson_id = this.data.lessonDetail.columnId,
-      cover = this.data.lessonDetail.cover;
+      cover = this.data.lessonDetail.shareCover || this.data.lessonDetail.cover;
     let id = this.data.$state.userInfo.id;
     this.shareLesson(lesson_id);
     return {
@@ -223,13 +228,28 @@ Page({
     if (!isAddSubscribe) {
       //未拥有
       LiveData.addSubscribe({
-        columnId
+          columnId
         })
         .then((res) => {
           this.data.lessonDetail.isAddSubscribe = 1;
+          getCurrentPages().forEach(e => {
+            if (e.route == 'pages/index/index') {
+              e.data.interestList.forEach(i => {
+                i.columnId == columnId ? i.isEnroll = 1 : ''
+              })
+              e.data.sprogInterestList.forEach(i => {
+                i.columnId == columnId ? i.isEnroll = 1 : ''
+              })
+              e.setData({
+                interestList: e.data.interestList,
+                sprogInterestList: e.data.sprogInterestList
+              })
+            }
+          })
           wx.redirectTo({
             url: `/page/live/pages/liveDetail/liveDetail?specialColumnId=${columnId}&isFirst=1`,
           });
+
         })
         .catch((err) => {
           wx.showToast({
@@ -253,5 +273,8 @@ Page({
       url: `/pages/education/education?liveType=liveTable&uid=${uid}`,
     });
     this.toEducation = true
+  },
+  checknextTap(e) {
+    app.checknextTap(e)
   }
 });

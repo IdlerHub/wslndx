@@ -1,4 +1,7 @@
 {
-  "usingComponents": {},
+  "usingComponents": {
+    "loginBox": "/components/loginBox/loginBox",
+    "slotSign": "/components/slotSign/slotSign"
+  },
   "navigationBarTitleText": "小林老师"
 }

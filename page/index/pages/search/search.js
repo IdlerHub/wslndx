@@ -276,5 +276,8 @@ Page({
     this.setData({
       lessList: this.data.lessList
     });
+  },
+  checknextTap(e) {
+    app.checknextTap(e)
   }
 });

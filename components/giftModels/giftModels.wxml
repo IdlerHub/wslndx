@@ -1,0 +1,29 @@
+<!--components/giftModels/giftModels.wxml-->
+<view class="c-gift-models" wx:if="{{showCard}}" catchtouchmove="unMove">
+  <view class="mask-bg">
+    <view class="gift-box">
+      <image class="gift-models-close" src="/images/close.png" mode="aspectFill" catchtap="close"></image>
+      <view class="box-info">
+        <view class="gift-img">
+          <image src="{{giftInfo.image}}" mode="aspectFill"></image>
+        </view>
+        <view class="gift-info">
+          <view class="gift-price"><text>{{giftInfo.need_points}}</text>学分</view>
+          <view class="gift-models">请选择{{modelsInfo[0].qualityValue}}</view>
+        </view>
+      </view>
+      <view class="models-list">
+        <view class="models-item" wx:for="{{modelsInfo}}" wx:key="index">
+          <view class="models-title">{{item.qualityValue}}</view>
+          <view class="models-content">
+            <view class="content-item {{mItem.skuId === skuId ? 'selected-models' : ''}}" wx:for="{{item.specsList}}" wx:for-item="mItem" wx:for-index="mIndex" wx:key="mIndex" data-sku-id="{{mItem.skuId}}" catchtap="changeSku">{{mItem.specsValue}}</view>
+          </view>
+        </view>
+      </view>
+      <view class="btn-site"></view>
+      <view class="btn-footer">
+        <view class="gift-btn" catchtap="setSkuId">确认</view>
+      </view>
+    </view>
+  </view>
+</view>

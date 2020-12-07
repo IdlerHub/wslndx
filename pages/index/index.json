@@ -11,6 +11,8 @@
     "navBar": "/components/navBar/navBar",
     "signinBox": "/components/signinBox/signinBox",
     "integralAnimation": "/components/integralAni/integralAni",
-    "loginBox": "/components/loginBox/loginBox"
+    "loginBox": "/components/loginBox/loginBox",
+    "lessonItem": "/components/lessonItem/lessonItem",
+    "slotSign": "/components/slotSign/slotSign"
   }
 }

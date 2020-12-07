@@ -17,5 +17,6 @@
   <view class="btn-box">
     <button bindtap="gift" style="background:{{!gift.stock ? 'gray': ''}}">立即兑换</button>
   </view>
-  <address style="position: fixed;" giftInfo="{{giftInfo}}" show-card="{{getAddress}}" bind:change="stockChange"></address>
 </view>
+<address style="position: fixed;" giftInfo="{{giftInfo}}" show-card="{{getAddress}}" bind:change="stockChange"></address>
+<giftModels show-card="{{showModelCard}}" giftInfo="{{giftInfo}}" bind:setSkuId="setSkuId"></giftModels>

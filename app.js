@@ -65,6 +65,7 @@ var tutor = require("data/Tutor.js");
 var vote = require("data/Vote.js"); //票选活动接口
 var activity = require("data/Activity.js");
 var liveData = require("data/LiveData.js");
+var lessonNew = require("data/lessonNew.js");
 //app.js
 App({
   API_URL: store.API_URL,
@@ -82,6 +83,7 @@ App({
   activity,
   liveData,
   socket,
+  lessonNew,
   store,
   livePlayer,
   fundebug,
@@ -97,7 +99,6 @@ App({
   },
   /*埋点统计*/
   onLaunch: async function (opts) {
-    console.log(opts, this.globalData.scenes.indexOf(opts.scene) >= 0);
     this.getSecureToken();
     let optsStr = decodeURIComponent(opts.query.scene).split("&");
     let opstObj = {};
@@ -129,21 +130,6 @@ App({
           wx.setStorageSync("invite", opstObj.u); /* 邀请码记录 */
         }
       }
-      livePlayer
-        .getShareParams()
-        .then((res) => {
-          // 开发者在跳转进入直播间页面时，页面路径上携带的自定义参数，这里传回给开发者
-          console.log("get custom params", res.custom_params);
-          res.custom_params
-            ? [
-                wx.setStorageSync("invite", res.custom_params.uid),
-                (this.globalData.shareObj = res.custom_params),
-              ]
-            : "";
-        })
-        .catch((err) => {
-          console.log("get share params", err);
-        });
     }
     let userInfo = wx.getStorageSync("userInfo") || {};
     let mpVersion = wx.getStorageSync("mpVersion");
@@ -168,10 +154,6 @@ App({
       wx.reLaunch({
         url: "/pages/upwxpage/upwxpage",
       });
-    } else if (!this.store.$state.userInfo.mobile) {
-      wx.reLaunch({
-        url: "/pages/sign/sign",
-      });
     } else if (opstObj.p) {
       wx.reLaunch({
         url: `/page/vote/pages/voteArticle/voteArticle?voteid=${opstObj.o}&uid=${opstObj.u}`,
@@ -185,6 +167,18 @@ App({
       opstObj[item.split("=")[0]] = item.split("=")[1];
     });
     let lists = ["share", "invite"];
+    if (this.store.$state.userInfo.id) {
+      setTimeout(() => {
+        socket.init(this.store.$state.userInfo.id);
+        socket.listen(this.prizemessage, "Prizemessage");
+        socket.listen(this.bokemessage, "Bokemessage");
+      }, 2000);
+    } else {
+      if(opts.path == 'pages/index/index') return
+      wx.reLaunch({
+        url: "/pages/index/index",
+      });
+    }
     /* 小程序(在后台运行中时)从分享卡片切到前台 */
     if (this.globalData.backstage) {
       this.globalData.backstage = false;
@@ -203,37 +197,11 @@ App({
           wx.setStorageSync("invite", opts.query.uid); /* 邀请码存储 */
         }
       }
-      livePlayer
-        .getShareParams()
-        .then((res) => {
-          // 开发者在跳转进入直播间页面时，页面路径上携带的自定义参数，这里传回给开发者
-          console.log("get custom params", res.custom_params);
-          res.custom_params
-            ? [
-                wx.setStorageSync("invite", res.custom_params.uid),
-                (this.globalData.shareObj = res.custom_params),
-              ]
-            : "";
-        })
-        .catch((err) => {
-          console.log("get share params", err);
-        });
-      if (!this.store.$state.userInfo.mobile) {
-        wx.reLaunch({
-          url: "/pages/sign/sign",
-        });
-      } else if (opts.type == "lottery") {
+      if (opts.type == "lottery") {
         wx.reLaunch({
           url: "/pages/education/education?type=lottery&login=1",
         });
       }
-    }
-    if (this.store.$state.userInfo.id) {
-      setTimeout(() => {
-        socket.init(this.store.$state.userInfo.id);
-        socket.listen(this.prizemessage, "Prizemessage");
-        socket.listen(this.bokemessage, "Bokemessage");
-      }, 2000);
     }
   },
   onHide() {
@@ -245,7 +213,7 @@ App({
   onError: function (err) {
     fundebug.notifyError(err);
   },
-  wxLogin: async function () {
+  wxLogin: async function (e) {
     await wxp.login({}).then((res) => {
       if (res.code) {
         this.globalData.code = res.code;
@@ -259,41 +227,15 @@ App({
         code: this.globalData.code,
       })
       .then((msg) => {
-        if (msg.data.tempCode) {
+        if (!msg.data.userInfo) {
           /* 新用户未注册 */
-          console.log("tempCode", msg.data.tempCode);
-          this.globalData.tempCode = msg.data.tempCode;
-          wx.reLaunch({
-            url: "/pages/sign/sign",
-          });
+          this.globalData.loginDetail = msg.data;
         } else {
           /* 旧用户 */
           wx.setStorageSync("token", msg.data.token);
           wx.setStorageSync("uid", msg.data.uid);
           wx.setStorageSync("authKey", msg.data.authKey);
-          this.setUser(msg.data.userInfo);
-          if (
-            this.globalData.query.type == "share" ||
-            this.globalData.shareObj.type == "lottery"
-          ) {
-            let params = [];
-            for (let attr in this.globalData.query) {
-              params.push(attr + "=" + this.globalData.query[attr]);
-            }
-            this.globalData.shareObj.type == "lottery"
-              ? wx.reLaunch({
-                  url:
-                    "/pages/education/education?type=lottery&login=1&id=" +
-                    this.globalData.lotteryId,
-                })
-              : wx.reLaunch({
-                  url: this.globalData.path + "?" + params.join("&"),
-                });
-          } else {
-            wx.reLaunch({
-              url: "/pages/index/index",
-            });
-          }
+          e ? this.updateBase(e) : this.setUser(msg.data.userInfo);
         }
       });
   },
@@ -316,7 +258,7 @@ App({
   },
   /* 更新store中的userInfo */
   setUser: function (data) {
-    let areaArray = data.university.split(",");
+    let areaArray = data.universityName ? data.universityName.split(",") : '';
     if ((!data.address || !data.school) && areaArray.length == 3) {
       data.address = areaArray.slice(0, 2);
       data.addressCity = areaArray[1];
@@ -332,6 +274,9 @@ App({
       socket.listen(this.prizemessage, "Prizemessage");
       socket.listen(this.bokemessage, "Bokemessage");
     }
+    getCurrentPages().forEach(e => {
+      e.route == 'pages/index/index' ? this.store.$state.nextTapDetial.type == 'addStudy' ? e.init(1) :  e.init() : ''
+    })
   },
   /* 更新AuthKey */
   setAuthKey: function (data) {
@@ -386,15 +331,18 @@ App({
     }
     this.getSets();
     let param = {
-      userInfo: JSON.stringify(e.detail.userInfo),
+      userInfo: e.detail.userInfo,
       encryptedData: e.detail.encryptedData,
       iv: e.detail.iv,
     };
     this.user.profile(param).then((msg) => {
       this.setUser(msg.data.userInfo);
+    }).catch(msg => {
+      if(msg.status == 401) {
+        this.wxLogin(e)
+      }
     });
   },
-
   playVedio(type) {
     type == "wifi"
       ? ""
@@ -544,11 +492,23 @@ App({
       });
     }, 1000);
   },
+  changeLoginstatus() {
+    this.store.setState({
+      showLogin: !this.store.$state.showLogin
+    })
+  },
+  checknextTap(e) {
+    this.store.setState({
+      'nextTapDetial.type': e.currentTarget.dataset.type,
+      'nextTapDetial.detail': e.currentTarget.dataset.detail ? e.currentTarget.dataset.detail : e
+    })
+  },
   globalData: {
     /*wx.login 返回值 code */
     code: null,
     /* 新用户临时code */
     tempCode: null,
+    logindetail: {},
     /* 卡片路径 */
     path: null,
     /* 卡片参数 */

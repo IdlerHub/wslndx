@@ -44,15 +44,20 @@ let messageUplisten = function (event) {
   // 收到推送的单聊、群聊、群提示、群系统通知的新消息，可通过遍历 event.data 获取消息列表数据并渲染到页面
   // event.name - TIM.EVENT.MESSAGE_RECEIVED
   // event.data - 存储 Message 对象的数组 - [Message]
-  console.log(event)
-  const talkList = then.data.talkList
+  console.log(event, '新消息')
   event.data.forEach(e => {
     let {
       nick,
       payload,
+      to
     } = e
+    console.log(to, then.data.liveDetail.chatGroup)
+    if (to != then.data.liveDetail.chatGroup) return
     // && messageFilter(payload, 1) != 1 && messageFilter(payload, 1) != 4
-    if (messageFilter(payload, 1) > 0) {
+    console.log(messageFilter(payload, 1))
+    if (messageFilter(payload, 1) > 0 && messageFilter(payload, 1) != 1 && messageFilter(payload, 1) != 4) {
+      const talkList = then.data.talkList
+      console.log('新增消息列表消息')
       talkList.push({
         nick,
         payload: payload.text ? payload : JSON.parse(payload.data)
@@ -60,6 +65,16 @@ let messageUplisten = function (event) {
       payload.text ? '' : messageFilter(payload) == -1 ? then.addliveCount() : ''
       then.setData({
         talkList
+      })
+    } else if (messageFilter(payload, 1) == 1 || messageFilter(payload, 1) == 4) {
+      console.log('点赞消息/进入直播间')
+      const specialList = then.data.specialList
+      specialList.push({
+        nick: nick,
+        payload: JSON.parse(payload.data),
+      })
+      then.setData({
+        specialList
       })
     } else if (messageFilter(payload) == -4) {
       then.setData({
@@ -84,7 +99,7 @@ function timInit(that, values, type) {
     SDKAppID: then.data.$state.sdkAppid
   };
   then.tim = TIM.create(options);
-  if(type) return
+  if (type) return
   then.tim.setLogLevel(1);
   then.tim.on(TIM.EVENT.SDK_READY, (event) => {
     // 收到离线消息和会话列表同步完毕通知，接入侧可以调用 sendMessage 等需要鉴权的接口
@@ -145,9 +160,9 @@ function joinGroup() {
       gender: TIM.TYPES.GENDER_MALE,
       selfSignature: '',
       allowType: TIM.TYPES.ALLOW_TYPE_ALLOW_ANY
-    }).then(function(imResponse) {
+    }).then(function (imResponse) {
       console.log(imResponse.data, '更新资料成功'); // 更新资料成功
-    }).catch(function(imError) {
+    }).catch(function (imError) {
       console.warn('updateMyProfile error:', imError); // 更新资料失败的相关信息
     });
     timGetmessage(then.data.liveDetail.chatGroup, 1)
@@ -169,7 +184,7 @@ function quitGroup() {
 
 //消息过滤
 function messageFilter(params, type) {
-  if (params.text) return 1
+  if (params.text) return 2
   switch (JSON.parse(params.data).customText) {
     case '0008043cc6f0647e061acf18dac98ef3': //进入直播
       return type ? 1 : -1
@@ -216,7 +231,7 @@ function timGetmessage(roomId, isFirst) {
       isShow: 'show',
 
     }
-    console.log(messageList, nextReqMessageID, isCompleted, '消息会话')
+    // console.log(messageList, nextReqMessageID, isCompleted, '消息会话')
     if (isFirst) {
       const talkList = [{
           nick: '网上老年大学小助手',
@@ -311,22 +326,31 @@ function customParams(params) {
 //发送自定义文本消息
 function sendCustomMessage(params) {
   console.log(params, 354234234234)
+  let payload = {
+    data: JSON.stringify(params),
+    description: '',
+    extension: ''
+  }
   let message = then.tim.createCustomMessage({
     to: String(then.data.liveDetail.chatGroup),
     conversationType: TIM.TYPES.CONV_GROUP,
-    payload: {
-      data: JSON.stringify(params),
-      description: '',
-      extension: ''
-    }
+    payload
   });
   // 3. 发送消息
   then.tim.sendMessage(message).then(function (imResponse) {
     // 发送成功
     console.log(imResponse, '发送成功');
-    // if (messageFilter(payload, 1) == 1 && messageFilter(payload, 1) == 4) {
-    //   return
-    // }
+    if (messageFilter(payload, 1) == 1 || messageFilter(payload, 1) == 4) {
+      const specialList = then.data.specialList
+      specialList.push({
+        nick: then.data.userInfo.nickname,
+        payload: params,
+      })
+      then.setData({
+        specialList
+      })
+      return
+    }
     const talkList = then.data.talkList
     talkList.push({
       nick: then.data.userInfo.nickname,

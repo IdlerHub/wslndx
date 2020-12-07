@@ -11,8 +11,8 @@
   </button>
 </view>
 <liveTop liveDetail="{{liveDetail}}" liveCount="{{liveCount}}" direction="{{liveDetail.direction}}" bind:checkFollow="checkFollow" wx:if="{{showCommont}}"/>
-<talkCommon talkList="{{talkList}}" close="{{close}}" showList="{{showList}}" newMessage="{{newMessage}}"
-  bind:setNewmessagenum="setNewmessagenum"/>
+<talkCommon id="talkCommon" talkList="{{talkList}}" specialList="{{specialList}}" close="{{close}}" showList="{{showList}}" newMessage="{{newMessage}}"
+  bind:setNewmessagenum="setNewmessagenum" bind:animationCheck="animationCheck"/>
 <navigator class="downloadeApp"
   url="/pages/education/education?type=0&url=https://mp.weixin.qq.com/s/vSd8XBQDQkvqVX_kt_YyTQ" hover-class="none">
   <image src="../../images/dowloafeApp.png" bindtap="downloadeApp"></image>

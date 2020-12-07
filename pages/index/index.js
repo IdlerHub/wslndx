@@ -6,32 +6,39 @@ const Tutor = require("../../data/Tutor")
 const app = getApp()
 Page({
   data: {
-    nav: [{
-      id: 1,
-      name: "推荐",
-      class: "#recommend1",
-      unMove: true
-    }],
-    height: 1000,
     isRefreshing: false,
-    currentTab: 0,
     showReco: false,
-    guideNum: 0,
     guidetxt: '下一步',
-    guideNum: 1,
     shownow: true,
     shownowt: true,
     showdialog: true,
-    showSignbox: true
+    showSignbox: false,
+    centerIcon: [{
+      url: '/page/index/pages/allLesson/allLesson',
+      icon: '/images/indexIcon/allLessonIcon.png',
+      name: '全部课程'
+    }, {
+      url: '/pages/video/video',
+      icon: '/images/indexIcon/sortVideoicon.png',
+      name: '短视频'
+    }, {
+      url: '/page/index/pages/schoolLesson/schoolLesson',
+      icon: '/images/indexIcon/shollLesson.png',
+      name: '高校课程'
+    }, {
+      url: '/page/index/pages/hotActivity/hotActivity',
+      icon: '/images/indexIcon/hotActivityIcon.png',
+      name: '热门活动'
+    }, ]
   },
-  navHeightList: [],
   pageName: '首页',
   guide: 0,
   liveTimer: '',
-  onLoad: async function (e) {
-    !getApp().globalData.tempCode ? '' : wx.reLaunch({
-      url: "/pages/sign/sign"
-    });
+  nextTapDetial: {
+    type: '',
+    detail: {}
+  },
+  onLoad: function (e) {
     e.type != undefined ? this.pageType = e.type : ''
     let reg = /ios/i
     let pt = 20 //导航状态栏上内边距
@@ -56,88 +63,53 @@ Page({
     let that = this
     let query = wx.createSelectorQuery().in(this)
     query.select(".top").boundingClientRect()
-    query.select(".nav").boundingClientRect()
     query.exec(res => {
       that.headerHeight = res[0].height + pt + h
-      that.navHeight = res[1].height
-      that.navWidth = res[1].width
     })
     this.setData({
-      recommend: [],
       liveRecommend: [],
+      sprogInterestList: [],
+      interestList: [],
       category: [],
       history: {},
-      navScrollLeft: 0,
-      catrecommend: []
     })
-    if (this.data.$state.userInfo.mobile) {
-      await app.user.signed().then(res => {
-        let sign = res.data && res.data.signed
-        app.store.setState({
-          signdays: res.data.sign_days
-        })
-        app.setSignIn({
-          status: sign,
-          count: sign ? 1 : this.data.$state.signStatus.count
-        }, true)
+    this.init()
+  },
+  onShow() {
+    /* 更新用户的视频浏览历史 */
+    if (app.store.$state.userInfo.mobile) {
+      this.getHistory()
+      app.getUserOpenData()
+      setTimeout(wx.hideLoading, 500)
+      this.setData({
+        showSignbox: true
       })
-      await app.user.share({}).then(res => {
-        app.setShare(res)
-      })
-      this.init()
-      this.integrationTime()
+      this.data.isSign ? this.signIn() : ''
     }
   },
-  onReady: function () {},
-  onShow() {
-    app.globalData.currentTab == 1 ? this.setData({
-      currentTab: 1
-    }) : ''
-    app.globalData.currentTab = ''
-    /* 更新用户的视频浏览历史 */
-    if (app.store.$state.userInfo.mobile)[this.getHistory(), app.getUserOpenData()]
-    setTimeout(wx.hideLoading, 500)
+  init(type) {
+    if(type) {
+      return Promise.all([this.getRecommendLessons(1), this.getBanner(), this.getDialog(), this.getUserOpenid()]).then(() => {
+        this.getSigns()
+      })
+    } else if (this.data.$state.userInfo.mobile) {
+      return Promise.all([this.getRecommendLessons(1), this.getinterestList(), this.getBanner(), this.getDialog(), this.getUserOpenid()]).then(() => {
+        this.getSigns()
+      })
+    } else {
+      return Promise.all([this.getRecommendLessons(1), this.getinterestList(), this.getBanner()])
+    }
+  },
+  centerTab(e) {
     this.setData({
-      showSignbox: true
-    })
-    this.data.isSign ? this.signIn() : ''
-  },
-  init() {
-    return Promise.all([this.getactivite(), this.getRecommendLessons(1), this.getRecommend(), this.getCategory(), this.getBanner(), this.getPaper(), this.getDialog(), this.getGuide(), this.getUserOpenid()]).then(values => {
-      if (this.data.$state.newGuide.index == 0) {
-        this.setData({
-          guideNum: 1,
-          showdialog: false
-        })
-        app.setSignIn({
-          status: false,
-          count: 1
-        }, true)
-      } else {
-        this.setData({
-          guideNum: 5
-        })
-      }
-      console.log(app.globalData.query)
-      if (app.globalData.query.categoryId) {
-        this.data.nav.forEach((v, i) => {
-          v.id == app.globalData.query.categoryId ? this.setData({
-            currentTab: i
-          }) : ''
-        })
-      }
-      this.navHeightList = []
-      setTimeout(() => {
-        this.setHeight()
-      }, 500);
+      bannercurrentTab: e.detail.current
     })
   },
-  // 获取新手指引
-  getGuide() {
-    return app.user.guideRecord().then(res => {
-      let newGuide = res.data
-      app.store.setState({
-        newGuide
+  getinterestList() {
+    return app.lessonNew.interestList().then(res => {
+      this.setData({
+        interestList: res.data.interestList,
+        sprogInterestList: res.data.sprogInterestList
       })
     })
   },
@@ -148,120 +120,19 @@ Page({
       })
     })
   },
-  setHeight() {
-    let nav = this.data.nav
-    let currentTab = this.data.currentTab
-    if (this.navHeightList[currentTab]) {
-      this.navHeightList[currentTab] < 300 ? this.getheight(nav, currentTab) : this.setData({
-        height: this.navHeightList[currentTab]
-      })
-    } else {
-      this.getheight(nav, currentTab)
-    }
-  },
-  getheight(nav, currentTab) {
-    let query = wx.createSelectorQuery().in(this)
-    let that = this
-    query.select(nav[currentTab].class).boundingClientRect()
-    query.exec(res => {
-      let height = res[0].height
-      that.navHeightList[currentTab] = height
-      that.setData({
-        height: height
-      })
-    })
-  },
-  switchNav(event) {
-    let cur = event.currentTarget.dataset.current,
-      id = event.currentTarget.dataset.id
-    if (this.data.currentTab != cur) {
-      this.setData({
-        currentTab: cur
-      })
-    }
-    if (this.data.currentTab == 0) {
-      this.setData({
-        navScrollLeft: 0
-      })
-    }
-  },
-  centerTab(e) {
-    this.setData({
-      bannercurrentTab: e.detail.current
-    })
-  },
-  switchTab(event) {
-    let cur = event.detail.current,
-      that = this,
-      currren = this.data.currentTab
-    this.timer ? clearTimeout(this.timer) : ''
-    this.timer = setTimeout(() => {
-      this.data.currentTab != cur ? cur == that.setData({
-        currentTab: cur,
-      }) : ''
-      wx.hideLoading()
-    }, 300)
-    if (cur != 0) {
-      let id = this.data.nav[cur].id
-      this.geteCatrcommend(id, cur)
-      wx.uma.trackEvent('classify_btnClick', {
-        name: this.data.nav[cur].name
-      });
-    }
-    setTimeout(() => {
-      this.setHeight()
-    }, 500)
-  },
-  lastswitchTab(event) {
-    if (!event) {
-      this.setData({
-        currentTab: 0
-      })
-    } else {
-      let arr = this.data.nav,
-        num = 0
-      arr.forEach((i, index) => {
-        i.id == event ? num = index : 0
-      })
-      this.setData({
-        currentTab: num
-      })
-      if (this.data.catrecommend[event]) {
-        if (!this.data.catrecommend[event][0]) this.geteCatrcommend(event, this.data.currentTab)
-      } else {
-        this.geteCatrcommend(event, this.data.currentTab)
-      }
-    }
-  },
-  getRecommend() {
-    let param = {
-      page: 1,
-      pageSize: 10,
-      province: this.data.$state.userInfo.university.split(',')[0]
-    }
-    return app.classroom.recommend(param).then(msg => {
-      msg.data.forEach(function (item) {
-        item.bw = app.util.tow(item.browse)
-      })
-      this.setData({
-        recommend: msg.data
-      })
-      wx.hideLoading()
-    })
-  },
   getRecommendLessons(type) {
     if (this.data.liveRecommend[0] && !type) {
       setInterval(() => {
         app.liveData.recommendLessons().then(res => {
           this.setData({
-            liveRecommend: res.dataList.slice(0, 6)
+            liveRecommend: res.dataList
           })
         })
       }, 60000);
     } else {
       app.liveData.recommendLessons().then(res => {
         this.setData({
-          liveRecommend: res.dataList.slice(0, 6)
+          liveRecommend: res.dataList
         }, () => {
           res.dataList.length > 0 ? this.getRecommendLessons() : ''
         })
@@ -269,60 +140,13 @@ Page({
     }
 
   },
-  geteCatrcommend(id, currtab) {
-    if (this.data.catrecommend[id]) {
-      if (this.data.catrecommend[id][0]) return
-    }
-    let temp = []
-    return app.classroom.lessons(this.categoryParams[id]).then(msg => {
-      msg.data.forEach(function (item) {
-        item.thousand = app.util.tow(item.browse)
-      })
-      let catrecommend = this.data.catrecommend
-      catrecommend[id] = temp.concat(msg.data)
-      this.setData({
-        [`catrecommend[${id}]`]: temp.concat(msg.data)
-      })
-      temp.concat(msg.data).length < 10 ? this.setData({
-        [`nav[${this.data.currentTab}].showBtoom`]: true
-      }) : ''
-      setTimeout(() => {
-        currtab != this.data.currentTab ? '' : this.setHeight()
-      }, 600)
-    })
-  },
-  getCategory() {
-    this.setData({
-      currentTab: 0,
-    })
-    this.categoryParams = {}
-    return app.user.getLessonCategory().then(msg => {
-      let arr = this.data.nav.slice(0, 1)
-      msg.data.user_lesson_category.forEach((i, index) => {
-        this.categoryParams[i.id] = {
-          category_id: i.id,
-          page: 1,
-          pageSize: 10
-        }
-        i['class'] = '#recommend' + i.id
-        i['showBtoom'] = false
-        arr.push(i)
-      })
-      this.setData({
-        nav: arr
-      })
-    })
-  },
-  getactivite() {
-    // return app.user.activite()
-  },
   getBanner() {
     this.setData({
       bannercurrentTab: 0
     })
-    return app.classroom.banner({}).then(res => {
+    return app.lessonNew.getBannerList({}).then(res => {
       this.setData({
-        imgUrls: res.data
+        imgUrls: res.dataList
       })
     })
   },
@@ -334,6 +158,26 @@ Page({
     return app.user.history(historyParam).then(msg => {
       this.setData({
         "history.last_lesson": msg.data.last_lesson || ""
+      })
+    })
+  },
+  getSigns() {
+    app.user.signed().then(res => {
+      let sign = res.data && res.data.signed
+      app.store.setState({
+        signdays: res.data.sign_days
+      })
+      console.log(this.data.$state.signStatus.count)
+      app.setSignIn({
+        status: sign,
+        count: sign ? 1 : this.data.$state.signStatus.count
+      }, true)
+      app.store.setState({
+        showSignbox: !sign
+      }, () => {
+        app.user.share({}).then(res => {
+          app.setShare(res)
+        })
       })
     })
   },
@@ -354,7 +198,7 @@ Page({
     this.shownow = false
   },
   onPageScroll(e) {
-    if (e.scrollTop >= this.headerHeight - this.navHeight) {
+    if (e.scrollTop >= this.headerHeight) {
       !this.data.scroll &&
         this.setData({
           scroll: true
@@ -388,22 +232,6 @@ Page({
       shownowt: false
     })
   },
-  //点击推荐课堂
-  detailTap: function (e) {
-    wx.navigateTo({
-      url: `../../page/index/pages/detail/detail?id=${e.currentTarget.dataset.item.id}&name=${e.currentTarget.dataset.item.title}`
-    })
-    //用于数据统计
-    if (e.currentTarget.dataset.type) {
-      wx.uma.trackEvent('classify_lessonsClick', {
-        ['classifyID_' + this.data.nav[this.data.currentTab].id]: e.currentTarget.dataset.item.title
-      });
-    } else {
-      wx.uma.trackEvent('index_recommendLessons', {
-        lessonsName: e.currentTarget.dataset.item.title
-      });
-    }
-  },
   //用于数据统计
   onHide() {},
   // 用户昵称等信息授权
@@ -435,12 +263,8 @@ Page({
           bannerTencent: item.title
         });
       }
+      this.init()
     }
-  },
-  integrationTime() {
-    let data = new Date();
-    let time = data.getDate();
-    let tomorowTime = wx.getStorageSync("closeInTime")
   },
   /* 签到 */
   closeSignIn() {
@@ -482,47 +306,6 @@ Page({
     })
   },
   onReachBottom() {
-    if (this.data.currentTab != 0 && !this.data.nav[this.data.currentTab].showBtoom) {
-      let id = this.data.nav[this.data.currentTab].id
-      let temp = this.data.catrecommend[id]
-      this.categoryParams[id].page++
-      wx.showLoading({
-        title: '加载中'
-      })
-      app.classroom.lessons(this.categoryParams[id]).then(msg => {
-        let next = true
-        msg.data.forEach(function (item) {
-          item.thousand = app.util.tow(item.browse)
-          temp.forEach(i => {
-            i.id == item.id ? next = false : ''
-          })
-        })
-        if (!next) return
-        if (msg.data.length == 0) {
-          this.setData({
-            [`nav[${this.data.currentTab}].showBtoom`]: true
-          })
-        }
-        this.data.catrecommend[id] = temp.concat(msg.data)
-        this.setData({
-          [`catrecommend[${id}]`]: temp.concat(msg.data)
-        })
-        let query = wx.createSelectorQuery().in(this)
-        let that = this,
-          nav = this.data.nav,
-          currentTab = this.data.currentTab
-        query.select(nav[currentTab].class).boundingClientRect()
-        query.exec(res => {
-          let height = res[0].height
-          that.navHeightList[currentTab] = height
-          that.setData({
-            height: height,
-            showLoading: false
-          })
-          wx.hideLoading()
-        })
-      })
-    }
     this.setData({
       onReachBottom: true
     })
@@ -535,7 +318,7 @@ Page({
   /* 广告位值跳转 */
   bannerGo(e) {
     let item = e.currentTarget.dataset.item;
-    if (item.jump_type == 1) {
+    if (item.jumpType == 1) {
       /* 外链 */
       wx.navigateTo({
         url: `../education/education?type=0&url=${item.clickurl}&login=${item.is_login}`
@@ -543,7 +326,7 @@ Page({
       wx.uma.trackEvent('index_bannerClick', {
         bannerTencent: item.title
       });
-    } else if (item.jump_type == 2) {
+    } else if (item.jumpType == 2) {
       /* 视频 */
       wx.navigateTo({
         url: `../../page/index/pages/detail/detail?id=${item.video_id}&name=${item.title}`
@@ -551,24 +334,24 @@ Page({
       wx.uma.trackEvent('index_bannerClick', {
         bannerVideo: item.title
       });
-    } else if (item.jump_type == 4) {
+    } else if (item.jumpType == 4) {
       this.minigo(item.clickurl)
       wx.uma.trackEvent('index_bannerClick', {
         bannerMini: item.title
       });
-    } else if (item.jump_type == 5) {
+    } else if (item.jumpType == 5) {
       wx.navigateTo({
         url: item.clickurl,
       })
       wx.uma.trackEvent('index_bannerClick', {
         bannerActivity: item.title
       });
-    } else if (item.jump_type == 6) {
+    } else if (item.jumpType == 6) {
       this.toLive(item.clickurl)
     } else {
       /* 文章 */
       wx.navigateTo({
-        url: "../../page/post/pages/pDetail/pDetail?id=" + item.article_id
+        url: "../../page/post/pages/pDetail/pDetail?id=" + item.articleId
       })
       wx.uma.trackEvent('index_bannerClick', {
         bannerBlog: item.title
@@ -589,13 +372,6 @@ Page({
       appId: system.appid,
       path: system.url,
       // envVersion: 'trial',
-    })
-  },
-  getPaper() {
-    app.classroom.paper({}).then(res => {
-      this.setData({
-        paperMsg: res.data
-      })
     })
   },
   /*获取首页活动弹框 */
@@ -636,36 +412,6 @@ Page({
       url: `plugin-private://wx2b03c6e691cd7370/pages/live-player-plugin?room_id=${id}&custom_params=${customParams}`
     })
   },
-  /* 指引联动 */
-  nextGuide() {
-    if (this.data.guideNum == 1) {
-      this.setData({
-        guideNum: 2
-      })
-    } else if (this.data.guideNum == 2) {
-      this.setData({
-        guideNum: 3,
-        guidetxt: '我知道了'
-      })
-    } else {
-      if (this.guide) return
-      this.guide = true
-      let param = {
-        guide_name: 'index'
-      }
-      app.user.guideRecordAdd(param).then(res => {
-        app.getGuide()
-        this.setData({
-          guideNum: 5
-        })
-      }).catch(() => {
-        this.guide = 0
-        err.msg == '记录已增加' ? app.setState({
-          'newGuide.index': 1
-        }) : ''
-      })
-    }
-  },
   // 课程完成状态
   doneless(id) {
     this.data.recommend.forEach(item => {
@@ -701,7 +447,6 @@ Page({
     }, 2000);
   },
   sigin() {
-    console.log(4324234)
     if (!this.data.$state.userIndex.has_mp_openid) {
       wx.navigateTo({
         url: '/pages/education/education?type=sign&url=https://authorization.jinlingkeji.cn/#/',
@@ -718,16 +463,38 @@ Page({
     app.liveData.getLiveBySpecialColumnId({
       specialColumnId: item.columnId
     }).then(res => {
-      // if (res.data.isAddSubscribe) {
+      if (!res.data.isAddSubscribe || !this.data.$state.userInfo.id) {
+        wx.navigateTo({
+          url: `/page/live/pages/tableDetail/tableDetail?specialColumnId=${item.columnId}`,
+        })
+      } else if(item.status == 2) {
+        wx.navigateTo({
+          url: `/page/live/pages/liveDetail/liveDetail?specialColumnId=${item.columnId}`,
+        })
+      } else {
         wx.navigateTo({
           url: `/page/live/pages/vliveRoom/vliveRoom?roomId=${item.liveId}`,
         })
-      // } else {
-      //   wx.navigateTo({
-      //     url: "/page/live/pages/tableDetail/tableDetail?specialColumnId=" +
-      //       item.columnId + "liveRoom=1"
-      //   });
-      // }
+      }
     })
+  },
+  addStudy(e) {
+    app.liveData.addSubscribe({
+      columnId: e.detail.columnId
+    }).then(() => {
+      this.data.interestList.forEach(i => {
+        i.columnId == e.detail.columnId ? i.isEnroll = 1 : ''
+      })
+      this.data.sprogInterestList.forEach(i => {
+       i.columnId == e.detail.columnId ? i.isEnroll = 1 : ''
+      })
+      this.setData({
+        interestList: this.data.interestList,
+        sprogInterestList: this.data.sprogInterestList
+      })
+    })
+  },
+  checknextTap(e) {
+    app.checknextTap(e)
   }
 })

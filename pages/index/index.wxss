@@ -29,6 +29,11 @@ page {
   height: 100%;
 }
 
+.top .userNone {
+  width: 64rpx;
+  height: 64rpx;
+}
+
 .top text {
   display: block;
   width: 400rpx;
@@ -41,6 +46,12 @@ page {
   height: 56rpx;
 }
 
+.top .loginTxt {
+  font-size: 40rpx;
+  font-weight: 500;
+  color: #333333;
+}
+
 .left .left-btn {
   position: absolute;
   z-index: 5;
@@ -48,78 +59,12 @@ page {
   opacity: 0;
 }
 
-.nav {
-  box-sizing: border-box;
-  border-bottom: 2rpx solid #e9e9e9;
-  background: #fff;
-  height: 100rpx;
-}
-
-.nav .item {
-  line-height: 100rpx;
-  display: inline-block;
-  width: 115rpx;
-  text-align: center;
-  font-family: PingFangSC-Regular;
-  font-size: 36rpx;
-  color: #999999;
-  letter-spacing: 0;
-}
-
-.nav .itemone {
-  margin-left: 14rpx;
-}
-
-.nav .item.active {
-  position: relative;
-  color: #df2020;
-  font-size: 44rpx;
-  font-weight: 800;
-}
-
-.nav .item.active::after {
-  content: "";
-  position: absolute;
-  bottom: 2rpx;
-  left: 50%;
-  width: 36rpx;
-  height: 5rpx;
-  margin-left: -18rpx;
-  background: #df2020;
-  border-radius: 3rpx;
-}
-
-.nav .tabclassify {
-  height: 100%;
-  width: 74rpx;
-  float: right;
-  box-sizing: border-box;
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  background: linear-gradient(270deg, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0.9) 100%);
-  margin-top: -99rpx;
-  position: relative;
-}
-
-.nav .tabclassify image {
-  width: 32rpx;
-  height: 26rpx;
-}
-
-.nav .integral {
-  height: 100%;
-  float: right;
-  padding: 10rpx 0 0 30rpx;
-  box-sizing: border-box;
-}
-
 .centerIcon {
   display: flex;
-  padding: 32rpx 20rpx;
+  padding: 32rpx 30rpx;
   align-items: center;
-  justify-content: space-around;
-  background: #fff;
+  justify-content: space-between;
+  background: linear-gradient(180deg, #FFFFFF 0%, #F7F7F7 100%);
 }
 
 .centerIcon .iconBox {
@@ -146,19 +91,10 @@ page {
   box-sizing: border-box;
 }
 
-.tab-item {
-  background: #EDEDED;
-}
 
 .wrap {
   padding-bottom: 180rpx;
   box-sizing: border-box;
-}
-
-.recommend .item {
-  padding: 0 20rpx;
-  box-sizing: border-box;
-  background: #fff;
 }
 
 .swiperBox {
@@ -166,11 +102,9 @@ page {
 }
 
 .swiper {
-  height: 280rpx;
+  height: 240rpx;
   overflow: hidden;
-  padding: 20rpx 20rpx 0 20rpx;
   background: #fff;
-  border-radius: 8rpx;
   background: #fff;
 }
 
@@ -195,146 +129,9 @@ page {
   background: #F73943;
 }
 
-.swiper swiper-item {
-  border-radius: 8rpx;
-}
-
 .swiper .slide-image {
-  width: 100%;
-  height: 100%;
-  border-radius: 16rpx;
-  border: 1px solid #ededed;
-}
-
-
-.item .right .title {
-  line-height: 50rpx;
-  font-size: 38rpx;
-  color: #3a3a3a;
-  letter-spacing: 0;
-  display: -webkit-box;
-  overflow: hidden;
-  word-break: break-all;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
-}
-
-.item .right .createtime {
-  display: block;
-  margin-top: 14rpx;
-}
-
-.recommend .item .content {
-  display: flex;
-  align-items: center;
-  padding: 30rpx 0;
-  box-sizing: border-box;
-  border-bottom: 1rpx solid #e9e9e9;
-}
-
-.recommend .item .content.big {
-  flex-direction: column;
-  align-items: flex-start;
-}
-
-.recommend .item .content.big .left {
-  width: 100%;
-  height: 364rpx;
-}
-
-.recommend .item .content.big .left .poster {
-  width: 100%;
-  height: 364rpx;
-}
-
-.recommend .item .content.big .left .icon {
-  width: 100rpx;
-  height: 100rpx;
-}
-
-.recommend .item .content.big .right {
-  width: 100%;
-  margin-left: 0;
-  margin-top: 20rpx;
-}
-
-.recommend .item .content.big .right .actor {
-  margin-bottom: 0;
-}
-
-.recommend .item .content.big .right .info {
-  display: none;
-}
-
-.recommend .item:last-of-type .content {
-  border-bottom: none;
-}
-
-.recommend .item .left {
-  position: relative;
-  width: 260rpx;
-  height: 160rpx;
-}
-
-.recommend .item .left .status {
-  width: 90rpx !important;
-  height: 52rpx !important;
-  position: absolute;
-  top: 0;
-  left: 0;
-}
-
-.recommend .left .poster {
-  width: 260rpx;
-  height: 160rpx;
-  border-radius: 12rpx;
-  background: #f5f6f8;
-  border: 1px solid #ededed;
-}
-
-.recommend .left .icon {
-  position: absolute;
-  width: 50rpx;
-  height: 50rpx;
-  right: 10rpx;
-  bottom: 10rpx;
-}
-
-.recommend .right {
-  flex: 1;
-  width: 410rpx;
-  margin-left: 30rpx;
-}
-
-.recommend .right .name {
-  line-height: 56rpx;
-  font-size: 38rpx;
-  color: #3a3a3a;
-  letter-spacing: 0;
-}
-
-.recommend .right .actor {
-  line-height: 40rpx;
-  font-size: 28rpx;
-  color: #8a8a8a;
-  letter-spacing: 0;
-  margin: 8rpx 0;
-}
-
-.recommend .right .info {
-  line-height: 40rpx;
-  font-size: 28rpx;
-  color: #bfbfbf;
-  letter-spacing: 0;
-}
-
-.recommend .right .info .key {
-  color: #8a8a8a;
-  margin-right: 12rpx;
-}
-
-.playNum {
-  margin-left: 40rpx;
+  width: 100vw;
+  height: 240rpx;
 }
 
 .category {
@@ -389,12 +186,6 @@ page {
   font-size: 36rpx;
   color: #3a3a3a;
   letter-spacing: 0;
-}
-
-
-.fixed {
-  position: sticky;
-  z-index: 999;
 }
 
 .now {
@@ -658,137 +449,6 @@ page {
   bottom: 0;
 }
 
-page .getGuideBox {
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.65);
-  position: fixed;
-  top: 0;
-  z-index: 9999999;
-}
-
-page .getGuideBox .guidsearch {
-  width: 564rpx;
-  height: 224rpx;
-  position: relative;
-  top: 316rpx;
-  left: 30rpx;
-}
-
-page .getGuideBox .numberbox {
-  width: 100%;
-  height: 100%;
-  position: relative;
-}
-
-page .getGuideBox .searchlabel {
-  width: 420rpx;
-  height: 290rpx;
-}
-
-page .getGuideBox .numberbox-box {
-  width: 420rpx;
-  position: relative;
-  top: 400rpx;
-  left: 165rpx;
-}
-
-page .getGuideBox .numberbox-boxt {
-  width: 430rpx;
-  position: absolute;
-  top: 888rpx;
-  left: 160rpx;
-}
-
-page .getGuideBox .numberbox-boxr {
-  width: 460rpx;
-  position: relative;
-  left: 163rpx;
-  top: 697rpx;
-}
-
-page .getGuideBox .nextGude {
-  margin-top: 80rpx;
-  width: 202rpx;
-  height: 80rpx;
-  margin-left: 45rpx;
-}
-
-page .getGuideBox .nextGudet {
-  margin-top: 80rpx;
-  width: 202rpx;
-  height: 80rpx;
-  margin-left: 120rpx;
-}
-
-page .getGuideBox .nextGuder {
-  margin-top: 80rpx;
-  width: 202rpx;
-  height: 80rpx;
-  margin-left: 78rpx;
-}
-
-page .getGuideBox .guidtab {
-  width: 670rpx;
-  height: 120rpx;
-  position: absolute;
-  top: 426rpx;
-  left: 10rpx;
-}
-
-page .getGuideBox .gesture {
-  overflow: visible;
-  position: absolute;
-  top: 612rpx;
-  left: 262rpx;
-}
-
-page .getGuideBox .gesture .indexGuide-img {
-  width: 178rpx;
-  height: 106rpx;
-}
-
-page .getGuideBox .gesture .indexGuide-imgactive {
-  width: 175rpx;
-  height: 167rpx;
-  margin-top: -78rpx;
-  margin-left: 36rpx;
-}
-
-page .getGuideBox .indexLeft {
-  width: 430rpx;
-  height: 290rpx;
-}
-
-page .getGuideBox .indexSocre {
-  width: 136rpx;
-  height: 180rpx;
-  position: absolute;
-  right: 30rpx;
-  top: 451rpx;
-}
-
-page .getGuideBox .indexsocermsg {
-  width: 460rpx;
-  height: 290rpx;
-}
-
-page .getGuideBox .nextBtn {
-  width: 176rpx;
-  height: 60rpx;
-  text-align: center;
-  line-height: 60rpx;
-  font-size: 34rpx;
-  font-weight: 400;
-  color: rgba(255, 255, 255, 1);
-  border-radius: 30rpx;
-  border: 1px solid rgba(255, 255, 255, 1);
-  position: absolute;
-  right: 60rpx;
-  bottom: 130rpx;
-  z-index: 50;
-}
-
 /* 课程搜索 */
 .search-box {
   width: 100%;
@@ -837,9 +497,8 @@ page .getGuideBox .nextBtn {
 
 .search-box .search-right text {
   font-size: 28rpx;
-  font-family: PingFangSC-Medium, PingFang SC;
+  font-weight: 500;
   color: #666666;
-  margin-top: 7rpx;
 }
 
 .dragsort {
@@ -918,8 +577,8 @@ page .getGuideBox .nextBtn {
 
 /* 直播推荐 */
 .liveBox {
-  margin: 20rpx 0;
   background: #fff;
+  margin-bottom: 20rpx;
 }
 
 .topTtile {
@@ -952,6 +611,7 @@ page .getGuideBox .nextBtn {
   width: 22rpx;
   height: 22rpx;
   margin-left: 10rpx;
+  margin-top: 2rpx;
 }
 
 .liveBox .comment {
@@ -986,8 +646,9 @@ page .getGuideBox .nextBtn {
 }
 
 .liveBox .comment .liveItem .liveImgBox .liveStatus {
-  width: 100rpx;
+  /* width: 100rpx; */
   height: 44rpx;
+  padding: 0 9rpx;
   background: linear-gradient(270deg, #FF565D 0%, #F2323A 100%);
   border-radius: 10rpx 0rpx 0rpx 0px;
   position: absolute;
@@ -1014,6 +675,18 @@ page .getGuideBox .nextBtn {
   position: relative;
 }
 
+.liveItem .liveImgBox .liveStatus .statusLeft .naoling {
+  width: 23rpx;
+  height: 23rpx;
+  margin-right: 8rpx;
+}
+
+.liveItem .liveImgBox .liveStatus .statusLeft .endIcon {
+  width: 24rpx;
+  height: 24rpx;
+  margin-right: 6rpx;
+}
+
 .liveItem .liveImgBox .liveStatus .statusLeft .statusTxt {
   font-size: 26rpx;
   font-weight: 400;
@@ -1029,7 +702,7 @@ page .getGuideBox .nextBtn {
   width: 100rpx;
   height: 44rpx;
   background: rgba(0, 0, 0, 0.4);
-  border-radius: 0  6rpx 6rpx 0;
+  border-radius: 0 6rpx 6rpx 0;
   text-align: center;
   line-height: 44rpx;
   font-size: 26rpx;
@@ -1069,7 +742,28 @@ page .getGuideBox .nextBtn {
   height: 53rpx;
 }
 
-.liveBox .comment .liveItem text:nth-child(3) {
+.liveBox .comment .liveItem .tagsLine {
+  display: flex;
+  align-items: center;
+  padding-left: 10rpx;
+  margin-top: 4rpx;
+}
+
+.liveBox .comment .liveItem .tagsLine view {
+  padding: 3rpx 6rpx;
+  max-width: 144rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 24rpx;
+  font-weight: 400;
+  color: #808080;
+  background: #EBEDF5;
+  border-radius: 4rpx;
+  margin-right: 10rpx;
+}
+
+.liveBox .comment .liveItem text:nth-child(4) {
   width: 310rpx;
   text-overflow: ellipsis;
   overflow: hidden;
@@ -1083,33 +777,6 @@ page .getGuideBox .nextBtn {
   margin-top: 8rpx;
 }
 
-.nomore {
-  position: relative;
-  width: 360rpx;
-  height: 40rpx;
-  left: 50%;
-  margin-left: -180rpx;
-}
-
-.nomore image {
-  width: 100%;
-  height: 3rpx;
-  position: absolute;
-  top: 50%;
-  left: 0;
-  margin-top: -1.5rpx;
-}
-
-.nomore text {
-  display: block;
-  font-size: 28rpx;
-  font-weight: 500;
-  color: #999999;
-  line-height: 40rpx;
-  text-align: center;
-  margin-top: 30rpx;
-}
-
 /* 骨架屏 */
 
 .skeletonaAtive {
@@ -1119,15 +786,12 @@ page .getGuideBox .nextBtn {
 }
 
 .skeletonSwiper {
-  height: 282rpx;
-  padding: 20rpx 20rpx 0 20rpx;
-  background: #fff;
+  height: 240rpx;
 }
 
 .skeletonSwiper .skeletonaAtive {
   width: 100%;
   height: 100%;
-  border-radius: 16rpx;
 }
 
 .skeleton {
@@ -1200,4 +864,39 @@ page .getGuideBox .nextBtn {
   100% {
     height: 100%;
   }
+}
+
+.interestedBox {
+  width: 100%;
+  padding: 60rpx 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.interestedBox text:nth-child(1) {
+  font-size: 34rpx;
+  font-weight: 400;
+  color: #333333;
+  line-height: 48rpx;
+}
+
+.interestedBox text:nth-child(2) {
+  font-size: 28rpx;
+  font-weight: 400;
+  color: #999999;
+  line-height: 40rpx;
+}
+
+.interestedBox .navigator {
+  width: 160rpx;
+  height: 72rpx;
+  background: #F7F7F7;
+  border-radius: 6rpx;
+  font-size: 28rpx;
+  font-weight: 400;
+  color: #F52D3A;
+  text-align: center;
+  line-height: 72rpx;
+  margin-top: 16rpx;
 }

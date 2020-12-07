@@ -101,7 +101,7 @@ Page({
       keepScreenOn: true
     })
     record.initRecord(this)
-    if (this.timer) recorderManager.stop()
+    if (this.timer != null) recorderManager.stop()
     this.getRecordAuth();
     this.initRecord();
     if (this.data.$state.releaseParam != null) {
@@ -774,4 +774,11 @@ Page({
         });
     }
   },
+  // 用户昵称等信息授权
+  onGotUserInfo(e) {
+    if (e.detail.errMsg === "getUserInfo:ok") {
+      app.updateBase(e)
+      this.data.replyparam ? this.reply() : this.judgeCircle()
+    }
+  }
 });

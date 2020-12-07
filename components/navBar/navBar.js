@@ -1,37 +1,55 @@
+const Tutor = require("../../data/Tutor")
+
 // components/navBar/navBar.js
 const app = getApp()
 Component({
   properties: {
     path: {
-      type: String,//类型
-      value: ''//默认值
+      type: String, //类型
+      value: '' //默认值
     }
   },
   methods: {
-    toIndex() {
-      if(this.data.path == 'index') {
-        return
-      }else {
-        wx.switchTab({ url: "/pages/index/index" })
-        this.hideIndex()
-      }  
+    loginStauts(e) {
+      if (!this.data.$state.userInfo.id) {
+        app.changeLoginstatus()
+        app.checknextTap(e)
+        return true
+      }
     },
-    toVideo() {
+    toIndex(e) {
+      if (this.loginStauts(e)) return
+      if (this.data.path == 'index') {
+        return
+      } else {
+        wx.switchTab({
+          url: "/pages/index/index"
+        })
+        this.hideIndex()
+      }
+    },
+    toVideo(e) {
+      if (this.loginStauts(e)) return
       if (this.data.path == 'video') {
         return
       } else {
-        wx.switchTab({ url: "/pages/timetableList/timetableList" })
+        wx.switchTab({
+          url: "/pages/timetableList/timetableList"
+        })
         this.hideIndex()
-      }  
+      }
     },
-    toPost() {
+    toPost(e) {
+      if (this.loginStauts(e)) return
       if (this.data.path == 'post') {
         return
       } else {
-        wx.switchTab({ url: "/pages/post/post" })
+        wx.switchTab({
+          url: "/pages/post/post"
+        })
         app.globalData.postShow = true
         this.hideIndex()
-      }  
+      }
     },
     // 隐藏首页按钮
     hideIndex() {
@@ -41,12 +59,15 @@ Component({
         vistor: false
       })
     },
-    toUser() {
+    toUser(e) {
+      if (this.loginStauts(e)) return
       if (this.data.path == 'user') {
         return
       } else {
-        wx.switchTab({ url: "/pages/user/user" })
-      }  
+        wx.switchTab({
+          url: "/pages/user/user"
+        })
+      }
     },
     // 用户昵称等信息授权
     onGotUserInfo(e) {
@@ -62,5 +83,5 @@ Component({
       }
     },
   }
-  
+
 })

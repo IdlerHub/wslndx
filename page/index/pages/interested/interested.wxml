@@ -1,0 +1,17 @@
+<!--page/index/pages/interested/interested.wxml-->
+<template name="interestedBox">
+  <view class="interestedBox" style="border:{{ index == (list.length - 1) ? 'none' : ''}}">
+    <view class="iterestTitle">{{item.name}}</view>
+    <view class="itemBox">
+      <view class="interestItem {{ interest.select ? 'selectItem' : '' }}" wx:for="{{item.categoryList}}" wx:for-index="idx" wx:for-item="interest" wx:key="idx" bindtap="select" data-index="{{index}}" data-idx="{{idx}}">{{interest.name}}</view>
+    </view>
+  </view>
+</template>
+<view class="pageTop">
+  <text>选择你感兴趣的内容</text>
+  <text>至少选一项，可随时调整</text>
+</view>
+<template is="interestedBox" wx:for="{{list}}" data="{{list, item, index}}" wx:key="index"></template>
+<view class="btn" bindtap="determine">
+  确定(已经选择{{selectNum}}个)
+</view>

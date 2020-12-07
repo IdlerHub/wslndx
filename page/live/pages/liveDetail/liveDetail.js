@@ -167,11 +167,16 @@ Page({
       _this.setData({
         lessonDetail: res.data
       });
-      _this.getSublesson(res.data.liverVOS)
+      LiveData.getSpecialLives({
+        specialColumnId
+      }).then(msg => {
+        _this.getSublesson(msg.dataList)
+      })
       _this.getComment();
     });
   },
   getSublesson(lessons) {
+    if (!lessons) return
     let playNow = {},
       liveNow = 0;
     this.setData({
@@ -191,15 +196,16 @@ Page({
         playNow,
         current: playNow,
         playFlag: false
-      }, () => {
-        this.tolesson()
       }) : ''
+      setTimeout(() => {
+        this.tolesson()
+      }, 800)
       if (this.Timeout) return
       this.Timeout = setInterval(() => {
-        LiveData.getLiveBySpecialColumnId({
+        LiveData.getSpecialLives({
           specialColumnId: this.data.lessonDetail.columnId,
         }).then(res => {
-          this.getSublesson(res.data.liverVOS)
+          this.getSublesson(res.dataList)
         })
       }, 60000);
     });
@@ -377,32 +383,26 @@ Page({
   },
   setHeight() {
     let that = this;
-    if (this.data.currentTab != 0) {
-      let query = wx.createSelectorQuery().in(this);
-      if (this.data.currentTab == 0) {
-        query.select(".introduction").boundingClientRect();
-      } else if (this.data.currentTab == 2) {
-        query.select(".comment").boundingClientRect();
-      } else {
-        query.select(".drama").boundingClientRect();
-      }
-      query.exec((res) => {
-        console.log(res)
-        let height =
-          this.data.currentTab == 1 ? res[0].height : res[0].height - -110;
-        height <= 110 ?
-          that.setData({
-            height: this.data.currentTab == 2 ? 350 : 700,
-          }) :
-          that.setData({
-            height
-          });
-      });
+    let query = wx.createSelectorQuery().in(this);
+    if (this.data.currentTab == 0) {
+      query.select(".introduction").boundingClientRect();
+    } else if (this.data.currentTab == 2) {
+      query.select(".comment").boundingClientRect();
     } else {
-      this.setData({
-        height: 306,
-      });
+      this.data.sublessons.length > 0 ? query.select(".drama").boundingClientRect() : query.select(".none-live").boundingClientRect()
     }
+    query.exec((res) => {
+      let height =
+        this.data.currentTab == 1 && this.data.sublessons.length > 0 ? res[0].height : res[0].height - -110;
+      console.log(height)
+      height <= 170 ?
+        that.setData({
+          height: 350,
+        }) :
+        that.setData({
+          height
+        });
+    });
   },
   tolesson() {
     let that = this,
@@ -412,7 +412,7 @@ Page({
       let query = wx.createSelectorQuery().in(this);
       query.select(id).boundingClientRect();
       query.exec((res) => {
-        console.log(res)
+        console.log(res, 'scrollviewtop')
         res[0] ?
           this.setData({
             scrollviewtop: res[0].top - 500,
@@ -1208,7 +1208,7 @@ Page({
   },
   onShareAppMessage() {
     let lesson_id = this.data.lessonDetail.columnId,
-      cover = this.data.lessonDetail.cover;
+      cover = this.data.lessonDetail.shareCover || this.data.lessonDetail.cover;
     return {
       title: `快来和我一起报名,免费好课天天学!`,
       path: `/page/live/pages/liveDetail/liveDetail?specialColumnId=${lesson_id}&inviter=${this.data.$state.userInfo.id}&liveShare=1`,

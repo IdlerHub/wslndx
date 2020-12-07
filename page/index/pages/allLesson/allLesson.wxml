@@ -1,0 +1,62 @@
+<!--page/index/pages/allLesson/allLesson.wxml-->
+<navigator class="pageTop" hover-class="none" url="../search/search">
+  <image src="/images/indexIcon/searchp.png"></image>
+  <text>搜索课程名称</text>
+</navigator>
+<swiper class="contrainer" current="{{tabCurrent}}" duration="300">
+  <swiper-item catchtouchmove="stopTouchMove">
+    <view class="contrainer">
+      <scroll-view scroll-y class="scrollLeft">
+        <view id="nav{{item.id}}" class="navItem {{ current == index ? 'active' : '' }}" wx:for="{{navList}}"
+          wx:key="index" bindtap="navChange" data-index="{{index}}">
+          {{item.name}}
+          <text wx:if="{{ current == index}}"></text>
+        </view>
+      </scroll-view>
+      <swiper class="scrollRight" vertical duration="100" current="{{current}}" bindanimationfinish="swiperChange">
+        <swiper-item wx:for="{{navList}}" wx:key="index" class="swiperItem">
+          <scroll-view class="scrollView" scroll-top="{{scrollTop}}" scroll-with-animation="{{false}}" scroll-y enable-flex>
+            <view class="lessonBox">
+              <image src="{{item.image}}" class="activity"></image>
+              <view class="lessonItem">
+                <image src="{{lessonItem.image}}" wx:for="{{ item.categoryList }}" wx:for-item="lessonItem" wx:for-index="idx" wx:key="idx" bindtap="checkTab" data-id="{{lessonItem.id}}" data-tab1="{{item.name}}" data-tab2="{{lessonItem.name}}">
+                </image>
+              </view>
+            </view>
+            <view class="down" wx:if="{{ index != (navList.length - 1) }}">
+              上拉切换下一个分类～
+            </view>
+          </scroll-view>
+        </swiper-item>
+      </swiper>
+    </view>
+  </swiper-item>
+  <swiper-item catchtouchmove="stopTouchMove">
+    <view class="lessonListBox">
+      <view class="lessonListTop">
+        <view class="left" bindtap="checkTab">
+          <image src="../../images/lessonBack.png"></image>
+          <text>返回
+            上级</text>
+        </view>
+        <view class="right">
+          <text>{{crumbs.tab1}}</text>
+          <image src="../../images/lessonTo.png"></image>
+          <text>{{crumbs.tab2}}</text>
+        </view>
+      </view>
+      <scroll-view class="lessonScroll" scroll-y enable-flex bindscrolltolower="scrolltolower">
+        <lessonItem id="lessonItem" isAllLesson="1" lessonList="{{lessonList}}" wx:if="{{lessonList.length > 0}}" />
+        <view wx:else class="qst">
+          <image src="/images/liveqs.png"></image>
+          <text>暂无相关课程</text>
+          <text bindtap="checkTab">查看全部课程</text>
+        </view>
+      </scroll-view>
+    </view>
+  </swiper-item>
+</swiper>
+
+
+<!-- 登录 -->
+<loginBox wx:if="{{$state.showLogin}}"/>

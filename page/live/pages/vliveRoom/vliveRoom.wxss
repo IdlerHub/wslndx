@@ -53,7 +53,7 @@ page {
   display: flex;
   align-items: flex-start;
   padding: 20rpx 40rpx 20rpx 20rpx;
-  z-index: 999999999;
+  z-index: 99999999991;
 }
 
 .h-player .liveRemind image {

@@ -13,9 +13,9 @@ Page({
       {
         name: "剧集"
       },
-      {
-        name: "讨论"
-      },
+      // {
+      //   name: "讨论"
+      // },
       {
         name: "简介"
       }
@@ -92,13 +92,6 @@ Page({
         curid: options.curid || null,
         cur: {}
       });
-      if (that.data.$state.newGuide) {
-        that.data.$state.newGuide.lesson == 0
-          ? this.setData({
-            currentTab: 1
-          })
-          : "";
-      }
       if (that.data.vistor) {
         setTimeout(() => {
           that.setData({
@@ -137,7 +130,11 @@ Page({
           });
         });
       } else if (that.data.$state.userInfo.mobile) {
-        that.getDetail();
+        that.getDetail().then(() => {
+          setTimeout(() => {
+            that.recordAdd();
+          }, 800);
+        });
       }
     });
     this.sublessParam = {
@@ -559,16 +556,17 @@ Page({
     });
   },
   onReachBottom() {
-    if (this.data.currentTab == 1) {
-      this.comParam.page++;
-      this.getComment();
-    }
+    // if (this.data.currentTab == 1) {
+    //   this.comParam.page++;
+    //   this.getComment();
+    // }
   },
   setHeight() {
     let that = this;
     if (this.data.currentTab == 1) {
       let query = wx.createSelectorQuery().in(this);
-      query.select(".comment").boundingClientRect();
+      // query.select(".comment").boundingClientRect();
+      query.select(".wrap").boundingClientRect();
       query.exec(res => {
         let height = res[0].height - -110;
         height < 100
@@ -610,48 +608,9 @@ Page({
     if (this.data.cur.id == lesson.id) {
       this.videoContext.seek(lesson.time);
     }
-    // if (lesson && lesson[this.data.cur.lesson_id]) {
-    //   for (let i in lesson[this.data.cur.lesson_id]) {
-    //     i == this.data.cur.id ? this.videoContext.seek(lesson[this.data.cur.lesson_id][i].time) : ''
-    //   }
-    // }
   },
   timeupdate(e) {
     let lesson = wx.getStorageSync("lessonProgress")
-    // if (lesson) {
-    //   if (lesson[this.data.cur.lesson_id]) {
-    //     if (lesson[this.data.cur.lesson_id][this.data.cur.lesson_id]) {
-    //       for (let i in lesson[this.data.cur.lesson_id]) {
-    //         i == this.data.cur.id ? lesson[this.data.cur.lesson_id][i].time = e.detail.currentTime : ''
-    //       }
-    //       wx.setStorage({
-    //         key: "lessonProgress",
-    //         data: lesson
-    //       })
-    //     }else {
-    //       lesson[this.data.cur.lesson_id][this.data.cur.id] = { id: this.data.cur.id, time: e.detail.currentTime }
-    //       wx.setStorage({
-    //         key: "lessonProgress",
-    //         data: lesson
-    //       })
-    //     }
-    //   } else {
-    //     lesson[this.data.cur.lesson_id] = {}
-    //     lesson[this.data.cur.lesson_id][this.data.cur.id] = { id: this.data.cur.id, time: e.detail.currentTime }
-    //     wx.setStorage({
-    //       key: "lessonProgress",
-    //       data: lesson
-    //     })
-    //   }
-    // } else {
-    //   let videoTime = {}
-    //   videoTime[this.data.cur.lesson_id] = {}
-    //   videoTime[this.data.cur.lesson_id][this.data.cur.id] = { id: this.data.cur.id, time: e.detail.currentTime}
-    //   wx.setStorage({
-    //     key: "lessonProgress",
-    //     data: videoTime
-    //   })
-    // }
     wx.setStorage({
       key: "lessonProgress",
       data: {

@@ -1,7 +1,8 @@
 <view class="container">
     <view class='wrap'>
-        <textarea placeholder="{{showintegral ? '' : replyparam.blog_id ? '请输入200字以内的评论哦' : '说点什么吧...'}}" focus="{{replyparam.blog_id ? false : true}}" bindinput="input"
-            value="{{param.content}}" placeholder-class="ph-class" maxlength="{{  replyparam.blog_id ? '200' : '-1'}}"/>
+        <textarea placeholder="{{showintegral ? '' : replyparam.blog_id ? '请输入200字以内的评论哦' : '说点什么吧...'}}"
+            focus="{{replyparam.blog_id ? false : true}}" bindinput="input" value="{{param.content}}"
+            placeholder-class="ph-class" maxlength="{{  replyparam.blog_id ? '200' : '-1'}}" />
         <view class='box'>
             <view class='img' wx:key="index" wx:for="{{param.image}}">
                 <image class='image' mode='aspectFill' src="{{item}}" data-index='{{index}}' data-url="{{item}}" catchtap='selectImg'></image>
@@ -42,9 +43,10 @@
             <formCode  bind:handler='cancel'>
                 <button class='item'>取消</button>
             </formCode>
-            <formCode  bind:handler='{{replyparam.blog_id ? "reply" : "judgeCircle"}}'>
+            <formCode  bind:handler='{{replyparam.blog_id ? "reply" : "judgeCircle"}}' wx:if="{{$state.authUserInfo}}">
                 <button class='item ensure'>发布</button>
             </formCode>
+            <button class="item ensure" bindgetuserinfo="onGotUserInfo" open-type="getUserInfo" data-role="user" wx:else>发布</button>
         </view>
     </view>
     <view wx:else class="recordBox">

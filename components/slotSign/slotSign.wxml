@@ -1,0 +1,6 @@
+<!--components/slotSign/slotSign.wxml-->
+<view class="" class="slotBox">
+  <slot></slot>
+  <view class="slotBtn" bindtap="changeLoginstatus" wx:if="{{!$state.userInfo.id}}">
+  </view>
+</view>

@@ -1,0 +1,9 @@
+{
+  "usingComponents": {
+    "lessonItem": "/components/lessonItem/lessonItem",
+    "loginBox": "/components/loginBox/loginBox"
+  },
+  "navigationBarTitleText": "全部课程",
+  "disableScroll": true,
+  "navigationBarBackgroundColor": "#fff"
+}
