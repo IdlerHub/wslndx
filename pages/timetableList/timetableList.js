@@ -52,19 +52,25 @@ Page({
     })
   },
   toDetail(e) {
-    let url = ''
+
     if (!e.currentTarget.dataset.status || e.currentTarget.dataset.status == 1) {
-      url =
-        "/page/live/pages/vliveRoom/vliveRoom?roomId=" +
-        e.currentTarget.dataset.liveid;
+      wx.navigateTo({
+        url: "/page/live/pages/vliveRoom/vliveRoom?roomId=" + e.currentTarget.dataset.liveid,
+      });
     } else {
-      url =
-        "/page/live/pages/liveDetail/liveDetail?specialColumnId=" +
-        e.currentTarget.dataset.lessonId;
+      let url = ''
+      LiveData.getLiveBySpecialColumnId({
+        specialColumnId: e.currentTarget.dataset.lessonId
+      }).then(res => {
+        res.data.isAddSubscribe ? url = "/page/live/pages/liveDetail/liveDetail?specialColumnId=" +
+          e.currentTarget.dataset.lessonId : url =
+          "/page/live/pages/tableDetail/tableDetail?specialColumnId=" +
+          e.currentTarget.dataset.lessonId
+        wx.navigateTo({
+          url,
+        });
+      })
     }
-    wx.navigateTo({
-      url,
-    });
   },
   getUserLessons(date) {
     this.params.date = new Date(date).valueOf()
