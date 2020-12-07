@@ -12,6 +12,7 @@ Page({
     scrollTop: 0
   },
   pageEnd: 0,
+  isLogin: 1,
   onLoad: function (options) {
     this.params = {
       categoryId: '',

@@ -30,6 +30,7 @@ Page({
   },
   timer: "",
   toEducation: false,
+  isLogin: 1,
   onShow() {
     if (this.toEducation) {
       this.getUserOpenid(1)
