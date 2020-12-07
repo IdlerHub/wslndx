@@ -384,7 +384,6 @@ Page({
   setHeight() {
     let that = this;
     let query = wx.createSelectorQuery().in(this);
-    console.log(this.data.currentTab)
     if (this.data.currentTab == 0) {
       query.select(".introduction").boundingClientRect();
     } else if (this.data.currentTab == 2) {
@@ -395,7 +394,6 @@ Page({
     query.exec((res) => {
       let height =
         this.data.currentTab == 1 && this.data.sublessons.length > 0 ? res[0].height = 350 : res[0].height - -110;
-      console.log(height)
       height <= 170 ?
         that.setData({
           height: 350,
