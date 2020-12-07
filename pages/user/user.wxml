@@ -17,7 +17,7 @@
         <view class="info">
           <text class="line name">{{ $state.userInfo.nickname }}</text>
           <view class="line">
-            <text class="school">{{ $state.userInfo.school || $state.userInfo.university || "网上老年大学" }}</text>
+            <text class="school">{{ $state.userInfo.school || "网上老年大学" }}</text>
           </view>
         </view>
       </view>

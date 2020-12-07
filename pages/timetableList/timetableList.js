@@ -52,7 +52,6 @@ Page({
     })
   },
   toDetail(e) {
-
     if (!e.currentTarget.dataset.status || e.currentTarget.dataset.status == 1) {
       wx.navigateTo({
         url: "/page/live/pages/vliveRoom/vliveRoom?roomId=" + e.currentTarget.dataset.liveid,

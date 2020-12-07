@@ -39,7 +39,14 @@ Page({
       }) :
       this.setData({
         statusBarHeight: systemInfo.statusBarHeight
-      });
+      })
+    let clickHandler = setInterval(() => {
+      this.clickHandler()
+    }, 250);
+    setTimeout(() => {
+      clearInterval(clickHandler)
+    }, 2000)
+    
   },
   onShow: function () {
     this.setData({

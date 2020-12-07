@@ -40,7 +40,7 @@
             上级</text>
         </view>
         <view class="right">
-          <text>{{crumbs.tab1}}</text>
+          <text bindtap="checkTab">{{crumbs.tab1}}</text>
           <image src="../../images/lessonTo.png"></image>
           <text>{{crumbs.tab2}}</text>
         </view>

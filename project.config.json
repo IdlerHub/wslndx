@@ -122,9 +122,9 @@
           "scene": null
         },
         {
-          "name": "page/live/pages/liveDetail/liveDetail",
-          "pathName": "page/live/pages/liveDetail/liveDetail",
-          "query": "specialColumnId=287",
+          "name": "pages/education/education",
+          "pathName": "pages/education/education",
+          "query": "url=www.baodi.com&type=activity&login=1",
           "scene": 1000
         },
         {
