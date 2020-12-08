@@ -37,7 +37,7 @@
     ]
   },
   "setting": {
-    "useApiHostProcess": true
+    "useMultiFrameRuntime": true
   },
   "compileType": "miniprogram",
   "libVersion": "2.12.2",
