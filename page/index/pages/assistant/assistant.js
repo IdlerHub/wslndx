@@ -41,6 +41,7 @@ Page({
     ],
     talkList: [],
   },
+  isLogin: 1,
   onLoad: function (options) {
     wx.uma.trackEvent('xiaolinCheck', {
       click: '小林老师'

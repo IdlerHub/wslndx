@@ -12,6 +12,7 @@ Page({
     showClassify: false
   },
   navHeightList: [],
+  isLogin: 1,
   onLoad: function (options) {
     this.universityId = options.id
     wx.setNavigationBarTitle({

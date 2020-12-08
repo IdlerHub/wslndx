@@ -488,6 +488,10 @@ Page({
       this.data.sprogInterestList.forEach(i => {
        i.columnId == e.detail.columnId ? i.isEnroll = 1 : ''
       })
+      wx.showToast({
+        title: '报名成功',
+        icon: 'none'
+      })
       this.setData({
         interestList: this.data.interestList,
         sprogInterestList: this.data.sprogInterestList

@@ -39,7 +39,7 @@
     <text>没有更多了</text>
   </view>
 </template>
-<view class="nav {{ scroll ? 'fixed' : '' }}" style="top:0px;padding-right:30rpx;overflow: hidden;">
+<view class="nav {{ scroll ? 'fixed' : '' }}" style="top:0px;padding-right:30rpx;overflow: hidden;position: sticky;background: #fff;z-index: 999;">
   <scroll-view class="nav" style="display:flex;padding-right: 30rpx" scroll-x="true" scroll-left="{{ navScrollLeft }}"
     scroll-with-animation="true" enable-flex scroll-into-view="item{{currentTab < 4 ? 0 : currentTab - 3}}">
     <block wx:for="{{ nav }}" wx:for-index="id" wx:for-item="item" wx:key="index" class="navitem">

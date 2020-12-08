@@ -174,7 +174,12 @@ App({
         socket.listen(this.bokemessage, "Bokemessage");
       }, 2000);
     } else {
+      let isLogin = 0
       if(opts.path == 'pages/index/index') return
+      getCurrentPages().forEach(e => {
+        e.isLogin ? isLogin = 1 : ''
+      })
+      if(isLogin) return
       wx.reLaunch({
         url: "/pages/index/index",
       });

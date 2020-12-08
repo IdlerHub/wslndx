@@ -38,7 +38,8 @@ Component({
         });
       } else {
         wx.showToast({
-          title: '为授权成功,请重新授权',
+          title: '未授权成功,请重新授权',
+          icon: 'none'
         })
       }
     },
