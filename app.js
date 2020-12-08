@@ -161,30 +161,15 @@ App({
     }
   },
   onShow: function (opts) {
+    console.log(opts, '进入')
     let optsStr = decodeURIComponent(opts.query.scene).split("&");
     let opstObj = {};
     optsStr.forEach((item, index) => {
       opstObj[item.split("=")[0]] = item.split("=")[1];
     });
     let lists = ["share", "invite"];
-    if (this.store.$state.userInfo.id) {
-      setTimeout(() => {
-        socket.init(this.store.$state.userInfo.id);
-        socket.listen(this.prizemessage, "Prizemessage");
-        socket.listen(this.bokemessage, "Bokemessage");
-      }, 2000);
-    } else {
-      let isLogin = 0
-      if(opts.path == 'pages/index/index') return
-      getCurrentPages().forEach(e => {
-        e.isLogin ? isLogin = 1 : ''
-      })
-      if(isLogin) return
-      wx.reLaunch({
-        url: "/pages/index/index",
-      });
-    }
     /* 小程序(在后台运行中时)从分享卡片切到前台 */
+    console.log(this.globalData.backstage)
     if (this.globalData.backstage) {
       this.globalData.backstage = false;
       this.socket.backstage();
@@ -207,6 +192,23 @@ App({
           url: "/pages/education/education?type=lottery&login=1",
         });
       }
+    }
+    if (this.store.$state.userInfo.id) {
+      setTimeout(() => {
+        socket.init(this.store.$state.userInfo.id);
+        socket.listen(this.prizemessage, "Prizemessage");
+        socket.listen(this.bokemessage, "Bokemessage");
+      }, 2000);
+    } else {
+      let isLogin = 0
+      if(opts.path == 'pages/index/index') return
+      getCurrentPages().forEach(e => {
+        e.isLogin ? isLogin = 1 : ''
+      })
+      if(isLogin) return
+      wx.reLaunch({
+        url: "/pages/index/index",
+      });
     }
   },
   onHide() {

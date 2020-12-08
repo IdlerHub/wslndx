@@ -21,7 +21,7 @@ Component({
       })
     },
     getphonenumber(e) {
-      console.log(e)
+      console.log(wx.getStorageSync("invite"), '邀请人')
       if (e.detail.errMsg == "getPhoneNumber:ok") {
         let param = {
           encryptedData: e.detail.encryptedData,
@@ -95,6 +95,7 @@ Component({
     },
     /* 登录请求 */
     login(param) {
+      console.log(param, '登录信息')
       app.user.register(param).then(res => {
         /* 新用户注册不用提示签到 */
         // app.setSignIn({
