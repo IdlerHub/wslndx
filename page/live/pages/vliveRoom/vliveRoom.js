@@ -39,7 +39,14 @@ Page({
       }) :
       this.setData({
         statusBarHeight: systemInfo.statusBarHeight
-      });
+      })
+    let clickHandler = setInterval(() => {
+      this.clickHandler()
+    }, 250);
+    setTimeout(() => {
+      clearInterval(clickHandler)
+    }, 2000)
+    
   },
   onShow: function () {
     this.setData({
@@ -81,7 +88,7 @@ Page({
   onShareAppMessage: function () {
     this.setCustommessag('MD5_AUDIENCE_SHARE_LIVE_ROOM')
     return {
-      imageUrl: this.data.liveDetail.indexCover,
+      imageUrl: this.data.liveDetail.shareCover || this.data.liveDetail.indexCover,
       title: this.data.liveDetail.name,
       path: "/page/live/pages/vliveRoom/vliveRoom?roomId=" +
         this.data.liveDetail.id +
@@ -263,7 +270,7 @@ Page({
   },
   //计时器
   liveInterVal() {
-    this.liveInterval || this.data.liveDetail.follow ? '' : this.liveInterval = setInterval(() => {
+    (this.liveInterval || this.data.liveDetail.follow) || this.data.liveDetail.lecturerUserId == this.data.$state.userInfo.id ? '' : this.liveInterval = setInterval(() => {
       this.setData({
         viewNum: this.data.viewNum += 1
       }, () => {

@@ -21,7 +21,7 @@ Component({
       })
     },
     getphonenumber(e) {
-      console.log(e)
+      console.log(wx.getStorageSync("invite"), '邀请人')
       if (e.detail.errMsg == "getPhoneNumber:ok") {
         let param = {
           encryptedData: e.detail.encryptedData,
@@ -38,7 +38,8 @@ Component({
         });
       } else {
         wx.showToast({
-          title: '为授权成功,请重新授权',
+          title: '未授权成功,请重新授权',
+          icon: 'none'
         })
       }
     },
@@ -47,10 +48,15 @@ Component({
     },
     nextTap() {
       let page = getCurrentPages()[getCurrentPages().length - 1]
-      page.route == 'pages/index/index' ? page.init() : ''
+      // page.route == 'pages/index/index' ? page.init() : ''
       switch (this.data.$state.nextTapDetial.type) {
         case 'top':
           page.toInfo()
+          break;
+        case 'searchBox':
+          page.setData({
+            focus: true
+          })
           break;
         case 'search':
           wx.navigateTo({
@@ -79,10 +85,17 @@ Component({
             url: this.data.$state.nextTapDetial.detail,
           })
           break;
+        case 'addSubscribe':
+          page.rightNow()
+          break;
+        case 'attenBtn':
+          page.toEducation(this.data.$state.nextTapDetial.detail)
+          break;
       }
     },
     /* 登录请求 */
     login(param) {
+      console.log(param, '登录信息')
       app.user.register(param).then(res => {
         /* 新用户注册不用提示签到 */
         // app.setSignIn({

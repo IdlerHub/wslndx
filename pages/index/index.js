@@ -20,7 +20,7 @@ Page({
     }, {
       url: '/pages/video/video',
       icon: '/images/indexIcon/sortVideoicon.png',
-      name: '短视频 '
+      name: '短视频'
     }, {
       url: '/page/index/pages/schoolLesson/schoolLesson',
       icon: '/images/indexIcon/shollLesson.png',
@@ -87,9 +87,13 @@ Page({
       this.data.isSign ? this.signIn() : ''
     }
   },
-  init() {
-    if (this.data.$state.userInfo.mobile) {
-     return Promise.all([this.getRecommendLessons(1), this.getinterestList(), this.getBanner(), this.getDialog(), this.getUserOpenid()]).then(values => {
+  init(type) {
+    if(type) {
+      return Promise.all([this.getRecommendLessons(1), this.getBanner(), this.getDialog(), this.getUserOpenid()]).then(() => {
+        this.getSigns()
+      })
+    } else if (this.data.$state.userInfo.mobile) {
+      return Promise.all([this.getRecommendLessons(1), this.getinterestList(), this.getBanner(), this.getDialog(), this.getUserOpenid()]).then(() => {
         this.getSigns()
       })
     } else {
@@ -121,14 +125,14 @@ Page({
       setInterval(() => {
         app.liveData.recommendLessons().then(res => {
           this.setData({
-            liveRecommend: res.dataList.slice(0, 6)
+            liveRecommend: res.dataList
           })
         })
       }, 60000);
     } else {
       app.liveData.recommendLessons().then(res => {
         this.setData({
-          liveRecommend: res.dataList.slice(0, 8)
+          liveRecommend: res.dataList
         }, () => {
           res.dataList.length > 0 ? this.getRecommendLessons() : ''
         })
@@ -458,10 +462,20 @@ Page({
     let item = e.currentTarget.dataset.item
     app.liveData.getLiveBySpecialColumnId({
       specialColumnId: item.columnId
-    }).then(() => {
-      wx.navigateTo({
-        url: `/page/live/pages/vliveRoom/vliveRoom?roomId=${item.liveId}`,
-      })
+    }).then(res => {
+      if (!res.data.isAddSubscribe || !this.data.$state.userInfo.id) {
+        wx.navigateTo({
+          url: `/page/live/pages/tableDetail/tableDetail?specialColumnId=${item.columnId}`,
+        })
+      } else if(item.status == 2) {
+        wx.navigateTo({
+          url: `/page/live/pages/liveDetail/liveDetail?specialColumnId=${item.columnId}`,
+        })
+      } else {
+        wx.navigateTo({
+          url: `/page/live/pages/vliveRoom/vliveRoom?roomId=${item.liveId}`,
+        })
+      }
     })
   },
   addStudy(e) {
@@ -471,8 +485,12 @@ Page({
       this.data.interestList.forEach(i => {
         i.columnId == e.detail.columnId ? i.isEnroll = 1 : ''
       })
-      this.data.sprogInterestList.forEach(e => {
-        i.columnId == e.detail.columnId ? i.isEnroll = 1 : ''
+      this.data.sprogInterestList.forEach(i => {
+       i.columnId == e.detail.columnId ? i.isEnroll = 1 : ''
+      })
+      wx.showToast({
+        title: '报名成功',
+        icon: 'none'
       })
       this.setData({
         interestList: this.data.interestList,

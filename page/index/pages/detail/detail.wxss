@@ -1,6 +1,9 @@
 page {
-  background: #eee; }
+  background: #fff; }
 
+.container {
+  background: #eee;
+}
 #myVideo {
   display: block;
   position: relative;
@@ -160,7 +163,8 @@ page {
   z-index: 5;
 }
 .content {
-  background: #eee; }
+  background: #fff;
+}
 
 .nav {
   position: relative;

@@ -1,14 +1,16 @@
 <view class="container">
   <!-- wx:if="{{!showplece && !detail.school_dialog}}" -->
-  <video id="myVideo" src="{{ cur.url }}" controls page-gesture enable-play-gesture bindended="ended" bindplay="played" bindpause="videoPause" wx:if="{{!showplece || !detail.school_dialog}}">
+  <video id="myVideo" src="{{ cur.url }}" controls page-gesture enable-play-gesture bindended="ended" bindplay="played"
+    bindpause="videoPause" wx:if="{{!showplece || !detail.school_dialog}}">
     <cover-view wx:if="{{ vistor && tip }}" class="vistor-head">
       <cover-view>点击“</cover-view>
       <cover-image src="/images/xiaochengxu.png" class="iconfont"></cover-image>
       <cover-view>”添加到我的小程序</cover-view>
       <!-- <cover-image src="/images/shouzhi.png" class="iconfont" style="left:{{ rect.left + 10 }}px"></cover-image> -->
     </cover-view>
-    <cover-image wx:if="{{ !playing }}" mode="widthFix" src="{{ detail.image }}" class="poster" bindtap="recordAdd"></cover-image>
-    <cover-image wx:if="{{ !playing }}" mode="aspectFill" src="{{ $state.imgHost }}/play.png" class="play" bindtap="recordAdd"></cover-image>
+    <cover-image wx:if="{{ !playing }}" mode="widthFix" src="{{ detail.image }}" class="poster" bindtap="recordAdd">
+    </cover-image>
+    <!-- <cover-image wx:if="{{ !playing }}" mode="aspectFill" src="{{ $state.imgHost }}/play.png" class="play" bindtap="recordAdd"></cover-image> -->
     <cover-view class="videomask" wx:if="{{showintegral}}"></cover-view>
   </video>
   <view id="myVideo" style="overflow: hidden;" wx:else>
@@ -42,7 +44,8 @@
             <text class="des">已学习</text>
           </view>
           <view class="pro-bar">
-            <view class="por-cur" wx:if="{{ detail.progress && detail.progress > 0 }}" style="width:{{ detail.progress - 4 }}%"></view>
+            <view class="por-cur" wx:if="{{ detail.progress && detail.progress > 0 }}"
+              style="width:{{ detail.progress - 4 }}%"></view>
           </view>
         </view>
         <view class="certificate" wx:if="{{ detail.progress == 100 }}" bindtap="navitor">
@@ -74,6 +77,7 @@
     <view class="line">继续播放：{{ cur.sub_id }}. {{ cur.title }}</view>
     <image class="icon" mode="widthFix" src="{{ $state.imgHost }}/rectangleTwo.png"></image>
   </view>
+  
   <view class="content">
     <scroll-view scroll-x="true" class="nav" scroll-left="{{ navScrollLeft }}" scroll-with-animation="{{ true }}">
       <block wx:for="{{ nav }}" wx:for-index="id" wx:for-item="item" wx:key="id">
@@ -101,8 +105,11 @@
     <swiper class="tab" style="height:{{ height }}px" current="{{ currentTab }}" duration="300" bindchange="switchTab">
       <swiper-item class="tab-item">
         <!-- 剧集 -->
-        <scroll-view scroll-y="true" class="wrap drama" bindscrolltolower="{{moreSublessons}}" scroll-with-animation="true" scroll-top="{{scrollviewtop}}">
-          <view wx:for="{{ sublessons }}" bindtap="select" data-index="{{ index }}" wx:key="index" class="item {{ item.played == 1 ? 'played' : '' }} {{ item.id == cur.id ? 'active' : '' }} {{'sublessonsd' + item.id}}" id="sublessonsd">
+        <scroll-view scroll-y="true" class="wrap drama" bindscrolltolower="{{moreSublessons}}"
+          scroll-with-animation="true" scroll-top="{{scrollviewtop}}">
+          <view wx:for="{{ sublessons }}" bindtap="select" data-index="{{ index }}" wx:key="index"
+            class="item {{ item.played == 1 ? 'played' : '' }} {{ item.id == cur.id ? 'active' : '' }} {{'sublessonsd' + item.id}}"
+            id="sublessonsd">
             <view class="left">
               <text class="name">{{ item.index }}. {{ item.title }}</text>
               <text class="time">{{ item.minute }}分钟</text>
@@ -114,28 +121,32 @@
           </view>
         </scroll-view>
       </swiper-item>
-      <swiper-item class="tab-item">
-        <!-- 讨论 -->
+      <!-- 讨论 -->
+      <!-- <swiper-item class="tab-item">
         <view class="discussion">
           <view class="comment">
             <view wx:for="{{ comment }}" wx:key="index" class="item">
               <view class="content">
                 <view class="left">
-                  <image class="img" mode="aspectFill" src="{{ item.avatar }}" catchtap="toUser" data-item="{{item}}"></image>
+                  <image class="img" mode="aspectFill" src="{{ item.avatar }}" catchtap="toUser" data-item="{{item}}">
+                  </image>
                 </view>
                 <view class="right">
                   <view class="top">
                     <text class="line name">{{ item.nickname }}</text>
                     <view class="time-del">
                       <text class="line time">{{ item.createtimes }}</text>
-                      <view class="del" wx:if="{{ $state.userInfo.id == item.uid }}" catchtap="delComment" data-item="{{ item }}">
+                      <view class="del" wx:if="{{ $state.userInfo.id == item.uid }}" catchtap="delComment"
+                        data-item="{{ item }}">
                         <image src="{{ $state.imgHost }}/delete.png" mode="aspectFill" class="icon-del"></image>
                         <text>删除</text>
                       </view>
                     </view>
                   </view>
-                  <rich-text nodes="{{ item.content }}" catchlongpress="copythat" data-content="{{ item.content }}" data-type="comment" data-index="{{index}}"></rich-text>
-                  <button wx:if="{{ $state.userInfo.id != item.uid && !$state.authUserInfo }}" class="reply-btn" data-reply="{{ item }}" open-type="getUserInfo" bindgetuserinfo="onGotUserInfo">
+                  <rich-text nodes="{{ item.content }}" catchlongpress="copythat" data-content="{{ item.content }}"
+                    data-type="comment" data-index="{{index}}"></rich-text>
+                  <button wx:if="{{ $state.userInfo.id != item.uid && !$state.authUserInfo }}" class="reply-btn"
+                    data-reply="{{ item }}" open-type="getUserInfo" bindgetuserinfo="onGotUserInfo">
                     回复
                   </button>
                   <button wx:else class="reply-btn" data-reply="{{ item }}" catchtap="show">
@@ -143,29 +154,38 @@
                   </button>
                 </view>
               </view>
-              <view class="children" wx:for="{{ item.reply_array }}" wx:key="index" wx:for-item="child" wx:for-index="number">
+              <view class="children" wx:for="{{ item.reply_array }}" wx:key="index" wx:for-item="child"
+                wx:for-index="number">
                 <view class="from_user">
                   <view class="user_info">
-                    <image class="img" mode="aspectFill" src="{{ child.from_user_avatar }}" catchtap="toUser" data-item="{{child}}" data-type="true"></image>
+                    <image class="img" mode="aspectFill" src="{{ child.from_user_avatar }}" catchtap="toUser"
+                      data-item="{{child}}" data-type="true"></image>
                     <text class="line name">{{ child.from_user }}</text>
                   </view>
                   <view class="time-del">
                     <text class="line time">{{ child.create_time }}</text>
-                    <view class="del" wx:if="{{ $state.userInfo.id == child.reply_user_id }}" catchtap="delReply" data-item="{{ child }}" data-parentid="{{ item.id }}">
+                    <view class="del" wx:if="{{ $state.userInfo.id == child.reply_user_id }}" catchtap="delReply"
+                      data-item="{{ child }}" data-parentid="{{ item.id }}">
                       <image src="{{ $state.imgHost }}/delete.png" mode="aspectFill" class="icon-del"></image>
                       <text>删除</text>
                     </view>
                   </view>
                 </view>
-                <rich-text nodes="{{ child.rtext + child.reply_content }}" catchlongpress="copythat" data-content="{{ child.reply_content }}" data-index="{{index}}" data-chilindex="{{number}}"></rich-text>
-                <button wx:if="{{ $state.userInfo.id != child.reply_user_id && !$state.authUserInfo }}" class="reply-btn" data-reply="{{ child }}" data-parent="{{ item.id }}" open-type="getUserInfo" bindgetuserinfo="onGotUserInfo">
+                <rich-text nodes="{{ child.rtext + child.reply_content }}" catchlongpress="copythat"
+                  data-content="{{ child.reply_content }}" data-index="{{index}}" data-chilindex="{{number}}">
+                </rich-text>
+                <button wx:if="{{ $state.userInfo.id != child.reply_user_id && !$state.authUserInfo }}"
+                  class="reply-btn" data-reply="{{ child }}" data-parent="{{ item.id }}" open-type="getUserInfo"
+                  bindgetuserinfo="onGotUserInfo">
                   回复
                 </button>
-                <button wx:elif="{{ $state.userInfo.id != child.reply_user_id }}" class="reply-btn" data-reply="{{ child }}" data-parent="{{ item.id }}" catchtap="show">
+                <button wx:elif="{{ $state.userInfo.id != child.reply_user_id }}" class="reply-btn"
+                  data-reply="{{ child }}" data-parent="{{ item.id }}" catchtap="show">
                   回复
                 </button>
               </view>
-              <view class="reply_all" wx:if="{{ item.reply_num > 3 }}" data-parentid="{{ item.id }}" catchtap="toCommentDetail">
+              <view class="reply_all" wx:if="{{ item.reply_num > 3 }}" data-parentid="{{ item.id }}"
+                catchtap="toCommentDetail">
                 查看全部{{ item.reply_num }}条
               </view>
             </view>
@@ -174,7 +194,7 @@
             <image src="{{$state.imgHost}}/no-com.png" mode="aspectFill"></image>
           </view>
         </view>
-      </swiper-item>
+      </swiper-item> -->
       <swiper-item class="tab-item">
         <!-- 简介 -->
         <scroll-view scroll-y="true" class="wrap synopsis">
@@ -187,28 +207,38 @@
     <icon class="iconfont icon-shouye"></icon>
     <text>首页</text>
   </view>
-  <button class="authorize" wx:if="{{ $state.baseInfo }}" open-type="getUserInfo" bindgetuserinfo="onGotUserInfo"></button>
-  <button class="issueBox" wx:if="{{write&&currentTab == 1&& !$state.authUserInfo}}" hover-class="none" open-type="getUserInfo" bindgetuserinfo="onGotUserInfo" style="text-align: left;line-height:0;">
+  <button class="authorize" wx:if="{{ $state.baseInfo }}" open-type="getUserInfo"
+    bindgetuserinfo="onGotUserInfo"></button>
+  <button class="issueBox" wx:if="{{write&&currentTab == 1&& !$state.authUserInfo}}" hover-class="none"
+    open-type="getUserInfo" bindgetuserinfo="onGotUserInfo" style="text-align: left;line-height:0;">
     <image src="{{$state.imgHost}}/voicebig.png" class="bigvoice" catchtap="showvoice" data-type="content"></image>
     <view class="issueBox-txt" style="color:{{content != '' ? 'rgba(46,46,46,1)': ''}}">
       {{ content != '' ? content : replycomment }}
     </view>
-    <view class="submit" catchtap="{{content != '' ? 'release' : ''}}" data-type="reply" style="color:{{content != '' ? '' : 'rgba(51,51,51,1);'}}">
+    <view class="submit" catchtap="{{content != '' ? 'release' : ''}}" data-type="reply"
+      style="color:{{content != '' ? '' : 'rgba(51,51,51,1);'}}">
       发布
     </view>
   </button>
-  <view class="issueBox" wx:elif="{{write&&currentTab == 1&&$state.authUserInfo}}" bindtap="showWrite" data-type="reply">
+  <view class="issueBox" wx:elif="{{write&&currentTab == 5&&$state.authUserInfo}}" bindtap="showWrite"
+    data-type="reply">
     <image src="{{$state.imgHost}}/voicebig.png" class="bigvoice" catchtap="showvoice" data-type="content"></image>
     <view class="issueBox-txt" style="color:{{content != '' ? 'rgba(46,46,46,1)': ''}}">
       {{ content != '' ? content : replycomment }}
     </view>
-    <view class="submit" catchtap="{{content != '' ? 'release' : ''}}" data-type="reply" style="color:{{content != '' ? '' : 'rgba(51,51,51,1);'}}">
+    <view class="submit" catchtap="{{content != '' ? 'release' : ''}}" data-type="reply"
+      style="color:{{content != '' ? '' : 'rgba(51,51,51,1);'}}">
       发布
     </view>
   </view>
-  <view class="issueBoxTow" style="bottom :{{ keyheight != 0 ? keyheight : 0}}px;height:{{replyplaceholder != '' ? '181' : ''}}px" wx:if="{{writeTow&&currentTab == 1}}">
+  <view class="issueBoxTow"
+    style="bottom :{{ keyheight != 0 ? keyheight : 0}}px;height:{{replyplaceholder != '' ? '181' : ''}}px"
+    wx:if="{{writeTow&&currentTab == 1}}">
     <text class="replayplaceholder" wx:if="{{replyplaceholder != ''}}">{{replyplaceholder}}</text>
-    <textarea placeholder="{{$state.newGuide.lesson == 0 ? '' : placeholder }}" fixed show-confirm-bar="{{false}}" placeholder-class="placeholder" bindinput="input" bindkeyboardheightchange="keyheight" adjust-position="{{false}}" focus="{{focus}}" bindblur="bindblur" maxlength="200" value="{{replyshow ? replycontent: content}}" cursor-spacing="190rpx"></textarea>
+    <textarea placeholder="{{$state.newGuide.lesson == 0 ? '' : placeholder }}" fixed show-confirm-bar="{{false}}"
+      placeholder-class="placeholder" bindinput="input" bindkeyboardheightchange="keyheight" adjust-position="{{false}}"
+      focus="{{focus}}" bindblur="bindblur" maxlength="200" value="{{replyshow ? replycontent: content}}"
+      cursor-spacing="190rpx"></textarea>
     <view class="issueBoxTow-txt">
       <view class="number">{{ replyshow ? replycontenLength : contenLength}}/200</view>
       <view class="issueBoxTow-btn">
@@ -224,17 +254,24 @@
     <view class="voiceBoxmask" catchtap="closevoiceBox"></view>
     <view class="voiceContent">
       <text class="replyplaceholder" wx:if="{{replyshow}}">{{replyplaceholder}}</text>
-      <text style="color:{{content != '' && !replyshow ? 'rgba(46,46,46,1)': replycontent !== '' && replyshow ? 'rgba(46,46,46,1)' : ''}}" class="placeholder" catchtap="showWrite" data-type="voice" wx:if="{{!replyshow}}">
+      <text
+        style="color:{{content != '' && !replyshow ? 'rgba(46,46,46,1)': replycontent !== '' && replyshow ? 'rgba(46,46,46,1)' : ''}}"
+        class="placeholder" catchtap="showWrite" data-type="voice" wx:if="{{!replyshow}}">
         {{ content == '' ? placeholder : content }}
       </text>
-      <text style="color:{{content != '' && !replyshow ? 'rgba(46,46,46,1)': replycontent !== '' && replyshow ? 'rgba(46,46,46,1)' : ''}}" class="placeholder" catchtap="showWrite" data-type="voice" wx:else>
+      <text
+        style="color:{{content != '' && !replyshow ? 'rgba(46,46,46,1)': replycontent !== '' && replyshow ? 'rgba(46,46,46,1)' : ''}}"
+        class="placeholder" catchtap="showWrite" data-type="voice" wx:else>
         {{ replycontent == '' ? placeholder : replycontent }}
       </text>
       <view class="voiceaction" wx:if="{{!showvoiceauto}}">
         <view class="voice-box">
           <text wx:if="{{voicetime != 0}}">{{voicetime}}"</text>
-          <view style="background:url('{{$state.imgHost}}/voicebtnr.png');background-size:100% 100%;" class="voice-image" catchtouchstart="touchstart" catchtouchend="touchend" wx:if="{{$state.authRecord}}"></view>
-          <view style="background:url('{{$state.imgHost}}/voicebtnr.png');background-size:100% 100%;" class="voice-image" catchtap="authrecord" catchtouchstart="authrecord" wx:else></view>
+          <view style="background:url('{{$state.imgHost}}/voicebtnr.png');background-size:100% 100%;"
+            class="voice-image" catchtouchstart="touchstart" catchtouchend="touchend" wx:if="{{$state.authRecord}}">
+          </view>
+          <view style="background:url('{{$state.imgHost}}/voicebtnr.png');background-size:100% 100%;"
+            class="voice-image" catchtap="authrecord" catchtouchstart="authrecord" wx:else></view>
           <div class="voice-water1" wx:if="{{voiceActon}}"></div>
           <div class="voice-water1 voice-water2" wx:if="{{voiceActon}}"></div>
           <view class="voice-txt" style="height:12rpx;">{{voiceActon? '' : '按住说话'}}</view>
@@ -250,7 +287,8 @@
           <view class="voicetextstatus" wx:if="{{voicetextstatus != ''}}">{{voicetextstatus}}</view>
         </view>
         <view class="voiceanew" catchtap="relacevoice">重录</view>
-        <view class="voicerelease" catchtap="release" style="{{ replyplaceholder != '' ? replycontent != '' ? '':'background:rgba(230,230,230,1);color:rgba(179,179,179,1);' : content != '' ? '' : 'background:rgba(230,230,230,1);color:rgba(179,179,179,1);'}}">
+        <view class="voicerelease" catchtap="release"
+          style="{{ replyplaceholder != '' ? replycontent != '' ? '':'background:rgba(230,230,230,1);color:rgba(179,179,179,1);' : content != '' ? '' : 'background:rgba(230,230,230,1);color:rgba(179,179,179,1);'}}">
           发布
         </view>
       </view>
@@ -263,11 +301,13 @@
       <cover-image src="{{$state.imgHost}}/detailMsg.png" class="detailGuide-Msgimg"></cover-image>
       <cover-image src="{{$state.imgHost}}/know.png" class="nextGude"></cover-image>
     </cover-view>
-    <cover-image class="detailGuide-img" src="{{$state.imgHost}}/discussion.png" style="top:{{ detail.current_sublesson_id != 0 && !hideRecode ? 738 : '' }}rpx"></cover-image>
+    <cover-image class="detailGuide-img" src="{{$state.imgHost}}/discussion.png"
+      style="top:{{ detail.current_sublesson_id != 0 && !hideRecode ? 738 : '' }}rpx"></cover-image>
   </cover-view>
 </view>
 <!-- 学分动画 -->
-<integralAnimation integral="{{integral}}" integralContent="{{integralContent}}" wx:if="{{showintegral}}"></integralAnimation>
+<integralAnimation integral="{{integral}}" integralContent="{{integralContent}}" wx:if="{{showintegral}}">
+</integralAnimation>
 <!-- 学校选择 -->
 <view class="chancesh" wx:if="{{showplece && detail.school_dialog}}">
   <view class="chanBox">
@@ -277,7 +317,8 @@
     </view>
     <view class="plath">
       <text>地区</text>
-      <picker mode="multiSelector" bindchange="bindMultiPickerChange" bindcolumnchange="bindMultiPickerColumnChange" value="{{multiIndex}}" range="{{ multiAddress }}">
+      <picker mode="multiSelector" bindchange="bindMultiPickerChange" bindcolumnchange="bindMultiPickerColumnChange"
+        value="{{multiIndex}}" range="{{ multiAddress }}">
         <view class="plahtPicker">
           <text wx:if="{{plathParam.plath.length == 0}}" class="plathoer">请选择地区</text>
           <text wx:else class="adress">{{ plathParam.plath }}</text>
@@ -287,7 +328,8 @@
     </view>
     <view class="plath" bindtap="tipOrder">
       <text>学校</text>
-      <picker mode="selector" bindchange="bindSchool" value="{{singleIndex}}" range="{{ singleSchool }}" disabled="{{ plathParam.plath.length == 0 }}">
+      <picker mode="selector" bindchange="bindSchool" value="{{singleIndex}}" range="{{ singleSchool }}"
+        disabled="{{ plathParam.plath.length == 0 }}">
         <view class="plahtPicker">
           <text class="plathoer" wx:if="{{plathParam.shool.length == 0}}">请选择学校</text>
           <text wx:else class="adress">{{ plathParam.shool }}</text>

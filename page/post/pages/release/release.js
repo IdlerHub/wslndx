@@ -101,7 +101,7 @@ Page({
       keepScreenOn: true
     })
     record.initRecord(this)
-    if (this.timer) recorderManager.stop()
+    if (this.timer != null) recorderManager.stop()
     this.getRecordAuth();
     this.initRecord();
     if (this.data.$state.releaseParam != null) {

@@ -189,7 +189,7 @@
   position: absolute;
   top: calc(-90vmin / 7.5);
   left: calc(-1000vmin / 7.5);
-  animation: showAnimation 2s infinite;
+  animation: showAnimation 2.5s infinite;
   z-index: 9999999999999;
   opacity: 0;
 }

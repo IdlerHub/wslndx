@@ -161,25 +161,15 @@ App({
     }
   },
   onShow: function (opts) {
+    console.log(opts, '进入')
     let optsStr = decodeURIComponent(opts.query.scene).split("&");
     let opstObj = {};
     optsStr.forEach((item, index) => {
       opstObj[item.split("=")[0]] = item.split("=")[1];
     });
     let lists = ["share", "invite"];
-    if (this.store.$state.userInfo.id) {
-      setTimeout(() => {
-        socket.init(this.store.$state.userInfo.id);
-        socket.listen(this.prizemessage, "Prizemessage");
-        socket.listen(this.bokemessage, "Bokemessage");
-      }, 2000);
-    } else {
-      if(opts.path == 'pages/index/index') return
-      wx.reLaunch({
-        url: "/pages/index/index",
-      });
-    }
     /* 小程序(在后台运行中时)从分享卡片切到前台 */
+    console.log(this.globalData.backstage)
     if (this.globalData.backstage) {
       this.globalData.backstage = false;
       this.socket.backstage();
@@ -203,6 +193,23 @@ App({
         });
       }
     }
+    if (this.store.$state.userInfo.id) {
+      setTimeout(() => {
+        socket.init(this.store.$state.userInfo.id);
+        socket.listen(this.prizemessage, "Prizemessage");
+        socket.listen(this.bokemessage, "Bokemessage");
+      }, 2000);
+    } else {
+      let isLogin = 0
+      if(opts.path == 'pages/index/index') return
+      getCurrentPages().forEach(e => {
+        e.isLogin ? isLogin = 1 : ''
+      })
+      if(isLogin) return
+      wx.reLaunch({
+        url: "/pages/index/index",
+      });
+    }
   },
   onHide() {
     this.globalData.backstage = true;
@@ -213,7 +220,7 @@ App({
   onError: function (err) {
     fundebug.notifyError(err);
   },
-  wxLogin: async function () {
+  wxLogin: async function (e) {
     await wxp.login({}).then((res) => {
       if (res.code) {
         this.globalData.code = res.code;
@@ -235,7 +242,7 @@ App({
           wx.setStorageSync("token", msg.data.token);
           wx.setStorageSync("uid", msg.data.uid);
           wx.setStorageSync("authKey", msg.data.authKey);
-          this.setUser(msg.data.userInfo);
+          e ? this.updateBase(e) : this.setUser(msg.data.userInfo);
         }
       });
   },
@@ -275,7 +282,7 @@ App({
       socket.listen(this.bokemessage, "Bokemessage");
     }
     getCurrentPages().forEach(e => {
-      e.route == 'pages/index/index' ? e.init() : ''
+      e.route == 'pages/index/index' ? this.store.$state.nextTapDetial.type == 'addStudy' ? e.init(1) :  e.init() : ''
     })
   },
   /* 更新AuthKey */
@@ -337,6 +344,10 @@ App({
     };
     this.user.profile(param).then((msg) => {
       this.setUser(msg.data.userInfo);
+    }).catch(msg => {
+      if(msg.status == 401) {
+        this.wxLogin(e)
+      }
     });
   },
   playVedio(type) {

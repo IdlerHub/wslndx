@@ -16,7 +16,8 @@
     "pages/gamePage/gamePage",
     "pages/webPay/webPay",
     "pages/timetableList/timetableList",
-    "components/playRrecord/playRrecord"
+    "components/playRrecord/playRrecord",
+    "pages/studyCenter/studyCenter"
   ],
   "permission": {
     "scope.userLocation": {
@@ -29,7 +30,7 @@
   },
   "window": {
     "backgroundTextStyle": "light",
-    "navigationBarBackgroundColor": "#F8F8F8",
+    "navigationBarBackgroundColor": "#fff",
     "navigationBarTitleText": "网上老年大学",
     "navigationBarTextStyle": "black",
     "backgroundColor": "#eeefef"
@@ -43,8 +44,8 @@
         "text": "云课堂"
       },
       {
-        "pagePath": "pages/timetableList/timetableList",
-        "text": "直播课"
+        "pagePath": "pages/studyCenter/studyCenter",
+        "text": "学习"
       },
       {
         "pagePath": "pages/post/post",

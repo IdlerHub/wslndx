@@ -114,7 +114,8 @@ Page({
       }, () => {
         console.log(this.data.textHeight - this.textHeight >= 0)
         this.data.textHeight - this.textHeight >= 0 ? '' : this.setData({
-          write: false
+          write: false,
+          focus: false
         });
         this.textHeight = res.height
       });
@@ -364,13 +365,15 @@ Page({
   touchStart() {
     setTimeout(() => {
       this.setData({
-        write: false
+        write: false,
+        focus: false
       });
     }, 200);
   },
   hide() {
     this.setData({
-      write: false
+      write: false,
+      focus: false
     });
   },
   input(e) {
@@ -459,7 +462,8 @@ Page({
     params ? Object.assign(param, params) : ''
     if (e.currentTarget.dataset.type) {
       this.setData({
-        write: false
+        write: false,
+        focus: false
       })
       wx.navigateTo({
         url: `/page/post/pages/release/release?params=${JSON.stringify(param)}`,
@@ -471,6 +475,7 @@ Page({
   post(param, type) {
     this.setData({
       write: false,
+      focus: false,
       showvoice: false,
       voicetime: 0,
       showvoiceauto: false
@@ -581,7 +586,8 @@ Page({
         if (options) {
           this.data.comment.length > 0 ?
             this.setData({
-              write: false
+              write: false,
+              focus: false
             }) :
             this.show();
         }
@@ -794,6 +800,7 @@ Page({
   reply(params, type) {
     this.setData({
       write: false,
+      focus: false,
       showvoice: false,
       voicetime: 0,
       showvoiceauto: false
@@ -924,7 +931,9 @@ Page({
     });
     this.setData({
       showvoice: true,
-      write: false
+      focus: false,
+      write: false,
+      focus: false
     });
   },
   showWrite(e) {
@@ -1179,6 +1188,7 @@ Page({
     this.setData({
       showvoice: false,
       write: false,
+      focus: false,
       showvoiceauto: false,
       voicetime: 0
     });

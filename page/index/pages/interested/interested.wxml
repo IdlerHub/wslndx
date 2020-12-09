@@ -13,5 +13,5 @@
 </view>
 <template is="interestedBox" wx:for="{{list}}" data="{{list, item, index}}" wx:key="index"></template>
 <view class="btn" bindtap="determine">
-  确定(已经选泽{{selectNum}}个)
+  确定(已经选择{{selectNum}}个)
 </view>

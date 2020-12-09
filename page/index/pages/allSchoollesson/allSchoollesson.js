@@ -12,43 +12,46 @@ Page({
     showClassify: false
   },
   navHeightList: [],
+  isLogin: 1,
   onLoad: function (options) {
     this.universityId = options.id
-    let query = wx.createSelectorQuery().in(this), that = this
+    wx.setNavigationBarTitle({
+      title: options.title
+    })
+    let query = wx.createSelectorQuery().in(this),
+      that = this
     query.select(".nav").boundingClientRect()
     query.exec(res => {
       that.navHeight = res[0].height
     })
     Promise.all([this.getCategory()])
   },
-  onShow: function () {
-
-  },
+  onShow: function () {},
   onReachBottom: function () {
     if (!this.data.nav[this.data.currentTab].showBtoom) {
       let id = this.data.nav[this.data.currentTab].id
       let temp = this.data.catrecommend[id]
-      this.categoryParams[id].page++
+      this.categoryParams[id].pageNum++
       wx.showLoading({
         title: '加载中'
       })
       app.classroom.lessons(this.categoryParams[id]).then(msg => {
         let next = true
-        msg.data.forEach(function (item) {
+        msg.dataList.forEach(function (item) {
           item.thousand = app.util.tow(item.browse)
           temp.forEach(i => {
             i.id == item.id ? next = false : ''
           })
         })
         if (!next) return
-        if (msg.data.length == 0) {
+        if (msg.dataList.length < 10) {
           this.setData({
             [`nav[${this.data.currentTab}].showBtoom`]: true
           })
         }
-        this.data.catrecommend[id] = temp.concat(msg.data)
+        this.data.catrecommend[id] = temp.concat(msg.dataList)
         this.setData({
-          [`catrecommend[${id}]`]: temp.concat(msg.data)
+          [`catrecommend[${id}]`]: this.data.catrecommend[id]
         })
         let query = wx.createSelectorQuery().in(this)
         let that = this,
@@ -82,11 +85,23 @@ Page({
     this.setData({
       currentTab: 0,
     })
-    this.categoryParams = {}
+    this.categoryParams = [{
+      categoryId: null,
+      universityId: this.universityId,
+      pageNum: 1,
+      pageSize: 10
+    }]
     return app.lessonNew.getAllCategory().then(msg => {
-      let arr = []
+      let arr = [{
+        id: 0,
+        name: "全部",
+        class: "#recommend0",
+        unMove: true,
+        showBtoom: false,
+        showNone: false
+      }]
       msg.dataList.forEach((i, index) => {
-        this.categoryParams[i.id] = {
+        this.categoryParams[i .id] = {
           categoryId: i.id,
           universityId: this.universityId,
           pageNum: 1,
@@ -147,11 +162,10 @@ Page({
   },
   switchTab(event) {
     let cur = event.detail.current,
-      that = this,
-      currren = this.data.currentTab
+      that = this
     this.timer ? clearTimeout(this.timer) : ''
     this.timer = setTimeout(() => {
-      this.data.currentTab != cur ? cur == that.setData({
+      that.data.currentTab != cur ? cur == that.setData({
         currentTab: cur,
       }) : ''
       wx.hideLoading()
@@ -184,22 +198,9 @@ Page({
       let height = res[0].height
       that.navHeightList[currentTab] = height
       that.setData({
-        height: height
+        height: height < 300 ? 600 : height
       })
     })
-  },
-  onPageScroll(e) {
-    if (e.scrollTop >= this.navHeight) {
-      !this.data.scroll &&
-        this.setData({
-          scroll: true
-        })
-    } else {
-      this.data.scroll &&
-        this.setData({
-          scroll: false
-        })
-    }
   },
   showClassify() {
     this.setData({

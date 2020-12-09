@@ -12,6 +12,7 @@ Page({
     scrollTop: 0
   },
   pageEnd: 0,
+  isLogin: 1,
   onLoad: function (options) {
     this.params = {
       categoryId: '',
@@ -22,6 +23,9 @@ Page({
   },
   onHide: function () {
 
+  },
+  onUnload() {
+    return
   },
   onReachBottom: function () {
 
@@ -56,11 +60,16 @@ Page({
   checkTab(e, i) {
     let categoryId = e.currentTarget.dataset.id, tab1 = e.currentTarget.dataset.tab1, tab2 = e.currentTarget.dataset.tab2
     this.setData({
-      tabCurrent: this.data.tabCurrent ? 0 : 1,
+      tabCurrent: !this.data.tabCurrent,
       'crumbs.tab1': tab1,
       'crumbs.tab2': tab2,
       lessonList: []
     }, () => {
+      this.data.tabCurrent ? wx.setNavigationBarTitle({
+        title: tab2
+      }) : wx.setNavigationBarTitle({
+        title: '全部课程'
+      })
       this.params = {
         pageSize: 20, 
         pageNum: 1

@@ -39,15 +39,15 @@
     <text>没有更多了</text>
   </view>
 </template>
-<view class="nav {{ scroll ? 'fixed' : '' }}" style="top:0px;padding-right:20px;overflow: hidden;">
-  <scroll-view class="nav" style="display:flex;padding-right: 20px" scroll-x="true" scroll-left="{{ navScrollLeft }}"
+<view class="nav {{ scroll ? 'fixed' : '' }}" style="top:0px;padding-right:30rpx;overflow: hidden;position: sticky;background: #fff;z-index: 999;">
+  <scroll-view class="nav" style="display:flex;padding-right: 30rpx" scroll-x="true" scroll-left="{{ navScrollLeft }}"
     scroll-with-animation="true" enable-flex scroll-into-view="item{{currentTab < 4 ? 0 : currentTab - 3}}">
     <block wx:for="{{ nav }}" wx:for-index="id" wx:for-item="item" wx:key="index" class="navitem">
       <view class="item {{ [currentTab == id ? 'active' : '',id == 0 ? 'itemone' : ''] }}"
         style="margin-right:{{id + 1 == nav.length ? '40rpx' : ''}}" id="item{{id}}" bindtap="switchNav"
         data-current="{{ id }}" data-id="{{item.id}}">{{ item.name }}</view>
-      <view class="item" style="opacity: 0;" wx:if="{{id == nav.length - 1}}">地方，是否</view>
     </block>
+    <view class="item" style="opacity: 0;width: 20rpx;">dfsdf</view> 
   </scroll-view>
   <view class="tabclassify" bindtap="showClassify">
     <image src="/images/indexIcon/tabclassify.png"></image>
@@ -58,7 +58,7 @@
   <swiper-item class="tab-item" wx:for="{{nav}}" wx:key="index" item-id="{{item.name}}">
     <view class="wrap recommend" id="recommend{{item.id}}">
       <template is="skeleton" wx:if="{{ !catrecommend[item.id][0] && !item.showNone}}"></template>
-      <lessonItem lessonList="{{catrecommend[item.id]}}" isSchool="{{true}}" wx:else />
+      <lessonItem id="lessonItem" lessonList="{{catrecommend[item.id]}}" isSchool="{{true}}" wx:else />
       <template is="nomore" wx:if="{{nav[currentTab].showBtoom && !item.showNone}}"></template>
       <view class="qst" wx:if="{{item.showNone}}">
         <image src="/images/liveqs.png"></image>
@@ -79,3 +79,6 @@
     </view>
   </view>
 </view>
+
+<!-- 登录 -->
+<loginBox wx:if="{{$state.showLogin}}"/>

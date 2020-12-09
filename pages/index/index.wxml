@@ -38,29 +38,38 @@
       </slotSign>
     </view>
     <view class="comment">
-      <slotSign bindtap="checknextTap" data-type="toLivelesson" data-type="live" data-item="{{item}}"
-        wx:for="{{liveRecommend}}" wx:key="index">
-        <view class="liveItem" style="{{index + 1 > 6 - 2 ? 'border:none' : '' }}" bindtap="toLivelesson"
-          data-item="{{item}}">
-          <view class="liveImgBox">
-            <image src="{{item.indexCover}}">
-            </image>
-            <view class="liveStatus"
-              style="background: {{ item.status == 0 ? '' : 'linear-gradient(270deg, #44A2FF 0%, #007CF7 100%);border-radius: 10rpx 6rpx 6rpx 0px;' }}">
-              <view class="statusLeft" wx:if="{{item.status == 0}}">
-                <view wx:for="{{3}}" wx:key="index" class="statusWite"></view>
-                <view class="statusTxt">直播</view>
-                <view class="viewNum">{{fn.num(item.viewNum)}}人</view>
-              </view>
-              <view class="statusLeft" wx:else>
-                <view class="statusTxt" style="margin: 0">未开始</view>
-              </view>
+      <view class="liveItem" style="{{index + 1 > 6 - 2 ? 'border:none' : '' }}" wx:for="{{liveRecommend}}"
+        wx:key="index" bindtap="toLivelesson" data-item="{{item}}">
+        <view class="liveImgBox">
+          <image src="{{item.indexCover}}">
+          </image>
+          <view class="liveStatus"
+            style="background: {{ item.status == 0 ? '' : item.status == 2 ? 'linear-gradient(270deg, #FF8242 0%, #FF6010 100%)' : 'linear-gradient(270deg, #44A2FF 0%, #007CF7 100%);border-radius: 10rpx 6rpx 6rpx 0px;' }}">
+            <view class="statusLeft" wx:if="{{item.status == 1}}">
+              <image src="/images/naoling.png" class="naoling"></image>
+              <view class="statusTxt" style="margin: 0">待开始</view>
+            </view>
+            <view class="statusLeft" wx:elif="{{item.status == 0}}">
+              <view wx:for="{{3}}" wx:key="index" class="statusWite"></view>
+              <view class="statusTxt">直播</view>
+              <view class="viewNum">{{fn.num(item.viewNum)}}人</view>
+            </view>
+            <view class="statusLeft" wx:else>
+              <image src="/images/endIcon.png" class="endIcon"></image>
+              <view class="statusTxt" style="margin: 0">看回播</view>
+              <view class="viewNum">{{fn.num(item.viewNum)}}人</view>
             </view>
           </view>
-          <text>{{item.liveName}}</text>
-          <text>{{item.dayTime}} {{item.startTime}}</text>
         </view>
-      </slotSign>
+        <text>{{item.liveName}}</text>
+        <view class="tagsLine" wx:if="{{item.tags[0]}}">
+          <view wx:for="{{item.tags}}" wx:for-item="tag" wx:key="index">{{tag.tagName}}</view>
+        </view>
+        <view class="tagsLine" wx:else>
+          <view>{{item.universityName}}</view>
+        </view>
+        <text>{{item.dayTime}} {{item.startTime}}</text>
+      </view>
     </view>
   </view>
   <view class="liveBox" wx:else>
@@ -74,6 +83,7 @@
     <view class="comment">
       <view wx:for="{{6}}" wx:key="index" class="liveItem" style="{{index + 1 > 6 - 2 ? 'border:none' : '' }}">
         <view class="img skeletonaAtive"></view>
+        <text class="skeletonaAtive"></text>
         <text class="skeletonaAtive"></text>
         <text class="skeletonaAtive"></text>
       </view>
@@ -90,22 +100,22 @@
       <view class="avatarBox" catchtap="toUser" wx:if="{{$state.authUserInfo}}">
         <image class="img" src="{{$state.userInfo.avatar}}" alt=""></image>
       </view>
-      <button class="avatarBox" wx:else open-type="getUserInfo" bindgetuserinfo="onGotUserInfo" data-role="user"
-        catchtap="getSomthin">
+      <button class="avatarBox" wx:elif="{{ !$state.authUserInfo && $state.userInfo.id }}" open-type="getUserInfo"
+        bindgetuserinfo="onGotUserInfo" data-role="user" catchtap="getSomthin">
         <open-data class="img" type="userAvatarUrl"></open-data>
       </button>
-      <text>{{$state.userInfo.school || "网上老年大学"}}</text>
+      <image src="/images/indexIcon/userNone.png" wx:else class="userNone"></image>
+      <text wx:if="{{$state.userInfo.id}}">{{$state.userInfo.school || "请完善信息"}}</text>
+      <text wx:else class="loginTxt">注册登录</text>
     </view>
     <template is="skeletonTop" data="{{topT}}" wx:else></template>
   </slotSign>
   <!-- 搜索/学分 -->
   <view class="search-box">
-    <slotSign bindtap="checknextTap" data-type="search" data-detail="/page/index/pages/search/search">
-      <navigator class="search-left" url="/page/index/pages/search/search">
-        <image src="/images/indexIcon/searchp.png"></image>
-        <text>搜索课程名称</text>
-      </navigator>
-    </slotSign>
+    <navigator class="search-left" url="/page/index/pages/search/search">
+      <image src="/images/indexIcon/searchp.png"></image>
+      <text>搜索课程名称</text>
+    </navigator>
     <slotSign bindtap="checknextTap" data-type="search" data-detail="/page/live/pages/timetableList/timetableList">
       <navigator class="search-right" url="/page/live/pages/timetableList/timetableList" hover-class="none">
         <image src="/images/indexIcon/timetableIcon.png"></image>
@@ -120,15 +130,17 @@
         current="{{bannercurrentTab}}" bindanimationfinish="centerTab">
         <block wx:for="{{imgUrls}}" wx:key="index">
           <swiper-item>
-            <slotSign bindtap="checknextTap" data-type="swiper" data-item="{{ item }}">
-              <image src="{{item.image}}" class="slide-image" width="355" height="150" catchtap="bannerGo"
-                data-item="{{ item }}" wx:if="{{!item.isLogin}}" />
+            <slotSign bindtap="checknextTap" data-type="swiper" data-item="{{ item }}" wx:if="{{item.isLogin}}">
               <image src="{{item.image}}" class="slide-image" width="355" height="150" catchtap="bannerGo"
                 data-item="{{ item }}" wx:if="{{item.isLogin && $state.authUserInfo}}" />
               <button class="slide-image" style="background:url({{item.image}});background-size: 100% 100%;"
                 open-type="getUserInfo" bindgetuserinfo="onGotUserInfo" data-type="banner" data-item="{{item}}"
                 wx:else></button>
             </slotSign>
+            <view wx:else>
+              <image src="{{item.image}}" class="slide-image" width="355" height="150" catchtap="bannerGo"
+                data-item="{{ item }}" />
+            </view>
           </swiper-item>
         </block>
       </swiper>
@@ -140,13 +152,19 @@
     <template is="skeletonSwiper" wx:else></template>
     <!-- 中间icon -->
     <view class="centerIcon">
-      <slotSign bindtap="checknextTap" wx:for="{{centerIcon}}" wx:key="index" data-type="search"
-        data-detail="{{item.url}}">
-        <navigator class="iconBox" hover-class="none" url="{{item.url}}">
+      <view wx:for="{{centerIcon}}" wx:key="index">
+        <slotSign bindtap="checknextTap" data-type="search" data-detail="{{item.url}}"
+          wx:if="{{ index == 1 || index == 3}}">
+          <navigator class="iconBox" hover-class="none" url="{{item.url}}">
+            <image src="{{item.icon}}"></image>
+            <text>{{item.name}}</text>
+          </navigator>
+        </slotSign>
+        <navigator class="iconBox" hover-class="none" url="{{item.url}}" wx:else>
           <image src="{{item.icon}}"></image>
           <text>{{item.name}}</text>
         </navigator>
-      </slotSign>
+      </view>
     </view>
     <template is="liveBox" data="{{recommend, liveRecommend, $state}}"></template>
     <view>
@@ -198,13 +216,9 @@
   <signinBox wx:if="{{ !$state.signStatus.count && !dialog[0].image && showSignbox}}" state="{{$state}}" top="{{topT}}"
     isIndex="{{true}}" bind:closesignBox="closesignBox" bind:showIntegral="showIntegral" bind:sigin="sigin" />
 </view>
-<navigator url="/page/index/pages/assistant/assistant" hover-class="none" wx:if="{{$state.userInfo.id}}">
+<navigator url="/page/index/pages/assistant/assistant" hover-class="none">
   <image src="/images/xiaolin.png" class="xiaolin"></image>
 </navigator>
-<slotSign class="xiaolin" bindtap="checknextTap" data-type="search" data-detail="/page/index/pages/assistant/assistant"
-  wx:else>
-  <image src="/images/xiaolin.png" style="width: 168rpx;height: 178rpx;"></image>
-</slotSign>
 <!-- 黑名单提示框 -->
 <view class="blackBox" wx:if="{{$state.blackShow}}">
   <view class="blackToast">

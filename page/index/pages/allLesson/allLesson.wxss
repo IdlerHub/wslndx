@@ -142,7 +142,7 @@
   justify-content: center;
   width: 172rpx;
   height: 100%;
-  border-right: 1rpx solid #FE9B02;
+  border-right: 1rpx solid rgba(254,155,2, 0.3);
 }
 
 .lessonListBox .lessonListTop .left image {
