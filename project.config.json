@@ -122,8 +122,8 @@
           "scene": null
         },
         {
-          "name": "pages/education/education",
-          "pathName": "pages/education/education",
+          "name": "pages/studyCenter/studyCenter",
+          "pathName": "pages/studyCenter/studyCenter",
           "query": "url=https://mp.weixin.qq.com/s/yQAksZ2guGSI1CjhS-9few&type=activity&login=1",
           "scene": 1000
         },
