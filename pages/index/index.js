@@ -48,8 +48,8 @@ Page({
       url: '/page/index/pages/rankingList/rankingList',
       icon: '/images/indexIcon/rankIcon.png',
       name: '排行榜',
-      width: 62,
-      height: 62,
+      width: 65.19,
+      height: 63.16,
     }, {
       url: '/page/index/pages/rankingList/rankingList',
       icon: '/images/indexIcon/vipIcon.png',
