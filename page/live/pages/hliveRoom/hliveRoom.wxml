@@ -5,7 +5,7 @@
 <view class="statusBox" wx:if="{{liveStatus != 1}}">
   <text wx:if="{{liveStatus == 3}}">讲师暂时离开,请稍等</text>
   <text wx:if="{{liveStatus == 4}}">直播结束</text>
-  <text wx:if="{{liveStatus == 4}}">观看 {{liveCount}}人 | 15分钟内生成回播</text>
+  <text wx:if="{{liveStatus == 4}}">观看 {{liveCount}}人 | 正在生成回播中</text>
   <button class="share" hover-class="none" open-type="share" wx:if="{{liveStatus == 4}}">
     <image src="../../images/liveShare.png"></image>
   </button>
