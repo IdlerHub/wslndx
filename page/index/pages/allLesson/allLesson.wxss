@@ -225,3 +225,16 @@
   color: #FFFFFF;
   margin-top: 48rpx;
 }
+
+.classRoomBox {
+  width: 710rpx;
+  height: 128rpx;
+  background: #FFFFFF;
+  box-shadow: 0px 5rpx 20rpx 0rpx rgba(119, 63, 34, 0.15);
+  border-radius: 10rpx;
+  border: 1rpx solid #ED5708;
+  position: fixed;
+  bottom: 60rpx;
+  left: 50%;
+  transform: translateX(-50%);
+}
