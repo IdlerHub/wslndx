@@ -463,17 +463,17 @@ Page({
     app.liveData.getLiveBySpecialColumnId({
       specialColumnId: item.columnId
     }).then(res => {
-      if (!res.data.isAddSubscribe || !this.data.$state.userInfo.id) {
+      if(this.data.$state.userInfo.id) {
+        wx.navigateTo({
+          url: `/page/live/pages/vliveRoom/vliveRoom?roomId=${item.liveId}`,
+        })
+      } else if (!res.data.isAddSubscribe || !this.data.$state.userInfo.id) {
         wx.navigateTo({
           url: `/page/live/pages/tableDetail/tableDetail?specialColumnId=${item.columnId}`,
         })
       } else if(item.status == 2) {
         wx.navigateTo({
           url: `/page/live/pages/liveDetail/liveDetail?specialColumnId=${item.columnId}`,
-        })
-      } else {
-        wx.navigateTo({
-          url: `/page/live/pages/vliveRoom/vliveRoom?roomId=${item.liveId}`,
         })
       }
     })
