@@ -102,7 +102,7 @@ page {
 }
 
 .swiper {
-  height: 240rpx;
+  height: 270rpx;
   overflow: hidden;
   background: #fff;
   background: #fff;
@@ -131,7 +131,7 @@ page {
 
 .swiper .slide-image {
   width: 100vw;
-  height: 240rpx;
+  height: 270rpx;
 }
 
 .category {

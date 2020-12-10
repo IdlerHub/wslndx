@@ -9,7 +9,9 @@ Page({
     pay: false
   },
   pageName: "外链页（开心农场&amp;老年电台&amp;早报）",
+  activityShare: 0,
   onLoad: function (options) {
+    this.options = options
     console.log(options)
     setTimeout(() => {
       if (options.classId) {
@@ -41,7 +43,6 @@ Page({
           url: webURL,
         });
       }
-
       if (!options.type) {
         let optsStr = decodeURIComponent(options.scene).split("&"),
           opstObj = {};
@@ -87,7 +88,6 @@ Page({
         }
       }
     }, 1000);
-
   },
   junmpOut(url) {
     this.setData({
@@ -117,7 +117,7 @@ Page({
         path: `/pages/education/education?type=0&url=${shareUrl+ '/#/login'}&login=1`,
         imageUrl: "https://hwcdn.jinlingkeji.cn/app/zsxtshare.jpg"
       }
-    }else {
+    } else {
       return this.menuAppShare();
     }
   }

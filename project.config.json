@@ -37,7 +37,7 @@
     ]
   },
   "setting": {
-    "useMultiFrameRuntime": true
+    "scopeDataCheck": false
   },
   "compileType": "miniprogram",
   "libVersion": "2.12.2",
@@ -124,7 +124,7 @@
         {
           "name": "pages/education/education",
           "pathName": "pages/education/education",
-          "query": "url=www.baodi.com&type=activity&login=1",
+          "query": "url=https://mp.weixin.qq.com/s/yQAksZ2guGSI1CjhS-9few&type=activity&login=1",
           "scene": 1000
         },
         {
