@@ -152,18 +152,18 @@
     <template is="skeletonSwiper" wx:else></template>
     <!-- 中间icon -->
     <view class="centerIcon">
-      <view wx:for="{{centerIcon}}" wx:key="index">
+      <view wx:for="{{centerIcon}}" wx:key="index" class="centerIconItem" style="margin: {{ index > 3 ? 0 : ''}}">
         <slotSign bindtap="checknextTap" data-type="search" data-detail="{{item.url}}"
           wx:if="{{ index == 1 || index == 3}}">
-          <navigator class="iconBox" hover-class="none" url="{{item.url}}">
-            <image src="{{item.icon}}"></image>
+          <view class="iconBox" bindtap="iconBind" data-item="{{item}}">
+            <image src="{{item.icon}}" style="width: {{item.width}}rpx;height:{{item.height}}rpx;"></image>
             <text>{{item.name}}</text>
-          </navigator>
+          </view>
         </slotSign>
-        <navigator class="iconBox" hover-class="none" url="{{item.url}}" wx:else>
-          <image src="{{item.icon}}"></image>
+        <view class="iconBox" bindtap="iconBind" data-item="{{item}}" wx:else>
+          <image src="{{item.icon}}" style="width: {{item.width}}rpx;height:{{item.height}}rpx;"></image>
           <text>{{item.name}}</text>
-        </navigator>
+        </view>
       </view>
     </view>
     <template is="liveBox" data="{{recommend, liveRecommend, $state}}"></template>

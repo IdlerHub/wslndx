@@ -16,20 +16,55 @@ Page({
     centerIcon: [{
       url: '/page/index/pages/allLesson/allLesson',
       icon: '/images/indexIcon/allLessonIcon.png',
-      name: '全部课程'
+      name: '全部课程',
+      width: 92,
+      height: 92
     }, {
       url: '/pages/video/video',
       icon: '/images/indexIcon/sortVideoicon.png',
-      name: '短视频'
+      name: '短视频',
+      width: 92,
+      height: 92
     }, {
       url: '/page/index/pages/schoolLesson/schoolLesson',
       icon: '/images/indexIcon/shollLesson.png',
-      name: '高校课程'
+      name: '高校课程',
+      width: 92,
+      height: 92
     }, {
       url: '/page/index/pages/hotActivity/hotActivity',
       icon: '/images/indexIcon/hotActivityIcon.png',
-      name: '热门活动'
-    }, ]
+      name: '热门活动',
+      width: 92,
+      height: 92
+    }, {
+      url: '/page/index/pages/hotActivity/hotActivity',
+      icon: '/images/indexIcon/technologyIcon.png',
+      name: '智能技术',
+      width: 64,
+      height: 58,
+      toEducation: 'https://mp.weixin.qq.com/s/uOzzdEDmKiJSyRtCtW33cg'
+    }, {
+      url: '/page/index/pages/rankingList/rankingList',
+      icon: '/images/indexIcon/rankIcon.png',
+      name: '排行榜',
+      width: 62,
+      height: 62,
+    }, {
+      url: '/page/index/pages/rankingList/rankingList',
+      icon: '/images/indexIcon/vipIcon.png',
+      name: 'VIP专区',
+      width: 59,
+      height: 66,
+      toMiniProgram: 'wx8dc9e7f55fe1f3ff'
+    }, {
+      url: '/page/index/pages/rankingList/rankingList',
+      icon: '/images/indexIcon/appicon.png',
+      name: '下载APP',
+      width: 46,
+      height: 64,
+      toEducation: 'https://mp.weixin.qq.com/s/vSd8XBQDQkvqVX_kt_YyTQ'
+    },]
   },
   pageName: '首页',
   guide: 0,
@@ -497,6 +532,20 @@ Page({
         sprogInterestList: this.data.sprogInterestList
       })
     })
+  },
+  iconBind(e) {
+    let item = e.currentTarget.dataset.item
+    if(item.toEducation) {
+      wx.navigateTo({
+        url: '/pages/education/education?type=0&url=' + item.toEducation,
+      })
+    } else if(item.toMiniProgram) {
+      this.minigo(`{"appid":"${item.toMiniProgram}","url":""}`)
+    } else {
+      wx.navigateTo({
+        url: item.url
+      })
+    }
   },
   checknextTap(e) {
     app.checknextTap(e)

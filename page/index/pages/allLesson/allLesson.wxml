@@ -46,13 +46,18 @@
         </view>
       </view>
       <scroll-view class="lessonScroll" scroll-y enable-flex bindscrolltolower="scrolltolower">
-        <lessonItem id="lessonItem" isAllLesson="1" lessonList="{{lessonList}}" wx:if="{{lessonList.length > 0}}" />
+        <lessonItem style="margin-bottom: {{ navList[current].id == 2 ? '130rpx' : ''}};" id="lessonItem" isAllLesson="1" lessonList="{{lessonList}}" wx:if="{{lessonList.length > 0}}" />
         <view wx:else class="qst">
           <image src="/images/liveqs.png"></image>
           <text>暂无相关课程</text>
           <text bindtap="checkTab">查看全部课程</text>
         </view>
-        <view class="classRoomBox"></view>
+        <view wx:if="{{ navList[current].id == 2 }}" class="noneBox"></view>
+        <view class="classRoomBox" wx:if="{{ navList[current].id == 2 }}">
+          <text>加入形象管理兴趣群</text>
+          <text>和形象管理爱好者分享交流</text>
+          <navigator class="joinBtn" hover-class="none" url="/pages/education/education?type=0&url=https://mp.weixin.qq.com/s/3iflPzn1y8_CRPS6lhGX7g">进群</navigator>
+        </view>
       </scroll-view>
     </view>
   </swiper-item>
