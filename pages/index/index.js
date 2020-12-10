@@ -61,8 +61,8 @@ Page({
       url: '/page/index/pages/rankingList/rankingList',
       icon: '/images/indexIcon/appicon.png',
       name: '下载APP',
-      width: 46,
-      height: 64,
+      width: 86,
+      height: 76,
       toEducation: 'https://mp.weixin.qq.com/s/vSd8XBQDQkvqVX_kt_YyTQ'
     },]
   },
