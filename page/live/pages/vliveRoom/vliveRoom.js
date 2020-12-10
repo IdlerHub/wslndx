@@ -54,7 +54,7 @@ Page({
           this.setData({
             'animation.showOne': !this.data.animation.showOne
           })
-        }, 500);
+        }, 250);
       })
     }, 5000);
     let clickHandler = setInterval(() => {

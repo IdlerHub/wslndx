@@ -20,7 +20,12 @@ Page({
     showBox: 0,
     moveBox: 0,
     viewNum: 0,
-    showList: 1
+    showList: 1,
+    animation: {
+      showDoweload: 1,
+      showJoinclass: 0,
+      showOne: 1,
+    }
   },
   pageName: 'live',
   pagetype: 'hlive',
@@ -33,6 +38,18 @@ Page({
     }, () => {
       this.liveInit()
     })
+    setInterval(() => {
+      this.setData({
+        'animation.showJoinclass': !this.data.animation.showJoinclass,
+        'animation.showDoweload': !this.data.animation.showDoweload,
+      }, () => {
+        setTimeout(() => {
+          this.setData({
+            'animation.showOne': !this.data.animation.showOne
+          })
+        }, 250);
+      })
+    }, 5000);
   },
   onShow: function () {
     this.setData({

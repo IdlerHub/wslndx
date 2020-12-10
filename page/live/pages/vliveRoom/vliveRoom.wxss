@@ -122,8 +122,8 @@ page {
 }
 
 .joinclass {
-  width: calc(108vmin / 7.5);
-  height: calc(105vmin / 7.5);
+  width: calc(94vmin / 7.5);
+  height: calc(100vmin / 7.5);
   position: fixed;
   bottom: calc(199vmin / 7.5);
   right: calc(10vmin / 7.5);
