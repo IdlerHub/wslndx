@@ -122,9 +122,9 @@
           "scene": null
         },
         {
-          "name": "pages/education/education",
-          "pathName": "pages/education/education",
-          "query": "url=https://mp.weixin.qq.com/s/yQAksZ2guGSI1CjhS-9few&type=activity&login=1",
+          "name": "page/live/pages/vliveRoom/vliveRoom",
+          "pathName": "page/live/pages/vliveRoom/vliveRoom",
+          "query": "roomId=7508",
           "scene": 1000
         },
         {

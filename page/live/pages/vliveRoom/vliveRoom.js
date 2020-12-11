@@ -24,6 +24,11 @@ Page({
       d: 0,
       m: 0,
       s: 0
+    },
+    animation: {
+      showDoweload: 1,
+      showJoinclass: 0,
+      showOne: 1,
     }
   },
   pageName: 'live',
@@ -40,13 +45,24 @@ Page({
       this.setData({
         statusBarHeight: systemInfo.statusBarHeight
       })
+    setInterval(() => {
+      this.setData({
+        'animation.showJoinclass': !this.data.animation.showJoinclass,
+        'animation.showDoweload': !this.data.animation.showDoweload,
+      }, () => {
+        setTimeout(() => {
+          this.setData({
+            'animation.showOne': !this.data.animation.showOne
+          })
+        }, 250);
+      })
+    }, 5000);
     let clickHandler = setInterval(() => {
       this.clickHandler()
     }, 250);
     setTimeout(() => {
       clearInterval(clickHandler)
     }, 2000)
-    
   },
   onShow: function () {
     this.setData({
