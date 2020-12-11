@@ -107,7 +107,7 @@ Page({
     });
   },
   setPostData(e) {
-    console.log(e)
+    console.log(e.detail.data[0], 'postMessage')
   },
   onShareAppMessage(ops) {
     let shareUrl = ops.webViewUrl.split('#')[0]
@@ -116,6 +116,12 @@ Page({
         title: '我已入学【网上老年大学】,你也快来一起学习吧',
         path: `/pages/education/education?type=0&url=${shareUrl+ '/#/login'}&login=1`,
         imageUrl: "https://hwcdn.jinlingkeji.cn/app/zsxtshare.jpg"
+      }
+    } else if(this.options.url.indexOf('lottery') != -1) {
+      return {
+        title: 'VIP学习年卡，1212张优惠名额限量首发',
+        path: `/pages/education/education?type=0&url=${this.options.url}&login=1&type=0`,
+        imageUrl: "https://hwcdn.jinlingkeji.cn/images/pro/lotteryShare.jpg"
       }
     } else {
       return this.menuAppShare();
