@@ -33,7 +33,9 @@ Page({
         width: 50,
         height: 50
       },
-    ]
+    ],
+    liveList: [],
+    lessonList: []
   },
   onLoad: function (options) {
 

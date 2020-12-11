@@ -1,7 +1,9 @@
 /* pages/timetableList/timetableList.wxss */
-page,
-.timetableList,
-.contariner {
+page {
+  padding-top: 112rpx;
+}
+
+.timetableList{
   padding-top: 112rpx;
   padding-bottom: 100rpx;
   box-sizing: border-box;

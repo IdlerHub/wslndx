@@ -66,3 +66,37 @@
   color: #666666;
   margin-top: 15rpx;
 }
+
+.qst {
+  height: calc(100vh - 373rpx);
+  padding-top: 101rpx;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.qst image {
+  width: 452rpx;
+  height: 288rpx;
+}
+
+.qst text {
+  font-size: 36rpx;
+  font-weight: 400;
+  color: #999999;
+  margin-top: -40rpx;
+}
+
+.qst .navigator {
+  width: 228rpx;
+  height: 80rpx;
+  background: #F2323A;
+  border-radius: 46rpx;
+  font-size: 36rpx;
+  font-weight: 400;
+  color: #FFFFFF;
+  text-align: center;
+  line-height: 80rpx;
+  margin-top: 30rpx;
+}

@@ -23,4 +23,10 @@
     </view>
   </view>
 </view>
+<view wx:if="{{liveList[0] || lessonList[0]}}"></view>
+<view class="qst" wx:else>
+  <image src="/images/liveqs.png"></image>
+  <text>您还未开始学习</text>
+  <navigator class="navigator" url="/pages/timetableList/timetableList">去选课</navigator>
+</view>
 <navBar path="video" />
