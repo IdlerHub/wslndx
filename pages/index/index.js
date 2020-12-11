@@ -51,7 +51,7 @@ Page({
       width: 65.19,
       height: 63.16,
     }, {
-      url: '/page/index/pages/rankingList/rankingList',
+      url: 'pages/studyCard/studyCard?type=home',
       icon: '/images/indexIcon/vipIcon.png',
       name: 'VIP专区',
       width: 59,
@@ -540,7 +540,7 @@ Page({
         url: '/pages/education/education?type=0&url=' + item.toEducation,
       })
     } else if(item.toMiniProgram) {
-      this.minigo(`{"appid":"${item.toMiniProgram}","url":""}`)
+      this.minigo(`{"appid":"${item.toMiniProgram}","url":"${item.url}"}`)
     } else {
       wx.navigateTo({
         url: item.url

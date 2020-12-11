@@ -52,7 +52,7 @@
           <text>暂无相关课程</text>
           <text bindtap="checkTab">查看全部课程</text>
         </view>
-        <view wx:if="{{ navList[current].id == 2 }}" class="noneBox"></view>
+        <view wx:if="{{ navList[current].id == 2 && lessonList.length > 4}}" class="noneBox"></view>
         <view class="classRoomBox" wx:if="{{ navList[current].id == 2 }}">
           <text>加入形象管理兴趣群</text>
           <text>和形象管理爱好者分享交流</text>
