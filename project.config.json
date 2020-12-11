@@ -122,8 +122,8 @@
           "scene": null
         },
         {
-          "name": "page/live/pages/vliveRoom/vliveRoom",
-          "pathName": "page/live/pages/vliveRoom/vliveRoom",
+          "name": "pages/studyCenter/studyCenter",
+          "pathName": "pages/studyCenter/studyCenter",
           "query": "roomId=7508",
           "scene": 1000
         },
