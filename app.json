@@ -137,6 +137,11 @@
         "pages/voteSearch/voteSearch",
         "pages/voteRule/voteRule"
       ]
+    },
+    {
+      "root": "page/study/",
+      "pages": [
+      ]
     }
   ],
   "requiredBackgroundModes": [

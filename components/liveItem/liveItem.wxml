@@ -1,0 +1,10 @@
+<!--components/liveItem/liveItem.wxml-->
+<view class="liveItem" wx:for="{{liveList}}" wx:key="index">
+  <view class="itemTop">
+    <text></text>
+    <text>正在直播</text>
+  </view>
+  <view class="itemBox">
+    <image src="{{item.indexCover}}"></image>
+  </view>
+</view>

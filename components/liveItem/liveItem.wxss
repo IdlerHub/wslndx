@@ -1,0 +1,33 @@
+/* components/liveItem/liveItem.wxss */
+.liveItem {
+  margin: 0rpx 20rpx 0 30rpx;
+  border-left: 1rpx solid #999999;
+  padding: 50rpx 0 50rpx 0;
+  position: relative;
+}
+
+.liveItem .itemTop {
+  position: absolute;
+  top: -11rpx;
+  left: -12rpx;
+}
+
+.liveItem .itemTop,.itemBox {
+  display: flex;
+  align-items: center;
+}
+
+.liveItem .itemTop text:nth-child(1) {
+  width: 14rpx;
+  height: 14rpx;
+  border: 4rpx solid #F2323A;
+  background: #fff;
+  margin-right: 20rpx;
+  border-radius: 50%;
+}
+
+.liveItem .itemBox image {
+  width: 260rpx;
+  height: 160rpx;
+  border-radius: 12rpx;
+} 

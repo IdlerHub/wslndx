@@ -1,7 +1,12 @@
 /* pages/studyCenter/studyCenter.wxss */
+page {
+  background: #EDEDED;
+}
+
 .pageTop {
   padding: 40rpx 30rpx 30rpx 30rpx;
   border-bottom: 1rpx solid #E9E9E9;
+  background: #fff;
 }
 
 .pageTop .timeBox {
@@ -74,6 +79,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  background: #fff;
 }
 
 .qst image {
@@ -99,4 +105,38 @@
   text-align: center;
   line-height: 80rpx;
   margin-top: 30rpx;
+}
+
+.contentBox {
+  margin-top: 20rpx;
+  background: #fff;
+}
+
+.contentBox .contentTop {
+  padding: 0 30rpx;
+  height: 120rpx;
+  border-bottom: 1rpx solid #E9E9E9;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.contentBox .contentTop .contentTopleft {
+  font-size: 42rpx;
+  font-weight: 500;
+  color: #333333;
+}
+
+.contentBox .contentTop .contentTopright {
+  display: flex;
+  align-items: center;
+  font-size: 32rpx;
+  font-weight: 400;
+  color: #333333;
+}
+
+.contentBox .contentTop .contentTopright image {
+  width: 14rpx;
+  height: 22rpx;
+  margin-left: 10rpx;
 }

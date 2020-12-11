@@ -1,4 +1,18 @@
 <!--pages/studyCenter/studyCenter.wxml-->
+<template name="contentBox">
+  <view class="contentBox">
+    <view class="contentTop">
+      <view class="contentTopleft">
+        <text>{{title}} 3</text>
+      </view>
+      <view class="contentTopright" wx:if="{{isLive}}">
+        <text>全部</text>
+        <image src="/images/vedioRight.png"></image>
+      </view>
+    </view>
+    <liveItem liveList="{{liveList}}" />
+  </view>
+</template>
 <view class="pageTop">
   <view class="timeBox">
     <view class="timeItem">
@@ -23,7 +37,9 @@
     </view>
   </view>
 </view>
-<view wx:if="{{liveList[0] || lessonList[0]}}"></view>
+<view wx:if="{{liveList[0] || lessonList[0]}}">
+  <template is="contentBox" data="{{ title:'直播课程', isLive: 1, liveList }}"></template>
+</view>
 <view class="qst" wx:else>
   <image src="/images/liveqs.png"></image>
   <text>您还未开始学习</text>
