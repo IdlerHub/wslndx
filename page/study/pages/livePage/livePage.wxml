@@ -1,0 +1,2 @@
+<!--page/study/pages/livePage/livePage.wxml-->
+<liveItem liveList="{{liveList}}" />

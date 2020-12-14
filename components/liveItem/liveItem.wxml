@@ -1,10 +1,27 @@
 <!--components/liveItem/liveItem.wxml-->
-<view class="liveItem" wx:for="{{liveList}}" wx:key="index">
+<view class="liveItem" wx:for="{{liveList}}" wx:key="index"
+  style="border: {{ index == liveList.length - 1 ? 'none' : '' }}">
   <view class="itemTop">
     <text></text>
     <text>正在直播</text>
   </view>
   <view class="itemBox">
-    <image src="{{item.indexCover}}"></image>
+    <view class="boxLeft">
+      <image src="{{item.indexCover}}"></image>
+      <image src="/images/recomonPlay.png"></image>
+    </view>
+    <view class="boxRight">
+      <text class="itemName">{{item.liveName}}</text>
+      <view class="bottom">
+        <text class="count">共{{liveCout || '18'}}课时</text>
+        <view class="status living" wx:if="{{item.status == 1}}">
+          <text wx:for="{{3}}" wx:key="index"></text>
+          <view>直播中</view>
+        </view>
+        <view class="status stanby" wx:else>
+          即将开始
+        </view>
+      </view>
+    </view>
   </view>
 </view>

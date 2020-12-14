@@ -5,12 +5,40 @@
       <view class="contentTopleft">
         <text>{{title}} 3</text>
       </view>
-      <view class="contentTopright" wx:if="{{isLive}}">
+      <navigator class="contentTopright" hover-class="none" url="/page/study/pages/livePage/livePage" wx:if="{{isLive}}">
         <text>全部</text>
         <image src="/images/vedioRight.png"></image>
+      </navigator>
+    </view>
+    <view class="itemBox" wx:if="{{isLive}}">
+      <liveItem liveList="{{liveList}}" />
+    </view>
+    <view class="itemBox" wx:else>
+      <view class="lessItem" wx:for="{{lessonList}}" wx:key="index" style="border: {{ index == lessonList.length - 1 ? 'none' : '' }}">
+        <view class="left">
+          <image src="{{item.indexCover}}"></image>
+          <view class="mask" wx:if="{{item.isOver}}">
+            <image src="/images/studyIcon/pastDue.png"></image>
+          </view>
+        </view>
+        <view class="right">
+          <view class="itemTitle">{{item.name}}</view>
+          <view class="bottom" wx:if="{{ item.studyNum > 0 && item.studyNum != item.liveCount }}">
+            <view class="studyNum">已学{{item.studyNum}}/{{item.liveCount}}课时</view>
+            <view class="studyLine"><text style="width: {{ (item.studyNum / item.liveCount) * 100}}%;" ></text></view>
+          </view>
+          <view class="bottom" wx:elif="{{item.isOver}}">
+            <view class="studyNum">课程过期时间  2021.11.09</view>  
+          </view>
+          <view class="bottom unStudy" wx:else>
+            <view class="studyNum">共{{item.liveCount}}课时</view>
+            <view class="btn {{item.studyNum > 0 ? 'over' : ''}}">
+                {{ item.studyNum > 0 ? '已学完' : '去学习' }}
+            </view>
+          </view>
+        </view>
       </view>
     </view>
-    <liveItem liveList="{{liveList}}" />
   </view>
 </template>
 <view class="pageTop">
@@ -39,6 +67,7 @@
 </view>
 <view wx:if="{{liveList[0] || lessonList[0]}}">
   <template is="contentBox" data="{{ title:'直播课程', isLive: 1, liveList }}"></template>
+  <template is="contentBox" data="{{ title:'我的课程', lessonList }}"></template>
 </view>
 <view class="qst" wx:else>
   <image src="/images/liveqs.png"></image>

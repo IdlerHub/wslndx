@@ -79,10 +79,37 @@ Page({
         viewNum: 184
       }
     ],
-    lessonList: []
+    lessonList: [{
+        id: 1,
+        name: '老年权益维护老年权益维护老年权益维护老年权士大夫但是看',
+        liveCount: 18,
+        studyNum: 8,
+        indexCover: "https://hwcdn.jinlingkeji.cn/uploads/images/fe39ce58b0be811ac576ddbbeb513b63.png",
+      },
+      {
+        id: 1,
+        name: '音乐鉴赏之古典音乐',
+        liveCount: 18,
+        studyNum: 0,
+        indexCover: "https://hwcdn.jinlingkeji.cn/uploads/images/fe39ce58b0be811ac576ddbbeb513b63.png",
+      }, {
+        id: 1,
+        name: '音乐鉴赏之古典音乐',
+        liveCount: 18,
+        studyNum: 18,
+        indexCover: "https://hwcdn.jinlingkeji.cn/uploads/images/fe39ce58b0be811ac576ddbbeb513b63.png",
+      },{
+        id: 1,
+        name: '音乐鉴赏之古典音乐',
+        liveCount: 18,
+        studyNum: 18,
+        indexCover: "https://hwcdn.jinlingkeji.cn/uploads/images/fe39ce58b0be811ac576ddbbeb513b63.png",
+        isOver: 1
+      },
+    ]
   },
   onLoad: function (options) {
-    
+
   },
   onShow: function () {
 

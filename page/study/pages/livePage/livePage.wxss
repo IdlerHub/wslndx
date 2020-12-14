@@ -1,0 +1,5 @@
+/* page/study/pages/livePage/livePage.wxss */
+page {
+  padding-top: 50rpx;
+  border-top: 1rpx solid #EDEDED;
+}

@@ -141,6 +141,8 @@
     {
       "root": "page/study/",
       "pages": [
+        "pages/livePage/livePage",
+        "pages/certificate/certificate"
       ]
     }
   ],
