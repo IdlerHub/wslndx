@@ -13,7 +13,7 @@ Page({
         id: 2,
         name: '结课证书',
         image: '/images/studyIcon/overIcon.png',
-        url: '/page/index/pages/rankingList/rankingList',
+        url: '/page/study/pages/certificate/certificate',
         width: 50,
         height: 50
       },
@@ -128,5 +128,16 @@ Page({
   },
   onShareAppMessage: function () {
 
+  },
+  iconBind(e) {
+    console.log(e)
+    let item = e.currentTarget.dataset.item
+    if(item.toMiniprogram) {
+
+    } else {
+      wx.navigateTo({
+        url: item.url,
+      })
+    }
   }
 })

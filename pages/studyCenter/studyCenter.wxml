@@ -59,7 +59,7 @@
     </view>
   </view>
   <view class="iconBox">
-    <view wx:for="{{iconList}}" wx:key="index" class="iconItem">
+    <view wx:for="{{iconList}}" wx:key="index" class="iconItem" bindtap="iconBind" data-item="{{item}}">
       <image src="{{item.image}}" style="width: {{item.width}}rpx;height:{{item.height}}rpx;"></image>
       <text>{{item.name}}</text>
     </view>

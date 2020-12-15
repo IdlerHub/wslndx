@@ -122,8 +122,8 @@
           "scene": null
         },
         {
-          "name": "pages/studyCenter/studyCenter",
-          "pathName": "pages/studyCenter/studyCenter",
+          "name": "page/study/pages/certificate/certificate",
+          "pathName": "page/study/pages/certificate/certificate",
           "query": "roomId=7508",
           "scene": 1000
         },
