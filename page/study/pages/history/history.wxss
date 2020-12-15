@@ -38,6 +38,39 @@ page {
   transform: translateX(-50%);
 }
 
+.qstBox {
+  height: calc(100% - 116rpx);
+  padding-top: 180rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.qstBox image {
+  width: 452rpx;
+  height: 288rpx;
+}
+
+.qstBox text:nth-child(2) {
+  font-size: 36rpx;
+  font-weight: 400;
+  color: #999999;
+  line-height: 50rpx;
+}
+
+.qstBox .navigator {
+  width: 264rpx;
+  height: 80rpx;
+  background: #F2323A;
+  border-radius: 46rpx;
+  text-align: center;
+  line-height: 80rpx;
+  font-size: 36rpx;
+  font-weight: 400;
+  color: #FFFFFF;
+  margin-top: 40rpx;
+}
+
 .swiper {
   height: calc(100% - 116rpx);
 }
