@@ -142,7 +142,8 @@
       "root": "page/study/",
       "pages": [
         "pages/livePage/livePage",
-        "pages/certificate/certificate"
+        "pages/certificate/certificate",
+        "pages/history/history"
       ]
     }
   ],

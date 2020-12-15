@@ -122,9 +122,9 @@
           "scene": null
         },
         {
-          "name": "page/study/pages/certificate/certificate",
-          "pathName": "page/study/pages/certificate/certificate",
-          "query": "roomId=7508",
+          "name": "page/study/pages/history/history",
+          "pathName": "page/study/pages/history/history",
+          "query": "type=recruit&url=mp.weixin.qq.com/s/kkgQv6rnuJmZUM2GmbE2xQ",
           "scene": 1000
         },
         {
