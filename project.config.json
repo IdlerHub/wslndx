@@ -122,8 +122,8 @@
           "scene": null
         },
         {
-          "name": "page/study/pages/history/history",
-          "pathName": "page/study/pages/history/history",
+          "name": "page/index/pages/search/search",
+          "pathName": "page/index/pages/search/search",
           "query": "type=recruit&url=mp.weixin.qq.com/s/kkgQv6rnuJmZUM2GmbE2xQ",
           "scene": 1000
         },
