@@ -1,2 +1,18 @@
 <!--page/index/pages/topTeacher/topTeacher.wxml-->
-<text>page/index/pages/topTeacher/topTeacher.wxml</text>
+<view class="item" wx:for="{{list}}" wx:key="index">
+  <image src="{{item.avatar}}" class="avatar" alt="" srcset=""></image>
+  <view class="nameBox">
+    <view class="name">{{item.name}}</view>
+    <view class="inro">{{item.inro}}</view>
+  </view>
+  <view class="iconBox" bindtap="checkAttention" data-item="{{item}}" data-index="{{index}}">
+    <image src="../../images/attention.png" wx:if="{{!item.isChage}}"></image>
+    <image src="../../images/attentioned.png" wx:elif="{{item.isChage && !item.chageYou}}"></image>
+    <image src="../../images/attentionown.png" wx:else></image>
+    <text style="color:{{!item.isChage ? '' : '#999999'}}">{{ !item.isChage ? '关注' : item.isChage && !item.chageYou ? '已关注' : '相互关注' }}</text>
+  </view>
+  <button class="iconBox share" hover-class="none" open-type="share" data-id="{{item.id}}">
+    <image src="../../images/wechatShare.png"></image>
+    <text>分享</text>
+  </button>
+</view>

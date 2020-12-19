@@ -30,9 +30,6 @@ Page({
   onReachBottom: function () {
 
   },
-  onShareAppMessage: function () {
-
-  },
   getAllCategory() {
     app.lessonNew.getAllCategory().then(res => {
       this.setData({

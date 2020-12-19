@@ -1,0 +1,7 @@
+<!--page/index/pages/tearcherDetail/tearcherDetail.wxml-->
+<view class="topBox" style="padding-top: {{ statusBarHeight + 10 }}px;">
+  <image src="/images/back.png" class="back"></image>
+  <view class="msgBox">
+    <image src="../../images/avatarNone.png"></image>
+  </view>
+</view>

@@ -72,7 +72,8 @@
         "pages/schoolLesson/schoolLesson",
         "pages/allSchoollesson/allSchoollesson",
         "pages/interested/interested",
-        "pages/topTeacher/topTeacher"
+        "pages/topTeacher/topTeacher",
+        "pages/tearcherDetail/tearcherDetail"
       ]
     },
     {

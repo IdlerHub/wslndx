@@ -21,5 +21,4 @@ Page({
       });
     });
   },
-  onShareAppMessage: function () {},
 });

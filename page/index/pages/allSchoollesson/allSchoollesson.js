@@ -78,9 +78,6 @@ Page({
       })
     }, 1000)
   },
-  onShareAppMessage: function () {
-
-  },
   getCategory() {
     this.setData({
       currentTab: 0,

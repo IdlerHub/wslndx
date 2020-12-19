@@ -27,9 +27,6 @@ Page({
     this.params.pageNum += 1
     this.getSchollList()
   },
-  onShareAppMessage: function () {
-
-  },
   getSchollList() {
     app.lessonNew.getSchollList(this.params).then(res => {
       res.dataList.length < 20 ? this.pageEnd = 1 : ''

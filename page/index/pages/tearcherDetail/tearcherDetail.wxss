@@ -1,0 +1,25 @@
+/* page/index/pages/tearcherDetail/tearcherDetail.wxss */
+.topBox {
+  min-height: 100rpx;
+  background: linear-gradient(180deg, #757D8C 0%, #626A7D 100%);
+  padding-bottom: 30rpx;
+}
+
+.topBox .back {
+  width: 40rpx;
+  height: 35rpx;
+  padding: 0 30rpx;
+
+}
+.topBox .msgBox {
+  display: flex;
+  padding: 40rpx 30rpx;
+  align-items: center;
+}
+
+.topBox .msgBox image {
+  width: 130rpx;
+  height: 130rpx;
+  border-radius: 50%;
+  border: 1rpx solid #fff;
+}

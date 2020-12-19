@@ -138,6 +138,7 @@ let store = new Store({
   },
   methods: {
     menuAppShare() {
+      console.log()
       wx.uma.trackEvent("totalShare", {
         shareName: "tab三个点",
       });
@@ -149,7 +150,7 @@ let store = new Store({
           this.data.$state.userInfo.id +
           "&type=invite",
         imageUrl:
-          this.data.$state.shareImgurl || "../../images/sharemessage.jpg",
+          this.data.$state.shareImgurl || "/images/sharemessage.jpg",
       };
     },
     getPlayerState() {

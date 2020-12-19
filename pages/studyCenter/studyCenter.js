@@ -126,9 +126,6 @@ Page({
   onReachBottom: function () {
 
   },
-  onShareAppMessage: function () {
-
-  },
   iconBind(e) {
     console.log(e)
     let item = e.currentTarget.dataset.item

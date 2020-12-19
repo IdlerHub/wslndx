@@ -122,8 +122,8 @@
           "scene": null
         },
         {
-          "name": "page/index/pages/topTeacher/topTeacher",
-          "pathName": "page/index/pages/topTeacher/topTeacher",
+          "name": "page/index/pages/tearcherDetail/tearcherDetail",
+          "pathName": "page/index/pages/tearcherDetail/tearcherDetail",
           "query": "id=1040",
           "scene": 1000
         },
