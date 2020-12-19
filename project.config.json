@@ -122,9 +122,9 @@
           "scene": null
         },
         {
-          "name": "page/index/pages/search/search",
-          "pathName": "page/index/pages/search/search",
-          "query": "type=recruit&url=mp.weixin.qq.com/s/kkgQv6rnuJmZUM2GmbE2xQ",
+          "name": "page/index/pages/topTeacher/topTeacher",
+          "pathName": "page/index/pages/topTeacher/topTeacher",
+          "query": "id=1040",
           "scene": 1000
         },
         {

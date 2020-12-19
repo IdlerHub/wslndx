@@ -37,7 +37,9 @@
         </view>
       </view>
       <view class="schoolBootem" wx:else>
-        <text class="left">剧集</text><text class="right">{{item.lesson_count || item.lessonCount}}集</text><text
+        <text class="left">剧集</text><text class="right">{{item.lesson_count || item.lessonCount}}集</text>
+          <text>|</text>
+        <text
           class="left">播放</text><text class="right">{{item.thousand || item.browse}}</text>
         <!-- <text>查看全部课程</text> -->
       </view>

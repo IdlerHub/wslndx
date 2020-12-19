@@ -119,6 +119,7 @@
 
 .item .contentBox .schoolBootem {
   margin-top: 20rpx;
+  display: flex;
 }
 
 .item .contentBox .schoolBootem .left {
@@ -127,8 +128,12 @@
   color: #7E7E7E;
 }
 
-.item .contentBox .schoolBootem .left:nth-child(3) {
-  margin-left: 40rpx;
+.item .contentBox .schoolBootem text:nth-child(3) {
+  display: inline-block;
+  margin: 0 20rpx;
+  font-size: 26rpx;
+  font-weight: 400;
+  color: #CCCCCC;
 }
 
 .item .contentBox .schoolBootem .right {

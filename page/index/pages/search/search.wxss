@@ -1,6 +1,7 @@
 /* pages/search/search.wxss */
 .container {
   height: 100vh;
+  overflow: hidden;
 }
 
 .container .search-top {
@@ -8,6 +9,7 @@
   height: 80rpx;
   padding: 0 30rpx;
   margin: 30rpx 0;
+  margin-bottom: 20rpx;
   box-sizing: border-box;
   display: flex;
   justify-content: space-between;
@@ -29,7 +31,7 @@
   width: 40rpx;
   height: 40rpx;
   margin-left: 12rpx;
-  margin-right:20rpx;
+  margin-right: 20rpx;
 }
 
 /* .container .search-top .search-box image:nth-child(3) {
@@ -37,7 +39,7 @@
   height: 36rpx;
   margin-left: 15rpx;
 } */
-.container .search-top .search-box  form{
+.container .search-top .search-box form {
   display: flex;
   flex: 1;
   justify-content: flex-start;
@@ -45,6 +47,7 @@
   flex-direction: row;
   position: relative;
 }
+
 .container .search-top .search-box button {
   width: 86rpx;
   height: 88rpx;
@@ -54,6 +57,7 @@
   margin-top: -36rpx;
   z-index: 5;
 }
+
 .container .search-top .search-box button image {
   width: 40rpx;
   height: 40rpx;
@@ -79,56 +83,6 @@
   border-radius: 0px 10rpx 10rpx 0px;
 }
 
-.container .voice-box {
-  position: absolute;
-  bottom: -500rpx;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.container .voice-box .voice-image {
-  width: 152rpx;
-  height: 152rpx;
-}
-
-.container .voice-box .voice-txt {
-  font-size: 36rpx;
-  font-family: PingFangSC-Regular, PingFang SC;
-  font-weight: 400;
-  color: rgba(51, 51, 51, 1);
-  margin-top: 24rpx;
-}
-
-.container .voice-box .voice-water1{
-  width: 152rpx;
-  height: 152rpx;
-  position: absolute;
-  top: -2rpx;
-  border: 1px solid pink;
-  box-shadow: 0 0 120px 30px pink inset;
-  border-radius: 100%;
-  z-index: -4;
-  opacity: 0;
-}
-.container .voice-box .voice-water1 {
-  animation: wateranimate 2s 1s ease-out infinite;
-}
-.container .voice-box .voice-water2 {
-  animation: wateranimate 2s 0s ease-out infinite;
-}
-@keyframes wateranimate {
-  0% {
-    transform: scale(0.9);
-    opacity: 0.8;
-  }
-
-  100% {
-    transform: scale(2);
-    opacity: 0;
-  }
-}
 .qst {
   width: 100%;
   height: 500rpx;
@@ -137,79 +91,262 @@
   align-items: center;
   margin-top: 130rpx;
 }
-.qst .qst-img{
+
+.qst .qst-img {
   width: 510rpx;
   height: 334rpx;
 }
+
 .container .wrap {
-  padding: 0 30rpx;
-  box-sizing: border-box;
+  background: #EDEDED;
+  height: calc(100% - 130rpx);
+  display: flex;
+  flex-direction: column;
 }
-.wrap .item {
+
+.container .wrap .top {
+  width: 100%;
+  height: 90rpx;
+  box-sizing: border-box;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 0 30rpx;
+  border-bottom: 1rpx solid #E9E9E9;
+}
+
+.container .wrap .top view {
+  width: 160rpx;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.container .wrap .top view text:nth-child(1) {
+  font-size: 32rpx;
+  font-weight: 400;
+  color: #999999;
+}
+
+.container .wrap .top view .active {
+  font-size: 36rpx !important;
+  font-weight: 500 !important;
+  color: #F2323A !important;
+}
+
+.container .wrap .top view text:nth-child(2) {
+  width: 36rpx;
+  height: 5rpx;
+  background: #F2323A;
+  border-radius: 3rpx;
+  margin-top: 15rpx;
+  position: absolute;
+  bottom: -1rpx;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.container .wrap .swiper {
+  height: calc(100% - 80rpx);
+}
+
+.item {
   display: flex;
   align-items: center;
   padding: 30rpx 0;
+  margin: 0 20rpx;
   box-sizing: border-box;
   border-bottom: 1rpx solid #e9e9e9;
 }
-.wrap .item:last-of-type {
+
+.item:last-of-type {
   border-bottom: none;
 }
-.wrap .item .left {
+
+.item .left {
   position: relative;
   width: 260rpx;
   height: 160rpx;
+  border: 2rpx solid #EDEDED;
+  background: #EDEDED;
+  border-radius: 10rpx;
 }
-.wrap .item .left .status {
+
+.item .left .status {
   position: absolute;
   width: 90rpx;
   height: 52rpx;
   top: 0;
   left: 0;
 }
-.wrap .left .poster {
+
+.left .poster {
   width: 260rpx;
   height: 160rpx;
   border-radius: 12rpx;
 }
-.wrap .left .icon {
+
+.left .icon {
   position: absolute;
   width: 50rpx;
   height: 50rpx;
   right: 10rpx;
   bottom: 10rpx;
 }
-.wrap .right {
+
+.right {
   flex: 1;
   width: 410rpx;
+  height: 160rpx;
   margin-left: 20rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
-.wrap .right .name {
+
+.right .tags {
+  display: flex;
+  margin-top: 12rpx;
+}
+
+.right .tags text {
+  padding: 3rpx 6rpx 2rpx 6rpx;
+  font-size: 24rpx;
+  font-weight: 400;
+  color: #808080;
+  background: #EDEFF7;
+  border-radius: 4rpx;
+}
+
+.right .name {
   line-height: 53rpx;
   font-size: 38rpx;
-  color:rgba(46,46,46,1);
+  color: rgba(46, 46, 46, 1);
   letter-spacing: 0;
   font-weight: 500;
 }
-.wrap .right .actor {
+
+.right .actor {
   line-height: 37rpx;
   font-size: 26rpx;
   color: #999;
   letter-spacing: 0;
   margin: 10rpx 0;
 }
-.wrap .right .info {
+
+.right .info {
   line-height: 40rpx;
   font-size: 28rpx;
   color: #bfbfbf;
   letter-spacing: 0;
+  display: flex;
+  margin-top: 22rpx;
 }
-.wrap .right .info .key {
+
+.right .info .key {
   color: #999;
   margin-right: 12rpx;
 }
-.playNum {
-  margin-left: 40rpx;
+
+.info text:nth-child(2) {
+  font-size: 24rpx;
+  margin: 0 20rpx;
 }
 
+.containerBox {
+  margin: 0 30rpx 30rpx 30rpx;
+  padding-bottom: 30rpx;
+  border-bottom: 1rpx solid #E9E9E9;
+}
 
+.containerBox .titleBox {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.containerBox .titleBox text:nth-child(1) {
+  font-size: 34rpx;
+  font-weight: 500;
+  color: #333333;
+}
+
+.containerBox .titleBox .titleRight {
+  display: flex;
+  align-items: center;
+}
+
+.containerBox .titleBox .titleRight image {
+  width: 32.83rpx;
+  height: 34rpx;
+}
+
+.containerBox .titleBox .titleRight text:nth-child(2) {
+  font-size: 32rpx;
+  font-weight: 400;
+  color: #999999;
+  margin-left: 12rpx;
+}
+
+.containerBox .listBox {
+  padding: 0 2rpx;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.containerBox .listBox text {
+  width: 216rpx;
+  height: 80rpx;
+  box-sizing: border-box;
+  background: #F5F6FA;
+  border-radius: 10rpx;
+  padding: 0 15rpx;
+  text-align: center;
+  line-height: 80rpx;
+  font-size: 32rpx;
+  font-weight: 400;
+  color: #333333;
+  margin-top: 20rpx;
+  margin-right: 19rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.containerBox .listBox text:nth-child(3n) {
+  margin-right: 0;
+}
+
+.allBox {
+  background: #fff;
+  margin-bottom: 20rpx;
+}
+
+.allBox .title {
+  padding: 30rpx;
+  font-size: 36rpx;
+  font-weight: 500;
+  color: #333333;
+  border-bottom: 1rpx solid #E9E9E9;
+}
+
+.allBox .bottom {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 109rpx;
+  font-size: 32rpx;
+  font-weight: 400;
+  color: #96A8BB;
+}
+
+.allBox .bottom image {
+  width: 20rpx;
+  height: 20rpx;
+  margin-left: 16rpx;
+}

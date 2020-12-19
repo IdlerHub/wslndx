@@ -1656,5 +1656,8 @@ Page({
     {
         return true
     }
+  },
+  binderror(e) {
+    console.log(e)
   }
 });
