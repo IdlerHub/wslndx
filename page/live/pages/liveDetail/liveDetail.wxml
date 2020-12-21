@@ -1,8 +1,8 @@
 <!-- pages/liveDetail/liveDetail.wxml -->
 <view class="container">
     <!-- 视频播放 -->
-    <video id="myVideo" wx:if="{{playNow.recordUrl && playNow.recordUrl != '' }}" src="{{ playNow.recordUrl }}"
-        controls page-gesture enable-play-gesture bindended="ended" bindplay="played" bindpause="videoPause">
+    <video id="myVideo" wx:if="{{playNow.recordUrl && playNow.recordUrl != '' }}" src="{{ playNow.recordUrl }}" controls
+        page-gesture enable-play-gesture bindended="ended" bindplay="played" bindpause="videoPause">
         <cover-image wx:if="{{ !playFlag }}" mode="widthFix" src="{{ lessonDetail.cover }}" class="poster"
             bindtap="recordAddVedio"></cover-image>
         <cover-image wx:if="{{ !playFlag }}" mode="aspectFill" src="{{ $state.imgHost }}/play.png" class="play"
@@ -44,6 +44,21 @@
                 <text>分享</text>
             </button>
         </view>
+        <!-- <view class="progressBox">
+            <view class="studyNum">
+                <text>已学习</text>
+                <text> 25%</text>
+            </view>
+            <view class="progress">
+                <text style="width: 25%;"></text>
+            </view>
+        </view> -->
+        <view class="progressBox">
+            <view class="badgeBox">
+                <image src="/images/livebadge.png"></image>
+                <text class="badge">查看证书</text>
+            </view>
+        </view>
     </view>
     <!-- 直播信息 -->
     <navigator></navigator>
@@ -75,7 +90,8 @@
                 </view>
             </block>
         </scroll-view>
-        <swiper class="tab" style="height:{{ height }}px" current="{{ currentTab }}" duration="300" bindchange="switchTab" scroll-top="{{scrollviewtop}}">
+        <swiper class="tab" style="height:{{ height }}px" current="{{ currentTab }}" duration="300"
+            bindchange="switchTab" scroll-top="{{scrollviewtop}}">
             <swiper-item class="tab-item">
                 <!-- 简介 -->
                 <scroll-view scroll-y="true" class="wrap synopsis">
