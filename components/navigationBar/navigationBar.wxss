@@ -20,12 +20,18 @@
   justify-content: flex-start;
   align-items: center;
 }
+.back image {
+  width: 20rpx;
+  height: 30rpx;
+  padding: 30rpx;
+  transform: rotateY(180deg);
+}
 .icon-fanhui{
   display: inline-block;
   font-family: 'iconfont' !important;
   speak: none;
   font-style: normal;
-  font-weight: bold;
+  font-weight: 800;
   font-variant: normal;
   text-transform: none;
   text-rendering: auto;
@@ -34,8 +40,9 @@
   -moz-osx-font-smoothing: grayscale;
   vertical-align: middle;
   font-size: 34rpx;
-  padding-left:10rpx;
+  padding-left:30rpx;
 }
+
 .icon-fanhui:before { content: "\e624";}
 .back-home{
   width: auto;

@@ -1,4 +1,7 @@
 {
-  "usingComponents": {},
-  "navigationStyle": "custom"
+  "usingComponents": {
+    "navigationBar": "/components/navigationBar/navigationBar"
+  },
+  "navigationStyle": "custom",
+  "disableScroll": true
 }

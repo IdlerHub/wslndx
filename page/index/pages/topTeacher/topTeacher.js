@@ -28,7 +28,7 @@ Page({
     if (e.from === "button") {
       let id = e.target.dataset.id
       return {
-        title: this.data.$state.shareTitle || "福利！老年大学十万集免费课程在线学习",
+        title: "一起来学习网上老年大学讲师的课程吧!",
         imageUrl:  this.data.$state.shareImgurl || "/images/sharemessage.jpg",
         path: "/page/index/pages/tearcherDetail/tearcherDetail?id=" +
           id +

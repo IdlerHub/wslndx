@@ -1,6 +1,6 @@
 <!--page/index/pages/topTeacher/topTeacher.wxml-->
 <view class="item" wx:for="{{list}}" wx:key="index">
-  <image src="{{item.avatar}}" class="avatar" alt="" srcset=""></image>
+  <image src="{{item.avatar || '../../images/avatarNone.png'}}" class="avatar" alt="" srcset=""></image>
   <view class="nameBox">
     <view class="name">{{item.name}}</view>
     <view class="inro">{{item.inro}}</view>
