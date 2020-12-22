@@ -25,7 +25,7 @@
   <view class="liveBox" wx:if="{{liveRecommend[0]}}">
     <view class="topTtile">
       <text>免费直播</text>
-      <navigator open-type="switchTab" class="topTtile-right" url="/pages/timetableList/timetableList"
+      <navigator class="topTtile-right" url="/pages/timetableList/timetableList"
         hover-class="none" wx:if="{{$state.userInfo.id}}">
         <text>本周课表</text>
         <image src="{{ $state.imgHost }}/Return-black.png"></image>
