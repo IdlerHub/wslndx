@@ -1,0 +1,24 @@
+<!--page/live/pages/liveCertificate/liveCertificate.wxml-->
+<view class="canvansBox">
+  <image src="../../images/certificate.png" class="certificate"></image>
+  <view class="nick" style="{{detail.nick.length >= 5 ? detail.nick.length > 7 ? 'font-size: 20rpx;line-height: 53rpx;' : 'font-size: 30rpx;line-height: 53rpx;' : ''}}">{{detail.nick}}</view>
+  <view class="name"
+    style="{{ detail.name.length > 10 && detail.name.length < 16 ? 'font-size:25rpx;line-height: 53rpx;' : ''  }}">
+    {{detail.name}}</view>
+  <view class="date">
+    <text>网上老年大学</text>
+    <text>{{date}}</text>
+  </view>
+</view>
+<view class="btnBox" bindtap="">
+  <view class="btn" bindtap="save">
+    <image src="../../images/saveImg.png"></image>
+    <text>保存图片</text>
+  </view>
+  <button hover-class="none" class="btn" open-type="share">
+    <image src="../../images/shareIcon.png"></image>
+    <text>分享好友</text>
+  </button>
+</view>
+<painter scaleRatio="2" style="position: absolute; top: -9999rpx;" palette="{{canvans}}" bind:imgOK="onImgOK" />
+<!-- <image src="{{sharePath}}" style="width: 690rpx;height: 1012rpx;"></image> -->
