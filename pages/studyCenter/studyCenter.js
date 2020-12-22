@@ -21,7 +21,7 @@ Page({
         id: 3,
         name: '学习历史',
         image: '/images/studyIcon/historyIcon.png',
-        url: '/page/index/pages/rankingList/rankingList',
+        url: '/page/study/pages/history/history',
         width: 50,
         height: 50
       },
@@ -29,9 +29,11 @@ Page({
         id: 4,
         name: '学院市集',
         image: '/images/studyIcon/shopIcon.png',
-        url: '/page/index/pages/rankingList/rankingList',
+        url: '',
         width: 50,
-        height: 50
+        height: 50,
+        toMiniprogram: 1,
+        appId: 'wx11cabfef2ec771b3'
       },
     ],
     liveList: [{
@@ -130,7 +132,10 @@ Page({
     console.log(e)
     let item = e.currentTarget.dataset.item
     if(item.toMiniprogram) {
-
+      wx.navigateToMiniProgram({
+        appId: item.appId,
+        path: 'page/index/index'
+      })
     } else {
       wx.navigateTo({
         url: item.url,

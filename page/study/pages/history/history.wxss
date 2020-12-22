@@ -193,6 +193,7 @@ page {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  margin: 0;
 }
 
 .lessonBox .lessonItem .lessonRight .bottom .studyNum {
