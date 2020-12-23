@@ -92,13 +92,14 @@
   font-size: 36rpx;
   font-weight: 500;
   color: #333333;
+  margin-bottom: 30rpx;
 }
 
 .ListItem .itemBox {
   padding: 0 20rpx;
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
 }
 
@@ -107,4 +108,26 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding-bottom: 50rpx;
+}
+
+.ListItem .itemBox .item image {
+  width: 190rpx;
+  height: 300rpx;
+}
+
+.ListItem .itemBox .item text:nth-child(2) {
+  margin-top: 30rpx;
+  margin-bottom: 10rpx;
+  font-size: 28rpx;
+  font-weight: 400;
+  color: #333333;
+  line-height: 40rpx;
+  text-align: center;
+}
+
+.ListItem .itemBox .item text:nth-child(3) {
+  font-size: 28rpx;
+  font-weight: 400;
+  color: #999999;
 }

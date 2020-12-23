@@ -4,7 +4,6 @@ const qr = require("../../utils/qrcode.js")
 Page({
   data: {
     detail: {},
-    date: '',
     src: '',
     canvans: {},
     info: {},
@@ -20,13 +19,15 @@ Page({
       columnId: ops.id
     }
     this.setData({
-      detail,
-      date: app.util.dateUnit()
+      detail
     }, () => {
       this.getDetail()
     })
   },
   onShow: function () {},
+  onUnload() {
+    wx.hideLoading()
+  },
   getDetail() {
     app.study.certificateiInfo({
       columnId: this.data.detail.columnId
@@ -132,7 +133,7 @@ Page({
         },
         {
           type: 'text',
-          text: this.data.date,
+          text: this.data.info.updatetime,
           css: {
             top: '710rpx',
             left: '84rpx',

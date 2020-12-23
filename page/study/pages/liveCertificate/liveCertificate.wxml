@@ -9,7 +9,7 @@
     {{info.columnName}}</view>
   <view class="date">
     <text>{{info.universityName}}</text>
-    <text>{{date}}</text>
+    <text>{{info.updatetime}}</text>
   </view>
   <view class="qrBox">
     <image class="qrcode" src="{{qrUrl}}"></image>

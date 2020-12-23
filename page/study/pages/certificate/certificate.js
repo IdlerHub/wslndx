@@ -10,16 +10,23 @@ Page({
     wx.getSystemInfoSync().statusBarHeight < 30 ? '' : this.setData({
       top: 44
     })
-    this.getList()
   },
   onShow: function () {
-
+    this.getList()
   },
   onReachBottom: function () {
 
   },
   getList() {
     app.study.certificateList().then(res => {
+      let certificateImg =  wx.getStorageSync('certificateImg') 
+      if(certificateImg) {
+        res.data.certificatesList.forEach( item => {
+          item.certificates.forEach((e, i) => {
+            certificateImg[e.id] ? e['qrImg'] = certificateImg[e.id] : null
+          })
+        })
+      }
       this.setData({
         certificatesList: res.data.certificatesList,
         totle: res.data.count

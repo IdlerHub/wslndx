@@ -15,9 +15,11 @@
       <view class="ListItem" wx:for="{{certificatesList}}" wx:key="index">
         <view class="times">{{item.month}}</view>
         <view class="itemBox">
-          <view class="item" wx:for="{{item.certificates}}" wx:for-item="certificate" wx:for-index="i" wx:key="i">
-            <!-- <image src="{{certificate.}}"></image> -->
-          </view>
+          <navigator hover-class="none" url="/page/study/pages/liveCertificate/liveCertificate?id={{certificate.lessonId}}" class="item" wx:for="{{item.certificates}}" wx:for-item="certificate" wx:for-index="i" wx:key="i">
+            <image src="{{ certificate.qrImg || '../../images/certificateBg.png'}}"></image>
+            <text>{{certificate.columnName}}</text>
+            <text>{{certificate.updatetime}}学完</text>
+          </navigator>
         </view>
       </view>
     </view>
