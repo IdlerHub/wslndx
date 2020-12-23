@@ -4,6 +4,10 @@ Component({
     liveList: {
       type: Array,
       value: []
+    },
+    isLive: {
+      type: Boolean,
+      value: 0
     }
   },
   data: {

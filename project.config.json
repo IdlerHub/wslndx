@@ -155,8 +155,8 @@
           "scene": null
         },
         {
-          "name": "page/study/pages/certificate/certificate",
-          "pathName": "page/study/pages/certificate/certificate",
+          "name": "pages/studyCenter/studyCenter",
+          "pathName": "pages/studyCenter/studyCenter",
           "query": "",
           "scene": 1000
         },
@@ -168,8 +168,8 @@
           "scene": null
         },
         {
-          "name": "pages/login/login",
-          "pathName": "pages/login/login",
+          "name": "pages/user/user",
+          "pathName": "pages/user/user",
           "query": "url=www.baidu.com&type=123",
           "scene": 1069,
           "referrerInfo": {

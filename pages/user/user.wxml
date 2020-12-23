@@ -50,21 +50,31 @@
     </view>
   </view>
   <view class="myslef">
-    <view class="title">
-      更多服务
-    </view>
-    <view class="iconBox moreList">
-      <navigator class="iconItem" wx:for="{{moreList}}" wx:key="index" hover-class="none" url="{{item.page}}" wx:if="{{!item.isContact}}"
-        >
+    <navigator wx:for="{{moreList}}" hover-class="none" url="{{item.page}}" class="item" wx:if="{{!item.isContact}}">
+      <text>{{item.name}}</text>
+      <image src="/images/stickright.png"></image>
+    </navigator>
+    <button wx:for="{{moreList}}" wx:key="index" class="item" open-type="contact" bindcontact="handleContact"
+      data-index='{{index}}'
+      session-from='{"name": "{{$state.userInfo.nickname}}","avatarUrl":"{{$state.userInfo.avatar}}","nickName":"{{$state.userInfo.nickname}}"}'
+      wx:if="{{item.isContact}}">
+      <text>{{item.name}}</text>
+      <image src="/images/stickright.png"></image>
+    </button>
+    <!-- <view class="iconBox moreList">
+      <navigator class="iconItem" wx:for="{{moreList}}" wx:key="index" hover-class="none" url="{{item.page}}"
+        wx:if="{{!item.isContact}}">
         <image src="{{item.icon}}"></image>
         <text>{{item.name}}</text>
       </navigator>
-      <button wx:for="{{moreList}}" wx:key="index" class="iconItem" open-type="contact" bindcontact="handleContact" data-index='{{index}}'
-      session-from='{"name": "{{$state.userInfo.nickname}}","avatarUrl":"{{$state.userInfo.avatar}}","nickName":"{{$state.userInfo.nickname}}"}' wx:if="{{item.isContact}}">
-      <image src="{{item.icon}}" class="iconfont"></image>
-      <text>{{item.name}}</text>
-    </button> 
-    </view>
+      <button wx:for="{{moreList}}" wx:key="index" class="iconItem" open-type="contact" bindcontact="handleContact"
+        data-index='{{index}}'
+        session-from='{"name": "{{$state.userInfo.nickname}}","avatarUrl":"{{$state.userInfo.avatar}}","nickName":"{{$state.userInfo.nickname}}"}'
+        wx:if="{{item.isContact}}">
+        <image src="{{item.icon}}" class="iconfont"></image>
+        <text>{{item.name}}</text>
+      </button>
+    </view> -->
   </view>
   <navBar path="user" />
   <!-- wx:if="{{$state.newGuide.user == 0}}" -->

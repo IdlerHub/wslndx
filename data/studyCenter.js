@@ -19,7 +19,37 @@ function certificateiInfo(params) {
 }
 
 
+/**
+ * @description: 统计学习天数和本周学习时长
+ * @param {}
+ * @return:  promise
+ * **/
+function centerDuration(params) {
+  return httpService.post("study/center/duration", params, null, true);
+}
+
+/**
+ * @description: 我的直播
+ * @param {}
+ * @return:  promise
+ * **/
+function centerLive(params) {
+  return httpService.post("study/center/live", params, null, true);
+}
+
+/**
+ * @description: 我的直播
+ * @param {}
+ * @return:  promise
+ * **/
+function centerHistoryLesson(params) {
+  return httpService.post("study/center/historyLesson", params, null, true);
+}
+
 module.exports = {
   certificateList,
-  certificateiInfo
+  certificateiInfo,
+  centerDuration,
+  centerLive,
+  centerHistoryLesson
 }

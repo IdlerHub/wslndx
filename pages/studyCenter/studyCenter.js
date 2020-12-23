@@ -1,4 +1,5 @@
 // pages/studyCenter/studyCenter.js
+const app = getApp()
 Page({
   data: {
     iconList: [{
@@ -108,22 +109,24 @@ Page({
         indexCover: "https://hwcdn.jinlingkeji.cn/uploads/images/fe39ce58b0be811ac576ddbbeb513b63.png",
         isOver: 1
       },
-    ]
+    ],
+    detail: {}
+  },
+  liveParams: {
+    pageNum: 1,
+    pageSize: 10,
+  },
+  lessonParams: {
+    pageNum: 1,
+    pageSize: 10,
   },
   onLoad: function (options) {
 
   },
   onShow: function () {
-
-  },
-  onHide: function () {
-
-  },
-  onUnload: function () {
-
-  },
-  onPullDownRefresh: function () {
-
+    this.getDetail()
+    this.getMylive()
+    this.getMylesson()
   },
   onReachBottom: function () {
 
@@ -141,5 +144,26 @@ Page({
         url: item.url,
       })
     }
+  },
+  getDetail() {
+    app.study.centerDuration().then(res => {
+      this.setData({
+        detail: res.data
+      })
+    })
+  },
+  getMylive() {
+    app.study.centerLive(this.liveParams).then(res => {
+      this.setData({
+        liveList: res.dataList
+      })
+    })
+  },
+  getMylesson() {
+    app.study.centerHistoryLesson(this.lessonParams).then(res => {
+      this.setData({
+        lessonList: res.dataList
+      })
+    })
   }
 })

@@ -186,6 +186,7 @@ page .navgationto .navgationBox .toInvite image {
   background: #fff;
   border-radius: 16rpx;
   margin-bottom: 20rpx;
+  overflow: hidden;
 }
 
 .myslef .iconBox {
@@ -206,9 +207,29 @@ page .navgationto .navgationBox .toInvite image {
   position: relative;
 }
 
-.myslef .moreList .iconItem {
-  margin-right: 0;
-} 
+.myslef .item {
+  height: 110rpx;
+  margin: 0 30rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1rpx solid #E9E9E9;
+}
+
+.myslef .item text {
+  font-size: 36rpx;
+  font-weight: 400;
+  color: #333333;
+}
+
+.myslef .item image {
+  width: 18rpx;
+  height: 32rpx;
+}
+
+.myslef .item:last-child {
+  border: 0;
+}
 
 .myslef .iconBox .iconItem:nth-child(3n) {
   margin-right: 0;
@@ -237,9 +258,9 @@ page .navgationto .navgationBox .toInvite image {
 }
 
 .myslef .iconBox .iconItem .smallred {
-  width:20rpx;
-  height:20rpx;
-  background:rgba(223,32,32,1);
+  width: 20rpx;
+  height: 20rpx;
+  background: rgba(223, 32, 32, 1);
   /* border:1px solid rgba(247,247,247,1); */
   border-radius: 50%;
   position: absolute;
@@ -247,12 +268,14 @@ page .navgationto .navgationBox .toInvite image {
   right: 22rpx;
 }
 
+
+
 .title {
   padding: 30rpx;
   font-size: 36rpx;
   font-weight: 500;
   color: #333333;
-  border-bottom: 1px  solid #E9E9E9;
+  border-bottom: 1px solid #E9E9E9;
 }
 
 .userGuide {

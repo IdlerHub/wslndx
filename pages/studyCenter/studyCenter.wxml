@@ -11,7 +11,7 @@
       </navigator>
     </view>
     <view class="itemBox" wx:if="{{isLive}}">
-      <liveItem liveList="{{liveList}}" />
+      <liveItem liveList="{{liveList}}" isLive="{{isLive}}" />
     </view>
     <view class="itemBox" wx:else>
       <view class="lessItem" wx:for="{{lessonList}}" wx:key="index" style="border: {{ index == lessonList.length - 1 ? 'none' : '' }}">
@@ -46,14 +46,14 @@
     <view class="timeItem">
       <image src="/images/studyIcon/studyDaysIcon.png" class="studyDaysIcon"></image>
       <view>
-        <view><text>365</text> 天</view>
+        <view><text>{{detail.studyDay}}</text> 天</view>
         <view>学习天数</view>
       </view>
     </view>
     <view class="timeItem">
       <image src="/images/studyIcon/studyHoursIcon.png" class="studyHoursIcon"></image>
       <view>
-        <view><text>200</text> 小时</view>
+        <view><text>{{detail.studyTime}}</text> 小时</view>
         <view>本周学习</view>
       </view>
     </view>
@@ -72,6 +72,6 @@
 <view class="qst" wx:else>
   <image src="/images/liveqs.png"></image>
   <text>您还未开始学习</text>
-  <navigator class="navigator" url="/pages/timetableList/timetableList">去选课</navigator>
+  <navigator class="navigator" url="/page/index/pages/allLesson/allLesson">去选课</navigator>
 </view>
 <navBar path="video" />
