@@ -81,3 +81,30 @@
   line-height: 50rpx;
   text-align: center;
 }
+
+.ListItem {
+  padding: 0 30rpx;
+}
+
+.ListItem .times {
+  padding: 30rpx 0;
+  border-bottom: 1rpx solid #E9E9E9;
+  font-size: 36rpx;
+  font-weight: 500;
+  color: #333333;
+}
+
+.ListItem .itemBox {
+  padding: 0 20rpx;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.ListItem .itemBox .item {
+  width: 310rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}

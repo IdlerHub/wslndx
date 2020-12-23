@@ -127,8 +127,7 @@
         "pages/vliveRoom/vliveRoom",
         "pages/liveCenter/liveCenter",
         "pages/liveCenterList/liveCenterList",
-        "pages/hliveRoom/hliveRoom",
-        "pages/liveCertificate/liveCertificate"
+        "pages/hliveRoom/hliveRoom"
       ]
     },
     {
@@ -146,7 +145,8 @@
       "pages": [
         "pages/livePage/livePage",
         "pages/certificate/certificate",
-        "pages/history/history"
+        "pages/history/history",
+        "pages/liveCertificate/liveCertificate"
       ]
     }
   ],

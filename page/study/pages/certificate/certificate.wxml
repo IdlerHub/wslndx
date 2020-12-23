@@ -7,11 +7,20 @@
   <view class="box" style="top: {{ top < 30 ? '50' : 20 + top }}px;">
     <image src="{{$state.userInfo.avatar}}" class="avatar"></image>
     <text>{{$state.userInfo.username || $state.userInfo.nickname}}</text>
-    <text>未获得证书</text>
+    <text>{{ totle > 0 ? '获得了 '+ totle +' 张证书' : '未获得证书' }}</text>
   </view>
 </view>
 <view class="certificateBox">
-    <view wx:if="{{certificate[0]}}"></view>
+    <view wx:if="{{certificatesList[0]}}">
+      <view class="ListItem" wx:for="{{certificatesList}}" wx:key="index">
+        <view class="times">{{item.month}}</view>
+        <view class="itemBox">
+          <view class="item" wx:for="{{item.certificates}}" wx:for-item="certificate" wx:for-index="i" wx:key="i">
+            <!-- <image src="{{certificate.}}"></image> -->
+          </view>
+        </view>
+      </view>
+    </view>
     <view wx:else class="qst">
       <image src="../../images/certificateQst.png"></image>
       <text decode>您还未获得证书

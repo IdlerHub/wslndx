@@ -52,6 +52,28 @@ page {
   flex-direction: column;
 }
 
+.canvansBox .qrBox {
+  width: 180rpx;
+  height: 180rpx;
+  position: absolute;
+  bottom: 208rpx;
+  right: 83rpx;
+}
+
+.canvansBox .qrBox image:nth-child(1) {
+  width: 100%;
+  height: 100%;
+}
+
+.canvansBox .qrBox image:nth-child(2) {
+  width: 50rpx;
+  height: 50rpx;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+}
+
 .btnBox {
   width: 100vw;
   position: fixed;

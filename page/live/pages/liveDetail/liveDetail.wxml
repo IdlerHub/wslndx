@@ -53,7 +53,7 @@
                 <text style="width: 25%;"></text>
             </view>
         </view> -->
-        <navigator hover-class="none" url="/page/live/pages/liveCertificate/liveCertificate" class="progressBox">
+        <navigator hover-class="none" url="/page/study/pages/liveCertificate/liveCertificate?name={{lessonDetail.name}}&id={{lessonDetail.columnId}}" class="progressBox">
             <view class="badgeBox">
                 <image src="/images/livebadge.png"></image>
                 <text class="badge">查看证书</text>
