@@ -69,6 +69,8 @@ page {
   display: flex;
   align-items: center;
   border-bottom: 1px solid #E9E9E9;
+  text-align: left;
+  line-height: normal;
 }
 
 .moreBox .listItem .imgMask {

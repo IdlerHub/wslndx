@@ -61,10 +61,16 @@ page {
 
 .centerIcon {
   display: flex;
-  padding: 32rpx 30rpx;
+  padding: 32rpx 0 30rpx 0;
   align-items: center;
   justify-content: space-between;
+  flex-wrap: wrap;
   background: linear-gradient(180deg, #FFFFFF 0%, #F7F7F7 100%);
+}
+
+.centerIcon .centerIconItem {
+  width: 25%;
+  margin-bottom: 40rpx;
 }
 
 .centerIcon .iconBox {
@@ -102,7 +108,7 @@ page {
 }
 
 .swiper {
-  height: 240rpx;
+  height: 270rpx;
   overflow: hidden;
   background: #fff;
   background: #fff;
@@ -131,7 +137,7 @@ page {
 
 .swiper .slide-image {
   width: 100vw;
-  height: 240rpx;
+  height: 270rpx;
 }
 
 .category {

@@ -44,7 +44,6 @@ let messageUplisten = function (event) {
   // 收到推送的单聊、群聊、群提示、群系统通知的新消息，可通过遍历 event.data 获取消息列表数据并渲染到页面
   // event.name - TIM.EVENT.MESSAGE_RECEIVED
   // event.data - 存储 Message 对象的数组 - [Message]
-  console.log(event, '新消息')
   event.data.forEach(e => {
     let {
       nick,
@@ -73,6 +72,9 @@ let messageUplisten = function (event) {
         nick: nick,
         payload: JSON.parse(payload.data),
       })
+      messageFilter(payload, 1) == 1 ? then.setData({
+        liveCount: then.data.liveCount + 1
+      }) : ''
       then.setData({
         specialList
       })
@@ -325,7 +327,6 @@ function customParams(params) {
 
 //发送自定义文本消息
 function sendCustomMessage(params) {
-  console.log(params, 354234234234)
   let payload = {
     data: JSON.stringify(params),
     description: '',
@@ -339,7 +340,7 @@ function sendCustomMessage(params) {
   // 3. 发送消息
   then.tim.sendMessage(message).then(function (imResponse) {
     // 发送成功
-    console.log(imResponse, '发送成功');
+    // console.log(imResponse, '发送成功');
     if (messageFilter(payload, 1) == 1 || messageFilter(payload, 1) == 4) {
       const specialList = then.data.specialList
       specialList.push({

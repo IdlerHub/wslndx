@@ -20,17 +20,55 @@ page {
 
 .downloadeApp {
   width: calc(102vmin / 7.5);
-  height: calc(100.81vmin / 7.5);
+  height: calc(105vmin / 7.5);
   position: fixed;
   bottom: calc(199vmin / 7.5);
   right: calc(10vmin / 7.5);
   z-index: 9999999999999999999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.joinclass {
+  width: calc(94vmin / 7.5);
+  height: calc(100vmin / 7.5);
+  position: fixed;
+  bottom: calc(199vmin / 7.5);
+  right: calc(10vmin / 7.5);
+  z-index: 9999999999999999999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /* 下载app */
+.joinclass image {
+  width: 100%;
+  height: 100%;
+}
+
 .downloadeApp image {
   width: 100%;
   height: 100%;
+}
+
+@keyframes showImg {
+  from {
+    transform: rotateY(-90deg)
+  }
+  to {
+    transform: rotateY(0deg)
+  }
+}
+
+@keyframes loseImg {
+  from {
+    transform: rotateY(0deg)
+  }
+  to {
+    transform: rotateY(-90deg)
+  }
 }
 
 .statusBox {

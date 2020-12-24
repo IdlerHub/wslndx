@@ -16,20 +16,55 @@ Page({
     centerIcon: [{
       url: '/page/index/pages/allLesson/allLesson',
       icon: '/images/indexIcon/allLessonIcon.png',
-      name: '全部课程'
+      name: '全部课程',
+      width: 92,
+      height: 92
     }, {
       url: '/pages/video/video',
       icon: '/images/indexIcon/sortVideoicon.png',
-      name: '短视频'
+      name: '短视频',
+      width: 92,
+      height: 92
     }, {
       url: '/page/index/pages/schoolLesson/schoolLesson',
       icon: '/images/indexIcon/shollLesson.png',
-      name: '高校课程'
+      name: '高校课程',
+      width: 92,
+      height: 92
     }, {
       url: '/page/index/pages/hotActivity/hotActivity',
       icon: '/images/indexIcon/hotActivityIcon.png',
-      name: '热门活动'
-    }, ]
+      name: '热门活动',
+      width: 92,
+      height: 92
+    }, {
+      url: '/page/index/pages/hotActivity/hotActivity',
+      icon: '/images/indexIcon/technologyIcon.png',
+      name: '智能技术',
+      width: 64,
+      height: 58,
+      toEducation: 'https://mp.weixin.qq.com/s/uOzzdEDmKiJSyRtCtW33cg'
+    }, {
+      url: '/page/index/pages/rankingList/rankingList',
+      icon: '/images/indexIcon/rankIcon.png',
+      name: '排行榜',
+      width: 65.19,
+      height: 63.16,
+    }, {
+      url: 'pages/studyCard/studyCard?type=home',
+      icon: '/images/indexIcon/vipIcon.png',
+      name: 'VIP专区',
+      width: 59,
+      height: 66,
+      toMiniProgram: 'wx8dc9e7f55fe1f3ff'
+    }, {
+      url: '/page/index/pages/rankingList/rankingList',
+      icon: '/images/indexIcon/appicon.png',
+      name: '下载APP',
+      width: 86,
+      height: 76,
+      toEducation: 'https://mp.weixin.qq.com/s/vSd8XBQDQkvqVX_kt_YyTQ'
+    },]
   },
   pageName: '首页',
   guide: 0,
@@ -389,7 +424,7 @@ Page({
     if (e.currentTarget.dataset.type == 'dialog') {
       let dialog = e.currentTarget.dataset.peper
       dialog.jump_type == 1 ? wx.navigateTo({
-        url: `../education/education?url=${dialog.url}&type=0}`
+        url: `../education/education?url=${dialog.url}&type=activity&isLogin=1}`
       }) : this.toLive(dialog.extra.room_id)
       this.closeSignIn()
       wx.uma.trackEvent('index_activityClick');
@@ -463,17 +498,17 @@ Page({
     app.liveData.getLiveBySpecialColumnId({
       specialColumnId: item.columnId
     }).then(res => {
-      if (!res.data.isAddSubscribe || !this.data.$state.userInfo.id) {
+      if(this.data.$state.userInfo.id) {
+        wx.navigateTo({
+          url: `/page/live/pages/vliveRoom/vliveRoom?roomId=${item.liveId}`,
+        })
+      } else if (!res.data.isAddSubscribe || !this.data.$state.userInfo.id) {
         wx.navigateTo({
           url: `/page/live/pages/tableDetail/tableDetail?specialColumnId=${item.columnId}`,
         })
       } else if(item.status == 2) {
         wx.navigateTo({
           url: `/page/live/pages/liveDetail/liveDetail?specialColumnId=${item.columnId}`,
-        })
-      } else {
-        wx.navigateTo({
-          url: `/page/live/pages/vliveRoom/vliveRoom?roomId=${item.liveId}`,
         })
       }
     })
@@ -497,6 +532,20 @@ Page({
         sprogInterestList: this.data.sprogInterestList
       })
     })
+  },
+  iconBind(e) {
+    let item = e.currentTarget.dataset.item
+    if(item.toEducation) {
+      wx.navigateTo({
+        url: '/pages/education/education?type=0&url=' + item.toEducation,
+      })
+    } else if(item.toMiniProgram) {
+      this.minigo(`{"appid":"${item.toMiniProgram}","url":"${item.url}"}`)
+    } else {
+      wx.navigateTo({
+        url: item.url
+      })
+    }
   },
   checknextTap(e) {
     app.checknextTap(e)

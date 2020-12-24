@@ -37,7 +37,7 @@
 <view class="statusBox" wx:if="{{liveStatus != 1}}">
   <text wx:if="{{liveStatus == 3}}">讲师暂时离开,请稍等</text>
   <text wx:if="{{liveStatus == 4}}">直播结束</text>
-  <text wx:if="{{liveStatus == 4}}">观看 {{liveCount}}人 | 正在生成会播中</text>
+  <text wx:if="{{liveStatus == 4}}">观看 {{liveCount}}人 | 正在生成回播中</text>
   <button class="share" hover-class="none" open-type="share" wx:if="{{liveStatus == 4}}">
     <image src="../../images/liveShare.png"></image>
   </button>
@@ -47,8 +47,12 @@
 <talkCommon id="talkCommon" talkList="{{talkList}}" specialList="{{specialList}}" close="{{close}}" vliveRoom="1" newMessage="{{newMessage}}"
   statusBarHeight="{{statusBarHeight}}" bind:setNewmessagenum="setNewmessagenum" bind:animationCheck="animationCheck" />
 <navigator class="downloadeApp"
-  url="/pages/education/education?type=0&url=https://mp.weixin.qq.com/s/vSd8XBQDQkvqVX_kt_YyTQ" hover-class="none">
-  <image src="../../images/dowloafeApp.png" bindtap="downloadeApp"></image>
+  url="/pages/education/education?type=0&url=https://mp.weixin.qq.com/s/vSd8XBQDQkvqVX_kt_YyTQ" hover-class="none" wx:if="{{animation.showOne}}">
+  <image src="../../images/dowloafeApp.png" style="{{animation.showJoinclass ? 'animation: loseImg 0.5s;' : 'animation: showImg 0.5s;'}}" bindtap="downloadeApp"></image>
+</navigator>
+<navigator class="joinclass"
+  url="/pages/education/education?type=0&url={{liveDetail.mpUrl}}" hover-class="none" wx:else>
+  <image src="../../images/joninClass.png" style="{{animation.showDoweload ? 'animation: loseImg 0.5s;' : 'animation: showImg 0.5s;'}}" bindtap="downloadeApp"></image>
 </navigator>
 <liveBottom close="{{close}}" columnId="{{liveDetail.columnId}}" keyHeight="{{keyHeight}}" vliveRoom="1"
   bind:sendMsg="sendMsg" bind:praise="praise" bind:checkCaption="checkCaption" bind:clickHandler="clickHandler" />
