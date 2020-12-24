@@ -19,7 +19,7 @@
       <view class="tags" wx:if="{{item.tags[0]}}">
         <text wx:for="{{item.tags}}" wx:key="index" wx:for-item="tag">{{tag.tagName}}</text>
       </view>
-      <text class="line info" wx:if="{{item.browse}}">
+      <text class="line info" wx:if="{{isLesson || current == 2}}">
         <text class="dramaNum"><text class="key">剧集</text>{{ item.episode }}集</text>
         <text>|</text>
         <text class="playNum"><text class="key">播放</text>{{ fn.num(item.browse) }}</text>
@@ -27,7 +27,7 @@
       <text class="line info" wx:else>
         <text class="dramaNum">免费</text>
         <text>|</text>
-        <text class="playNum">{{ fn.num(item.viewNum) }}人在学</text>
+        <text class="playNum">{{ fn.num(item.browse) }}人在学</text>
       </text>
     </view>
   </view>
@@ -92,7 +92,7 @@
       <swiper-item>
         <scroll-view scroll-y style="height: 100%; background: #fff;" wx:if="{{liveList[0]}}" bindscrolltolower="liveTolower">
           <view class="allBox">
-            <template is="listItem" data="{{list: liveList}}"></template>
+            <template is="listItem" data="{{list: liveList, current}}"></template>
           </view>
         </scroll-view>
         <template is="qst" wx:else></template>
@@ -100,7 +100,7 @@
       <swiper-item>
         <scroll-view scroll-y style="height: 100%; background: #fff;" wx:if="{{lessonList[0]}}" bindscrolltolower="lessonTolower">
           <view class="allBox">
-            <template is="listItem" data="{{list: lessonList}}"></template>
+            <template is="listItem" data="{{list: lessonList, current}}"></template>
           </view>
         </scroll-view>
         <template is="qst" wx:else></template>
