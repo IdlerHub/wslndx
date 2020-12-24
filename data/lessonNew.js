@@ -91,6 +91,15 @@ function addSearchLabel(params) {
   return httpService.post("index/addSearchLabel", params, null, true);
 }
 
+/**
+ * @description: 高校讲师列表
+ * @param { } 
+ * @return:  promise
+ * **/
+function lecturerList(params) {
+  return httpService.post("university/lecturer/list", params, null, true);
+}
+
 module.exports = {
   getBannerList,
   interestList,
@@ -101,5 +110,6 @@ module.exports = {
   collectLessonCategory,
   getHotSearchLabel,
   searchLessonAndColumn,
-  addSearchLabel
+  addSearchLabel,
+  lecturerList
 }
