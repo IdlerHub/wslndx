@@ -82,6 +82,15 @@ function searchLessonAndColumn(params) {
   return httpService.post("index/searchLessonAndColumn", params, null, true);
 }
 
+/**
+ * @description: searchLessonAndColumn
+ * @param { type, keyword } 
+ * @return:  promise
+ * **/
+function addSearchLabel(params) {
+  return httpService.post("index/addSearchLabel", params, null, true);
+}
+
 module.exports = {
   getBannerList,
   interestList,
@@ -91,5 +100,6 @@ module.exports = {
   categoryLesson,
   collectLessonCategory,
   getHotSearchLabel,
-  searchLessonAndColumn
+  searchLessonAndColumn,
+  addSearchLabel
 }

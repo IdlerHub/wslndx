@@ -47,7 +47,8 @@ Page({
     })
   },
   detailTap: function (e) {
-    let item = e.currentTarget.dataset.item, type = e.currentTarget.dataset.type
+    let item = e.currentTarget.dataset.item,
+      type = e.currentTarget.dataset.type
     if (type == 1) {
       app.liveData.getLiveBySpecialColumnId({
         specialColumnId: item.id
@@ -161,9 +162,13 @@ Page({
         'isEnd.lesson': lessonList.length < 10 ? 1 : 0,
       });
     });
+    app.lessonNew.addSearchLabel({
+      type: 2,
+      keyword: this.data.text
+    })
   },
   liveTolower() {
-    if(this.data.isEnd.live) return
+    if (this.data.isEnd.live) return
     this.liveParams.pageNum += 1
     app.lessonNew.searchLessonAndColumn(this.liveParams).then(res => {
       let liveList = this.data.liveList
@@ -181,7 +186,7 @@ Page({
     });
   },
   lessonTolower() {
-    if(this.data.isEnd.lesson) return
+    if (this.data.isEnd.lesson) return
     this.lessonParams.pageNum += 1
     app.lessonNew.searchLessonAndColumn(this.lessonParams).then(res => {
       let lessonList = this.data.lessonList
