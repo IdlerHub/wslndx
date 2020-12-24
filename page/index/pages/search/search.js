@@ -2,205 +2,24 @@
 const app = getApp();
 Page({
   data: {
-    voiceImg: "https://hwcdn.jinlingkeji.cn/images/pro/voicebtn2.png",
-    voiceActon: false,
-    voiceheight: "",
+    isSearch: 0,
     focus: true,
-    text: "1",
-    lessList: [{
-        "id": 533,
-        "type": 2,
-        "image": "https://jinling-xcx-dev.obs.cn-north-1.myhuaweicloud.com:443/uploads/images/a03b93cf2e29dfbf23d80eaefd3253e3.jpg",
-        "title": "<p style='width:410rpx;display: block;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;'>识别和保护我们的发声器官1</p>",
-        "tags": [],
-        "browse": 28345,
-        "lessonCount": 10
-      },
-      {
-        "id": 534,
-        "type": 2,
-        "image": "https://jinling-xcx-dev.obs.cn-north-1.myhuaweicloud.com:443/uploads/images/59c1e19d64da1a13c87b21328376e3b6.jpg",
-        "title": "<p style='width:410rpx;display: block;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;'>识别和保护我们的发声器官1</p>",
-        "tags": [],
-        "browse": 31483,
-        "lessonCount": 6
-      },
-      {
-        "id": 135,
-        "type": 2,
-        "image": "https://jinling-xcx-dev.obs.cn-north-1.myhuaweicloud.com:443//uploads/images/30a0c84371797312607f41d578939649.jpg",
-        "title": "<p style='width:410rpx;display: block;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;'>识别和保护我们的发声器官1</p>",
-        "tags": [],
-        "browse": 8990,
-        "lessonCount": 5
-      },
-      {
-        "id": 291,
-        "type": 2,
-        "image": "https://jinling-xcx-dev.obs.cn-north-1.myhuaweicloud.com:443/uploads/images/797cc4cfc73f3ca71164d92ac268a15d.jpg",
-        "title": "<p style='width:410rpx;display: block;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;'>识别和保护我们的发声器官1</p>",
-        "tags": [],
-        "browse": 29691,
-        "lessonCount": 12
-      },
-      {
-        "id": 80,
-        "type": 2,
-        "image": "https://jinling-xcx-dev.obs.cn-north-1.myhuaweicloud.com:443//uploads/images/07df1ccaffa6006de7b11431e93b4d5e.jpg",
-        "title": "<p style='width:410rpx;display: block;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;'>识别和保护我们的发声器官1</p>",
-        "tags": [],
-        "browse": 14222,
-        "lessonCount": 5
-      },
-      {
-        "id": 145,
-        "type": 2,
-        "image": "https://jinling-xcx-dev.obs.cn-north-1.myhuaweicloud.com:443//uploads/images/65318a673b50153ad785cb7b1208aadc.jpg",
-        "title": "<p style='width:410rpx;display: block;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;'>识别和保护我们的发声器官1</p>",
-        "tags": [],
-        "browse": 9998,
-        "lessonCount": 4
-      },
-      {
-        "id": 136,
-        "type": 2,
-        "image": "https://jinling-xcx-dev.obs.cn-north-1.myhuaweicloud.com:443//uploads/images/32498ed103db6c3a46b9cc8602c93824.jpg",
-        "title": "<p style='width:410rpx;display: block;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;'>识别和保护我们的发声器官1</p>",
-        "tags": [],
-        "browse": 8302,
-        "lessonCount": 5
-      },
-      {
-        "id": 288,
-        "type": 2,
-        "image": "https://jinling-xcx-dev.obs.cn-north-1.myhuaweicloud.com:443/uploads/images/f7a4d14bd7eba0d4ef0d5d81e8a8097f.jpg",
-        "title": "<p style='width:410rpx;display: block;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;'>识别和保护我们的发声器官1</p>",
-        "tags": [],
-        "browse": 19188,
-        "lessonCount": 12
-      },
-      {
-        "id": 183,
-        "type": 2,
-        "image": "https://jinling-xcx-dev.obs.cn-north-1.myhuaweicloud.com:443//uploads/images/436c4cd882ba55aa37d14a6f9a985832.jpg",
-        "title": "<p style='width:410rpx;display: block;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;'>识别和保护我们的发声器官1</p>",
-        "tags": [],
-        "browse": 11201,
-        "lessonCount": 8
-      },
-      {
-        "id": 98,
-        "type": 2,
-        "image": "https://jinling-xcx-dev.obs.cn-north-1.myhuaweicloud.com:443//uploads/images/4fa6ecd32bad58fb0e734903c42149fd.jpg",
-        "title": "<p style='width:410rpx;display: block;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;'>识别和保护我们的发声器官1</p>",
-        "tags": [],
-        "browse": 4551,
-        "lessonCount": 4
-      },
-      {
-        "id": 112,
-        "type": 2,
-        "image": "https://jinling-xcx-dev.obs.cn-north-1.myhuaweicloud.com:443//uploads/images/6bfd6aa36dc2828cbf4b72abb33733ac.jpg",
-        "title": "<p style='width:410rpx;display: block;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;'>识别和保护我们的发声器官1</p>",
-        "tags": [],
-        "browse": 5652,
-        "lessonCount": 5
-      },
-      {
-        "id": 290,
-        "type": 2,
-        "image": "https://jinling-xcx-dev.obs.cn-north-1.myhuaweicloud.com:443/uploads/images/9dd423694b26e39b7fa635a01d3eab64.jpg",
-        "title": "<p style='width:410rpx;display: block;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;'>识别和保护我们的发声器官1</p>",
-        "tags": [],
-        "browse": 12320,
-        "lessonCount": 12
-      },
-      {
-        "id": 289,
-        "type": 2,
-        "image": "https://jinling-xcx-dev.obs.cn-north-1.myhuaweicloud.com:443/uploads/images/16a7ce73770ee596f2de8f16dd9d75eb.jpg",
-        "title": "<p style='width:410rpx;display: block;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;'>识别和保护我们的发声器官1</p>",
-        "tags": [],
-        "browse": 10997,
-        "lessonCount": 10
-      }
-    ],
-    liveList: [{
-        columnId: 855,
-        dayTime: "12月19日",
-        indexCover: "https://hwcdn.jinlingkeji.cn/uploads/images/aba9522ca7833d964db860b181ca170e.png",
-        isExperience: 0,
-        liveId: 8544,
-        liveName: "<p style='width:410rpx;display: block;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;'>识别和保护我们的发声器官1</p>",
-        startTime: "09:00",
-        status: 0,
-        tags: [{
-          columnId: 855,
-          tagName: "戏曲文化"
-        }],
-        universityName: "网上老年大学",
-        viewNum: 184,
-      },
-      {
-        columnId: 855,
-        dayTime: "12月19日",
-        indexCover: "https://hwcdn.jinlingkeji.cn/uploads/images/aba9522ca7833d964db860b181ca170e.png",
-        isExperience: 0,
-        liveId: 8544,
-        liveName: "<p style='width:410rpx;display: block;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;'>识别和保护我们的发声器官1</p>",
-        startTime: "09:00",
-        status: 0,
-        tags: [{
-          columnId: 855,
-          tagName: "戏曲文化"
-        }],
-        universityName: "网上老年大学",
-        viewNum: 184,
-      }, {
-        columnId: 855,
-        dayTime: "12月19日",
-        indexCover: "https://hwcdn.jinlingkeji.cn/uploads/images/aba9522ca7833d964db860b181ca170e.png",
-        isExperience: 0,
-        liveId: 8544,
-        liveName: "<p style='width:410rpx;display: block;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;'>识别和保护我们的发声器官1</p>",
-        startTime: "09:00",
-        status: 0,
-        tags: [{
-          columnId: 855,
-          tagName: "戏曲文化"
-        }],
-        universityName: "网上老年大学",
-        viewNum: 184,
-      }, {
-        columnId: 855,
-        dayTime: "12月19日",
-        indexCover: "https://hwcdn.jinlingkeji.cn/uploads/images/aba9522ca7833d964db860b181ca170e.png",
-        isExperience: 0,
-        liveId: 8544,
-        liveName: "<p style='width:410rpx;display: block;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;'>识别和保护我们的发声器官1</p>",
-        startTime: "09:00",
-        status: 0,
-        tags: [{
-          columnId: 855,
-          tagName: "戏曲文化"
-        }],
-        universityName: "网上老年大学",
-        viewNum: 184,
-      },
-    ],
-    showvioce: true,
+    text: "",
+    lessonList: [],
+    liveList: [],
     searchInfo: {
       historyList: [],
       hostList: []
+    },
+    isEnd: {
+      live: 0,
+      lesson: 0
     },
     current: 0
   },
   pagename: "课程搜索",
   isLogin: 1,
   onLoad: function (options) {
-    this.param = {
-      page_size: 10
-    };
     let that = this
     wx.getStorage({
       key: 'seachHistory',
@@ -214,20 +33,29 @@ Page({
       btnName: '课程搜索'
     });
   },
-  onShow() {},
+  onShow() {
+    this.getHotSearchLabel()
+  },
   onReachBottom: function () {
     this.lesssearch(true);
   },
+  getHotSearchLabel() {
+    app.lessonNew.getHotSearchLabel().then(res => {
+      this.setData({
+        'searchInfo.hostList': res.dataList
+      })
+    })
+  },
   detailTap: function (e) {
-    let item = e.currentTarget.dataset.item
-    if (item.columnId) {
+    let item = e.currentTarget.dataset.item, type = e.currentTarget.dataset.type
+    if (type == 1) {
       app.liveData.getLiveBySpecialColumnId({
-        specialColumnId: item.columnId
+        specialColumnId: item.id
       }).then(res => {
         !res.data.isAddSubscribe ? wx.navigateTo({
-          url: `/page/live/pages/tableDetail/tableDetail?specialColumnId=${item.columnId}`,
+          url: `/page/live/pages/tableDetail/tableDetail?specialColumnId=${item.id}`,
         }) : wx.navigateTo({
-          url: `/page/live/pages/liveDetail/liveDetail?specialColumnId=${item.columnId}`,
+          url: `/page/live/pages/liveDetail/liveDetail?specialColumnId=${item.id}`,
         })
       })
     } else {
@@ -247,13 +75,12 @@ Page({
     this.setData({
       text: e.detail.value
     });
-    this.param = {
-      page_size: 10
-    };
     e.detail.value.length < 1 ?
       this.setData({
-        lessList: [],
-        showvioce: true,
+        lessonList: [],
+        liveList: [],
+        isSearch: 0,
+        current: 0
       }) :
       ''
   },
@@ -261,7 +88,10 @@ Page({
     this.setData({
       text: "",
       focus: false,
-      lessList: [],
+      isSearch: 0,
+      lessonList: [],
+      liveList: [],
+      current: 0
     });
     this.setData({
       focus: true
@@ -269,8 +99,20 @@ Page({
   },
   searchlesss(e) {
     this.param = {
-      page_size: 10
+      page_size: 10,
+      type: 0,
+      pageNum: 1
     };
+    this.liveParams = {
+      page_size: 10,
+      type: 1,
+      pageNum: 1
+    };
+    this.lessonParams = {
+      page_size: 10,
+      type: 2,
+      pageNum: 1
+    }
     if (e.currentTarget.dataset.text) {
       this.setData({
         text: e.currentTarget.dataset.text
@@ -281,11 +123,9 @@ Page({
       this.lesssearch();
     }
   },
-  lesssearch(list) {
+  lesssearch() {
     this.param["keyword"] = this.data.text;
-    let lesslist = [],
-      historyList = [...this.data.searchInfo.historyList]
-    list ? (lesslist = this.data.lessList) : "";
+    let historyList = [...this.data.searchInfo.historyList]
     historyList.forEach((item, index) => {
       item == this.data.text ? historyList.splice(index, 1) : ''
     })
@@ -298,43 +138,73 @@ Page({
         data: this.data.searchInfo.historyList
       })
     })
-    app.classroom.lessSearch(this.param).then(res => {
-      if (!res.data.data) {
-        this.setData({
-          showvioce: false,
-          voiceActon: false
-        });
-        return;
-      }
-      let lessList = res.data.data;
-      (this.param["scroll_id"] = res.data.scroll_id),
-      lessList.forEach(item => {
-        item.name = item.title
-          .replace(/<highlight>/g, "")
-          .replace(/<\/highlight>/g, "");
+    app.lessonNew.searchLessonAndColumn(this.param).then(res => {
+      let liveList = res.data.columnInfo.list,
+        lessonList = res.data.lessonInfo.list
+      liveList.forEach(item => {
         item.title = `<p style="width:410rpx;display: block;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">${item.title
-            .replace(/<highlight>/g, '<span style="color:#DF2020">')
-            .replace(/<\/highlight>/g, "</span>")}</p>`;
-        item.subtitle = `<p style="width:410rpx;display: block;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">${item.subtitle
-            .replace(/<highlight>/g, '<span style="color:#DF2020">')
-            .replace(/<\/highlight>/g, "</span>")}</p>`;
+            .replace(this.data.text, '<span style="color:#DF2020">' + this.data.text
+             + "</span>" )}</p>`;
         item.bw = app.util.tow(item.browse);
       });
-      lesslist.push(...lessList);
+      lessonList.forEach(item => {
+        item.title = `<p style="width:410rpx;display: block;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">${item.title
+            .replace(this.data.text, '<span style="color:#DF2020">' + this.data.text
+             + "</span>" )}</p>`;
+        item.bw = app.util.tow(item.browse);
+      });
       this.setData({
-        showvioce: false,
-        lessList: lesslist,
-        voiceActon: false
+        liveList,
+        lessonList,
+        isSearch: 1,
+        'isEnd.live': liveList.length < 10 ? 1 : 0,
+        'isEnd.lesson': lessonList.length < 10 ? 1 : 0,
+      });
+    });
+  },
+  liveTolower() {
+    if(this.data.isEnd.live) return
+    this.liveParams.pageNum += 1
+    app.lessonNew.searchLessonAndColumn(this.liveParams).then(res => {
+      let liveList = this.data.liveList
+      res.data.columnInfo.list.forEach(item => {
+        item.title = `<p style="width:410rpx;display: block;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">${item.title
+            .replace(this.data.text, '<span style="color:#DF2020">' + this.data.text
+             + "</span>" )}</p>`;
+        item.bw = app.util.tow(item.browse);
+      });
+      liveList = liveList.push(...res.data.columnInfo.list)
+      this.setData({
+        liveList,
+        'isEnd.live': res.data.columnInfo.list < 10 ? 1 : 0,
+      });
+    });
+  },
+  lessonTolower() {
+    if(this.data.isEnd.lesson) return
+    this.lessonParams.pageNum += 1
+    app.lessonNew.searchLessonAndColumn(this.lessonParams).then(res => {
+      let lessonList = this.data.lessonList
+      res.data.lessonInfo.list.forEach(item => {
+        item.title = `<p style="width:410rpx;display: block;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">${item.title
+            .replace(this.data.text, '<span style="color:#DF2020">' + this.data.text
+             + "</span>" )}</p>`;
+        item.bw = app.util.tow(item.browse);
+      });
+      lessonList = lessonList.push(...res.data.lessonInfo.list)
+      this.setData({
+        lessonList,
+        'isEnd.live': res.data.columnInfo.list < 10 ? 1 : 0,
       });
     });
   },
   // 课程完成状态
   doneless(id) {
-    this.data.lessList.forEach(item => {
+    this.data.lessonList.forEach(item => {
       item.id == id ? (item.is_finish = 1) : "";
     });
     this.setData({
-      lessList: this.data.lessList
+      lessonList: this.data.lessonList
     });
   },
   checknextTap(e) {
@@ -353,6 +223,11 @@ Page({
   checkTab(e) {
     this.setData({
       current: e.currentTarget.dataset.index
+    })
+  },
+  bindanimationfinish(e) {
+    this.setData({
+      current: e.detail.current
     })
   }
 });

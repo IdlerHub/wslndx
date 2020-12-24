@@ -155,8 +155,8 @@
           "scene": null
         },
         {
-          "name": "pages/studyCenter/studyCenter",
-          "pathName": "pages/studyCenter/studyCenter",
+          "name": "page/index/pages/search/search",
+          "pathName": "page/index/pages/search/search",
           "query": "",
           "scene": 1000
         },

@@ -7,20 +7,20 @@
   }
 </wxs>
 <template name="listItem">
-  <view catchtap="detailTap" wx:for="{{ list }}" wx:key="index" class="item" data-item="{{ item }}"
+  <view catchtap="detailTap" wx:for="{{ list }}" wx:key="index" class="item" data-item="{{ item }}" data-type="{{isLive ? 1 : isLesson ? 2 : 0}}"
     wx:if="{{ isLesson || isLive ? index < 3 : true }}">
     <view class="left">
-      <image class="poster" mode="aspectFill" src="{{ item.image || item.indexCover}}"></image>
+      <image class="poster" mode="aspectFill" src="{{ item.cover}}"></image>
       <image class="icon" mode="aspectFill" src="/images/recomonPlay.png"></image>
       <image src="/images/coursestautes.png" class="status" wx:if="{{item.is_finish}}"></image>
     </view>
     <view class="right">
-      <rich-text class="line name" nodes="{{ item.title || item.liveName}}"></rich-text>
+      <rich-text class="line name" nodes="{{ item.title}}"></rich-text>
       <view class="tags" wx:if="{{item.tags[0]}}">
         <text wx:for="{{item.tags}}" wx:key="index" wx:for-item="tag">{{tag.tagName}}</text>
       </view>
       <text class="line info" wx:if="{{item.browse}}">
-        <text class="dramaNum"><text class="key">剧集</text>{{ item.lessonCount }}集</text>
+        <text class="dramaNum"><text class="key">剧集</text>{{ item.episode }}集</text>
         <text>|</text>
         <text class="playNum"><text class="key">播放</text>{{ fn.num(item.browse) }}</text>
       </text>
@@ -30,6 +30,12 @@
         <text class="playNum">{{ fn.num(item.viewNum) }}人在学</text>
       </text>
     </view>
+  </view>
+</template>
+<template name="qst">
+  <view class="qstBox">
+    <image src="../../images/searchQst.png"></image>
+    <text>暂无内容</text>
   </view>
 </template>
 <view class="container">
@@ -53,18 +59,18 @@
     <!-- </slotSign> -->
     <view class="cancle" bindtap="searchlesss">搜索</view>
   </view>
-  <view class="wrap" wx:if="{{text.length > 0 && (lessList[0] || liveList[0])}}">
+  <view class="wrap" wx:if="{{text.length > 0 && isSearch}}">
     <view class="top">
       <view wx:for="{{3}}" wx:key="index" bindtap="checkTab" data-index="{{index}}">
         <text class="{{index == current ? 'active' : ''}}">{{ index == 0 ? '全部' : index == 1 ? '直播课程' : '在线课程'}}</text>
         <text wx:if="{{index == current}}"></text>
       </view>
     </view>
-    <swiper class="swiper" current="{{current}}" duration="100">
+    <swiper class="swiper" current="{{current}}" duration="100" bindanimationfinish="bindanimationfinish">
       <swiper-item>
-        <scroll-view scroll-y style="height: 100%">
+        <scroll-view scroll-y style="height: 100%" wx:if="{{liveList[0] || lessonList[0]}}">
           <view style="height: 20rpx;"></view>
-          <view class="allBox">
+          <view class="allBox" wx:if="{{liveList[0]}}">
             <view class="title">直播课程</view>
             <template is="listItem" data="{{list: liveList, isLive: 1}}"></template>
             <view class="bottom" bindtap="checkTab" data-index="1">
@@ -72,29 +78,32 @@
               <image src="../../images/allRight.png"></image>
             </view>
           </view>
-          <view class="allBox">
+          <view class="allBox" wx:if="{{lessonList[0]}}">
             <view class="title">在线课程</view>
-            <template is="listItem" data="{{list: lessList, isLesson: 1}}"></template>
+            <template is="listItem" data="{{list: lessonList, isLesson: 1}}"></template>
             <view class="bottom" bindtap="checkTab" data-index="2">
               <text>查看全部</text>
               <image src="../../images/allRight.png"></image>
             </view>
           </view>
         </scroll-view>
+        <template is="qst" wx:else></template>
       </swiper-item>
       <swiper-item>
-        <scroll-view scroll-y style="height: 100%; background: #fff;">
+        <scroll-view scroll-y style="height: 100%; background: #fff;" wx:if="{{liveList[0]}}" bindscrolltolower="liveTolower">
           <view class="allBox">
             <template is="listItem" data="{{list: liveList}}"></template>
           </view>
         </scroll-view>
+        <template is="qst" wx:else></template>
       </swiper-item>
       <swiper-item>
-        <scroll-view scroll-y style="height: 100%; background: #fff;">
+        <scroll-view scroll-y style="height: 100%; background: #fff;" wx:if="{{lessonList[0]}}" bindscrolltolower="lessonTolower">
           <view class="allBox">
-            <template is="listItem" data="{{list: lessList}}"></template>
+            <template is="listItem" data="{{list: lessonList}}"></template>
           </view>
         </scroll-view>
+        <template is="qst" wx:else></template>
       </swiper-item>
     </swiper>
   </view>
@@ -112,7 +121,7 @@
           data-text="{{item}}">{{item}}</text>
       </view>
     </view>
-    <view class="containerBox" wx:if="{{searchInfo.hostList[0]}}">
+    <view class="containerBox" style="border:0" wx:if="{{searchInfo.hostList[0]}}">
       <view class="titleBox">
         <text>热门搜索</text>
       </view>

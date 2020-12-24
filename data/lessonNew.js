@@ -63,6 +63,24 @@ function collectLessonCategory(params) {
   return httpService.post("index/collectLessonCategory", params, null, true);
 }
 
+/**
+ * @description: 首页搜索获取热门搜索标签
+ * @param {  } 
+ * @return:  promise
+ * **/
+function getHotSearchLabel(params) {
+  return httpService.post("index/getHotSearchLabel", params, null, true);
+}
+
+
+/**
+ * @description: searchLessonAndColumn
+ * @param { type, universityId, keyword } 
+ * @return:  promise
+ * **/
+function searchLessonAndColumn(params) {
+  return httpService.post("index/searchLessonAndColumn", params, null, true);
+}
 
 module.exports = {
   getBannerList,
@@ -71,5 +89,7 @@ module.exports = {
   categoryLessonOrLive,
   getSchollList,
   categoryLesson,
-  collectLessonCategory
+  collectLessonCategory,
+  getHotSearchLabel,
+  searchLessonAndColumn
 }
