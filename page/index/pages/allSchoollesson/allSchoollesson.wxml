@@ -39,18 +39,22 @@
     <text>没有更多了</text>
   </view>
 </template>
-<view class="nav {{ scroll ? 'fixed' : '' }}" style="top:0px;padding-right:30rpx;overflow: hidden;position: sticky;background: #fff;z-index: 999;">
-  <scroll-view class="nav" style="display:flex;padding-right: 30rpx" scroll-x="true" scroll-left="{{ navScrollLeft }}"
-    scroll-with-animation="true" enable-flex scroll-into-view="item{{currentTab < 4 ? 0 : currentTab - 3}}">
-    <block wx:for="{{ nav }}" wx:for-index="id" wx:for-item="item" wx:key="index" class="navitem">
-      <view class="item {{ [currentTab == id ? 'active' : '',id == 0 ? 'itemone' : ''] }}"
-        style="margin-right:{{id + 1 == nav.length ? '40rpx' : ''}}" id="item{{id}}" bindtap="switchNav"
-        data-current="{{ id }}" data-id="{{item.id}}">{{ item.name }}</view>
-    </block>
-    <view class="item" style="opacity: 0;width: 20rpx;">dfsdf</view> 
-  </scroll-view>
-  <view class="tabclassify" bindtap="showClassify">
-    <image src="/images/indexIcon/tabclassify.png"></image>
+<view style="position: sticky;top: 0;z-index: 1;">
+  <searchTop isLesson="{{true}}" universityId="{{universityId}}"/>
+  <view class="nav"
+    style="padding-right:30rpx;overflow: hidden;background: #fff;margin-top: -30rpx;">
+    <scroll-view class="nav" style="display:flex;padding-right: 30rpx" scroll-x="true" scroll-left="{{ navScrollLeft }}"
+      scroll-with-animation="true" enable-flex scroll-into-view="item{{currentTab < 4 ? 0 : currentTab - 3}}">
+      <block wx:for="{{ nav }}" wx:for-index="id" wx:for-item="item" wx:key="index" class="navitem">
+        <view class="item {{ [currentTab == id ? 'active' : '',id == 0 ? 'itemone' : ''] }}"
+          style="margin-right:{{id + 1 == nav.length ? '40rpx' : ''}}" id="item{{id}}" bindtap="switchNav"
+          data-current="{{ id }}" data-id="{{item.id}}">{{ item.name }}</view>
+      </block>
+      <view class="item" style="opacity: 0;width: 20rpx;">dfsdf</view>
+    </scroll-view>
+    <view class="tabclassify" bindtap="showClassify">
+      <image src="/images/indexIcon/tabclassify.png"></image>
+    </view>
   </view>
 </view>
 <swiper class="tab" style="height:{{ height }}px" current="{{ currentTab }}" duration="300" bindchange="switchTab"
@@ -67,7 +71,6 @@
     </view>
   </swiper-item>
 </swiper>
-
 <view class="tabclassifyBox" wx:if="{{showClassify}}" bindtap="showClassify">
   <view class="classifyContent" catchtap="return">
     <view class="classifyTitle">点击进入课程分类<image src="../../images/icon-del.png" bindtap="showClassify"></image>
@@ -81,4 +84,4 @@
 </view>
 
 <!-- 登录 -->
-<loginBox wx:if="{{$state.showLogin}}"/>
+<loginBox wx:if="{{$state.showLogin}}" />

@@ -73,7 +73,8 @@
         "pages/allSchoollesson/allSchoollesson",
         "pages/interested/interested",
         "pages/topTeacher/topTeacher",
-        "pages/tearcherDetail/tearcherDetail"
+        "pages/tearcherDetail/tearcherDetail",
+        "pages/allSearch/allSearch"
       ]
     },
     {

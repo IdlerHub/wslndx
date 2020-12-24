@@ -1,6 +1,5 @@
 {
   "usingComponents": {
     "searchTop": "../../components/searchTop/searchTop"
-  },
-  "navigationBarTitleText": "全部高校"
+  }
 }

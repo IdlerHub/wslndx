@@ -15,6 +15,9 @@ Page({
   isLogin: 1,
   onLoad: function (options) {
     this.universityId = options.id
+    this.setData({
+      universityId: options.id
+    })
     wx.setNavigationBarTitle({
       title: options.title
     })

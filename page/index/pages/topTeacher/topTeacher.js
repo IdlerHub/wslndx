@@ -1,5 +1,4 @@
-const { list } = require("../../../../data/Video")
-
+const app = getApp()
 // page/index/pages/topTeacher/topTeacher.js
 Page({
   data: {
@@ -7,16 +6,14 @@ Page({
   },
   isTopteacher: 1,
   onLoad: function (options) {
-    this.setData({
-      list: [
-        {id: 1, name: '秋海棠', avatar: 'https://wx.qlogo.cn/mmopen/vi_32/Kk8UYpvxciaDAphxnujSO9wEKRQ42B369uE7EawOtT0GMnFkbyaTvPNxIWxnibVm5tNEwluxFGdX7tUiaFY09lGRw/132', isChage: 0, chageYou: 0, inro: '数据来看的话发货了发快递师傅和'},
-        {id: 2, name: '金铭心语', avatar: 'https://thirdwx.qlogo.cn/mmopen/vi_32/DYAIOgq83epBW5TAxeFNiaXVRZJRUl8DDgLErdkx0dUQs2BczGjm3p65Sliajd1ctPCnib89Fur1LiaYlzHSDKibOsw/132', isChage: 1, chageYou: 0, inro: '数据来看的话发货了发快递师傅和'},
-        {id: 3, name: '金铭心语', avatar: 'https://thirdwx.qlogo.cn/mmopen/vi_32/DYAIOgq83epBW5TAxeFNiaXVRZJRUl8DDgLErdkx0dUQs2BczGjm3p65Sliajd1ctPCnib89Fur1LiaYlzHSDKibOsw/132', isChage: 1, chageYou: 1, inro: '数据来看的话发货了发快递师傅和'},
-      ]
-    })
+    
   },
   onShow: function () {
-
+    this.params = {
+      pageSize: 10,
+      pageNum: 1
+    }
+    this.getlecturerList()
   },
   onPullDownRefresh: function () {
 
@@ -38,6 +35,12 @@ Page({
     } else {
       return this.menuAppShare()
     }
+  },
+  getlecturerList(list) {
+    let arr = list || this.data.list
+    app.lessonNew.lecturerList(this.params).then(res => {
+
+    })
   },
   checkAttention(e) {
     let item = e.currentTarget.dataset.item, index = e.currentTarget.dataset.index

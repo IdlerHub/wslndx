@@ -1,0 +1,195 @@
+/* page/index/pages/allSearch/allSearch.wxss */
+.top {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.listIitem {
+  margin: 0 30rpx;
+  padding: 30rpx 0;
+  display: flex;
+  align-items: center;
+  border-bottom: 1rpx solid #EDEDED;
+}
+
+.listIitem:last-child {
+  border: none;
+}
+
+.listIitem image {
+  width: 130rpx;
+  height: 130rpx;
+  margin-right: 30rpx;
+}
+
+.listIitem .richText {
+  font-size: 38rpx;
+}
+
+.containerBox {
+  margin: 0 30rpx 30rpx 30rpx;
+  padding-bottom: 30rpx;
+}
+
+.containerBox .titleBox {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.containerBox .titleBox text:nth-child(1) {
+  font-size: 34rpx;
+  font-weight: 500;
+  color: #333333;
+}
+
+.containerBox .titleBox .titleRight {
+  display: flex;
+  align-items: center;
+}
+
+.containerBox .titleBox .titleRight image {
+  width: 32.83rpx;
+  height: 34rpx;
+}
+
+.containerBox .titleBox .titleRight text:nth-child(2) {
+  font-size: 32rpx;
+  font-weight: 400;
+  color: #999999;
+  margin-left: 12rpx;
+}
+
+.containerBox .listBox {
+  padding: 0 2rpx;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.containerBox .listBox text {
+  width: 216rpx;
+  height: 80rpx;
+  box-sizing: border-box;
+  background: #F5F6FA;
+  border-radius: 10rpx;
+  padding: 0 15rpx;
+  text-align: center;
+  line-height: 80rpx;
+  font-size: 32rpx;
+  font-weight: 400;
+  color: #333333;
+  margin-top: 20rpx;
+  margin-right: 19rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.containerBox .listBox text:nth-child(3n) {
+  margin-right: 0;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  padding: 30rpx 0;
+  margin: 0 20rpx;
+  box-sizing: border-box;
+  border-bottom: 1rpx solid #e9e9e9;
+}
+
+.item:last-of-type {
+  border-bottom: none;
+}
+
+.item .left {
+  position: relative;
+  width: 260rpx;
+  height: 160rpx;
+  border: 2rpx solid #EDEDED;
+  background: #EDEDED;
+  border-radius: 10rpx;
+}
+
+.item .left .status {
+  position: absolute;
+  width: 90rpx;
+  height: 52rpx;
+  top: 0;
+  left: 0;
+}
+
+.left .poster {
+  width: 260rpx;
+  height: 160rpx;
+  border-radius: 12rpx;
+}
+
+.left .icon {
+  position: absolute;
+  width: 50rpx;
+  height: 50rpx;
+  right: 10rpx;
+  bottom: 10rpx;
+}
+
+.right {
+  flex: 1;
+  width: 410rpx;
+  height: 160rpx;
+  margin-left: 20rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.right .tags {
+  display: flex;
+  margin-top: 12rpx;
+}
+
+.right .tags text {
+  padding: 3rpx 6rpx 2rpx 6rpx;
+  font-size: 24rpx;
+  font-weight: 400;
+  color: #808080;
+  background: #EDEFF7;
+  border-radius: 4rpx;
+}
+
+.right .name {
+  line-height: 53rpx;
+  font-size: 38rpx;
+  color: rgba(46, 46, 46, 1);
+  letter-spacing: 0;
+  font-weight: 500;
+}
+
+.right .actor {
+  line-height: 37rpx;
+  font-size: 26rpx;
+  color: #999;
+  letter-spacing: 0;
+  margin: 10rpx 0;
+}
+
+.right .info {
+  line-height: 40rpx;
+  font-size: 28rpx;
+  color: #bfbfbf;
+  letter-spacing: 0;
+  display: flex;
+  margin-top: 22rpx;
+}
+
+.right .info .key {
+  color: #999;
+  margin-right: 12rpx;
+}
+
+.info text:nth-child(2) {
+  font-size: 24rpx;
+  margin: 0 20rpx;
+}

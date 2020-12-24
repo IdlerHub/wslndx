@@ -1,0 +1,47 @@
+<!--page/index/pages/allSearch/allSearch.wxml-->
+<template name="listItem">
+  <view catchtap="detailTap" wx:for="{{ list }}" wx:key="index" class="item" data-item="{{ item }}">
+    <view class="left">
+      <image class="poster" mode="aspectFill" src="{{ item.cover}}"></image>
+      <image class="icon" mode="aspectFill" src="/images/recomonPlay.png"></image>
+      <image src="/images/coursestautes.png" class="status" wx:if="{{item.is_finish}}"></image>
+    </view>
+    <view class="right">
+      <rich-text class="line name" nodes="{{ item.title}}"></rich-text>
+      <view class="tags" wx:if="{{item.tags[0]}}">
+        <text wx:for="{{item.tags}}" wx:key="index" wx:for-item="tag">{{tag.tagName}}</text>
+      </view>
+      <text class="line info">
+        <text class="dramaNum"><text class="key">剧集</text>{{ item.episode }}集</text>
+        <text>|</text>
+        <text class="playNum"><text class="key">播放</text>{{ fn.num(item.browse) }}</text>
+      </text>
+    </view>
+  </view>
+</template>
+<view class="top">
+  <searchTop id="searchTop" isSchool="{{isSchool}}" isLesson="{{isLesson}}" isSearch="{{1}}"
+    universityId="{{universityId}}" />
+</view>
+<view class="content">
+  <view wx:if="{{isSchool}}">
+    <view class="listIitem" wx:for="{{list}}" wx:key="index" bindtap="toSchool" data-item="{{item}}">
+      <image src="{{item.logo}}"></image>
+      <rich-text nodes="{{item.name}}" class="richText"></rich-text>
+    </view>
+  </view>
+  <template is="listItem" wx:else data="{{list}}"></template>
+  <view class="containerBox" wx:if="{{historyList[0]}}" wx:if="{{!isSearch && historyList[0]}}">
+    <view class="titleBox">
+      <text>搜索历史</text>
+      <view class="titleRight" bindtap="clearHistory">
+        <image src="/images/delete.png"></image>
+        <text>清空</text>
+      </view>
+    </view>
+    <view class="listBox">
+      <text wx:for="{{historyList}}" wx:key="index" wx:if="{{index < 9}}" bindtap="searchlesss"
+        data-text="{{item}}">{{item}}</text>
+    </view>
+  </view>
+</view>

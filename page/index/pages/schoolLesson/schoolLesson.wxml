@@ -1,5 +1,9 @@
 <!--page/index/pages/schoolLesson/schoolLesson.wxml-->
-<navigator class="item" wx:for="{{schoolList}}" wx:key="index" hover-class="none" url="/page/index/pages/allSchoollesson/allSchoollesson?id={{item.id}}&title={{item.name}}">
-  <image src="{{item.logo || '../../images/schoolNone.png'}}"></image>
-  <text>{{item.name}}</text>
-</navigator>
+<searchTop isSchool="{{true}}"/>
+<view class="contrainer">
+  <navigator class="item" wx:for="{{schoolList}}" wx:key="index" hover-class="none"
+    url="/page/index/pages/allSchoollesson/allSchoollesson?id={{item.id}}&title={{item.name}}">
+    <image src="{{item.logo || '../../images/schoolNone.png'}}"></image>
+    <text>{{item.name}}</text>
+  </navigator>
+</view>

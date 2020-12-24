@@ -57,7 +57,7 @@ function xhr(path, method, param = {}, noToken, checkAPI) {
     let token = wx.getStorageSync("token");
     // return Promise.reject("请登录后再请求");
     if (token) {
-      param.uid = wx.getStorageSync("uid");
+      // param.uid = wx.getStorageSync("uid");
       param.timestamp = parseInt(new Date().getTime() / 1000 + "");
     }
     header['Authorization'] = checkAPI ? token : "Bearer " + token

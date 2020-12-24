@@ -100,6 +100,15 @@ function lecturerList(params) {
   return httpService.post("university/lecturer/list", params, null, true);
 }
 
+/**
+ * @description: 搜索学校
+ * @param { } 
+ * @return:  promise
+ * **/
+function universitySearchList(params) {
+  return httpService.post("university/searchList", params, null, true);
+}
+
 module.exports = {
   getBannerList,
   interestList,
@@ -111,5 +120,6 @@ module.exports = {
   getHotSearchLabel,
   searchLessonAndColumn,
   addSearchLabel,
-  lecturerList
+  lecturerList,
+  universitySearchList
 }

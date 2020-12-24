@@ -155,9 +155,9 @@
           "scene": null
         },
         {
-          "name": "page/index/pages/topTeacher/topTeacher",
-          "pathName": "page/index/pages/topTeacher/topTeacher",
-          "query": "",
+          "name": "page/index/pages/allSchoollesson/allSchoollesson",
+          "pathName": "page/index/pages/allSchoollesson/allSchoollesson",
+          "query": "id=13&title=123",
           "scene": 1000
         },
         {
@@ -177,8 +177,8 @@
           }
         },
         {
-          "name": "page/study/pages/liveCertificate/liveCertificate",
-          "pathName": "page/study/pages/liveCertificate/liveCertificate",
+          "name": "page/index/pages/topTeacher/topTeacher",
+          "pathName": "page/index/pages/topTeacher/topTeacher",
           "query": "id=647",
           "scene": null
         },
