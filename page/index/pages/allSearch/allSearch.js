@@ -45,7 +45,26 @@ Page({
       url: `/page/index/pages/allSchoollesson/allSchoollesson?id=${item.id}&title=${item.title}`,
     })
   },
+  clearHistory() {
+    this.setData({
+      historyList: []
+    }, () => {
+      this.data.isSchool ? wx.setStorage({
+        key: "universityHistory",
+        data: this.data.historyList
+      }) : wx.setStorage({
+        key: "lessonHistory",
+        data: this.data.historyList
+      })
+    })
+  },
   onReachBottom: function () {
 
   },
+  detailTap(e) {
+    let item = e.currentTarget.dataset.item
+    wx.navigateTo({
+      url: '/page/index/pages/detail/detail?id=' + item.id,
+    })
+  }
 })

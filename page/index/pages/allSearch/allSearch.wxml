@@ -1,4 +1,11 @@
 <!--page/index/pages/allSearch/allSearch.wxml-->
+<wxs module="fn">
+  module.exports = {
+  num: function(num) {
+  return num > 10000 ? (num / 10000).toFixed(1) + '万' : num
+  }
+  }
+</wxs>
 <template name="listItem">
   <view catchtap="detailTap" wx:for="{{ list }}" wx:key="index" class="item" data-item="{{ item }}">
     <view class="left">
