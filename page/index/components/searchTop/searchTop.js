@@ -34,7 +34,12 @@ Component({
     },
     clear() {
       this.setData({
-        text: ''
+        text: '',
+        focus: false
+      }, () => {
+        this.setData({
+          focus: true
+        })
       })
       getCurrentPages()[getCurrentPages().length - 1].setData({
         isSearch: 0,
