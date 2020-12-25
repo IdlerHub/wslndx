@@ -14,14 +14,14 @@
       <view class="chargeBox charge" wx:else>收费</view>
     </view>
     <view class="right">
-      <rich-text class="line name" nodes="{{ item.title || item.liveName}}"></rich-text>
+      <rich-text class="line name" nodes="{{ item.name }}"></rich-text>
       <view class="tags" wx:if="{{item.tags[0]}}">
         <text wx:for="{{item.tags}}" wx:key="index" wx:for-item="tag">{{tag.tagName}}</text>
       </view>
       <text class="line info">
-        <text class="dramaNum">{{item.count}}课时</text>
+        <text class="dramaNum">{{item.liveCount}}课时</text>
         <text>|</text>
-        <text class="playNum">{{ fn.num(item.viewNum) }}人在学</text>
+        <text class="playNum">{{ fn.num(item.studyNum) }}人在学</text>
       </text>
     </view>
   </view>
@@ -37,25 +37,26 @@
   <view class="topBox" style="padding-top: {{ statusBarHeight + 10 }}px;">
     <image src="/images/back.png" class="back" bindtap="back"></image>
     <view class="msgBox">
-      <image src="../../images/avatarNone.png"></image>
+      <image src="{{ info.avatar || '../../images/avatarNone.png'}}"></image>
       <view class="nickBox">
-        <text>伦素聪</text>
-        <text>深圳老年大学</text>
+        <text>{{ info.nickname }}</text>
+        <text>{{ info.universityName }}</text>
       </view>
-      <view class="btn">关注</view>
+      <view class="btn" wx:if="{{!info.isFollowing && !info.isFollower}}" bindtap="follow">关注</view>
+      <view wx:else class="btn btning" bindtap="follow">{{ info.isFollower ? '相互关注' : '已关注' }}</view>
     </view>
     <view class="inro">
-      有一位学者，如此点评教育：“如果有一天，一个年轻的学生说出的一个想法，不被周围轻易“否决”，而开始觉得十分谨慎的回复世界的繁华会计师大后方跨境电商风格和考虑即使对方就看见法国航空发动机是给看见对方规划了肯定就发生过和快点结束访华给
+      {{ info.bio }}
     </view>
     <view class="bottom">
       <text class="center"></text>
       <view class="numBox">
         <text>关注</text>
-        <text>234</text>
+        <text>{{ info.numberOfConcerns }}</text>
       </view>
       <view class="numBox">
         <text>粉丝</text>
-        <text>335</text>
+        <text>{{ info.numberOfFans }}</text>
       </view>
     </view>
   </view>

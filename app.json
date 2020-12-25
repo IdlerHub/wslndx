@@ -74,7 +74,8 @@
         "pages/interested/interested",
         "pages/topTeacher/topTeacher",
         "pages/tearcherDetail/tearcherDetail",
-        "pages/allSearch/allSearch"
+        "pages/allSearch/allSearch",
+        "pages/chageLesson/chageLesson"
       ]
     },
     {

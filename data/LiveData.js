@@ -255,6 +255,15 @@ function follow(params) {
 
 
 /**
+ * @description: 取消直播教师关注
+ * @param {}
+ * @return:  promise
+ * **/
+function cancelFollow(params) {
+  return httpService.post("user/cancelFollow", params, null ,true);
+}
+
+/**
  * @description: 获取回播
  * @param {}
  * @return:  promise
@@ -280,6 +289,15 @@ function studyCenterspecial(params) {
  * **/
 function getSpecialLives(params) {
   return httpService.post("live/getSpecialLives", params, null ,true);
+}
+
+/**
+ * @description: 讲师课程（个人主页）
+ * @param { uid, pageSize, pageNum }
+ * @return:  promise
+ * **/
+function lecturerList(params) {
+  return httpService.post("live/lecturer/lecturerList", params, null ,true);
 }
 
 module.exports = {
@@ -313,5 +331,7 @@ module.exports = {
   follow,
   getLiveBackById,
   studyCenterspecial,
-  getSpecialLives
+  getSpecialLives,
+  lecturerList,
+  cancelFollow
 };

@@ -69,6 +69,11 @@
   margin-left: 40rpx;
 }
 
+.topBox .msgBox .btning {
+  background: rgba(255, 255, 255, 0.2);
+  color: #FFFFFF;
+}
+
 .topBox .inro {
   padding: 0 20rpx 0 40rpx;
   font-size: 28rpx;

@@ -155,9 +155,9 @@
           "scene": null
         },
         {
-          "name": "page/index/pages/allSchoollesson/allSchoollesson",
-          "pathName": "page/index/pages/allSchoollesson/allSchoollesson",
-          "query": "id=13&title=123",
+          "name": "page/index/pages/chageLesson/chageLesson",
+          "pathName": "page/index/pages/chageLesson/chageLesson",
+          "query": "id=125",
           "scene": 1000
         },
         {

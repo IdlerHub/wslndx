@@ -1,0 +1,19 @@
+<!--page/index/pages/chageLesson/chageLesson.wxml-->
+<image src="{{lessonDetail.cover}}" class="cover"></image>
+<view class="inro">
+  <text class="name">{{lessonDetail.name}}</text>
+  <view class="subTitlt">共{{lessonDetail.liverVOS.length}}讲 · {{lessonDetail.description  }}</view>
+  <view class="price"><text>¥ </text><text>{{lessonDetail.price}}</text></view>
+</view>
+<view class="content">
+  <view class="tabBox">
+    <view class="tab">
+      <text>剧集</text>
+      <text wx:if="{{!current}}"></text>
+    </view>
+    <view class="tab">
+      <text>简介</text>
+      <text wx:if="{{current}}"></text>
+    </view>
+  </view>
+</view>
