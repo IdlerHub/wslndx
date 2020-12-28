@@ -1,32 +1,32 @@
 <!--page/study/pages/history/history.wxml-->
 <template name="liveItem">
-  <view class="liveItem" wx:for="{{liveList}}" wx:key="index">
-    <image src="{{item.image}}"></image>
+  <view class="liveItem" wx:for="{{liveList}}" wx:key="index" bindtap="toSpecal" data-id="{{item.columnId}}">
+    <image src="{{item.columnCover}}"></image>
     <view class="liveRight">
-      <text>{{item.name}}</text>
-      <text>{{item.time}}</text>
+      <text>{{item.liveName}}</text>
+      <text>{{item.studyDate}}</text>
     </view>
   </view>
 </template>
 <template name="lessonItem">
-  <view class="lessonBox" wx:for="{{lessonList}}" wx:key="index">
-    <view class="title">{{item.studydate}}</view>
-    <view class="lessonItem" wx:for="{{item.list}}" wx:for-index="idx" wx:for-item="lesson" wx: wx:key="idx">
+  <view class="lessonBox" wx:for="{{dayLessonlist}}" wx:key="index">
+    <view class="title">{{item.time}}</view>
+    <view class="lessonItem" wx:for="{{item.list}}" wx:for-index="idx" wx:for-item="lesson" wx: wx:key="idx" bindtap="toDetail" data-id="{{lesson.id}}">
       <view class="lessonLeft">
         <image class="cover" src="{{lesson.image}}"></image>
         <view class="mask">
-          <image src="/images/recomonPlay.png" alt="" wx:if="{{lesson.studyNum != lesson.count}}"></image>
+          <image src="/images/recomonPlay.png" alt="" wx:if="{{!lesson.isFinish}}"></image>
           <image src="../../images/over.png" wx:else></image>
-          <text wx:if="{{lesson.studyNum != lesson.count}}">继续学习</text>
+          <text wx:if="{{!lesson.isFinish}}">继续学习</text>
           <text wx:else>已学完</text>
         </view>
       </view>
       <view class="lessonRight">
-        <view class="title">{{lesson.name}}</view>
+        <view class="title">{{lesson.title}}</view>
         <view class="bottom">
-          <view class="studyNum">已学 {{lesson.studyNum}}/{{lesson.count}}课时</view>
+          <view class="studyNum">已学 {{lesson.isFinishNum}}/{{lesson.sublessonNum}}课时</view>
           <view class="studyLine">
-            <text style="width: {{lesson.studyNum/lesson.count*100}}%;"></text>
+            <text style="width: {{(lesson.isFinishNum/lesson.sublessonNum)*100}}%;"></text>
           </view>
         </view>
       </view>
@@ -49,14 +49,14 @@
 </view>
 <swiper class="swiper" current="{{current}}" duration="100" bindanimationfinish="checkTab">
   <swiper-item>
-    <scroll-view scroll-y class="scrollView" wx:if="{{liveList[0]}}">
+    <scroll-view scroll-y class="scrollView" wx:if="{{liveList[0]}}" bindscrolltolower="bindscrolltolower">
       <template is="liveItem" data="{{ liveList }}"></template>
     </scroll-view>
     <template is="qst" wx:else></template>
   </swiper-item>
   <swiper-item>
-    <scroll-view scroll-y class="scrollView" wx:if="{{lessonList[0]}}">
-      <template is="lessonItem" data="{{ lessonList }}"></template>
+    <scroll-view scroll-y class="scrollView" wx:if="{{lessonList[0]}}" bindscrolltolower="bindscrolltolower">
+      <template is="lessonItem" data="{{ dayLessonlist }}"></template>
     </scroll-view>
     <template is="qst" wx:else></template>
   </swiper-item>

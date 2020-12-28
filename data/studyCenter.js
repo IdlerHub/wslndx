@@ -46,10 +46,20 @@ function centerHistoryLesson(params) {
   return httpService.post("study/center/historyLesson", params, null, true);
 }
 
+/**
+ * @description: 直播课历史记录
+ * @param {}
+ * @return:  promise
+ * **/
+function centerHistoryLive(params) {
+  return httpService.post("study/center/historyLive", params, null, true);
+}
+
 module.exports = {
   certificateList,
   certificateiInfo,
   centerDuration,
   centerLive,
-  centerHistoryLesson
+  centerHistoryLesson,
+  centerHistoryLive
 }

@@ -187,7 +187,7 @@ Page({
         //如果是已经结束的课,就把第一个放到当前播放中
         item.state == 1 && JSON.stringify(playNow) == "{}" ? [playNow = item, liveNow = 1] : ''
       });
-      this.data.sublessons.forEach((item) => {
+      this.data.sublessons.forEach((item, index) => {
         //如果是已经结束的课,就把第一个放到当前播放中
         item.state == 3 && JSON.stringify(playNow) == "{}" && !liveNow && JSON.stringify(this.data.playNow) == "{}" && !item.isStudy ? [this.getLiveBackById(item.id), playNow = item] :
           "";
