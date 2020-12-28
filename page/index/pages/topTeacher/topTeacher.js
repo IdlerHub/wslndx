@@ -6,14 +6,13 @@ Page({
   },
   isTopteacher: 1,
   onLoad: function (options) {
-
-  },
-  onShow: function () {
     this.params = {
       pageSize: 10,
       pageNum: 1
     }
     this.getlecturerList()
+  },
+  onShow: function () {
   },
   onPullDownRefresh: function () {
 

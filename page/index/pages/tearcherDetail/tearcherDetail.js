@@ -305,7 +305,7 @@ Page({
     }).then(res => {
       if(item.isCharge) {
         wx.navigateTo({
-          url: `/page/live/pages/liveDetail/liveDetail?specialColumnId=${item.columnId}`,
+          url: `/page/index/pages/chageLesson/chageLesson?id=${item.columnId}`,
         })
       } else if (!res.data.isAddSubscribe) {
         wx.navigateTo({

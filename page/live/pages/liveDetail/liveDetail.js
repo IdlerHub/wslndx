@@ -189,7 +189,7 @@ Page({
       });
       this.data.sublessons.forEach((item) => {
         //如果是已经结束的课,就把第一个放到当前播放中
-        item.state == 3 && JSON.stringify(playNow) == "{}" && !liveNow && JSON.stringify(this.data.playNow) == "{}" ? [this.getLiveBackById(item.id), playNow = item] :
+        item.state == 3 && JSON.stringify(playNow) == "{}" && !liveNow && JSON.stringify(this.data.playNow) == "{}" && !item.isStudy ? [this.getLiveBackById(item.id), playNow = item] :
           "";
       });
       liveNow ? this.setData({
@@ -425,22 +425,12 @@ Page({
       pages = getCurrentPages(),
       back = 0;
     if (item.state == 0) {
-      // LiveData.getLiveById({
-      //   liveId: item.id
-      // }).then(res => {
-      //   res.data.state == 0 ? wx.showToast({
-      //     title: "直播还未开始",
-      //     icon: "none",
-      //   }) : ''
-      //   if (res.data.state == 1) {
       pages.forEach(e => {
         e.pageName ? e.pageName == 'live' ? back = 1 : '' : ''
       })
       back ? wx.navigateBack() : wx.navigateTo({
         url: '/page/live/pages/vliveRoom/vliveRoom?roomId=' + item.id,
       })
-      // }
-      // })
     } else if (item.state == 1) {
       pages.forEach(e => {
         e.pageName ? e.pageName == 'live' ? back = 1 : '' : ''
@@ -459,11 +449,19 @@ Page({
   },
   //获取回播
   getLiveBackById(liveId) {
+    let i = 0, studyNum= 0
     LiveData.getLiveBackById({
       liveId
     }).then(res => {
+      this.data.sublessons.forEach((item, index) => {
+        item.id == liveId ? i = index : ''
+        item.isStudy ? studyNum += 1 : ''
+      })
+      console.log(studyNum + 1, ((studyNum + 1) / this.data.sublessons.length).toFixed(2))
       this.setData({
-        playNow: res.data
+        playNow: res.data,
+        [`sublessons[${i}].isStudy`]: 1,
+        'lessonDetail.progress': ((studyNum + 1) / this.data.sublessons.length * 100).toFixed(0)
       }, () => {
         this.recordAddVedio();
       })

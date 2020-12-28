@@ -508,7 +508,7 @@ page {
   position: relative;
 }
 
-.nav .item.active {
+.nav .item .active {
   position: relative;
   color: #df2020;
   font-size: 44rpx;
@@ -523,6 +523,7 @@ page {
   height: 4rpx;
   background: #df2020;
 }
+
 
 .nav .item .activeBox {
   width: 60rpx;
@@ -585,6 +586,10 @@ rich-text {
 
 .drama .item.active .left .name {
   color: #df2020;
+}
+
+.drama .item.isStudy .left .name  {
+  color: rgba(58, 58, 58, 0.4);
 }
 
 .drama .item .right {

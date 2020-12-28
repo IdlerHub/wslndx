@@ -7,13 +7,38 @@
 </view>
 <view class="content">
   <view class="tabBox">
-    <view class="tab">
+    <view class="tab" bindtap="checktap" data-index="0">
       <text>剧集</text>
       <text wx:if="{{!current}}"></text>
     </view>
-    <view class="tab">
+    <view class="tab" bindtap="checktap" data-index="1">
       <text>简介</text>
       <text wx:if="{{current}}"></text>
     </view>
+    <view class="sort" bindtap="sort">
+      <image src="{{ sort ? '../../images/sortDwon.png' : '../../images/sortup.png'}}"></image>
+      <text>{{ sort ? '倒序' : '正序'}}</text>
+    </view>
   </view>
+  <swiper class="swiper" current="{{current}}" duration="200" bindanimationfinish="bindanimationfinish">
+    <swiper-item>
+      <scroll-view scroll-y style="height: 100%;">
+        <view class="item" wx:for="{{lessonDetail.liverVOS}}" wx:key="index">
+          <view class="itemName">{{item.index}}. {{item.name}}</view>
+          <view class="itemRight">
+            <image src="https://hwcdn.jinlingkeji.cn/images/dev/play-ash.png"></image>
+            <text>播放</text>
+          </view>
+        </view>
+        <view style="height: 140rpx;"></view>
+      </scroll-view>
+    </swiper-item>
+    <swiper-item>
+      <scroll-view scroll-y style="height: 100%;">
+        <rich-text nodes="{{lessonDetail.introduction}}" class="richText"></rich-text>
+      </scroll-view>
+    </swiper-item>
+  </swiper>
 </view>
+
+<view class="fixeBox">由于相关规范，购买功能暂不可用</view>

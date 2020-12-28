@@ -44,16 +44,16 @@
                 <text>分享</text>
             </button>
         </view>
-        <!-- <view class="progressBox">
+        <view class="progressBox" wx:if="{{lessonDetail.progress != 100}}">
             <view class="studyNum">
                 <text>已学习</text>
-                <text> 25%</text>
+                <text> {{lessonDetail.progress}}%</text>
             </view>
             <view class="progress">
-                <text style="width: 25%;"></text>
+                <text style="width: {{lessonDetail.progress}}%;"></text>
             </view>
-        </view> -->
-        <navigator hover-class="none" url="/page/study/pages/liveCertificate/liveCertificate?name={{lessonDetail.name}}&id={{lessonDetail.columnId}}" class="progressBox">
+        </view>
+        <navigator hover-class="none" url="/page/study/pages/liveCertificate/liveCertificate?name={{lessonDetail.name}}&id={{lessonDetail.columnId}}" class="progressBox" wx:else>
             <view class="badgeBox">
                 <image src="/images/livebadge.png"></image>
                 <text class="badge">查看证书</text>
@@ -108,7 +108,7 @@
                 <scroll-view wx:else scroll-y="true" class="wrap drama" scroll-with-animation="true"
                     scroll-top="{{scrollviewtop}}">
                     <view wx:for="{{ sublessons }}" catchtap="select" data-item="{{item}}" data-index="{{ index }}"
-                        wx:key="index" class="item {{ playNow.id==item.id ?'active' : ''}} {{'sublessonsd' + item.id}}"
+                        wx:key="index" class="item {{ playNow.id==item.id ?'active' : item.isStudy ? 'isStudy' : ''}} {{'sublessonsd' + item.id}}"
                         id="{{'sublessonsd'+item.id}}">
                         <view class="left">
                             <text class="name">{{ index+1 }}. {{ item.name }}</text>
