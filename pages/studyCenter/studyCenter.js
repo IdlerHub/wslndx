@@ -57,6 +57,7 @@ Page({
     this.getMylesson()
   },
   onReachBottom: function () {
+    if(this.data.lessonList.length < this.lessonParams.pageNum * 10) return
 
   },
   iconBind(e) {
@@ -91,12 +92,14 @@ Page({
     })
   },
   getMylesson() {
+    let arr = this.data.lessonList
     app.study.centerHistoryLesson(this.lessonParams).then(res => {
       res.dataList.forEach(item => {
         item.studydate = app.util.dateUnit(item.studydate)
       })
+      arr.push(...res.dataList)
       this.setData({
-        lessonList: res.dataList
+        lessonList: arr
       })
     })
   },
