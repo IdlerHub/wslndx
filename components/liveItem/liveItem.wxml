@@ -1,9 +1,9 @@
 <!--components/liveItem/liveItem.wxml-->
 <view class="liveItem" wx:for="{{liveList}}" wx:key="index"
-  style="border: {{ index == liveList.length - 1 || (isLive && index == 2) ? 'none' : '' }};padding-bottom:{{isLive && index == 2 ? 0 : ''}}" wx:if="{{ isLive ? index < 3 : 1 }}">
+  style="border: {{ index == liveList.length - 1 || (isLive && index == 2) ? 'none' : '' }};padding-bottom:{{isLive && index == 2 ? 0 : ''}}" wx:if="{{ isLive ? index < 3 : 1 }}" bindtap="toLive" data-item="{{item}}">
   <view class="itemTop">
     <text></text>
-    <text>正在直播</text>
+    <text>{{ item.status == 0 ? '正在直播' : item.studydate}}</text>
   </view>
   <view class="itemBox">
     <view class="boxLeft">
@@ -14,7 +14,7 @@
       <text class="itemName">{{item.name}}</text>
       <view class="bottom">
         <text class="count">共{{item.liveCount}}课时</text>
-        <view class="status living" wx:if="{{item.status == 1}}">
+        <view class="status living" wx:if="{{item.status == 0}}">
           <text wx:for="{{3}}" wx:key="index"></text>
           <view>直播中</view>
         </view>

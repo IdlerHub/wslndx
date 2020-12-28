@@ -82,6 +82,9 @@ Page({
   },
   getMylive() {
     app.study.centerLive(this.liveParams).then(res => {
+      res.dataList.forEach(item => {
+        item.studydate = app.util.formatTime(new Date(item.startTime * 1000), 1)
+      })
       this.setData({
         liveList: res.dataList
       })

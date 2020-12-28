@@ -14,6 +14,12 @@ Component({
     
   },
   methods: {
-
+    toLive(e) {
+      console.log(e)
+      let item = e.currentTarget.dataset.item
+      wx.navigateTo({
+        url: '/page/live/pages/vliveRoom/vliveRoom?roomId=' + item.liveId,
+      })
+    }
   }
 })

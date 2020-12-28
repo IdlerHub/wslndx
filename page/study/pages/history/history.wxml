@@ -10,7 +10,7 @@
 </template>
 <template name="lessonItem">
   <view class="lessonBox" wx:for="{{lessonList}}" wx:key="index">
-    <view class="title">{{item.time}}</view>
+    <view class="title">{{item.studydate}}</view>
     <view class="lessonItem" wx:for="{{item.list}}" wx:for-index="idx" wx:for-item="lesson" wx: wx:key="idx">
       <view class="lessonLeft">
         <image class="cover" src="{{lesson.image}}"></image>
