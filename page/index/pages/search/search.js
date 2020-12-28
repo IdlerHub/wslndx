@@ -50,6 +50,12 @@ Page({
     let item = e.currentTarget.dataset.item,
       type = e.currentTarget.dataset.type
     if (type == 1) {
+      if (!this.data.$state.userInfo.id) {
+        wx.navigateTo({
+          url: `/page/live/pages/tableDetail/tableDetail?specialColumnId=${item.id}`,
+        })
+        return
+      }
       app.liveData.getLiveBySpecialColumnId({
         specialColumnId: item.id
       }).then(res => {
@@ -60,6 +66,11 @@ Page({
         })
       })
     } else {
+      if (!this.data.$state.userInfo.id) {
+        getApp().changeLoginstatus()
+        getApp().checknextTap(e)
+        return
+      }
       wx.navigateTo({
         url: `../detail/detail?id=${e.currentTarget.dataset.item.id}`
       });

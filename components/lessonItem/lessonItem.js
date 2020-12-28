@@ -25,7 +25,6 @@ Component({
   },
   methods: {
     loginStatus(e) {
-      console.log(32423423)
       if (!this.data.$state.userInfo.id) {
         getApp().changeLoginstatus()
         getApp().checknextTap(e)

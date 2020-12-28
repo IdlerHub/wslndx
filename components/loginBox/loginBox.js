@@ -53,9 +53,9 @@ Component({
         case 'top':
           page.toInfo()
           break;
-        case 'searchBox':
-          page.setData({
-            focus: true
+        case 'searchItem':
+          wx.navigateTo({
+            url: '/page/index/pages/detail/detail?id=' + this.data.$state.nextTapDetial.detail.currentTarget.dataset.item.id
           })
           break;
         case 'search':

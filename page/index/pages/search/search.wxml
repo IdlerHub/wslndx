@@ -7,7 +7,7 @@
   }
 </wxs>
 <template name="listItem">
-  <view catchtap="detailTap" wx:for="{{ list }}" wx:key="index" class="item" data-item="{{ item }}" data-type="{{isLive ? 1 : isLesson ? 2 : 0}}"
+  <view catchtap="detailTap" wx:for="{{ list }}" wx:key="index" class="item" data-item="{{ item }}" data-type="{{isLive || current == 1 ? 1 : isLesson ? 'searchItem' : 'searchItem'}}"
     wx:if="{{ isLesson || isLive ? index < 3 : true }}">
     <view class="left">
       <image class="poster" mode="aspectFill" src="{{ item.cover}}"></image>
@@ -40,7 +40,6 @@
 </template>
 <view class="container">
   <view class="search-top">
-    <!-- <slotSign bindtap="checknextTap" data-type="searchBox" data-detail=""> -->
     <view class="search-box">
       <image src="../../images/searchIcon.png"></image>
       <form wx:if="{{focus}}">
@@ -56,7 +55,6 @@
         <button wx:if="{{text != ''}}" form-type="reset" catchtap="cleartxt"></button>
       </form>
     </view>
-    <!-- </slotSign> -->
     <view class="cancle" bindtap="searchlesss">搜索</view>
   </view>
   <view class="wrap" wx:if="{{text.length > 0 && isSearch}}">
