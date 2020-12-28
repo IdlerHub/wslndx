@@ -6,7 +6,8 @@ Page({
     url: "",
     payStatus: "",
     classId: '', //招生的课程ID
-    pay: false
+    pay: false,
+    activityShareInfo: {},  //H5分享信息
   },
   pageName: "外链页（开心农场&amp;老年电台&amp;早报）",
   activityShare: 0,
@@ -76,12 +77,8 @@ Page({
             url: 'https://' + options.url
           })
         }else {
-          if (options.login) {
-            if (options.login == 0) {
-              this.junmpOut(options.url);
-            } else {
-              this.webJump(options.url);
-            }
+          if (options.login && options.login != 0) {
+            this.webJump(options.url);
           } else {
             this.junmpOut(options.url);
           }
@@ -106,18 +103,19 @@ Page({
       pay: true
     });
   },
-  setPostData(e) {
+  setPostData(e) {  //获取分享参数配置
     console.log(e.detail.data[0], 'postMessage')
+    this.activityShareInfo = e.detail.data[0];
   },
   onShareAppMessage(ops) {
-    let shareUrl = ops.webViewUrl.split('#')[0]
-    if(shareUrl.indexOf('enrollment_small') != -1) {
+    let shareInfo = this.activityShareInfo
+    if(shareInfo.type == 1) { //type = 1: 配置分享打开进活动页面
       return {
-        title: '我已入学【网上老年大学】,你也快来一起学习吧',
-        path: `/pages/education/education?type=0&url=${shareUrl+ '/#/login'}&login=1`,
-        imageUrl: "https://hwcdn.jinlingkeji.cn/app/zsxtshare.jpg"
+        title: shareInfo.title,
+        path: `/pages/education/education?type=0&url=${shareInfo.url}&login=1`,
+        imageUrl: shareInfo.imageUrl
       }
-    } else if(this.options.url.indexOf('lottery') != -1) {
+    }else if(this.options.url.indexOf('lottery') != -1) {
       return {
         title: 'VIP学习年卡，1212张优惠名额限量首发',
         path: `/pages/education/education?type=0&url=${this.options.url}&login=1&type=0`,
