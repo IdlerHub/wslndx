@@ -25,9 +25,6 @@ Page({
   onPullDownRefresh: function () {
 
   },
-  onReachBottom: function () {
-
-  },
   checkTab(e) {
     this.setData({
       current: e.currentTarget.dataset.current || e.detail.current

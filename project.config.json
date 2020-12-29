@@ -157,7 +157,7 @@
         {
           "name": "page/index/pages/lessonSpecial/lessonSpecial",
           "pathName": "page/index/pages/lessonSpecial/lessonSpecial",
-          "query": "id=1",
+          "query": "id=4&name=四案子",
           "scene": 1000
         },
         {

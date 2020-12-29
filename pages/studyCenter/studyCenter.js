@@ -45,20 +45,21 @@ Page({
     pageNum: 1,
     pageSize: 10,
   },
-  lessonParams: {
-    pageNum: 1,
-    pageSize: 10,
-  },
   onLoad: function (options) {
   },
   onShow: function () {
+    this.lessonParams = {
+      pageNum: 1,
+      pageSize: 10,
+    }
     this.getDetail()
     this.getMylive()
     this.getMylesson()
   },
   onReachBottom: function () {
     if(this.data.lessonList.length < this.lessonParams.pageNum * 10) return
-
+    this.lessonParams.pageNum += 1
+    this.getMylive(this.data.lessonList)
   },
   iconBind(e) {
     console.log(e)
@@ -91,8 +92,8 @@ Page({
       })
     })
   },
-  getMylesson() {
-    let arr = this.data.lessonList
+  getMylesson(list) {
+    let arr = list || []
     app.study.centerHistoryLesson(this.lessonParams).then(res => {
       res.dataList.forEach(item => {
         item.studydate = app.util.dateUnit(item.studydate)

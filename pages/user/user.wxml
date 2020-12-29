@@ -50,7 +50,7 @@
     </view>
   </view>
   <view class="myslef">
-    <navigator wx:for="{{moreList}}" hover-class="none" url="{{item.page}}" class="item" wx:if="{{!item.isContact}}">
+    <navigator wx:for="{{moreList}}" wx:key="index" hover-class="none" url="{{item.page}}" class="item" wx:if="{{!item.isContact}}">
       <text>{{item.name}}</text>
       <image src="/images/stickright.png"></image>
     </navigator>
