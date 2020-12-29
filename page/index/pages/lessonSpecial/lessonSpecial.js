@@ -17,7 +17,8 @@ Page({
     this.getList()
   },
   onReachBottom: function () {
-
+    this.params.pageNum += 1
+    this.getList()
   },
   getList() {
     app.liveData.subjectList(this.params).then(res => {
