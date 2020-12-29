@@ -20,9 +20,9 @@ Page({
       width: 92,
       height: 92
     }, {
-      url: '/pages/video/video',
-      icon: '/images/indexIcon/sortVideoicon.png',
-      name: '短视频',
+      url: '/page/index/pages/topTeacher/topTeacher',
+      icon: '/images/indexIcon/topTeacher.png',
+      name: '名师榜',
       width: 92,
       height: 92
     }, {
@@ -45,11 +45,11 @@ Page({
       height: 58,
       toEducation: 'https://mp.weixin.qq.com/s/uOzzdEDmKiJSyRtCtW33cg'
     }, {
-      url: '/page/index/pages/rankingList/rankingList',
-      icon: '/images/indexIcon/rankIcon.png',
-      name: '排行榜',
-      width: 65.19,
-      height: 63.16,
+      url: '/pages/video/video',
+      icon: '/images/indexIcon/sortVideoicon.png',
+      name: '短视频',
+      width: 64,
+      height: 62.49,
     }, {
       url: 'pages/studyCard/studyCard?type=home',
       icon: '/images/indexIcon/vipIcon.png',

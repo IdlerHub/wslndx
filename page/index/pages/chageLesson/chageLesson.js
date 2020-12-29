@@ -18,17 +18,12 @@ Page({
       wx.setNavigationBarTitle({
         title: res.data.name || "",
       });
-      if (res.data.isAddSubscribe == 0 && !(res.data.price > 0)) {
-        wx.redirectTo({
-          url: `/page/live/pages/tableDetail/tableDetail?specialColumnId=${specialColumnId}`,
-        });
-      }
       res.data.introduction = htmlparser.default(
         res.data.introduction
       );
-      res.data.liverVOS.forEach((item, index) => {
+      res.data.liverVOS ? res.data.liverVOS.forEach((item, index) => {
         item.index = index + 1
-      })
+      }) : ''
       _this.setData({
         lessonDetail: res.data
       });

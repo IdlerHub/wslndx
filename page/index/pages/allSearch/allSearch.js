@@ -63,6 +63,11 @@ Page({
   },
   detailTap(e) {
     let item = e.currentTarget.dataset.item
+    if(!this.data.$state.userInfo.id) {
+      getApp().changeLoginstatus()
+      getApp().checknextTap(e)
+      return
+    }
     wx.navigateTo({
       url: '/page/index/pages/detail/detail?id=' + item.id,
     })

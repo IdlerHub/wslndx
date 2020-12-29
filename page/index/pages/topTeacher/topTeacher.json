@@ -1,5 +1,8 @@
 {
-  "usingComponents": {},
+  "usingComponents": {
+    "slotSign": "/components/slotSign/slotSign",
+    "loginBox": "/components/loginBox/loginBox"
+  },
   "navigationBarBackgroundColor": "#F5F6FA",
   "navigationBarTitleText": "名师推荐"
 }

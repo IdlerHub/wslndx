@@ -261,7 +261,7 @@ Page({
       })
     })
   },
-  follow() {
+  checkAttention() {
     let pages = getCurrentPages().length > 1 ? getCurrentPages()[getCurrentPages().length - 2] : null
     if (this.data.info.isFollowing) {
       app.liveData.cancelFollow({
@@ -317,5 +317,8 @@ Page({
         })
       }
     })
+  },
+  checknextTap(e) {
+    app.checknextTap(e)
   }
 })

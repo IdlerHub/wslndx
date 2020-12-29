@@ -5,14 +5,19 @@
     <view class="name">{{item.nickname}}</view>
     <view class="inro">{{item.bio}}</view>
   </view>
-  <view class="iconBox" catchtap="checkAttention" data-item="{{item}}" data-index="{{index}}">
-    <image src="../../images/attention.png" wx:if="{{!item.isFollowing}}"></image>
-    <image src="../../images/attentioned.png" wx:elif="{{item.isFollowing && !item.isFollower}}"></image>
-    <image src="../../images/attentionown.png" wx:else></image>
-    <text style="color:{{!item.isFollowing ? '' : '#999999'}}">{{ !item.isFollowing ? '关注' : item.isFollowing && !item.isFollower ? '已关注' : '相互关注' }}</text>
-  </view>
+  <slotSign class="iconBox" catchtap="checknextTap" data-type="attention" data-item="{{item}}" data-index="{{index}}">
+    <view class="iconBox" catchtap="checkAttention" data-item="{{item}}" data-index="{{index}}">
+      <image src="../../images/attention.png" wx:if="{{!item.isFollowing}}"></image>
+      <image src="../../images/attentioned.png" wx:elif="{{item.isFollowing && !item.isFollower}}"></image>
+      <image src="../../images/attentionown.png" wx:else></image>
+      <text
+        style="color:{{!item.isFollowing ? '' : '#999999'}}">{{ !item.isFollowing ? '关注' : item.isFollowing && !item.isFollower ? '已关注' : '相互关注' }}</text>
+    </view>
+  </slotSign>
   <button class="iconBox share" hover-class="none" open-type="share" data-id="{{item.id}}" catchtap="return">
     <image src="../../images/wechatShare.png"></image>
     <text>分享</text>
   </button>
 </view>
+
+<loginBox wx:if="{{$state.showLogin}}" />

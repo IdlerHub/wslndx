@@ -5,6 +5,7 @@ Page({
     list: []
   },
   isTopteacher: 1,
+  isLogin: 1,
   onLoad: function (options) {
     this.params = {
       pageSize: 10,
@@ -13,9 +14,6 @@ Page({
     this.getlecturerList()
   },
   onShow: function () {
-  },
-  onPullDownRefresh: function () {
-
   },
   onReachBottom: function () {
     this.params.pageNum += 1
@@ -72,5 +70,8 @@ Page({
     wx.navigateTo({
       url: '/page/index/pages/tearcherDetail/tearcherDetail?id=' + uid,
     })
+  },
+  checknextTap(e) {
+    app.checknextTap(e)
   }
 })

@@ -1,6 +1,8 @@
 {
   "usingComponents": {
-    "navigationBar": "/components/navigationBar/navigationBar"
+    "navigationBar": "/components/navigationBar/navigationBar",
+    "slotSign": "/components/slotSign/slotSign",
+    "loginBox": "/components/loginBox/loginBox"
   },
   "navigationStyle": "custom",
   "disableScroll": true

@@ -7,7 +7,7 @@
   }
 </wxs>
 <template name="listItem">
-  <view catchtap="detailTap" wx:for="{{ list }}" wx:key="index" class="item" data-item="{{ item }}">
+  <view catchtap="detailTap" data-type="searchItem" wx:for="{{ list }}" wx:key="index" class="item" data-item="{{ item }}">
     <view class="left">
       <image class="poster" mode="aspectFill" src="{{ item.cover}}"></image>
       <image class="icon" mode="aspectFill" src="/images/recomonPlay.png"></image>
@@ -52,3 +52,5 @@
     </view>
   </view>
 </view>
+
+<loginBox wx:if="{{$state.showLogin}}" />

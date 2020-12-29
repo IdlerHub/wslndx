@@ -161,6 +161,17 @@ App({
         url: `/page/vote/pages/voteArticle/voteArticle?voteid=${opstObj.o}&uid=${opstObj.u}`,
       });
     }
+    if(!this.store.$state.userInfo.id) {
+      let isLogin = 0
+      if(opts.path == 'pages/index/index') return
+      getCurrentPages().forEach(e => {
+        e.isLogin ? isLogin = 1 : ''
+      })
+      if(isLogin) return
+      wx.reLaunch({
+        url: "/pages/index/index",
+      });
+    }
   },
   onShow: function (opts) {
     console.log(opts, '进入')
@@ -203,7 +214,7 @@ App({
       }, 2000);
     } else {
       let isLogin = 0
-      if(opts.path == 'pages/index/index') return
+      if(opts.path == 'pages/index/index' || !getCurrentPages()[0]) return
       getCurrentPages().forEach(e => {
         e.isLogin ? isLogin = 1 : ''
       })

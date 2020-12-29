@@ -1,5 +1,6 @@
 {
   "usingComponents": {
-    "searchTop": "../../components/searchTop/searchTop"
+    "searchTop": "../../components/searchTop/searchTop",
+    "loginBox": "/components/loginBox/loginBox"
   }
 }

@@ -21,6 +21,7 @@
   width: 130rpx;
   height: 130rpx;
   margin-right: 30rpx;
+  border-radius: 50%;
 }
 
 .listIitem .richText {

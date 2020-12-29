@@ -154,7 +154,7 @@
     <view class="centerIcon">
       <view wx:for="{{centerIcon}}" wx:key="index" class="centerIconItem" style="margin: {{ index > 3 ? 0 : ''}}">
         <slotSign bindtap="checknextTap" data-type="search" data-detail="{{item.url}}"
-          wx:if="{{ index == 1 || index == 3}}">
+          wx:if="{{ index == 3 || index == 5}}">
           <view class="iconBox" bindtap="iconBind" data-item="{{item}}">
             <image src="{{item.icon}}" style="width: {{item.width}}rpx;height:{{item.height}}rpx;"></image>
             <text>{{item.name}}</text>

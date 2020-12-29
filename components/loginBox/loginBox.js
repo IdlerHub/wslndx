@@ -91,6 +91,8 @@ Component({
         case 'attenBtn':
           page.toEducation(this.data.$state.nextTapDetial.detail)
           break;
+        case 'attention':
+          page.checkAttention(this.data.$state.nextTapDetial.detail)
       }
     },
     /* 登录请求 */

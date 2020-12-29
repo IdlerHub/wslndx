@@ -14,7 +14,7 @@
       <view class="chargeBox charge" wx:else>收费</view>
     </view>
     <view class="right">
-      <rich-text class="line name" nodes="{{ item.name }}"></rich-text>
+      <text class="line name">{{item.name}}</text>
       <view class="tags" wx:if="{{item.tags[0]}}">
         <text wx:for="{{item.tags}}" wx:key="index" wx:for-item="tag">{{tag.tagName}}</text>
       </view>
@@ -26,10 +26,10 @@
     </view>
   </view>
 </template>
-<navigationBar id="navigationBar" wx:if="{{scroll > 0}}" title="伦素聪" back="{{ true }}" isIndex="{{false}}"></navigationBar>
+<navigationBar id="navigationBar" wx:if="{{scroll > 0}}" title="{{info.nickname}}" back="{{ true }}" isIndex="{{false}}"></navigationBar>
 <view class="tabBox" wx:if="{{showTab}}" style="position: fixed;top: {{top}}px">
   <view class="tab">
-    <text>课程 2</text>
+    <text>课程 {{lessonList.length}}</text>
     <text></text>
   </view>
 </view>
@@ -42,8 +42,10 @@
         <text>{{ info.nickname }}</text>
         <text>{{ info.universityName }}</text>
       </view>
-      <view class="btn" wx:if="{{!info.isFollowing && !info.isFollower}}" bindtap="follow">关注</view>
-      <view wx:else class="btn btning" bindtap="follow">{{ info.isFollower ? '相互关注' : '已关注' }}</view>
+      <slotSign class="iconBox" catchtap="checknextTap" data-type="attention" wx:if="{{!info.isFollowing && !info.isFollower}}">
+        <view class="btn" bindtap="checkAttention">关注</view>
+      </slotSign>
+      <view wx:else class="btn btning" bindtap="checkAttention">{{ info.isFollower ? '相互关注' : '已关注' }}</view>
     </view>
     <view class="inro">
       {{ info.bio }}
@@ -62,9 +64,11 @@
   </view>
   <view class="tabBox" id="tabBox">
     <view class="tab">
-      <text>课程 2</text>
+      <text>课程 {{lessonList.length}}</text>
       <text></text>
     </view>
   </view>
   <template is="listItem" data="{{list: lessonList}}"></template>
 </scroll-view>
+
+<loginBox wx:if="{{$state.showLogin}}" />
