@@ -155,9 +155,9 @@
           "scene": null
         },
         {
-          "name": "page/study/pages/history/history",
-          "pathName": "page/study/pages/history/history",
-          "query": "id=125",
+          "name": "page/index/pages/lessonSpecial/lessonSpecial",
+          "pathName": "page/index/pages/lessonSpecial/lessonSpecial",
+          "query": "id=1",
           "scene": 1000
         },
         {

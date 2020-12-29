@@ -38,12 +38,11 @@ Page({
       width: 92,
       height: 92
     }, {
-      url: '/page/index/pages/hotActivity/hotActivity',
-      icon: '/images/indexIcon/technologyIcon.png',
-      name: '智能技术',
+      url: '/page/index/pages/lessonSpecial/lessonSpecial?id=',
+      icon: '/images/indexIcon/special.png',
+      name: '声乐弹唱',
       width: 64,
-      height: 58,
-      toEducation: 'https://mp.weixin.qq.com/s/uOzzdEDmKiJSyRtCtW33cg'
+      height: 64,
     }, {
       url: '/pages/video/video',
       icon: '/images/indexIcon/sortVideoicon.png',

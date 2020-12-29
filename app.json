@@ -75,7 +75,8 @@
         "pages/topTeacher/topTeacher",
         "pages/tearcherDetail/tearcherDetail",
         "pages/allSearch/allSearch",
-        "pages/chageLesson/chageLesson"
+        "pages/chageLesson/chageLesson",
+        "pages/lessonSpecial/lessonSpecial"
       ]
     },
     {

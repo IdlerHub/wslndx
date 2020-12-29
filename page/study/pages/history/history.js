@@ -2,7 +2,7 @@
 const app = getApp()
 Page({
   data: {
-    current: 1,
+    current: 0,
     liveList: [],
     lessonList: [],
     dayLessonlist: []

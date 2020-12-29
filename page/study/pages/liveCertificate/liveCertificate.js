@@ -75,22 +75,29 @@ Page({
       sharePath: e.detail.path,
       visible: true,
     }, () => {
-      wx.hideLoading()
-      let res =  wx.getStorageSync('certificateImg') 
-      if(res) {
-       res[this.data.info.id] =  e.detail.path
-       wx.setStorage({
-        key:"certificateImg",
-        data: res
+      let that = this
+      wx.saveFile({
+        tempFilePath: e.detail.path,
+        success(msg) {
+          let savedFilePath = msg.savedFilePath
+          wx.hideLoading()
+          let res = wx.getStorageSync('certificateImg')
+          if (res) {
+            res[that.data.info.id] = savedFilePath
+            wx.setStorage({
+              key: "certificateImg",
+              data: res
+            })
+          } else {
+            let certificateImg = {}
+            certificateImg[that.data.info.id] = savedFilePath
+            wx.setStorage({
+              key: "certificateImg",
+              data: certificateImg
+            })
+          }
+        }
       })
-      } else {
-        let certificateImg = {}
-        certificateImg[this.data.info.id] =  e.detail.path
-        wx.setStorage({
-          key:"certificateImg",
-          data: certificateImg
-        })
-      }
     })
   },
   initCanvans() {

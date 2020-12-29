@@ -300,6 +300,15 @@ function lecturerList(params) {
   return httpService.post("live/lecturer/lecturerList", params, null ,true);
 }
 
+/**
+ * @description: 讲师课程（个人主页）
+ * @param { uid, pageSize, pageNum }
+ * @return:  promise
+ * **/
+function subjectList(params) {
+  return httpService.post("live/special/subject/list", params, null ,true);
+}
+
 module.exports = {
   getLiveLessons,
   getApplyDetail,
@@ -333,5 +342,6 @@ module.exports = {
   studyCenterspecial,
   getSpecialLives,
   lecturerList,
-  cancelFollow
+  cancelFollow,
+  subjectList
 };
