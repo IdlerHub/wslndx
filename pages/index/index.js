@@ -38,7 +38,7 @@ Page({
       width: 92,
       height: 92
     }, {
-      url: '/page/index/pages/lessonSpecial/lessonSpecial?id=',
+      url: '/page/index/pages/lessonSpecial/lessonSpecial?id=4&name=声乐弹唱',
       icon: '/images/indexIcon/special.png',
       name: '声乐弹唱',
       width: 64,

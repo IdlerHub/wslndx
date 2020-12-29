@@ -82,6 +82,9 @@ Page({
           let savedFilePath = msg.savedFilePath
           wx.hideLoading()
           let res = wx.getStorageSync('certificateImg')
+          that.setData({
+            src: savedFilePath
+          })
           if (res) {
             res[that.data.info.id] = savedFilePath
             wx.setStorage({
@@ -180,13 +183,13 @@ Page({
     // 保存图片到系统相册
     let that = this
     wx.saveImageToPhotosAlbum({
-      filePath: that.data.sharePath,
+      filePath: that.data.src,
       success() {
         wx.showToast({
           title: "保存成功"
         })
       },
-      fail() {
+      fail(e) {
         wx.showToast({
           title: "保存失败"
         })
