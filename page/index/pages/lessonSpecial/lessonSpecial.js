@@ -26,7 +26,7 @@ Page({
       arr.push(...res.dataList)
       this.setData({
         list: arr
-      },() => {
+      }, () => {
         this.listClassify(this.data.list)
       })
     })
@@ -50,9 +50,9 @@ Page({
         newArr[index].list.push(item);
       }
     });
-    newArr.sort(function compareFunction(a,b){
-      return a.subjectCategoryName.localeCompare(b.subjectCategoryName);
-  });
+    // newArr.sort(function compareFunction(a, b) {
+    //   return a.subjectCategoryName.localeCompare(b.subjectCategoryName);
+    // });
     this.setData({
       classfyList: newArr
     })
