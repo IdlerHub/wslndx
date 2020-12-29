@@ -2,7 +2,7 @@
 const app = getApp()
 Page({
   data: {
-    current: 0,
+    current: 1,
     liveList: [],
     lessonList: [],
     dayLessonlist: []
@@ -37,7 +37,8 @@ Page({
     let arr = this.data.lessonList
     app.study.centerHistoryLesson(this.lesssonParams).then(res => {
       res.dataList.forEach(item => {
-        item.studydate = app.util.dateUnit(item.studydate)
+        var date = new Date(item.studydate * 1000)
+        item.studydate = date.getFullYear() + "年" + (date.getMonth() + 1) + "月" + date.getDate() + "日"
       })
       arr.push(...res.dataList)
       this.setData({

@@ -155,8 +155,8 @@
           "scene": null
         },
         {
-          "name": "page/index/pages/topTeacher/topTeacher",
-          "pathName": "page/index/pages/topTeacher/topTeacher",
+          "name": "page/study/pages/history/history",
+          "pathName": "page/study/pages/history/history",
           "query": "id=125",
           "scene": 1000
         },
