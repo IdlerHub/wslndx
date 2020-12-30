@@ -9,8 +9,7 @@ var htmlparser = require("../../../../utils/htmlparser");
 Page({
   data: {
     sort: 0,
-    nav: [
-      {
+    nav: [{
         name: "剧集"
       },
       // {
@@ -49,14 +48,8 @@ Page({
     /* rect: wx.getMenuButtonBoundingClientRect() */
   },
   pageName: "视频页（视频详情页）",
-  timeTemplate: '',
-  videoTime: 0,
-  videoTime2: 0,
+  timeTemplate: "",
   vRecordAdd: false,
-  videoParam:{
-    id:'',
-    suId:''
-  },
   turnOff: {
     guide: 0,
     collect: 0
@@ -68,11 +61,11 @@ Page({
     this.pages = getCurrentPages();
     let windowHeight = wx.getSystemInfoSync().windowHeight;
     let system = wx.getSystemInfoSync().model.indexOf("iPhone");
-    system == -1
-      ? this.setData({
+    system == -1 ?
+      this.setData({
         paddingTop: true
-      })
-      : "";
+      }) :
+      "";
     let query = wx.createSelectorQuery().in(this);
     query.select("#myVideo").boundingClientRect();
     query.select(".info").boundingClientRect();
@@ -155,11 +148,11 @@ Page({
           keyHeight: true
         });
       } else {
-        res.height > 0
-          ? this.setData({
+        res.height > 0 ?
+          this.setData({
             keyHeight: true
-          })
-          : this.setData({
+          }) :
+          this.setData({
             keyHeight: false,
             keyheight: 0,
             write: true,
@@ -169,7 +162,7 @@ Page({
     });
   },
   onShow() {
-    if(this.data.$state.userInfo.mobile) {
+    if (this.data.$state.userInfo.mobile) {
       app.getGuide().then(() => {
         this.showPlath()
       });
@@ -184,44 +177,43 @@ Page({
     if (this.data.$state.newGuide) {
       this.data.$state.newGuide.lesson == 0 ? this.closeGuide() : "";
     }
-    if(this.timeTemplate.length > 0) {
-      this.updateProgress()
+    if (this.timeTemplate.length > 0) {
+      let progress = parseInt(new Date().getTime() / 1000 + "") - this.timeTemplate
+      this.updateProgress(progress)
     }
   },
-  onHide() {
-   },
+  onHide() {},
   showPlath(that) {
-    if(this.data.$state.userInfo && this.data.$state.userInfo.university.length == 0 && this.data.$state.newGuide.lesson) {
+    if (this.data.$state.userInfo && this.data.$state.userInfo.university.length == 0 && this.data.$state.newGuide.lesson) {
       let plathParam = {
-        plath: '',
-        shool:'',
-      }, that = this
+          plath: '',
+          shool: '',
+        },
+        that = this
       this.setData({
         plathParam,
-        showplece:true,
+        showplece: true,
         showToast: false
       })
       wx.getStorage({
         key: 'plathStatus',
-        success (res) {
-          if(res) {
-            if(res.data.status) return
-            let timeType = that.compareDate(app.util.formatTime(new Date()).slice(0,10), res.data.time)
-            timeType ?  that.setData({
+        success(res) {
+          if (res) {
+            if (res.data.status) return
+            let timeType = that.compareDate(app.util.formatTime(new Date()).slice(0, 10), res.data.time)
+            timeType ? that.setData({
               showplece: false
-            }): wx.setStorageSync(
-              'plathStatus',
-              {
-                time:  app.util.formatTime(new Date()).slice(0,10),
+            }) : wx.setStorageSync(
+              'plathStatus', {
+                time: app.util.formatTime(new Date()).slice(0, 10),
                 status: 1
               })
           } else {
             wx.setStorageSync(
-            'plathStatus',
-            {
-              time:  app.util.formatTime(new Date()).slice(0,10),
-              status: 1
-            })
+              'plathStatus', {
+                time: app.util.formatTime(new Date()).slice(0, 10),
+                status: 1
+              })
           }
         }
       })
@@ -256,30 +248,38 @@ Page({
   },
   getDetail() {
     this.param = {
-      id: this.data.id,
-      sort: this.data.sort,
-      page: 1,
-      pageSize: 100
+      lessonId: this.data.id
     };
-    return app.classroom.detail(this.param).then(msg => {
-      msg.data.sublesson.forEach((item, index) => {
-        item.minute = (item.film_length / 60).toFixed(0);
-        item['index'] = index + 1
-      });
-      msg.data.intro_content = htmlparser.default(msg.data.intro_content)
+    return app.lessonNew.lessonInfo(this.param).then(res => {
+      res.data.intro_content = htmlparser.default(res.data.introContent)
       wx.setNavigationBarTitle({
-        title: msg.data.title
+        title: res.data.title
       });
       this.setData({
-        detail: msg.data,
-        sublessons: msg.data.sublesson
+        detail: res.data,
+      }, () => {
+        let params = {
+          lessonId: this.data.id,
+          pageSize: 100,
+          pageNum: 1
+        }
+        app.lessonNew.lessonSublessonList(params).then(msg => {
+          msg.dataList.forEach((item, index) => {
+            item.minute = (item.filmLength / 60).toFixed(0);
+            item['index'] = index + 1
+          });
+          this.setData({
+            sublessons: msg.dataList
+          }, () => {
+            this.manage();
+            // this.getComment();
+            setTimeout(() => {
+              this.tolesson();
+            }, 800);
+          })
+        })
       });
-      this.manage();
-      this.getComment();
-      setTimeout(() => {
-        this.tolesson();
-      }, 800);
-    });
+    })
   },
   setIntegral(integral, integralContent) {
     this.setData({
@@ -297,10 +297,6 @@ Page({
   played() {
     setTimeout(() => {
       this.vedioRecordAdd()
-      this.videoParam = {
-        id: this.data.detail.id,
-        suId: this.data.cur.id
-      }
       this.timeTemplate = parseInt(new Date().getTime() / 1000 + "")
     }, 800)
     wx.uma.trackEvent("lessonsPlay", {
@@ -323,68 +319,70 @@ Page({
       }
     });
     let param = {
-      lesson_id: this.data.detail.id,
-      sublesson_id: this.data.cur.id
+      lessonId: this.data.detail.id,
+      sublessonId: this.data.cur.id
     };
-    app.classroom.sublessonfinish(param).then(res => {
+    app.lessonNew.recordFinish(param).then(res => {
       if (res.data.is_first == "first") {
         this.setIntegral("+70 学分", "完成首次学习课程");
       } else if (res.data.is_first == "finish") {
         this.setIntegral("+20 学分", "完成学完一门新课程");
       }
-      app.classroom.detail(this.param).then(msg => {
+      app.lessonNew.lessonInfo(this.param).then(msg => {
         this.setData({
           "detail.progress": msg.data.progress
         });
         if (msg.data.progress == 100) {
           this.pages.forEach(item => {
-            item.route == "pages/index/index"
-              ? item.doneless(this.data.detail.id)
-              : "";
-            item.route == "pages/search/search"
-              ? item.doneless(this.data.detail.id)
-              : "";
+            item.route == "pages/index/index" ?
+              item.doneless(this.data.detail.id) :
+              "";
+            item.route == "pages/search/search" ?
+              item.doneless(this.data.detail.id) :
+              "";
           });
         }
       });
     });
   },
   videoPause() {
-    this.updateProgress()
+    let progress = parseInt(new Date().getTime() / 1000 + "") - this.timeTemplate
+    this.updateProgress(progress)
   },
-  updateProgress() {
-    let videoTime = parseInt(new Date().getTime() / 1000 + "") - this.timeTemplate
-    videoTime > this.data.cur.minute * 60 ? videoTime = this.data.cur.minute * 60 : ''
-    this.videoTime = videoTime
+
+  updateProgress(studyTime) {
     let param = {
-      lesson_id: this.videoParam.id,
-      sublesson_id: this.videoParam.suId,
-      progress: this.videoTime,
+      columnId: this.data.detail.id,
+      courseId: this.data.cur.id,
+      studyType: 1,
+      studyTime,
+      sourceType: 3
     }
-    app.classroom.updateProgress(param).then(res => {
-      this.timeTemplate = 0
-      this.videoTime2 = 0
+    app.lessonNew.recordAdd(param).then(msg => {
+      this.vRecordAdd = false
     }).catch(() => {
-      this.videoTime2 = this.videoTime
-    })
+      this.updateProgress(studyTime)
+    });
   },
   manage() {
     let detail = this.data.detail;
     let sublesson = this.data.sublessons;
-    let current = 0,total = sublesson.length,cur = {};
+    let current = 0,
+      total = sublesson.length,
+      cur = {};
     sublesson.forEach(item => {
       if (item.played == 1) {
         current++;
       }
       if (
-        item.id == detail.current_sublesson_id ||
+        item.id == detail.currentSublessonId ||
         item.id == this.data.curid
       ) {
         cur = item;
       }
     });
-    if (detail.current_sublesson_id == 0 && !this.data.curid) {
-      cur = detail.sublesson[0];
+    if (detail.currentSublessonId == 0 && !this.data.curid) {
+      cur = sublesson[0];
     }
     this.setData({
       cur: cur
@@ -398,7 +396,7 @@ Page({
     });
     this.sublessParam.page = 1;
     let sublessons = this.data.sublessons
-    if(this.data.sort) {
+    if (this.data.sort) {
       sublessons.sort((a, b) => {
         return b.index - a.index
       })
@@ -426,7 +424,7 @@ Page({
     if (this.turnOff.collect) return
     let that = this;
     let param = {
-      lesson_id: this.param.id
+      lesson_id: this.data.detail.id
     };
     if (this.data.detail.collected == 1) {
       wx.showModal({
@@ -492,8 +490,7 @@ Page({
             that.recordAddVedio();
           } else {
             wx.showModal({
-              content:
-                "您当前不在Wi-Fi环境，继续播放将会产生流量，是否选择继续播放?",
+              content: "您当前不在Wi-Fi环境，继续播放将会产生流量，是否选择继续播放?",
               confirmText: "是",
               cancelText: "否",
               confirmColor: "#DF2020",
@@ -502,8 +499,7 @@ Page({
                   app.playVedio("flow");
                   that.recordAddVedio();
                   wx.offNetworkStatusChange()
-                } else if (res.cancel) {
-                }
+                } else if (res.cancel) {}
               }
             })
           }
@@ -522,13 +518,7 @@ Page({
   },
   vedioRecordAdd() {
     this.vRecordAdd = true
-    let param = {
-      lesson_id: this.param.id,
-      sublesson_id: this.data.cur.id
-    };
-    app.classroom.recordAdd(param).then(msg => {
-      this.vRecordAdd = false
-    });
+    this.updateProgress(0)
   },
   // 获取讨论
   getComment(list, options) {
@@ -569,11 +559,11 @@ Page({
       query.select(".wrap").boundingClientRect();
       query.exec(res => {
         let height = res[0].height - -110;
-        height < 100
-          ? that.setData({
+        height < 100 ?
+          that.setData({
             height: 700
-          })
-          : that.setData({
+          }) :
+          that.setData({
             height: height
           });
         if (height == 110) {
@@ -590,16 +580,16 @@ Page({
   },
   tolesson() {
     let that = this,
-      id = ".sublessonsd" + this.data.detail.current_sublesson_id;
+      id = ".sublessonsd" + this.data.cur.id;
     if (this.data.currentTab == 0) {
       let query = wx.createSelectorQuery().in(this);
       query.select(id).boundingClientRect();
       query.exec(res => {
-        res[0]
-          ? this.setData({
+        res[0] ?
+          this.setData({
             scrollviewtop: res[0].top - 520
-          })
-          : "";
+          }) :
+          "";
       });
     }
   },
@@ -618,14 +608,9 @@ Page({
         time: e.detail.currentTime
       }
     });
-    if(!this.vRecordAdd) return
-    let param = {
-      lesson_id: this.param.id,
-      sublesson_id: this.data.cur.id
-    };
-    app.classroom.recordAdd(param).then(msg => {
-      this.vRecordAdd = false
-    });
+    this.playTime = e.detail.currentTime
+    if (!this.vRecordAdd) return
+    this.updateProgress(0)
   },
   // 删除讨论
   delComment: function (e) {
@@ -680,11 +665,12 @@ Page({
         lesson_id: this.data.id,
         sublesson_id: this.data.cur.id
       });
-      wx.uma.trackEvent('totalShare', { 'shareName': '云课堂邀请学员' });
+      wx.uma.trackEvent('totalShare', {
+        'shareName': '云课堂邀请学员'
+      });
       return {
         title: this.data.detail.title,
-        path:
-          "page/index/pages/detail/detail?id=" +
+        path: "page/index/pages/detail/detail?id=" +
           this.data.id +
           "&curid=" +
           this.data.cur.id +
@@ -898,20 +884,20 @@ Page({
         replycontenLength: e.detail.value.length
       });
       let lessDiscussion = this.data.$state.lessDiscussion;
-      lessDiscussion[this.data.detail.id]
-        ? ""
-        : (lessDiscussion[this.data.detail.id] = {});
+      lessDiscussion[this.data.detail.id] ?
+        "" :
+        (lessDiscussion[this.data.detail.id] = {});
       if (this.replyParent) {
-        lessDiscussion[this.data.detail.id]["replyParent"]
-          ? ""
-          : (lessDiscussion[this.data.detail.id]["replyParent"] = {});
+        lessDiscussion[this.data.detail.id]["replyParent"] ?
+          "" :
+          (lessDiscussion[this.data.detail.id]["replyParent"] = {});
         lessDiscussion[this.data.detail.id]["replyParent"][
           this.replyParent
         ] = this.data.replycontent;
       } else if (this.replyInfo) {
-        lessDiscussion[this.data.detail.id]["replyInfo"]
-          ? ""
-          : (lessDiscussion[this.data.detail.id]["replyInfo"] = {});
+        lessDiscussion[this.data.detail.id]["replyInfo"] ?
+          "" :
+          (lessDiscussion[this.data.detail.id]["replyInfo"] = {});
         lessDiscussion[this.data.detail.id]["replyInfo"][
           this.replyInfo.id
         ] = this.data.replycontent;
@@ -925,9 +911,9 @@ Page({
         contenLength: e.detail.value.length
       });
       let lessDiscussion = this.data.$state.lessDiscussion;
-      lessDiscussion[this.data.detail.id]
-        ? ""
-        : (lessDiscussion[this.data.detail.id] = {});
+      lessDiscussion[this.data.detail.id] ?
+        "" :
+        (lessDiscussion[this.data.detail.id] = {});
       lessDiscussion[this.data.detail.id]["replycontent"] = this.data.content;
       app.store.setState({
         lessDiscussion
@@ -937,8 +923,7 @@ Page({
   toCommentDetail(e) {
     let vm = this;
     wx.navigateTo({
-      url:
-        "/pages/commentDetail/commentDetail?" +
+      url: "/pages/commentDetail/commentDetail?" +
         "lesson_id=" +
         this.data.detail.id +
         "&comment_id=" +
@@ -954,8 +939,7 @@ Page({
   show(e) {
     if (this.data.$state.userInfo.status !== "normal") {
       wx.showModal({
-        content:
-          "由于您近期不合规操作，您的账户已被管理员禁止发帖留言，如有疑问请在个人中心联系客服处理"
+        content: "由于您近期不合规操作，您的账户已被管理员禁止发帖留言，如有疑问请在个人中心联系客服处理"
       });
     } else {
       this.setscrollto();
@@ -969,37 +953,33 @@ Page({
               this.data.$state.lessDiscussion[this.data.detail.id].replyInfo
             ) {
               this.data.$state.lessDiscussion[this.data.detail.id].replyInfo[
-                this.replyInfo.id
-              ]
-                ? this.setData({
+                  this.replyInfo.id
+                ] ?
+                this.setData({
                   replycontent: this.data.$state.lessDiscussion[
                     this.data.detail.id
                   ].replyInfo[this.replyInfo.id],
-                  replyplaceholder:
-                    "回复 " + e.currentTarget.dataset.reply.nickname,
+                  replyplaceholder: "回复 " + e.currentTarget.dataset.reply.nickname,
                   replycontenLength: this.data.$state.lessDiscussion[
                     this.data.detail.id
                   ].replyInfo[this.replyInfo.id].length
-                })
-                : this.setData({
+                }) :
+                this.setData({
                   replycontent: "",
-                  replyplaceholder:
-                    "回复 " + e.currentTarget.dataset.reply.nickname,
+                  replyplaceholder: "回复 " + e.currentTarget.dataset.reply.nickname,
                   replycontenLength: 0
                 });
             } else {
               this.setData({
                 replycontent: "",
-                replyplaceholder:
-                  "回复 " + e.currentTarget.dataset.reply.nickname,
+                replyplaceholder: "回复 " + e.currentTarget.dataset.reply.nickname,
                 replycontenLength: 0
               });
             }
           } else {
             this.setData({
               replycontent: "",
-              replyplaceholder:
-                "回复 " + e.currentTarget.dataset.reply.nickname,
+              replyplaceholder: "回复 " + e.currentTarget.dataset.reply.nickname,
               replycontenLength: 0
             });
           }
@@ -1008,29 +988,26 @@ Page({
             this.data.$state.lessDiscussion[this.data.detail.id].replyParent
           ) {
             this.data.$state.lessDiscussion[this.data.detail.id].replyParent[
-              this.replyParent
-            ]
-              ? this.setData({
+                this.replyParent
+              ] ?
+              this.setData({
                 replycontent: this.data.$state.lessDiscussion[
                   this.data.detail.id
                 ].replyParent[this.replyParent],
-                replyplaceholder:
-                  "回复 " + e.currentTarget.dataset.reply.from_user,
+                replyplaceholder: "回复 " + e.currentTarget.dataset.reply.from_user,
                 replycontenLength: this.data.$state.lessDiscussion[
                   this.data.detail.id
                 ].replyParent[this.replyParent].length
-              })
-              : this.setData({
+              }) :
+              this.setData({
                 replycontent: "",
-                replyplaceholder:
-                  "回复 " + e.currentTarget.dataset.reply.from_user,
+                replyplaceholder: "回复 " + e.currentTarget.dataset.reply.from_user,
                 replycontenLength: 0
               });
           } else {
             this.setData({
               replycontent: "",
-              replyplaceholder:
-                "回复 " + e.currentTarget.dataset.reply.from_user,
+              replyplaceholder: "回复 " + e.currentTarget.dataset.reply.from_user,
               replycontenLength: 0
             });
           }
@@ -1068,8 +1045,7 @@ Page({
     this.setscrollto();
     if (this.data.$state.userInfo.status !== "normal") {
       wx.showModal({
-        content:
-          "由于您近期不合规操作，您的账户已被管理员禁止发帖留言，如有疑问请在个人中心联系客服处理",
+        content: "由于您近期不合规操作，您的账户已被管理员禁止发帖留言，如有疑问请在个人中心联系客服处理",
         confirmColor: "#df2020"
       });
     } else {
@@ -1094,8 +1070,7 @@ Page({
   showWrite(e) {
     if (this.data.$state.userInfo.status !== "normal") {
       wx.showModal({
-        content:
-          "由于您近期不合规操作，您的账户已被管理员禁止发帖留言，如有疑问请在个人中心联系客服处理",
+        content: "由于您近期不合规操作，您的账户已被管理员禁止发帖留言，如有疑问请在个人中心联系客服处理",
         confirmColor: "#df2020"
       });
     } else {
@@ -1152,7 +1127,9 @@ Page({
       this.setIntegral("+45 学分", "完成[云课堂]新手指引");
     }).catch(err => {
       this.turnOff.guide = 0
-      err.msg == '记录已增加' ? app.setState({ 'newGuide.lesson': 1 }) : ''
+      err.msg == '记录已增加' ? app.setState({
+        'newGuide.lesson': 1
+      }) : ''
     });
   },
   // 语音
@@ -1163,8 +1140,7 @@ Page({
     });
     if (this.data.$state.authRecordfail) {
       wx.showModal({
-        content:
-          "您已拒绝授权使用麦克风录音权限，请打开获取麦克风授权！否则无法使用小程序部分功能",
+        content: "您已拒绝授权使用麦克风录音权限，请打开获取麦克风授权！否则无法使用小程序部分功能",
         confirmText: "去授权",
         confirmColor: "#df2020",
         success: res => {
@@ -1199,8 +1175,7 @@ Page({
           authRecord: record || false
         });
       },
-      fail(res) {
-      }
+      fail(res) {}
     });
   },
   /**
@@ -1222,9 +1197,9 @@ Page({
       clearInterval(this.timer);
       if (!this.data.showvoiceauto) return;
       let text = res.result;
-      this.data.replyshow
-        ? (text = this.data.replycontent + text)
-        : (text = this.data.content + text);
+      this.data.replyshow ?
+        (text = this.data.replycontent + text) :
+        (text = this.data.content + text);
       // 获取音频文件临时地址
       let filePath = res.tempFilePath;
       let duration = res.duration;
@@ -1235,29 +1210,29 @@ Page({
         });
         return;
       }
-      this.data.replyshow
-        ? this.setData({
+      this.data.replyshow ?
+        this.setData({
           replycontent: text
-        })
-        : this.setData({
+        }) :
+        this.setData({
           content: text
         });
       if (this.data.replyshow) {
         let lessDiscussion = this.data.$state.lessDiscussion;
-        lessDiscussion[this.data.detail.id]
-          ? ""
-          : (lessDiscussion[this.data.detail.id] = {});
+        lessDiscussion[this.data.detail.id] ?
+          "" :
+          (lessDiscussion[this.data.detail.id] = {});
         if (this.replyParent) {
-          lessDiscussion[this.data.detail.id]["replyParent"]
-            ? ""
-            : (lessDiscussion[this.data.detail.id]["replyParent"] = {});
+          lessDiscussion[this.data.detail.id]["replyParent"] ?
+            "" :
+            (lessDiscussion[this.data.detail.id]["replyParent"] = {});
           lessDiscussion[this.data.detail.id]["replyParent"][
             this.replyParent
           ] = this.data.replycontent;
         } else if (this.replyInfo) {
-          lessDiscussion[this.data.detail.id]["replyInfo"]
-            ? ""
-            : (lessDiscussion[this.data.detail.id]["replyInfo"] = {});
+          lessDiscussion[this.data.detail.id]["replyInfo"] ?
+            "" :
+            (lessDiscussion[this.data.detail.id]["replyInfo"] = {});
           lessDiscussion[this.data.detail.id]["replyInfo"][
             this.replyInfo.id
           ] = this.data.replycontent;
@@ -1267,9 +1242,9 @@ Page({
         });
       } else {
         let lessDiscussion = this.data.$state.lessDiscussion;
-        lessDiscussion[this.data.detail.id]
-          ? ""
-          : (lessDiscussion[this.data.detail.id] = {});
+        lessDiscussion[this.data.detail.id] ?
+          "" :
+          (lessDiscussion[this.data.detail.id] = {});
         lessDiscussion[this.data.detail.id]["replycontent"] = this.data.content;
         app.store.setState({
           lessDiscussion
@@ -1369,9 +1344,9 @@ Page({
         voicetime: 0,
         filePath: ""
       });
-      lessDiscussion[this.data.detail.id]
-        ? (lessDiscussion[this.data.detail.id].replycontent = text)
-        : "";
+      lessDiscussion[this.data.detail.id] ?
+        (lessDiscussion[this.data.detail.id].replycontent = text) :
+        "";
       app.store.setState({
         lessDiscussion
       });
@@ -1421,8 +1396,8 @@ Page({
       }, 2500);
     } else {
       this.data.comment[e.target.dataset.index].reply_array[
-        e.target.dataset.chilindex
-      ].reply_content =
+          e.target.dataset.chilindex
+        ].reply_content =
         "<span style='background:#f6eeee'>" +
         this.data.comment[e.target.dataset.index].reply_array[
           e.target.dataset.chilindex
@@ -1444,13 +1419,14 @@ Page({
     }
   },
   copySynopsis() {
-    let content = this.data.detail.intro_content, txt = ''
-    if(Array.isArray(content)) {
+    let content = this.data.detail.intro_content,
+      txt = ''
+    if (Array.isArray(content)) {
       content.forEach(item => {
-        item.children[0]['text'] ? txt = txt + item.children[0]['text'] : 
-        item.children[0]['children'] ? item.children[0]['children'][0]['text'] ? txt = txt + item.children[0]['children'][0]['text'] : '' : ''
+        item.children[0]['text'] ? txt = txt + item.children[0]['text'] :
+          item.children[0]['children'] ? item.children[0]['children'][0]['text'] ? txt = txt + item.children[0]['children'][0]['text'] : '' : ''
       })
-      txt = txt.replace(/&nbsp;/g,'')
+      txt = txt.replace(/&nbsp;/g, '')
       app.copythat(txt)
     } else {
       app.copythat(content)
@@ -1475,20 +1451,21 @@ Page({
   },
   //客服盒子
   showServise() {
-    let link = this.data.detail.mp_url
+    let link = this.data.detail.mpUrl
     wx.navigateTo({
       url: "/pages/education/education?type=live",
       success: function (res) {
         // 通过eventChannel向被打开页面传送数据
-        res.eventChannel.emit("liveCode", { url: link })
+        res.eventChannel.emit("liveCode", {
+          url: link
+        })
       },
     });
   },
   closeShool() {
     wx.setStorageSync(
-      'plathStatus',
-      {
-        time:  app.util.formatTime(new Date()).slice(0,10),
+      'plathStatus', {
+        time: app.util.formatTime(new Date()).slice(0, 10),
         status: 0
       }
     )
@@ -1501,7 +1478,9 @@ Page({
     this.getProvince().then(() => {
       this.getCity().then(() => {
         this.getSchool().then(() => {
-          let index1 = 0 , index2 = 0, index3 = 0
+          let index1 = 0,
+            index2 = 0,
+            index3 = 0
           this.setData({
             multiAddress: [this.province, this.city],
             multiIndex: [index1, index2],
@@ -1513,21 +1492,29 @@ Page({
     })
   },
   getProvince() {
-    let param = { level: 1 }
+    let param = {
+      level: 1
+    }
     return app.user.search(param).then(msg => {
       msg.data.push('暂无')
       this.province = msg.data
     })
   },
   getCity(val) {
-    let param = { level: 2, name: val || this.province[0] }
+    let param = {
+      level: 2,
+      name: val || this.province[0]
+    }
     return app.user.search(param).then(msg => {
       msg.data.push('暂无')
       this.city = msg.data
     })
   },
   getSchool(val) {
-    let param = { level: 3, name: val || this.city[0] }
+    let param = {
+      level: 3,
+      name: val || this.city[0]
+    }
     return app.user.search(param).then(msg => {
       this.school = msg.data
     })
@@ -1539,7 +1526,7 @@ Page({
     temp[col] = val
     switch (col) {
       case 0:
-        if(this.province[val] == '暂无') {
+        if (this.province[val] == '暂无') {
           this.setData({
             "multiAddress[1]": ['暂无'],
             singleSchool: ['暂无'],
@@ -1561,7 +1548,7 @@ Page({
         }
         break
       case 1:
-        if(this.city[val] == '暂无') {
+        if (this.city[val] == '暂无') {
           this.school = ['暂无']
           this.setData({
             singleSchool: ['暂无'],
@@ -1601,44 +1588,44 @@ Page({
         duration: 1500,
         mask: false
       })
-    } else if(this.data.plathParam.shool.length == 0 && this.data.plathParam.plath != '暂无' && type == 1) {
+    } else if (this.data.plathParam.shool.length == 0 && this.data.plathParam.plath != '暂无' && type == 1) {
       wx.showToast({
         title: "请先选择学校",
         icon: "none",
         duration: 1500,
         mask: false
       })
-    } else if(type == 1){
+    } else if (type == 1) {
       app.user.schoolWrite().then(() => {
         this.setData({
           showplece: false,
           showToast: true,
-          "detail.school_dialog": 0
+          "detail.schoolDialog": 0
         })
         this.closeToast()
       })
     }
   },
   submit() {
-    if(this.data.plathParam.plath.length == 0 || this.data.plathParam.shool.length == 0) {
+    if (this.data.plathParam.plath.length == 0 || this.data.plathParam.shool.length == 0) {
       this.tipOrder(1)
     } else {
       let param = {
         university: this.data.plathParam.shool,
-      } 
+      }
       app.user.profile(param).then(msg => {
         app.setUser(msg.data.userInfo)
         this.setData({
           showplece: false,
           showToast: true,
-          "detail.school_dialog": 0
+          "detail.schoolDialog": 0
         })
         this.closeToast()
       })
     }
   },
   closeToast() {
-   this.Toastimer = setTimeout(() => {
+    this.Toastimer = setTimeout(() => {
       this.setData({
         showToast: false
       })
@@ -1646,15 +1633,13 @@ Page({
       clearTimeout(this.Toastimer)
     }, 1500)
   },
-  compareDate (dateTime1, dateTime2) {
-    let formatDate1 = new Date(dateTime1), formatDate2 = new Date(dateTime2)
-    if(formatDate1 > formatDate2)
-    {
-        return false
-    }
-    else
-    {
-        return true
+  compareDate(dateTime1, dateTime2) {
+    let formatDate1 = new Date(dateTime1),
+      formatDate2 = new Date(dateTime2)
+    if (formatDate1 > formatDate2) {
+      return false
+    } else {
+      return true
     }
   },
   binderror(e) {

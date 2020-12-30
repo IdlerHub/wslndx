@@ -109,6 +109,42 @@ function universitySearchList(params) {
   return httpService.post("university/searchList", params, null, true);
 }
 
+/**
+ * @description: 在线课程详情
+ * @param { lessonId } 
+ * @return:  promise
+ * **/
+function lessonInfo(params) {
+  return httpService.post("lesson/info", params, null, true);
+}
+
+/**
+ * @description: 在线课程获取课程子列表
+ * @param { lessonId } 
+ * @return:  promise
+ * **/
+function lessonSublessonList(params) {
+  return httpService.post("lesson/sublessonList", params, null, true);
+}
+
+/**
+ * @description: 在线课程播放记录增加
+ * @param { lessonId } 
+ * @return:  promise
+ * **/
+function recordAdd(params) {
+  return httpService.post("study/center/add/record", params, null, true);
+}
+
+/**
+ * @description: 在线课程播放完成记录
+ * @param { lessonId } 
+ * @return:  promise
+ * **/
+function recordFinish(params) {
+  return httpService.post("lesson/record/finish", params, null, true);
+}
+
 module.exports = {
   getBannerList,
   interestList,
@@ -121,5 +157,9 @@ module.exports = {
   searchLessonAndColumn,
   addSearchLabel,
   lecturerList,
-  universitySearchList
+  universitySearchList,
+  lessonInfo,
+  lessonSublessonList,
+  recordAdd,
+  recordFinish
 }

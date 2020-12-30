@@ -77,6 +77,7 @@ Page({
   },
   getDetail() {
     app.study.centerDuration().then(res => {
+      res.data.studyTime = (res.data.studyTime / 60 / 60).toFixed(0)
       this.setData({
         detail: res.data
       })
