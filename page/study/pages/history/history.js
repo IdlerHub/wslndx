@@ -35,7 +35,7 @@ Page({
     app.study.centerHistoryLesson(this.lesssonParams).then(res => {
       res.dataList.forEach(item => {
         var date = new Date(item.studydate * 1000)
-        item.studydate = date.getFullYear() + "年" + (date.getMonth() + 1) + "月" + date.getDate() + "日"
+        item.studydate = (date.getMonth() + 1) + "月" + date.getDate() + "日"
       })
       arr.push(...res.dataList)
       this.setData({

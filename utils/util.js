@@ -12,7 +12,7 @@ function formatTime(date, type) {
   const minute = date.getMinutes()
   const second = date.getSeconds()
   if(type) {
-    return (date.getMonth() + 1) + "月" + date.getDate() + "日" + [hour, minute].map(formatNumber).join(":")
+    return (date.getMonth() + 1) + "月" + date.getDate() + "日 " + [hour, minute].map(formatNumber).join(":")
   } else {
     return [year, month, day].map(formatNumber).join("-") + " " + [hour, minute].map(formatNumber).join(":")
   }

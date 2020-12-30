@@ -139,6 +139,10 @@ page {
   display: flex;
 }
 
+.lessonBox .lessonItem:last-child {
+  margin-bottom: 0;
+}
+
 .lessonBox .lessonItem .lessonLeft {
   position: relative;
   width: 260rpx;
