@@ -57,9 +57,9 @@ Page({
     this.getMylesson()
   },
   onReachBottom: function () {
-    if(this.data.lessonList.length < this.lessonParams.pageNum * 10) return
+    if(this.data.lessonList.length < (this.lessonParams.pageNum * 10)) return
     this.lessonParams.pageNum += 1
-    this.getMylive(this.data.lessonList)
+    this.getMylesson(this.data.lessonList)
   },
   iconBind(e) {
     console.log(e)

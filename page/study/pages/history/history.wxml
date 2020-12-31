@@ -51,12 +51,14 @@
   <swiper-item>
     <scroll-view scroll-y class="scrollView" wx:if="{{liveList[0]}}" bindscrolltolower="bindscrolltolower">
       <template is="liveItem" data="{{ liveList }}"></template>
+      <view style="height: 60rpx;"></view>
     </scroll-view>
     <template is="qst" wx:else></template>
   </swiper-item>
   <swiper-item>
     <scroll-view scroll-y class="scrollView" wx:if="{{lessonList[0]}}" bindscrolltolower="bindscrolltolower">
       <template is="lessonItem" data="{{ dayLessonlist }}"></template>
+      <view style="height: 60rpx;"></view>
     </scroll-view>
     <template is="qst" wx:else></template>
   </swiper-item>

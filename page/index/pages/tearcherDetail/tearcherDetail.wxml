@@ -11,7 +11,7 @@
     <view class="left">
       <image class="poster" mode="aspectFill" src="{{ item.image || item.indexCover}}"></image>
       <view class="chargeBox" wx:if="{{!item.isCharge}}">免费</view>
-      <view class="chargeBox charge" wx:else>收费</view>
+      <view class="chargeBox charge" wx:else>付费</view>
     </view>
     <view class="right">
       <text class="line name">{{item.name}}</text>
@@ -33,7 +33,7 @@
     <text></text>
   </view>
 </view>
-<scroll-view class="scrollView" scroll-y bindscroll="bindscroll">
+<scroll-view class="scrollView" scroll-y bindscroll="bindscroll" bindscrolltolower="bindscrolltolower">
   <view class="topBox" style="padding-top: {{ statusBarHeight + 10 }}px;">
     <image src="/images/back.png" class="back" bindtap="back"></image>
     <view class="msgBox">
@@ -69,6 +69,7 @@
     </view>
   </view>
   <template is="listItem" data="{{list: lessonList}}"></template>
+  <view style="height: 60rpx;"></view>
 </scroll-view>
 
 <loginBox wx:if="{{$state.showLogin}}" />

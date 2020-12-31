@@ -155,8 +155,8 @@
           "scene": null
         },
         {
-          "name": "page/live/pages/tableDetail/tableDetail",
-          "pathName": "page/live/pages/tableDetail/tableDetail",
+          "name": "page/index/pages/allSchoollesson/allSchoollesson",
+          "pathName": "page/index/pages/allSchoollesson/allSchoollesson",
           "query": "specialColumnId=246",
           "scene": 1000
         },

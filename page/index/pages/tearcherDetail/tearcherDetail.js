@@ -6,183 +6,13 @@ Page({
     top: 0,
     topBox: 0,
     showTab: 0,
-    lessonList: [{
-        columnId: 855,
-        dayTime: "12月19日",
-        indexCover: "https://hwcdn.jinlingkeji.cn/uploads/images/aba9522ca7833d964db860b181ca170e.png",
-        isExperience: 0,
-        liveId: 8544,
-        liveName: "<p style='width:410rpx;display: block;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;'>识别和保护我们的发声器官1</p>",
-        startTime: "09:00",
-        status: 0,
-        tags: [{
-          columnId: 855,
-          tagName: "戏曲文化"
-        }],
-        universityName: "网上老年大学",
-        viewNum: 184,
-        isCharge: 1
-      },
-      {
-        columnId: 855,
-        dayTime: "12月19日",
-        indexCover: "https://hwcdn.jinlingkeji.cn/uploads/images/aba9522ca7833d964db860b181ca170e.png",
-        isExperience: 0,
-        liveId: 8544,
-        liveName: "<p style='width:410rpx;display: block;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;'>识别和保护我们的发声器官1</p>",
-        startTime: "09:00",
-        status: 0,
-        tags: [{
-          columnId: 855,
-          tagName: "戏曲文化"
-        }],
-        universityName: "网上老年大学",
-        viewNum: 184,
-      }, {
-        columnId: 855,
-        dayTime: "12月19日",
-        indexCover: "https://hwcdn.jinlingkeji.cn/uploads/images/aba9522ca7833d964db860b181ca170e.png",
-        isExperience: 0,
-        liveId: 8544,
-        liveName: "<p style='width:410rpx;display: block;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;'>识别和保护我们的发声器官1</p>",
-        startTime: "09:00",
-        status: 0,
-        tags: [{
-          columnId: 855,
-          tagName: "戏曲文化"
-        }],
-        universityName: "网上老年大学",
-        viewNum: 184,
-        isCharge: 1
-      }, {
-        columnId: 855,
-        dayTime: "12月19日",
-        indexCover: "https://hwcdn.jinlingkeji.cn/uploads/images/aba9522ca7833d964db860b181ca170e.png",
-        isExperience: 0,
-        liveId: 8544,
-        liveName: "<p style='width:410rpx;display: block;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;'>识别和保护我们的发声器官1</p>",
-        startTime: "09:00",
-        status: 0,
-        tags: [{
-          columnId: 855,
-          tagName: "戏曲文化"
-        }],
-        universityName: "网上老年大学",
-        viewNum: 184,
-      }, {
-        columnId: 855,
-        dayTime: "12月19日",
-        indexCover: "https://hwcdn.jinlingkeji.cn/uploads/images/aba9522ca7833d964db860b181ca170e.png",
-        isExperience: 0,
-        liveId: 8544,
-        liveName: "<p style='width:410rpx;display: block;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;'>识别和保护我们的发声器官1</p>",
-        startTime: "09:00",
-        status: 0,
-        tags: [{
-          columnId: 855,
-          tagName: "戏曲文化"
-        }],
-        universityName: "网上老年大学",
-        viewNum: 184,
-      }, {
-        columnId: 855,
-        dayTime: "12月19日",
-        indexCover: "https://hwcdn.jinlingkeji.cn/uploads/images/aba9522ca7833d964db860b181ca170e.png",
-        isExperience: 0,
-        liveId: 8544,
-        liveName: "<p style='width:410rpx;display: block;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;'>识别和保护我们的发声器官1</p>",
-        startTime: "09:00",
-        status: 0,
-        tags: [{
-          columnId: 855,
-          tagName: "戏曲文化"
-        }],
-        universityName: "网上老年大学",
-        viewNum: 184,
-      }, {
-        columnId: 855,
-        dayTime: "12月19日",
-        indexCover: "https://hwcdn.jinlingkeji.cn/uploads/images/aba9522ca7833d964db860b181ca170e.png",
-        isExperience: 0,
-        liveId: 8544,
-        liveName: "<p style='width:410rpx;display: block;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;'>识别和保护我们的发声器官1</p>",
-        startTime: "09:00",
-        status: 0,
-        tags: [{
-          columnId: 855,
-          tagName: "戏曲文化"
-        }],
-        universityName: "网上老年大学",
-        viewNum: 184,
-        isCharge: 1
-      }, {
-        columnId: 855,
-        dayTime: "12月19日",
-        indexCover: "https://hwcdn.jinlingkeji.cn/uploads/images/aba9522ca7833d964db860b181ca170e.png",
-        isExperience: 0,
-        liveId: 8544,
-        liveName: "<p style='width:410rpx;display: block;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;'>识别和保护我们的发声器官1</p>",
-        startTime: "09:00",
-        status: 0,
-        tags: [{
-          columnId: 855,
-          tagName: "戏曲文化"
-        }],
-        universityName: "网上老年大学",
-        viewNum: 184,
-      }, {
-        columnId: 855,
-        dayTime: "12月19日",
-        indexCover: "https://hwcdn.jinlingkeji.cn/uploads/images/aba9522ca7833d964db860b181ca170e.png",
-        isExperience: 0,
-        liveId: 8544,
-        liveName: "<p style='width:410rpx;display: block;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;'>识别和保护我们的发声器官1</p>",
-        startTime: "09:00",
-        status: 0,
-        tags: [{
-          columnId: 855,
-          tagName: "戏曲文化"
-        }],
-        universityName: "网上老年大学",
-        viewNum: 184,
-      }, {
-        columnId: 855,
-        dayTime: "12月19日",
-        indexCover: "https://hwcdn.jinlingkeji.cn/uploads/images/aba9522ca7833d964db860b181ca170e.png",
-        isExperience: 0,
-        liveId: 8544,
-        liveName: "<p style='width:410rpx;display: block;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;'>识别和保护我们的发声器官1</p>",
-        startTime: "09:00",
-        status: 0,
-        tags: [{
-          columnId: 855,
-          tagName: "戏曲文化"
-        }],
-        universityName: "网上老年大学",
-        viewNum: 184,
-      }, {
-        columnId: 855,
-        dayTime: "12月19日",
-        indexCover: "https://hwcdn.jinlingkeji.cn/uploads/images/aba9522ca7833d964db860b181ca170e.png",
-        isExperience: 0,
-        liveId: 8544,
-        liveName: "<p style='width:410rpx;display: block;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;'>识别和保护我们的发声器官1</p>",
-        startTime: "09:00",
-        status: 0,
-        tags: [{
-          columnId: 855,
-          tagName: "戏曲文化"
-        }],
-        universityName: "网上老年大学",
-        viewNum: 184,
-      },
-    ],
+    lessonList: [],
     info: {
 
     }
   },
   params: {
-    pageSize: 10,
+    pageSize: 50,
     pageNum: 1
   },
   onLoad: function (options) {
@@ -238,6 +68,10 @@ Page({
       this.getTabtop()
     })
   },
+  bindscrolltolower() {
+    this.params.pageNum += 1
+    this.getLesson()
+  },
   back() {
     let pages = getCurrentPages()
     pages.length > 1 ? wx.navigateBack() : wx.switchTab({
@@ -253,11 +87,12 @@ Page({
       })
     })
   },
-  getLesson(list) {
-    let arr = list || this.data.list
+  getLesson() {
+    let arr = this.data.lessonList
     app.liveData.lecturerList(this.params).then(res => {
+      arr.push(...res.dataList)
       this.setData({
-        lessonList: res.dataList
+        lessonList: arr
       })
     })
   },

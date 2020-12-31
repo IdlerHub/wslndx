@@ -66,8 +66,8 @@
   </view>
 </view>
 <view wx:if="{{liveList[0] || lessonList[0]}}">
-  <template is="contentBox" data="{{ title:'直播课程', isLive: 1, liveList }}"></template>
-  <template is="contentBox" data="{{ title:'我的课程', lessonList }}"></template>
+  <template is="contentBox" data="{{ title:'直播课程', isLive: 1, liveList }}" wx:if="{{liveList[0]}}"></template>
+  <template is="contentBox" data="{{ title:'我的课程', lessonList }}" wx:if="{{lessonList[0]}}"></template>
 </view>
 <view class="qst" wx:else>
   <image src="/images/liveqs.png"></image>

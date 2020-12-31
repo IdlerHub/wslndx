@@ -355,7 +355,7 @@ Page({
     if (item.jumpType == 1) {
       /* 外链 */
       wx.navigateTo({
-        url: `../education/education?type=0&url=${item.clickurl}&login=${item.is_login}`
+        url: `../education/education?type=0&url=${item.clickurl}&login=${item.isLogin}`
       })
       wx.uma.trackEvent('index_bannerClick', {
         bannerTencent: item.title
@@ -363,7 +363,7 @@ Page({
     } else if (item.jumpType == 2) {
       /* 视频 */
       wx.navigateTo({
-        url: `../../page/index/pages/detail/detail?id=${item.video_id}&name=${item.title}`
+        url: `../../page/index/pages/detail/detail?id=${item.videoId}&name=${item.title}`
       })
       wx.uma.trackEvent('index_bannerClick', {
         bannerVideo: item.title
