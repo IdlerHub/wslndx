@@ -26,14 +26,14 @@
     </view>
   </view>
 </template>
-<navigationBar id="navigationBar" wx:if="{{scroll > 0}}" title="{{info.nickname}}" back="{{ true }}" isIndex="{{false}}"></navigationBar>
+<navigationBar id="navigationBar" wx:if="{{scroll > 50}}" title="{{info.nickname}}" back="{{ true }}" isIndex="{{false}}"></navigationBar>
 <view class="tabBox" wx:if="{{showTab}}" style="position: fixed;top: {{top}}px">
   <view class="tab">
     <text>课程 {{lessonList.length}}</text>
     <text></text>
   </view>
 </view>
-<scroll-view class="scrollView" scroll-y bindscroll="bindscroll" bindscrolltolower="bindscrolltolower">
+<scroll-view class="scrollView" scroll-y bindscroll="bindscroll" bindscrolltolower="bindscrolltolower" bindscrolltoupper="bindscrolltoupper">
   <view class="topBox" style="padding-top: {{ statusBarHeight + 10 }}px;">
     <image src="/images/back.png" class="back" bindtap="back"></image>
     <view class="msgBox">

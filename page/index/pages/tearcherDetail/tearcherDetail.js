@@ -68,6 +68,11 @@ Page({
       this.getTabtop()
     })
   },
+  bindscrolltoupper() {
+    this.setData({
+      scroll: 0
+    })
+  },
   bindscrolltolower() {
     this.params.pageNum += 1
     this.getLesson()
