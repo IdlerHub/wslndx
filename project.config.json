@@ -155,9 +155,9 @@
           "scene": null
         },
         {
-          "name": "page/index/pages/detail/detail",
-          "pathName": "page/index/pages/detail/detail",
-          "query": "id=430&name=四案子",
+          "name": "page/live/pages/tableDetail/tableDetail",
+          "pathName": "page/live/pages/tableDetail/tableDetail",
+          "query": "specialColumnId=246",
           "scene": 1000
         },
         {
@@ -177,9 +177,9 @@
           }
         },
         {
-          "name": "page/index/pages/topTeacher/topTeacher",
-          "pathName": "page/index/pages/topTeacher/topTeacher",
-          "query": "id=647",
+          "name": "pages/education/education",
+          "pathName": "pages/education/education",
+          "query": "type=0&url=https://globalh5dev.jinlingkeji.cn/enrollmenth5/#/?lessonGroupId=12",
           "scene": null
         },
         {

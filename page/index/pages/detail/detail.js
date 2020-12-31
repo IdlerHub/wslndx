@@ -48,7 +48,7 @@ Page({
     /* rect: wx.getMenuButtonBoundingClientRect() */
   },
   pageName: "视频页（视频详情页）",
-  timeTemplate: "",
+  timeTemplate: 0,
   vRecordAdd: false,
   turnOff: {
     guide: 0,
@@ -177,7 +177,7 @@ Page({
     if (this.data.$state.newGuide) {
       this.data.$state.newGuide.lesson == 0 ? this.closeGuide() : "";
     }
-    if (this.timeTemplate.length > 0) {
+    if (this.timeTemplate > 0) {
       let progress = parseInt(new Date().getTime() / 1000 + "") - this.timeTemplate
       this.updateProgress(progress)
     }
@@ -248,7 +248,7 @@ Page({
   },
   getDetail() {
     this.param = {
-      lessonId: this.data.id
+      lessonId: Number(this.data.id)
     };
     return app.lessonNew.lessonInfo(this.param).then(res => {
       res.data.intro_content = htmlparser.default(res.data.introContent)
@@ -304,6 +304,10 @@ Page({
     });
   },
   ended() {
+    if (this.timeTemplate > 0) {
+      let progress = parseInt(new Date().getTime() / 1000 + "") - this.timeTemplate
+      this.updateProgress(progress)
+    }
     this.data.sublessons.forEach(item => {
       item.id == this.data.cur.id ? (item.played = 1) : "";
     });
@@ -346,8 +350,10 @@ Page({
     });
   },
   videoPause() {
-    let progress = parseInt(new Date().getTime() / 1000 + "") - this.timeTemplate
-    this.updateProgress(progress)
+    if (this.timeTemplate > 0) {
+      let progress = parseInt(new Date().getTime() / 1000 + "") - this.timeTemplate
+      this.updateProgress(progress)
+    }
   },
 
   updateProgress(studyTime) {

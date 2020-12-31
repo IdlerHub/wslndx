@@ -178,7 +178,8 @@ Page({
   getSublesson(lessons) {
     if (!lessons) return
     let playNow = {},
-      liveNow = 0;
+      liveNow = 0, 
+      i = -1;
     this.setData({
       sublessons: lessons,
     }, () => {
@@ -191,12 +192,13 @@ Page({
         //如果是已经结束的课,就把第一个放到当前播放中
         item.state == 3 && JSON.stringify(playNow) == "{}" && !liveNow && JSON.stringify(this.data.playNow) == "{}" && !item.isStudy ? [this.getLiveBackById(item.id), playNow = item] :
           "";
+        item.state == 3 && i == -1 ? i = index : ''
       });
       liveNow ? this.setData({
         playNow,
         current: playNow,
         playFlag: false
-      }) : ''
+      }) : JSON.stringify(playNow) == "{}" ? [this.getLiveBackById(this.data.sublessons[i].id), playNow = item] : ''
       setTimeout(() => {
         this.tolesson()
       }, 800)
@@ -1187,20 +1189,48 @@ Page({
   },
   played() {
     //开始播放
+    setTimeout(() => {
+      this.timeTemplate = parseInt(new Date().getTime() / 1000 + "")
+      this.updateProgress(0)
+    }, 800)
   },
   timeupdate() {
     //进度条变化
+    if (!this.vRecordAdd) return
+    this.updateProgress(0)
   },
   videoPause() {
     //暂停播放
     // this.setData({
     //   playFlag: false,
     // });
+    if (this.timeTemplate > 0) {
+      let progress = parseInt(new Date().getTime() / 1000 + "") - this.timeTemplate
+      this.updateProgress(progress)
+    }
   },
   ended() {
     //播放结束
     this.setData({
       playFlag: false,
+    });
+    if (this.timeTemplate > 0) {
+      let progress = parseInt(new Date().getTime() / 1000 + "") - this.timeTemplate
+      this.updateProgress(progress)
+    }
+  },
+  updateProgress(studyTime) {
+    let param = {
+      columnId: this.data.lessonDetail.columnId,
+      courseId: this.data.playNow.id,
+      studyType: 2,
+      studyTime,
+      sourceType: 3
+    }
+    app.lessonNew.recordAdd(param).then(msg => {
+      this.vRecordAdd = false
+    }).catch(() => {
+      this.updateProgress(studyTime)
     });
   },
   onShareAppMessage() {
