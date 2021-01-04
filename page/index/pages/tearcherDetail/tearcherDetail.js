@@ -102,7 +102,11 @@ Page({
     })
   },
   checkAttention() {
-    let pages = getCurrentPages().length > 1 ? getCurrentPages()[getCurrentPages().length - 2] : null
+    let teachPage = null, searchPage = null
+    getCurrentPages().forEach(e => {
+      e.isTopteacher ? teachPage = e : null
+      e.isAllsearch ? searchPage = e : null
+    })
     if (this.data.info.isFollowing) {
       app.liveData.cancelFollow({
         followerUid: this.data.info.id
@@ -110,12 +114,16 @@ Page({
         this.setData({
           'info.isFollowing': 0
         })
-        console.log(pages)
-        pages.data.list.forEach((item, index) => {
-          item.uid == this.data.info.id ? pages.setData({
+        teachPage ? teachPage.data.list.forEach((item, index) => {
+          item.uid == this.data.info.id ? teachPage.setData({
             [`list[${index}].isFollowing`]: 0
           }) : ''
-        })
+        }) : ''
+        searchPage ? searchPage.data.list.forEach((item, index) => {
+          item.uid == this.data.info.id ? searchPage.setData({
+            [`list[${index}].isFollowing`]: 0
+          }) : ''
+        }) : ''
       })
     } else {
       app.liveData.follow({
@@ -128,13 +136,16 @@ Page({
         this.setData({
           'info.isFollowing': 1
         })
-        if (pages) {
-          pages.data.list.forEach((item, index) => {
-            item.uid == this.data.info.id ? pages.setData({
-              [`list[${index}].isFollowing`]: 1
-            }) : ''
-          })
-        }
+        teachPage ? teachPage.data.list.forEach((item, index) => {
+          item.uid == this.data.info.id ? teachPage.setData({
+            [`list[${index}].isFollowing`]: 1
+          }) : ''
+        }) : ''
+        searchPage ? searchPage.data.list.forEach((item, index) => {
+          item.uid == this.data.info.id ? searchPage.setData({
+            [`list[${index}].isFollowing`]: 1
+          }) : ''
+        }) : ''
       })
     }
   },
@@ -143,7 +154,7 @@ Page({
     app.liveData.getLiveBySpecialColumnId({
       specialColumnId: item.columnId
     }).then(res => {
-      if(item.isCharge) {
+      if (item.isCharge) {
         wx.navigateTo({
           url: `/page/index/pages/chageLesson/chageLesson?id=${item.columnId}`,
         })

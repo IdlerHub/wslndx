@@ -65,12 +65,6 @@ Page({
       })
     }
   },
-  toDetail(e) {
-    let uid = e.currentTarget.dataset.uid
-    wx.navigateTo({
-      url: '/page/index/pages/tearcherDetail/tearcherDetail?id=' + uid,
-    })
-  },
   checknextTap(e) {
     app.checknextTap(e)
   }

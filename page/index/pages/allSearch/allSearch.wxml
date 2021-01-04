@@ -37,7 +37,10 @@
       <rich-text nodes="{{item.name}}" class="richText"></rich-text>
     </view>
   </view>
-  <template is="listItem" wx:else data="{{list}}"></template>
+  <template is="listItem"  wx:elif="{{isLesson}}" data="{{list}}"></template>
+  <view wx:else>
+    <teacherBox wx:for="{{list}}" wx:key="index" item="{{item}}" index="{{index}}" isSearch="{{true}}"/>
+  </view>
   <view class="qstBox" wx:if="{{isSearch && !list[0]}}">
     <image src="../../images/searchQst.png"></image>
     <text>暂无内容</text>

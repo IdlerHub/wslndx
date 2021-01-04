@@ -1,6 +1,7 @@
 {
   "usingComponents": {
     "searchTop": "../../components/searchTop/searchTop",
-    "loginBox": "/components/loginBox/loginBox"
+    "loginBox": "/components/loginBox/loginBox",
+    "teacherBox": "../../components/teacherBox/teacherBox"
   }
 }

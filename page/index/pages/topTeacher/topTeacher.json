@@ -1,7 +1,9 @@
 {
   "usingComponents": {
     "slotSign": "/components/slotSign/slotSign",
-    "loginBox": "/components/loginBox/loginBox"
+    "loginBox": "/components/loginBox/loginBox",
+    "teacherBox": "../../components/teacherBox/teacherBox",
+    "searchTop": "../../components/searchTop/searchTop"
   },
   "navigationBarBackgroundColor": "#F5F6FA",
   "navigationBarTitleText": "名师推荐"

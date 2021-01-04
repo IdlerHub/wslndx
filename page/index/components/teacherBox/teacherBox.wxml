@@ -1,0 +1,22 @@
+<!--page/index/components/teacherBox/teacherBox.wxml-->
+<view class="item" bindtap="toDetail" data-uid="{{item.uid}}">
+  <image src="{{item.avatar || '../../images/avatarNone.png'}}" class="avatar" alt="" srcset=""></image>
+  <view class="nameBox">
+    <view class="name" wx:if="{{!isSearch}}">{{item.nickname}}</view>
+    <rich-text class="name" nodes="{{item.nickname}}" wx:else></rich-text>
+    <view class="inro">{{item.bio}}</view>
+  </view>
+  <slotSign class="iconBox" catchtap="checknextTap" data-type="attention" data-item="{{item}}" data-index="{{index}}">
+    <view class="iconBox" catchtap="checkAttention" data-item="{{item}}" data-index="{{index}}">
+      <image src="../../images/attention.png" wx:if="{{!item.isFollowing}}"></image>
+      <image src="../../images/attentioned.png" wx:elif="{{item.isFollowing && !item.isFollower}}"></image>
+      <image src="../../images/attentionown.png" wx:else></image>
+      <text
+        style="color:{{!item.isFollowing ? '' : '#999999'}}">{{ !item.isFollowing ? '关注' : item.isFollowing && !item.isFollower ? '已关注' : '相互关注' }}</text>
+    </view>
+  </slotSign>
+  <button class="iconBox share" hover-class="none" open-type="share" data-id="{{item.uid}}" catchtap="return">
+    <image src="../../images/wechatShare.png"></image>
+    <text>分享</text>
+  </button>
+</view>

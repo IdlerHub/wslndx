@@ -13,6 +13,10 @@ Component({
       type: Boolean,
       value: false
     },
+    isTeach: {
+      type: Boolean,
+      value: false
+    },
     isSearch: {
       type: Boolean,
       value: 0
@@ -81,7 +85,7 @@ Component({
             isSearch: 1
           })
         })
-      } else {
+      } else if (this.data.isLesson) {
         params['type'] = 2
         pages.setData({
           historyList: historyList
@@ -101,6 +105,29 @@ Component({
           });
           pages.setData({
             list: res.data.lessonInfo.list,
+            text: this.data.text,
+            isSearch: 1
+          })
+        })
+      } else {
+        pages.setData({
+          historyList: historyList
+        }, () => {
+          wx.setStorage({
+            key: "teachHistory",
+            data: pages.data.historyList
+          })
+        })
+        params['nickName'] = this.data.text
+        app.lessonNew.lecturerList(params).then(res => {
+          res.dataList.forEach(item => {
+            item.title = item.name
+            item.nickname = `<p style="width:410rpx;display: block;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">${item.nickname
+                .replace(this.data.text, '<span style="color:#DF2020">' + this.data.text
+                 + "</span>" )}</p>`;
+          });
+          pages.setData({
+            list: res.dataList,
             text: this.data.text,
             isSearch: 1
           })

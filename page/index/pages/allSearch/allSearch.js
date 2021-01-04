@@ -6,6 +6,7 @@ Page({
     historyList: [],
     isSearch: 0
   },
+  isAllsearch: 1,
   onLoad: function (ops) {
     this.setData({
       isLesson: ops.isLesson == 'true',
@@ -13,7 +14,7 @@ Page({
       universityId: ops.universityId
     })
     wx.setNavigationBarTitle({
-      title: ops.isSchool == 'true' ? '搜索高校' : '全部课程'
+      title: ops.isSchool == 'true' ? '搜索高校' : ops.islesson ? '搜索课程' : '搜索讲师'
     })
     let that = this
     ops.isSchool == 'true' ? wx.getStorage({
@@ -23,8 +24,15 @@ Page({
           'historyList': res.data
         })
       }
-    }) : wx.getStorage({
+    }) : ops.islesson ?  wx.getStorage({
       key: 'lessonHistory',
+      success(res) {
+        that.setData({
+          'historyList': res.data
+        })
+      }
+    }) : wx.getStorage({
+      key: 'teachHistory',
       success(res) {
         that.setData({
           'historyList': res.data
@@ -71,5 +79,27 @@ Page({
     wx.navigateTo({
       url: '/page/index/pages/detail/detail?id=' + item.id,
     })
-  }
+  },
+  checkAttention(e) {
+    let item = e.currentTarget.dataset.item,
+      index = e.currentTarget.dataset.index
+    if (!item.isFollowing) {
+      app.liveData.follow({
+        followerUid: item.uid
+      }).then(res => {
+        wx.showToast({
+          icon: 'none',
+          title: '关注成功'
+        })
+        this.setData({
+          [`list[${index}].isFollowing`]: 1
+        })
+      })
+
+    } else {
+      wx.navigateTo({
+        url: '/page/index/pages/tearcherDetail/tearcherDetail?id=' + item.uid,
+      })
+    }
+  },
 })

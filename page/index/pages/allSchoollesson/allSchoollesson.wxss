@@ -342,7 +342,7 @@ page {
   max-height: 790rpx;
   overflow: hidden;
   overflow-y: auto;
-  padding:30rpx 0 30rpx 30rpx;
+  padding:30rpx 0 500rpx 30rpx;
   box-sizing: border-box;
   display: flex;
   align-items: center;
