@@ -198,7 +198,7 @@ Page({
         playNow,
         current: playNow,
         playFlag: false
-      }) : JSON.stringify(playNow) == "{}" ? [this.getLiveBackById(this.data.sublessons[i].id), playNow = item] : ''
+      }) : JSON.stringify(playNow) == "{}" ? [this.getLiveBackById(this.data.sublessons[i].id, 1), playNow = this.data.sublessons[i]] : ''
       setTimeout(() => {
         this.tolesson()
       }, 800)
@@ -450,7 +450,7 @@ Page({
     }
   },
   //获取回播
-  getLiveBackById(liveId) {
+  getLiveBackById(liveId, type) {
     let i = 0, studyNum= 0
     LiveData.getLiveBackById({
       liveId
@@ -459,11 +459,10 @@ Page({
         item.id == liveId ? i = index : ''
         item.isStudy ? studyNum += 1 : ''
       })
-      console.log(studyNum + 1, ((studyNum + 1) / this.data.sublessons.length).toFixed(2))
       this.setData({
         playNow: res.data,
         [`sublessons[${i}].isStudy`]: 1,
-        'lessonDetail.progress': ((studyNum + 1) / this.data.sublessons.length * 100).toFixed(0)
+        'lessonDetail.progress': !type ? ((studyNum + 1) / this.data.lessonDetail.liveCount * 100).toFixed(0) : this.data.lessonDetail.progress
       }, () => {
         this.recordAddVedio();
       })
