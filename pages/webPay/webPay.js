@@ -24,15 +24,16 @@ Page({
     let {
       timeStamp,
       nonceStr,
-      packageInfo,
+      packageValue,
       signType,
       paySign,
       openUrl,
     } = JSON.parse(decodeURIComponent(options.wxPayOptions));
+    console.log(1111,JSON.parse(decodeURIComponent(options.wxPayOptions)))
     wx.requestPayment({
       timeStamp,
       nonceStr,
-      package: packageInfo,
+      package: packageValue,
       signType,
       paySign,
       success: (res) => {
@@ -52,7 +53,7 @@ Page({
         //   classId: classId,
         // });
         wx.redirectTo({
-          url: '/pages/education/education?type=0&url=' + '&login=1' + openUrl,
+          url: '/pages/education/education?type=0&login=1&url=' + openUrl,
         });
       },
     });
