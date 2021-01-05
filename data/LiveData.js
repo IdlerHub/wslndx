@@ -318,6 +318,25 @@ function hotList(params) {
   return httpService.post("live/hot/list", params, null ,true);
 }
 
+
+/**
+ * @description: 高校专栏列表
+ * @param { universityId, categoryId, type }
+ * @return:  promise
+ * **/
+function chargeList(params) {
+  return httpService.post("live/chargeList", params, null ,true);
+}
+
+/**
+ * @description: 高校直播列表（日期）
+ * @param { universityId, categoryId, type }
+ * @return:  promise
+ * **/
+function freeDate(params) {
+  return httpService.post("live/free/date", params, null ,true);
+}
+
 module.exports = {
   getLiveLessons,
   getApplyDetail,
@@ -353,5 +372,7 @@ module.exports = {
   lecturerList,
   cancelFollow,
   subjectList,
-  hotList
+  hotList,
+  chargeList,
+  freeDate
 };

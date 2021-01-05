@@ -288,7 +288,6 @@ page {
 }
 
 .inroBox {
-  height: 198rpx;
   background: #FFFFFF;
   margin-bottom: 20rpx;
   padding: 30rpx;
@@ -408,4 +407,24 @@ page {
   to {
     bottom: 0;
   }
+}
+
+.qstBox {
+  margin-top: 30rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.qstBox image {
+  width: 452rpx;
+  height: 288rpx;
+}
+
+.qstBox text {
+  font-size: 36rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: #999999;
+  margin-top: 42rpx;
 }

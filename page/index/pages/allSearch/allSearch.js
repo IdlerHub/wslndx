@@ -8,13 +8,14 @@ Page({
   },
   isAllsearch: 1,
   onLoad: function (ops) {
+    console.log(ops.islesson)
     this.setData({
       isLesson: ops.isLesson == 'true',
       isSchool: ops.isSchool == 'true',
       universityId: ops.universityId
     })
     wx.setNavigationBarTitle({
-      title: ops.isSchool == 'true' ? '搜索高校' : ops.islesson ? '搜索课程' : '搜索讲师'
+      title: ops.isSchool == 'true' ? '搜索高校' : ops.isLesson == 'true' ? '搜索课程' : '搜索讲师'
     })
     let that = this
     ops.isSchool == 'true' ? wx.getStorage({
@@ -24,7 +25,7 @@ Page({
           'historyList': res.data
         })
       }
-    }) : ops.islesson ?  wx.getStorage({
+    }) : ops.isLesson == 'true' ?  wx.getStorage({
       key: 'lessonHistory',
       success(res) {
         that.setData({
@@ -50,7 +51,7 @@ Page({
   toSchool(e) {
     let item = e.currentTarget.dataset.item
     wx.navigateTo({
-      url: `/page/index/pages/allSchoollesson/allSchoollesson?id=${item.id}&title=${item.title}`,
+      url: `/page/index/pages/schoolDetail/schoolDetail?id=${item.id}&title=${item.title}`,
     })
   },
   clearHistory() {

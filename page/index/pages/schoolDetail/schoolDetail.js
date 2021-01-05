@@ -26,7 +26,7 @@ Page({
   getList() {
     let params = {
       universityId: this.data.detail.id,
-      type: 3,
+      type: 1,
       pageSize: 10,
       pageNum: 1
     }
@@ -56,5 +56,28 @@ Page({
     this.setData({
       showIntro: !this.data.showIntro
     })
+  },
+  toLivelesson(e) {
+    let item = e.currentTarget.dataset.item
+    app.liveData.getLiveBySpecialColumnId({
+      specialColumnId: item.columnId
+    }).then(res => {
+      if(this.data.$state.userInfo.id) {
+        wx.navigateTo({
+          url: `/page/live/pages/vliveRoom/vliveRoom?roomId=${item.liveId}`,
+        })
+      } else if (!res.data.isAddSubscribe || !this.data.$state.userInfo.id) {
+        wx.navigateTo({
+          url: `/page/live/pages/tableDetail/tableDetail?specialColumnId=${item.columnId}`,
+        })
+      } else if(item.status == 2) {
+        wx.navigateTo({
+          url: `/page/live/pages/liveDetail/liveDetail?specialColumnId=${item.columnId}`,
+        })
+      }
+    })
+  },
+  checknextTap(e) {
+    app.checknextTap(e)
   }
 })

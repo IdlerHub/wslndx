@@ -16,8 +16,11 @@ Page({
     this.params = {
       date: '',
       pageSize: 20,
-      pageNum: 1
+      pageNum: 1,
+      type: 1
     }
+    this.options.type ? this.params['universityId'] = options.id : ''
+    console.log(this.params)
     this.getWeekDate()
   },
   getWeekDate() {
@@ -74,15 +77,23 @@ Page({
   getUserLessons(date) {
     this.params.date = new Date(date).valueOf()
     let list = this.data.courseList
-    return LiveData.newUserLessons(this.params).then((res) => {
-      let date = new Date(),
-        dataTime = ''
-      list.push(...res.dataList)
-      this.setData({
-        courseList: list,
-        pageEnd: res.total < 10 ? 1 : 0
+    if (this.params.universityId) {
+      return LiveData.freeDate(this.params).then((res) => {
+        list.push(...res.dataList)
+        this.setData({
+          courseList: list,
+          pageEnd: res.total < 10 ? 1 : 0
+        });
       });
-    });
+    } else {
+      return LiveData.newUserLessons(this.params).then((res) => {
+        list.push(...res.dataList)
+        this.setData({
+          courseList: list,
+          pageEnd: res.total < 10 ? 1 : 0
+        });
+      });
+    }
   },
   onReachBottom() {
     if (this.data.pageEnd) return

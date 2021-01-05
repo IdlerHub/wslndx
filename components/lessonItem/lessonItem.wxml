@@ -22,7 +22,7 @@
           <text>网上老年大学</text>
         </view>
       </view>
-      <view class="bottom" wx:if="{{(!isSchool && item.type == 1) || isIndex}}">
+      <view class="bottom" wx:if="{{(!isSchool && item.type == 1) || isIndex || item.columnId}}">
         <view class="left">
           <text>免费</text>
           <text>|</text>

@@ -15,6 +15,7 @@ Page({
   isLogin: 1,
   onLoad: function (options) {
     this.universityId = options.id
+    this.type = options.type
     this.setData({
       universityId: options.id
     })
@@ -38,39 +39,67 @@ Page({
       wx.showLoading({
         title: '加载中'
       })
-      app.classroom.lessons(this.categoryParams[id]).then(msg => {
-        let next = true
-        msg.dataList.forEach(function (item) {
-          item.thousand = app.util.tow(item.browse)
-          temp.forEach(i => {
-            i.id == item.id ? next = false : ''
+      if (this.type == 2) {
+        app.classroom.lessons(this.categoryParams[id]).then(msg => {
+          let next = true
+          msg.dataList.forEach(function (item) {
+            item.thousand = app.util.tow(item.browse)
+            temp.forEach(i => {
+              i.id == item.id ? next = false : ''
+            })
           })
-        })
-        if (!next) return
-        if (msg.dataList.length < 10) {
+          if (!next) return
+          if (msg.dataList.length < 10) {
+            this.setData({
+              [`nav[${this.data.currentTab}].showBtoom`]: true
+            })
+          }
+          this.data.catrecommend[id] = temp.concat(msg.dataList)
           this.setData({
-            [`nav[${this.data.currentTab}].showBtoom`]: true
+            [`catrecommend[${id}]`]: this.data.catrecommend[id]
           })
-        }
-        this.data.catrecommend[id] = temp.concat(msg.dataList)
-        this.setData({
-          [`catrecommend[${id}]`]: this.data.catrecommend[id]
-        })
-        let query = wx.createSelectorQuery().in(this)
-        let that = this,
-          nav = this.data.nav,
-          currentTab = this.data.currentTab
-        query.select(nav[currentTab].class).boundingClientRect()
-        query.exec(res => {
-          let height = res[0].height
-          that.navHeightList[currentTab] = height
-          that.setData({
-            height: height,
-            showLoading: false
+          let query = wx.createSelectorQuery().in(this)
+          let that = this,
+            nav = this.data.nav,
+            currentTab = this.data.currentTab
+          query.select(nav[currentTab].class).boundingClientRect()
+          query.exec(res => {
+            let height = res[0].height
+            that.navHeightList[currentTab] = height
+            that.setData({
+              height: height,
+              showLoading: false
+            })
+            wx.hideLoading()
           })
-          wx.hideLoading()
         })
-      })
+      } else {
+        app.liveData.chargeList(this.categoryParams[id]).then(msg => {
+          if (msg.dataList.length < 10) {
+            this.setData({
+              [`nav[${this.data.currentTab}].showBtoom`]: true
+            })
+          }
+          this.data.catrecommend[id] = temp.concat(msg.dataList)
+          this.setData({
+            [`catrecommend[${id}]`]: this.data.catrecommend[id]
+          })
+          let query = wx.createSelectorQuery().in(this)
+          let that = this,
+            nav = this.data.nav,
+            currentTab = this.data.currentTab
+          query.select(nav[currentTab].class).boundingClientRect()
+          query.exec(res => {
+            let height = res[0].height
+            that.navHeightList[currentTab] = height
+            that.setData({
+              height: height,
+              showLoading: false
+            })
+            wx.hideLoading()
+          })
+        })
+      }
     }
     this.setData({
       onReachBottom: true
@@ -89,7 +118,8 @@ Page({
       categoryId: null,
       universityId: this.universityId,
       pageNum: 1,
-      pageSize: 10
+      pageSize: 10,
+      type: 1
     }]
     return app.lessonNew.getAllCategory().then(msg => {
       let arr = [{
@@ -101,15 +131,16 @@ Page({
         showNone: false
       }]
       msg.dataList.forEach((i, index) => {
-        this.categoryParams[i .id] = {
+        this.categoryParams[i.id] = {
           categoryId: i.id,
           universityId: this.universityId,
+          type: 1,
           pageNum: 1,
           pageSize: 10
         }
         i['class'] = '#recommend' + i.id
         i['showBtoom'] = false,
-        i['showNone'] = false
+          i['showNone'] = false
         arr.push(i)
       })
       this.setData({
@@ -124,26 +155,50 @@ Page({
       if (this.data.catrecommend[id][0]) return
     }
     let temp = []
-    return app.lessonNew.categoryLesson(this.categoryParams[id]).then(msg => {
-      msg.dataList.forEach(function (item) {
-        item.thousand = app.util.tow(item.browse)
-      })
-      let catrecommend = this.data.catrecommend
-      catrecommend[id] = temp.concat(msg.dataList)
-      this.setData({
-        [`catrecommend[${id}]`]: temp.concat(msg.dataList)
-      })
-      temp.concat(msg.dataList).length < 10 ? this.setData({
-        [`nav[${this.data.currentTab}].showBtoom`]: true
-      }) : ''
-      console.log(msg.dataList.length, this.categoryParams[id].pageNum)
-      setTimeout(() => {
-        msg.dataList.length == 0 && this.categoryParams[id].pageNum == 1 ? this.setData({
-          [`nav[${this.data.currentTab}].showNone`]: true
+    if (this.type == 2) {
+      return app.lessonNew.categoryLesson(this.categoryParams[id]).then(msg => {
+        msg.dataList.forEach(function (item) {
+          item.thousand = app.util.tow(item.browse)
+        })
+        let catrecommend = this.data.catrecommend
+        catrecommend[id] = temp.concat(msg.dataList)
+        this.setData({
+          [`catrecommend[${id}]`]: temp.concat(msg.dataList)
+        })
+        temp.concat(msg.dataList).length < 10 ? this.setData({
+          [`nav[${this.data.currentTab}].showBtoom`]: true
         }) : ''
-        currtab != this.data.currentTab && !type ? '' : this.setHeight()
-      }, 600)
-    })
+        console.log(msg.dataList.length, this.categoryParams[id].pageNum)
+        setTimeout(() => {
+          msg.dataList.length == 0 && this.categoryParams[id].pageNum == 1 ? this.setData({
+            [`nav[${this.data.currentTab}].showNone`]: true
+          }) : ''
+          currtab != this.data.currentTab && !type ? '' : this.setHeight()
+        }, 600)
+      })
+    } else {
+      return app.liveData.chargeList(this.categoryParams[id]).then(msg => {
+        msg.dataList.forEach(function (item) {
+          item.thousand = app.util.tow(item.browse)
+        })
+        let catrecommend = this.data.catrecommend
+        catrecommend[id] = temp.concat(msg.dataList)
+        this.setData({
+          [`catrecommend[${id}]`]: temp.concat(msg.dataList)
+        })
+        temp.concat(msg.dataList).length < 10 ? this.setData({
+          [`nav[${this.data.currentTab}].showBtoom`]: true
+        }) : ''
+        console.log(msg.dataList.length, this.categoryParams[id].pageNum)
+        setTimeout(() => {
+          msg.dataList.length == 0 && this.categoryParams[id].pageNum == 1 ? this.setData({
+            [`nav[${this.data.currentTab}].showNone`]: true
+          }) : ''
+          currtab != this.data.currentTab && !type ? '' : this.setHeight()
+        }, 600)
+      })
+    }
+
   },
   switchNav(event) {
     let cur = event.currentTarget.dataset.current,

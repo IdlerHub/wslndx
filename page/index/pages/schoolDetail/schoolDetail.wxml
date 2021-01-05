@@ -5,7 +5,7 @@
   return num > 10000 ? (num / 10000).toFixed(1) + 'W' : num
   },
   overflow: function(intro) {
-    return intro.length > 50 ? intro.slice(0, 62) + '...' : intro
+    return intro.length > 62 ? intro.slice(0, 62) + '...' : intro
   }
   }
 </wxs>
@@ -13,12 +13,12 @@
   <view class="liveBox">
     <view class="topTtile">
       <text>免费直播</text>
-      <navigator class="topTtile-right" url="/pages/timetableList/timetableList"
+      <navigator class="topTtile-right" url="/pages/timetableList/timetableList?id={{detail.id}}&type=2"
         hover-class="none" wx:if="{{$state.userInfo.id}}">
         <text>本周课表</text>
         <image src="{{ $state.imgHost }}/Return-black.png"></image>
       </navigator>
-      <slotSign bindtap="checknextTap" data-type="navBar" data-detail="/pages/timetableList/timetableList" wx:else>
+      <slotSign bindtap="checknextTap" data-type="navBar" data-detail="/pages/timetableList/timetableList?id={{detail.id}}&type=2" wx:else>
         <view class="topTtile-right">
           <text>本周课表</text>
           <image src="{{ $state.imgHost }}/Return-black.png"></image>
@@ -59,7 +59,7 @@
         <text>{{item.dayTime}} {{item.startTime}}</text>
       </view>
     </view>
-    <navigator class="allBox" hover-class="none" url="/page/index/pages/allSchoollesson/allSchoollesson?id={{detail.id}}&type=1">
+    <navigator class="allBox" url="/page/index/pages/allSchoollesson/allSchoollesson?id={{detail.id}}&type=1&title={{detail.name}}" hover-class="none">
       <text>查看全部</text>
       <image src="../../images/allRight.png" alt=""></image>
     </navigator>
@@ -73,13 +73,13 @@
 </view>
 <view class="inroBox" wx:if="{{detail.intro}}">
   {{fn.overflow(detail.intro)}}
-  <text bindtap="showIntro">查看更多</text>
+  <text bindtap="showIntro" wx:if="{{detail.intro.length > 62}}">查看更多</text>
 </view>
-<template is="liveBox" data="{{ $state, liveList }}" wx:if="{{liveList[0]}}"></template>
+<template is="liveBox" data="{{ $state, liveList, detail }}" wx:if="{{liveList[0]}}"></template>
 <view class="contentBox" wx:if="{{lessonList[0]}}">
   <view class="topTtile">
     <text>在线课程</text>
-    <navigator class="topTtile-right" url="/page/index/pages/allSchoollesson/allSchoollesson?id={{detail.id}}&type=2"
+    <navigator class="topTtile-right" url="/page/index/pages/allSchoollesson/allSchoollesson?id={{detail.id}}&type=2&title={{detail.name}}"
       hover-class="none">
       <text>全部课程</text>
       <image src="{{ $state.imgHost }}/Return-black.png"></image>
@@ -103,6 +103,10 @@
     </navigator>
   </view>
 </view>
+<view class="qstBox" wx:if="{{ !liveList[0] && !lessonList[0] && !teacherList[0] }}">
+  <image src="/images/liveqs.png"></image>
+  <text>暂无相关内容</text>
+</view>
 <view class="bigIntro" wx:if="{{showIntro}}">
   <view class="content">
     <view class="top">
@@ -115,3 +119,4 @@
   </view>
 </view>
 
+<loginBox wx:if="{{$state.showLogin}}" />
