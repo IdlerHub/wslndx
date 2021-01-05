@@ -42,7 +42,11 @@ Page({
           opstObj[item.split("=")[0]] = item.split("=")[1];
         });
       } else {
-        if (options.type == 'task') { //票选活动页面任务
+        if(options.type == 'webpay') {
+          let url = decodeURIComponent(options.url)
+          console.log(111,url)
+          this.junmpOut(url)
+        }else if (options.type == 'task') { //票选活动页面任务
           const event = this.getOpenerEventChannel();
           event.on(options.type, (data) => {
             this.junmpOut(data.url);
