@@ -5,8 +5,6 @@ Page({
   data: {
     url: "",
     payStatus: "",
-    classId: '', //招生的课程ID
-    pay: false,
     activityShareInfo: {},  //H5分享信息
   },
   pageName: "外链页（开心农场&amp;老年电台&amp;早报）",
@@ -15,14 +13,7 @@ Page({
     this.options = options
     console.log(options)
     setTimeout(() => {
-      if (options.classId) {
-        // let webURL = "http://192.168.1.68:8080/#/order-detail";
-        let webURL = "https://globalh5pro.jinlingkeji.cn/enrollment_small/#/order-detail";
-        let id = options.classId;
-        this.setData({
-          url: webURL + "?id=" + id,
-        });
-      } else if (options.liveType) {
+      if (options.liveType) {
         //直播课表获取用户公众号openid
         let webURL = `https://authorization.jinlingkeji.cn/#/?uid=${options.uid}`;
         if (options.liveType == "wechatarticle") {
@@ -97,10 +88,9 @@ Page({
     this.setData({
       url: webURL +
         "?openId=" +
-        this.data.$state.openId +
+        this.data.$state.userInfo.openid +
         "&token=" + token +
-        "&terminal=miniprogram",
-      pay: true
+        "&terminal=miniprogram"
     });
   },
   setPostData(e) {  //获取分享参数配置
@@ -118,7 +108,7 @@ Page({
     }else if(this.options.url.indexOf('lottery') != -1) {
       return {
         title: 'VIP学习年卡，1212张优惠名额限量首发',
-        path: `/pages/education/education?type=0&url=${this.options.url}&login=1&type=0`,
+        path: `/pages/education/education?type=0&url=${this.options.url}&login=1`,
         imageUrl: "https://hwcdn.jinlingkeji.cn/images/pro/lotteryShare.jpg"
       }
     } else {

@@ -27,7 +27,7 @@ Page({
       packageInfo,
       signType,
       paySign,
-      classId,
+      openUrl,
     } = JSON.parse(decodeURIComponent(options.wxPayOptions));
     wx.requestPayment({
       timeStamp,
@@ -36,23 +36,23 @@ Page({
       signType,
       paySign,
       success: (res) => {
-        console.log("支付成功", classId);
+        console.log("支付成功", openUrl);
         // prevPage.setData({
         //   payStatus: "success",
         //   classId: classId,
         // });
         wx.redirectTo({
-          url: '/pages/education/education?classId='+classId,
+          url: '/pages/education/education?type=0&login=1&url=' + openUrl,
         });
       },
       fail: (err) => {
-        console.log("支付失败", classId);
+        console.log("支付失败", openUrl);
         // prevPage.setData({
         //   payStatus: "fail",
         //   classId: classId,
         // });
         wx.redirectTo({
-          url: '/pages/education/education?classId='+classId,
+          url: '/pages/education/education?type=0&url=' + '&login=1' + openUrl,
         });
       },
     });
