@@ -123,8 +123,8 @@ Page({
           type: 'text',
           text: this.data.info.columnName,
           css: {
-            top: this.data.info.columnName.length > 10 ? '375rpx' : '369rpx',
-            fontSize: this.data.info.columnName.length > 10 ? '25rpx' : '36rpx',
+            top: this.data.info.columnName.length >= 9 ? '375rpx' : '369rpx',
+            fontSize: this.data.info.columnName.length >= 9 ? '25rpx' : '36rpx',
             left: '336rpx',
             align: 'center',
             color: '#3A3A3A'

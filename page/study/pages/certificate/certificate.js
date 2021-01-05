@@ -27,6 +27,9 @@ Page({
           })
         })
       }
+      res.data.certificatesList.sort((a, b) => {
+        return  a.month < b.month ? 1 : -1;
+      })
       this.setData({
         certificatesList: res.data.certificatesList,
         totle: res.data.count

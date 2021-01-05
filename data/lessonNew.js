@@ -145,6 +145,24 @@ function recordFinish(params) {
   return httpService.post("lesson/record/finish", params, null, true);
 }
 
+/**
+ * @description: 统计空中课堂和直播
+ * @param { } 
+ * @return:  promise
+ * **/
+function countVideo(params) {
+  return httpService.post("live/count/video", params, null, true);
+}
+
+/**
+ * @description: 获取高校详情
+ * @param { id } 
+ * @return:  promise
+ * **/
+function getUniversityInfo(params) {
+  return httpService.post("university/getUniversityInfo", params, null, true);
+}
+
 module.exports = {
   getBannerList,
   interestList,
@@ -161,5 +179,7 @@ module.exports = {
   lessonInfo,
   lessonSublessonList,
   recordAdd,
-  recordFinish
+  recordFinish,
+  countVideo,
+  getUniversityInfo
 }

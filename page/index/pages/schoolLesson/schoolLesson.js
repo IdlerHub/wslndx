@@ -2,7 +2,8 @@
 const app = getApp()
 Page({
   data: {
-    schoolList: []
+    schoolList: [],
+    detail: null
   },
   params: {
     pageNum: 1,
@@ -14,7 +15,7 @@ Page({
     this.getSchollList()
   },
   onShow: function () {
-
+    this.getcountVideo()
   },
   onUnload: function () {
 
@@ -26,6 +27,15 @@ Page({
     if(this.pageEnd) return
     this.params.pageNum += 1
     this.getSchollList()
+  },
+  getcountVideo() {
+    app.lessonNew.countVideo().then(res => {
+      this.setData({
+        detail: res.data
+      })
+    }).catch(msg => {
+      
+    })
   },
   getSchollList() {
     app.lessonNew.getSchollList(this.params).then(res => {

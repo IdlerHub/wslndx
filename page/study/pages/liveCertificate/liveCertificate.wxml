@@ -5,7 +5,7 @@
     style="{{detail.nick.length >= 5 ? detail.nick.length > 7 ? 'font-size: 20rpx;line-height: 53rpx;' : 'font-size: 30rpx;line-height: 53rpx;' : ''}}">
     {{detail.nick}}</view>
   <view class="name"
-    style="{{ info.columnName.length > 10 && info.columnName.length < 16 ? 'font-size:25rpx;line-height: 53rpx;' : ''  }}">
+    style="{{ info.columnName.length >= 9 && info.columnName.length < 16 ? 'font-size:25rpx;line-height: 53rpx;' : ''  }}">
     {{info.columnName}}</view>
   <view class="date">
     <text>{{info.universityName}}</text>

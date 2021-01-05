@@ -1,0 +1,117 @@
+<!--page/index/pages/schoolDetail/schoolDetail.wxml-->
+<wxs module="fn">
+  module.exports = {
+  num: function(num) {
+  return num > 10000 ? (num / 10000).toFixed(1) + 'W' : num
+  },
+  overflow: function(intro) {
+    return intro.length > 50 ? intro.slice(0, 62) + '...' : intro
+  }
+  }
+</wxs>
+<template name="liveBox">
+  <view class="liveBox">
+    <view class="topTtile">
+      <text>免费直播</text>
+      <navigator class="topTtile-right" url="/pages/timetableList/timetableList"
+        hover-class="none" wx:if="{{$state.userInfo.id}}">
+        <text>本周课表</text>
+        <image src="{{ $state.imgHost }}/Return-black.png"></image>
+      </navigator>
+      <slotSign bindtap="checknextTap" data-type="navBar" data-detail="/pages/timetableList/timetableList" wx:else>
+        <view class="topTtile-right">
+          <text>本周课表</text>
+          <image src="{{ $state.imgHost }}/Return-black.png"></image>
+        </view>
+      </slotSign>
+    </view>
+    <view class="comment">
+      <view class="liveItem" style="{{index + 1 > 6 - 2 ? 'border:none' : '' }}" wx:for="{{liveList}}"
+        wx:key="index" bindtap="toLivelesson" data-item="{{item}}">
+        <view class="liveImgBox">
+          <image src="{{item.indexCover}}">
+          </image>
+          <view class="liveStatus"
+            style="background: {{ item.status == 0 ? '' : item.status == 2 ? 'linear-gradient(270deg, #FF8242 0%, #FF6010 100%)' : 'linear-gradient(270deg, #44A2FF 0%, #007CF7 100%);border-radius: 10rpx 6rpx 6rpx 0px;' }}">
+            <view class="statusLeft" wx:if="{{item.status == 1}}">
+              <image src="/images/naoling.png" class="naoling"></image>
+              <view class="statusTxt" style="margin: 0">待开始</view>
+            </view>
+            <view class="statusLeft" wx:elif="{{item.status == 0}}">
+              <view wx:for="{{3}}" wx:key="index" class="statusWite"></view>
+              <view class="statusTxt">直播</view>
+              <view class="viewNum">{{fn.num(item.viewNum)}}人</view>
+            </view>
+            <view class="statusLeft" wx:else>
+              <image src="/images/endIcon.png" class="endIcon"></image>
+              <view class="statusTxt" style="margin: 0">看回播</view>
+              <view class="viewNum">{{fn.num(item.viewNum)}}人</view>
+            </view>
+          </view>
+        </view>
+        <text>{{item.liveName}}</text>
+        <view class="tagsLine" wx:if="{{item.tags[0]}}">
+          <view wx:for="{{item.tags}}" wx:for-item="tag" wx:key="index">{{tag.tagName}}</view>
+        </view>
+        <view class="tagsLine" wx:else>
+          <view>{{item.universityName}}</view>
+        </view>
+        <text>{{item.dayTime}} {{item.startTime}}</text>
+      </view>
+    </view>
+    <navigator class="allBox" hover-class="none" url="/page/index/pages/allSchoollesson/allSchoollesson?id={{detail.id}}&type=1">
+      <text>查看全部</text>
+      <image src="../../images/allRight.png" alt=""></image>
+    </navigator>
+  </view>
+</template>
+<view class="topBox">
+  <image class="bg" src="{{detail.logo}}"></image>
+  <view class="mask"></view>
+  <image src="{{detail.logo}}" class="logo"></image>
+  <text>{{detail.name}}</text>
+</view>
+<view class="inroBox" wx:if="{{detail.intro}}">
+  {{fn.overflow(detail.intro)}}
+  <text bindtap="showIntro">查看更多</text>
+</view>
+<template is="liveBox" data="{{ $state, liveList }}" wx:if="{{liveList[0]}}"></template>
+<view class="contentBox" wx:if="{{lessonList[0]}}">
+  <view class="topTtile">
+    <text>在线课程</text>
+    <navigator class="topTtile-right" url="/page/index/pages/allSchoollesson/allSchoollesson?id={{detail.id}}&type=2"
+      hover-class="none">
+      <text>全部课程</text>
+      <image src="{{ $state.imgHost }}/Return-black.png"></image>
+    </navigator>
+  </view>
+  <lessonItem lessonList="{{lessonList}}" />
+</view>
+<view class="contentBox" wx:if="{{teacherList[0]}}" style="margin: 0">
+  <view class="topTtile">
+    <text>名师推荐</text>
+    <navigator class="topTtile-right" url="/page/index/pages/topTeacher/topTeacher"
+      hover-class="none" wx:if="{{$state.userInfo.id}}">
+      <text>全部讲师</text>
+      <image src="{{ $state.imgHost }}/Return-black.png"></image>
+    </navigator>
+  </view>
+  <view class="listBox">
+    <navigator hover-class="none" url="/page/index/pages/tearcherDetail/tearcherDetail?id={{item.uid}}" wx:for="{{teacherList}}" wx:key="index" class="teachItem">
+      <image src="{{item.avatar}}"></image>
+      <text>{{item.nickname}}</text>
+    </navigator>
+  </view>
+</view>
+<view class="bigIntro" wx:if="{{showIntro}}">
+  <view class="content">
+    <view class="top">
+      {{detail.name}}
+      <image src="/images/icon-del.png" bindtap="showIntro"></image>
+    </view>
+    <view class="intro">
+      {{detail.intro}}
+    </view>
+  </view>
+</view>
+

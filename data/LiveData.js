@@ -309,6 +309,15 @@ function subjectList(params) {
   return httpService.post("live/special/subject/list", params, null ,true);
 }
 
+/**
+ * @description: 高校直播列表
+ * @param { universityId, categoryId, type }
+ * @return:  promise
+ * **/
+function hotList(params) {
+  return httpService.post("live/hot/list", params, null ,true);
+}
+
 module.exports = {
   getLiveLessons,
   getApplyDetail,
@@ -343,5 +352,6 @@ module.exports = {
   getSpecialLives,
   lecturerList,
   cancelFollow,
-  subjectList
+  subjectList,
+  hotList
 };

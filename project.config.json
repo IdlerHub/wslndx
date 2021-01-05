@@ -155,9 +155,9 @@
           "scene": null
         },
         {
-          "name": "page/index/pages/topTeacher/topTeacher",
-          "pathName": "page/index/pages/topTeacher/topTeacher",
-          "query": "specialColumnId=253",
+          "name": "page/index/pages/schoolDetail/schoolDetail",
+          "pathName": "page/index/pages/schoolDetail/schoolDetail",
+          "query": "id=13&title=网上老年大学&logo=https://hwcdn.jinlingkeji.cn/uploads/images/49ae6fa6d0bd6f00be9b9aa7486a77ac.jpg",
           "scene": 1000
         },
         {

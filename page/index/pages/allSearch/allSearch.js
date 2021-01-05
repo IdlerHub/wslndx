@@ -102,4 +102,20 @@ Page({
       })
     }
   },
+  onShareAppMessage(ops) {
+    if (ops.from === "menu") {
+      return this.menuAppShare();
+    }
+    if (ops.from === "button") {
+      let id = ops.target.dataset.id
+      return {
+        title: "一起来学习网上老年大学讲师的课程吧!",
+        imageUrl: this.data.$state.shareImgurl || "/images/sharemessage.jpg",
+        path: "/page/index/pages/tearcherDetail/tearcherDetail?id=" +
+          id +
+          "&type=share&uid=" +
+          this.data.$state.userInfo.id
+      };
+    }
+  }
 })
