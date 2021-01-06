@@ -37,7 +37,11 @@
     ]
   },
   "setting": {
+<<<<<<< HEAD
     "urlCheck": true,
+=======
+    "urlCheck": false,
+>>>>>>> 7c9e38f84403a4b1e14c40eacf03d8ae37733e73
     "es6": true,
     "enhance": true,
     "postcss": true,
@@ -54,15 +58,23 @@
     "checkSiteMap": true,
     "uploadWithSourceMap": true,
     "compileHotReLoad": false,
+<<<<<<< HEAD
     "useMultiFrameRuntime": true,
     "useApiHook": true,
     "useApiHostProcess": true,
+=======
+    "useMultiFrameRuntime": false,
+    "useApiHook": true,
+>>>>>>> 7c9e38f84403a4b1e14c40eacf03d8ae37733e73
     "babelSetting": {
       "ignore": [],
       "disablePlugins": [],
       "outputPath": ""
     },
+<<<<<<< HEAD
     "enableEngineNative": false,
+=======
+>>>>>>> 7c9e38f84403a4b1e14c40eacf03d8ae37733e73
     "bundle": false,
     "useIsolateContext": true,
     "useCompilerModule": true,

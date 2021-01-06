@@ -5,8 +5,7 @@ Page({
   data: {
     url: "",
     payStatus: "",
-    classId: '', //招生的课程ID
-    pay: false
+    activityShareInfo: {},  //H5分享信息
   },
   pageName: "外链页（开心农场&amp;老年电台&amp;早报）",
   activityShare: 0,
@@ -14,14 +13,7 @@ Page({
     this.options = options
     console.log(options)
     setTimeout(() => {
-      if (options.classId) {
-        // let webURL = "http://192.168.1.68:8080/#/order-detail";
-        let webURL = "https://globalh5pro.jinlingkeji.cn/enrollment_small/#/order-detail";
-        let id = options.classId;
-        this.setData({
-          url: webURL + "?id=" + id,
-        });
-      } else if (options.liveType) {
+      if (options.liveType) {
         //直播课表获取用户公众号openid
         let webURL = `https://authorization.jinlingkeji.cn/#/?uid=${options.uid}`;
         if (options.liveType == "wechatarticle") {
@@ -50,7 +42,11 @@ Page({
           opstObj[item.split("=")[0]] = item.split("=")[1];
         });
       } else {
-        if (options.type == 'task') { //票选活动页面任务
+        if(options.type == 'webpay') {
+          let url = decodeURIComponent(options.url)
+          console.log(111,url)
+          this.junmpOut(url)
+        }else if (options.type == 'task') { //票选活动页面任务
           const event = this.getOpenerEventChannel();
           event.on(options.type, (data) => {
             this.junmpOut(data.url);
@@ -76,12 +72,8 @@ Page({
             url: 'https://' + options.url
           })
         }else {
-          if (options.login) {
-            if (options.login == 0) {
-              this.junmpOut(options.url);
-            } else {
-              this.webJump(options.url);
-            }
+          if (options.login && options.login != 0) {
+            this.webJump(options.url);
           } else {
             this.junmpOut(options.url);
           }
@@ -100,22 +92,28 @@ Page({
     this.setData({
       url: webURL +
         "?openId=" +
-        this.data.$state.openId +
+        this.data.$state.userInfo.openid +
         "&token=" + token +
-        "&terminal=miniprogram",
-      pay: true
+        "&terminal=miniprogram"
     });
   },
-  setPostData(e) {
-    console.log(e)
+  setPostData(e) {  //获取分享参数配置
+    console.log(e.detail.data[0], 'postMessage')
+    this.activityShareInfo = e.detail.data[0];
   },
   onShareAppMessage(ops) {
-    let shareUrl = ops.webViewUrl.split('#')[0]
-    if(shareUrl.indexOf('enrollment_small') != -1) {
+    let shareInfo = this.activityShareInfo
+    if(shareInfo.type == 1) { //type = 1: 配置分享打开进活动页面
       return {
-        title: '我已入学【网上老年大学】,你也快来一起学习吧',
-        path: `/pages/education/education?type=0&url=${shareUrl+ '/#/login'}&login=1`,
-        imageUrl: "https://hwcdn.jinlingkeji.cn/app/zsxtshare.jpg"
+        title: shareInfo.title,
+        path: `/pages/education/education?type=0&url=${shareInfo.url}&login=1`,
+        imageUrl: shareInfo.imageUrl
+      }
+    }else if(this.options.url.indexOf('lottery') != -1) {
+      return {
+        title: 'VIP学习年卡，1212张优惠名额限量首发',
+        path: `/pages/education/education?type=0&url=${this.options.url}&login=1`,
+        imageUrl: "https://hwcdn.jinlingkeji.cn/images/pro/lotteryShare.jpg"
       }
     } else {
       return this.menuAppShare();
