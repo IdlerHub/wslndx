@@ -69,6 +69,10 @@
     </view>
   </view>
   <template is="listItem" data="{{list: lessonList}}"></template>
+  <view class="qstBox" wx:if="{{!lessonList[0]}}">
+    <image src="/images/noLesson.png"></image>
+    <text>暂无课程</text>
+  </view>
   <view style="height: 60rpx;"></view>
 </scroll-view>
 

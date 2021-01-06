@@ -269,3 +269,23 @@
   font-size: 24rpx;
   margin: 0 20rpx;
 }
+
+.qstBox {
+  margin-top: 80rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.qstBox image {
+  width: 452rpx;
+  height: 288rpx;
+}
+
+.qstBox text {
+  font-size: 36rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: #999999;
+  margin-top: 8rpx;
+}

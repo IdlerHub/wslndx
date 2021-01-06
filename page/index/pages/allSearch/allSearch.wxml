@@ -30,7 +30,7 @@
   <searchTop id="searchTop" isSchool="{{isSchool}}" isLesson="{{isLesson}}" isSearch="{{1}}"
     universityId="{{universityId}}" />
 </view>
-<view class="content">
+<view class="content" style="background:{{ !isLesson && !isSchool && isSearch ? '#F7F7F7' : '' }};">
   <view wx:if="{{isSchool}}">
     <view class="listIitem" wx:for="{{list}}" wx:key="index" bindtap="toSchool" data-item="{{item}}">
       <image src="{{item.logo}}"></image>

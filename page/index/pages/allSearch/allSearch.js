@@ -9,6 +9,9 @@ Page({
   },
   isAllsearch: 1,
   onLoad: function (ops) {
+    wx.setBackgroundColor({
+      backgroundColor: '#000', // 窗口的背景色为白色
+    })
     this.setData({
       isLesson: ops.isLesson == 'true',
       isSchool: ops.isSchool == 'true',
