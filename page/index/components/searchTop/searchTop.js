@@ -101,6 +101,7 @@ Component({
         })
         if (alllessonpage.type == 1) {
           params.type = 1
+          params.name = this.data.text
           app.liveData.chargeList(params).then(res => {
             res.dataList.forEach(item => {
               item.name = `<p style="width:410rpx;display: block;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">${item.name

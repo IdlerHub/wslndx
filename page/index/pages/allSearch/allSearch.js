@@ -96,7 +96,8 @@ Page({
     } else if (this.data.isLesson) {
       this.params.keyword = this.data.text
       if (this.data.type == 1) {
-        this.params.type = 3
+        this.params.type = 1
+        this.params.name = this.data.text
         app.liveData.chargeList(this.params).then(res => {
           res.dataList.forEach(item => {
             item.name = `<p style="width:410rpx;display: block;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">${item.name

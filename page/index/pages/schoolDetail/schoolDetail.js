@@ -36,17 +36,19 @@ Page({
       })
     })
     app.liveData.hotList(params).then(res => {
+      res.dataList = res.dataList.slice(0, 6)
       this.setData({
         liveList: res.dataList
       })
     })
     app.lessonNew.categoryLesson(params).then(res => {
-      res.dataList = res.dataList.slice(0, 4)
+      res.dataList = res.dataList.slice(0, 6)
       this.setData({
         lessonList: res.dataList
       })
     })
     app.lessonNew.lecturerList(params).then(res => {
+      res.dataList = res.dataList.slice(0, 6)
       this.setData({
         teacherList: res.dataList
       })

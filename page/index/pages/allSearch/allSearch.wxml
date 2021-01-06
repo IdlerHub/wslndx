@@ -38,7 +38,7 @@
     </view>
   </view>
   <template is="listItem"  wx:elif="{{isLesson && type == 2}}" data="{{list}}"></template>
-  <lessonItem wx:elif="{{isLesson && type == 1}}" lessonList="{{list}}" isSearch="{{true}}" />
+  <lessonItem wx:elif="{{isLesson && type == 1}}" lessonList="{{list}}" isSearch="{{true}}" isAllLesson="{{true}}" />
   <view wx:else>
     <teacherBox wx:for="{{list}}" wx:key="index" item="{{item}}" index="{{index}}" isSearch="{{true}}"/>
   </view>
