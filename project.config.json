@@ -37,11 +37,7 @@
     ]
   },
   "setting": {
-<<<<<<< HEAD
     "urlCheck": true,
-=======
-    "urlCheck": false,
->>>>>>> 7c9e38f84403a4b1e14c40eacf03d8ae37733e73
     "es6": true,
     "enhance": true,
     "postcss": true,
