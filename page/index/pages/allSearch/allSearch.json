@@ -2,6 +2,7 @@
   "usingComponents": {
     "searchTop": "../../components/searchTop/searchTop",
     "loginBox": "/components/loginBox/loginBox",
-    "teacherBox": "../../components/teacherBox/teacherBox"
+    "teacherBox": "../../components/teacherBox/teacherBox",
+    "lessonItem": "/components/lessonItem/lessonItem"
   }
 }

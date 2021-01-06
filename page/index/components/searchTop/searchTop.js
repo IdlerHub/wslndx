@@ -23,7 +23,7 @@ Component({
     },
     universityId: {
       type: String,
-      value: 0
+      value: null
     }
   },
   data: {
@@ -57,6 +57,7 @@ Component({
           pageNum: 1,
           keyword: this.data.text
         }
+      if (this.data.universityId) params['universityId'] = this.data.universityId
       let historyList = [...pages.data.historyList]
       historyList.forEach((item, index) => {
         item == this.data.text ? historyList.splice(index, 1) : ''
@@ -86,7 +87,10 @@ Component({
           })
         })
       } else if (this.data.isLesson) {
-        params['type'] = 2
+        let alllessonpage = {}
+        getCurrentPages().forEach(item => {
+          item.isAlllessonpage ? alllessonpage = item : ''
+        })
         pages.setData({
           historyList: historyList
         }, () => {
@@ -95,20 +99,37 @@ Component({
             data: pages.data.historyList
           })
         })
-        app.lessonNew.searchLessonAndColumn(params).then(res => {
-          res.data.lessonInfo.list.forEach(item => {
-            item.name = item.title
-            item.title = `<p style="width:410rpx;display: block;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">${item.title
-                .replace(this.data.text, '<span style="color:#DF2020">' + this.data.text
-                 + "</span>" )}</p>`;
-            item.bw = app.util.tow(item.browse);
-          });
-          pages.setData({
-            list: res.data.lessonInfo.list,
-            text: this.data.text,
-            isSearch: 1
+        if (alllessonpage.type == 1) {
+          params.type = 1
+          app.liveData.chargeList(params).then(res => {
+            res.dataList.forEach(item => {
+              item.name = `<p style="width:410rpx;display: block;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">${item.name
+                  .replace(this.data.text, '<span style="color:#DF2020">' + this.data.text
+                   + "</span>" )}</p>`;
+              item.bw = app.util.tow(item.browse);
+            });
+            pages.setData({
+              list: res.dataList,
+              text: this.data.text,
+              isSearch: 1
+            })
           })
-        })
+        } else {
+          app.lessonNew.searchLessonList(params).then(res => {
+            res.dataList.forEach(item => {
+              item.name = item.title
+              item.title = `<p style="width:410rpx;display: block;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">${item.title
+                  .replace(this.data.text, '<span style="color:#DF2020">' + this.data.text
+                   + "</span>" )}</p>`;
+              item.bw = app.util.tow(item.browse);
+            });
+            pages.setData({
+              list: res.dataList,
+              text: this.data.text,
+              isSearch: 1
+            })
+          })
+        }
       } else {
         pages.setData({
           historyList: historyList

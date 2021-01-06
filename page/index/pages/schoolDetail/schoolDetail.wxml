@@ -90,7 +90,7 @@
 <view class="contentBox" wx:if="{{teacherList[0]}}" style="margin: 0">
   <view class="topTtile">
     <text>名师推荐</text>
-    <navigator class="topTtile-right" url="/page/index/pages/topTeacher/topTeacher"
+    <navigator class="topTtile-right" url="/page/index/pages/topTeacher/topTeacher?id={{detail.id}}"
       hover-class="none" wx:if="{{$state.userInfo.id}}">
       <text>全部讲师</text>
       <image src="{{ $state.imgHost }}/Return-black.png"></image>

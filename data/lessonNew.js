@@ -163,6 +163,15 @@ function getUniversityInfo(params) {
   return httpService.post("university/getUniversityInfo", params, null, true);
 }
 
+/**
+ * @description: 搜索高校在线课程
+ * @param { keyword } 
+ * @return:  promise
+ * **/
+function searchLessonList(params) {
+  return httpService.post("lesson/searchLessonList", params, null, 2);
+}
+
 module.exports = {
   getBannerList,
   interestList,
@@ -181,5 +190,6 @@ module.exports = {
   recordAdd,
   recordFinish,
   countVideo,
-  getUniversityInfo
+  getUniversityInfo,
+  searchLessonList
 }

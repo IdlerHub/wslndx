@@ -13,7 +13,8 @@
       <image src="/images/recomonPlay.png"></image>
     </view>
     <view class="contentBox">
-      <text class="title">{{ item.title || item.name}}</text>
+      <text class="title" wx:if="{{!isSearch}}">{{ item.title || item.name }}</text>
+      <rich-text class="title" wx:else nodes="{{item.title || item.name}}"></rich-text>
       <view wx:if="{{(!isSchool && item.columnId) || item.type == 1}}">
         <view class="tabLine" wx:if="{{ item.tags[0] }}">
           <text wx:for="{{item.tags}}" wx:key="index" wx:for-item="tagItem">{{tagItem.tagName || tagItem}}</text>

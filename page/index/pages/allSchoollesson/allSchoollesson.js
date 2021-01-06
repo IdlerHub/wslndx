@@ -13,6 +13,7 @@ Page({
   },
   navHeightList: [],
   isLogin: 1,
+  isAlllessonpage: 1,
   onLoad: function (options) {
     this.universityId = options.id
     this.type = options.type

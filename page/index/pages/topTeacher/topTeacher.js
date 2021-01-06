@@ -11,6 +11,12 @@ Page({
       pageSize: 10,
       pageNum: 1
     }
+    if(options.id) {
+      this.params['universityId'] = options.id 
+      this.setData({
+        universityId: options.id
+      })
+    }
     this.getlecturerList()
   },
   onShow: function () {

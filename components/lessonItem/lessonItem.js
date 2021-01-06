@@ -18,6 +18,10 @@ Component({
     isAllLesson: {
       type: Boolean,
       value: false
+    },
+    isSearch: {
+      type: Boolean,
+      value: false
     }
   },
   data: {
