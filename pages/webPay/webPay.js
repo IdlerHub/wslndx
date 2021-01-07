@@ -48,7 +48,7 @@ Page({
         //   classId: classId,
         // });
         wx.redirectTo({
-          url: '/pages/education/education?type=0&login=1&url=' + openUrl,
+          url: '/pages/education/education?type=0&login=1&url=' + encodeURIComponent(openUrl),
         });
       },
       fail: (err) => {
