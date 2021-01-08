@@ -65,7 +65,7 @@ Page({
         },
         {
           title: "学完一门新课程",
-          score: 20,
+          score: 5,
           status: false,
           page: "/pages/index/index?tabs=1",
           authorization: false,
@@ -77,7 +77,7 @@ Page({
         },
         {
           title: "每日短视频首次点赞",
-          score: 20,
+          score: 2,
           status: false,
           page: "/pages/video/video",
           authorization: false,
@@ -89,7 +89,7 @@ Page({
         },
         {
           title: "每日看完十个短视频",
-          score: 100,
+          score: 2,
           status: false,
           page: "/pages/video/video",
           authorization: true,
@@ -101,7 +101,7 @@ Page({
         },
         {
           title: "每日秀风采首次发帖",
-          score: 20,
+          score: 2,
           status: false,
           page: "/pages/post/post",
           authorization: true,
@@ -112,7 +112,7 @@ Page({
         },
         {
           title: "每日秀风采首次评论",
-          score: 20,
+          score: 2,
           status: false,
           page: "/pages/post/post",
           authorization: true,
@@ -123,7 +123,7 @@ Page({
         },
         {
           title: "每日课程首次讨论",
-          score: 10,
+          score: 2,
           status: false,
           page: "/pages/index/index",
           authorization: true,
@@ -134,7 +134,7 @@ Page({
         },
         {
           title: "每日签到",
-          score: 20,
+          score: 2,
           status: false,
           authorization: false,
           showStatus: {
@@ -146,7 +146,7 @@ Page({
       newbie = [
         {
           title: "完善资料",
-          score: 65,
+          score: 10,
           status: false,
           page: "/page/user/pages/info/info",
           authorization: false,
@@ -157,7 +157,7 @@ Page({
         },
         {
           title: "完成[云课堂]新手指引",
-          score: 45,
+          score: 5,
           status: false,
           page: "/pages/index/index?tabs=0",
           authorization: false,
@@ -168,7 +168,7 @@ Page({
         },
         {
           title: "首次学习课程",
-          score: 70,
+          score: 5,
           status: false,
           page: "/pages/index/index?tabs=0",
           authorization: false,
@@ -179,7 +179,7 @@ Page({
         },
         {
           title: "完成[短视频]新手指引",
-          score: 45,
+          score: 5,
           status: false,
           page: "/pages/video/video",
           authorization: false,
@@ -191,7 +191,7 @@ Page({
         },
         {
           title: "短视频首次点赞",
-          score: 50,
+          score: 5,
           status: false,
           page: "/pages/video/video",
           authorization: false,
@@ -203,7 +203,7 @@ Page({
         },
         {
           title: "完成[秀风采]新手指引",
-          score: 45,
+          score: 5,
           status: false,
           page: "/pages/post/post",
           authorization: true,
@@ -214,7 +214,7 @@ Page({
         },
         {
           title: "首次发帖",
-          score: 50,
+          score: 5,
           status: false,
           page: "/pages/post/post",
           authorization: true,
@@ -225,7 +225,7 @@ Page({
         },
         {
           title: "秀风采首次点赞",
-          score: 50,
+          score: 5,
           status: false,
           page: "/pages/post/post",
           authorization: true,
@@ -236,7 +236,7 @@ Page({
         },
         {
           title: "秀风采首次评论",
-          score: 50,
+          score: 5,
           status: false,
           page: "/pages/post/post",
           authorization: true,
