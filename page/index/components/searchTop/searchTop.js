@@ -53,7 +53,7 @@ Component({
     searchlesss() {
       if(this.data.text == '') {
         wx.showToast({
-          title: '请输入内容',
+          title: '请输入搜索内容',
           duration: 1500,
           icon: 'none',
         })
