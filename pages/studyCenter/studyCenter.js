@@ -95,7 +95,7 @@ Page({
   },
   getMylesson(list) {
     let arr = list || []
-    app.study.centerHistoryLesson(this.lessonParams).then(res => {
+    app.study.centerSpecial(this.lessonParams).then(res => {
       res.dataList.forEach(item => {
         item.studydate = app.util.dateUnit(item.studydate)
       })
@@ -108,7 +108,7 @@ Page({
   topDetail(e) {
     let item = e.currentTarget.dataset.item
     wx.navigateTo({
-      url: '/page/index/pages/detail/detail?id=' + item.id,
+      url: '/page/live/pages/liveDetail/liveDetail?specialColumnId=' + item.columnId,
     })
   }
 })

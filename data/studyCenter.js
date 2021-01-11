@@ -55,11 +55,21 @@ function centerHistoryLive(params) {
   return httpService.post("study/center/historyLive", params, null, true);
 }
 
+/**
+ * @description: 我的专栏
+ * @param {}
+ * @return:  promise
+ * **/
+function centerSpecial(params) {
+  return httpService.post("study/center/special", params, null, true);
+}
+
 module.exports = {
   certificateList,
   certificateiInfo,
   centerDuration,
   centerLive,
   centerHistoryLesson,
-  centerHistoryLive
+  centerHistoryLive,
+  centerSpecial
 }

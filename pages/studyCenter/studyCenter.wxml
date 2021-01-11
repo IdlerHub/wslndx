@@ -16,24 +16,24 @@
     <view class="itemBox" wx:else>
       <view class="lessItem" bindtap="topDetail" data-item="{{item}}" wx:for="{{lessonList}}" wx:key="index" style="border: {{ index == lessonList.length - 1 ? 'none' : '' }}; margin-bottom:  {{ index == lessonList.length - 1 ? 0 : '' }}">
         <view class="left">
-          <image src="{{item.image}}"></image>
+          <image src="{{item.indexCover}}"></image>
           <!-- <view class="mask" wx:if="{{item.isFinish}}">
             <image src="/images/studyIcon/pastDue.png"></image>
           </view> -->
         </view>
         <view class="right">
-          <view class="itemTitle">{{item.title}}</view>
-          <view class="bottom" wx:if="{{ item.isFinishNum > 0 && item.isFinishNum != item.sublessonNum }}">
-            <view class="studyNum">已学{{item.isFinishNum}}/{{item.sublessonNum}}课时</view>
-            <view class="studyLine"><text style="width: {{ (item.isFinishNum / item.sublessonNum) * 100}}%;" ></text></view>
+          <view class="itemTitle">{{item.name}}</view>
+          <view class="bottom" wx:if="{{ item.studyLiveCount > 0 && item.studyLiveCount != item.liveCount }}">
+            <view class="studyNum">已学{{item.studyLiveCount}}/{{item.liveCount}}课时</view>
+            <view class="studyLine"><text style="width: {{ (item.studyLiveCount / item.liveCount) * 100 > 100 ? 100 : (item.studyLiveCount / item.liveCount) * 100 }}%;" ></text></view>
           </view>
           <!-- <view class="bottom" wx:elif="{{item.isFinish}}">
             <view class="studyNum">课程过期时间  {{item.studydate}}</view>  
           </view> -->
           <view class="bottom unStudy" wx:else>
-            <view class="studyNum">共{{item.sublessonNum}}课时</view>
-            <view class="btn {{item.isFinishNum > 0 ? 'over' : ''}}">
-                {{ item.isFinishNum > 0 ? '已学完' : '去学习' }}
+            <view class="studyNum">共{{item.liveCount}}课时</view>
+            <view class="btn {{item.studyLiveCount > 0 ? 'over' : ''}}">
+                {{ item.studyLiveCount > 0 ? '已学完' : '去学习' }}
             </view>
           </view>
         </view>
