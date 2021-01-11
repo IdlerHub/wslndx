@@ -42,17 +42,12 @@
   <view class="search-top">
     <view class="search-box">
       <image src="../../images/searchIcon.png"></image>
-      <form wx:if="{{focus}}">
+      <form>
         <input placeholder="搜索课程名称" placeholder-style="color:#999;" confirm-type="search" type="text" class="search-txt"
-          focus="{{focus}}" value="{{text}}" bindinput="txtchange" bindconfirm="searchlesss"></input>
+          focus="{{false}}" value="{{text}}" bindinput="txtchange" bindconfirm="searchlesss"></input>
         <button wx:if="{{text != ''}}" form-type="reset" catchtap="cleartxt">
           <image src="../../images/searchcancle.png"></image>
         </button>
-      </form>
-      <form wx:else>
-        <input placeholder-style="color:#999;" confirm-type="search" type="text" class="search-txt" value="{{text}}"
-          bindinput="txtchange" bindconfirm="searchlesss"></input>
-        <button wx:if="{{text != ''}}" form-type="reset" catchtap="cleartxt"></button>
       </form>
     </view>
     <view class="cancle" bindtap="searchlesss">搜索</view>

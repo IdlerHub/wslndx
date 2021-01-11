@@ -3,7 +3,7 @@ const app = getApp();
 Page({
   data: {
     isSearch: 0,
-    focus: true,
+    focus: false,
     text: "",
     lessonList: [],
     liveList: [],
@@ -105,9 +105,6 @@ Page({
       liveList: [],
       current: 0
     });
-    this.setData({
-      focus: true
-    });
   },
   searchlesss(e) {
     this.param = {
@@ -127,7 +124,8 @@ Page({
     }
     if (e.currentTarget.dataset.text) {
       this.setData({
-        text: e.currentTarget.dataset.text
+        text: e.currentTarget.dataset.text,
+        focus: true
       }, () => {
         this.lesssearch();
       })
