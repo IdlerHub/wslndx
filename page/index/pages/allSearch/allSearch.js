@@ -140,7 +140,7 @@ Page({
                  + "</span>" )}</p>`;
         });
         arr.push(...res.dataList)
-        pages.setData({
+        this.setData({
           list: arr,
           text: this.data.text,
         })

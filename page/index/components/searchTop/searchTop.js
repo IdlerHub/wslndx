@@ -51,6 +51,14 @@ Component({
       })
     },
     searchlesss() {
+      if(this.data.text == '') {
+        wx.showToast({
+          title: '请输入内容',
+          duration: 1500,
+          icon: 'none',
+        })
+        return
+      }
       let pages = getCurrentPages()[getCurrentPages().length - 1],
         params = {
           pageSize: 10,
