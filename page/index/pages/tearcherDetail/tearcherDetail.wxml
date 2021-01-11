@@ -45,7 +45,7 @@
       <slotSign class="iconBox" catchtap="checknextTap" data-type="attention" wx:if="{{!info.isFollowing && !info.isFollower}}">
         <view class="btn" bindtap="checkAttention">关注</view>
       </slotSign>
-      <view wx:else class="btn btning" bindtap="checkAttention">{{ info.isFollower ? '相互关注' : '已关注' }}</view>
+      <view wx:else class="btn btning" bindtap="checkAttention">{{ info.isFollower && info.isFollowing ? '相互关注' : '已关注' }}</view>
     </view>
     <view class="inro">
       {{ info.bio }}
