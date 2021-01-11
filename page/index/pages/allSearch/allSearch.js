@@ -70,8 +70,11 @@ Page({
       this.data.isSchool ? wx.setStorage({
         key: "universityHistory",
         data: this.data.historyList
-      }) : wx.setStorage({
+      }) : this.data.isLesson ? wx.setStorage({
         key: "lessonHistory",
+        data: this.data.historyList
+      }) : wx.setStorage({
+        key: "teachHistory",
         data: this.data.historyList
       })
     })
@@ -160,7 +163,11 @@ Page({
   },
   checkAttention(e) {
     let item = e.currentTarget.dataset.item,
-      index = e.currentTarget.dataset.index
+      index = e.currentTarget.dataset.index,
+      pages = {}
+    getCurrentPages().forEach(p => {
+      p.isTopteacher ? pages = p : ''
+    })
     if (!item.isFollowing) {
       app.liveData.follow({
         followerUid: item.uid
@@ -171,9 +178,16 @@ Page({
         })
         this.setData({
           [`list[${index}].isFollowing`]: 1
+        }, () => {
+          pages.data.list.forEach((listItem, index) => {
+            if (listItem.uid == item.uid) {
+              pages.setData({
+                [`list[${index}].isFollowing`]: 1
+              })
+            }
+          })
         })
       })
-
     } else {
       wx.navigateTo({
         url: '/page/index/pages/tearcherDetail/tearcherDetail?id=' + item.uid,
