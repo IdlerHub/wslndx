@@ -175,7 +175,7 @@ Page({
       _this.getComment();
     });
   },
-  getSublesson(lessons) {
+  getSublesson(lessons, type) {
     if (!lessons) return
     let playNow = {},
       liveNow = 0, 
@@ -199,7 +199,7 @@ Page({
         current: playNow,
         playFlag: false
       }) : JSON.stringify(playNow) == "{}" ? [this.getLiveBackById(this.data.sublessons[i].id, 1), playNow = this.data.sublessons[i]] : ''
-      setTimeout(() => {
+      type ? "" : setTimeout(() => {
         this.tolesson()
       }, 800)
       if (this.Timeout) return
@@ -207,7 +207,7 @@ Page({
         LiveData.getSpecialLives({
           specialColumnId: this.data.lessonDetail.columnId,
         }).then(res => {
-          this.getSublesson(res.dataList)
+          this.getSublesson(res.dataList, 1)
         })
       }, 60000);
     });
@@ -462,7 +462,7 @@ Page({
       this.setData({
         playNow: res.data,
         [`sublessons[${i}].isStudy`]: 1,
-        'lessonDetail.progress': !type ? ((studyNum + 1) / this.data.lessonDetail.liveCount * 100).toFixed(0) : this.data.lessonDetail.progress
+        'lessonDetail.progress': !type && this.data.lessonDetail.progress < 100 ? ((studyNum + 1) / this.data.lessonDetail.liveCount * 100).toFixed(0) : this.data.lessonDetail.progress
       }, () => {
         this.recordAddVedio();
       })
