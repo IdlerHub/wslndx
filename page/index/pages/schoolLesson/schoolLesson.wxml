@@ -1,14 +1,24 @@
 <!--page/index/pages/schoolLesson/schoolLesson.wxml-->
-<searchTop isSchool="{{true}}"/>
+<searchTop isSchool="{{true}}" />
 <view class="myScholl">
   <view class="title">我的大学</view>
   <view class="box">
-    <view class="top">
-      <image src="{{ detail.logo || '../../images/schoolLogo.png' }}" class="logo"></image>
-      <text class="schollName">{{ detail.name || '暂未加入学校' }}</text>
-      <navigator class="btn" wx:if="{{detail.name}}" hover-class="none" url="/page/index/pages/schoolDetail/schoolDetail?id={{detail.universityId}}&title={{detail.name}}&logo={{detail.logo}}">点击查看</navigator>
-      <navigator hover-class="none" url="/page/user/pages/info/info" class="btn" wx:else>立即加入</navigator>
-    </view>
+    <navigator hover-class="none"
+      url="/page/index/pages/schoolDetail/schoolDetail?id={{detail.universityId}}&title={{detail.name}}&logo={{detail.logo}}"
+      wx:if="{{detail.name}}">
+      <view class="top">
+        <image src="{{ detail.logo || '../../images/schoolLogo.png' }}" class="logo"></image>
+        <text class="schollName">{{ detail.name || '暂未加入学校' }}</text>
+        <view class="btn">点击查看</view>
+      </view>
+    </navigator>
+    <navigator wx:else hover-class="none" url="/page/user/pages/info/info">
+      <view class="top">
+        <image src="{{ detail.logo || '../../images/schoolLogo.png' }}" class="logo"></image>
+        <text class="schollName">{{ detail.name || '暂未加入学校' }}</text>
+        <navigator class="btn">立即加入</navigator>
+      </view>
+    </navigator>
     <view class="bottom">
       <view>免费课程{{detail.lessonSum || 0}}节</view>
       <view>直播课程{{detail.liveSum || 0}}节</view>
