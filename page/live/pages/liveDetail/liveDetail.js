@@ -198,7 +198,7 @@ Page({
         playNow,
         current: playNow,
         playFlag: false
-      }) : JSON.stringify(playNow) == "{}" ? [this.getLiveBackById(this.data.sublessons[i].id, 1), playNow = this.data.sublessons[i]] : ''
+      }) : JSON.stringify(playNow) == "{}" && JSON.stringify(this.data.playNow) == "{}" ? [this.getLiveBackById(this.data.sublessons[i].id, 1), playNow = this.data.sublessons[i]] : ''
       type ? "" : setTimeout(() => {
         this.tolesson()
       }, 800)

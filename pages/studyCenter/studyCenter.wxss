@@ -145,7 +145,7 @@ page {
 
 .contentBox .itemBox {
   padding: 40rpx 0;
-  padding-bottom: 0;
+  padding-bottom: 30rpx;
 }
 
 .lessItem {
