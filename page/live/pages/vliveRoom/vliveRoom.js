@@ -328,11 +328,14 @@ Page({
     })
   },
   clickFloat() {
-    if(this.data.liveDetail.floatJumpType == 1) {
-      let params = JSON.parse(this.data.liveDetail.floatJumpParam)
-      console.log(params)
+    let params = JSON.parse(this.data.liveDetail.floatJumpParam)
+    if (this.data.liveDetail.floatJumpType == 1) {
       wx.navigateTo({
         url: `/pages/education/education?url=${params.url}&type=0&login=0`,
+      })
+    } else {
+      wx.navigateTo({
+        url: '/page/live/pages/liveDetail/liveDetail?specialColumnId=' + params.url,
       })
     }
   }

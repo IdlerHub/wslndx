@@ -31,3 +31,4 @@
   <text>关注老师，更多好课不错过</text>
   <view class="addBtn" bindtap="attention">关注</view>
 </view>
+<image class="liveFloat" src="/images/liveRoomicon.png" wx:if="{{liveDetail.floatStatus}}" bindtap="clickFloat"></image>
