@@ -187,7 +187,7 @@ Page({
              + "</span>" )}</p>`;
         item.bw = app.util.tow(item.browse);
       });
-      liveList = liveList.push(...res.data.columnInfo.list)
+      liveList.push(...res.data.columnInfo.list)
       this.setData({
         liveList,
         'isEnd.live': res.data.columnInfo.list < 10 ? 1 : 0,
@@ -205,7 +205,7 @@ Page({
              + "</span>" )}</p>`;
         item.bw = app.util.tow(item.browse);
       });
-      lessonList = lessonList.push(...res.data.lessonInfo.list)
+      lessonList.push(...res.data.lessonInfo.list)
       this.setData({
         lessonList,
         'isEnd.live': res.data.columnInfo.list < 10 ? 1 : 0,

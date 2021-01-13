@@ -183,7 +183,7 @@ Page({
     this.setData({
       sublessons: lessons,
     }, () => {
-      if (this.data.playNow.state == 1) return
+      if (JSON.stringify(this.data.playNow) != "{}") return
       this.data.sublessons.forEach((item) => {
         //如果是已经结束的课,就把第一个放到当前播放中
         item.state == 1 && JSON.stringify(playNow) == "{}" ? [playNow = item, liveNow = 1] : ''

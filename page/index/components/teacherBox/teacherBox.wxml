@@ -8,11 +8,12 @@
   </view>
   <slotSign class="iconBox" catchtap="checknextTap" data-type="attention" data-item="{{item}}" data-index="{{index}}">
     <view class="iconBox" catchtap="checkAttention" data-item="{{item}}" data-index="{{index}}">
-      <image src="../../images/attention.png" wx:if="{{!item.isFollowing}}"></image>
-      <image src="../../images/attentioned.png" wx:elif="{{item.isFollowing && !item.isFollower}}"></image>
+      <image src="../../images/attention.png" wx:if="{{!item.isFollowing && item.uid != $state.userInfo.id}}"></image>
+      <image src="../../images/attentioned.png"
+        wx:elif="{{(item.isFollowing && !item.isFollower) || item.uid == $state.userInfo.id }}"></image>
       <image src="../../images/attentionown.png" wx:else></image>
       <text
-        style="color:{{!item.isFollowing ? '' : '#999999'}}">{{ !item.isFollowing ? '关注' : item.isFollowing && !item.isFollower ? '已关注' : '相互关注' }}</text>
+        style="color:{{!item.isFollowing && item.uid != $state.userInfo.id  ? '' : '#999999'}}">{{ item.uid == $state.userInfo.id ? '个人主页' : !item.isFollowing ? '关注' : item.isFollowing && !item.isFollower ? '已关注' : '相互关注'  }}</text>
     </view>
   </slotSign>
   <button class="iconBox share" hover-class="none" open-type="share" data-id="{{item.uid}}" catchtap="return">

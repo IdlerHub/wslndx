@@ -165,6 +165,12 @@ Page({
     let item = e.currentTarget.dataset.item,
       index = e.currentTarget.dataset.index,
       pages = {}
+    if (item.uid == this.data.$state.userInfo.id) {
+      wx.navigateTo({
+        url: '/page/index/pages/tearcherDetail/tearcherDetail?id=' + item.uid,
+      })
+      return
+    }
     getCurrentPages().forEach(p => {
       p.isTopteacher ? pages = p : ''
     })

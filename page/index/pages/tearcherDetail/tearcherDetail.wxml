@@ -26,26 +26,33 @@
     </view>
   </view>
 </template>
-<navigationBar id="navigationBar" wx:if="{{scroll > 50}}" title="{{info.nickname}}" back="{{ true }}" isIndex="{{false}}"></navigationBar>
+<navigationBar id="navigationBar" wx:if="{{scroll > 50}}" title="{{info.nickname}}" back="{{ true }}"
+  isIndex="{{false}}"></navigationBar>
 <view class="tabBox" wx:if="{{showTab}}" style="position: fixed;top: {{top}}px">
   <view class="tab">
     <text>课程 {{lessonList.length}}</text>
     <text></text>
   </view>
 </view>
-<scroll-view class="scrollView" scroll-y bindscroll="bindscroll" bindscrolltolower="bindscrolltolower" bindscrolltoupper="bindscrolltoupper">
+<scroll-view class="scrollView" scroll-y bindscroll="bindscroll" bindscrolltolower="bindscrolltolower"
+  bindscrolltoupper="bindscrolltoupper">
   <view class="topBox" style="padding-top: {{ statusBarHeight + 10 }}px;">
     <image src="/images/back.png" class="back" bindtap="back"></image>
     <view class="msgBox">
-      <image src="{{ info.avatar || '../../images/avatarNone.png'}}"></image>
+      <view class="imgBox">
+        <image src="{{ info.avatar || '../../images/avatarNone.png'}}"></image>
+        <image src="../../images/teachImg.png" class="teachImg"></image>
+      </view>
       <view class="nickBox">
         <text>{{ info.nickname }}</text>
         <text>{{ info.universityName }}</text>
       </view>
-      <slotSign class="iconBox" catchtap="checknextTap" data-type="attention" wx:if="{{!info.isFollowing && !info.isFollower}}">
+      <slotSign class="iconBox" catchtap="checknextTap" data-type="attention"
+        wx:if="{{!info.isFollowing && !info.isFollower && info.id != $state.userInfo.id}}">
         <view class="btn" bindtap="checkAttention">关注</view>
       </slotSign>
-      <view wx:else class="btn btning" bindtap="checkAttention">{{ info.isFollower && info.isFollowing ? '相互关注' : '已关注' }}</view>
+      <view wx:elif="{{(info.isFollowing || info.isFollower) && info.id != $state.userInfo.id}}" class="btn btning"
+        bindtap="checkAttention">{{ info.isFollower && info.isFollowing ? '相互关注' : '已关注' }}</view>
     </view>
     <view class="inro">
       {{ info.bio }}

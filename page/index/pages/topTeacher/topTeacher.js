@@ -52,6 +52,12 @@ Page({
   checkAttention(e) {
     let item = e.currentTarget.dataset.item,
       index = e.currentTarget.dataset.index
+    if(item.uid == this.data.$state.userInfo.id) {
+      wx.navigateTo({
+        url: '/page/index/pages/tearcherDetail/tearcherDetail?id=' + item.uid,
+      })
+      return
+    }
     if (!item.isFollowing) {
       app.liveData.follow({
         followerUid: item.uid
