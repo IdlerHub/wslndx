@@ -305,3 +305,12 @@ page {
   position: fixed;
   bottom: -120rpx;
 }
+
+.liveFloat {
+  width: calc(90vmin / 7.5);
+  height: calc(102vmin / 7.5);
+  position: absolute;
+  right: calc(16vmin / 7.5);
+  bottom: calc(364vmin / 7.5);
+  z-index: 9999999999999999999;
+}

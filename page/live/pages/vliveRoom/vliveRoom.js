@@ -326,5 +326,14 @@ Page({
     this.setData({
       specialList: this.data.specialList
     })
+  },
+  clickFloat() {
+    if(this.data.liveDetail.floatJumpType == 1) {
+      let params = JSON.parse(this.data.liveDetail.floatJumpParam)
+      console.log(params)
+      wx.navigateTo({
+        url: `/pages/education/education?url=${params.url}&type=0&login=0`,
+      })
+    }
   }
 })
