@@ -156,7 +156,8 @@
           "name": "pages/education/education",
           "pathName": "pages/education/education",
           "query": "type=0&login=1&url=https://globalh5pro.jinlingkeji.cn/enrollmenth5/index/home/1",
-          "scene": 1000
+          "scene": 1069,
+          "referrerInfo": {}
         },
         {
           "id": 12,

@@ -91,6 +91,14 @@ Component({
         case 'attenBtn':
           page.toEducation(this.data.$state.nextTapDetial.detail)
           break;
+        case 'education':
+          let params = JSON.parse(this.data.$state.nextTapDetial.detail)
+          setTimeout(() => {
+            wx.navigateTo({
+              url: `/pages/education/education?type=0&login=${params.login || 0}&url=${params.url}`,
+            })
+          }, 1000)
+          break;
       }
     },
     /* 登录请求 */
