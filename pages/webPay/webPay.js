@@ -38,16 +38,26 @@ Page({
       paySign,
       success: (res) => {
         console.log("支付成功", openUrl);
+        wx.showToast({
+          title: '支付成功',
+          icon: 'success',
+          duration: 1000
+        })
         // prevPage.setData({
         //   payStatus: "success",
         //   classId: classId,
         // });
         wx.redirectTo({
-          url: '/pages/education/education?type=0&login=1&url=' + openUrl,
+          url: '/pages/education/education?type=webpay&login=1&url=' + encodeURIComponent(openUrl),
         });
       },
       fail: (err) => {
         console.log("支付失败", openUrl);
+        wx.showToast({
+          title: '支付失败',
+          icon: 'error',
+          duration: 1000
+        })
         // prevPage.setData({
         //   payStatus: "fail",
         //   classId: classId,
