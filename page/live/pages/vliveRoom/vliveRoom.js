@@ -340,9 +340,15 @@ Page({
         url: `/pages/education/education?url=${params.url}&type=0&login=0`,
       })
     } else {
-      wx.navigateTo({
-        url: '/page/live/pages/liveDetail/liveDetail?specialColumnId=' + params.url,
-      })
+      if (params.lesson_type == 1) {
+        wx.navigateTo({
+          url: '/page/live/pages/liveDetail/liveDetail?specialColumnId=' + params.lesson_id,
+        })
+      } else {
+        wx.navigateTo({
+          url: '/page/index/pages/chageLesson/chageLesson?id=' + params.lesson_id,
+        })
+      }
     }
   }
 })

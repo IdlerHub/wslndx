@@ -54,7 +54,7 @@
     "checkSiteMap": true,
     "uploadWithSourceMap": true,
     "compileHotReLoad": false,
-    "useMultiFrameRuntime": false,
+    "useMultiFrameRuntime": true,
     "useApiHook": true,
     "babelSetting": {
       "ignore": [],
@@ -67,10 +67,7 @@
     "userConfirmedUseCompilerModuleSwitch": false,
     "packNpmManually": false,
     "packNpmRelationList": [],
-    "useApiHostProcess": true,
-    "enableEngineNative": false,
-    "userConfirmedBundleSwitch": false,
-    "minifyWXSS": true
+    "useApiHostProcess": true
   },
   "compileType": "miniprogram",
   "libVersion": "2.12.2",
@@ -155,9 +152,9 @@
           "scene": null
         },
         {
-          "name": "page/index/pages/topTeacher/topTeacher",
-          "pathName": "page/index/pages/topTeacher/topTeacher",
-          "query": "id=13&title=网上老年大学&logo=https://hwcdn.jinlingkeji.cn/uploads/images/49ae6fa6d0bd6f00be9b9aa7486a77ac.jpg",
+          "name": "page/live/pages/vliveRoom/vliveRoom",
+          "pathName": "page/live/pages/vliveRoom/vliveRoom",
+          "query": "roomId=11649",
           "scene": 1000
         },
         {

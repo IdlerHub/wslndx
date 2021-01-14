@@ -45,8 +45,7 @@ Page({
     pageNum: 1,
     pageSize: 10,
   },
-  onLoad: function (options) {
-  },
+  onLoad: function (options) {},
   onShow: function () {
     this.lessonParams = {
       pageNum: 1,
@@ -57,14 +56,14 @@ Page({
     this.getMylesson()
   },
   onReachBottom: function () {
-    if(this.data.lessonList.length < (this.lessonParams.pageNum * 10)) return
+    if (this.data.lessonList.length < (this.lessonParams.pageNum * 10)) return
     this.lessonParams.pageNum += 1
     this.getMylesson(this.data.lessonList)
   },
   iconBind(e) {
     console.log(e)
     let item = e.currentTarget.dataset.item
-    if(item.toMiniprogram) {
+    if (item.toMiniprogram) {
       wx.navigateToMiniProgram({
         appId: item.appId,
         path: ''
@@ -77,7 +76,7 @@ Page({
   },
   getDetail() {
     app.study.centerDuration().then(res => {
-      res.data.studyTime = (res.data.studyTime / 60 / 60).toFixed(0)
+      res.data.studyTime = (res.data.studyTime / 60).toFixed(0)
       this.setData({
         detail: res.data
       })

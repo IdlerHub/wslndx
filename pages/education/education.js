@@ -9,6 +9,7 @@ Page({
   },
   pageName: "外链页（开心农场&amp;老年电台&amp;早报）",
   activityShare: 0,
+  isLogin: 1,
   onLoad: function (options) {
     this.options = options
     console.log(options)

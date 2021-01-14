@@ -92,6 +92,10 @@ Page({
   onUnload() {
     clearInterval(this.timer);
     clearInterval(this.Timeout);
+    if (this.timeTemplate > 0) {
+      let progress = parseInt(new Date().getTime() / 1000 + "") - this.timeTemplate
+      this.updateProgress(progress)
+    }
   },
   subscribe() {
     //上课通知
