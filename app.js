@@ -219,7 +219,7 @@ App({
             detail: JSON.stringify(this.globalData.query) 
           }
           this.checknextTap(params, 1)
-        }, 1000)
+        }, 1500)
       }
     }
   },
