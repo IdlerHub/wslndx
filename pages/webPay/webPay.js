@@ -24,35 +24,46 @@ Page({
     let {
       timeStamp,
       nonceStr,
-      packageInfo,
+      packageValue,
       signType,
       paySign,
-      classId,
+      openUrl,
     } = JSON.parse(decodeURIComponent(options.wxPayOptions));
+    console.log(1111,JSON.parse(decodeURIComponent(options.wxPayOptions)))
     wx.requestPayment({
       timeStamp,
       nonceStr,
-      package: packageInfo,
+      package: packageValue,
       signType,
       paySign,
       success: (res) => {
-        console.log("支付成功", classId);
+        console.log("支付成功", openUrl);
+        wx.showToast({
+          title: '支付成功',
+          icon: 'success',
+          duration: 1000
+        })
         // prevPage.setData({
         //   payStatus: "success",
         //   classId: classId,
         // });
         wx.redirectTo({
-          url: '/pages/education/education?classId='+classId,
+          url: '/pages/education/education?type=webpay&login=1&url=' + encodeURIComponent(openUrl),
         });
       },
       fail: (err) => {
-        console.log("支付失败", classId);
+        console.log("支付失败", openUrl);
+        wx.showToast({
+          title: '支付失败',
+          icon: 'error',
+          duration: 1000
+        })
         // prevPage.setData({
         //   payStatus: "fail",
         //   classId: classId,
         // });
         wx.redirectTo({
-          url: '/pages/education/education?classId='+classId,
+          url: '/pages/education/education?type=webpay&login=1&url=' + encodeURIComponent(openUrl),
         });
       },
     });

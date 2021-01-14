@@ -161,6 +161,7 @@ App({
     }
   },
   onShow: function (opts) {
+    console.log(opts, '进入')
     let optsStr = decodeURIComponent(opts.query.scene).split("&");
     let opstObj = {};
     optsStr.forEach((item, index) => {
@@ -168,6 +169,7 @@ App({
     });
     let lists = ["share", "invite"];
     /* 小程序(在后台运行中时)从分享卡片切到前台 */
+    console.log(this.globalData.backstage)
     if (this.globalData.backstage) {
       this.globalData.backstage = false;
       this.socket.backstage();
