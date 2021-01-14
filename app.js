@@ -209,6 +209,9 @@ App({
       wx.reLaunch({
         url: "/pages/index/index",
       });
+      if(opts.path == 'pages/education/education') {
+        this.changeLoginstatus()
+      }
     }
   },
   onHide() {
