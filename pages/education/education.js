@@ -102,6 +102,7 @@ Page({
     this.activityShareInfo = e.detail.data[0];
   },
   onShareAppMessage(ops) {
+    console.log(this.activityShareInfo)
     let shareInfo = this.activityShareInfo
     if(shareInfo.type == 1) { //type = 1: 配置分享打开进活动页面
       return {

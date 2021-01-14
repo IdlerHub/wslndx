@@ -63,6 +63,9 @@ Page({
     setTimeout(() => {
       clearInterval(clickHandler)
     }, 2000)
+    wx.setKeepScreenOn({
+      keepScreenOn: true
+    })
   },
   onShow: function () {
     this.setData({
@@ -100,6 +103,9 @@ Page({
     timsdk.timLoginout(this)
     this.liveInterval ? [clearInterval(this.liveInterval), this.liveInterval = null] : ''
     wx.offKeyboardHeightChange()
+    wx.setKeepScreenOn({
+      keepScreenOn: false
+    })
   },
   onShareAppMessage: function () {
     this.setCustommessag('MD5_AUDIENCE_SHARE_LIVE_ROOM')

@@ -67,7 +67,7 @@ Page({
     if(item.toMiniprogram) {
       wx.navigateToMiniProgram({
         appId: item.appId,
-        path: 'page/index/index'
+        path: ''
       })
     } else {
       wx.navigateTo({

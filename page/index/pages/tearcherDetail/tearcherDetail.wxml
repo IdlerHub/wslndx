@@ -18,6 +18,9 @@
       <view class="tags" wx:if="{{item.tags[0]}}">
         <text wx:for="{{item.tags}}" wx:key="index" wx:for-item="tag">{{tag.tagName}}</text>
       </view>
+      <view class="tags" wx:else>
+        <text>{{item.universityName}}</text>
+      </view>
       <text class="line info">
         <text class="dramaNum">{{item.liveCount}}课时</text>
         <text>|</text>

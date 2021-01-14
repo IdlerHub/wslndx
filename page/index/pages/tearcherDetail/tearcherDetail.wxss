@@ -247,6 +247,7 @@
   color: #808080;
   background: #EDEFF7;
   border-radius: 4rpx;
+  margin-right: 8rpx;
 }
 
 .right .name {

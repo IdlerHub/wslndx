@@ -497,7 +497,7 @@ Page({
     app.liveData.getLiveBySpecialColumnId({
       specialColumnId: item.columnId
     }).then(res => {
-      if(this.data.$state.userInfo.id) {
+      if(this.data.$state.userInfo.id && item.status != 2) {
         wx.navigateTo({
           url: `/page/live/pages/vliveRoom/vliveRoom?roomId=${item.liveId}`,
         })
