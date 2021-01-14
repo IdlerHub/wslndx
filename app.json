@@ -44,8 +44,8 @@
         "text": "云课堂"
       },
       {
-        "pagePath": "pages/studyCenter/studyCenter",
-        "text": "学习"
+        "pagePath": "pages/timetableList/timetableList",
+        "text": "直播课"
       },
       {
         "pagePath": "pages/post/post",
