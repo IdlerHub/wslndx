@@ -232,7 +232,7 @@ Page({
     let params = JSON.parse(this.data.liveDetail.floatJumpParam)
     if (this.data.liveDetail.floatJumpType == 1) {
       wx.navigateTo({
-        url: `/pages/education/education?url=${params.url}&type=0&login=0`,
+        url: `/pages/education/education?url=${params.url}&type=0&login=1`,
       })
     } else {
       wx.navigateTo({

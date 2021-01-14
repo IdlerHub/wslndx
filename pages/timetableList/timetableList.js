@@ -101,11 +101,8 @@ Page({
     this.getUserLessons(this.data.weeks[this.data.current].date)
   },
   onPullDownRefresh() {
-    this.params = {
-      date: '',
-      pageSize: 20,
-      pageNum: 1
-    }
+    this.params.date = ''
+    this.params.pageNum = 1
     this.setData({
       courseList: [],
       pageEnd: 0
@@ -139,11 +136,8 @@ Page({
         duration: 0,
         scrollTop: 0
       })
-      this.params = {
-        date: '',
-        pageSize: 20,
-        pageNum: 1
-      }
+      this.params.date = ''
+      this.params.pageNum = 1
       this.getUserLessons(this.data.weeks[this.data.current].date)
     })
   },
@@ -182,11 +176,8 @@ Page({
       courseList: [],
       pageEnd: 0
     }, () => {
-      this.params = {
-        date: '',
-        pageSize: 20,
-        pageNum: 1
-      }
+      this.params.date = ''
+      this.params.pageNum = 1
       this.data.weeks.forEach((e, i) => {
         date == e.date ? [this.setData({
           current: i,
