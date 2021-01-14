@@ -34,7 +34,7 @@ Component({
         return
       } else {
         wx.switchTab({
-          url: "/pages/studyCenter/studyCenter"
+          url: "/pages/timetableList/timetableList"
         })
         this.hideIndex()
       }
