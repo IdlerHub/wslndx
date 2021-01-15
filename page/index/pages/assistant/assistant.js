@@ -107,13 +107,13 @@ Page({
         //   });
         //   break;
         case 1:
-          wx.switchTab({
+          wx.navigateTo({
             url: '/pages/timetableList/timetableList',
           });
           break;
         case 3:
           wx.navigateTo({
-            url: "/page/user/pages/history/history",
+            url: "/page/study/pages/history/history",
           });
           break;
         
