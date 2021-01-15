@@ -38,9 +38,9 @@ Page({
       width: 92,
       height: 92
     }, {
-      url: '/page/index/pages/lessonSpecial/lessonSpecial?id=11&name=声乐弹唱',
-      icon: '/images/indexIcon/special.png',
-      name: '声乐弹唱',
+      url: '/page/index/pages/lessonSpecial/lessonSpecial?id=3&name=智能技术',
+      icon: '/images/indexIcon/technologyIcon.png',
+      name: '智能技术',
       width: 64,
       height: 64,
     }, {

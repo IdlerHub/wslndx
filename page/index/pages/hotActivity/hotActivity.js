@@ -42,7 +42,7 @@ Page({
     if (item.jump_type == 1) {
       /* 外链 */
       wx.navigateTo({
-        url: `/pages/education/education?type=0&url=${item.extra.url}&login=0`
+        url: `/pages/education/education?type=0&url=${item.extra.url}&login=1`
       })
     } else if (item.jump_type == 0) {
       /* 视频 */

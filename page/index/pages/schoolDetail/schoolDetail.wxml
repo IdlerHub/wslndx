@@ -99,7 +99,7 @@
   <view class="listBox">
     <navigator hover-class="none" url="/page/index/pages/tearcherDetail/tearcherDetail?id={{item.uid}}" wx:for="{{teacherList}}" wx:key="index" class="teachItem">
       <image src="{{item.avatar}}"></image>
-      <text>{{item.nickname}}</text>
+      <text>{{ item.lecturerName || item.nickname}}</text>
     </navigator>
   </view>
 </view>
