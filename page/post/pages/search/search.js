@@ -31,13 +31,15 @@ Page({
       params = {
         type: 2,
         word: this.data.text,
-        page: this.uPage += 1
+        page: this.uPage += 1,
+        uid: this.data.$state.userInfo.id
       }
     } else {
       params = {
         type: 1,
         word: this.data.text,
-        page: this.cPage += 1
+        page: this.cPage += 1,
+        uid: this.data.$state.userInfo.id
       }
     }
     this.searchMore(params, current ? this.data.uList : this.data.cList).then(() => {
@@ -53,7 +55,8 @@ Page({
   },
   getSearchword(type) {
     api.searchWord({
-      type
+      type,
+      uid: this.data.$state.userInfo.id
     }).then(res => {
       this.setData({
         searchWordlist: res.data,
@@ -98,12 +101,14 @@ Page({
     let cParam = {
         type: 1,
         word: this.data.text,
-        page: this.cPage
+        page: this.cPage,
+        uid: this.data.$state.userInfo.id
       },
       uParam = {
         type: 2,
         word: this.data.text,
-        page: this.uPage
+        page: this.uPage,
+        uid: this.data.$state.userInfo.id
       }
     Promise.all([this.searchMore(cParam), this.searchMore(uParam)]).then(() => {
       setTimeout(() => {
