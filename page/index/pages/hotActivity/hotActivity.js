@@ -39,10 +39,11 @@ Page({
     let item = e.currentTarget.dataset.item;
     console.log(item)
     if (item.is_finish) return
+    let login = item.is_login > 0 ? 1 : 0
     if (item.jump_type == 1) {
       /* 外链 */
       wx.navigateTo({
-        url: `/pages/education/education?type=0&url=${item.extra.url}&login=0`
+        url: `/pages/education/education?type=0&url=${item.extra.url}&login=${login}`
       })
     } else if (item.jump_type == 0) {
       /* 视频 */

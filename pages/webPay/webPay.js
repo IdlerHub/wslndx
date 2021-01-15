@@ -4,7 +4,7 @@
  * @Date: 2020-06-18 14:51:42
  * @LastEditors: zxk
  * @LastEditTime: 2020-06-19 18:44:10
- */ 
+ */
 // pages/webPay/webPay.js
 Page({
 
@@ -28,8 +28,9 @@ Page({
       signType,
       paySign,
       openUrl,
+      lesson,
     } = JSON.parse(decodeURIComponent(options.wxPayOptions));
-    console.log(1111,JSON.parse(decodeURIComponent(options.wxPayOptions)))
+    console.log(1111, JSON.parse(decodeURIComponent(options.wxPayOptions)), lesson)
     wx.requestPayment({
       timeStamp,
       nonceStr,
@@ -37,34 +38,52 @@ Page({
       signType,
       paySign,
       success: (res) => {
-        console.log("支付成功", openUrl);
-        wx.showToast({
-          title: '支付成功',
-          icon: 'success',
-          duration: 1000
-        })
-        // prevPage.setData({
-        //   payStatus: "success",
-        //   classId: classId,
-        // });
-        wx.redirectTo({
-          url: '/pages/education/education?type=webpay&login=1&url=' + encodeURIComponent(openUrl),
-        });
+        console.log("支付成功", openUrl, lesson);
+        if (lesson && lesson != '') {
+          wx.showToast({
+            title: '学习卡购买成功',
+            icon: 'success',
+            duration: 1000
+          })
+          setTimeout(()=>{
+            wx.redirectTo({
+              url: `/pages/education/education?type=webpay&login=1&url=${encodeURIComponent(openUrl)}/${lesson}`,
+            });
+          }, 1000)
+        } else {
+          wx.showToast({
+            title: '支付成功',
+            icon: 'success',
+            duration: 1000
+          })
+          wx.redirectTo({
+            url: '/pages/education/education?type=webpay&login=1&url=' + encodeURIComponent(openUrl),
+          });
+        }
       },
       fail: (err) => {
-        console.log("支付失败", openUrl);
-        wx.showToast({
-          title: '支付失败',
-          icon: 'error',
-          duration: 1000
-        })
-        // prevPage.setData({
-        //   payStatus: "fail",
-        //   classId: classId,
-        // });
-        wx.redirectTo({
-          url: '/pages/education/education?type=webpay&login=1&url=' + encodeURIComponent(openUrl),
-        });
+        console.log("支付失败", openUrl, lesson);
+        if (lesson && lesson != '') {
+          wx.showToast({
+            title: '购买学习卡失败,请重试',
+            icon: 'none',
+            duration: 1000
+          })
+          setTimeout(()=>{
+            wx.navigateBack({
+              delta: 0,
+            })
+          }, 1000)
+        } else {
+          wx.showToast({
+            title: '支付失败',
+            icon: 'none',
+            duration: 1000
+          })
+          wx.redirectTo({
+            url: '/pages/education/education?type=webpay&login=1&url=' + encodeURIComponent(openUrl),
+          });
+        }
       },
     });
   },
