@@ -177,7 +177,7 @@
     </view>
     <view class="liveBox">
       <view class="topTtile">
-        <text>温故知新</text>
+        <text>进阶提升</text>
       </view>
       <lessonItem id="lessonItem" lessonList="{{interestList}}" isIndex="1" bind:addStudy="addStudy" />
     </view>

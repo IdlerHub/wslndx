@@ -47,7 +47,7 @@
         <image src="../../images/teachImg.png" class="teachImg"></image>
       </view>
       <view class="nickBox">
-        <text>{{ info.nickname }}</text>
+        <text>{{ info.lecturerName || info.nickname }}</text>
         <text>{{ info.universityName }}</text>
       </view>
       <slotSign class="iconBox" catchtap="checknextTap" data-type="attention"
