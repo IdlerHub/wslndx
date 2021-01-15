@@ -204,7 +204,7 @@
     <image src="{{$state.imgHost}}/nowcancle.png" catchtap="closenow"></image>
   </view>
   <!-- 活动弹窗 -->
-  <view class="integration" wx:if="{{ dialog[0].image && showdialog}}" catchtouchmove="return">
+  <view class="integration" wx:if="{{ dialog[0].image && showdialog }}" catchtouchmove="return">
     <view class="dialog">
       <view class="bg"
         style="background: url('{{dialog[0].image}}') no-repeat center; background-size: 100% 100%;border-radius:10px"

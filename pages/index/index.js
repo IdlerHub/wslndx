@@ -423,7 +423,7 @@ Page({
     if (e.currentTarget.dataset.type == 'dialog') {
       let dialog = e.currentTarget.dataset.peper
       dialog.jump_type == 1 ? wx.navigateTo({
-        url: `../education/education?url=${dialog.url}&type=activity&isLogin=1}`
+        url: `../education/education?url=${dialog.url}&type=activity&login=1}`
       }) : this.toLive(dialog.extra.room_id)
       this.closeSignIn()
       wx.uma.trackEvent('index_activityClick');

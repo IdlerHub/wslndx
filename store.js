@@ -4,7 +4,7 @@
  * @LastEditTime: 2021-01-14 17:26:27
  */
 import Store from "wxministore";
-let env = "pro";
+let env = "test";
 let mpVersion = "v24"; /* 版本管理 */
 /* 图片等静态资源服务器 */
 let imgBase = {
@@ -153,7 +153,6 @@ let store = new Store({
       };
     },
     getPlayerState() {
-      console.log(342423);
       wx.getBackgroundAudioPlayerState({
         success(res) {
           console.log(res);

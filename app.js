@@ -1,12 +1,13 @@
 /*
  * @Date: 2019-05-28 09:50:08
  * @LastEditors: wjl
- * @LastEditTime: 2020-07-30 09:34:25
+ * @LastEditTime: 2021-01-15 16:28:35
  */
 import { wxp } from "./utils/service";
 import { uma } from "umtrack-wx";
 /* 全局状态管理 */
 import store from "./store";
+import { praise } from "./data/Circle";
 // const vodwxsdk = require('vod-wx-sdk-v2')
 /* sse */
 const socket = require("data/socket.js");
@@ -161,20 +162,20 @@ App({
         url: `/page/vote/pages/voteArticle/voteArticle?voteid=${opstObj.o}&uid=${opstObj.u}`,
       });
     }
-    if(!this.store.$state.userInfo.id) {
-      let isLogin = 0
-      if(opts.path == 'pages/index/index') return
-      getCurrentPages().forEach(e => {
-        e.isLogin ? isLogin = 1 : ''
-      })
-      if(isLogin) return
+    if (!this.store.$state.userInfo.id) {
+      let isLogin = 0;
+      if (opts.path == "pages/index/index") return;
+      getCurrentPages().forEach((e) => {
+        e.isLogin ? (isLogin = 1) : "";
+      });
+      if (isLogin) return;
       wx.reLaunch({
         url: "/pages/index/index",
       });
     }
   },
   onShow: function (opts) {
-    console.log(opts, '进入')
+    console.log(opts, "进入");
     let optsStr = decodeURIComponent(opts.query.scene).split("&");
     let opstObj = {};
     optsStr.forEach((item, index) => {
@@ -182,7 +183,7 @@ App({
     });
     let lists = ["share", "invite"];
     /* 小程序(在后台运行中时)从分享卡片切到前台 */
-    console.log(this.globalData.backstage)
+    console.log(this.globalData.backstage);
     if (this.globalData.backstage) {
       this.globalData.backstage = false;
       this.socket.backstage();
@@ -213,15 +214,25 @@ App({
         socket.listen(this.bokemessage, "Bokemessage");
       }, 2000);
     } else {
-      let isLogin = 0
-      if(opts.path == 'pages/index/index' || !getCurrentPages()[0]) return
-      getCurrentPages().forEach(e => {
-        e.isLogin ? isLogin = 1 : ''
-      })
-      if(isLogin) return
+      let isLogin = 0;
+      if (opts.path == "pages/index/index") return;
+      getCurrentPages().forEach((e) => {
+        e.isLogin ? (isLogin = 1) : "";
+      });
+      if (isLogin) return;
       wx.reLaunch({
         url: "/pages/index/index",
       });
+      if (opts.path == "pages/education/education") {
+        setTimeout(() => {
+          this.changeLoginstatus();
+          let params = {
+            type: "education",
+            detail: JSON.stringify(this.globalData.query),
+          };
+          this.checknextTap(params, 1);
+        }, 1500);
+      }
     }
   },
   onHide() {
@@ -278,7 +289,7 @@ App({
   },
   /* 更新store中的userInfo */
   setUser: function (data) {
-    let areaArray = data.universityName ? data.universityName.split(",") : '';
+    let areaArray = data.universityName ? data.universityName.split(",") : "";
     if ((!data.address || !data.school) && areaArray.length == 3) {
       data.address = areaArray.slice(0, 2);
       data.addressCity = areaArray[1];
@@ -294,9 +305,13 @@ App({
       socket.listen(this.prizemessage, "Prizemessage");
       socket.listen(this.bokemessage, "Bokemessage");
     }
-    getCurrentPages().forEach(e => {
-      e.route == 'pages/index/index' ? this.store.$state.nextTapDetial.type == 'addStudy' ? e.init(1) :  e.init() : ''
-    })
+    getCurrentPages().forEach((e) => {
+      e.route == "pages/index/index"
+        ? this.store.$state.nextTapDetial.type == "addStudy"
+          ? e.init(1)
+          : e.init()
+        : "";
+    });
   },
   /* 更新AuthKey */
   setAuthKey: function (data) {
@@ -355,13 +370,16 @@ App({
       encryptedData: e.detail.encryptedData,
       iv: e.detail.iv,
     };
-    this.user.profile(param).then((msg) => {
-      this.setUser(msg.data.userInfo);
-    }).catch(msg => {
-      if(msg.status == 401) {
-        this.wxLogin(e)
-      }
-    });
+    this.user
+      .profile(param)
+      .then((msg) => {
+        this.setUser(msg.data.userInfo);
+      })
+      .catch((msg) => {
+        if (msg.status == 401) {
+          this.wxLogin(e);
+        }
+      });
   },
   playVedio(type) {
     type == "wifi"
@@ -514,14 +532,24 @@ App({
   },
   changeLoginstatus() {
     this.store.setState({
-      showLogin: !this.store.$state.showLogin
-    })
+      showLogin: !this.store.$state.showLogin,
+    });
   },
-  checknextTap(e) {
-    this.store.setState({
-      'nextTapDetial.type': e.currentTarget.dataset.type,
-      'nextTapDetial.detail': e.currentTarget.dataset.detail ? e.currentTarget.dataset.detail : e
-    })
+  checknextTap(e, type) {
+    console.log(e);
+    if (!type) {
+      this.store.setState({
+        "nextTapDetial.type": e.currentTarget.dataset.type,
+        "nextTapDetial.detail": e.currentTarget.dataset.detail
+          ? e.currentTarget.dataset.detail
+          : e,
+      });
+    } else {
+      this.store.setState({
+        "nextTapDetial.type": e.type,
+        "nextTapDetial.detail": e.detail,
+      });
+    }
   },
   globalData: {
     /*wx.login 返回值 code */
@@ -553,4 +581,3 @@ App({
     categoryId: 0,
   },
 });
-
