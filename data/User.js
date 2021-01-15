@@ -33,6 +33,11 @@ function profile(param) {
   return httpService.post("wx/profile", param, null, true);
 }
 
+//POST user/getOtherUser 个人首页用户信息
+function getOtherUser(param) {
+  return httpService.post("user/getOtherUser", param, null, true);
+}
+
 //POST User/collect 收藏课程
 function collect(param) {
   return httpService.post("User/collect", param);
@@ -318,5 +323,6 @@ module.exports = {
   getLearnTimeProportion,
   putEmail,
   getUserOpenData,
-  myIndex
+  myIndex,
+  getOtherUser
 };

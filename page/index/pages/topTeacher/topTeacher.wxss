@@ -1,0 +1,73 @@
+/* page/index/pages/topTeacher/topTeacher.wxss */
+page {
+  background: #F7F7F7;
+}
+
+.item {
+  height: 240rpx;
+  background: #FFFFFF;
+  margin-bottom: 20rpx;
+  padding: 0 30rpx;
+  display: flex;
+  align-items: center;
+}
+
+.item .avatar {
+  width: 128rpx;
+  height: 128rpx;
+  border-radius: 50%;
+}
+
+.item .nameBox {
+  flex: 1;
+  width: 0;
+  margin: 0 30rpx 0 20rpx;
+}
+
+.item .nameBox .name {
+  font-size: 36rpx;
+  font-weight: 500;
+  color: #333333;
+  line-height: 52rpx;
+  overflow: hidden;
+  text-overflow:ellipsis;
+  white-space: nowrap;
+}
+
+.item .nameBox .inro {
+  font-size: 32rpx;
+  font-weight: 400;
+  color: #666666;
+  line-height: 45rpx;
+  overflow: hidden;
+  text-overflow:ellipsis;
+  white-space: nowrap;
+}
+
+.item .iconBox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.item .iconBox:nth-child(3) {
+  width: 120rpx;
+  margin-right: 40rpx;
+}
+
+.item .iconBox image {
+  width: 80rpx;
+  height: 80rpx;
+  margin-bottom: 8rpx;
+}
+
+.item .iconBox text {
+  font-size: 30rpx;
+  font-weight: 400;
+  color: #E68B00;
+  line-height: 42rpx;
+}
+
+.item .share text {
+  color: #14AA50;
+}

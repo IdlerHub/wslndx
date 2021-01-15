@@ -1,14 +1,10 @@
 /*
  * @Date: 2019-05-28 09:50:08
  * @LastEditors: wjl
- * @LastEditTime: 2020-07-30 09:34:25
+ * @LastEditTime: 2021-01-15 16:28:35
  */
-import {
-  wxp
-} from "./utils/service";
-import {
-  uma
-} from "umtrack-wx";
+import { wxp } from "./utils/service";
+import { uma } from "umtrack-wx";
 /* 全局状态管理 */
 import store from "./store";
 import { praise } from "./data/Circle";
@@ -23,12 +19,13 @@ var fundebug = require("fundebug-wxjs");
 fundebug.init({
   apikey: "b3b256c65b30a1b0eb26f8d9c2cd7855803498f0c667df934be2c72048af93d9",
   releaseStage: store.process,
-  monitorMethodCall: true /* 自定义函数的监控 */ ,
-  monitorMethodArguments: true /* 监控小程序中的函数调用的参数 */ ,
-  monitorHttpData: true /* 收集 HTTP 请求错误的 body  */ ,
+  monitorMethodCall: true /* 自定义函数的监控 */,
+  monitorMethodArguments: true /* 监控小程序中的函数调用的参数 */,
+  monitorHttpData: true /* 收集 HTTP 请求错误的 body  */,
   setSystemInfo: true,
   silentInject: true,
-  filters: [{
+  filters: [
+    {
       req: {
         url: /log\.aldwx\.com/,
         method: /^GET$/,
@@ -70,6 +67,7 @@ var vote = require("data/Vote.js"); //票选活动接口
 var activity = require("data/Activity.js");
 var liveData = require("data/LiveData.js");
 var lessonNew = require("data/lessonNew.js");
+var study = require("data/studyCenter.js");
 //app.js
 App({
   API_URL: store.API_URL,
@@ -86,6 +84,7 @@ App({
   vote,
   activity,
   liveData,
+  study,
   socket,
   lessonNew,
   store,
@@ -93,8 +92,10 @@ App({
   fundebug,
   backgroundAudioManager,
   umengConfig: {
-    appKey: store.process == "develop" ?
-      "5e4cad07eef38d3632042549" : "5e4cd613e1367a268d56bfa2", //由友盟分配的APP_KEY
+    appKey:
+      store.process == "develop"
+        ? "5e4cad07eef38d3632042549"
+        : "5e4cd613e1367a268d56bfa2", //由友盟分配的APP_KEY
     useOpenid: false, // 是否使用openid进行统计，此项为false时将使用友盟+随机ID进行用户统计。使用openid来统计微信小程序的用户，会使统计的指标更为准确，对系统准确性要求高的应用推荐使用OpenID。
     autoGetOpenid: false, // 是否需要通过友盟后台获取openid，如若需要，请到友盟后台设置appId及secret
     debug: false, //是否打开调试模式
@@ -161,9 +162,20 @@ App({
         url: `/page/vote/pages/voteArticle/voteArticle?voteid=${opstObj.o}&uid=${opstObj.u}`,
       });
     }
+    if (!this.store.$state.userInfo.id) {
+      let isLogin = 0;
+      if (opts.path == "pages/index/index") return;
+      getCurrentPages().forEach((e) => {
+        e.isLogin ? (isLogin = 1) : "";
+      });
+      if (isLogin) return;
+      wx.reLaunch({
+        url: "/pages/index/index",
+      });
+    }
   },
   onShow: function (opts) {
-    console.log(opts, '进入')
+    console.log(opts, "进入");
     let optsStr = decodeURIComponent(opts.query.scene).split("&");
     let opstObj = {};
     optsStr.forEach((item, index) => {
@@ -171,7 +183,7 @@ App({
     });
     let lists = ["share", "invite"];
     /* 小程序(在后台运行中时)从分享卡片切到前台 */
-    console.log(this.globalData.backstage)
+    console.log(this.globalData.backstage);
     if (this.globalData.backstage) {
       this.globalData.backstage = false;
       this.socket.backstage();
@@ -202,24 +214,24 @@ App({
         socket.listen(this.bokemessage, "Bokemessage");
       }, 2000);
     } else {
-      let isLogin = 0
-      if (opts.path == 'pages/index/index') return
-      getCurrentPages().forEach(e => {
-        e.isLogin ? isLogin = 1 : ''
-      })
-      if (isLogin) return
+      let isLogin = 0;
+      if (opts.path == "pages/index/index") return;
+      getCurrentPages().forEach((e) => {
+        e.isLogin ? (isLogin = 1) : "";
+      });
+      if (isLogin) return;
       wx.reLaunch({
         url: "/pages/index/index",
       });
-      if (opts.path == 'pages/education/education') {
+      if (opts.path == "pages/education/education") {
         setTimeout(() => {
-          this.changeLoginstatus()
+          this.changeLoginstatus();
           let params = {
-            type: 'education',
-            detail: JSON.stringify(this.globalData.query) 
-          }
-          this.checknextTap(params, 1)
-        }, 1500)
+            type: "education",
+            detail: JSON.stringify(this.globalData.query),
+          };
+          this.checknextTap(params, 1);
+        }, 1500);
       }
     }
   },
@@ -277,7 +289,7 @@ App({
   },
   /* 更新store中的userInfo */
   setUser: function (data) {
-    let areaArray = data.universityName ? data.universityName.split(",") : '';
+    let areaArray = data.universityName ? data.universityName.split(",") : "";
     if ((!data.address || !data.school) && areaArray.length == 3) {
       data.address = areaArray.slice(0, 2);
       data.addressCity = areaArray[1];
@@ -293,9 +305,13 @@ App({
       socket.listen(this.prizemessage, "Prizemessage");
       socket.listen(this.bokemessage, "Bokemessage");
     }
-    getCurrentPages().forEach(e => {
-      e.route == 'pages/index/index' ? this.store.$state.nextTapDetial.type == 'addStudy' ? e.init(1) : e.init() : ''
-    })
+    getCurrentPages().forEach((e) => {
+      e.route == "pages/index/index"
+        ? this.store.$state.nextTapDetial.type == "addStudy"
+          ? e.init(1)
+          : e.init()
+        : "";
+    });
   },
   /* 更新AuthKey */
   setAuthKey: function (data) {
@@ -354,20 +370,23 @@ App({
       encryptedData: e.detail.encryptedData,
       iv: e.detail.iv,
     };
-    this.user.profile(param).then((msg) => {
-      this.setUser(msg.data.userInfo);
-    }).catch(msg => {
-      if (msg.status == 401) {
-        this.wxLogin(e)
-      }
-    });
+    this.user
+      .profile(param)
+      .then((msg) => {
+        this.setUser(msg.data.userInfo);
+      })
+      .catch((msg) => {
+        if (msg.status == 401) {
+          this.wxLogin(e);
+        }
+      });
   },
   playVedio(type) {
-    type == "wifi" ?
-      "" :
-      this.store.setState({
-        flow: true,
-      });
+    type == "wifi"
+      ? ""
+      : this.store.setState({
+          flow: true,
+        });
   },
   /* 更新签到信息 */
   setSignIn(data, bl) {
@@ -430,9 +449,7 @@ App({
     }
   },
   bokemessage(res) {
-    let {
-      num = 0, avatar
-    } = JSON.parse(res.data).data;
+    let { num = 0, avatar } = JSON.parse(res.data).data;
     this.store.setState({
       unRead: num,
       surPass: num > 99,
@@ -497,7 +514,8 @@ App({
     });
     return {
       title: "一起来网上老年大学学习",
-      path: "/pages/index/index?uid=" +
+      path:
+        "/pages/index/index?uid=" +
         this.store.$state.userInfo.id +
         "&type=invite&activity=1",
       imageUrl: "https://hwcdn.jinlingkeji.cn/images/dev/withdrawShareImg2.png",
@@ -514,21 +532,23 @@ App({
   },
   changeLoginstatus() {
     this.store.setState({
-      showLogin: !this.store.$state.showLogin
-    })
+      showLogin: !this.store.$state.showLogin,
+    });
   },
   checknextTap(e, type) {
-    console.log(e)
+    console.log(e);
     if (!type) {
       this.store.setState({
-        'nextTapDetial.type': e.currentTarget.dataset.type,
-        'nextTapDetial.detail': e.currentTarget.dataset.detail ? e.currentTarget.dataset.detail : e
-      })
+        "nextTapDetial.type": e.currentTarget.dataset.type,
+        "nextTapDetial.detail": e.currentTarget.dataset.detail
+          ? e.currentTarget.dataset.detail
+          : e,
+      });
     } else {
       this.store.setState({
-        'nextTapDetial.type': e.type,
-        'nextTapDetial.detail': e.detail
-      })
+        "nextTapDetial.type": e.type,
+        "nextTapDetial.detail": e.detail,
+      });
     }
   },
   globalData: {

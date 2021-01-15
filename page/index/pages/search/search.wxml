@@ -1,61 +1,128 @@
 <!--pages/search/search.wxml-->
+<wxs module="fn">
+  module.exports = {
+  num: function(num) {
+  return num > 10000 ? (num / 10000).toFixed(1) + '万' : num
+  }
+  }
+</wxs>
+<template name="listItem">
+  <view catchtap="detailTap" wx:for="{{ list }}" wx:key="index" class="item" data-item="{{ item }}" data-type="{{isLive || current == 1 ? 1 : isLesson ? 'searchItem' : 'searchItem'}}"
+    wx:if="{{ isLesson || isLive ? index < 3 : true }}">
+    <view class="left">
+      <image class="poster" mode="aspectFill" src="{{ item.cover}}"></image>
+      <image class="icon" mode="aspectFill" src="/images/recomonPlay.png"></image>
+      <image src="/images/coursestautes.png" class="status" wx:if="{{item.is_finish}}"></image>
+    </view>
+    <view class="right">
+      <rich-text class="line name" nodes="{{ item.title}}"></rich-text>
+      <view class="tags" wx:if="{{item.tags[0]}}">
+        <text wx:for="{{item.tags}}" wx:key="index" wx:for-item="tag">{{tag.tagName}}</text>
+      </view>
+      <text class="line info" wx:if="{{isLesson || current == 2}}">
+        <text class="dramaNum"><text class="key">剧集</text>{{ item.episode }}集</text>
+        <text>|</text>
+        <text class="playNum"><text class="key">播放</text>{{ fn.num(item.browse) }}</text>
+      </text>
+      <text class="line info" wx:else>
+        <text class="dramaNum">免费</text>
+        <text>|</text>
+        <text class="playNum">{{ fn.num(item.browse) }}人在学</text>
+      </text>
+    </view>
+  </view>
+</template>
+<template name="qst">
+  <view class="qstBox">
+    <image src="../../images/searchQst.png"></image>
+    <text>暂无内容</text>
+  </view>
+</template>
 <view class="container">
   <view class="search-top">
-    <slotSign bindtap="checknextTap" data-type="searchBox" data-detail="">
-      <view class="search-box">
-        <image src="{{$state.imgHost}}/searchp.png"></image>
-        <form wx:if="{{focus}}">
-          <input placeholder="搜索课程名称" placeholder-style="color:#999;" confirm-type="search" type="text"
-            class="search-txt" focus="focus" value="{{text}}" bindinput="txtchange" bindconfirm="earchlesss"
-            wx:if="{{$state.userInfo.id}}"></input>
-          <input placeholder="搜索课程名称" placeholder-style="color:#999;" confirm-type="search" type="text"
-            class="search-txt" value="{{text}}" bindinput="txtchange" bindconfirm="earchlesss" wx:else disabled></input>
-          <button wx:if="{{text != ''}}" form-type="reset" catchtap="cleartxt"></button>
-        </form>
-        <form wx:else>
-          <input placeholder-style="color:#999;" confirm-type="search" type="text" class="search-txt" value="{{text}}"
-            bindinput="txtchange" bindconfirm="earchlesss"></input>
-          <button wx:if="{{text != ''}}" form-type="reset" catchtap="cleartxt"></button>
-        </form>
-      </view>
-    </slotSign>
-    <view class="cancle" bindtap="backhome">取消</view>
+    <view class="search-box">
+      <image src="../../images/searchIcon.png"></image>
+      <form>
+        <input placeholder="搜索课程名称" placeholder-style="color:#999;" confirm-type="search" type="text" class="search-txt"
+          focus="{{false}}" value="{{text}}" bindinput="txtchange" bindconfirm="searchlesss"></input>
+        <button wx:if="{{text != ''}}" form-type="reset" catchtap="cleartxt">
+          <image src="../../images/searchcancle.png"></image>
+        </button>
+      </form>
+    </view>
+    <view class="cancle" bindtap="searchlesss">搜索</view>
   </view>
-  <view class="wrap">
-    <view catchtap="detailTap" wx:for="{{ lessList }}" wx:key="index" class="item" data-item="{{ item }}">
-      <view class="left">
-        <image class="poster" mode="aspectFill"
-          src="{{ item.image + '?x-image-process=image/resize,m_fixed,w_260,h_160/quality,Q_80' }}"></image>
-        <image class="icon" mode="aspectFill" src="/images/recomonPlay.png"></image>
-        <image src="/images/coursestautes.png" class="status" wx:if="{{item.is_finish}}"></image>
-      </view>
-      <view class="right">
-        <rich-text class="line name" nodes="{{ item.title }}"></rich-text>
-        <rich-text class="line actor" nodes="{{ item.subtitle }}"></rich-text>
-        <!-- <text class="line actor" wx:else>{{ item.name }}-{{ item.honor }}</text> -->
-        <text class="line info">
-          <text class="dramaNum"><text class="key">剧集</text>{{ item.lesson_count }}集</text>
-          <text class="playNum"><text class="key">播放</text>{{ item.bw || item.browse }}</text>
-        </text>
+  <view class="wrap" wx:if="{{text.length > 0 && isSearch}}">
+    <view class="top">
+      <view wx:for="{{3}}" wx:key="index" bindtap="checkTab" data-index="{{index}}">
+        <text class="{{index == current ? 'active' : ''}}">{{ index == 0 ? '全部' : index == 1 ? '直播课程' : '在线课程'}}</text>
+        <text wx:if="{{index == current}}"></text>
       </view>
     </view>
-    <view class="qst" wx:if="{{showqst && !lessList[0]}}">
-      <image class="ast-img" src="{{$state.imgHost}}/no-com.png"></image>
+    <swiper class="swiper" current="{{current}}" duration="100" bindanimationfinish="bindanimationfinish">
+      <swiper-item>
+        <scroll-view scroll-y style="height: 100%" wx:if="{{liveList[0] || lessonList[0]}}">
+          <view style="height: 20rpx;"></view>
+          <view class="allBox" wx:if="{{liveList[0]}}">
+            <view class="title">直播课程</view>
+            <template is="listItem" data="{{list: liveList, isLive: 1}}"></template>
+            <view class="bottom" bindtap="checkTab" data-index="1">
+              <text>查看全部</text>
+              <image src="../../images/allRight.png"></image>
+            </view>
+          </view>
+          <view class="allBox" wx:if="{{lessonList[0]}}">
+            <view class="title">在线课程</view>
+            <template is="listItem" data="{{list: lessonList, isLesson: 1}}"></template>
+            <view class="bottom" bindtap="checkTab" data-index="2">
+              <text>查看全部</text>
+              <image src="../../images/allRight.png"></image>
+            </view>
+          </view>
+        </scroll-view>
+        <template is="qst" wx:else></template>
+      </swiper-item>
+      <swiper-item>
+        <scroll-view scroll-y style="height: 100%; background: #fff;" wx:if="{{liveList[0]}}" bindscrolltolower="liveTolower">
+          <view class="allBox">
+            <template is="listItem" data="{{list: liveList, current}}"></template>
+          </view>
+        </scroll-view>
+        <template is="qst" wx:else></template>
+      </swiper-item>
+      <swiper-item>
+        <scroll-view scroll-y style="height: 100%; background: #fff;" wx:if="{{lessonList[0]}}" bindscrolltolower="lessonTolower">
+          <view class="allBox">
+            <template is="listItem" data="{{list: lessonList, current}}"></template>
+          </view>
+        </scroll-view>
+        <template is="qst" wx:else></template>
+      </swiper-item>
+    </swiper>
+  </view>
+  <view wx:else>
+    <view class="containerBox" wx:if="{{searchInfo.historyList[0]}}">
+      <view class="titleBox">
+        <text>搜索历史</text>
+        <view class="titleRight" bindtap="clearHistory">
+          <image src="/images/delete.png"></image>
+          <text>清空</text>
+        </view>
+      </view>
+      <view class="listBox">
+        <text wx:for="{{searchInfo.historyList}}" wx:key="index" wx:if="{{index < 9}}" bindtap="searchlesss"
+          data-text="{{item}}">{{item}}</text>
+      </view>
     </view>
-  </view>
-  <view class="voice-box" style="bottom:{{voiceheight}}px"
-    wx:if="{{$state.authRecord && showvioce && !lessList[0].image}}">
-    <view style="background:url({{voiceImg}});background-size:100% 100%;" class="voice-image"
-      catchtouchstart="touchstart" catchtouchend="touchend"></view>
-    <div class="voice-water1" wx:if="{{voiceActon}}"></div>
-    <div class="voice-water1 voice-water2" wx:if="{{voiceActon}}"></div>
-    <view class="voice-txt" style="height:12rpx;"> {{voiceActon? '' : '按住说话'}}</view>
-  </view>
-  <view class="voice-box" style="bottom:{{voiceheight}}px"
-    wx:if="{{!$state.authRecord && showvioce && !lessList[0].image}}">
-    <view style="background:url({{voiceImg}});background-size:100% 100%;" class="voice-image" bindtap="authrecord"
-      catchtouchstart="authrecord"></view>
-    <view class="voice-txt" style="height:12rpx;"> {{voiceActon? '' : '按住说话'}}</view>
+    <view class="containerBox" style="border:0" wx:if="{{searchInfo.hostList[0]}}">
+      <view class="titleBox">
+        <text>热门搜索</text>
+      </view>
+      <view class="listBox">
+        <text wx:for="{{searchInfo.hostList}}" wx:key="index" wx:if="{{index < 9}}" bindtap="searchlesss"
+          data-text="{{item}}">{{item}}</text>
+      </view>
+    </view>
   </view>
 </view>
 <loginBox wx:if="{{$state.showLogin}}" />

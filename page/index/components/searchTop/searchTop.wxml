@@ -1,0 +1,23 @@
+<!--page/index/components/searchTop/searchTop.wxml-->
+<navigator hover-class="none"
+  url="/page/index/pages/allSearch/allSearch?isSchool={{isSchool}}&isLesson={{isLesson}}&isTeach={{isTeach}}&universityId={{universityId}}"
+  class="serchBox" wx:if="{{!isSearch}}">
+  <view class="searchLeft" style="border-radius: {{ isTeach ? '100rpx 0 0 100rpx;' : ''  }}">
+    <image src="../../images/searchIcon.png"></image>
+    <text>搜索{{isSchool ? '高校' : isLesson ? '课程' : '讲师'}}名称</text>
+  </view>
+  <view class="searchRight" style="border-radius: {{ isTeach ? '0px 100rpx 100rpx 0px;' : ''  }};">搜索</view>
+</navigator>
+<view class="serchBox" wx:else>
+  <view class="searchLeft">
+    <image src="../../images/searchIcon.png"></image>
+    <input placeholder="搜索{{isSchool ? '高校' : isLesson ? '课程' : '讲师'}}名称" placeholder-style="color:#999;" confirm-type="search"
+      type="text" class="search-txt" focus="{{focus}}" value="{{text}}" bindinput="txtchange"
+      bindconfirm="searchlesss" wx:if="{{focus}}"></input>
+    <input placeholder="搜索{{isSchool ? '高校' : isLesson ? '课程' : '讲师'}}名称" placeholder-style="color:#999;" confirm-type="search"
+      type="text" class="search-txt" focus="{{focus}}" value="{{text}}" bindinput="txtchange"
+      bindconfirm="searchlesss" wx:else></input>
+    <image src="../../images/searchcancle.png" wx:if="{{text.length > 0}}" bindtap="clear"></image>
+  </view>
+  <view class="searchRight" bindtap="searchlesss">搜索</view>
+</view>

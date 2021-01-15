@@ -1,0 +1,5 @@
+<!--page/index/pages/lessonSpecial/lessonSpecial.wxml-->
+<view class="classifyItem" wx:for="{{classfyList}}" wx:key="index">
+  <view class="classifyName">{{item.subjectCategoryName}}</view>
+  <lessonItem lessonList="{{item.list}}" isAllLesson="1" isIndex="1"  />
+</view>

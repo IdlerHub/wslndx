@@ -1,0 +1,3 @@
+[submodule "page/live/components/components/painter"]
+	path = page/live/components/components/painter
+	url = https://github.com/Kujiale-Mobile/PainterCore.git

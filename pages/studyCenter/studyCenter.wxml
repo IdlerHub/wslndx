@@ -1,3 +1,77 @@
 <!--pages/studyCenter/studyCenter.wxml-->
-
+<template name="contentBox">
+  <view class="contentBox">
+    <view class="contentTop">
+      <view class="contentTopleft">
+        <text>{{title}} {{ isLive ? liveList.length : lessonList.length}}</text>
+      </view>
+      <navigator class="contentTopright" hover-class="none" url="/page/study/pages/livePage/livePage" wx:if="{{isLive}}">
+        <text>全部</text>
+        <image src="/images/vedioRight.png"></image>
+      </navigator>
+    </view>
+    <view class="itemBox" wx:if="{{isLive}}">
+      <liveItem liveList="{{liveList}}" isLive="{{isLive}}" />
+    </view>
+    <view class="itemBox" wx:else>
+      <view class="lessItem" bindtap="topDetail" data-item="{{item}}" wx:for="{{lessonList}}" wx:key="index" style="border: {{ index == lessonList.length - 1 ? 'none' : '' }}; margin-bottom:  {{ index == lessonList.length - 1 ? 0 : '' }}">
+        <view class="left">
+          <image src="{{item.indexCover}}"></image>
+          <!-- <view class="mask" wx:if="{{item.isFinish}}">
+            <image src="/images/studyIcon/pastDue.png"></image>
+          </view> -->
+        </view>
+        <view class="right">
+          <view class="itemTitle">{{item.name}}</view>
+          <view class="bottom" wx:if="{{ item.studyLiveCount > 0 && item.studyLiveCount != item.liveCount }}">
+            <view class="studyNum">已学{{item.studyLiveCount}}/{{item.liveCount}}课时</view>
+            <view class="studyLine"><text style="width: {{ (item.studyLiveCount / item.liveCount) * 100 > 100 ? 100 : (item.studyLiveCount / item.liveCount) * 100 }}%;" ></text></view>
+          </view>
+          <!-- <view class="bottom" wx:elif="{{item.isFinish}}">
+            <view class="studyNum">课程过期时间  {{item.studydate}}</view>  
+          </view> -->
+          <view class="bottom unStudy" wx:else>
+            <view class="studyNum">共{{item.liveCount}}课时</view>
+            <view class="btn {{item.studyLiveCount > 0 ? 'over' : ''}}">
+                {{ item.studyLiveCount > 0 ? '已学完' : '去学习' }}
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</template>
+<view class="pageTop">
+  <view class="timeBox">
+    <view class="timeItem">
+      <image src="/images/studyIcon/studyDaysIcon.png" class="studyDaysIcon"></image>
+      <view>
+        <view><text>{{detail.studyDay}}</text> 天</view>
+        <view>学习天数</view>
+      </view>
+    </view>
+    <view class="timeItem">
+      <image src="/images/studyIcon/studyHoursIcon.png" class="studyHoursIcon"></image>
+      <view>
+        <view><text>{{detail.studyTime}}</text> 小时</view>
+        <view>本周学习</view>
+      </view>
+    </view>
+  </view>
+  <view class="iconBox">
+    <view wx:for="{{iconList}}" wx:key="index" class="iconItem" bindtap="iconBind" data-item="{{item}}">
+      <image src="{{item.image}}" style="width: {{item.width}}rpx;height:{{item.height}}rpx;"></image>
+      <text>{{item.name}}</text>
+    </view>
+  </view>
+</view>
+<view wx:if="{{liveList[0] || lessonList[0]}}">
+  <template is="contentBox" data="{{ title:'直播课程', isLive: 1, liveList }}" wx:if="{{liveList[0]}}"></template>
+  <template is="contentBox" data="{{ title:'我的课程', lessonList }}" wx:if="{{lessonList[0]}}"></template>
+</view>
+<view class="qst" wx:else>
+  <image src="/images/liveqs.png"></image>
+  <text>您还未开始学习</text>
+  <navigator class="navigator" url="/page/index/pages/allLesson/allLesson">去选课</navigator>
+</view>
 <navBar path="video" />

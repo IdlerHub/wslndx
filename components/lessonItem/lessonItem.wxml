@@ -13,7 +13,8 @@
       <image src="/images/recomonPlay.png"></image>
     </view>
     <view class="contentBox">
-      <text class="title">{{ item.title || item.name}}</text>
+      <text class="title" wx:if="{{!isSearch}}">{{ item.title || item.name }}</text>
+      <rich-text class="title" wx:else nodes="{{item.title || item.name}}"></rich-text>
       <view wx:if="{{(!isSchool && item.columnId) || item.type == 1}}">
         <view class="tabLine" wx:if="{{ item.tags[0] }}">
           <text wx:for="{{item.tags}}" wx:key="index" wx:for-item="tagItem">{{tagItem.tagName || tagItem}}</text>
@@ -22,7 +23,7 @@
           <text>网上老年大学</text>
         </view>
       </view>
-      <view class="bottom" wx:if="{{(!isSchool && item.type == 1) || isIndex}}">
+      <view class="bottom" wx:if="{{(!isSchool && item.type == 1) || isIndex || item.columnId}}">
         <view class="left">
           <text>免费</text>
           <text>|</text>
@@ -37,7 +38,9 @@
         </view>
       </view>
       <view class="schoolBootem" wx:else>
-        <text class="left">剧集</text><text class="right">{{item.lesson_count || item.lessonCount}}集</text><text
+        <text class="left">剧集</text><text class="right">{{item.lesson_count || item.lessonCount}}集</text>
+          <text>|</text>
+        <text
           class="left">播放</text><text class="right">{{item.thousand || item.browse}}</text>
         <!-- <text>查看全部课程</text> -->
       </view>

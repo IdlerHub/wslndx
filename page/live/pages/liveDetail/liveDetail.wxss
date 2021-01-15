@@ -40,9 +40,10 @@ page {
   margin-left: 30rpx;
   display: flex;
   align-items: center;
-  justify-content:  center
+  justify-content: center
 }
-.liveBack  .imgBox .liveBackImg {
+
+.liveBack .imgBox .liveBackImg {
   width: 20rpx;
   height: 35rpx;
 }
@@ -140,7 +141,7 @@ page {
   width: 30rpx;
   height: 30rpx;
   margin-left: 20rpx;
-} 
+}
 
 
 /* 课程信息块 */
@@ -150,6 +151,7 @@ page {
   box-sizing: border-box;
   padding: 30rpx;
   background: #fff;
+  position: relative;
 }
 
 .liveInfo .liveName {
@@ -181,12 +183,71 @@ page {
   white-space: nowrap;
 }
 
+.liveInfo .progressBox {
+  width: 226rpx;
+  height: 80rpx;
+  background: #F5F6FA;
+  border-radius: 100rpx 0px 0px 100rpx;
+  position: absolute;
+  right: 0;
+  top: 42rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.liveInfo .progressBox .studyNum {
+  font-size: 28rpx;
+  font-weight: 400;
+  color: #666666;
+}
+
+.liveInfo .progressBox .studyNum text:nth-child(2) {
+  color: #333333;
+  font-weight: 500;
+}
+
+.liveInfo .progressBox .progress {
+  width: 166rpx;
+  height: 10rpx;
+  border-radius: 5rpx;
+  border: 1rpx solid #BDBDBD;
+  margin-top: 10rpx;
+  overflow: hidden;
+}
+
+.liveInfo .progressBox .progress text {
+  display: block;
+  height: 100%;
+  background: #F2323A;
+}
+
+.liveInfo .progressBox .badgeBox {
+  display: flex;
+  align-items: center;
+}
+
+.liveInfo .progressBox image {
+  width: 38rpx;
+  height: 52rpx;
+  margin-right: 10rpx;
+}
+
+.liveInfo .progressBox .badge {
+  font-size: 28rpx;
+  font-weight: 400;
+  color: #666666;
+}
+
+
 .share-joinClass {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
-.live-info{
+
+.live-info {
   height: 72rpx;
   display: flex;
   align-items: center;
@@ -196,7 +257,8 @@ page {
   color: #FFFFFF;
   position: relative;
 }
-.live-info::after{
+
+.live-info::after {
   content: "";
   position: absolute;
   width: 4rpx;
@@ -206,7 +268,8 @@ page {
   right: -30rpx;
   top: 6rpx;
 }
-.live-info .join-class{
+
+.live-info .join-class {
   width: 230rpx;
   height: 72rpx;
   display: flex;
@@ -217,16 +280,19 @@ page {
   border-radius: 40rpx;
   margin-right: 30rpx;
 }
-.live-info .join-class>view{
+
+.live-info .join-class>view {
   height: 72rpx;
   line-height: 72rpx;
 }
-.live-info .join-class image{
+
+.live-info .join-class image {
   width: 43rpx;
   height: 36rpx;
   margin-right: 12rpx;
 }
-.subscribe{
+
+.subscribe {
   width: 230rpx;
   height: 72rpx;
   display: flex;
@@ -236,11 +302,13 @@ page {
   box-shadow: 0px 2rpx 6rpx 0px #FF6812;
   border-radius: 40rpx;
 }
-.live-info .subscribe image{
+
+.live-info .subscribe image {
   width: 24.22rpx;
   height: 36rpx;
   margin-right: 15rpx;
 }
+
 .share-joinClass .share {
   display: flex;
   align-items: center;
@@ -440,7 +508,7 @@ page {
   position: relative;
 }
 
-.nav .item.active {
+.nav .item .active {
   position: relative;
   color: #df2020;
   font-size: 44rpx;
@@ -455,6 +523,7 @@ page {
   height: 4rpx;
   background: #df2020;
 }
+
 
 .nav .item .activeBox {
   width: 60rpx;
@@ -517,6 +586,10 @@ rich-text {
 
 .drama .item.active .left .name {
   color: #df2020;
+}
+
+.drama .item.isStudy .left .name  {
+  color: rgba(58, 58, 58, 0.4);
 }
 
 .drama .item .right {

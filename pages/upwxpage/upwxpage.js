@@ -55,13 +55,6 @@ Page({
   onReachBottom: function () {
 
   },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
-  },
   upwx() {
     wx.setClipboardData({
       data: 'https://mobile.baidu.com/item?docid=26523238&f0=search_searchContent%400_appBaseNormal%400',

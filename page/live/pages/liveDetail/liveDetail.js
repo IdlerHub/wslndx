@@ -92,6 +92,10 @@ Page({
   onUnload() {
     clearInterval(this.timer);
     clearInterval(this.Timeout);
+    if (this.timeTemplate > 0) {
+      let progress = parseInt(new Date().getTime() / 1000 + "") - this.timeTemplate
+      this.updateProgress(progress)
+    }
   },
   subscribe() {
     //上课通知
@@ -175,29 +179,31 @@ Page({
       _this.getComment();
     });
   },
-  getSublesson(lessons) {
+  getSublesson(lessons, type) {
     if (!lessons) return
     let playNow = {},
-      liveNow = 0;
+      liveNow = 0, 
+      i = -1;
     this.setData({
       sublessons: lessons,
     }, () => {
-      if (this.data.playNow.state == 1) return
+      if (JSON.stringify(this.data.playNow) != "{}") return
       this.data.sublessons.forEach((item) => {
         //如果是已经结束的课,就把第一个放到当前播放中
         item.state == 1 && JSON.stringify(playNow) == "{}" ? [playNow = item, liveNow = 1] : ''
       });
-      this.data.sublessons.forEach((item) => {
+      this.data.sublessons.forEach((item, index) => {
         //如果是已经结束的课,就把第一个放到当前播放中
-        item.state == 3 && JSON.stringify(playNow) == "{}" && !liveNow && JSON.stringify(this.data.playNow) == "{}" ? [this.getLiveBackById(item.id), playNow = item] :
+        item.state == 3 && JSON.stringify(playNow) == "{}" && !liveNow && JSON.stringify(this.data.playNow) == "{}" && !item.isStudy ? [this.getLiveBackById(item.id), playNow = item] :
           "";
+        item.state == 3 && i == -1 ? i = index : ''
       });
       liveNow ? this.setData({
         playNow,
         current: playNow,
         playFlag: false
-      }) : ''
-      setTimeout(() => {
+      }) : JSON.stringify(playNow) == "{}" && JSON.stringify(this.data.playNow) == "{}" ? [this.getLiveBackById(this.data.sublessons[i].id, 1), playNow = this.data.sublessons[i]] : ''
+      type ? "" : setTimeout(() => {
         this.tolesson()
       }, 800)
       if (this.Timeout) return
@@ -205,7 +211,7 @@ Page({
         LiveData.getSpecialLives({
           specialColumnId: this.data.lessonDetail.columnId,
         }).then(res => {
-          this.getSublesson(res.dataList)
+          this.getSublesson(res.dataList, 1)
         })
       }, 60000);
     });
@@ -425,22 +431,12 @@ Page({
       pages = getCurrentPages(),
       back = 0;
     if (item.state == 0) {
-      // LiveData.getLiveById({
-      //   liveId: item.id
-      // }).then(res => {
-      //   res.data.state == 0 ? wx.showToast({
-      //     title: "直播还未开始",
-      //     icon: "none",
-      //   }) : ''
-      //   if (res.data.state == 1) {
       pages.forEach(e => {
         e.pageName ? e.pageName == 'live' ? back = 1 : '' : ''
       })
       back ? wx.navigateBack() : wx.navigateTo({
         url: '/page/live/pages/vliveRoom/vliveRoom?roomId=' + item.id,
       })
-      // }
-      // })
     } else if (item.state == 1) {
       pages.forEach(e => {
         e.pageName ? e.pageName == 'live' ? back = 1 : '' : ''
@@ -458,12 +454,19 @@ Page({
     }
   },
   //获取回播
-  getLiveBackById(liveId) {
+  getLiveBackById(liveId, type) {
+    let i = 0, studyNum= 0
     LiveData.getLiveBackById({
       liveId
     }).then(res => {
+      this.data.sublessons.forEach((item, index) => {
+        item.id == liveId ? i = index : ''
+        item.isStudy ? studyNum += 1 : ''
+      })
       this.setData({
-        playNow: res.data
+        playNow: res.data,
+        [`sublessons[${i}].isStudy`]: 1,
+        'lessonDetail.progress': !type && this.data.lessonDetail.progress < 100 ? ((studyNum + 1) / this.data.lessonDetail.liveCount * 100).toFixed(0) : this.data.lessonDetail.progress
       }, () => {
         this.recordAddVedio();
       })
@@ -1189,20 +1192,48 @@ Page({
   },
   played() {
     //开始播放
+    setTimeout(() => {
+      this.timeTemplate = parseInt(new Date().getTime() / 1000 + "")
+      this.updateProgress(0)
+    }, 800)
   },
   timeupdate() {
     //进度条变化
+    if (!this.vRecordAdd) return
+    this.updateProgress(0)
   },
   videoPause() {
     //暂停播放
     // this.setData({
     //   playFlag: false,
     // });
+    if (this.timeTemplate > 0) {
+      let progress = parseInt(new Date().getTime() / 1000 + "") - this.timeTemplate
+      this.updateProgress(progress)
+    }
   },
   ended() {
     //播放结束
     this.setData({
       playFlag: false,
+    });
+    if (this.timeTemplate > 0) {
+      let progress = parseInt(new Date().getTime() / 1000 + "") - this.timeTemplate
+      this.updateProgress(progress)
+    }
+  },
+  updateProgress(studyTime) {
+    let param = {
+      columnId: this.data.lessonDetail.columnId,
+      courseId: this.data.playNow.id,
+      studyType: 2,
+      studyTime,
+      sourceType: 3
+    }
+    app.lessonNew.recordAdd(param).then(msg => {
+      this.vRecordAdd = false
+    }).catch(() => {
+      this.updateProgress(studyTime)
     });
   },
   onShareAppMessage() {

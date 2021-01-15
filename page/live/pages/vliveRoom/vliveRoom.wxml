@@ -3,23 +3,25 @@
   bindleavepictureinpicture="bindleavepictureinpicture"
   wx:if="{{liveStatus == 1 && liveDetail.direction && !liveDetail.liveType}}">
 </live-player>
-<live-player src="{{liveDetail.liveUrl}}" style="top:{{ statusBarHeight + 150 }}rpx" class="v-player h-player" autoplay bindstatechange="bindstatechange"
-  wx:if="{{liveStatus == 1 && !liveDetail.direction && !liveDetail.liveType}}">
+<live-player src="{{liveDetail.liveUrl}}" style="top:{{ statusBarHeight + 150 }}rpx" class="v-player h-player" autoplay
+  bindstatechange="bindstatechange" wx:if="{{liveStatus == 1 && !liveDetail.direction && !liveDetail.liveType}}">
   <image src="../../images/full.png" bindtap="toHliveRoom"></image>
 </live-player>
 <video src="{{liveDetail.videoUrl}}" class="v-player" controls="{{false}}" initial-time="{{liveDetail.now}}"
   show-center-play-btn="{{false}}" enable-progress-gesture="{{false}}" show-progress="{{false}}"
   show-fullscreen-btn="{{false}}" show-play-btn="{{false}}" autoplay object-fit="fill"
   wx:if="{{liveStatus == 1 && liveDetail.direction && liveDetail.liveType && showVideo}}"></video>
-<video src="{{liveDetail.videoUrl}}" style="top:{{ statusBarHeight + 150 }}rpx" class="v-player h-player" controls="{{false}}" initial-time="{{liveDetail.now}}"
-  show-center-play-btn="{{false}}" enable-progress-gesture="{{false}}" show-progress="{{false}}"
-  show-fullscreen-btn="{{false}}" show-play-btn="{{false}}" autoplay object-fit="fill"
+<video src="{{liveDetail.videoUrl}}" style="top:{{ statusBarHeight + 150 }}rpx" class="v-player h-player"
+  controls="{{false}}" initial-time="{{liveDetail.now}}" show-center-play-btn="{{false}}"
+  enable-progress-gesture="{{false}}" show-progress="{{false}}" show-fullscreen-btn="{{false}}"
+  show-play-btn="{{false}}" autoplay object-fit="fill"
   wx:if="{{liveStatus == 1 && !liveDetail.direction && liveDetail.liveType && showVideo}}">
   <image src="../../images/full.png" bindtap="toHliveRoom"></image>
 </video>
 <view class="v-player h-player playCover" style="top:{{ statusBarHeight + 150 }}rpx" wx:if="{{liveStatus == 0}}">
   <image src="{{liveDetail.indexCover}}"></image>
-  <view class="liveRemind" style="bottom: {{downTime.d > 0 || downTime.m > 0 || downTime.s > 0 ? 'calc(-128vmin / 7.5)' : 'calc(-118vmin / 7.5)' }}">
+  <view class="liveRemind"
+    style="bottom: {{downTime.d > 0 || downTime.m > 0 || downTime.s > 0 ? 'calc(-128vmin / 7.5)' : 'calc(-118vmin / 7.5)' }}">
     <image src="../../images/ling.png" alt=""></image>
     <view class="remindTxt">
       <text class="liveName">{{liveDetail.name}}</text>
@@ -44,16 +46,24 @@
 </view>
 <liveTop liveDetail="{{liveDetail}}" liveCount="{{liveCount}}" direction="{{liveDetail.direction}}"
   statusBarHeight="{{statusBarHeight}}" vliveRoom="1" bind:checkFollow="checkFollow" />
-<talkCommon id="talkCommon" talkList="{{talkList}}" specialList="{{specialList}}" close="{{close}}" vliveRoom="1" newMessage="{{newMessage}}"
-  statusBarHeight="{{statusBarHeight}}" bind:setNewmessagenum="setNewmessagenum" bind:animationCheck="animationCheck" />
+<talkCommon id="talkCommon" talkList="{{talkList}}" specialList="{{specialList}}" close="{{close}}" vliveRoom="1"
+  newMessage="{{newMessage}}" statusBarHeight="{{statusBarHeight}}" bind:setNewmessagenum="setNewmessagenum"
+  bind:animationCheck="animationCheck" />
 <navigator class="downloadeApp"
-  url="/pages/education/education?type=0&url=https://mp.weixin.qq.com/s/vSd8XBQDQkvqVX_kt_YyTQ" hover-class="none" wx:if="{{animation.showOne}}">
-  <image src="../../images/dowloafeApp.png" style="{{animation.showJoinclass ? 'animation: loseImg 0.5s;' : 'animation: showImg 0.5s;'}}" bindtap="downloadeApp"></image>
+  url="/pages/education/education?type=0&url=https://mp.weixin.qq.com/s/vSd8XBQDQkvqVX_kt_YyTQ" hover-class="none"
+  wx:if="{{animation.showOne}}">
+  <image src="../../images/dowloafeApp.png"
+    style="{{animation.showJoinclass ? 'animation: loseImg 0.5s;' : 'animation: showImg 0.5s;'}}"
+    bindtap="downloadeApp"></image>
 </navigator>
-<navigator class="joinclass"
-  url="/pages/education/education?type=0&url={{liveDetail.mpUrl}}" hover-class="none" wx:else>
-  <image src="../../images/joninClass.png" style="{{animation.showDoweload ? 'animation: loseImg 0.5s;' : 'animation: showImg 0.5s;'}}" bindtap="downloadeApp"></image>
+<navigator class="joinclass" url="/pages/education/education?type=0&url={{liveDetail.mpUrl}}" hover-class="none"
+  wx:else>
+  <image src="../../images/joninClass.png"
+    style="{{animation.showDoweload ? 'animation: loseImg 0.5s;' : 'animation: showImg 0.5s;'}}" bindtap="downloadeApp">
+  </image>
 </navigator>
+<image class="liveFloat" src="/images/liveRoomicon.png" wx:if="{{liveDetail.floatStatus}}" bindtap="clickFloat"></image>
+
 <liveBottom close="{{close}}" columnId="{{liveDetail.columnId}}" keyHeight="{{keyHeight}}" vliveRoom="1"
   bind:sendMsg="sendMsg" bind:praise="praise" bind:checkCaption="checkCaption" bind:clickHandler="clickHandler" />
 <like-fx count="{{praiseCount}}" wx:if="{{showCanvans}}"></like-fx>

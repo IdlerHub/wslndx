@@ -44,8 +44,8 @@
         "text": "云课堂"
       },
       {
-        "pagePath": "pages/timetableList/timetableList",
-        "text": "直播课"
+        "pagePath": "pages/studyCenter/studyCenter",
+        "text": "学习"
       },
       {
         "pagePath": "pages/post/post",
@@ -71,7 +71,13 @@
         "pages/allLesson/allLesson",
         "pages/schoolLesson/schoolLesson",
         "pages/allSchoollesson/allSchoollesson",
-        "pages/interested/interested"
+        "pages/interested/interested",
+        "pages/topTeacher/topTeacher",
+        "pages/tearcherDetail/tearcherDetail",
+        "pages/allSearch/allSearch",
+        "pages/chageLesson/chageLesson",
+        "pages/lessonSpecial/lessonSpecial",
+        "pages/schoolDetail/schoolDetail"
       ]
     },
     {
@@ -136,6 +142,15 @@
         "pages/voteInfo/voteInfo",
         "pages/voteSearch/voteSearch",
         "pages/voteRule/voteRule"
+      ]
+    },
+    {
+      "root": "page/study/",
+      "pages": [
+        "pages/livePage/livePage",
+        "pages/certificate/certificate",
+        "pages/history/history",
+        "pages/liveCertificate/liveCertificate"
       ]
     }
   ],

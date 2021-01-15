@@ -255,6 +255,15 @@ function follow(params) {
 
 
 /**
+ * @description: 取消直播教师关注
+ * @param {}
+ * @return:  promise
+ * **/
+function cancelFollow(params) {
+  return httpService.post("user/cancelFollow", params, null ,true);
+}
+
+/**
  * @description: 获取回播
  * @param {}
  * @return:  promise
@@ -280,6 +289,52 @@ function studyCenterspecial(params) {
  * **/
 function getSpecialLives(params) {
   return httpService.post("live/getSpecialLives", params, null ,true);
+}
+
+/**
+ * @description: 讲师课程（个人主页）
+ * @param { uid, pageSize, pageNum }
+ * @return:  promise
+ * **/
+function lecturerList(params) {
+  return httpService.post("live/lecturer/lecturerList", params, null ,true);
+}
+
+/**
+ * @description: 讲师课程（个人主页）
+ * @param { uid, pageSize, pageNum }
+ * @return:  promise
+ * **/
+function subjectList(params) {
+  return httpService.post("live/special/subject/list", params, null ,true);
+}
+
+/**
+ * @description: 高校直播列表
+ * @param { universityId, categoryId, type }
+ * @return:  promise
+ * **/
+function hotList(params) {
+  return httpService.post("live/hot/list", params, null ,true);
+}
+
+
+/**
+ * @description: 高校专栏列表
+ * @param { universityId, categoryId, type }
+ * @return:  promise
+ * **/
+function chargeList(params) {
+  return httpService.post("live/chargeList", params, null ,true);
+}
+
+/**
+ * @description: 高校直播列表（日期）
+ * @param { universityId, categoryId, type }
+ * @return:  promise
+ * **/
+function freeDate(params) {
+  return httpService.post("live/free/date", params, null ,true);
 }
 
 module.exports = {
@@ -313,5 +368,11 @@ module.exports = {
   follow,
   getLiveBackById,
   studyCenterspecial,
-  getSpecialLives
+  getSpecialLives,
+  lecturerList,
+  cancelFollow,
+  subjectList,
+  hotList,
+  chargeList,
+  freeDate
 };

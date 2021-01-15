@@ -1,0 +1,32 @@
+<!--page/live/pages/liveCertificate/liveCertificate.wxml-->
+<view class="canvansBox" wx:if="{{sharePath.length > 0}}">
+  <image src="../../images/certificate.png" class="certificate"></image>
+  <view class="nick"
+    style="{{detail.nick.length >= 5 ? detail.nick.length > 7 ? 'font-size: 20rpx;line-height: 53rpx;' : 'font-size: 30rpx;line-height: 53rpx;' : ''}}">
+    {{detail.nick}}</view>
+  <view class="name"
+    style="{{ info.columnName.length >= 9 && info.columnName.length < 16 ? 'font-size:25rpx;line-height: 53rpx;' : ''  }}">
+    {{info.columnName}}</view>
+  <view class="date">
+    <text>{{info.universityName}}</text>
+    <text>{{info.updatetime}}</text>
+  </view>
+  <view class="qrBox">
+    <image class="qrcode" src="{{qrUrl}}"></image>
+    <image class="icon" wx:if="{{qrUrl.length > 0}}" src="https://hwcdn.jinlingkeji.cn/images/pro/qrIcon.png"></image>
+  </view>
+</view>
+<view class="btnBox" bindtap="">
+  <view class="btn" bindtap="save">
+    <image src="../../images/saveImg.png"></image>
+    <text>保存图片</text>
+  </view>
+  <button hover-class="none" class="btn" open-type="share">
+    <image src="../../images/shareIcon.png"></image>
+    <text>分享好友</text>
+  </button>
+</view>
+<canvas class="canvas-code" canvas-id="myQrcode"
+  style="background:#fff;width: 180px;height: 180px;position: absolute; top: -9999rpx;" />
+<painter scaleRatio="2" style="position: absolute; top: -9999rpx;" palette="{{canvans}}" bind:imgOK="onImgOK" />
+<!-- <image src="{{sharePath}}" style="width: 690rpx;height: 1012rpx;"></image> -->

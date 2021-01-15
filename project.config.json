@@ -37,7 +37,7 @@
     ]
   },
   "setting": {
-    "urlCheck": false,
+    "urlCheck": true,
     "es6": true,
     "enhance": true,
     "postcss": true,
@@ -66,15 +66,14 @@
     "useIsolateContext": true,
     "useCompilerModule": true,
     "userConfirmedUseCompilerModuleSwitch": false,
-    "userConfirmedBundleSwitch": false,
     "packNpmManually": false,
     "packNpmRelationList": [],
-    "minifyWXSS": true
+    "useApiHostProcess": true
   },
   "compileType": "miniprogram",
   "libVersion": "2.12.2",
   "appid": "wx756d04f5d669cef0",
-  "projectname": "%E4%B8%AD%E5%9B%BD%E7%BD%91%E4%B8%8A%E8%80%81%E5%B9%B4%E5%A4%A7%E5%AD%A6",
+  "projectname": "wslndx",
   "isGameTourist": false,
   "simulatorType": "wechat",
   "simulatorPluginLibVersion": {},
@@ -168,8 +167,8 @@
           "scene": null
         },
         {
-          "name": "pages/login/login",
-          "pathName": "pages/login/login",
+          "name": "pages/user/user",
+          "pathName": "pages/user/user",
           "query": "url=www.baidu.com&type=123",
           "scene": 1069,
           "referrerInfo": {
@@ -177,9 +176,9 @@
           }
         },
         {
-          "name": "page/live/pages/liveDetail/liveDetail",
-          "pathName": "page/live/pages/liveDetail/liveDetail",
-          "query": "specialColumnId=378",
+          "name": "pages/education/education",
+          "pathName": "pages/education/education",
+          "query": "type=0&url=https://globalh5dev.jinlingkeji.cn/enrollmenth5/#/?lessonGroupId=12",
           "scene": null
         },
         {

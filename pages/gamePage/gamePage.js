@@ -19,8 +19,5 @@ Page({
   },
   onShow: function () {
 
-  },
-  onShareAppMessage: function () {
-
   }
 })

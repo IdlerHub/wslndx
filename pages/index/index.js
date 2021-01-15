@@ -20,9 +20,9 @@ Page({
       width: 92,
       height: 92
     }, {
-      url: '/pages/video/video',
-      icon: '/images/indexIcon/sortVideoicon.png',
-      name: '短视频',
+      url: '/page/index/pages/topTeacher/topTeacher',
+      icon: '/images/indexIcon/topTeacher.png',
+      name: '名师榜',
       width: 92,
       height: 92
     }, {
@@ -38,18 +38,17 @@ Page({
       width: 92,
       height: 92
     }, {
-      url: '/page/index/pages/hotActivity/hotActivity',
+      url: '/page/index/pages/lessonSpecial/lessonSpecial?id=3&name=智能技术',
       icon: '/images/indexIcon/technologyIcon.png',
       name: '智能技术',
       width: 64,
-      height: 58,
-      toEducation: 'https://mp.weixin.qq.com/s/uOzzdEDmKiJSyRtCtW33cg'
+      height: 64,
     }, {
-      url: '/page/index/pages/rankingList/rankingList',
-      icon: '/images/indexIcon/rankIcon.png',
-      name: '排行榜',
-      width: 65.19,
-      height: 63.16,
+      url: '/pages/video/video',
+      icon: '/images/indexIcon/sortVideoicon.png',
+      name: '短视频',
+      width: 64,
+      height: 62.49,
     }, {
       url: 'pages/studyCard/studyCard?type=home',
       icon: '/images/indexIcon/vipIcon.png',
@@ -356,7 +355,7 @@ Page({
     if (item.jumpType == 1) {
       /* 外链 */
       wx.navigateTo({
-        url: `../education/education?type=0&url=${item.clickurl}&login=${item.is_login}`
+        url: `../education/education?type=0&url=${item.clickurl}&login=${item.isLogin}`
       })
       wx.uma.trackEvent('index_bannerClick', {
         bannerTencent: item.title
@@ -364,7 +363,7 @@ Page({
     } else if (item.jumpType == 2) {
       /* 视频 */
       wx.navigateTo({
-        url: `../../page/index/pages/detail/detail?id=${item.video_id}&name=${item.title}`
+        url: `../../page/index/pages/detail/detail?id=${item.videoId}&name=${item.title}`
       })
       wx.uma.trackEvent('index_bannerClick', {
         bannerVideo: item.title
@@ -498,7 +497,7 @@ Page({
     app.liveData.getLiveBySpecialColumnId({
       specialColumnId: item.columnId
     }).then(res => {
-      if(this.data.$state.userInfo.id) {
+      if(this.data.$state.userInfo.id && item.status != 2) {
         wx.navigateTo({
           url: `/page/live/pages/vliveRoom/vliveRoom?roomId=${item.liveId}`,
         })

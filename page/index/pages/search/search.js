@@ -1,284 +1,247 @@
 // pages/search/search.js
 const app = getApp();
-const plugin = requirePlugin("WechatSI");
-// 获取**全局唯一**的语音识别管理器**recordRecoManager**
-const manager = plugin.getRecordRecognitionManager();
-
-// const innerAudioContext = wx.createInnerAudioContext();
 Page({
   data: {
-    voiceImg: "https://hwcdn.jinlingkeji.cn/images/pro/voicebtn2.png",
-    voiceActon: false,
-    voiceheight: "",
-    focus: true,
+    isSearch: 0,
+    focus: false,
     text: "",
-    lessList: [],
-    showqst: false,
-    showvioce: true
+    lessonList: [],
+    liveList: [],
+    searchInfo: {
+      historyList: [],
+      hostList: []
+    },
+    isEnd: {
+      live: 0,
+      lesson: 0
+    },
+    current: 0
   },
   pagename: "课程搜索",
   isLogin: 1,
-  onLoad: function(options) {
-    this.param = {
-      page_size: 10
-    };
-    this.voiceheight = 0;
-    wx.onKeyboardHeightChange(res => {
-      let systems = wx.getSystemInfoSync();
-      this.voiceheight == 0 ? (this.voiceheight = res.height) : "";
-      this.voiceheight != 0
-        ? res.height == 0
-          ? ""
-          : this.setData({
-              voiceheight: this.voiceheight + systems.screenHeight * 0.05,
-              showvioce: true,
-              showqst: false
-            })
-        : "";
-    });
+  onLoad: function (options) {
+    let that = this
+    wx.getStorage({
+      key: 'seachHistory',
+      success(res) {
+        that.setData({
+          'searchInfo.historyList': res.data
+        })
+      }
+    })
     wx.uma.trackEvent('index_btnClick', {
       btnName: '课程搜索'
     });
   },
   onShow() {
-    this.getRecordAuth();
-    this.initRecord();
+    this.getHotSearchLabel()
   },
-  onReachBottom: function() {
+  onReachBottom: function () {
     this.lesssearch(true);
   },
-  onShareAppMessage: function() {},
-  detailTap: function(e) {
-    let title = e.currentTarget.dataset.item.title
-      .replace(
-        '<p style="width:410rpx;display: block;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">',
-        ""
-      )
-      .replace("</p>", "")
-      .replace('<span style="color:#DF2020">', "")
-      .replace("</span>", "");
-    wx.navigateTo({
-      url: `../detail/detail?id=${e.currentTarget.dataset.item.id}&name=${title}`
-    });
+  getHotSearchLabel() {
+    app.lessonNew.getHotSearchLabel().then(res => {
+      this.setData({
+        'searchInfo.hostList': res.dataList
+      })
+    })
+  },
+  detailTap: function (e) {
+    let item = e.currentTarget.dataset.item,
+      type = e.currentTarget.dataset.type
+    if (type == 1) {
+      if (!this.data.$state.userInfo.id) {
+        wx.navigateTo({
+          url: `/page/live/pages/tableDetail/tableDetail?specialColumnId=${item.id}`,
+        })
+        return
+      }
+      app.liveData.getLiveBySpecialColumnId({
+        specialColumnId: item.id
+      }).then(res => {
+        !res.data.isAddSubscribe ? wx.navigateTo({
+          url: `/page/live/pages/tableDetail/tableDetail?specialColumnId=${item.id}`,
+        }) : wx.navigateTo({
+          url: `/page/live/pages/liveDetail/liveDetail?specialColumnId=${item.id}`,
+        })
+      })
+    } else {
+      if (!this.data.$state.userInfo.id) {
+        getApp().changeLoginstatus()
+        getApp().checknextTap(e)
+        return
+      }
+      wx.navigateTo({
+        url: `../detail/detail?id=${e.currentTarget.dataset.item.id}`
+      });
+    }
     //用于数据统计
     wx.uma.trackEvent("searchLessons", {
       lessonsName: e.currentTarget.dataset.item.name
     });
   },
-  // 权限询问
-  authrecord() {
-    this.setData({
-      focus: false
-    });
-    if (this.data.$state.authRecordfail) {
-      wx.showModal({
-        content:
-          "您已拒绝授权使用麦克风录音权限，请打开获取麦克风授权！否则无法使用小程序部分功能",
-        confirmText: "去授权",
-        confirmColor: "#df2020",
-        success: res => {
-          if (res.confirm) {
-            wx.openSetting({});
-          }
-        }
-      });
-    }
-    if (!this.data.$state.authRecord) {
-      wx.authorize({
-        scope: "scope.record",
-        success() {
-          // 用户已经同意小程序使用录音功能，后续调用 wx.startRecord 接口不会弹窗询问
-          app.store.setState({
-            authRecord: true
-          });
-        },
-        fail() {
-          app.store.setState({
-            authRecordfail: true
-          });
-        }
-      });
-    }
-  },
-  getRecordAuth: function() {
-    wx.getSetting({
-      success(res) {
-        let record = res.authSetting["scope.record"];
-        app.store.setState({
-          authRecord: record || false
-        });
-      },
-      fail(res) {}
-    });
-  },
-  /**
-   * 初始化语音识别回调
-   */
-  initRecord: function() {
-    //有新的识别内容返回，则会调用此事件
-    manager.onRecognize = res => {
-      this.setData({
-        newtxt: res.result
-      });
-    };
-
-    // 识别结束事件
-    manager.onStop = res => {
-      // 取出录音文件识别出来的文字信息
-      let text =
-        this.data.text + res.result.replace("。", "").replace("，", "");
-      // 获取音频文件临时地址
-      let duration = res.duration;
-      if (text == "") {
-        this.showRecordEmptyTip();
-        return;
-      }
-
-      if (res.duration < 1000) {
-        wx.showToast({
-          title: "录音时间过短",
-          icon: "none",
-          duration: 2000
-        });
-        // util.showTips('录音时间过短')
-        return;
-      }
-      this.setData({
-        text
-      });
-      this.param = {
-        page_size: 10
-      };
-      this.lesssearch();
-    };
-    // 识别错误事件
-    manager.onError = res => {
-      this.setData({
-        recording: false,
-        bottomButtonDisabled: false
-      });
-    };
-  },
-  /**
-   * 识别内容为空时的反馈
-   */
-  showRecordEmptyTip: function() {
-    this.setData({
-      recording: false
-      // bottomButtonDisabled: false,
-    });
-    wx.showToast({
-      title: "未识别到语音",
-      icon: "none",
-      image: "../../images/no_voice.png",
-      duration: 1500,
-      success: function(res) {},
-      fail: function(res) {}
-    });
-  },
   backhome() {
     wx.navigateBack();
-  },
-  touchstart(e) {
-    manager.start({
-      lang: "zh_CN"
-    });
-    this.setData({
-      voiceImg: "https://hwcdn.jinlingkeji.cn/images/pro/voicebtnr.png",
-      voiceActon: true
-    });
-  },
-  touchend() {
-    manager.stop();
-    this.setData({
-      voiceImg: "https://hwcdn.jinlingkeji.cn/images/pro/voicebtn2.png",
-      voiceActon: false
-    });
-  },
-  keychange(e) {
-    // let systems = wx.getSystemInfoSync()
-    // wx.onKeyboardHeightChange(res => {
-    //   res.height != 0 ? this.setData({
-    //     voiceheight: res.heightt + (systems.screenHeight * 0.05)
-    //   }) : ''
-    // })
   },
   txtchange(e) {
     this.setData({
       text: e.detail.value
     });
-    this.param = {
-      page_size: 10
-    };
-    e.detail.value.length < 1
-      ? this.setData({
-          lessList: [],
-          showqst: false,
-          showvioce: true
-        })
-      : this.lesssearch();
+    e.detail.value.length < 1 ?
+      this.setData({
+        lessonList: [],
+        liveList: [],
+        isSearch: 0,
+        current: 0
+      }) :
+      ''
   },
   cleartxt() {
     this.setData({
       text: "",
       focus: false,
-      lessList: []
-    });
-    this.setData({
-      focus: true
+      isSearch: 0,
+      lessonList: [],
+      liveList: [],
+      current: 0
     });
   },
-  earchlesss() {
+  searchlesss(e) {
     this.param = {
-      page_size: 10
+      page_size: 10,
+      type: 0,
+      pageNum: 1
     };
-    this.lesssearch();
-  },
-  lesssearch(list) {
-    this.param["keyword"] = this.data.text;
-    let lesslist = [];
-    list ? (lesslist = this.data.lessList) : "";
-    app.classroom.lessSearch(this.param).then(res => {
-      if (!res.data.data) {
-        this.setData({
-          showqst: true,
-          showvioce: false,
-          voiceActon: false
-        });
-        return;
-      }
-      let lessList = res.data.data;
-      (this.param["scroll_id"] = res.data.scroll_id),
-        lessList.forEach(item => {
-          item.name = item.title
-            .replace(/<highlight>/g, "")
-            .replace(/<\/highlight>/g, "");
-          item.title = `<p style="width:410rpx;display: block;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">${item.title
-            .replace(/<highlight>/g, '<span style="color:#DF2020">')
-            .replace(/<\/highlight>/g, "</span>")}</p>`;
-          item.subtitle = `<p style="width:410rpx;display: block;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">${item.subtitle
-            .replace(/<highlight>/g, '<span style="color:#DF2020">')
-            .replace(/<\/highlight>/g, "</span>")}</p>`;
-          item.bw = app.util.tow(item.browse);
-        });
-      lesslist.push(...lessList);
+    this.liveParams = {
+      page_size: 10,
+      type: 1,
+      pageNum: 1
+    };
+    this.lessonParams = {
+      page_size: 10,
+      type: 2,
+      pageNum: 1
+    }
+    if (e.currentTarget.dataset.text) {
       this.setData({
-        showvioce: false,
-        lessList: lesslist,
-        voiceActon: false
+        text: e.currentTarget.dataset.text,
+        focus: true
+      }, () => {
+        this.lesssearch();
+      })
+    } else {
+      this.lesssearch();
+    }
+  },
+  lesssearch() {
+    this.param["keyword"] = this.data.text;
+    let historyList = [...this.data.searchInfo.historyList]
+    historyList.forEach((item, index) => {
+      item == this.data.text ? historyList.splice(index, 1) : ''
+    })
+    historyList.unshift(this.data.text)
+    this.setData({
+      'searchInfo.historyList': historyList
+    }, () => {
+      wx.setStorage({
+        key: "seachHistory",
+        data: this.data.searchInfo.historyList
+      })
+    })
+    app.lessonNew.searchLessonAndColumn(this.param).then(res => {
+      let liveList = res.data.columnInfo.list,
+        lessonList = res.data.lessonInfo.list
+      liveList.forEach(item => {
+        item.title = `<p style="width:410rpx;display: block;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">${item.title
+            .replace(this.data.text, '<span style="color:#DF2020">' + this.data.text
+             + "</span>" )}</p>`;
+        item.bw = app.util.tow(item.browse);
+      });
+      lessonList.forEach(item => {
+        item.title = `<p style="width:410rpx;display: block;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">${item.title
+            .replace(this.data.text, '<span style="color:#DF2020">' + this.data.text
+             + "</span>" )}</p>`;
+        item.bw = app.util.tow(item.browse);
+      });
+      this.setData({
+        liveList,
+        lessonList,
+        isSearch: 1,
+        'isEnd.live': liveList.length < 10 ? 1 : 0,
+        'isEnd.lesson': lessonList.length < 10 ? 1 : 0,
+      });
+    });
+    app.lessonNew.addSearchLabel({
+      type: 2,
+      keyword: this.data.text
+    })
+  },
+  liveTolower() {
+    if (this.data.isEnd.live) return
+    this.liveParams.pageNum += 1
+    app.lessonNew.searchLessonAndColumn(this.liveParams).then(res => {
+      let liveList = this.data.liveList
+      res.data.columnInfo.list.forEach(item => {
+        item.title = `<p style="width:410rpx;display: block;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">${item.title
+            .replace(this.data.text, '<span style="color:#DF2020">' + this.data.text
+             + "</span>" )}</p>`;
+        item.bw = app.util.tow(item.browse);
+      });
+      liveList.push(...res.data.columnInfo.list)
+      this.setData({
+        liveList,
+        'isEnd.live': res.data.columnInfo.list < 10 ? 1 : 0,
+      });
+    });
+  },
+  lessonTolower() {
+    if (this.data.isEnd.lesson) return
+    this.lessonParams.pageNum += 1
+    app.lessonNew.searchLessonAndColumn(this.lessonParams).then(res => {
+      let lessonList = this.data.lessonList
+      res.data.lessonInfo.list.forEach(item => {
+        item.title = `<p style="width:410rpx;display: block;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">${item.title
+            .replace(this.data.text, '<span style="color:#DF2020">' + this.data.text
+             + "</span>" )}</p>`;
+        item.bw = app.util.tow(item.browse);
+      });
+      lessonList.push(...res.data.lessonInfo.list)
+      this.setData({
+        lessonList,
+        'isEnd.live': res.data.columnInfo.list < 10 ? 1 : 0,
       });
     });
   },
   // 课程完成状态
   doneless(id) {
-    this.data.lessList.forEach(item => {
+    this.data.lessonList.forEach(item => {
       item.id == id ? (item.is_finish = 1) : "";
     });
     this.setData({
-      lessList: this.data.lessList
+      lessonList: this.data.lessonList
     });
   },
   checknextTap(e) {
     app.checknextTap(e)
+  },
+  clearHistory() {
+    this.setData({
+      'searchInfo.historyList': []
+    }, () => {
+      wx.setStorage({
+        key: "seachHistory",
+        data: this.data.searchInfo.historyList
+      })
+    })
+  },
+  checkTab(e) {
+    this.setData({
+      current: e.currentTarget.dataset.index
+    })
+  },
+  bindanimationfinish(e) {
+    this.setData({
+      current: e.detail.current
+    })
   }
 });

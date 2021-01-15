@@ -1,0 +1,31 @@
+<!--page/study/pages/certificate/certificate.wxml-->
+<view class="topBox">
+  <image src="/images/studyIcon/certificateTop.png" class="certificateTop"></image>
+  <navigator class="back" style="top: {{top > 30 ? top : 20}}px;" open-type="navigateBack" hover-class="none">
+    <image src="/images/back.png"></image>
+  </navigator>
+  <view class="box" style="top: {{ top < 30 ? '50' : 20 + top }}px;">
+    <image src="{{$state.userInfo.avatar}}" class="avatar"></image>
+    <text>{{$state.userInfo.username || $state.userInfo.nickname}}</text>
+    <text>{{ totle > 0 ? '获得了 '+ totle +' 张证书' : '未获得证书' }}</text>
+  </view>
+</view>
+<view class="certificateBox">
+    <view wx:if="{{certificatesList[0]}}">
+      <view class="ListItem" wx:for="{{certificatesList}}" wx:key="index">
+        <view class="times">{{item.month}}</view>
+        <view class="itemBox">
+          <navigator hover-class="none" url="/page/study/pages/liveCertificate/liveCertificate?id={{certificate.lessonId}}" class="item" wx:for="{{item.certificates}}" wx:for-item="certificate" wx:for-index="i" wx:key="i">
+            <image src="{{ certificate.qrImg || '../../images/certificateBg.png'}}"></image>
+            <text>{{certificate.columnName}}</text>
+            <text>{{certificate.updatetime}}学完</text>
+          </navigator>
+        </view>
+      </view>
+    </view>
+    <view wx:else class="qst">
+      <image src="../../images/certificateQst.png"></image>
+      <text decode>您还未获得证书
+        加油学习吧</text>
+    </view>
+</view>

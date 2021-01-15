@@ -63,6 +63,9 @@ Page({
     setTimeout(() => {
       clearInterval(clickHandler)
     }, 2000)
+    wx.setKeepScreenOn({
+      keepScreenOn: true
+    })
   },
   onShow: function () {
     this.setData({
@@ -100,6 +103,9 @@ Page({
     timsdk.timLoginout(this)
     this.liveInterval ? [clearInterval(this.liveInterval), this.liveInterval = null] : ''
     wx.offKeyboardHeightChange()
+    wx.setKeepScreenOn({
+      keepScreenOn: false
+    })
   },
   onShareAppMessage: function () {
     this.setCustommessag('MD5_AUDIENCE_SHARE_LIVE_ROOM')
@@ -326,5 +332,23 @@ Page({
     this.setData({
       specialList: this.data.specialList
     })
+  },
+  clickFloat() {
+    let params = JSON.parse(this.data.liveDetail.floatJumpParam)
+    if (this.data.liveDetail.floatJumpType == 1) {
+      wx.navigateTo({
+        url: `/pages/education/education?url=${params.url}&type=0&login=1`,
+      })
+    } else {
+      if (params.lesson_type == 1) {
+        wx.navigateTo({
+          url: '/page/live/pages/liveDetail/liveDetail?specialColumnId=' + params.lesson_id,
+        })
+      } else {
+        wx.navigateTo({
+          url: '/page/index/pages/chageLesson/chageLesson?id=' + params.lesson_id,
+        })
+      }
+    }
   }
 })

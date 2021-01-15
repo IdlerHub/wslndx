@@ -4,9 +4,9 @@
       <text  class="{{ path === 'index' ? 'active name' : 'name'}}" >云课堂</text>
       <view class="resRow" wx:if="{{path === 'index'}}"></view>
     </view>
-    <view bindtap="toVideo" data-type="navBar" data-detail="/pages/timetableList/timetableList">
+    <view bindtap="toVideo" data-type="navBar" data-detail="/pages/studyCenter/studyCenter">
       <view class="item">
-        <text class="{{ path === 'video' ? 'active name' : 'name'}}">直播课</text>
+        <text class="{{ path === 'video' ? 'active name' : 'name'}}">学习</text>
       <view class="resRow" wx:if="{{path === 'video'}}"></view>
       </view>
     </view>

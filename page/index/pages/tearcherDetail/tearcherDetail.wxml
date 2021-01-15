@@ -1,0 +1,89 @@
+<!--page/index/pages/tearcherDetail/tearcherDetail.wxml-->
+<wxs module="fn">
+  module.exports = {
+  num: function(num) {
+  return num > 10000 ? (num / 10000).toFixed(1) + '万' : num
+  }
+  }
+</wxs>
+<template name="listItem">
+  <view catchtap="detailTap" wx:for="{{ list }}" wx:key="index" class="item" data-item="{{ item }}">
+    <view class="left">
+      <image class="poster" mode="aspectFill" src="{{ item.image || item.indexCover}}"></image>
+      <view class="chargeBox" wx:if="{{!item.isCharge}}">免费</view>
+      <view class="chargeBox charge" wx:else>付费</view>
+    </view>
+    <view class="right">
+      <text class="line name">{{item.name}}</text>
+      <view class="tags" wx:if="{{item.tags[0]}}">
+        <text wx:for="{{item.tags}}" wx:key="index" wx:for-item="tag">{{tag.tagName}}</text>
+      </view>
+      <view class="tags" wx:else>
+        <text>{{item.universityName}}</text>
+      </view>
+      <text class="line info">
+        <text class="dramaNum">{{item.liveCount}}课时</text>
+        <text>|</text>
+        <text class="playNum">{{ fn.num(item.studyNum) }}人在学</text>
+      </text>
+    </view>
+  </view>
+</template>
+<navigationBar id="navigationBar" wx:if="{{scroll > 50}}" title="{{info.nickname}}" back="{{ true }}"
+  isIndex="{{false}}"></navigationBar>
+<view class="tabBox" wx:if="{{showTab}}" style="position: fixed;top: {{top}}px">
+  <view class="tab">
+    <text>课程 {{lessonList.length}}</text>
+    <text></text>
+  </view>
+</view>
+<scroll-view class="scrollView" scroll-y bindscroll="bindscroll" bindscrolltolower="bindscrolltolower"
+  bindscrolltoupper="bindscrolltoupper">
+  <view class="topBox" style="padding-top: {{ statusBarHeight + 10 }}px;">
+    <image src="/images/back.png" class="back" bindtap="back"></image>
+    <view class="msgBox">
+      <view class="imgBox">
+        <image src="{{ info.avatar || '../../images/avatarNone.png'}}"></image>
+        <image src="../../images/teachImg.png" class="teachImg"></image>
+      </view>
+      <view class="nickBox">
+        <text>{{ info.lecturerName || info.nickname }}</text>
+        <text>{{ info.universityName }}</text>
+      </view>
+      <slotSign class="iconBox" catchtap="checknextTap" data-type="attention"
+        wx:if="{{!info.isFollowing && !info.isFollower && info.id != $state.userInfo.id}}">
+        <view class="btn" bindtap="checkAttention">关注</view>
+      </slotSign>
+      <view wx:elif="{{(info.isFollowing || info.isFollower) && info.id != $state.userInfo.id}}" class="btn btning"
+        bindtap="checkAttention">{{ info.isFollower && info.isFollowing ? '相互关注' : '已关注' }}</view>
+    </view>
+    <view class="inro">
+      {{ info.bio }}
+    </view>
+    <view class="bottom">
+      <text class="center"></text>
+      <view class="numBox">
+        <text>关注</text>
+        <text>{{ info.numberOfConcerns }}</text>
+      </view>
+      <view class="numBox">
+        <text>粉丝</text>
+        <text>{{ info.numberOfFans }}</text>
+      </view>
+    </view>
+  </view>
+  <view class="tabBox" id="tabBox">
+    <view class="tab">
+      <text>课程 {{lessonList.length}}</text>
+      <text></text>
+    </view>
+  </view>
+  <template is="listItem" data="{{list: lessonList}}"></template>
+  <view class="qstBox" wx:if="{{!lessonList[0]}}">
+    <image src="/images/noLesson.png"></image>
+    <text>暂无课程</text>
+  </view>
+  <view style="height: 60rpx;"></view>
+</scroll-view>
+
+<loginBox wx:if="{{$state.showLogin}}" />

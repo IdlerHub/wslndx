@@ -1,7 +1,7 @@
 /*
  * @Date: 2019-06-11 14:24:48
  * @LastEditors: wjl
- * @LastEditTime: 2020-08-11 18:00:20
+ * @LastEditTime: 2021-01-14 17:26:27
  */
 import Store from "wxministore";
 let env = "test";
@@ -32,29 +32,28 @@ let socetBase = {
   dev: "lndxdev.jinlingkeji.cn:8182",
   test: "lndxtest.jinlingkeji.cn:8182",
   pro: "api.jinlingkeji.cn:8182",
-  testpro: "lndxpre.jinlingkeji.cn:8182"
-}
+  testpro: "lndxpre.jinlingkeji.cn:8182",
+};
 /* IMSDKAPPID */
 let sdkAppid = {
   dev: "1400346137",
   test: "1400390948",
   pro: "1400358896",
-  testpro: "1400358896"
-}
+  testpro: "1400358896",
+};
 /* 过渡接口域名 */
 let API_URLBASECHECK = {
   dev: `https://smallgwdev.jinlingkeji.cn/mini/`,
   test: `https://smallgwtest.jinlingkeji.cn/mini/`,
   pro: `https://smallgwpro.jinlingkeji.cn/mini/`,
   testpro: `https://smallgwpro.jinlingkeji.cn/mini/`,
-}
+};
 
 Store.prototype.process = env;
 Store.prototype.API_URL = API_URLBASE[env];
 Store.prototype.API_URLBASECHECK = API_URLBASECHECK[env];
 Store.prototype.mpVersion = mpVersion;
 Store.prototype.socket_host = socetBase[env];
-
 
 let store = new Store({
   state: {
@@ -92,7 +91,7 @@ let store = new Store({
     userIndex: {},
     messageReceived: 0,
     showLogin: false,
-    nextTapDetial: {}
+    nextTapDetial: {},
   },
   pageLisener: {
     onLoad(opts) {
@@ -133,11 +132,13 @@ let store = new Store({
     },
     onUnload() {
       this.pageName == "首页" ? clearInterval(this.timer) : "";
-      if(!this.data.$state.userInfo.id && this.data.$state.showLogin) getApp().changeLoginstatus()
+      if (!this.data.$state.userInfo.id && this.data.$state.showLogin)
+        getApp().changeLoginstatus();
     },
   },
   methods: {
     menuAppShare() {
+      console.log();
       wx.uma.trackEvent("totalShare", {
         shareName: "tab三个点",
       });
@@ -148,8 +149,7 @@ let store = new Store({
           "/pages/index/index?uid=" +
           this.data.$state.userInfo.id +
           "&type=invite",
-        imageUrl:
-          this.data.$state.shareImgurl || "../../images/sharemessage.jpg",
+        imageUrl: this.data.$state.shareImgurl || "/images/sharemessage.jpg",
       };
     },
     getPlayerState() {

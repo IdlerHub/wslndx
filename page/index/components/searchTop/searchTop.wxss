@@ -1,0 +1,59 @@
+/* page/index/components/searchTop/searchTop.wxss */
+.serchBox {
+  padding: 30rpx;
+  display: flex;
+  background: #fff;
+  position: sticky;
+  top: 0;
+  z-index: 8;
+}
+
+.serchBox .searchLeft {
+  flex: 1;
+  box-sizing: border-box;
+  padding-left: 30rpx;
+  padding-right: 70rpx;
+  display: flex;
+  align-items: center;
+  background: #F2F3F7;
+  border-radius: 10rpx 0 0 10rpx;
+  position: relative;
+}
+
+.serchBox text {
+  font-size: 36rpx;
+  font-weight: 400;
+  color: #999999;
+  margin-left: 20rpx;
+}
+
+.serchBox input {
+  flex: 1;
+  margin-left: 20rpx;
+}
+
+.serchBox .searchLeft image:nth-child(1) {
+  width: 40rpx;
+  height: 40rpx;
+}
+
+.serchBox .searchLeft image:nth-child(3) {
+  width: 40rpx;
+  height: 40rpx;
+  position: absolute;
+  top: 50%;
+  right: 20rpx;
+  transform: translateY(-50%);
+}
+
+.serchBox .searchRight {
+  width: 136rpx;
+  height: 80rpx;
+  background: #F2323A;
+  text-align: center;
+  line-height: 80rpx;
+  font-size: 36rpx;
+  font-weight: 400;
+  color: #FFFFFF;
+  border-radius: 0px 10rpx 10rpx 0px;
+}

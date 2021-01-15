@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "liveItem": "/components/liveItem/liveItem"
+  },
+  "navigationBarTitleText": "直播课程"
+}

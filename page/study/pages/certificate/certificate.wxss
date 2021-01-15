@@ -1,0 +1,133 @@
+/* page/study/pages/certificate/certificate.wxss */
+.topBox {
+  height: 510rpx;
+  position: relative;
+}
+
+.topBox .certificateTop {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+}
+
+.topBox .back {
+  width: 38rpx;
+  height: 38rpx;
+  position: absolute;
+  margin: 30rpx;
+}
+
+.topBox .back image {
+  width: 100%;
+  height: 100%;
+}
+
+.topBox .box {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.topBox .box .avatar {
+  width: 134rpx;
+  height: 134rpx;
+  border: 4rpx solid #fff;
+  border-radius: 50%;
+}
+
+.topBox .box text:nth-child(2) {
+  font-size: 42rpx;
+  font-weight: 500;
+  color: #FFFFFF;
+  margin-top: 30rpx;
+  margin-bottom: 10rpx;
+}
+
+.topBox .box text:nth-child(3) {
+  font-size: 36rpx;
+  font-weight: 400;
+  color: #FFFFFF;
+}
+
+.certificateBox {
+  min-height: 200rpx;
+  position: relative;
+  top: -53rpx;
+  border-radius: 30rpx 30rpx 0px 0px;
+  background: #fff;
+  overflow: hidden;
+}
+
+.certificateBox .qst {
+  margin-top: 150rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.certificateBox .qst image {
+  width: 427rpx;
+  height: 280rpx;
+}
+
+.certificateBox .qst text {
+  font-size: 36rpx;
+  font-weight: 400;
+  color: #999999;
+  line-height: 50rpx;
+  text-align: center;
+}
+
+.ListItem {
+  padding: 0 30rpx;
+}
+
+.ListItem .times {
+  padding: 30rpx 0;
+  border-bottom: 1rpx solid #E9E9E9;
+  font-size: 36rpx;
+  font-weight: 500;
+  color: #333333;
+  margin-bottom: 30rpx;
+}
+
+.ListItem .itemBox {
+  padding: 0 20rpx;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.ListItem .itemBox .item {
+  width: 310rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 50rpx;
+}
+
+.ListItem .itemBox .item image {
+  width: 190rpx;
+  height: 300rpx;
+}
+
+.ListItem .itemBox .item text:nth-child(2) {
+  margin-top: 30rpx;
+  margin-bottom: 10rpx;
+  font-size: 28rpx;
+  font-weight: 400;
+  color: #333333;
+  line-height: 40rpx;
+  text-align: center;
+}
+
+.ListItem .itemBox .item text:nth-child(3) {
+  font-size: 28rpx;
+  font-weight: 400;
+  color: #999999;
+}

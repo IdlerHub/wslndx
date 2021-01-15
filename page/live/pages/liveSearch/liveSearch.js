@@ -102,5 +102,4 @@ Page({
     this.toLiveSearch(this.data.lastId);
   },
   onPullDownRefresh: function () {},
-  onShareAppMessage: function () {},
 });

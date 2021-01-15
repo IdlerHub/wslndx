@@ -1,7 +1,7 @@
 <view class="container">
   <!-- wx:if="{{!showplece && !detail.school_dialog}}" -->
   <video id="myVideo" src="{{ cur.url }}" controls page-gesture enable-play-gesture bindended="ended" bindplay="played"
-    bindpause="videoPause" wx:if="{{!showplece || !detail.school_dialog}}">
+    bindpause="videoPause" wx:if="{{!showplece || !detail.schoolDialog}}" binderror="binderror">
     <cover-view wx:if="{{ vistor && tip }}" class="vistor-head">
       <cover-view>点击“</cover-view>
       <cover-image src="/images/xiaochengxu.png" class="iconfont"></cover-image>
@@ -26,16 +26,16 @@
     <view class="top">
       <view>
         <text class="name line">{{ detail.title }}</text>
-        <view class="line actor" wx:if="{{ detail.teacher_id == 0 }}">
-          共{{ detail.lesson_count }}讲
+        <view class="line actor">
+          共{{ detail.lessonCount }}讲
           <text>.</text>
           {{ detail.subtitle }}
         </view>
-        <view class="line actor" wx:else>
-          共{{ detail.lesson_count }}讲
+        <!-- <view class="line actor" wx:else>
+          共{{ detail.lessonCount }}讲
           <text>.</text>
           {{ detail.teacher.name }}-{{ detail.teacher.honor }}
-        </view>
+        </view> -->
       </view>
       <view class="right" style="padding-top: {{detail.progress < 100 ? '' : 0}};">
         <view class="progress" wx:if="{{ detail.progress < 100 }}">
@@ -309,7 +309,7 @@
 <integralAnimation integral="{{integral}}" integralContent="{{integralContent}}" wx:if="{{showintegral}}">
 </integralAnimation>
 <!-- 学校选择 -->
-<view class="chancesh" wx:if="{{showplece && detail.school_dialog}}">
+<view class="chancesh" wx:if="{{showplece && detail.schoolDialog}}">
   <view class="chanBox">
     <view class="top">
       请选择您的学校
