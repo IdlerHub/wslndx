@@ -206,6 +206,16 @@ App({
           url: "/pages/education/education?type=lottery&login=1",
         });
       }
+      if (opts.path == "pages/education/education" && !this.store.$state.userInfo.id) {
+        setTimeout(() => {
+          this.changeLoginstatus();
+          let params = {
+            type: "education",
+            detail: JSON.stringify(this.globalData.query),
+          };
+          this.checknextTap(params, 1);
+        }, 1500);
+      }
     }
     if (this.store.$state.userInfo.id) {
       setTimeout(() => {
@@ -223,16 +233,6 @@ App({
       wx.reLaunch({
         url: "/pages/index/index",
       });
-      if (opts.path == "pages/education/education") {
-        setTimeout(() => {
-          this.changeLoginstatus();
-          let params = {
-            type: "education",
-            detail: JSON.stringify(this.globalData.query),
-          };
-          this.checknextTap(params, 1);
-        }, 1500);
-      }
     }
   },
   onHide() {
@@ -261,12 +261,27 @@ App({
         if (!msg.data.userInfo) {
           /* 新用户未注册 */
           this.globalData.loginDetail = msg.data;
+          if (this.globalData.path == "/pages/education/education") {
+            setTimeout(() => {
+              this.changeLoginstatus();
+              let params = {
+                type: "education",
+                detail: JSON.stringify(this.globalData.query),
+              };
+              this.checknextTap(params, 1);
+            }, 1500);
+          }
         } else {
           /* 旧用户 */
           wx.setStorageSync("token", msg.data.token);
           wx.setStorageSync("uid", msg.data.uid);
           wx.setStorageSync("authKey", msg.data.authKey);
           e ? this.updateBase(e) : this.setUser(msg.data.userInfo);
+          if (this.globalData.path == "/pages/education/education") {
+            wx.navigateTo({
+              url: `/pages/education/education?url=${this.globalData.query.url}&type=0&login=1`,
+            })
+          }
         }
       });
   },
