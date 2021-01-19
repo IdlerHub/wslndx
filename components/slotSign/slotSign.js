@@ -8,6 +8,7 @@ Component({
   },
   methods: {
     changeLoginstatus() {
+      if(this.data.$state.userInfo.id) return
       getApp().changeLoginstatus()
     }
   }
