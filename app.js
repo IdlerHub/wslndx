@@ -137,7 +137,7 @@ App({
     let userInfo = wx.getStorageSync("userInfo") || {};
     let mpVersion = wx.getStorageSync("mpVersion");
     /* storage中信息缺失,重新登录 */
-    if (!userInfo.mobile || mpVersion != this.store.mpVersion) {
+    if (!userInfo.mobile || !userInfo.openid || mpVersion != this.store.mpVersion) {
       await this.wxLogin();
       wx.setStorageSync("mpVersion", this.store.mpVersion);
     }
