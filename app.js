@@ -448,6 +448,16 @@ App({
                 if (res.confirm) {
                   // 新的版本已经下载好，调用 applyUpdate 应用新版本并重启
                   updateManager.applyUpdate();
+                }else {
+                  wx.showModal({
+                    title:'温馨提示',
+                    content:'为了保障您的信息安全, 请点击进行系统更新',
+                    showCancel:false,//隐藏取消按钮
+                    confirmText:"确定更新",//只保留确定更新按钮
+                    success: function(res) {
+                      updateManager.applyUpdate();
+                    }
+                  })
                 }
               },
             });

@@ -1,6 +1,7 @@
 //index.js
 
 const Tutor = require("../../data/Tutor")
+import lottie from 'lottie-miniprogram'
 
 //获取应用实例
 const app = getApp()
@@ -58,11 +59,12 @@ Page({
       toMiniProgram: 'wx8dc9e7f55fe1f3ff'
     }, {
       url: '/page/index/pages/rankingList/rankingList',
-      icon: '/images/indexIcon/appicon.png',
-      name: '下载APP',
-      width: 86,
-      height: 76,
-      toEducation: 'https://mp.weixin.qq.com/s/vSd8XBQDQkvqVX_kt_YyTQ'
+      icon: '/images/indexIcon/zhaosheng.png',
+      name: '春季招生',
+      width: 70,
+      height: 64,
+      toEducation: 'https://globalh5pro.jinlingkeji.cn/enrollmenth5/index/home/1',
+      showCanvas: 1
     },]
   },
   pageName: '首页',
@@ -536,7 +538,7 @@ Page({
     let item = e.currentTarget.dataset.item
     if(item.toEducation) {
       wx.navigateTo({
-        url: '/pages/education/education?type=0&url=' + item.toEducation,
+        url: '/pages/education/education?type=0&login=1&url=' + item.toEducation,
       })
     } else if(item.toMiniProgram) {
       this.minigo(`{"appid":"${item.toMiniProgram}","url":"${item.url}"}`)
