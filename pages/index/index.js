@@ -424,9 +424,15 @@ Page({
   jumpPeper(e) {
     if (e.currentTarget.dataset.type == 'dialog') {
       let dialog = e.currentTarget.dataset.peper
-      dialog.jump_type == 1 ? wx.navigateTo({
-        url: `../education/education?url=${dialog.url}&type=activity&login=1}`
-      }) : this.toLive(dialog.extra.room_id)
+      if(dialog.jump_type == 1) {
+        wx.navigateTo({
+          url: `../education/education?url=${dialog.url}&type=activity&login=1}`
+        })
+      } else if(dialog.jump_type == 2) {
+        this.toLive(dialog.extra.room_id)
+      } else {
+        this.minigo(dialog.url)
+      }
       this.closeSignIn()
       wx.uma.trackEvent('index_activityClick');
     } else {
