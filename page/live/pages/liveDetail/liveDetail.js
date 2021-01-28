@@ -182,7 +182,7 @@ Page({
   getSublesson(lessons, type) {
     if (!lessons) return
     let playNow = {},
-      liveNow = 0, 
+      liveNow = 0,
       i = -1;
     this.setData({
       sublessons: lessons,
@@ -430,20 +430,31 @@ Page({
     let item = e.currentTarget.dataset.item,
       pages = getCurrentPages(),
       back = 0;
-    if (item.state == 0) {
+    if (item.state == 1 || item.state == 0) {
       pages.forEach(e => {
-        e.pageName ? e.pageName == 'live' ? back = 1 : '' : ''
+        if (e.pageName) {
+          if (e.pageName == 'live' && e.data.liveDetail.id == item.id) {
+            back = 1
+          } else if (e.pageName == 'live' && e.data.liveDetail.id != item.id) {
+            back = 2
+          }
+        }
       })
-      back ? wx.navigateBack() : wx.navigateTo({
-        url: '/page/live/pages/vliveRoom/vliveRoom?roomId=' + item.id,
-      })
-    } else if (item.state == 1) {
-      pages.forEach(e => {
-        e.pageName ? e.pageName == 'live' ? back = 1 : '' : ''
-      })
-      back ? wx.navigateBack() : wx.navigateTo({
-        url: '/page/live/pages/vliveRoom/vliveRoom?roomId=' + item.id,
-      })
+      switch (back) {
+        case 0:
+          wx.navigateTo({
+            url: '/page/live/pages/vliveRoom/vliveRoom?roomId=' + item.id,
+          })
+          break;
+        case 1:
+          wx.navigateBack()
+          break;
+        case 2:
+          wx.reLaunch({
+            url: `/page/live/pages/vliveRoom/vliveRoom?roomId=${item.id}&from=liveDetail`,
+          })
+          break;
+      }
     } else if (item.state == 2) {
       wx.showToast({
         title: "课程视频正在加紧上传中",
@@ -455,7 +466,8 @@ Page({
   },
   //获取回播
   getLiveBackById(liveId, type) {
-    let i = 0, studyNum= 0
+    let i = 0,
+      studyNum = 0
     LiveData.getLiveBackById({
       liveId
     }).then(res => {

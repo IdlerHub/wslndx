@@ -61,7 +61,6 @@
         </navigator>
     </view>
     <!-- 直播信息 -->
-    <navigator></navigator>
     <view class="liveLesson" wx:if="{{current.id}}" bindtap="select" data-item="{{current}}" data-item="{{current}}">
         <view class="liveImg">
             <image class="coverImg" mode="widthFix" src="{{lessonDetail.cover}}"></image>
