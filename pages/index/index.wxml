@@ -161,7 +161,8 @@
           </view>
         </slotSign>
         <view class="iconBox" bindtap="iconBind" data-item="{{item}}" wx:else>
-          <image src="{{item.icon}}" style="width: {{item.width}}rpx;height:{{item.height}}rpx;margin-left:{{index == 7 ? '35rpx' : ''}}"></image>
+          <image src="{{item.icon}}" style="width: {{item.width}}rpx;height:{{item.height}}rpx;"></image>
+          <image src="/images/zhaoshengAnimation.gif" class="iconCanvas" wx:if="{{item.showCanvas}}"></image>
           <text>{{item.name}}</text>
         </view>
       </view>

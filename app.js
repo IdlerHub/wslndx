@@ -137,7 +137,7 @@ App({
     let userInfo = wx.getStorageSync("userInfo") || {};
     let mpVersion = wx.getStorageSync("mpVersion");
     /* storage中信息缺失,重新登录 */
-    if (!userInfo.mobile || mpVersion != this.store.mpVersion) {
+    if (!userInfo.mobile || !userInfo.openid || mpVersion != this.store.mpVersion) {
       await this.wxLogin();
       wx.setStorageSync("mpVersion", this.store.mpVersion);
     }
@@ -153,6 +153,7 @@ App({
     ) {
       this.playVedio("flow");
     }
+    console.log(wxtype)
     if (wxtype < 606) {
       wx.reLaunch({
         url: "/pages/upwxpage/upwxpage",
@@ -206,6 +207,16 @@ App({
           url: "/pages/education/education?type=lottery&login=1",
         });
       }
+      if (opts.path == "pages/education/education" && !this.store.$state.userInfo.id) {
+        setTimeout(() => {
+          this.changeLoginstatus();
+          let params = {
+            type: "education",
+            detail: JSON.stringify(this.globalData.query),
+          };
+          this.checknextTap(params, 1);
+        }, 1500);
+      }
     }
     if (this.store.$state.userInfo.id) {
       setTimeout(() => {
@@ -223,16 +234,6 @@ App({
       wx.reLaunch({
         url: "/pages/index/index",
       });
-      if (opts.path == "pages/education/education") {
-        setTimeout(() => {
-          this.changeLoginstatus();
-          let params = {
-            type: "education",
-            detail: JSON.stringify(this.globalData.query),
-          };
-          this.checknextTap(params, 1);
-        }, 1500);
-      }
     }
   },
   onHide() {
@@ -261,12 +262,27 @@ App({
         if (!msg.data.userInfo) {
           /* 新用户未注册 */
           this.globalData.loginDetail = msg.data;
+          if (this.globalData.path == "/pages/education/education") {
+            setTimeout(() => {
+              this.changeLoginstatus();
+              let params = {
+                type: "education",
+                detail: JSON.stringify(this.globalData.query),
+              };
+              this.checknextTap(params, 1);
+            }, 1500);
+          }
         } else {
           /* 旧用户 */
           wx.setStorageSync("token", msg.data.token);
           wx.setStorageSync("uid", msg.data.uid);
           wx.setStorageSync("authKey", msg.data.authKey);
           e ? this.updateBase(e) : this.setUser(msg.data.userInfo);
+          if (this.globalData.path == "/pages/education/education") {
+            wx.navigateTo({
+              url: `/pages/education/education?url=${this.globalData.query.url}&type=0&login=1`,
+            })
+          }
         }
       });
   },
@@ -423,16 +439,28 @@ App({
     if (wx.canIUse("getUpdateManager")) {
       const updateManager = wx.getUpdateManager();
       updateManager.onCheckForUpdate(function (res) {
+        console.log(res, 121212121)
         // 请求完新版本信息的回调
         if (res.hasUpdate) {
           updateManager.onUpdateReady(function () {
             wx.showModal({
               title: "更新提示",
-              content: "新版本已经准备好，是否重启应用？",
+              content: "新版本已经准备好，请重启应用？",
+              showCancel: false,
               success: function (res) {
                 if (res.confirm) {
                   // 新的版本已经下载好，调用 applyUpdate 应用新版本并重启
                   updateManager.applyUpdate();
+                }else {
+                  wx.showModal({
+                    title:'温馨提示',
+                    content:'为了保障您的信息安全, 请点击进行系统更新',
+                    showCancel:false,//隐藏取消按钮
+                    confirmText:"确定更新",//只保留确定更新按钮
+                    success: function(res) {
+                      updateManager.applyUpdate();
+                    }
+                  })
                 }
               },
             });

@@ -62,7 +62,7 @@
     style="{{animation.showDoweload ? 'animation: loseImg 0.5s;' : 'animation: showImg 0.5s;'}}" bindtap="downloadeApp">
   </image>
 </navigator>
-<image class="liveFloat" src="/images/liveRoomicon.png" wx:if="{{liveDetail.floatStatus}}" bindtap="clickFloat"></image>
+<image class="liveFloat" src="{{liveDetail.floatImage}}" wx:if="{{liveDetail.floatStatus}}" bindtap="clickFloat"></image>
 
 <liveBottom close="{{close}}" columnId="{{liveDetail.columnId}}" keyHeight="{{keyHeight}}" vliveRoom="1"
   bind:sendMsg="sendMsg" bind:praise="praise" bind:checkCaption="checkCaption" bind:clickHandler="clickHandler" />

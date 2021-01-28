@@ -78,11 +78,19 @@ page {
   flex-direction: column;
   align-items: center;
   line-height: normal;
+  position: relative;
 }
 
 .centerIcon .iconBox image {
   width: 92rpx;
   height: 92rpx;
+}
+.centerIcon .iconBox .iconCanvas {
+  width: 65rpx;
+  height: 50rpx;
+  position: absolute;
+  top: -20rpx;
+  right: 12rpx;
 }
 
 .centerIcon .iconBox text {
