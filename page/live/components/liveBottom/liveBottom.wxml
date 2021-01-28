@@ -1,27 +1,26 @@
 <!--page/live/components/liveBottom/liveBottom.wxml-->
 <view class="bottomBox">
   <view class="itemBox captionBox {{ close ? 'close' : '' }}" style="margin-right: {{ !vliveRoom ? 'calc(16vmin / 7.5)' : ''}};" bindtap="checkCaption">
-    <image src="../../images/captionIcon.png"></image>
     <text>字幕</text>
   </view>
-  <view class="clickBox" catchtap="showBox" wx:if="{{vliveRoom}}">说点什么～</view>
+  <view class="clickBox" catchtap="showBox" wx:if="{{vliveRoom}}">我要发言…</view>
   <view class="itemBox backBox" bindtap="toLessons">
-    <image src="../../images/endIcon.png"></image>
-    <text>回播</text>
+    <image src="../../images/liveTolessonBtn.png"></image>
   </view>
-  <button class="itemBox shareBox" hover-class="none" open-type="share">
+  <button class="itemBox shareBox" hover-class="hoverClass">
     <view class="itemBox shareBox">
-      <image src="../../images/shareIcon.png"></image>
-      <text>分享</text>
+      <image src="../../images/shareBtn.png"></image>
     </view>
   </button>
+  <view class="itemBox backBox" bindtap="toLessons">
+    <image src="../../images/giftBtn.png"></image>
+  </view>
   <!-- bindtap="praise" -->
   <!-- <view class="itemBox praiseBox" bindtap="praise">
     <image src="../../images/praise.png" bindtap="clickHandler"></image>
   </view> -->
   <view class="itemBox praiseBox" bindtap="praise">
-    <image src="../../images/praiseImg.png" bindtap="clickHandler"></image>
-    <text bindtap="clickHandler">点赞</text>
+    <image src="../../images/praiseBtn.png" bindtap="clickHandler"></image>
   </view>
 </view>
 <view class="inputBox" style="bottom: {{keyHeight}}px">

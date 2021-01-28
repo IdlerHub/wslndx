@@ -3,7 +3,8 @@
     "talkCommon": "/components/talkCommon/talkCommon",
     "liveBottom": "../../components/liveBottom/liveBottom",
     "liveTop": "../../components/liveTop/liveTop",
-    "like-fx": "/components/likeFx/likeFx"
+    "like-fx": "/components/likeFx/likeFx",
+    "van-popup": "@vant/weapp/popup/index"
   },
   "disableScroll": true,
   "navigationStyle": "custom",
