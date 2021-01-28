@@ -67,8 +67,7 @@
     "useCompilerModule": true,
     "userConfirmedUseCompilerModuleSwitch": false,
     "packNpmManually": false,
-    "packNpmRelationList": [],
-    "useApiHostProcess": true
+    "packNpmRelationList": []
   },
   "compileType": "miniprogram",
   "libVersion": "2.12.2",
@@ -153,9 +152,9 @@
           "scene": null
         },
         {
-          "name": "pages/education/education",
-          "pathName": "pages/education/education",
-          "query": "type=0&login=1&url=https://globalh5pro.jinlingkeji.cn/enrollmenth5/index/home/1",
+          "name": "page/live/pages/vliveRoom/vliveRoom",
+          "pathName": "page/live/pages/vliveRoom/vliveRoom",
+          "query": "roomId=1604",
           "scene": 1069,
           "referrerInfo": {}
         },
