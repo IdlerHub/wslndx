@@ -1,4 +1,4 @@
-const app = getApp()
+const app = getApp();
 Page({
   /**
    * 页面的初始数据
@@ -17,7 +17,7 @@ Page({
         id: 2,
         name: "查看本周课程安排",
         isLogin: 1,
-        url: '/pages/timetableList/timetableList'
+        url: "/page/live/pages/timetableList/timetableList",
       },
       {
         id: 3,
@@ -27,7 +27,7 @@ Page({
         id: 4,
         name: "找最近看过的课程",
         isLogin: 1,
-        url: '/page/user/pages/history/history'
+        url: "/page/user/pages/history/history",
       },
       {
         id: 5,
@@ -43,8 +43,8 @@ Page({
   },
   isLogin: 1,
   onLoad: function (options) {
-    wx.uma.trackEvent('xiaolinCheck', {
-      click: '小林老师'
+    wx.uma.trackEvent("xiaolinCheck", {
+      click: "小林老师",
     });
     let talkList = [
       {
@@ -92,8 +92,8 @@ Page({
             this.setData({
               talkList: this.data.talkList,
             });
-            wx.uma.trackEvent('xiaolinCheck', {
-              click: '关注公众号'
+            wx.uma.trackEvent("xiaolinCheck", {
+              click: "关注公众号",
             });
           }
         },
@@ -108,7 +108,7 @@ Page({
         //   break;
         case 1:
           wx.navigateTo({
-            url: '/pages/timetableList/timetableList',
+            url: "/page/live/pages/timetableList/timetableList",
           });
           break;
         case 3:
@@ -116,7 +116,6 @@ Page({
             url: "/page/study/pages/history/history",
           });
           break;
-        
       }
     }
   },
@@ -133,8 +132,8 @@ Page({
           })
         : "";
     });
-    wx.uma.trackEvent('xiaolinCheck', {
-      click: item.name
+    wx.uma.trackEvent("xiaolinCheck", {
+      click: item.name,
     });
     this.setData(
       {
@@ -153,7 +152,7 @@ Page({
       reply: this.data.list[id - 1].name,
       index: index,
       isLogin: this.data.list[id - 1].isLogin ? 1 : 0,
-      url: this.data.list[id - 1].url
+      url: this.data.list[id - 1].url,
     });
     this.setData(
       {
@@ -168,6 +167,6 @@ Page({
     );
   },
   checknextTap(e) {
-    app.checknextTap(e)
-  }
+    app.checknextTap(e);
+  },
 });

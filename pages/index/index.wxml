@@ -25,12 +25,12 @@
   <view class="liveBox" wx:if="{{liveRecommend[0]}}">
     <view class="topTtile">
       <text>免费直播</text>
-      <navigator class="topTtile-right" url="/pages/timetableList/timetableList"
+      <navigator class="topTtile-right" url="/page/live/pages/timetableList/timetableList"
         hover-class="none" wx:if="{{$state.userInfo.id}}">
         <text>本周课表</text>
         <image src="{{ $state.imgHost }}/Return-black.png"></image>
       </navigator>
-      <slotSign bindtap="checknextTap" data-type="navBar" data-detail="/pages/timetableList/timetableList" wx:else>
+      <slotSign bindtap="checknextTap" data-type="navBar" data-detail="/page/live/pages/timetableList/timetableList" wx:else>
         <view class="topTtile-right">
           <text>本周课表</text>
           <image src="{{ $state.imgHost }}/Return-black.png"></image>

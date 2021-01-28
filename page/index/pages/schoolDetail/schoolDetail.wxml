@@ -5,7 +5,7 @@
   return num > 10000 ? (num / 10000).toFixed(1) + 'W' : num
   },
   overflow: function(intro) {
-    return intro.length > 62 ? intro.slice(0, 62) + '...' : intro
+  return intro.length > 62 ? intro.slice(0, 62) + '...' : intro
   }
   }
 </wxs>
@@ -13,12 +13,13 @@
   <view class="liveBox">
     <view class="topTtile">
       <text>免费直播</text>
-      <navigator class="topTtile-right" url="/pages/timetableList/timetableList?id={{detail.id}}&type=2"
+      <navigator class="topTtile-right" url="/page/live/pages/timetableList/timetableList?id={{detail.id}}&type=2"
         hover-class="none" wx:if="{{$state.userInfo.id}}">
         <text>本周课表</text>
         <image src="{{ $state.imgHost }}/Return-black.png"></image>
       </navigator>
-      <slotSign bindtap="checknextTap" data-type="navBar" data-detail="/pages/timetableList/timetableList?id={{detail.id}}&type=2" wx:else>
+      <slotSign bindtap="checknextTap" data-type="navBar"
+        data-detail="/page/live/pages/timetableList/timetableList?id={{detail.id}}&type=2" wx:else>
         <view class="topTtile-right">
           <text>本周课表</text>
           <image src="{{ $state.imgHost }}/Return-black.png"></image>
@@ -26,8 +27,8 @@
       </slotSign>
     </view>
     <view class="comment">
-      <view class="liveItem" style="{{index + 1 > 6 - 2 ? 'border:none' : '' }}" wx:for="{{liveList}}"
-        wx:key="index" bindtap="toLivelesson" data-item="{{item}}">
+      <view class="liveItem" style="{{index + 1 > 6 - 2 ? 'border:none' : '' }}" wx:for="{{liveList}}" wx:key="index"
+        bindtap="toLivelesson" data-item="{{item}}">
         <view class="liveImgBox">
           <image src="{{item.indexCover}}">
           </image>
@@ -59,7 +60,9 @@
         <text>{{item.dayTime}} {{item.startTime}}</text>
       </view>
     </view>
-    <navigator class="allBox" url="/page/index/pages/allSchoollesson/allSchoollesson?id={{detail.id}}&type=1&title={{detail.name}}" hover-class="none">
+    <navigator class="allBox"
+      url="/page/index/pages/allSchoollesson/allSchoollesson?id={{detail.id}}&type=1&title={{detail.name}}"
+      hover-class="none">
       <text>查看全部</text>
       <image src="../../images/allRight.png" alt=""></image>
     </navigator>
@@ -79,7 +82,8 @@
 <view class="contentBox" wx:if="{{lessonList[0]}}">
   <view class="topTtile">
     <text>在线课程</text>
-    <navigator class="topTtile-right" url="/page/index/pages/allSchoollesson/allSchoollesson?id={{detail.id}}&type=2&title={{detail.name}}"
+    <navigator class="topTtile-right"
+      url="/page/index/pages/allSchoollesson/allSchoollesson?id={{detail.id}}&type=2&title={{detail.name}}"
       hover-class="none">
       <text>全部课程</text>
       <image src="{{ $state.imgHost }}/Return-black.png"></image>
@@ -90,14 +94,15 @@
 <view class="contentBox" wx:if="{{teacherList[0]}}" style="margin: 0">
   <view class="topTtile">
     <text>名师推荐</text>
-    <navigator class="topTtile-right" url="/page/index/pages/topTeacher/topTeacher?id={{detail.id}}"
-      hover-class="none" wx:if="{{$state.userInfo.id}}">
+    <navigator class="topTtile-right" url="/page/index/pages/topTeacher/topTeacher?id={{detail.id}}" hover-class="none"
+      wx:if="{{$state.userInfo.id}}">
       <text>全部讲师</text>
       <image src="{{ $state.imgHost }}/Return-black.png"></image>
     </navigator>
   </view>
   <view class="listBox">
-    <navigator hover-class="none" url="/page/index/pages/tearcherDetail/tearcherDetail?id={{item.uid}}" wx:for="{{teacherList}}" wx:key="index" class="teachItem">
+    <navigator hover-class="none" url="/page/index/pages/tearcherDetail/tearcherDetail?id={{item.uid}}"
+      wx:for="{{teacherList}}" wx:key="index" class="teachItem">
       <image src="{{item.avatar}}"></image>
       <text>{{ item.lecturerName || item.nickname}}</text>
     </navigator>

@@ -15,7 +15,6 @@
     "components/recruitShare/recruitShare",
     "pages/gamePage/gamePage",
     "pages/webPay/webPay",
-    "pages/timetableList/timetableList",
     "components/playRrecord/playRrecord",
     "pages/studyCenter/studyCenter"
   ],

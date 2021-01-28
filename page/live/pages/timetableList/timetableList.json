@@ -1,5 +1,7 @@
 {
-  "usingComponents": {},
+  "usingComponents": {
+    "navBar": "/components/navBar/navBar"
+  },
   "enablePullDownRefresh": true,
-  "navigationBarTitleText": "我的课程"
+  "navigationBarTitleText": "课程表"
 }
