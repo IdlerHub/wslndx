@@ -39,7 +39,9 @@ Page({
     ],
     liveList: [],
     lessonList: [],
-    detail: {}
+    detail: {
+      liveTotal: 0
+    }
   },
   liveParams: {
     pageNum: 1,
@@ -88,7 +90,8 @@ Page({
         item.studydate = app.util.formatTime(new Date(item.startTime * 1000), 1)
       })
       this.setData({
-        liveList: res.dataList
+        liveList: res.dataList,
+        'detail.liveTotal': res.total
       })
     })
   },
@@ -100,7 +103,8 @@ Page({
       })
       arr.push(...res.dataList)
       this.setData({
-        lessonList: arr
+        lessonList: arr,
+        'detail.lessonTotal': res.total
       })
     })
   },

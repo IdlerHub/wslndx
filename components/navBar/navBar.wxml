@@ -1,12 +1,12 @@
 <!--components/navBar/navBar.wxml-->
 <view class="tabbar">
     <view class="item" bindtap="toIndex">
-      <text  class="{{ path === 'index' ? 'active name' : 'name'}}" >云课堂</text>
+      <text  class="{{ path === 'index' ? 'active name' : 'name'}}" >首页</text>
       <view class="resRow" wx:if="{{path === 'index'}}"></view>
     </view>
     <view bindtap="toVideo" data-type="navBar" data-detail="/pages/studyCenter/studyCenter">
       <view class="item">
-        <text class="{{ path === 'video' ? 'active name' : 'name'}}">学习</text>
+        <text class="{{ path === 'video' ? 'active name' : 'name'}}">上课</text>
       <view class="resRow" wx:if="{{path === 'video'}}"></view>
       </view>
     </view>

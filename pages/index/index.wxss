@@ -370,8 +370,8 @@ page {
 
 .integration .dialog {
   position: absolute;
-  width: 556rpx;
-  height: 742rpx;
+  width: 568rpx;
+  height: 680rpx;
   border-radius: 10rpx;
   left: calc((100% - 556rpx) / 2);
   top: calc((100% - 742rpx) / 2);
