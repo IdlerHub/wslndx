@@ -27,7 +27,7 @@
 </view>
 
 <van-popup show="{{ popupShow }}" position="{{ vliveRoom ? 'bottom' : 'right'}}"
-  custom-style="background: #161823; height: {{ vliveRoom ? '' : '100vw' }}; width: {{  vliveRoom ? '' : 'calc(640vmin / 7.5)' }}"
+  custom-style="background: #30323D; height: {{ vliveRoom ? '' : '100vw' }}; width: {{  vliveRoom ? '' : 'calc(640vmin / 7.5)' }}"
   overlay-style="opacity: {{ vliveRoom ? 1 : 0 }};" bind:close="onClose" z-index="999999999999" round="{{true}}"
   bind:click-overlay="showGift">
   <view class="popTitle">
@@ -36,7 +36,7 @@
   </view>
   <view class="giftList" style="padding:{{ vliveRoom ? '' : 'calc(20vmin / 7.5)'}}">
     <view bindtap="checkGift" data-index="{{index}}" class="giftItem {{vliveRoom ? '' : 'hGitfitem'}}" wx:for="{{giftList}}" wx:key="index"
-      style="background: {{ index == activeNum ? '#2C2E38' : '' }};">
+      style="background: {{ index == activeNum ? '#404352' : '' }};">
       <image class="{{ index == activeNum ? 'giftItemActive' : '' }}" src="{{item.pictureUrl}}"></image>
       <text>{{item.title}}</text>
       <text>￥ {{ item.learnCoinPrice }}</text>
