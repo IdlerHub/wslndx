@@ -1,7 +1,6 @@
 //index.js
 
 const Tutor = require("../../data/Tutor")
-import lottie from 'lottie-miniprogram'
 
 //获取应用实例
 const app = getApp()
