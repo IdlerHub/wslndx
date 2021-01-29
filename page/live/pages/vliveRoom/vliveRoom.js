@@ -288,7 +288,6 @@ Page({
     this.setData({
       showCanvans: 1
     })
-    console.log(this.data.showCanvans, 3489573485734875834589)
   },
   //计时器
   liveInterVal() {

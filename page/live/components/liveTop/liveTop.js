@@ -19,25 +19,35 @@ Component({
       value: 30
     },
   },
-  data: {
-  },
+  data: {},
   ready() {
     this.pages = getCurrentPages()
+    this.ipages = this.pages[this.pages.length - 1]
   },
   methods: {
     back() {
-      if (this.pages.length > 1) {
-        this.data.direction ? wx.navigateBack() : setTimeout(() => {
-          wx.navigateBack()
-        }, 1000);
+      console.log(this.pages.length)
+      if (this.pages.length > 1 || this.ipages.liveOps.from) {
+        if (this.ipages.liveOps.from) {
+          console.log()
+          wx.redirectTo({
+            url: '/page/live/pages/liveDetail/liveDetail?specialColumnId=' + this.data.liveDetail.columnId,
+          })
+        } else {
+          this.data.direction ? wx.navigateBack() : setTimeout(() => {
+            wx.navigateBack()
+          }, 1000);
+        }
       } else {
         wx.switchTab({
-          url: '/pages/timetableList/timetableList'
+          url: '/pages/index/index'
         })
       }
     },
     attention() {
-      app.liveData.follow({ followerUid: this.data.liveDetail.lecturerUserId }).then(() => {
+      app.liveData.follow({
+        followerUid: this.data.liveDetail.lecturerUserId
+      }).then(() => {
         wx.showToast({
           title: '关注成功',
           icon: 'none'
