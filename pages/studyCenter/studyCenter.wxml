@@ -1,9 +1,15 @@
 <!--pages/studyCenter/studyCenter.wxml-->
+<template name="nomore">
+  <view class="nomore">
+    <image src="/images/nomore.png"></image>
+    <text>没有更多了</text>
+  </view>
+</template>
 <template name="contentBox">
   <view class="contentBox">
     <view class="contentTop">
       <view class="contentTopleft">
-        <text>{{title}} {{ isLive ? liveList.length : lessonList.length}}</text>
+        <text>{{title}} {{ isLive ? detail.liveTotal : detail.lessonTotal}}</text>
       </view>
       <navigator class="contentTopright" hover-class="none" url="/page/study/pages/livePage/livePage" wx:if="{{isLive}}">
         <text>全部</text>
@@ -38,6 +44,8 @@
           </view>
         </view>
       </view>
+      <loading type="circle" wx:if="{{ lessonList.length < detail.lessonTotal }}"/>
+      <template is="nomore" wx:else></template>
     </view>
   </view>
 </template>
@@ -66,8 +74,8 @@
   </view>
 </view>
 <view wx:if="{{liveList[0] || lessonList[0]}}">
-  <template is="contentBox" data="{{ title:'直播课程', isLive: 1, liveList }}" wx:if="{{liveList[0]}}"></template>
-  <template is="contentBox" data="{{ title:'我的课程', lessonList }}" wx:if="{{lessonList[0]}}"></template>
+  <template is="contentBox" data="{{ title:'直播课程', isLive: 1, liveList, detail }}" wx:if="{{liveList[0]}}"></template>
+  <template is="contentBox" data="{{ title:'我的课程', lessonList, detail }}" wx:if="{{lessonList[0]}}"></template>
 </view>
 <view class="qst" wx:else>
   <image src="/images/liveqs.png"></image>

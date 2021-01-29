@@ -1,7 +1,8 @@
 {
   "usingComponents": {
     "navBar": "/components/navBar/navBar",
-    "liveItem": "/components/liveItem/liveItem"
+    "liveItem": "/components/liveItem/liveItem",
+    "loading": "/components/loading/loading"
   },
   "navigationBarTitleText": "学习"
 }
