@@ -45,18 +45,24 @@
 .tabbar .name {
   display: block;
   font-size: 42rpx;
-  color:#96A8BB;
+  color:#fff;
   padding-top: 30rpx;
   line-height: 45rpx; }
 .tabbar .active {
-  color: rgba(223,32,32,1);
+  color: #FDEE60;
   font-weight: 550;
 }
 .tabbar .resRow {
   width:36rpx;
   height:6rpx;
-  background:rgba(223,32,32,1);
+  background:#FDEE60;
   border-radius:6rpx;
   margin: 15rpx 43rpx;
 }
-
+.tabbar .navBarbg {
+  width: 100vw;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  z-index: 0;
+}

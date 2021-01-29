@@ -14,12 +14,24 @@ page {
   padding: 0 30rpx;
   display: flex;
   align-items: center;
-  background: rgba(248, 248, 248, 1);
+  /* background: rgba(248, 248, 248, 1); */
+  position: relative;
+  z-index: 2;
+}
+
+.topBg {
+  width: 100vw;
+  height: 320rpx;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
 }
 
 .top .avatarBox {
   width: 64rpx;
   height: 64rpx;
+  border: 1rpx solid #F4B905;
   border-radius: 50%;
   overflow: hidden;
 }
@@ -39,7 +51,8 @@ page {
   width: 400rpx;
   margin-left: 20rpx;
   font-size: 36rpx;
-  color: #333333;
+  color: #fff;
+  font-weight: 500;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -120,6 +133,8 @@ page {
   overflow: hidden;
   background: #fff;
   background: #fff;
+  position: relative;
+  z-index: 2;
 }
 
 .swiperBox .indicatorBox {
@@ -468,10 +483,11 @@ page {
   width: 100%;
   padding: 30rpx;
   box-sizing: border-box;
-  background: #F5F6FA;
   display: flex;
   justify-content: space-between;
   align-items: cneter;
+  position: relative;
+  z-index: 2;
 }
 
 .search-box .search-left {
@@ -493,7 +509,6 @@ page {
 
 .search-box .search-left text {
   font-size: 36rpx;
-  font-family: PingFangSC-Regular, PingFang SC;
   font-weight: 400;
   color: rgba(153, 153, 153, 1);
 }
@@ -512,7 +527,8 @@ page {
 .search-box .search-right text {
   font-size: 28rpx;
   font-weight: 500;
-  color: #666666;
+  color: #fff;
+  margin-top: 5rpx;
 }
 
 .dragsort {
@@ -795,12 +811,12 @@ page {
 
 .skeletonaAtive {
   background: #EDEDED;
-  animation: skeleton 1.5s infinite;
-  border-radius: 12rpx;
 }
 
 .skeletonSwiper {
   height: 240rpx;
+  position: relative;
+  z-index: 2;
 }
 
 .skeletonSwiper .skeletonaAtive {

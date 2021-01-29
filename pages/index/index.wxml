@@ -91,6 +91,7 @@
   </view>
 </template>
 <view class="container" bindtouchstart="touchstart" bindtouchend="touchend">
+  <image class="topBg" src="/images/indexIcon/topBg.png" alt="" srcset=""></image>
   <!-- 下拉刷新 -->
   <view wx:if="{{ isRefreshing }}" class="weui-loadmore indexdrop">
     <view class="weui-loading"></view>
@@ -156,12 +157,12 @@
         <slotSign bindtap="checknextTap" data-type="search" data-detail="{{item.url}}"
           wx:if="{{ index == 3 || index == 5}}">
           <view class="iconBox" bindtap="iconBind" data-item="{{item}}">
-            <image src="{{item.icon}}" style="width: {{item.width}}rpx;height:{{item.height}}rpx;"></image>
+            <image src="{{item.icon}}"></image>
             <text>{{item.name}}</text>
           </view>
         </slotSign>
         <view class="iconBox" bindtap="iconBind" data-item="{{item}}" wx:else>
-          <image src="{{item.icon}}" style="width: {{item.width}}rpx;height:{{item.height}}rpx;"></image>
+          <image src="{{item.icon}}"></image>
           <image src="/images/zhaoshengAnimation.gif" class="iconCanvas" wx:if="{{item.showCanvas}}"></image>
           <text>{{item.name}}</text>
         </view>
