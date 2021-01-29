@@ -7,7 +7,7 @@
   <text wx:if="{{liveStatus == 4}}">直播结束</text>
   <text wx:if="{{liveStatus == 4}}">观看 {{liveCount}}人 | 正在生成回播中</text>
   <button class="share" hover-class="none" open-type="share" wx:if="{{liveStatus == 4}}">
-    <image src="../../images/liveShare.png"></image>
+    <image src="../../images/commonShare.png"></image>
   </button>
 </view>
 <liveTop liveDetail="{{liveDetail}}" liveCount="{{liveCount}}" direction="{{liveDetail.direction}}" bind:checkFollow="checkFollow" wx:if="{{showCommont}}"/>

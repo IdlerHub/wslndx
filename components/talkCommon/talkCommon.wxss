@@ -94,8 +94,8 @@
 }
 
 .talkItem .contentBox .specalBox {
-  width: calc(159vmin / 7.5);
-  height: calc(68vmin / 7.5);
+  width: calc(96vmin / 7.5);
+  height: calc(44vmin / 7.5);
   margin-left: calc(20vmin / 7.5);
   border-radius: calc(40vmin / 7.5);
   display: flex;
@@ -117,9 +117,8 @@
 }
 
 .talkItem .contentBox .shareBox image {
-  width: calc(39vmin / 7.5);
-  height: calc(39vmin / 7.5);
-  margin-right: calc(6vmin / 7.5);
+  width: calc(96vmin / 7.5);
+  height: calc(44vmin / 7.5);
 }
 
 .talkItem .contentBox .appBox image {
