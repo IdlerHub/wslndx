@@ -29,7 +29,7 @@ Page({
       showDoweload: 1,
       showJoinclass: 0,
       showOne: 1,
-    }
+    },
   },
   pageName: 'live',
   liveInterval: null,

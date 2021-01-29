@@ -1,3 +1,5 @@
+const Tutor = require("../../../../data/Tutor")
+
 // page/live/components/liveBottom/liveBottom.js
 Component({
   properties: {
@@ -25,32 +27,31 @@ Component({
     },
   },
   ready() {
+    this.giftListConfig()
     let systemInfo = wx.getSystemInfoSync()
     this.setData({
       system: systemInfo.platform
     })
-    // wx.onKeyboardHeightChange(res => {
-    //   console.log(res.height)
-    //   this.setData({
-    //     keyHeight: res.height
-    //   }, () => {
-    //     setTimeout(() => {
-    //       this.data.keyHeight == 0 && !this.data.focus ? this.setData({
-    //         keyHeight: '-60'
-    //       }) : ''
-    //     }, 200);
-    //   })
-    // })
     this.praiseNum = 0
+    this.roomPages = getCurrentPages()[getCurrentPages().length - 1]
   },
   data: {
     focus: false,
     keyHeight: '-60',
     txt: '',
     system: 'ios',
-    praiseCount: 0
+    praiseCount: 0,
+    popupShow: false,
+    activeNum: 0,
+    giftList: []
   },
   methods: {
+    giftListConfig: async function() {
+       let list = (await getApp().liveData.giftListConfig()).dataList
+       this.setData({
+         giftList: list
+       })
+    },
     showBox() {
       this.setData({
         focus: !this.data.focus
@@ -107,6 +108,17 @@ Component({
         delta: back
       }) : wx.navigateTo({
         url: '/page/live/pages/liveDetail/liveDetail?specialColumnId=' + this.data.columnId,
+      })
+    },
+    showGift() {
+      this.setData({
+        popupShow: !this.data.popupShow
+      })
+    },
+    checkGift(e) {
+      let index =  e.currentTarget.dataset.index
+      this.setData({
+        activeNum: index
       })
     }
   }

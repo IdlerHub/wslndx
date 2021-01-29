@@ -80,10 +80,3 @@
 
 <textarea class="textarea" placeholder="文字" focus="{{false}}" fixed show-confirm-bar adjust-position="{{false}}"
   bindblur="showBox"></textarea>
-
-  <!-- <van-popup
-  show="{{ popupShow }}"
-  position="bottom"
-  custom-style="height: 20%;"
-  bind:close="onClose"
-/> -->

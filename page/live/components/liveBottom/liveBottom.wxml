@@ -1,31 +1,48 @@
 <!--page/live/components/liveBottom/liveBottom.wxml-->
 <view class="bottomBox">
-  <view class="itemBox captionBox {{ close ? 'close' : '' }}" style="margin-right: {{ !vliveRoom ? 'calc(16vmin / 7.5)' : ''}};" bindtap="checkCaption">
+  <view class="itemBox captionBox {{ close ? 'close' : '' }}"
+    style="margin-right: {{ !vliveRoom ? 'calc(16vmin / 7.5)' : ''}};" bindtap="checkCaption">
     <text>字幕</text>
   </view>
   <view class="clickBox" catchtap="showBox" wx:if="{{vliveRoom}}">我要发言…</view>
-  <view class="itemBox backBox" bindtap="toLessons">
+  <view class="itemBox backBox" bindtap="toLessons" hover-class="hoverClass" hover-stay-time="50">
     <image src="../../images/liveTolessonBtn.png"></image>
   </view>
-  <button class="itemBox shareBox" hover-class="hoverClass">
-    <view class="itemBox shareBox">
-      <image src="../../images/shareBtn.png"></image>
-    </view>
+  <button class="itemBox" hover-class="hoverClass" open-type="share" hover-stay-time="50">
+    <image src="../../images/shareBtn.png"></image>
   </button>
-  <view class="itemBox backBox" bindtap="toLessons">
+  <view class="itemBox" bindtap="showGift" hover-class="hoverClass" hover-stay-time="50">
     <image src="../../images/giftBtn.png"></image>
   </view>
-  <!-- bindtap="praise" -->
-  <!-- <view class="itemBox praiseBox" bindtap="praise">
-    <image src="../../images/praise.png" bindtap="clickHandler"></image>
-  </view> -->
-  <view class="itemBox praiseBox" bindtap="praise">
+  <view class="itemBox" bindtap="praise" hover-class="hoverClass" hover-stay-time="50">
     <image src="../../images/praiseBtn.png" bindtap="clickHandler"></image>
   </view>
 </view>
 <view class="inputBox" style="bottom: {{keyHeight}}px">
-  <textarea maxlength="50" focus="{{focus}}" value="{{txt}}" class="textarea" placeholder="我要发言..." placeholder-class="placeholder"
-    cursor-spacing="20" adjust-position="{{false}}" show-confirm-bar="{{false}}" auto-height
-    style="padding-top: {{ system == 'ios' ? '4' : '20' }}rpx;" bindinput="bindinput" bindblur="showBox"></textarea>
+  <textarea maxlength="50" focus="{{focus}}" value="{{txt}}" class="textarea" placeholder="我要发言..."
+    placeholder-class="placeholder" cursor-spacing="20" adjust-position="{{false}}" show-confirm-bar="{{false}}"
+    auto-height style="padding-top: {{ system == 'ios' ? '4' : '20' }}rpx;" bindinput="bindinput"
+    bindblur="showBox"></textarea>
   <view class="send" bindtap="send" style="background-color: {{txt.length > 0 ? '#F2323A' : ''}};">发送</view>
 </view>
+
+<van-popup show="{{ popupShow }}" position="{{ vliveRoom ? 'bottom' : 'right'}}"
+  custom-style="background: #161823; height: {{ vliveRoom ? '' : '100vw' }}; width: {{  vliveRoom ? '' : 'calc(640vmin / 7.5)' }}"
+  overlay-style="opacity: {{ vliveRoom ? 1 : 0 }};" bind:close="onClose" z-index="999999999999" round="{{true}}"
+  bind:click-overlay="showGift">
+  <view class="popTitle">
+    礼 物
+    <image src="/images/history-none.png" bindtap="showGift" wx:if="{{vliveRoom}}"></image>
+  </view>
+  <view class="giftList" style="padding:{{ vliveRoom ? '' : 'calc(20vmin / 7.5)'}}">
+    <view bindtap="checkGift" data-index="{{index}}" class="giftItem {{vliveRoom ? '' : 'hGitfitem'}}" wx:for="{{giftList}}" wx:key="index"
+      style="background: {{ index == activeNum ? '#2C2E38' : '' }};">
+      <image class="{{ index == activeNum ? 'giftItemActive' : '' }}" src="{{item.pictureUrl}}"></image>
+      <text>{{item.title}}</text>
+      <text>￥ {{ item.learnCoinPrice }}</text>
+    </view>
+  </view>
+  <view class="payGift" style="margin: {{ vliveRoom ? '' : 'calc(20vmin / 7.5)' }} calc(30vmin / 7.5)">
+    鼓励老师
+  </view>
+</van-popup>

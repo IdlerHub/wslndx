@@ -16,7 +16,6 @@
   width: calc(80vmin / 7.5);
   height: calc(80vmin / 7.5);
   margin-right: calc(16vmin / 7.5);
-  border-radius: calc(10vmin / 7.5);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -44,8 +43,7 @@
 }
 
 .hoverClass {
-  width: calc(60vmin / 7.5);
-  height: calc(60vmin / 7.5);
+  transform: scale(0.9);
 }
 
 .bottomBox .close::before {
@@ -133,4 +131,98 @@
   font-size: calc(32vmin / 7.5);
   font-weight: 400;
   color: #FFFFFF;
+}
+
+.popTitle {
+  height: calc(108vmin / 7.5);
+  border-bottom: 1rpx solid #40434C;
+  text-align: center;
+  line-height: calc(99vmin / 7.5);
+  font-size: calc(40vmin / 7.5);
+  font-weight: 500;
+  color: #FFFFFF;
+  position: relative;
+}
+
+.popTitle image {
+  width: calc(26vmin / 7.5);
+  height: calc(26vmin / 7.5);
+  background: #999999;
+  position: absolute;
+  padding: calc(35vmin / 7.5) calc(31vmin / 7.5);
+  top: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0);
+}
+
+.giftList {
+  padding: calc(30vmin / 7.5);
+  display: flex;
+  flex-wrap: wrap;
+  border-bottom: 1px solid #40434C;
+}
+
+.giftList .giftItem {
+  width: calc(230vmin / 7.5);
+  height: calc(230vmin / 7.5);
+  border-radius: calc(12vmin / 7.5);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20rpx;
+}
+
+.giftList .hGitfitem {
+  width: calc(200vmin / 7.5);
+  margin: 0;
+}
+
+.giftList .giftItemActive {
+  animation: giftAnimation 1s infinite;
+}
+
+
+.giftList .giftItem image {
+  width: calc(100vmin / 7.5);
+  height: calc(100vmin / 7.5);
+}
+
+.giftList .giftItem text:nth-child(2) {
+  font-size: calc(36vmin / 7.5);
+  font-weight: 400;
+  color: #FFFFFF;
+  line-height: calc(36vmin / 7.5);
+  margin: calc(16vmin / 7.5) 0 calc(12vmin / 7.5);
+}
+
+.giftList .giftItem text:nth-child(3) {
+  font-size: calc(26vmin / 7.5);
+  font-weight: 400;
+  color: #999999;
+}
+
+.payGift {
+  margin: calc(30vmin / 7.5);
+  margin-bottom: 0;
+  height: calc(98vmin / 7.5);
+  line-height: calc(98vmin / 7.5);
+  background: #F2323A;
+  border-radius: calc(49vmin / 7.5);
+  text-align: center;
+  font-size: calc(40vmin / 7.5);
+  font-weight: 500;
+  color: #FFFFFF;
+}
+
+@keyframes giftAnimation {
+  0% {
+    transform: scale(0.8);
+  }
+  50% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(0.8);
+  }
 }
