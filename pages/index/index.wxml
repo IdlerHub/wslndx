@@ -113,7 +113,7 @@
   </slotSign>
   <!-- 搜索/学分 -->
   <view class="search-box">
-    <navigator class="search-left" url="/page/index/pages/search/search">
+    <navigator hover-class="none" class="search-left" url="/page/index/pages/search/search">
       <image src="/images/indexIcon/searchp.png"></image>
       <text>搜索课程名称</text>
     </navigator>
