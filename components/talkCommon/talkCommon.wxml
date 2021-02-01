@@ -102,8 +102,7 @@
         <view class="shareTxt" wx:elif="{{fn.showType(item.payload) == 2}}"> <text>{{item.nick}}</text>: 分享了课程
           <button class="specalBox shareBox" hover-class="none" open-type="share">
             <view class="specalBox" style="margin: 0;">
-              <image src="../../images/weixin.png" class="weixin"></image>
-              <text>去分享</text>
+              <image src="../../images/commonShare.png" class="weixin"></image>
             </view>
           </button>
         </view>
@@ -114,7 +113,7 @@
           <text>{{item.nick}}</text> 关注了老师
         </view>
         <view class="joinTxt" wx:elif="{{fn.showType(item.payload) == 4}}">
-          <text>{{item.nick}}</text> 给主播点了<text>{{item.payload.attachContent}}</text>个赞
+          <text>{{item.nick}}</text> 点了<text>{{item.payload.attachContent}}</text>个赞
         </view>
         <!-- <navigator class="specalBox appBox" wx:if="{{item.fromApp}}" hover-class="none" url="/pages/education/education?type=0&url=https://mp.weixin.qq.com/s/vSd8XBQDQkvqVX_kt_YyTQ">
         <image src="../../images/toAppIcon.png" class="weixin"></image>
