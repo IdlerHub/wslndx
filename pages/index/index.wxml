@@ -91,7 +91,7 @@
   </view>
 </template>
 <view class="container" bindtouchstart="touchstart" bindtouchend="touchend">
-  <image class="topBg" style="top: {{ isRefreshing ? '180rpx' : 0 }}" src="/images/indexIcon/topBg.png" alt="" srcset=""></image>
+  <!-- <image class="topBg" style="top: {{ isRefreshing ? '180rpx' : 0 }}" src="/images/indexIcon/topBg.png" alt="" srcset=""></image> -->
   <!-- 下拉刷新 -->
   <view wx:if="{{ isRefreshing }}" class="weui-loadmore indexdrop">
     <view class="weui-loading"></view>

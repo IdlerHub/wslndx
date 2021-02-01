@@ -45,17 +45,17 @@
 .tabbar .name {
   display: block;
   font-size: 42rpx;
-  color:#fff;
+  color:#96A8BB;
   padding-top: 30rpx;
   line-height: 45rpx; }
 .tabbar .active {
-  color: #FDEE60;
+  color: #F2323A;
   font-weight: 550;
 }
 .tabbar .resRow {
   width:36rpx;
   height:6rpx;
-  background:#FDEE60;
+  background:#F2323A;
   border-radius:6rpx;
   margin: 15rpx 43rpx;
 }

@@ -8,14 +8,14 @@ page {
 .container {
   height: 100vh;
   position: relative;
-  /* background: rgba(248, 248, 248, 1); */
+  background: rgba(248, 248, 248, 1);
 }
 
 .top {
   padding: 0 30rpx;
   display: flex;
   align-items: center;
-  /* background: rgba(248, 248, 248, 1); */
+  background: rgba(248, 248, 248, 1);
   position: relative;
   z-index: 2;
 }
@@ -32,7 +32,7 @@ page {
 .top .avatarBox {
   width: 64rpx;
   height: 64rpx;
-  border: 1rpx solid #F4B905;
+  border: 1rpx solid #EDEDED;
   border-radius: 50%;
   overflow: hidden;
 }
@@ -52,7 +52,7 @@ page {
   width: 400rpx;
   margin-left: 20rpx;
   font-size: 36rpx;
-  color: #fff;
+  color: #333333;
   font-weight: 500;
   white-space: nowrap;
   overflow: hidden;
@@ -528,7 +528,7 @@ page {
 .search-box .search-right text {
   font-size: 28rpx;
   font-weight: 500;
-  color: #fff;
+  color: #666666;
   margin-top: 5rpx;
 }
 
