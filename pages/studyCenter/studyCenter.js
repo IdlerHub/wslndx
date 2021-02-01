@@ -39,9 +39,7 @@ Page({
     ],
     liveList: [],
     lessonList: [],
-    detail: {
-      liveTotal: 0
-    }
+    detail: {}
   },
   liveParams: {
     pageNum: 1,
@@ -63,7 +61,6 @@ Page({
     this.getMylesson(this.data.lessonList)
   },
   iconBind(e) {
-    console.log(e)
     let item = e.currentTarget.dataset.item
     if (item.toMiniprogram) {
       wx.navigateToMiniProgram({
@@ -80,7 +77,8 @@ Page({
     app.study.centerDuration().then(res => {
       res.data.studyTime = (res.data.studyTime / 60).toFixed(0)
       this.setData({
-        detail: res.data
+        'detail.studyDay': res.data.studyDay,
+        'detail.studyTime': res.data.studyTime
       })
     })
   },
