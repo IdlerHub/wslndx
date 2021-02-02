@@ -32,7 +32,7 @@
   bind:click-overlay="showGift">
   <view class="popTitle">
     礼 物
-    <image src="/images/history-none.png" bindtap="showGift" wx:if="{{vliveRoom}}"></image>
+    <image style="left:{{vliveRoom ? '' : 0}}" src="/images/history-none.png" bindtap="showGift"></image>
   </view>
   <view class="giftList" style="padding:{{ vliveRoom ? '' : 'calc(20vmin / 7.5)'}}">
     <view bindtap="checkGift" data-index="{{index}}" class="giftItem {{vliveRoom ? '' : 'hGitfitem'}}" wx:for="{{giftList}}" wx:key="index"
