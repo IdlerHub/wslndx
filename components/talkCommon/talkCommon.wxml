@@ -24,7 +24,7 @@
   }
   },
   showNick: function(nick) {
-  return nick.length > 5 ? nick.slice(0, 3) + '...' : nick
+  return nick.length > 5 ? nick.slice(0, 4) + '...' : nick
   },
   fliter: function(txt) {
   switch(txt) {
@@ -83,6 +83,14 @@
   return 1
   break;
   }
+  },
+  showGift: function(text, type) {
+    console.log(text.customText.indexOf('rewardMsg'))
+    if (type) {
+      return  text.customText.indexOf('rewardMsg') < 0 ? 1 : 0
+    } else {
+      return JSON.parse(text.customText)
+    }
   }
   }
 </wxs>
@@ -94,7 +102,7 @@
       class="talkItem {{ fn.showType(item.payload) != 0 && fn.showType(item.payload) != 2 && !item.payload.text ? 'joinItem' : ''}}"
       wx:for="{{talkList}}" wx:key="index"
       style="padding: {{ fn.showType(item.payload) == 2 ? 'calc(13vmin / 7.5)' : fn.showType(item.payload) == 1 || fn.showType(item.payload) == 4 ? 'calc(10vmin / 7.5)' : 'calc(10vmin / 7.5)'}} calc(20vmin / 7.5);"
-      wx:if="{{ (fn.showType(item.payload) > 0 || item.payload.text) && fn.fliter(item.payload.text)}}">
+      wx:if="{{ ((fn.showType(item.payload) > 0 || item.payload.text) && fn.fliter(item.payload.text)) || !fn.showGift(item.payload, 1)}}">
       <view class="contentBox">
         <rich-text class="richtext"
           nodes="{{ '<span style=color:#E6E6E6;>' + fn.showNick(item.nick) + ': </span>' + item.payload.text}}"
@@ -106,19 +114,15 @@
             </view>
           </button>
         </view>
-        <!-- <view class="joinTxt langTxt" wx:elif="{{fn.showType(item.payload) == 1}}">
-          <text>{{item.nick}} </text>进入了直播间
-        </view> -->
         <view class="joinTxt langTxt" wx:elif="{{fn.showType(item.payload) == 3}}">
           <text>{{item.nick}}</text> 关注了老师
         </view>
         <view class="joinTxt" wx:elif="{{fn.showType(item.payload) == 4}}">
           <text>{{item.nick}}</text> 点了<text>{{item.payload.attachContent}}</text>个赞
         </view>
-        <!-- <navigator class="specalBox appBox" wx:if="{{item.fromApp}}" hover-class="none" url="/pages/education/education?type=0&url=https://mp.weixin.qq.com/s/vSd8XBQDQkvqVX_kt_YyTQ">
-        <image src="../../images/toAppIcon.png" class="weixin"></image>
-        <text>去APP</text>
-      </navigator> -->
+        <view class="joinTxt gift" wx:elif="{{!fn.showGift(item.payload, 1)}}">
+          <text>{{item.nick}}</text>{{fn.showGift(item.payload).rewardMsg}} X 1<image src="{{fn.showGift(item.payload).pictureUrl}}"></image>
+        </view>
       </view>
     </view>
     <view class="viewMore" wx:if="{{ newMessage > 0 && showNum }}" bindtap="niewMore"
@@ -127,14 +131,22 @@
       <image src="/images/messageMore.png"></image>
     </view>
   </scroll-view>
-  <view class="specialItem" bindanimationiteration="animationiteration" wx:if="{{specialList[0] && talkList[0] && !close}}" style="padding-right: {{fn.showType(specialList[0].payload) == 4 ? 'calc(30vmin / 7.5)' : ''}}; top: {{!vliveRoom ? 'calc(15vmin / 7.5)' : ''}}">
+  <view class="specialItem" bindanimationiteration="animationiteration"
+    wx:if="{{specialList[0] && talkList[0] && !close}}"
+    style="padding-right: {{fn.showType(specialList[0].payload) == 4 ? 'calc(30vmin / 7.5)' : ''}}; top: {{!vliveRoom ? 'calc(15vmin / 7.5)' : ''}}">
     <text class="joinRoom"
       wx:if="{{fn.showType(specialList[0].payload) == 1}}">{{specialList[0].nick.length > 4 ? fn.showNick(specialList[0].nick) : specialList[0].nick}}进入了直播间</text>
-    <view class="praiseText" wx:else>
+    <view class="praiseText" wx:elif="{{ fn.showGift(specialList[0].payload, 1) }}">
       <text>{{specialList[0].nick.length > 4 ? fn.showNick(specialList[0].nick) : specialList[0].nick}}送出爱心</text>
       <image class="paise" src="../talkCommon/images/paiseSpecial.png"></image>
       <text> X </text>
       <text> {{ specialList[0].payload.attachContent }}</text>
+    </view>
+    <view class="praiseText" wx:else>
+      <text>{{specialList[0].nick.length > 4 ? fn.showNick(specialList[0].nick) : specialList[0].nick}}{{fn.showGift(specialList[0].payload).rewardMsg}}</text>
+      <image class="paise" src="{{fn.showGift(specialList[0].payload).pictureUrl}}"></image>
+      <text> X </text>
+      <text> 1</text>
     </view>
   </view>
 </view>

@@ -134,6 +134,12 @@
   align-items: center;
 }
 
+.talkItem .contentBox .gift image{
+  width: calc(50vmin / 7.5);
+  height: calc(50vmin / 7.5);
+  margin-left: calc(5vmin / 7.5);
+}
+
 .talkItem .contentBox .joinTxt text:nth-child(1) {
   display: inline-block;
   max-width: calc(200vmin / 7.5);

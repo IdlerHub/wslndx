@@ -36,6 +36,7 @@ var customText = {
   MD5_AUDIENCE_FOLLOW_LIVE_ROOM_ANCHOR: "b13ace4737652a74ef2ff02349eab853",
   /** 观众点赞直播间主播 **/
   MD5_AUDIENCE_PRAISE_ANCHOR: "751e68f208e65780d52c1a0d53c6c8d4",
+
 }
 
 
@@ -50,11 +51,10 @@ let messageUplisten = function (event) {
       payload,
       to
     } = e
-    console.log(to, then.data.liveDetail.chatGroup)
+    // console.log(e.payload)
     if (to != then.data.liveDetail.chatGroup) return
-    // && messageFilter(payload, 1) != 1 && messageFilter(payload, 1) != 4
-    console.log(messageFilter(payload, 1))
-    if (messageFilter(payload, 1) > 0 && messageFilter(payload, 1) != 1 && messageFilter(payload, 1) != 4) {
+    // console.log(messageFilter(payload, 1))
+    if (messageFilter(payload, 1) > 0 && messageFilter(payload, 1) != 1 && messageFilter(payload, 1) < 4) {
       const talkList = then.data.talkList
       console.log('新增消息列表消息')
       talkList.push({
@@ -65,9 +65,9 @@ let messageUplisten = function (event) {
       then.setData({
         talkList
       })
-    } else if (messageFilter(payload, 1) == 1 || messageFilter(payload, 1) == 4) {
-      console.log('点赞消息/进入直播间')
-      const specialList = then.data.specialList
+    } else if (messageFilter(payload, 1) == 1 || messageFilter(payload, 1) >= 4) {
+      console.log('点赞消息|进入直播间|直播打赏')
+      const specialList = then.data.specialList, talkList = then.data.talkList
       specialList.push({
         nick: nick,
         payload: JSON.parse(payload.data),
@@ -75,8 +75,13 @@ let messageUplisten = function (event) {
       messageFilter(payload, 1) == 1 ? then.setData({
         liveCount: then.data.liveCount + 1
       }) : ''
+      talkList.push({
+        nick,
+        payload: JSON.parse(payload.data)
+      })
       then.setData({
-        specialList
+        specialList,
+        talkList
       })
     } else if (messageFilter(payload) == -4) {
       then.setData({
@@ -187,34 +192,39 @@ function quitGroup() {
 //消息过滤
 function messageFilter(params, type) {
   if (params.text) return 2
-  switch (JSON.parse(params.data).customText) {
-    case '0008043cc6f0647e061acf18dac98ef3': //进入直播
-      return type ? 1 : -1
-      break;
-    case 'b6b7bc2d01bcb555795e9ed7ca5f84f5': //分享直播
-      return 2
-      break;
-    case 'b13ace4737652a74ef2ff02349eab853': //关注直播
-      return 3
-      break;
-    case '751e68f208e65780d52c1a0d53c6c8d4': //点赞直播
-      return 4
-      break;
-    case 'ee07a26161938852c3bc78d8aa02479b': //直播重新进入直播间
-      return -2
-      break;
-    case '79a5325920cb27c97654e65da37f5408': //主播结束直播
-      return -4
-      break;
-    case '01ff35f1f878fe1ef0a1501707664b32': //主播暂时离开
-      return -3
-      break;
-    case '5ef8580c35a92ce22aaad6154b186948': //后台结束直播解散房间
-      return -4
-      break;
-    default:
-      return 0
-      break;
+  let json = JSON.parse(params.data).customText
+  if (json.indexOf('rewardMsg') > 0) {
+    return 5
+  } else {
+    switch (json) {
+      case '0008043cc6f0647e061acf18dac98ef3': //进入直播
+        return type ? 1 : -1
+        break;
+      case 'b6b7bc2d01bcb555795e9ed7ca5f84f5': //分享直播
+        return 2
+        break;
+      case 'b13ace4737652a74ef2ff02349eab853': //关注直播
+        return 3
+        break;
+      case '751e68f208e65780d52c1a0d53c6c8d4': //点赞直播
+        return 4
+        break;
+      case 'ee07a26161938852c3bc78d8aa02479b': //直播重新进入直播间
+        return -2
+        break;
+      case '79a5325920cb27c97654e65da37f5408': //主播结束直播
+        return -4
+        break;
+      case '01ff35f1f878fe1ef0a1501707664b32': //主播暂时离开
+        return -3
+        break;
+      case '5ef8580c35a92ce22aaad6154b186948': //后台结束直播解散房间
+        return -4
+        break;
+      default:
+        return 0
+        break;
+    }
   }
 }
 
@@ -231,7 +241,6 @@ function timGetmessage(roomId, isFirst) {
       customText: 'MD5_AUDIENCE_ENTER_LIVE',
       customType: '0',
       isShow: 'show',
-
     }
     // console.log(messageList, nextReqMessageID, isCompleted, '消息会话')
     if (isFirst) {
@@ -247,7 +256,7 @@ function timGetmessage(roomId, isFirst) {
           nick,
           payload,
         } = e
-        messageFilter(payload) > 0 ? arr.push({
+        messageFilter(payload) == 2 ? arr.push({
           nick,
           payload: payload.text ? payload : JSON.parse(payload.data),
         }) : ''
@@ -268,13 +277,13 @@ function timGetmessage(roomId, isFirst) {
           nick,
           payload,
         } = e
-        messageFilter(payload) > 0 ? arr.push({
+        messageFilter(payload) == 2 ? arr.push({
           nick,
           payload: payload.text ? payload : JSON.parse(payload.data),
         }) : ''
       })
       then.data.talkList = arr.concat(talkList)
-      if (messageList.length < 15 || then.data.talkList.length > 100) {
+      if (messageList.length < 15 || then.data.talkList.length > 20) {
         then.setData({
           talkList: then.data.talkList
         })
@@ -341,7 +350,7 @@ function sendCustomMessage(params) {
   then.tim.sendMessage(message).then(function (imResponse) {
     // 发送成功
     // console.log(imResponse, '发送成功');
-    if (messageFilter(payload, 1) == 1 || messageFilter(payload, 1) == 4) {
+    if (messageFilter(payload, 1) == 1 || messageFilter(payload, 1) >= 4) {
       const specialList = then.data.specialList
       specialList.push({
         nick: then.data.userInfo.nickname,
@@ -350,7 +359,7 @@ function sendCustomMessage(params) {
       then.setData({
         specialList
       })
-      return
+      if(messageFilter(payload, 1) == 1) return
     }
     const talkList = then.data.talkList
     talkList.push({
