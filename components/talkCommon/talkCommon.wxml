@@ -99,7 +99,7 @@
         <rich-text class="richtext"
           nodes="{{ '<span style=color:#E6E6E6;>' + fn.showNick(item.nick) + ': </span>' + item.payload.text}}"
           wx:if="{{item.payload.text && fn.fliter(item.payload.text)}}" class="richtext"></rich-text>
-        <view class="shareTxt" wx:elif="{{fn.showType(item.payload) == 2}}"> <text>{{item.nick}}</text>: 分享了课程
+        <view class="joinTxt shareTxt" wx:elif="{{fn.showType(item.payload) == 2}}"> <text>{{item.nick}}</text><view class="sharetxt">分享了课程</view>
           <button class="specalBox shareBox" hover-class="none" open-type="share">
             <view class="specalBox" style="margin: 0;">
               <image src="../../images/commonShare.png" class="weixin"></image>

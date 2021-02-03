@@ -15,7 +15,7 @@ Page({
     setTimeout(() => {
       if (options.liveType) {
         //直播课表获取用户公众号openid
-        let webURL = `https://authorization.jinlingkeji.cn/#/?uid=${options.uid}`;
+        let webURL = `https://globalh5pro.jinlingkeji.cn/Authorization/#/?uid=${options.uid}`;
         if (options.liveType == "wechatarticle") {
           // console.log("重定向跳转推文链接");
           // 获取之后前往推文链接
@@ -26,10 +26,10 @@ Page({
         });
       } else if (options.voteType) {
         //获取公众号openid
-        let webURL = `https://authorization.jinlingkeji.cn/#/?voteType=voteIndex&uid=${options.uid}`;
+        let webURL = `https://globalh5pro.jinlingkeji.cn/Authorization/#/?voteType=voteIndex&uid=${options.uid}`;
         if (options.voteType == "voteArticle") {
           // 从详情页跳转过来获取公众号的openId
-          webURL = `https://authorization.jinlingkeji.cn/#/?voteType=voteArticle&voteid=${options.voteid}&uid=${options.uid}`;
+          webURL = `https://globalh5pro.jinlingkeji.cn/Authorization/#/?voteType=voteArticle&voteid=${options.voteid}&uid=${options.uid}`;
         }
         this.setData({
           url: webURL,
@@ -63,7 +63,7 @@ Page({
             btnName: "开心农场"
           });
         } else if (options.type === "sign") {
-          let webURL = `https://authorization.jinlingkeji.cn/#/?uid=${this.data.$state.userInfo.id}&type=sign`;
+          let webURL = `https://globalh5pro.jinlingkeji.cn/Authorization/#/?uid=${this.data.$state.userInfo.id}&type=sign`;
           this.setData({
             url: webURL
           })
