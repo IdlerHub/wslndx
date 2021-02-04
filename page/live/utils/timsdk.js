@@ -50,13 +50,13 @@ let messageUplisten = function (event) {
       payload,
       to
     } = e
-    console.log(to, then.data.liveDetail.chatGroup)
+    // console.log(to, then.data.liveDetail.chatGroup)
     if (to != then.data.liveDetail.chatGroup) return
     // && messageFilter(payload, 1) != 1 && messageFilter(payload, 1) != 4
-    console.log(messageFilter(payload, 1))
+    // console.log(messageFilter(payload, 1))
     if (messageFilter(payload, 1) > 0 && messageFilter(payload, 1) != 1 && messageFilter(payload, 1) != 4) {
-      const talkList = then.data.talkList
-      console.log('新增消息列表消息')
+      const talkList = then.data.talkList.length > 80 ? then.data.talkList.slice(20, 81) : then.data.talkList
+      // console.log('新增消息列表消息')
       talkList.push({
         nick,
         payload: payload.text ? payload : JSON.parse(payload.data)
@@ -66,8 +66,8 @@ let messageUplisten = function (event) {
         talkList
       })
     } else if (messageFilter(payload, 1) == 1 || messageFilter(payload, 1) == 4) {
-      console.log('点赞消息/进入直播间')
-      const specialList = then.data.specialList
+      // console.log('点赞消息/进入直播间')
+      const specialList = then.data.specialList.length > 20 ? then.data.specialList.slice(0, 22) : then.data.specialList
       specialList.push({
         nick: nick,
         payload: JSON.parse(payload.data),
@@ -274,7 +274,7 @@ function timGetmessage(roomId, isFirst) {
         }) : ''
       })
       then.data.talkList = arr.concat(talkList)
-      if (messageList.length < 15 || then.data.talkList.length > 100) {
+      if (messageList.length < 15 || then.data.talkList.length > 50) {
         then.setData({
           talkList: then.data.talkList
         })
@@ -297,7 +297,7 @@ function sendTextMsg(detail) {
   });
   // 2. 发送消息
   then.tim.sendMessage(message).then(function (imResponse) {
-    console.log(imResponse, '发送成功');
+    // console.log(imResponse, '发送成功');
     const talkList = then.data.talkList
     talkList.push({
       nick: then.data.userInfo.nickname,
