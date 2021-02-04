@@ -83,7 +83,7 @@ let messageUplisten = function (event) {
             ? then.data.specialList.slice(0, 22)
             : then.data.specialList,
         talkList =
-          tthen.data.talkList.length > 80
+          then.data.talkList.length > 80
             ? then.data.talkList.slice(
                 then.data.talkList.length - 80,
                 then.data.talkList.length - 1
