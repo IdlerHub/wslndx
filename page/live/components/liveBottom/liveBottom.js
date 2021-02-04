@@ -1,5 +1,5 @@
 const Tutor = require("../../../../data/Tutor")
-
+import timsdk from "../../utils/timsdk";
 // page/live/components/liveBottom/liveBottom.js
 Component({
   properties: {
@@ -120,6 +120,22 @@ Component({
       this.setData({
         activeNum: index
       })
-    }
+    },
+    giftCustommessag() {
+      let customText = {
+        pictureUrl: this.data.giftList[this.data.activeNum].pictureUrl,
+        rewardMsg: `送出${this.data.giftList[this.data.activeNum].title}`
+      }
+      let params = {
+        customText: JSON.stringify(customText),
+        customType: 1,
+        isShow:  'show',
+        attachContent: ''
+      }
+      timsdk.customParams(params, 1)
+      this.setData({
+        popupShow: false
+      })
+    },
   }
 })

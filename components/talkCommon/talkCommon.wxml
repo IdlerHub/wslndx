@@ -85,7 +85,6 @@
   }
   },
   showGift: function(text, type) {
-    console.log(text.customText.indexOf('rewardMsg'))
     if (type) {
       return  text.customText.indexOf('rewardMsg') < 0 ? 1 : 0
     } else {

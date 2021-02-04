@@ -67,7 +67,8 @@ let messageUplisten = function (event) {
       })
     } else if (messageFilter(payload, 1) == 1 || messageFilter(payload, 1) >= 4) {
       console.log('点赞消息|进入直播间|直播打赏')
-      const specialList = then.data.specialList, talkList = then.data.talkList
+      const specialList = then.data.specialList,
+        talkList = then.data.talkList
       specialList.push({
         nick: nick,
         payload: JSON.parse(payload.data),
@@ -323,9 +324,9 @@ function sendTextMsg(detail) {
 }
 
 //自定义消息数据初始
-function customParams(params) {
+function customParams(params, type) {
   let customParams = {
-    customText: customText[params.customText],
+    customText: type ? params.customText : customText[params.customText],
     customType: params.customType,
     isShow: params.isShow,
     personCount: "0",
@@ -336,6 +337,7 @@ function customParams(params) {
 
 //发送自定义文本消息
 function sendCustomMessage(params) {
+  console.log(params)
   let payload = {
     data: JSON.stringify(params),
     description: '',
@@ -359,7 +361,7 @@ function sendCustomMessage(params) {
       then.setData({
         specialList
       })
-      if(messageFilter(payload, 1) == 1) return
+      if (messageFilter(payload, 1) == 1) return
     }
     const talkList = then.data.talkList
     talkList.push({
