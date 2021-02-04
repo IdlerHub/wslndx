@@ -1,7 +1,7 @@
 <!--
  * @Date: 2019-06-11 20:56:43
- * @LastEditors: hxz
- * @LastEditTime: 2019-08-13 12:01:10
+ * @LastEditors: wjl
+ * @LastEditTime: 2021-02-04 14:16:54
  -->
 <wxs module="fn">
   module.exports = {
@@ -25,17 +25,13 @@
   <view class="liveBox" wx:if="{{liveRecommend[0]}}">
     <view class="topTtile">
       <text>免费直播</text>
-<<<<<<< HEAD
-      <navigator class="topTtile-right" url="/page/live/pages/timetableList/timetableList"
-        hover-class="none" wx:if="{{$state.userInfo.id}}">
-=======
       <navigator class="topTtile-right" url="/pages/timetableList/timetableList" hover-class="none"
         wx:if="{{$state.userInfo.id}}">
->>>>>>> 6cb15fe55444656ef104960eb25a8fa8b8aedc4a
         <text>本周课表</text>
         <image src="{{ $state.imgHost }}/Return-black.png"></image>
       </navigator>
-      <slotSign bindtap="checknextTap" data-type="navBar" data-detail="/page/live/pages/timetableList/timetableList" wx:else>
+      <slotSign bindtap="checknextTap" data-type="navBar" data-detail="/page/live/pages/timetableList/timetableList"
+        wx:else>
         <view class="topTtile-right">
           <text>本周课表</text>
           <image src="{{ $state.imgHost }}/Return-black.png"></image>
