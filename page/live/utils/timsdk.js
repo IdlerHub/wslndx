@@ -51,13 +51,13 @@ let messageUplisten = function (event) {
     if (
       messageFilter(payload, 1) > 0 &&
       messageFilter(payload, 1) != 1 &&
-      messageFilter(payload, 1) != 4
+      messageFilter(payload, 1) < 4
     ) {
       const talkList =
         then.data.talkList.length > 80
           ? then.data.talkList.slice(
-              then.data.talkList.length - 80,
-              then.data.talkList.length - 1
+              20,
+              81
             )
           : then.data.talkList;
       // console.log('新增消息列表消息')
@@ -75,9 +75,9 @@ let messageUplisten = function (event) {
       });
     } else if (
       messageFilter(payload, 1) == 1 ||
-      messageFilter(payload, 1) == 4
+      messageFilter(payload, 1) >= 4
     ) {
-      // console.log('点赞消息/进入直播间')
+      console.log('点赞消息/进入直播间')
       const specialList =
           then.data.specialList.length > 20
             ? then.data.specialList.slice(0, 22)
@@ -85,8 +85,8 @@ let messageUplisten = function (event) {
         talkList =
           then.data.talkList.length > 80
             ? then.data.talkList.slice(
-                then.data.talkList.length - 80,
-                then.data.talkList.length - 1
+                20,
+                81
               )
             : then.data.talkList;
       specialList.push({
