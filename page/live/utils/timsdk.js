@@ -79,15 +79,16 @@ let messageUplisten = function (event) {
     ) {
       // console.log('点赞消息/进入直播间')
       const specialList =
-        then.data.specialList.length > 20
-          ? then.data.specialList.slice(0, 22)
-          : then.data.specialList,
-          talkList = tthen.data.talkList.length > 80
-          ? then.data.talkList.slice(
-              then.data.talkList.length - 80,
-              then.data.talkList.length - 1
-            )
-          : then.data.talkList
+          then.data.specialList.length > 20
+            ? then.data.specialList.slice(0, 22)
+            : then.data.specialList,
+        talkList =
+          tthen.data.talkList.length > 80
+            ? then.data.talkList.slice(
+                then.data.talkList.length - 80,
+                then.data.talkList.length - 1
+              )
+            : then.data.talkList;
       specialList.push({
         nick: nick,
         payload: JSON.parse(payload.data),
