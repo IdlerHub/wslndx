@@ -25,8 +25,8 @@
   <view class="liveBox" wx:if="{{liveRecommend[0]}}">
     <view class="topTtile">
       <text>免费直播</text>
-      <navigator class="topTtile-right" url="/pages/timetableList/timetableList"
-        hover-class="none" wx:if="{{$state.userInfo.id}}">
+      <navigator class="topTtile-right" url="/pages/timetableList/timetableList" hover-class="none"
+        wx:if="{{$state.userInfo.id}}">
         <text>本周课表</text>
         <image src="{{ $state.imgHost }}/Return-black.png"></image>
       </navigator>
@@ -43,22 +43,25 @@
         <view class="liveImgBox">
           <image src="{{item.indexCover}}">
           </image>
-          <view class="liveStatus"
-            style="background: {{ item.status == 0 ? '' : item.status == 2 ? 'linear-gradient(270deg, #FF8242 0%, #FF6010 100%)' : 'linear-gradient(270deg, #44A2FF 0%, #007CF7 100%);border-radius: 10rpx 6rpx 6rpx 0px;' }}">
-            <view class="statusLeft" wx:if="{{item.status == 1}}">
-              <image src="/images/naoling.png" class="naoling"></image>
-              <view class="statusTxt" style="margin: 0">待开始</view>
+          <view class="liveStatusBox">
+            <view class="liveStatus"
+              style="background: {{ item.status == 0 ? '' : item.status == 2 ? 'linear-gradient(270deg, #FF8242 0%, #FF6010 100%)' : 'linear-gradient(270deg, #44A2FF 0%, #007CF7 100%);border-radius: 10rpx 6rpx 6rpx 0px;' }}">
+              <view class="statusLeft" wx:if="{{item.status == 1}}">
+                <image src="/images/naoling.png" class="naoling"></image>
+                <view class="statusTxt" style="margin: 0">待开始</view>
+              </view>
+              <view class="statusLeft" wx:elif="{{item.status == 0}}">
+                <view wx:for="{{3}}" wx:key="index" class="statusWite"></view>
+                <view class="statusTxt">直播</view>
+                <!-- <view class="viewNum">{{fn.num(item.viewNum)}}人</view> -->
+              </view>
+              <view class="statusLeft" wx:else>
+                <image src="/images/endIcon.png" class="endIcon"></image>
+                <view class="statusTxt" style="margin: 0">看回播</view>
+                <!-- <view class="viewNum">{{fn.num(item.viewNum)}}人</view> -->
+              </view>
             </view>
-            <view class="statusLeft" wx:elif="{{item.status == 0}}">
-              <view wx:for="{{3}}" wx:key="index" class="statusWite"></view>
-              <view class="statusTxt">直播</view>
-              <view class="viewNum">{{fn.num(item.viewNum)}}人</view>
-            </view>
-            <view class="statusLeft" wx:else>
-              <image src="/images/endIcon.png" class="endIcon"></image>
-              <view class="statusTxt" style="margin: 0">看回播</view>
-              <view class="viewNum">{{fn.num(item.viewNum)}}人</view>
-            </view>
+            <view class="viewNum" wx:if="{{item.status == 0}}">{{fn.num(item.viewNum)}}人</view>
           </view>
         </view>
         <text>{{item.liveName}}</text>

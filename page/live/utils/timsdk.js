@@ -55,7 +55,7 @@ let messageUplisten = function (event) {
     // && messageFilter(payload, 1) != 1 && messageFilter(payload, 1) != 4
     // console.log(messageFilter(payload, 1))
     if (messageFilter(payload, 1) > 0 && messageFilter(payload, 1) != 1 && messageFilter(payload, 1) != 4) {
-      const talkList = then.data.talkList.length > 80 ? then.data.talkList.slice(then.data.talkList.length - 80, then.data.talkList.length - 1) : then.data.talkList
+      const talkList = then.data.talkList.length > 80 ? then.data.talkList.slice(20, 81) : then.data.talkList
       // console.log('新增消息列表消息')
       talkList.push({
         nick,
@@ -274,7 +274,7 @@ function timGetmessage(roomId, isFirst) {
         }) : ''
       })
       then.data.talkList = arr.concat(talkList)
-      if (messageList.length < 15 || then.data.talkList.length > 100) {
+      if (messageList.length < 15 || then.data.talkList.length > 50) {
         then.setData({
           talkList: then.data.talkList
         })
