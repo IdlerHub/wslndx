@@ -12,8 +12,8 @@
     <image src="{{liveDetail.avatar}}">
     </image>
     <view class="txtCenter">
-      <text>{{fn.num(liveDetail.nickname)}}</text>
-      <text wx:if="{{liveDetail.state > 0}}">{{liveCount}}人在看</text>
+      <text>{{liveDetail.nickname}}</text>
+      <text wx:if="{{liveDetail.state > 0}}">{{fn.num(liveCount)}}人在看</text>
     </view>
     <view class="attention" catchtap="attention" wx:if="{{!liveDetail.follow && liveDetail.lecturerUserId != $state.userInfo.id}}">
       <image src="../../images/attentionicon.png"></image>
