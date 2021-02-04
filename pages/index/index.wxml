@@ -61,7 +61,7 @@
                 <!-- <view class="viewNum">{{fn.num(item.viewNum)}}人</view> -->
               </view>
             </view>
-            <view class="viewNum" wx:if="{{item.status == 0}}">{{fn.num(item.viewNum)}}人</view>
+            <view class="viewNum" wx:if="{{item.status == 0 || item.status == 2}}">{{fn.num(item.viewNum)}}人</view>
           </view>
         </view>
         <text>{{item.liveName}}</text>
