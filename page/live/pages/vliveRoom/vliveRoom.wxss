@@ -307,8 +307,8 @@ page {
 }
 
 .liveFloat {
-  width: calc(90vmin / 7.5);
-  height: calc(102vmin / 7.5);
+  width: calc(110vmin / 7.5);
+  height: calc(110vmin / 7.5);
   position: absolute;
   right: calc(16vmin / 7.5);
   bottom: calc(364vmin / 7.5);

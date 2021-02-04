@@ -490,7 +490,7 @@ Page({
   sigin() {
     if (!this.data.$state.userIndex.has_mp_openid) {
       wx.navigateTo({
-        url: '/pages/education/education?type=sign&url=https://authorization.jinlingkeji.cn/#/',
+        url: '/pages/education/education?type=sign&url=https://globalh5pro.jinlingkeji.cn/Authorization/#/',
       })
       this.setData({
         isSign: true
