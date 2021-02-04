@@ -30,7 +30,7 @@
 
 .tearchBox .txtCenter {
   display: flex;
-  max-width: calc(140vmin / 7.5);
+  max-width: calc(159vmin / 7.5);
   flex-direction: column;
   height: 100%;
   align-items: flex-start;
