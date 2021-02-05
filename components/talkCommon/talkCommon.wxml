@@ -85,62 +85,59 @@
   }
   },
   showGift: function(text, type) {
-    if (type) {
-      return  text.customText.indexOf('rewardMsg') < 0 ? 1 : 0
-    } else {
-      return JSON.parse(text.customText)
-    }
-  }
-  }
-</wxs>
-<view class="scrollView scrollBox">
-  <scroll-view scroll-y scroll-top="{{scrollTop}}" class="scrollView" bounces="{{false}}" bindscroll="bindscroll"
-    enable-flex bindscrolltolower="bindscrolltolower"
-    style="opacity: {{close || !showList ? 0 : 1}};bottom: {{!vliveRoom ? 'calc(30vmin / 7.5)' : ''}};left: {{!vliveRoom ? statusBarHeight : ''}}px">
-    <view
-      class="talkItem {{ fn.showType(item.payload) != 0 && fn.showType(item.payload) != 2 && !item.payload.text ? 'joinItem' : ''}}"
-      wx:for="{{talkList}}" wx:key="index"
-      style="padding: {{ fn.showType(item.payload) == 2 ? 'calc(13vmin / 7.5)' : fn.showType(item.payload) == 1 || fn.showType(item.payload) == 4 ? 'calc(10vmin / 7.5)' : 'calc(10vmin / 7.5)'}} calc(20vmin / 7.5);"
-      wx:if="{{ ((fn.showType(item.payload) > 0 || item.payload.text) && fn.fliter(item.payload.text)) || !fn.showGift(item.payload, 1)}}">
-      <view class="contentBox">
-        <rich-text class="richtext"
-          nodes="{{ '<span style=color:#E6E6E6;>' + fn.showNick(item.nick) + ': </span>' + item.payload.text}}"
-          wx:if="{{item.payload.text && fn.fliter(item.payload.text)}}" class="richtext"></rich-text>
-        <view class="joinTxt shareTxt" wx:elif="{{fn.showType(item.payload) == 2}}"> <text>{{item.nick}}</text><view class="sharetxt">分享了课程</view>
-          <button class="specalBox shareBox" hover-class="none" open-type="share">
-            <view class="specalBox" style="margin: 0;">
-              <image src="../../images/commonShare.png" class="weixin"></image>
-            </view>
-          </button>
+  if (type) {
+  return text.customText.indexOf('rewardMsg') < 0 ? 1 : 0 } else { return JSON.parse(text.customText) } } } </wxs> <view
+    class="scrollView scrollBox">
+    <scroll-view scroll-y scroll-top="{{scrollTop}}" class="scrollView" bounces="{{false}}" bindscroll="bindscroll"
+      enable-flex bindscrolltolower="bindscrolltolower"
+      style="opacity: {{close || !showList ? 0 : 1}};bottom: {{!vliveRoom ? 'calc(30vmin / 7.5)' : ''}};left: {{!vliveRoom ? statusBarHeight : ''}}px">
+      <view
+        class="talkItem {{ fn.showType(item.payload) != 0 && fn.showType(item.payload) != 2 && !item.payload.text ? 'joinItem' : ''}}"
+        wx:for="{{talkList}}" wx:key="index"
+        style="padding: {{ fn.showType(item.payload) == 2 ? 'calc(13vmin / 7.5)' : fn.showType(item.payload) == 1 || fn.showType(item.payload) == 4 ? 'calc(10vmin / 7.5)' : 'calc(10vmin / 7.5)'}} calc(20vmin / 7.5);"
+        wx:if="{{ ((fn.showType(item.payload) > 0 || item.payload.text) && fn.fliter(item.payload.text)) || !fn.showGift(item.payload, 1)}}">
+        <view class="contentBox">
+          <rich-text class="richtext"
+            nodes="{{ '<span style=color:#E6E6E6;>' + fn.showNick(item.nick) + ': </span>' + item.payload.text}}"
+            wx:if="{{item.payload.text && fn.fliter(item.payload.text)}}" class="richtext"></rich-text>
+          <view class="joinTxt shareTxt" wx:elif="{{fn.showType(item.payload) == 2}}"> <text>{{item.nick}}</text>
+            <view class="sharetxt">分享了课程</view>
+            <button class="specalBox shareBox" hover-class="none" open-type="share">
+              <view class="specalBox" style="margin: 0;">
+                <image src="../../images/commonShare.png" class="weixin"></image>
+              </view>
+            </button>
+          </view>
+          <view class="joinTxt langTxt" wx:elif="{{fn.showType(item.payload) == 3}}">
+            <text>{{item.nick}}</text> 关注了老师
+          </view>
+          <view class="joinTxt" wx:elif="{{fn.showType(item.payload) == 4}}">
+            <text>{{item.nick}}</text> 点了<text>{{item.payload.attachContent}}</text>个赞
+          </view>
+          <view class="joinTxt gift" wx:elif="{{!fn.showGift(item.payload, 1)}}">
+            <text>{{item.nick}}</text>{{fn.showGift(item.payload).rewardMsg}} X 1<image
+              src="{{fn.showGift(item.payload).pictureUrl}}"></image>
+          </view>
         </view>
-        <view class="joinTxt langTxt" wx:elif="{{fn.showType(item.payload) == 3}}">
-          <text>{{item.nick}}</text> 关注了老师
-        </view>
-        <view class="joinTxt" wx:elif="{{fn.showType(item.payload) == 4}}">
-          <text>{{item.nick}}</text> 点了<text>{{item.payload.attachContent}}</text>个赞
-        </view>
-        <view class="joinTxt gift" wx:elif="{{!fn.showGift(item.payload, 1)}}">
-          <text>{{item.nick}}</text>{{fn.showGift(item.payload).rewardMsg}} X 1<image src="{{fn.showGift(item.payload).pictureUrl}}"></image>
+      </view>
+      <view class="viewMore" wx:if="{{ newMessage > 0 && showNum }}" bindtap="niewMore"
+        style="left: {{!vliveRoom ? statusBarHeight : ''}}px; bottom: {{!vliveRoom ? 'calc(30vmin / 7.5)' : '' }}">
+        <text>{{ newMessage >= 99 ? newMessage + '+' : newMessage }}新消息</text>
+        <image src="/images/messageMore.png"></image>
+      </view>
+    </scroll-view>
+    <view class="specialBox" wx:if="{{specialList[0] && talkList[0] && !close}}"
+      style="top: {{!vliveRoom ? 'calc(15vmin / 7.5)' : 'calc(-90vmin / 7.5)'}}">
+      <view class="specialItem" bindanimationiteration="" wx:for="{{specialList}}" wx:key="index">
+        <view class="praiseText">
+          <text>{{item.nick.length > 4 ? fn.showNick(item.nick) : item.nick}}{{fn.showGift(item.payload).rewardMsg}}</text>
+          <image class="paise" src="{{fn.showGift(item.payload).pictureUrl}}"></image>
+          <text> X </text>
+          <text> {{item.num}}</text>
         </view>
       </view>
     </view>
-    <view class="viewMore" wx:if="{{ newMessage > 0 && showNum }}" bindtap="niewMore"
-      style="left: {{!vliveRoom ? statusBarHeight : ''}}px; bottom: {{!vliveRoom ? 'calc(30vmin / 7.5)' : '' }}">
-      <text>{{ newMessage >= 99 ? newMessage + '+' : newMessage }}新消息</text>
-      <image src="/images/messageMore.png"></image>
     </view>
-  </scroll-view>
-  <view class="specialItem" bindanimationiteration="animationiteration"
-    wx:if="{{specialList[0] && talkList[0] && !close}}"
-    style="top: {{!vliveRoom ? 'calc(15vmin / 7.5)' : ''}}">
-    <view class="praiseText">
-      <text>{{specialList[0].nick.length > 4 ? fn.showNick(specialList[0].nick) : specialList[0].nick}}{{fn.showGift(specialList[0].payload).rewardMsg}}</text>
-      <image class="paise" src="{{fn.showGift(specialList[0].payload).pictureUrl}}"></image>
-      <text> X </text>
-      <text> 1</text>
-    </view>
-  </view>
-</view>
-<!-- </view> -->
+    <!-- </view> -->
 
-<view class="scrollView scrollMask" wx:if="{{close || !showList}}"></view>
+    <view class="scrollView scrollMask" wx:if="{{close || !showList}}"></view>

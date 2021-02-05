@@ -191,18 +191,27 @@
   margin-top: calc(3vmin / 7.5);
 }
 
+.specialBox {
+  position: absolute;
+  top: calc(-90vmin / 7.5);
+  z-index: 9999999999999;
+  height: 200rpx;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  flex-direction: column;
+}
+
 .specialItem {
   /* max-width: calc(580vmin / 7.5); */
   max-height: calc(60vmin / 7.5);
   padding: calc(11vmin / 7.5) calc(20vmin / 7.5);
   background: linear-gradient(90deg, rgba(242, 50, 58, 0.85) 45%, rgba(255, 126, 86, 0.85) 100%);
   border-radius: 100rpx;
-  position: absolute;
-  top: calc(-90vmin / 7.5);
-  left: calc(-1000vmin / 7.5);
-  animation: showAnimation 2.5s infinite;
-  z-index: 9999999999999;
-  opacity: 0;
+  position: relative;
+  /* left: calc(-1000vmin / 7.5); */
+  animation: showAnimation 2.5s ;
+  opacity: 1;
 }
 
 .specialItem .joinRoom {
@@ -261,7 +270,7 @@
   }
 
   100% {
-    opacity: 0;
+    opacity: 1;
     left: calc(10vmin / 7.5);
   }
 }

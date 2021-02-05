@@ -43,8 +43,12 @@ let messageUplisten = function (event) {
   // event.name - TIM.EVENT.MESSAGE_RECEIVED
   // event.data - 存储 Message 对象的数组 - [Message]
   event.data.forEach((e) => {
-    let { nick, payload, to } = e;
-    console.log(payload)
+    let {
+      nick,
+      payload,
+      to,
+      from
+    } = e;
     if (to != then.data.liveDetail.chatGroup) return;
     if (
       messageFilter(payload, 1) > 0 &&
@@ -52,56 +56,70 @@ let messageUplisten = function (event) {
       messageFilter(payload, 1) <= 4
     ) {
       const talkList =
-        then.data.talkList.length > 80
-          ? then.data.talkList.slice(
-              20,
-              81
-            )
-          : then.data.talkList;
+        then.data.talkList.length > 80 ?
+        then.data.talkList.slice(
+          20,
+          81
+        ) :
+        then.data.talkList;
       // console.log('新增消息列表消息')
       talkList.push({
         nick,
-        payload: payload.text ? payload : JSON.parse(payload.data),
+        payload: payload.text ? payload : JSON.parse(payload.data)
       });
-      payload.text
-        ? ""
-        : messageFilter(payload) == -1
-        ? then.addliveCount()
-        : "";
+      payload.text ?
+        "" :
+        messageFilter(payload) == -1 ?
+        then.addliveCount() :
+        "";
       then.setData({
         talkList,
       });
     } else if (
       messageFilter(payload, 1) == 5
     ) {
-      console.log('打赏')
-      const specialList =
-          then.data.specialList.length > 20
-            ? then.data.specialList.slice(0, 22)
-            : then.data.specialList,
+      // console.log('打赏')
+      messageFilter(payload, 1) == 1 ?
+        then.setData({
+          liveCount: then.data.liveCount + 1,
+        }) :
+        "";
+      let specialList =
+        then.data.specialList.length > 20 ?
+        then.data.specialList.slice(0, 22) :
+        then.data.specialList,
         talkList =
-          then.data.talkList.length > 80
-            ? then.data.talkList.slice(
-                20,
-                81
-              )
-            : then.data.talkList;
-      specialList.push({
-        nick: nick,
-        payload: JSON.parse(payload.data),
-      });
-      messageFilter(payload, 1) == 1
-        ? then.setData({
-            liveCount: then.data.liveCount + 1,
-          })
-        : "";
+        then.data.talkList.length > 80 ?
+        then.data.talkList.slice(
+          20,
+          81
+        ) :
+        then.data.talkList,
+        addNum = -1
+      specialList.forEach((item, index) => {
+        item.from == from && JSON.stringify(item.payload) == payload.data ? addNum = index : null;
+      })
+      if (addNum == -1) {
+        specialList.push({
+          nick: nick,
+          payload: JSON.parse(payload.data),
+          from,
+          num: 1
+        })
+        then.setData({
+          specialList
+        })
+      } else {
+        then.setData({
+          [`specialList[${addNum}].num`]: then.data.specialList[addNum].num + 1
+        })
+      }
       talkList.push({
         nick,
-        payload: JSON.parse(payload.data),
+        payload: JSON.parse(payload.data)
       });
       then.setData({
-        specialList,
-        talkList,
+        talkList
       });
     } else if (messageFilter(payload) == -4) {
       then.setData({
@@ -281,24 +299,24 @@ function timGetmessage(roomId, isFirst) {
       };
       // console.log(messageList, nextReqMessageID, isCompleted, '消息会话')
       if (isFirst) {
-        const talkList = [
-            {
-              nick: "网上老年大学小助手",
-              payload: {
-                text:
-                  "欢迎来到直播间：<p> 1、请自行调节手机音量至合适的状态。</p> <p>2、听众发言可以在讨论区进行查看。</p>",
-              },
+        const talkList = [{
+            nick: "网上老年大学小助手",
+            payload: {
+              text: "欢迎来到直播间：<p> 1、请自行调节手机音量至合适的状态。</p> <p>2、听众发言可以在讨论区进行查看。</p>",
             },
-          ],
+          }, ],
           arr = [];
         messageList.forEach((e) => {
-          let { nick, payload } = e;
-          messageFilter(payload) == 2
-            ? arr.push({
-                nick,
-                payload: payload.text ? payload : JSON.parse(payload.data),
-              })
-            : "";
+          let {
+            nick,
+            payload
+          } = e;
+          messageFilter(payload) == 2 ?
+            arr.push({
+              nick,
+              payload: payload.text ? payload : JSON.parse(payload.data),
+            }) :
+            "";
         });
         then.data.talkList = arr.concat(talkList);
         if (messageList.length < 15) {
@@ -312,13 +330,16 @@ function timGetmessage(roomId, isFirst) {
         const talkList = then.data.talkList,
           arr = [];
         messageList.forEach((e) => {
-          let { nick, payload } = e;
-          messageFilter(payload) == 2
-            ? arr.push({
-                nick,
-                payload: payload.text ? payload : JSON.parse(payload.data),
-              })
-            : "";
+          let {
+            nick,
+            payload
+          } = e;
+          messageFilter(payload) == 2 ?
+            arr.push({
+              nick,
+              payload: payload.text ? payload : JSON.parse(payload.data),
+            }) :
+            "";
         });
         then.data.talkList = arr.concat(talkList);
         if (messageList.length < 15 || then.data.talkList.length > 20) {
@@ -369,7 +390,7 @@ function customParams(params, type) {
     customText: type ? params.customText : customText[params.customText],
     customType: params.customType,
     isShow: params.isShow,
-    personCount: "0",
+    personCount:  "0",
     attachContent: params.attachContent,
   };
   sendCustomMessage(customParams);
@@ -395,16 +416,28 @@ function sendCustomMessage(params) {
       // 发送成功
       // console.log(imResponse, '发送成功');
       if (messageFilter(payload, 1) == 5) {
-        const specialList = then.data.specialList;
-        specialList.push({
-          nick: then.data.userInfo.nickname,
-          payload: params,
-        });
-        then.setData({
-          specialList,
-        });
+        let specialList = then.data.specialList,
+          addNum = -1
+        specialList.forEach((item, index) => {
+          item.from == then.data.$state.userInfo.id && JSON.stringify(item.payload) == JSON.stringify(params) ? addNum = index : null;
+        })
+        if (addNum == -1) {
+          specialList.push({
+            nick: then.data.userInfo.nickname,
+            payload: params,
+            from: then.data.$state.userInfo.id,
+            num: 1
+          });
+          then.setData({
+            specialList,
+          });
+        } else {
+          then.setData({
+            [`specialList[${addNum}].num`]: then.data.specialList[addNum].num + 1
+          })
+        }
       }
-      if (messageFilter(payload) == 1) return;
+      if (messageFilter(payload, 1) == 1) return;
       const talkList = then.data.talkList;
       talkList.push({
         nick: then.data.userInfo.nickname,

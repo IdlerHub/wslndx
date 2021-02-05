@@ -83,7 +83,6 @@ Component({
       this.praiseNum += 1
       this.timer ? clearTimeout(this.timer) : ''
       this.timer = setTimeout(() => {
-        console.log(this.praiseNum)
         this.triggerEvent('praise', this.praiseNum)
         this.praiseNum = 0
       }, 1000);
@@ -130,7 +129,6 @@ Component({
         customText: JSON.stringify(customText),
         customType: 1,
         isShow:  'show',
-        attachContent: ''
       }
       timsdk.customParams(params, 1)
       this.setData({
