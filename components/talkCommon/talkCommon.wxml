@@ -132,16 +132,8 @@
   </scroll-view>
   <view class="specialItem" bindanimationiteration="animationiteration"
     wx:if="{{specialList[0] && talkList[0] && !close}}"
-    style="padding-right: {{fn.showType(specialList[0].payload) == 4 ? 'calc(30vmin / 7.5)' : ''}}; top: {{!vliveRoom ? 'calc(15vmin / 7.5)' : ''}}">
-    <text class="joinRoom"
-      wx:if="{{fn.showType(specialList[0].payload) == 1}}">{{specialList[0].nick.length > 4 ? fn.showNick(specialList[0].nick) : specialList[0].nick}}进入了直播间</text>
-    <view class="praiseText" wx:elif="{{ fn.showGift(specialList[0].payload, 1) }}">
-      <text>{{specialList[0].nick.length > 4 ? fn.showNick(specialList[0].nick) : specialList[0].nick}}送出爱心</text>
-      <image class="paise" src="../talkCommon/images/paiseSpecial.png"></image>
-      <text> X </text>
-      <text> {{ specialList[0].payload.attachContent }}</text>
-    </view>
-    <view class="praiseText" wx:else>
+    style="top: {{!vliveRoom ? 'calc(15vmin / 7.5)' : ''}}">
+    <view class="praiseText">
       <text>{{specialList[0].nick.length > 4 ? fn.showNick(specialList[0].nick) : specialList[0].nick}}{{fn.showGift(specialList[0].payload).rewardMsg}}</text>
       <image class="paise" src="{{fn.showGift(specialList[0].payload).pictureUrl}}"></image>
       <text> X </text>

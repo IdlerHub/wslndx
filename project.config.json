@@ -37,7 +37,7 @@
     ]
   },
   "setting": {
-    "urlCheck": true,
+    "urlCheck": false,
     "es6": true,
     "enhance": true,
     "postcss": true,
@@ -56,12 +56,12 @@
     "compileHotReLoad": false,
     "useMultiFrameRuntime": true,
     "useApiHook": true,
+    "useApiHostProcess": true,
     "babelSetting": {
       "ignore": [],
       "disablePlugins": [],
       "outputPath": ""
     },
-    "enableEngineNative": false,
     "bundle": false,
     "useIsolateContext": true,
     "useCompilerModule": true,
@@ -74,8 +74,7 @@
         "miniprogramNpmDistDir": "./"
       }
     ],
-    "minifyWXSS": true,
-    "useApiHostProcess": true
+    "minifyWXSS": true
   },
   "compileType": "miniprogram",
   "libVersion": "2.12.2",
@@ -162,7 +161,7 @@
         {
           "name": "page/live/pages/vliveRoom/vliveRoom",
           "pathName": "page/live/pages/vliveRoom/vliveRoom",
-          "query": "roomId=1746",
+          "query": "roomId=1604",
           "scene": 1069,
           "referrerInfo": {}
         },

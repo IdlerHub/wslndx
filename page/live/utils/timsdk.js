@@ -44,14 +44,12 @@ let messageUplisten = function (event) {
   // event.data - 存储 Message 对象的数组 - [Message]
   event.data.forEach((e) => {
     let { nick, payload, to } = e;
-    // console.log(to, then.data.liveDetail.chatGroup)
+    console.log(payload)
     if (to != then.data.liveDetail.chatGroup) return;
-    // && messageFilter(payload, 1) != 1 && messageFilter(payload, 1) != 4
-    // console.log(messageFilter(payload, 1))
     if (
       messageFilter(payload, 1) > 0 &&
       messageFilter(payload, 1) != 1 &&
-      messageFilter(payload, 1) < 4
+      messageFilter(payload, 1) <= 4
     ) {
       const talkList =
         then.data.talkList.length > 80
@@ -74,10 +72,9 @@ let messageUplisten = function (event) {
         talkList,
       });
     } else if (
-      messageFilter(payload, 1) == 1 ||
-      messageFilter(payload, 1) >= 4
+      messageFilter(payload, 1) == 5
     ) {
-      console.log('点赞消息/进入直播间')
+      console.log('打赏')
       const specialList =
           then.data.specialList.length > 20
             ? then.data.specialList.slice(0, 22)
@@ -239,7 +236,7 @@ function messageFilter(params, type) {
         return type ? 1 : -1;
         break;
       case "b6b7bc2d01bcb555795e9ed7ca5f84f5": //分享直播
-        return 2;
+        return 3;
         break;
       case "b13ace4737652a74ef2ff02349eab853": //关注直播
         return 3;
@@ -397,7 +394,7 @@ function sendCustomMessage(params) {
     .then(function (imResponse) {
       // 发送成功
       // console.log(imResponse, '发送成功');
-      if (messageFilter(payload, 1) == 1 || messageFilter(payload, 1) >= 4) {
+      if (messageFilter(payload, 1) == 5) {
         const specialList = then.data.specialList;
         specialList.push({
           nick: then.data.userInfo.nickname,
@@ -406,8 +403,8 @@ function sendCustomMessage(params) {
         then.setData({
           specialList,
         });
-        if (messageFilter(payload, 1) == 1) return;
       }
+      if (messageFilter(payload) == 1) return;
       const talkList = then.data.talkList;
       talkList.push({
         nick: then.data.userInfo.nickname,
