@@ -15,7 +15,8 @@ Page({
     this.getSchollList()
   },
   onShow: function () {
-    this.getcountVideo()
+    console.log(app.store.$state)
+    app.store.$state.userInfo.id ? this.getcountVideo() : ''
   },
   onUnload: function () {
 
