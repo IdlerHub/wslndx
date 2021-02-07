@@ -193,12 +193,12 @@
 
 .specialBox {
   position: absolute;
-  top: calc(-90vmin / 7.5);
+  top: calc(-120vmin / 7.5);
   z-index: 9999999999999;
   height: 200rpx;
   display: flex;
   align-items: flex-end;
-  justify-content: flex-end;
+  justify-content: flex-start;
   flex-direction: column;
 }
 

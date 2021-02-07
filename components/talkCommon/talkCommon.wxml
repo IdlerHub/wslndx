@@ -127,7 +127,7 @@
       </view>
     </scroll-view>
     <view class="specialBox" wx:if="{{specialList[0] && talkList[0] && !close}}"
-      style="top: {{!vliveRoom ? 'calc(15vmin / 7.5)' : 'calc(-90vmin / 7.5)'}}">
+      style="top: {{!vliveRoom ? 'calc(15vmin / 7.5)' : 'calc(-200vmin / 7.5)'}}">
       <view class="specialItem" bindanimationiteration="" wx:for="{{specialList}}" wx:key="index">
         <view class="praiseText">
           <text>{{item.nick.length > 4 ? fn.showNick(item.nick) : item.nick}}{{fn.showGift(item.payload).rewardMsg}}</text>
