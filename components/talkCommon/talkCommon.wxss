@@ -193,12 +193,12 @@
 
 .specialBox {
   position: absolute;
-  top: calc(-120vmin / 7.5);
+  top: calc(-255vmin / 7.5);
   z-index: 9999999999999;
-  height: 200rpx;
+  height: 260rpx;
   display: flex;
-  align-items: flex-end;
-  justify-content: flex-start;
+  align-items: flex-start;
+  justify-content: flex-end;
   flex-direction: column;
 }
 
@@ -209,9 +209,7 @@
   background: linear-gradient(90deg, rgba(242, 50, 58, 0.85) 45%, rgba(255, 126, 86, 0.85) 100%);
   border-radius: 100rpx;
   position: relative;
-  /* left: calc(-1000vmin / 7.5); */
-  animation: showAnimation 2.5s ;
-  opacity: 1;
+  margin-bottom: calc(15vmin / 7.5);
 }
 
 .specialItem .joinRoom {
@@ -252,6 +250,32 @@
   color: #FFFFFF;
 }
 
+.joinItem {
+  position: absolute;
+  bottom: 0;
+  z-index: 9999999999999;
+  height: calc(60vmin / 7.5);
+  border-radius: calc(40vmin / 7.5);
+  background: rgba(0, 0, 0, 0.1);
+  padding: 0 calc(20vmin / 7.5);
+  display: flex;
+  align-items: center;
+  color: #fff;
+  left: calc(-1000vmin / 7.5);
+  animation: showAnimation 2.5s;
+  opacity: 0;
+}
+
+.joinItem text {
+  display: inline-block;
+  max-width: calc(200vmin / 7.5);
+  color: #E4A004;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  margin-right: calc(10vmin / 7.5);
+}
+
 @keyframes showAnimation {
   
   8% {
@@ -260,17 +284,17 @@
   }
 
   30% {
-    left: calc(10vmin / 7.5);
+    left: calc(0vmin / 7.5);
     opacity: 1;
   }
 
   80% {
-    left: calc(10vmin / 7.5);
+    left: calc(0vmin / 7.5);
     opacity: 1;
   }
 
   100% {
     opacity: 1;
-    left: calc(10vmin / 7.5);
+    left: calc(0vmin / 7.5);
   }
 }

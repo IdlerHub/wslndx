@@ -97,7 +97,7 @@ let messageUplisten = function (event) {
         then.data.talkList,
         addNum = -1
       specialList.forEach((item, index) => {
-        item.from == from && JSON.stringify(item.payload) == payload.data ? addNum = index : null;
+        item.from == from && item.payload.customText == JSON.parse(payload.data).customText && item.payload.isShow ? addNum = index : null;
       })
       if (addNum == -1) {
         specialList.push({
@@ -121,6 +121,14 @@ let messageUplisten = function (event) {
       then.setData({
         talkList
       });
+    } else if (messageFilter(payload) == -1) {
+      let joinList = then.data.joinList
+      joinList.push({
+        nick
+      })
+      then.setData({
+        joinList
+      })
     } else if (messageFilter(payload) == -4) {
       then.setData({
         liveStatus: 4,
@@ -390,7 +398,7 @@ function customParams(params, type) {
     customText: type ? params.customText : customText[params.customText],
     customType: params.customType,
     isShow: params.isShow,
-    personCount:  "0",
+    personCount: "0",
     attachContent: params.attachContent,
   };
   sendCustomMessage(customParams);
@@ -398,7 +406,6 @@ function customParams(params, type) {
 
 //发送自定义文本消息
 function sendCustomMessage(params) {
-  console.log(params);
   let payload = {
     data: JSON.stringify(params),
     description: "",
@@ -419,7 +426,7 @@ function sendCustomMessage(params) {
         let specialList = then.data.specialList,
           addNum = -1
         specialList.forEach((item, index) => {
-          item.from == then.data.$state.userInfo.id && JSON.stringify(item.payload) == JSON.stringify(params) ? addNum = index : null;
+          item.from == then.data.$state.userInfo.id && JSON.stringify(item.payload.customText) == JSON.stringify(params.customText) && item.payload.isShow ? addNum = index : null;
         })
         if (addNum == -1) {
           specialList.push({
@@ -437,7 +444,16 @@ function sendCustomMessage(params) {
           })
         }
       }
-      if (messageFilter(payload, 1) == 1) return;
+      if (messageFilter(payload, 1) == 1) {
+        let joinList = then.data.joinList
+        joinList.push({
+          nick: then.data.userInfo.nickname
+        })
+        then.setData({
+          joinList
+        })
+        return
+      };
       const talkList = then.data.talkList;
       talkList.push({
         nick: then.data.userInfo.nickname,

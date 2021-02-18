@@ -1,3 +1,5 @@
+const Tutor = require("../../data/Tutor")
+
 // components/talkCommon/talkCommon.js
 Component({
   properties: {
@@ -21,19 +23,10 @@ Component({
     specialList: {
       type: Array,
       value: [],
-      observer: function (newVal, oldVal) {
-        // 属性值变化时执行
-        // if (newVal.length == 0) return
-        // if (newVal.length > oldVal.length) {
-        //   !this.touch || !this.data.showNum ? this.toBottom() : ''
-        //   if (this.data.showNum) {
-        //     this.triggerEvent('setNewmessagenum', {
-        //       num: newVal.length - oldVal.length,
-        //       type: 1
-        //     })
-        //   }
-        // }
-      }
+    },
+    joinList: {
+      type: Array,
+      value: [],
     },
     newMessage: {
       type: Number,
@@ -60,7 +53,8 @@ Component({
     scrollTop: 99999999999999999,
     inScroll: 1,
     showNum: 0,
-    top: 0
+    top: 0,
+    show: true
   },
   ready() {
     this.toBottom()
@@ -87,7 +81,7 @@ Component({
     bindscroll(e) {
       this.data.inScroll ? [
           this.setData({
-            showNum: e.detail.scrollHeight- e.detail.scrollTop <= 255 ? 0 : 1
+            showNum: e.detail.scrollHeight - e.detail.scrollTop <= 255 ? 0 : 1
           }),
           this.setCrollTop(e.detail.scrollTop, e.detail.scrollHeight)
         ] :
@@ -98,7 +92,7 @@ Component({
     setCrollTop(scrollTop, scrollHeight) {
       if (this.timer) clearTimeout(this.timer)
       this.timer = setTimeout(() => {
-        if(scrollHeight- scrollTop <= 255) {
+        if (scrollHeight - scrollTop <= 255) {
           this.touch = 0
           return
         }
@@ -119,7 +113,26 @@ Component({
       })
     },
     animationiteration() {
-      this.triggerEvent('animationCheck')
+      console.log('动画结束')
+      this.triggerEvent('animationEnd')
+    },
+    afterEnter(e) {
+      let index = e.currentTarget.dataset.index,
+        num = this.data.specialList[index].num
+      this.timeShow(index, num)
+    },
+    afterLeave(e) {
+      let index = e.currentTarget.dataset.index
+      this.triggerEvent('animationDel', {
+        index
+      })
+    },
+    timeShow(index, num) {
+      var timer = setTimeout(() => {
+        this.data.specialList[index].num == num ? this.triggerEvent('animationCheck', {
+          index
+        }) : [clearTimeout(timer), this.timeShow(index, this.data.specialList[index].num)]
+      }, 1000)
     }
   }
 })

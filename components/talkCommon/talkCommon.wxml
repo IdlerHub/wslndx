@@ -126,18 +126,26 @@
         <image src="/images/messageMore.png"></image>
       </view>
     </scroll-view>
-    <view class="specialBox" wx:if="{{specialList[0] && talkList[0] && !close}}"
-      style="top: {{!vliveRoom ? 'calc(15vmin / 7.5)' : 'calc(-200vmin / 7.5)'}}">
-      <view class="specialItem" bindanimationiteration="" wx:for="{{specialList}}" wx:key="index">
-        <view class="praiseText">
-          <text>{{item.nick.length > 4 ? fn.showNick(item.nick) : item.nick}}{{fn.showGift(item.payload).rewardMsg}}</text>
-          <image class="paise" src="{{fn.showGift(item.payload).pictureUrl}}"></image>
-          <text> X </text>
-          <text> {{item.num}}</text>
+    <view class="specialBox" style="left: {{!vliveRoom ? statusBarHeight : ''}}px; top: {{ !vliveRoom ? 'calc(-400vmin / 7.5)' : '' }}"
+      wx:if="{{specialList[0] && talkList[0] && !close}}">
+      <van-transition show="{{ item.payload.isShow }}" name="{{ item.payload.isShow ? 'fade-left' : 'fade'}}"
+        custom-class="transitionBox" wx:for="{{specialList}}" wx:key="index" bind:after-enter="afterEnter"
+        bind:after-leave="afterLeave" data-index="{{index}}">
+        <view class="specialItem">
+          <view class="praiseText">
+            <text>{{item.nick.length > 4 ? fn.showNick(item.nick) : item.nick}}{{fn.showGift(item.payload).rewardMsg}}</text>
+            <image class="paise" src="{{fn.showGift(item.payload).pictureUrl}}">
+            </image>
+            <text> X </text>
+            <text> {{item.num}}</text>
+          </view>
         </view>
-      </view>
+      </van-transition>
+    </view>
+    <view class="joinItem" wx:if="{{ joinList[0] && talkList[0] && !close}}" bindanimationend="animationiteration"
+      style="bottom: {{!vliveRoom ? 'calc(-50vmin / 7.5)' : ''}}">
+      <text>{{joinList[0].nick}}</text>进入了直播间
     </view>
     </view>
-    <!-- </view> -->
 
     <view class="scrollView scrollMask" wx:if="{{close || !showList}}"></view>
