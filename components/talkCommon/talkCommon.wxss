@@ -250,7 +250,7 @@
   color: #FFFFFF;
 }
 
-.joinItem {
+.joinSpelItem {
   position: absolute;
   bottom: 0;
   z-index: 9999999999999;
@@ -263,10 +263,10 @@
   color: #fff;
   left: calc(-1000vmin / 7.5);
   animation: showAnimation 2.5s;
-  opacity: 0;
+  opacity: 1;
 }
 
-.joinItem text {
+.joinSpelItem text {
   display: inline-block;
   max-width: calc(200vmin / 7.5);
   color: #E4A004;
