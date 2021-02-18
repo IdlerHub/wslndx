@@ -130,7 +130,7 @@
       wx:if="{{specialList[0] && talkList[0] && !close}}">
       <van-transition show="{{ item.payload.isShow }}" name="{{ item.payload.isShow ? 'fade-left' : 'fade'}}"
         custom-class="transitionBox" wx:for="{{specialList}}" wx:key="index" bind:after-enter="afterEnter"
-        bind:after-leave="afterLeave" data-index="{{index}}">
+        data-index="{{index}}">
         <view class="specialItem">
           <view class="praiseText">
             <text>{{item.nick.length > 4 ? fn.showNick(item.nick) : item.nick}}{{fn.showGift(item.payload).rewardMsg}}</text>

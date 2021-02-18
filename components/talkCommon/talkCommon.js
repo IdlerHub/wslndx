@@ -113,7 +113,6 @@ Component({
       })
     },
     animationiteration() {
-      console.log('动画结束')
       this.triggerEvent('animationEnd')
     },
     afterEnter(e) {
@@ -129,9 +128,10 @@ Component({
     },
     timeShow(index, num) {
       var timer = setTimeout(() => {
-        this.data.specialList[index].num == num ? this.triggerEvent('animationCheck', {
+        if(!this.data.specialList[index]) return
+        this.data.specialList[index].num == num ? [this.triggerEvent('animationCheck', {
           index
-        }) : [clearTimeout(timer), this.timeShow(index, this.data.specialList[index].num)]
+        }), clearTimeout(timer)] : [clearTimeout(timer), this.timeShow(index, this.data.specialList[index].num)]
       }, 1000)
     }
   }

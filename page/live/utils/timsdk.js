@@ -84,10 +84,7 @@ let messageUplisten = function (event) {
           liveCount: then.data.liveCount + 1,
         }) :
         "";
-      let specialList =
-        then.data.specialList.length > 20 ?
-        then.data.specialList.slice(0, 22) :
-        then.data.specialList,
+      let specialList = then.data.specialList,
         talkList =
         then.data.talkList.length > 80 ?
         then.data.talkList.slice(
@@ -122,7 +119,10 @@ let messageUplisten = function (event) {
         talkList
       });
     } else if (messageFilter(payload) == -1) {
-      let joinList = then.data.joinList
+      let joinList =
+        then.data.joinList.length > 20 ?
+        then.data.joinList.slice(0, 22) :
+        then.data.joinList
       joinList.push({
         nick
       })
