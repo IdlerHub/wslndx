@@ -717,7 +717,7 @@ page {
 }
 
 .liveItem .viewNum {
-  min-width: 80rpx;
+  /* min-width: 80rpx; */
   height: 44rpx;
   background: rgba(0, 0, 0, 0.4);
   border-radius: 0 6rpx 6rpx 0;
