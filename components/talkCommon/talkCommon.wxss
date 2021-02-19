@@ -140,6 +140,12 @@
   align-items: center;
 }
 
+.talkItem .contentBox .gift image{
+  width: calc(50vmin / 7.5);
+  height: calc(50vmin / 7.5);
+  margin-left: calc(5vmin / 7.5);
+}
+
 .talkItem .contentBox .joinTxt text:nth-child(1) {
   display: inline-block;
   max-width: calc(200vmin / 7.5);
@@ -185,18 +191,25 @@
   margin-top: calc(3vmin / 7.5);
 }
 
+.specialBox {
+  position: absolute;
+  top: calc(-255vmin / 7.5);
+  z-index: 9999999999999;
+  height: 260rpx;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-end;
+  flex-direction: column;
+}
+
 .specialItem {
   /* max-width: calc(580vmin / 7.5); */
   max-height: calc(60vmin / 7.5);
   padding: calc(11vmin / 7.5) calc(20vmin / 7.5);
   background: linear-gradient(90deg, rgba(242, 50, 58, 0.85) 45%, rgba(255, 126, 86, 0.85) 100%);
   border-radius: 100rpx;
-  position: absolute;
-  top: calc(-90vmin / 7.5);
-  left: calc(-1000vmin / 7.5);
-  animation: showAnimation 2.5s infinite;
-  z-index: 9999999999999;
-  opacity: 0;
+  position: relative;
+  margin-bottom: calc(15vmin / 7.5);
 }
 
 .specialItem .joinRoom {
@@ -237,6 +250,31 @@
   color: #FFFFFF;
 }
 
+.joinSpelItem {
+  position: absolute;
+  bottom: 0;
+  z-index: 9999999999999;
+  border-radius: calc(40vmin / 7.5);
+  background: rgba(0, 0, 0, 0.5);
+  padding: calc(10vmin / 7.5) calc(20vmin / 7.5);
+  display: flex;
+  align-items: center;
+  color: #fff;
+  left: calc(-1000vmin / 7.5);
+  animation: showAnimation 2.5s;
+  opacity: 1;
+}
+
+.joinSpelItem text {
+  display: inline-block;
+  max-width: calc(200vmin / 7.5);
+  color: #E4A004;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  margin-right: calc(10vmin / 7.5);
+}
+
 @keyframes showAnimation {
   
   8% {
@@ -245,17 +283,17 @@
   }
 
   30% {
-    left: calc(10vmin / 7.5);
+    left: calc(0vmin / 7.5);
     opacity: 1;
   }
 
   80% {
-    left: calc(10vmin / 7.5);
+    left: calc(0vmin / 7.5);
     opacity: 1;
   }
 
   100% {
-    opacity: 0;
-    left: calc(10vmin / 7.5);
+    opacity: 1;
+    left: calc(0vmin / 7.5);
   }
 }

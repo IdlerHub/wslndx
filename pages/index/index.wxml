@@ -1,7 +1,7 @@
 <!--
  * @Date: 2019-06-11 20:56:43
- * @LastEditors: hxz
- * @LastEditTime: 2019-08-13 12:01:10
+ * @LastEditors: wjl
+ * @LastEditTime: 2021-02-04 14:16:54
  -->
 <wxs module="fn">
   module.exports = {
@@ -30,7 +30,8 @@
         <text>本周课表</text>
         <image src="{{ $state.imgHost }}/Return-black.png"></image>
       </navigator>
-      <slotSign bindtap="checknextTap" data-type="navBar" data-detail="/pages/timetableList/timetableList" wx:else>
+      <slotSign bindtap="checknextTap" data-type="navBar" data-detail="/page/live/pages/timetableList/timetableList"
+        wx:else>
         <view class="topTtile-right">
           <text>本周课表</text>
           <image src="{{ $state.imgHost }}/Return-black.png"></image>
@@ -61,7 +62,7 @@
                 <!-- <view class="viewNum">{{fn.num(item.viewNum)}}人</view> -->
               </view>
             </view>
-            <view class="viewNum" wx:if="{{item.status == 0}}">{{fn.num(item.viewNum)}}人</view>
+            <view class="viewNum" wx:if="{{item.status == 0 || item.status == 2}}">{{fn.num(item.viewNum)}}人</view>
           </view>
         </view>
         <text>{{item.liveName}}</text>

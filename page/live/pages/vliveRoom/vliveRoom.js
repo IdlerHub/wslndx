@@ -7,6 +7,7 @@ Page({
     statusBarHeight: 30,
     talkList: [],
     specialList: [],
+    joinList: [],
     close: 0,
     userInfo: {},
     liveDetail: {},
@@ -29,7 +30,7 @@ Page({
       showDoweload: 1,
       showJoinclass: 0,
       showOne: 1,
-    }
+    },
   },
   pageName: 'live',
   liveInterval: null,
@@ -326,10 +327,21 @@ Page({
       })
     })
   },
-  animationCheck() {
-    this.data.specialList.splice(0, 1)
+  animationCheck(e) {
+    this.setData({
+      [`specialList[${e.detail.index}].payload.isShow`]: false
+    })
+  },
+  animationDel(e) {
+    this.data.specialList.splice(e.detail.index, 1)
     this.setData({
       specialList: this.data.specialList
+    })
+  },
+  animationEnd() {
+    this.data.joinList.splice(0, 1)
+    this.setData({
+      joinList: this.data.joinList
     })
   },
   clickFloat() {

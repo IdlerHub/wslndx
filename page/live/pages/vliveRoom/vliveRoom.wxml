@@ -46,9 +46,10 @@
 </view>
 <liveTop liveDetail="{{liveDetail}}" liveCount="{{liveCount}}" direction="{{liveDetail.direction}}"
   statusBarHeight="{{statusBarHeight}}" vliveRoom="1" bind:checkFollow="checkFollow" />
-<talkCommon id="talkCommon" talkList="{{talkList}}" specialList="{{specialList}}" close="{{close}}" vliveRoom="1"
-  newMessage="{{newMessage}}" statusBarHeight="{{statusBarHeight}}" bind:setNewmessagenum="setNewmessagenum"
-  bind:animationCheck="animationCheck" />
+<talkCommon id="talkCommon" talkList="{{talkList}}" specialList="{{specialList}}" joinList="{{joinList}}"
+  close="{{close}}" vliveRoom="1" newMessage="{{newMessage}}" statusBarHeight="{{statusBarHeight}}"
+  bind:setNewmessagenum="setNewmessagenum" bind:animationCheck="animationCheck" bind:animationDel="animationDel"
+  bind:animationEnd="animationEnd" />
 <navigator class="downloadeApp"
   url="/pages/education/education?type=0&url=https://mp.weixin.qq.com/s/vSd8XBQDQkvqVX_kt_YyTQ" hover-class="none"
   wx:if="{{animation.showOne}}">
@@ -62,7 +63,8 @@
     style="{{animation.showDoweload ? 'animation: loseImg 0.5s;' : 'animation: showImg 0.5s;'}}" bindtap="downloadeApp">
   </image>
 </navigator>
-<image class="liveFloat" src="{{liveDetail.floatImage}}" wx:if="{{liveDetail.floatStatus}}" bindtap="clickFloat"></image>
+<image class="liveFloat" src="{{liveDetail.floatImage}}" wx:if="{{liveDetail.floatStatus}}" bindtap="clickFloat">
+</image>
 
 <liveBottom close="{{close}}" columnId="{{liveDetail.columnId}}" keyHeight="{{keyHeight}}" vliveRoom="1"
   bind:sendMsg="sendMsg" bind:praise="praise" bind:checkCaption="checkCaption" bind:clickHandler="clickHandler" />

@@ -1,8 +1,8 @@
-import TIM from 'tim-wx-sdk'
+import TIM from "tim-wx-sdk";
 
-var then = null
-var nextReqMessageID = ''
-var app = getApp()
+var then = null;
+var nextReqMessageID = "";
+var app = getApp();
 var customText = {
   /** 小助手进入房间*/
   MD5_HELPER_ENTER_LIVE: "3ba15067d362f56fbfd21406b0218ce1",
@@ -36,253 +36,329 @@ var customText = {
   MD5_AUDIENCE_FOLLOW_LIVE_ROOM_ANCHOR: "b13ace4737652a74ef2ff02349eab853",
   /** 观众点赞直播间主播 **/
   MD5_AUDIENCE_PRAISE_ANCHOR: "751e68f208e65780d52c1a0d53c6c8d4",
-}
-
-
+};
 
 let messageUplisten = function (event) {
   // 收到推送的单聊、群聊、群提示、群系统通知的新消息，可通过遍历 event.data 获取消息列表数据并渲染到页面
   // event.name - TIM.EVENT.MESSAGE_RECEIVED
   // event.data - 存储 Message 对象的数组 - [Message]
-  event.data.forEach(e => {
+  event.data.forEach((e) => {
     let {
       nick,
       payload,
-      to
-    } = e
-    // console.log(to, then.data.liveDetail.chatGroup)
-    if (to != then.data.liveDetail.chatGroup) return
-    // && messageFilter(payload, 1) != 1 && messageFilter(payload, 1) != 4
-    // console.log(messageFilter(payload, 1))
-    if (messageFilter(payload, 1) > 0 && messageFilter(payload, 1) != 1 && messageFilter(payload, 1) != 4) {
-      const talkList = then.data.talkList.length > 80 ? then.data.talkList.slice(20, 81) : then.data.talkList
+      to,
+      from
+    } = e;
+    if (to != then.data.liveDetail.chatGroup) return;
+    if (
+      messageFilter(payload, 1) > 0 &&
+      messageFilter(payload, 1) != 1 &&
+      messageFilter(payload, 1) <= 4
+    ) {
+      const talkList =
+        then.data.talkList.length > 80 ?
+        then.data.talkList.slice(
+          20,
+          81
+        ) :
+        then.data.talkList;
       // console.log('新增消息列表消息')
       talkList.push({
         nick,
         payload: payload.text ? payload : JSON.parse(payload.data)
+      });
+      payload.text ?
+        "" :
+        messageFilter(payload) == -1 ?
+        then.addliveCount() :
+        "";
+      then.setData({
+        talkList,
+      });
+    } else if (
+      messageFilter(payload, 1) == 5
+    ) {
+      // console.log('打赏')
+      messageFilter(payload, 1) == 1 ?
+        then.setData({
+          liveCount: then.data.liveCount + 1,
+        }) :
+        "";
+      let specialList = then.data.specialList,
+        talkList =
+        then.data.talkList.length > 80 ?
+        then.data.talkList.slice(
+          20,
+          81
+        ) :
+        then.data.talkList,
+        addNum = -1
+      specialList.forEach((item, index) => {
+        item.from == from && item.payload.customText == JSON.parse(payload.data).customText && item.payload.isShow ? addNum = index : null;
       })
-      payload.text ? '' : messageFilter(payload) == -1 ? then.addliveCount() : ''
+      if (addNum == -1) {
+        specialList.push({
+          nick: nick,
+          payload: JSON.parse(payload.data),
+          from,
+          num: 1
+        })
+        then.setData({
+          specialList
+        })
+      } else {
+        then.setData({
+          [`specialList[${addNum}].num`]: then.data.specialList[addNum].num + 1
+        })
+      }
+      talkList.push({
+        nick,
+        payload: JSON.parse(payload.data)
+      });
       then.setData({
         talkList
+      });
+    } else if (messageFilter(payload) == -1) {
+      let joinList =
+        then.data.joinList.length > 20 ?
+        then.data.joinList.slice(0, 22) :
+        then.data.joinList
+      joinList.push({
+        nick
       })
-    } else if (messageFilter(payload, 1) == 1 || messageFilter(payload, 1) == 4) {
-      // console.log('点赞消息/进入直播间')
-      const specialList = then.data.specialList.length > 20 ? then.data.specialList.slice(0, 22) : then.data.specialList
-      specialList.push({
-        nick: nick,
-        payload: JSON.parse(payload.data),
-      })
-      messageFilter(payload, 1) == 1 ? then.setData({
-        liveCount: then.data.liveCount + 1
-      }) : ''
       then.setData({
-        specialList
+        joinList
       })
     } else if (messageFilter(payload) == -4) {
       then.setData({
-        liveStatus: 4
-      })
+        liveStatus: 4,
+      });
     } else if (messageFilter(payload) == -2) {
       then.setData({
-        liveStatus: 1
-      })
+        liveStatus: 1,
+      });
     } else if (messageFilter(payload) == -3) {
       then.setData({
-        liveStatus: 3
-      })
+        liveStatus: 3,
+      });
     }
-  })
-}
+  });
+};
 
 //tim初始化
 function timInit(that, values, type) {
-  then = that
+  then = that;
   let options = {
-    SDKAppID: then.data.$state.sdkAppid
+    SDKAppID: then.data.$state.sdkAppid,
   };
   then.tim = TIM.create(options);
-  if (type) return
+  if (type) return;
   then.tim.setLogLevel(1);
   then.tim.on(TIM.EVENT.SDK_READY, (event) => {
     // 收到离线消息和会话列表同步完毕通知，接入侧可以调用 sendMessage 等需要鉴权的接口
-    joinGroup()
-    messageUp()
+    joinGroup();
+    messageUp();
   });
   timLogin({
     uid: values.uid,
-    userSig: values.userSig
-  })
+    userSig: values.userSig,
+  });
 }
 
 //tim登录
 function timLogin(params) {
-  then.tim.login({
-    userID: String(params.uid),
-    userSig: params.userSig
-  }).then((imResponse) => {
-    console.log(imResponse.data, '登录成功');
-    if (imResponse.data.repeatLogin === true) {
-      console.log(imResponse.data.errorInfo, '重复登录');
-    }
-  }).catch(function (imError) {
-    console.warn('登录失败', imError); // 登录失败的相关信息
-  });
+  then.tim
+    .login({
+      userID: String(params.uid),
+      userSig: params.userSig,
+    })
+    .then((imResponse) => {
+      console.log(imResponse.data, "登录成功");
+      if (imResponse.data.repeatLogin === true) {
+        console.log(imResponse.data.errorInfo, "重复登录");
+      }
+    })
+    .catch(function (imError) {
+      console.warn("登录失败", imError); // 登录失败的相关信息
+    });
 }
 
 //tim等出
 function timLoginout() {
-  then.tim.logout().then(function (imResponse) {
-    console.log(imResponse.data, '登出成功'); // 
-  }).catch(function (imError) {
-    console.warn('登出失败', imError);
-  });
+  then.tim
+    .logout()
+    .then(function (imResponse) {
+      console.log(imResponse.data, "登出成功"); //
+    })
+    .catch(function (imError) {
+      console.warn("登出失败", imError);
+    });
 }
 
 //加入群组
 function joinGroup() {
-  then.tim.joinGroup({
-    groupID: String(then.data.liveDetail.chatGroup),
-    type: TIM.TYPES.GRP_MEETING
-  }).then((imResponse) => {
-    switch (imResponse.data.status) {
-      case TIM.TYPES.JOIN_STATUS_WAIT_APPROVAL:
-        break;
-      case TIM.TYPES.JOIN_STATUS_SUCCESS:
-        console.log(imResponse.data.group, '加群成功');
-        break;
-      case TIM.TYPES.JOIN_STATUS_ALREADY_IN_GROUP:
-        console.log("已入群")
-        break;
-      default:
-        break;
-    }
-    then.tim.updateMyProfile({
-      nick: then.data.userInfo.nickname,
-      avatar: then.data.userInfo.avatar,
-      gender: TIM.TYPES.GENDER_MALE,
-      selfSignature: '',
-      allowType: TIM.TYPES.ALLOW_TYPE_ALLOW_ANY
-    }).then(function (imResponse) {
-      console.log(imResponse.data, '更新资料成功'); // 更新资料成功
-    }).catch(function (imError) {
-      console.warn('updateMyProfile error:', imError); // 更新资料失败的相关信息
+  then.tim
+    .joinGroup({
+      groupID: String(then.data.liveDetail.chatGroup),
+      type: TIM.TYPES.GRP_MEETING,
+    })
+    .then((imResponse) => {
+      switch (imResponse.data.status) {
+        case TIM.TYPES.JOIN_STATUS_WAIT_APPROVAL:
+          break;
+        case TIM.TYPES.JOIN_STATUS_SUCCESS:
+          console.log(imResponse.data.group, "加群成功");
+          break;
+        case TIM.TYPES.JOIN_STATUS_ALREADY_IN_GROUP:
+          console.log("已入群");
+          break;
+        default:
+          break;
+      }
+      then.tim
+        .updateMyProfile({
+          nick: then.data.userInfo.nickname,
+          avatar: then.data.userInfo.avatar,
+          gender: TIM.TYPES.GENDER_MALE,
+          selfSignature: "",
+          allowType: TIM.TYPES.ALLOW_TYPE_ALLOW_ANY,
+        })
+        .then(function (imResponse) {
+          console.log(imResponse.data, "更新资料成功"); // 更新资料成功
+        })
+        .catch(function (imError) {
+          console.warn("updateMyProfile error:", imError); // 更新资料失败的相关信息
+        });
+      timGetmessage(then.data.liveDetail.chatGroup, 1);
+    })
+    .catch(function (imError) {
+      console.warn("joinGroup error:", imError); // 申请加群失败的相关信息
     });
-    timGetmessage(then.data.liveDetail.chatGroup, 1)
-  }).catch(function (imError) {
-    console.warn('joinGroup error:', imError); // 申请加群失败的相关信息
-  });
 }
 
 //退出群组
 function quitGroup() {
-  then.tim.quitGroup(String(then.data.liveDetail.chatGroup)).then(function (imResponse) {
-    console.log(imResponse.data.groupID, '退出成功的群'); // 退出成功的群 ID
-    // then.tim.off(TIM.EVENT.MESSAGE_RECEIVED, messageUplisten);
-  }).catch(function (imError) {
-    console.warn('quitGroup error:', '退群失败'); // 退出群组失败的相关信息
-    // then.tim.off(TIM.EVENT.MESSAGE_RECEIVED, messageUplisten);
-  });
+  then.tim
+    .quitGroup(String(then.data.liveDetail.chatGroup))
+    .then(function (imResponse) {
+      console.log(imResponse.data.groupID, "退出成功的群"); // 退出成功的群 ID
+      // then.tim.off(TIM.EVENT.MESSAGE_RECEIVED, messageUplisten);
+    })
+    .catch(function (imError) {
+      console.warn("quitGroup error:", "退群失败"); // 退出群组失败的相关信息
+      // then.tim.off(TIM.EVENT.MESSAGE_RECEIVED, messageUplisten);
+    });
 }
 
 //消息过滤
 function messageFilter(params, type) {
-  if (params.text) return 2
-  switch (JSON.parse(params.data).customText) {
-    case '0008043cc6f0647e061acf18dac98ef3': //进入直播
-      return type ? 1 : -1
-      break;
-    case 'b6b7bc2d01bcb555795e9ed7ca5f84f5': //分享直播
-      return 2
-      break;
-    case 'b13ace4737652a74ef2ff02349eab853': //关注直播
-      return 3
-      break;
-    case '751e68f208e65780d52c1a0d53c6c8d4': //点赞直播
-      return 4
-      break;
-    case 'ee07a26161938852c3bc78d8aa02479b': //直播重新进入直播间
-      return -2
-      break;
-    case '79a5325920cb27c97654e65da37f5408': //主播结束直播
-      return -4
-      break;
-    case '01ff35f1f878fe1ef0a1501707664b32': //主播暂时离开
-      return -3
-      break;
-    case '5ef8580c35a92ce22aaad6154b186948': //后台结束直播解散房间
-      return -4
-      break;
-    default:
-      return 0
-      break;
+  if (params.text) return 2;
+  let json = JSON.parse(params.data).customText;
+  if (json.indexOf("rewardMsg") > 0) {
+    return 5;
+  } else {
+    switch (json) {
+      case "0008043cc6f0647e061acf18dac98ef3": //进入直播
+        return type ? 1 : -1;
+        break;
+      case "b6b7bc2d01bcb555795e9ed7ca5f84f5": //分享直播
+        return 3;
+        break;
+      case "b13ace4737652a74ef2ff02349eab853": //关注直播
+        return 3;
+        break;
+      case "751e68f208e65780d52c1a0d53c6c8d4": //点赞直播
+        return 4;
+        break;
+      case "ee07a26161938852c3bc78d8aa02479b": //直播重新进入直播间
+        return -2;
+        break;
+      case "79a5325920cb27c97654e65da37f5408": //主播结束直播
+        return -4;
+        break;
+      case "01ff35f1f878fe1ef0a1501707664b32": //主播暂时离开
+        return -3;
+        break;
+      case "5ef8580c35a92ce22aaad6154b186948": //后台结束直播解散房间
+        return -4;
+        break;
+      default:
+        return 0;
+        break;
+    }
   }
 }
 
 //获取消息列表
 function timGetmessage(roomId, isFirst) {
-  then.tim.getMessageList({
-    conversationID: `GROUP${roomId}`,
-    nextReqMessageID: nextReqMessageID
-  }).then(function (imResponse) {
-    const messageList = imResponse.data.messageList; // 消息列表。
-    nextReqMessageID = imResponse.data.nextReqMessageID; // 用于续拉，分页续拉时需传入该字段。
-    const isCompleted = imResponse.data.isCompleted; // 表示是否已经拉完所有消息。
-    const params = {
-      customText: 'MD5_AUDIENCE_ENTER_LIVE',
-      customType: '0',
-      isShow: 'show',
-
-    }
-    // console.log(messageList, nextReqMessageID, isCompleted, '消息会话')
-    if (isFirst) {
-      const talkList = [{
-          nick: '网上老年大学小助手',
-          payload: {
-            text: '欢迎来到直播间：<p> 1、请自行调节手机音量至合适的状态。</p> <p>2、听众发言可以在讨论区进行查看。</p>'
-          }
-        }],
-        arr = []
-      messageList.forEach(e => {
-        let {
-          nick,
-          payload,
-        } = e
-        messageFilter(payload) > 0 ? arr.push({
-          nick,
-          payload: payload.text ? payload : JSON.parse(payload.data),
-        }) : ''
-      })
-      then.data.talkList = arr.concat(talkList)
-      if (messageList.length < 15) {
-        then.setData({
-          talkList: then.data.talkList
-        })
+  then.tim
+    .getMessageList({
+      conversationID: `GROUP${roomId}`,
+      nextReqMessageID: nextReqMessageID,
+    })
+    .then(function (imResponse) {
+      const messageList = imResponse.data.messageList; // 消息列表。
+      nextReqMessageID = imResponse.data.nextReqMessageID; // 用于续拉，分页续拉时需传入该字段。
+      const isCompleted = imResponse.data.isCompleted; // 表示是否已经拉完所有消息。
+      const params = {
+        customText: "MD5_AUDIENCE_ENTER_LIVE",
+        customType: "0",
+        isShow: "show",
+      };
+      // console.log(messageList, nextReqMessageID, isCompleted, '消息会话')
+      if (isFirst) {
+        const talkList = [{
+            nick: "网上老年大学小助手",
+            payload: {
+              text: "欢迎来到直播间：<p> 1、请自行调节手机音量至合适的状态。</p> <p>2、听众发言可以在讨论区进行查看。</p>",
+            },
+          }, ],
+          arr = [];
+        messageList.forEach((e) => {
+          let {
+            nick,
+            payload
+          } = e;
+          messageFilter(payload) == 2 ?
+            arr.push({
+              nick,
+              payload: payload.text ? payload : JSON.parse(payload.data),
+            }) :
+            "";
+        });
+        then.data.talkList = arr.concat(talkList);
+        if (messageList.length < 15) {
+          then.setData({
+            talkList: then.data.talkList,
+          });
+        }
+        customParams(params);
+        timGetmessage(roomId);
+      } else {
+        const talkList = then.data.talkList,
+          arr = [];
+        messageList.forEach((e) => {
+          let {
+            nick,
+            payload
+          } = e;
+          messageFilter(payload) == 2 ?
+            arr.push({
+              nick,
+              payload: payload.text ? payload : JSON.parse(payload.data),
+            }) :
+            "";
+        });
+        then.data.talkList = arr.concat(talkList);
+        if (messageList.length < 15 || then.data.talkList.length > 20) {
+          then.setData({
+            talkList: then.data.talkList,
+          });
+          return;
+        }
+        timGetmessage(roomId);
       }
-      customParams(params)
-      timGetmessage(roomId)
-    } else {
-      const talkList = then.data.talkList,
-        arr = []
-      messageList.forEach(e => {
-        let {
-          nick,
-          payload,
-        } = e
-        messageFilter(payload) > 0 ? arr.push({
-          nick,
-          payload: payload.text ? payload : JSON.parse(payload.data),
-        }) : ''
-      })
-      then.data.talkList = arr.concat(talkList)
-      if (messageList.length < 15 || then.data.talkList.length > 50) {
-        then.setData({
-          talkList: then.data.talkList
-        })
-        return
-      }
-      timGetmessage(roomId)
-    }
-  });
+    });
 }
 
 //发送普通文本消息
@@ -292,95 +368,120 @@ function sendTextMsg(detail) {
     to: String(then.data.liveDetail.chatGroup),
     conversationType: TIM.TYPES.CONV_GROUP,
     payload: {
-      text: detail
-    }
+      text: detail,
+    },
   });
   // 2. 发送消息
-  then.tim.sendMessage(message).then(function (imResponse) {
-    // console.log(imResponse, '发送成功');
-    const talkList = then.data.talkList
-    talkList.push({
-      nick: then.data.userInfo.nickname,
-      payload: {
-        text: detail
-      }
+  then.tim
+    .sendMessage(message)
+    .then(function (imResponse) {
+      // console.log(imResponse, '发送成功');
+      const talkList = then.data.talkList;
+      talkList.push({
+        nick: then.data.userInfo.nickname,
+        payload: {
+          text: detail,
+        },
+      });
+      then.setData({
+        talkList,
+      });
     })
-    then.setData({
-      talkList
-    })
-  }).catch(function (imError) {
-    console.warn('发送失败', imError);
-  });
+    .catch(function (imError) {
+      console.warn("发送失败", imError);
+    });
 }
 
 //自定义消息数据初始
-function customParams(params) {
+function customParams(params, type) {
   let customParams = {
-    customText: customText[params.customText],
+    customText: type ? params.customText : customText[params.customText],
     customType: params.customType,
     isShow: params.isShow,
     personCount: "0",
-    attachContent: params.attachContent
-  }
-  sendCustomMessage(customParams)
+    attachContent: params.attachContent,
+  };
+  sendCustomMessage(customParams);
 }
 
 //发送自定义文本消息
 function sendCustomMessage(params) {
   let payload = {
     data: JSON.stringify(params),
-    description: '',
-    extension: ''
-  }
+    description: "",
+    extension: "",
+  };
   let message = then.tim.createCustomMessage({
     to: String(then.data.liveDetail.chatGroup),
     conversationType: TIM.TYPES.CONV_GROUP,
-    payload
+    payload,
   });
   // 3. 发送消息
-  then.tim.sendMessage(message).then(function (imResponse) {
-    // 发送成功
-    // console.log(imResponse, '发送成功');
-    if (messageFilter(payload, 1) == 1 || messageFilter(payload, 1) == 4) {
-      const specialList = then.data.specialList
-      specialList.push({
+  then.tim
+    .sendMessage(message)
+    .then(function (imResponse) {
+      // 发送成功
+      // console.log(imResponse, '发送成功');
+      if (messageFilter(payload, 1) == 5) {
+        let specialList = then.data.specialList,
+          addNum = -1
+        specialList.forEach((item, index) => {
+          item.from == then.data.$state.userInfo.id && JSON.stringify(item.payload.customText) == JSON.stringify(params.customText) && item.payload.isShow ? addNum = index : null;
+        })
+        if (addNum == -1) {
+          specialList.push({
+            nick: then.data.userInfo.nickname,
+            payload: params,
+            from: then.data.$state.userInfo.id,
+            num: 1
+          });
+          then.setData({
+            specialList,
+          });
+        } else {
+          then.setData({
+            [`specialList[${addNum}].num`]: then.data.specialList[addNum].num + 1
+          })
+        }
+      }
+      if (messageFilter(payload, 1) == 1) {
+        let joinList = then.data.joinList
+        joinList.push({
+          nick: then.data.userInfo.nickname
+        })
+        then.setData({
+          joinList
+        })
+        return
+      };
+      const talkList = then.data.talkList;
+      talkList.push({
         nick: then.data.userInfo.nickname,
         payload: params,
-      })
+      });
       then.setData({
-        specialList
-      })
-      return
-    }
-    const talkList = then.data.talkList
-    talkList.push({
-      nick: then.data.userInfo.nickname,
-      payload: params,
+        talkList,
+      });
     })
-    then.setData({
-      talkList
-    })
-  }).catch(function (imError) {
-    // 发送失败
-    console.warn('发送失败', imError);
-  });
+    .catch(function (imError) {
+      // 发送失败
+      console.warn("发送失败", imError);
+    });
 }
 
-//更新消息列表 
+//更新消息列表
 function messageUp() {
-  if (app.store.$state.messageReceived) return
+  if (app.store.$state.messageReceived) return;
   app.store.setState({
-    messageReceived: 1
-  })
+    messageReceived: 1,
+  });
   then.tim.on(TIM.EVENT.MESSAGE_RECEIVED, messageUplisten);
 }
-
-
 
 module.exports = {
   timInit,
   timLoginout,
   quitGroup,
   sendTextMsg,
-  customParams
-}
+  customParams,
+};
