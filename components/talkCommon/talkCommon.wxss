@@ -254,10 +254,9 @@
   position: absolute;
   bottom: 0;
   z-index: 9999999999999;
-  height: calc(60vmin / 7.5);
   border-radius: calc(40vmin / 7.5);
   background: rgba(0, 0, 0, 0.5);
-  padding: 0 calc(20vmin / 7.5);
+  padding: calc(10vmin / 7.5) calc(20vmin / 7.5);
   display: flex;
   align-items: center;
   color: #fff;
