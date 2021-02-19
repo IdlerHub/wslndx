@@ -159,8 +159,8 @@
           "scene": null
         },
         {
-          "name": "page/live/pages/vliveRoom/vliveRoom",
-          "pathName": "page/live/pages/vliveRoom/vliveRoom",
+          "name": "pages/post/post",
+          "pathName": "pages/post/post",
           "query": "roomId=1760",
           "scene": 1069,
           "referrerInfo": {}
