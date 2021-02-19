@@ -47,5 +47,13 @@ Page({
         schoolList
       })
     })
-  }
+  },
+  checknextTap(e) {
+    app.checknextTap(e)
+  },
+  toInfo() {
+    wx.navigateTo({
+      url: "/page/user/pages/info/info"
+    })
+  },
 })
