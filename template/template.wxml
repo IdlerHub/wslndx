@@ -1,4 +1,5 @@
 <!--template/postItem.wxml-->
+<!-- 秀风采列表item -->
 <template name="listitem">
 	<view class="item">
 		<view class="top" catchtap="navigate" data-id="{{ item.id }}">
