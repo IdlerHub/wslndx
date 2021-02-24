@@ -161,7 +161,7 @@
         {
           "name": "pages/post/post",
           "pathName": "pages/post/post",
-          "query": "roomId=1760",
+          "query": "",
           "scene": 1069,
           "referrerInfo": {}
         }

@@ -10,8 +10,13 @@
 <view wx:if="{{ isRefreshing }}" class="weui-loadmore indexdrop">
 	<view class="weui-loading"></view>
 </view>
+<navigationBar wx:if="{{ showNavigatiobar }}" id="navigationBar" placeholderBg="#F8F8F8" color="#000000" title="{{nickname}}"
+    back="{{ false }}" background="#F8F8F8" back="{{true}}"></navigationBar>
 <view class="container" wx:if="{{list.length > 0}}">
-	<view class="Pagetop top">
+	<view id="Pagetop" class="Pagetop top" style="padding-top: {{statusBarHeight + 44}}px">
+		<navigator open-type="navigateBack" hover-class="none">
+			<image src="/images/back.png" class="banckTop" alt="" style="top: {{statusBarHeight}}px"></image>
+		</navigator>
 		<image class="bg" mode="widthFix" src="{{ avatar }}"></image>
 		<view class="box">
 			<view class="left">
@@ -19,19 +24,43 @@
 				<view class="info">
 					<text class="line name">{{ nickname }}</text>
 					<view class="line">
-						<text class="city">{{ addressCity || "暂无" }}</text>
 						<text class="school">{{ university_name || "暂无" }}</text>
 					</view>
 				</view>
+			</view>
+			<view class="tabBox">
+				<text>品牌大使</text> <text>旅游</text> <text>爱分享</text>
 			</view>
 			<view class="attention {{isFollow == 1 ? 'attentionold' : ''}}"
 				bindtap="{{isFollow == 1  ? 'clsocancelFollowing' : 'attention'}}">{{isFollow == 1  ? '已关注' : '关注'}}
 			</view>
 		</view>
 	</view>
+	<view class="centerBox">
+		<view class="showBox">
+			<view class="box">
+				<text>粉丝</text>
+				<text>23940</text>
+			</view>
+			<view class="box">
+				<text>关注</text>
+				<text>2940</text>
+			</view>
+		</view>
+		<view class="text">忌硬套格式 安排结构、运用笔墨应遵循古人所说“定体则无，大体须有”的原则才是。也就是说，既要考虑一般规律，又要结合自身实际来确立重点、谋篇布局、组织材料，绝不可死搬硬套。绝不可死搬硬套谋篇布局组。</view>
+	</view>
+	<view class="studyList">
+		<view class="studyTitle">最近在学</view>
+		<view class="listBox">
+			<view class="listItem" wx:for="{{6}}" wx:key="index">
+				<image></image>
+			</view>
+		</view>
+	</view>
 	<view class="wrap">
-		<template is="listitem" wx:for="{{myList}}"
-			data="{{item:item, page, index, $state, voiceplayimg, currentTab, playVoice}}" wx:key="index" />
+		<view class="wrapTitle">TA的作品</view>
+		<template is="listitem" wx:for="{{list}}"
+			data="{{item:item, page, index, $state, voiceplayimg, currentTab, playVoice, isPersomPage: 1}}" wx:key="index" />
 		<mp-loading type="circle" wx:if="{{ showLoading }}"></mp-loading>
 	</view>
 </view>

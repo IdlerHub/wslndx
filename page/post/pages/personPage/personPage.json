@@ -1,9 +1,11 @@
 {
   "navigationBarTextStyle": "black",
   "enablePullDownRefresh": true,
+  "navigationStyle": "custom",
   "usingComponents": {
     "formCode": "/components/formCode/formCode",
     "integralAnimation": "/components/integralAni/integralAni",
-    "playRrecord": "/components/playRrecord/playRrecord"
+    "playRrecord": "/components/playRrecord/playRrecord",
+    "navigationBar": "/components/navigationBar/navigationBar"
   }
 }
