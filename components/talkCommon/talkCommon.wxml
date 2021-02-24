@@ -98,7 +98,7 @@
         wx:if="{{ ((fn.showType(item.payload) > 0 || item.payload.text) && fn.fliter(item.payload.text)) || !fn.showGift(item.payload, 1)}}">
         <view class="contentBox">
           <rich-text class="richtext"
-            nodes="{{ '<span style=color:#E6E6E6;>' + fn.showNick(item.nick) + ': </span>' + item.payload.text}}"
+            nodes="{{ '<span style=color:#E6E6E6;>' + item.nick + ': </span>' + item.payload.text}}"
             wx:if="{{item.payload.text && fn.fliter(item.payload.text)}}" class="richtext"></rich-text>
           <view class="joinTxt shareTxt" wx:elif="{{fn.showType(item.payload) == 2}}"> <text>{{item.nick}}</text>
             <view class="sharetxt">分享了课程</view>
