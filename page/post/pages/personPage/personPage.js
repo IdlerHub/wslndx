@@ -14,7 +14,8 @@ Page({
         second: 0
       },
       id: 0
-    }
+    },
+    showNavigatiobar: false
   },
   pageName: "个人简介页面",
   pageRecord: 1,
@@ -22,19 +23,25 @@ Page({
     this.setData({
       us_id: options.uid,
       nickname: options.nickname,
-      avatar: options.avatar
+      avatar: options.avatar,
+      statusBarHeight: wx.getSystemInfoSync().statusBarHeight
     });
     wx.setNavigationBarTitle({
       title: options.nickname
     });
-    this.param = { page: 1, pageSize: 10 };
+    this.param = {
+      page: 1,
+      pageSize: 10
+    };
     this.getList([]);
-    wx.uma.trackEvent("post_persons", { pageName: "个人风采" });
-     getCurrentPages().forEach(v => {
+    wx.uma.trackEvent("post_persons", {
+      pageName: "个人风采"
+    });
+    getCurrentPages().forEach(v => {
       v.pageName == '秀风采页' ? this.pages = v : ''
     });
   },
-  onShow: function() {
+  onShow: function () {
     record.initRecord(this)
     let list = this.data.list,
       flowList = this.data.flowList;
@@ -76,12 +83,19 @@ Page({
       }, 1000);
     });
   },
+  onPageScroll(e) {
+    e.scrollTop > 190 && !this.data.showNavigatiobar ? this.setData({
+      showNavigatiobar: true
+    }) : e.scrollTop <= 190 && this.data.showNavigatiobar ? this.setData({
+      showNavigatiobar: false
+    }) : null
+  },
   //上拉加载
   onReachBottom() {
     this.param.page++;
     this.getList();
   },
-  onShareAppMessage: function(ops, b) {
+  onShareAppMessage: function (ops, b) {
     if (ops.from === "menu") {
       return this.menuAppShare();
     }
@@ -90,20 +104,22 @@ Page({
       let i = ops.target.dataset.index;
       let article = this.data.list[i];
       let bkid = article.id;
-      app.circle.addForward({ blog_id: bkid }).then(res => {
+      app.circle.addForward({
+        blog_id: bkid
+      }).then(res => {
         let list = this.data.list;
         list[i].forward += 1;
         this.setData({
           list: list
         });
       });
-      wx.uma.trackEvent('totalShare', { shareName: '秀风采分享' });
+      wx.uma.trackEvent('totalShare', {
+        shareName: '秀风采分享'
+      });
       return {
         title: app.util.delHtmlTag(article.content),
-        imageUrl:
-          article.image || article.images[0] || "../../images/sharemessage.jpg",
-        path:
-          "/pages/pDetail/pDetail?id=" +
+        imageUrl: article.image || article.images[0] || "../../images/sharemessage.jpg",
+        path: "/page/post/pages/pDetail/pDetail?id=" +
           bkid +
           "&type=share&uid=" +
           this.data.$state.userInfo.id
@@ -119,7 +135,7 @@ Page({
         for (let i in msg.data) {
           arr.push(msg.data[i]);
         }
-        arr.forEach(function(item) {
+        arr.forEach(function (item) {
           item.fw = app.util.tow(item.forward);
           item.cw = app.util.tow(item.comments);
           item.lw = app.util.tow(item.likes);
@@ -137,9 +153,9 @@ Page({
           }
         });
         temp.push(...arr);
-        temp[0].university_name == "null"
-          ? (temp[0].university_name = null)
-          : "";
+        temp[0].university_name == "null" ?
+          (temp[0].university_name = null) :
+          "";
         temp[0].province == "null" ? (temp[0].province = null) : "";
         this.setData({
           list: temp,
@@ -191,7 +207,9 @@ Page({
           // app.socket.send(list[i].uid)
           app.socket.send({
             type: "Bokemessage",
-            data: { uid: list[i].uid }
+            data: {
+              uid: list[i].uid
+            }
           });
           if (msg.data.is_first == "first") {
             this.setData({
@@ -208,7 +226,9 @@ Page({
           this.setData({
             list: list
           });
-          wx.uma.trackEvent("post_btnClick", { btnName: "点赞按钮" });
+          wx.uma.trackEvent("post_btnClick", {
+            btnName: "点赞按钮"
+          });
           this.pages ? this.pages.pagePraise(e.currentTarget.dataset.id) : ''
         })
         .catch(msg => {
@@ -255,18 +275,19 @@ Page({
   handleRelse(status) {
     if (this.data.$state.userInfo.status !== "normal") {
       wx.showModal({
-        content:
-          "由于您近期不合规操作，您的账户已被管理员禁止发帖留言，如有疑问请在个人中心联系客服处理"
+        content: "由于您近期不合规操作，您的账户已被管理员禁止发帖留言，如有疑问请在个人中心联系客服处理"
       });
     } else {
-      status.currentTarget.dataset.type == "reply"
-        ? wx.navigateTo({
-            url: `/pages/pDetail/pDetail?id= ${status.currentTarget.dataset.id}&comment`
-          })
-        : wx.navigateTo({
-            url: "/pages/release/release"
-          });
-      wx.uma.trackEvent("post_btnClick", { btnName: "评论按钮" });
+      status.currentTarget.dataset.type == "reply" ?
+        wx.navigateTo({
+          url: `/page/post/pages/pDetail/pDetail?id= ${status.currentTarget.dataset.id}&comment`
+        }) :
+        wx.navigateTo({
+          url: "/page/post/pages/release/release"
+        });
+      wx.uma.trackEvent("post_btnClick", {
+        btnName: "评论按钮"
+      });
     }
   },
   //收藏风采
@@ -278,24 +299,26 @@ Page({
       blog_id,
       blog_index
     });
-    status == 0
-      ? this.setData({
-          showSheet: true,
-          showSheetBox: true
-        })
-      : this.setData({
-          showSheet: true,
-          showSheetBox: false
-        });
+    status == 0 ?
+      this.setData({
+        showSheet: true,
+        showSheetBox: true
+      }) :
+      this.setData({
+        showSheet: true,
+        showSheetBox: false
+      });
   },
   cancelCollection() {
-    let param = { blog_id: this.data.blog_id };
+    let param = {
+      blog_id: this.data.blog_id
+    };
     app.circle
       .collectCancel(param)
       .then(res => {
         let list = this.data.list;
         list[this.data.blog_index].collectstatus = 0;
-        this.pages ? this.pages.pagesCollect(this.data.blog_id, 0) :''
+        this.pages ? this.pages.pagesCollect(this.data.blog_id, 0) : ''
         this.setData({
           list
         });
@@ -325,7 +348,7 @@ Page({
       .then(res => {
         let list = this.data.list;
         list[this.data.blog_index].collectstatus = 1;
-        this.pages ? this.pages.pagesCollect(this.data.blog_id, 1) :''
+        this.pages ? this.pages.pagesCollect(this.data.blog_id, 1) : ''
         this.setData({
           list
         });
@@ -351,7 +374,9 @@ Page({
     });
   },
   attention() {
-    let param = { follower_uid: this.data.us_id };
+    let param = {
+      follower_uid: this.data.us_id
+    };
     app.user.following(param).then(res => {
       wx.showToast({
         title: "您已成功关注" + this.data.nickname,
@@ -362,17 +387,19 @@ Page({
         isFollow: 1
       });
       this.pages ? this.pages.setfollow(this.data.us_id, true) : ''
-      getCurrentPages().forEach(v=> {
-        v.pageName == "秀风采搜索" ?  v.data.uList.forEach((a,b) => {
+      getCurrentPages().forEach(v => {
+        v.pageName == "秀风采搜索" ? v.data.uList.forEach((a, b) => {
           a.id == this.data.us_id ? v.setData({
             [`uList[${b}].is_follow`]: 1
-          }) :''
+          }) : ''
         }) : ''
       })
     });
   },
   clsocancelFollowing() {
-    let param = { follower_uid: this.data.us_id },
+    let param = {
+        follower_uid: this.data.us_id
+      },
       that = this;
     wx.showModal({
       content: "是否取消关注？",
