@@ -171,5 +171,5 @@ page {
   position: absolute;
   right: calc(16vmin / 7.5);
   bottom: calc(364vmin / 7.5);
-  z-index: 9999999999999999999;
+  z-index: 999999999;
 }

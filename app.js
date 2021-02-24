@@ -12,48 +12,6 @@ import { praise } from "./data/Circle";
 /* sse */
 const socket = require("data/socket.js");
 const backgroundAudioManager = wx.getBackgroundAudioManager();
-/* 小程序直播组件 */
-var livePlayer = requirePlugin("live-player-plugin");
-/* 接入bug平台 */
-var fundebug = require("fundebug-wxjs");
-fundebug.init({
-  apikey: "b3b256c65b30a1b0eb26f8d9c2cd7855803498f0c667df934be2c72048af93d9",
-  releaseStage: store.process,
-  monitorMethodCall: true /* 自定义函数的监控 */,
-  monitorMethodArguments: true /* 监控小程序中的函数调用的参数 */,
-  monitorHttpData: true /* 收集 HTTP 请求错误的 body  */,
-  setSystemInfo: true,
-  silentInject: true,
-  filters: [
-    {
-      req: {
-        url: /log\.aldwx\.com/,
-        method: /^GET$/,
-      },
-    },
-    {
-      req: {
-        url: /recordFinish/,
-        method: /^POST$/,
-      },
-    },
-    {
-      req: {
-        url: /lists/,
-        method: /^POST$/,
-      },
-    },
-    {
-      error: /getHistory/,
-    },
-    {
-      errMsg: / request:fail timeout | uploadFile:ok | request:fail | request:ok /,
-    },
-  ],
-  metaData: {
-    storeData: store.$state,
-  },
-});
 //工具库
 var util = require("utils/util.js");
 //http请求接口
@@ -88,8 +46,6 @@ App({
   socket,
   lessonNew,
   store,
-  livePlayer,
-  fundebug,
   backgroundAudioManager,
   umengConfig: {
     appKey:
@@ -243,7 +199,6 @@ App({
     }
   },
   onError: function (err) {
-    fundebug.notifyError(err);
   },
   wxLogin: async function (e) {
     await wxp.login({}).then((res) => {

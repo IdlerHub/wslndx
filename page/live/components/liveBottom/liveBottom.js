@@ -1,3 +1,5 @@
+const Wallet = require("../../../../data/Wallet")
+import timsdk from "../../utils/timsdk";
 // page/live/components/liveBottom/liveBottom.js
 Component({
   properties: {
@@ -25,32 +27,31 @@ Component({
     },
   },
   ready() {
+    this.giftListConfig()
     let systemInfo = wx.getSystemInfoSync()
     this.setData({
       system: systemInfo.platform
     })
-    // wx.onKeyboardHeightChange(res => {
-    //   console.log(res.height)
-    //   this.setData({
-    //     keyHeight: res.height
-    //   }, () => {
-    //     setTimeout(() => {
-    //       this.data.keyHeight == 0 && !this.data.focus ? this.setData({
-    //         keyHeight: '-60'
-    //       }) : ''
-    //     }, 200);
-    //   })
-    // })
     this.praiseNum = 0
+    this.roomPages = getCurrentPages()[getCurrentPages().length - 1]
   },
   data: {
     focus: false,
     keyHeight: '-60',
     txt: '',
     system: 'ios',
-    praiseCount: 0
+    praiseCount: 0,
+    popupShow: false,
+    activeNum: 0,
+    giftList: []
   },
   methods: {
+    giftListConfig: async function () {
+      let list = (await getApp().liveData.giftListConfig()).dataList
+      this.setData({
+        giftList: list
+      })
+    },
     showBox() {
       this.setData({
         focus: !this.data.focus
@@ -82,7 +83,6 @@ Component({
       this.praiseNum += 1
       this.timer ? clearTimeout(this.timer) : ''
       this.timer = setTimeout(() => {
-        console.log(this.praiseNum)
         this.triggerEvent('praise', this.praiseNum)
         this.praiseNum = 0
       }, 1000);
@@ -108,6 +108,56 @@ Component({
       }) : wx.navigateTo({
         url: '/page/live/pages/liveDetail/liveDetail?specialColumnId=' + this.data.columnId,
       })
-    }
+    },
+    showGift() {
+      this.setData({
+        popupShow: !this.data.popupShow
+      })
+    },
+    checkGift(e) {
+      let index = e.currentTarget.dataset.index
+      this.setData({
+        activeNum: index
+      })
+    },
+    payGift: async function () {
+      let params = {
+        giftId: this.data.giftList[this.data.activeNum].id,
+        deviceType: wx.getSystemInfoSync().system.search('iOS') > -1 ? 2 : 1,
+        payType: 4,
+        liveId: this.roomPages.data.liveDetail.id,
+        serviceType: 1
+      }, that = this
+      let payParams = (await Wallet.buygift(params)).data
+      payParams.wxPayMpOrderResult['package'] = payParams.wxPayMpOrderResult.packageValue
+      delete payParams.wxPayMpOrderResult.packageValue;
+      wx.requestPayment(Object.assign(payParams.wxPayMpOrderResult, {
+        success(res) {
+          that.giftCustommessag()
+        },
+        fail(res) {
+          console.log(res)
+          wx.showToast({
+            title: '支付失败,请重新操作',
+            icon: 'none'
+          })
+        }
+      }))
+    },
+    giftCustommessag() {
+      let customText = {
+        pictureUrl: this.data.giftList[this.data.activeNum].pictureUrl,
+        rewardMsg: `送出${this.data.giftList[this.data.activeNum].title}`
+      }
+      let params = {
+        customText: JSON.stringify(customText),
+        customType: 1,
+        isShow: 'show',
+      }
+      timsdk.customParams(params, 1)
+      this.setData({
+        popupShow: false
+      })
+    },
   }
 })

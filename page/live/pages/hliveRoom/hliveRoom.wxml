@@ -1,7 +1,12 @@
 <!--page/live/pages/hliveRoom/hliveRoom.wxml-->
-<live-player src="{{liveDetail.liveUrl}}" class="h-player" autoplay bindstatechange="bindstatechange" wx:if="{{liveStatus == 1 && !liveDetail.liveType}}" orientation="vertical" bindtap="closeCommont" bindleavepictureinpicture="bindleavepictureinpicture">
+<live-player src="{{liveDetail.liveUrl}}" class="h-player" autoplay bindstatechange="bindstatechange"
+  wx:if="{{liveStatus == 1 && !liveDetail.liveType}}" orientation="vertical" bindtap="closeCommont"
+  bindleavepictureinpicture="bindleavepictureinpicture">
 </live-player>
-<video src="{{liveDetail.videoUrl}}" class="h-player" controls="{{false}}" initial-time="{{liveDetail.now}}" show-center-play-btn="{{false}}" enable-progress-gesture="{{false}}" show-progress="{{false}}" show-fullscreen-btn="{{false}}"  show-play-btn="{{false}}" autoplay object-fit="fill" wx:if="{{liveStatus == 1 && liveDetail.liveType && showVideo}}" bindtap="closeCommont"></video>
+<video src="{{liveDetail.videoUrl}}" class="h-player" controls="{{false}}" initial-time="{{liveDetail.now}}"
+  show-center-play-btn="{{false}}" enable-progress-gesture="{{false}}" show-progress="{{false}}"
+  show-fullscreen-btn="{{false}}" show-play-btn="{{false}}" autoplay object-fit="fill"
+  wx:if="{{liveStatus == 1 && liveDetail.liveType && showVideo}}" bindtap="closeCommont"></video>
 <view class="statusBox" wx:if="{{liveStatus != 1}}">
   <text wx:if="{{liveStatus == 3}}">讲师暂时离开,请稍等</text>
   <text wx:if="{{liveStatus == 4}}">直播结束</text>
@@ -10,19 +15,26 @@
     <image src="../../images/commonShare.png"></image>
   </button>
 </view>
-<liveTop liveDetail="{{liveDetail}}" liveCount="{{liveCount}}" direction="{{liveDetail.direction}}" bind:checkFollow="checkFollow" wx:if="{{showCommont}}"/>
-<talkCommon id="talkCommon" talkList="{{talkList}}" specialList="{{specialList}}" close="{{close}}" showList="{{showList}}" newMessage="{{newMessage}}"
-  bind:setNewmessagenum="setNewmessagenum" bind:animationCheck="animationCheck"/>
-  <navigator class="downloadeApp"
-  url="/pages/education/education?type=0&url=https://mp.weixin.qq.com/s/vSd8XBQDQkvqVX_kt_YyTQ" hover-class="none" wx:if="{{animation.showOne}}">
-  <image src="../../images/dowloafeApp.png" style="{{animation.showJoinclass ? 'animation: loseImg 0.5s;' : 'animation: showImg 0.5s;'}}" bindtap="downloadeApp"></image>
+<liveTop liveDetail="{{liveDetail}}" liveCount="{{liveCount}}" direction="{{liveDetail.direction}}"
+  bind:checkFollow="checkFollow" wx:if="{{showCommont}}" />
+<talkCommon id="talkCommon" talkList="{{talkList}}" specialList="{{specialList}}" close="{{close}}" joinList="{{joinList}}"
+  showList="{{showList}}" newMessage="{{newMessage}}" bind:setNewmessagenum="setNewmessagenum"
+  bind:animationCheck="animationCheck" bind:animationDel="animationDel" bind:animationEnd="animationEnd" />
+<navigator class="downloadeApp"
+  url="/pages/education/education?type=0&url=https://mp.weixin.qq.com/s/vSd8XBQDQkvqVX_kt_YyTQ" hover-class="none"
+  wx:if="{{animation.showOne}}">
+  <image src="../../images/dowloafeApp.png"
+    style="{{animation.showJoinclass ? 'animation: loseImg 0.5s;' : 'animation: showImg 0.5s;'}}"
+    bindtap="downloadeApp"></image>
 </navigator>
-<navigator class="joinclass"
-  url="/pages/education/education?type=0&url={{liveDetail.mpUrl}}" hover-class="none" wx:else>
-  <image src="../../images/joninClass.png" style="{{animation.showDoweload ? 'animation: loseImg 0.5s;' : 'animation: showImg 0.5s;'}}" bindtap="downloadeApp"></image>
+<navigator class="joinclass" url="/pages/education/education?type=0&url={{liveDetail.mpUrl}}" hover-class="none"
+  wx:else>
+  <image src="../../images/joninClass.png"
+    style="{{animation.showDoweload ? 'animation: loseImg 0.5s;' : 'animation: showImg 0.5s;'}}" bindtap="downloadeApp">
+  </image>
 </navigator>
-<liveBottom close="{{close}}" columnId="{{liveDetail.columnId}}" bind:sendMsg="sendMsg" bind:praise="praise" bind:checkCaption="checkCaption"
-  bind:clickHandler="clickHandler" wx:if="{{showCommont}}"/>
+<liveBottom close="{{close}}" columnId="{{liveDetail.columnId}}" bind:sendMsg="sendMsg" bind:praise="praise"
+  bind:checkCaption="checkCaption" bind:clickHandler="clickHandler" wx:if="{{showCommont}}" />
 <like-fx count="{{praiseCount}}" wx:if="{{showCanvans}}"></like-fx>
 <view class="teacherBox" wx:if="{{showBox}}">
   <image src="/images/icon-del.png" class="icondel" bindtap="showBox" data-type="1"></image>
@@ -31,4 +43,5 @@
   <text>关注老师，更多好课不错过</text>
   <view class="addBtn" bindtap="attention">关注</view>
 </view>
-<image class="liveFloat" src="{{liveDetail.floatImage}}" wx:if="{{liveDetail.floatStatus}}" bindtap="clickFloat"></image>
+<image class="liveFloat" src="{{liveDetail.floatImage}}" wx:if="{{liveDetail.floatStatus}}" bindtap="clickFloat">
+</image>

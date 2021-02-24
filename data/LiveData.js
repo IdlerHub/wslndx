@@ -337,6 +337,15 @@ function freeDate(params) {
   return httpService.post("live/free/date", params, null ,true);
 }
 
+/**
+ * @description: 礼物列表
+ * @param {}
+ * @return:  promise
+ * **/
+function giftListConfig(params) {
+  return httpService.post("live/giftListConfig", params, null ,true);
+}
+
 module.exports = {
   getLiveLessons,
   getApplyDetail,
@@ -374,5 +383,6 @@ module.exports = {
   subjectList,
   hotList,
   chargeList,
-  freeDate
+  freeDate,
+  giftListConfig
 };

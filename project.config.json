@@ -37,7 +37,7 @@
     ]
   },
   "setting": {
-    "urlCheck": true,
+    "urlCheck": false,
     "es6": true,
     "enhance": true,
     "postcss": true,
@@ -56,21 +56,25 @@
     "compileHotReLoad": false,
     "useMultiFrameRuntime": true,
     "useApiHook": true,
+    "useApiHostProcess": true,
     "babelSetting": {
       "ignore": [],
       "disablePlugins": [],
       "outputPath": ""
     },
-    "enableEngineNative": false,
     "bundle": false,
     "useIsolateContext": true,
     "useCompilerModule": true,
     "userConfirmedUseCompilerModuleSwitch": false,
     "userConfirmedBundleSwitch": false,
-    "packNpmManually": false,
-    "packNpmRelationList": [],
-    "minifyWXSS": true,
-    "useApiHostProcess": true
+    "packNpmManually": true,
+    "packNpmRelationList": [
+      {
+        "packageJsonPath": "./package.json",
+        "miniprogramNpmDistDir": "./"
+      }
+    ],
+    "minifyWXSS": true
   },
   "compileType": "miniprogram",
   "libVersion": "2.12.2",
@@ -155,39 +159,11 @@
           "scene": null
         },
         {
-          "name": "page/live/pages/vliveRoom/vliveRoom",
-          "pathName": "page/live/pages/vliveRoom/vliveRoom",
-          "query": "roomId=1671",
+          "name": "pages/post/post",
+          "pathName": "pages/post/post",
+          "query": "roomId=1760",
           "scene": 1069,
           "referrerInfo": {}
-        },
-        {
-          "id": 12,
-          "name": "学习排行榜",
-          "pathName": "pages/rankingList/rankingList",
-          "query": "uid=12661&type=invite&mode=0",
-          "scene": null
-        },
-        {
-          "name": "pages/user/user",
-          "pathName": "pages/user/user",
-          "query": "url=www.baidu.com&type=123",
-          "scene": 1069,
-          "referrerInfo": {
-            "appId": "wx756d04f5d669cef0"
-          }
-        },
-        {
-          "name": "pages/education/education",
-          "pathName": "pages/education/education",
-          "query": "type=0&url=https://globalh5dev.jinlingkeji.cn/enrollmenth5/#/?lessonGroupId=12",
-          "scene": null
-        },
-        {
-          "name": "page/user/pages/score/score",
-          "pathName": "page/user/pages/score/score",
-          "query": "",
-          "scene": null
         }
       ]
     }
