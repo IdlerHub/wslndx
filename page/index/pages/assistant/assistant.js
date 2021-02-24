@@ -27,7 +27,7 @@ Page({
         id: 4,
         name: "找最近看过的课程",
         isLogin: 1,
-        url: "/page/user/pages/history/history",
+        url: "/page/study/pages/history/history",
       },
       {
         id: 5,

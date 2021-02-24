@@ -55,7 +55,7 @@
         </view>
         <navigator hover-class="none" url="/page/study/pages/liveCertificate/liveCertificate?name={{lessonDetail.name}}&id={{lessonDetail.columnId}}" class="progressBox" wx:else>
             <view class="badgeBox">
-                <image src="/images/livebadge.png"></image>
+                <image src="../../images/livebadge.png"></image>
                 <text class="badge">查看证书</text>
             </view>
         </navigator>

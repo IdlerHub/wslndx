@@ -51,7 +51,7 @@ Page({
       height: 62.49,
     }, {
       url: 'pages/studyCard/studyCard?type=home',
-      icon: '/images/indexIcon/vipIcon.gif',
+      icon: 'https://lndxappcdn.jinlingkeji.cn/common/vipicon.gif',
       name: 'VIP专区',
       width: 92,
       height: 92,
