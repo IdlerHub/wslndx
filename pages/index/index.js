@@ -51,18 +51,19 @@ Page({
       height: 62.49,
     }, {
       url: 'pages/studyCard/studyCard?type=home',
-      icon: 'https://lndxappcdn.jinlingkeji.cn/common/vipicon.gif',
+      icon: '/images/indexIcon/vipIcon.png',
       name: 'VIP专区',
-      width: 92,
-      height: 92,
+      width: 59,
+      height: 66,
       toMiniProgram: 'wx8dc9e7f55fe1f3ff'
     }, {
       url: '/page/index/pages/rankingList/rankingList',
-      icon: '/images/indexIcon/appicon.png',
-      name: '下载app',
-      width: 92,
-      height: 92,
+      icon: '/images/indexIcon/dowloadIcon.png',
+      name: '下载APP',
+      width: 86,
+      height: 76,
       toEducation: 'https://mp.weixin.qq.com/s/vSd8XBQDQkvqVX_kt_YyTQ',
+      showCanvas: 1
     },]
   },
   pageName: '首页',
