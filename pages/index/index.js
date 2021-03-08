@@ -471,6 +471,10 @@ Page({
     this.setData({
       showSignbox: false
     });
+    app.setSignIn({
+      status: 0,
+      count: 1
+    }, true)
   },
   showIntegral() {
     this.setData({
