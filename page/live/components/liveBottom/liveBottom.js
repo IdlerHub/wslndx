@@ -32,6 +32,7 @@ Component({
     this.setData({
       system: systemInfo.platform
     })
+    console.log(this.data.system, 34234234234234)
     this.praiseNum = 0
     this.roomPages = getCurrentPages()[getCurrentPages().length - 1]
   },

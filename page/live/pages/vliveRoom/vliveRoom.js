@@ -38,7 +38,6 @@ Page({
     this.liveOps = ops
     this.liveInit()
     let systemInfo = wx.getSystemInfoSync()
-    console.log(systemInfo.statusBarHeight, '系统栏高度')
     systemInfo.statusBarHeight < 30 ?
       this.setData({
         statusBarHeight: systemInfo.statusBarHeight + 4
