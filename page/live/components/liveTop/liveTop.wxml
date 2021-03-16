@@ -6,16 +6,19 @@
   }
   }
 </wxs>
-<view class="topBox" style="top: {{ !vliveRoom ? 'calc(10vmin / 7.5)' : statusBarHeight + 'px' }};left:{{!vliveRoom ? statusBarHeight : ''}}px">
+<view class="topBox"
+  style="top: {{ !vliveRoom ? 'calc(10vmin / 7.5)' : statusBarHeight + 'px' }};left:{{!vliveRoom ? statusBarHeight : ''}}px">
   <image src="../../images/liveBack.png" class="liveBack" bindtap="back"></image>
   <view class="tearchBox">
-    <image src="{{liveDetail.avatar}}">
-    </image>
+    <navigator hover-class="none"  url="/page/index/pages/tearcherDetail/tearcherDetail?id={{liveDetail.lecturerUserId}}">
+      <image src="{{liveDetail.avatar}}"></image>
+    </navigator>
     <view class="txtCenter">
       <text>{{liveDetail.nickname}}</text>
       <text wx:if="{{liveDetail.state > 0}}">{{fn.num(liveCount)}}人在看</text>
     </view>
-    <view class="attention" catchtap="attention" wx:if="{{!liveDetail.follow && liveDetail.lecturerUserId != $state.userInfo.id}}">
+    <view class="attention" catchtap="attention"
+      wx:if="{{!liveDetail.follow && liveDetail.lecturerUserId != $state.userInfo.id}}">
       <image src="../../images/attentionicon.png"></image>
       关注
     </view>
