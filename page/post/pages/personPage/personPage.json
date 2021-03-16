@@ -1,7 +1,6 @@
 {
   "navigationBarTextStyle": "black",
   "enablePullDownRefresh": true,
-  "navigationStyle": "custom",
   "usingComponents": {
     "formCode": "/components/formCode/formCode",
     "integralAnimation": "/components/integralAni/integralAni",
