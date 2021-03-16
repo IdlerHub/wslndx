@@ -80,15 +80,15 @@ Page({
   },
   onShow: function () {
     record.initRecord(this)
-    if (app.globalData.postShow) {
-      this.setData({
-        currentTab: 0
-      })
-      this.pageInit()
-      this.getList([]);
-      this.gettop();
-      app.globalData.postShow = false;
-    }
+    // if (app.globalData.postShow) {
+    //   this.setData({
+    //     currentTab: 0
+    //   })
+    //   this.pageInit()
+    //   this.getList([]);
+    //   this.gettop();
+    //   app.globalData.postShow = false;
+    // }
     /* 从cdetail-->发帖 */
     if (app.globalData.rlSuc) {
       this.setData({
