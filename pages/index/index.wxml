@@ -95,6 +95,7 @@
   </view>
 </template>
 <view class="container" bindtouchstart="touchstart" bindtouchend="touchend">
+  <!-- <image class="topBg" style="top: {{ isRefreshing ? '180rpx' : 0 }}" src="/images/indexIcon/topBg.png" alt="" srcset=""></image> -->
   <!-- 下拉刷新 -->
   <view wx:if="{{ isRefreshing }}" class="weui-loadmore indexdrop">
     <view class="weui-loading"></view>
@@ -116,7 +117,7 @@
   </slotSign>
   <!-- 搜索/学分 -->
   <view class="search-box">
-    <navigator class="search-left" url="/page/index/pages/search/search">
+    <navigator hover-class="none" class="search-left" url="/page/index/pages/search/search">
       <image src="/images/indexIcon/searchp.png"></image>
       <text>搜索课程名称</text>
     </navigator>
@@ -165,8 +166,7 @@
           </view>
         </slotSign>
         <view class="iconBox" bindtap="iconBind" data-item="{{item}}" wx:else>
-          <image src="{{item.icon}}" style="width: {{item.width}}rpx;height:{{item.height}}rpx;"></image>
-          <image src="/images/zhaoshengAnimation.gif" class="iconCanvas" wx:if="{{item.showCanvas}}"></image>
+          <image src="{{item.icon}}" style="width: {{item.width}}rpx;height:{{item.height}}rpx;margin-left:{{ index == 7 ? '44rpx' : '' }}; margin-top: {{index == 7 ? '-13rpx' : ''}}"></image>
           <text>{{item.name}}</text>
         </view>
       </view>

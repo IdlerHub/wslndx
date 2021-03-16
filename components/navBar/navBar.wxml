@@ -1,5 +1,6 @@
 <!--components/navBar/navBar.wxml-->
 <view class="tabbar">
+    <!-- <image src="/images/indexIcon/navBarbg.png" class="navBarbg"></image> -->
     <view class="item" bindtap="toIndex">
       <text  class="{{ path === 'index' ? 'active name' : 'name'}}" >首页</text>
       <view class="resRow" wx:if="{{path === 'index'}}"></view>

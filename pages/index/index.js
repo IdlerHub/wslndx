@@ -58,11 +58,11 @@ Page({
       toMiniProgram: 'wx8dc9e7f55fe1f3ff'
     }, {
       url: '/page/index/pages/rankingList/rankingList',
-      icon: '/images/indexIcon/zhaosheng.png',
-      name: '春季招生',
-      width: 70,
-      height: 64,
-      toEducation: 'https://globalh5pro.jinlingkeji.cn/enrollmenth5/index/home/1',
+      icon: '/images/indexIcon/dowloadIcon.png',
+      name: '下载APP',
+      width: 86,
+      height: 76,
+      toEducation: 'https://mp.weixin.qq.com/s/vSd8XBQDQkvqVX_kt_YyTQ',
       showCanvas: 1
     },]
   },
@@ -472,6 +472,10 @@ Page({
     this.setData({
       showSignbox: false
     });
+    app.setSignIn({
+      status: 0,
+      count: 1
+    }, true)
   },
   showIntegral() {
     this.setData({
