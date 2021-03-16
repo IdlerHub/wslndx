@@ -53,7 +53,7 @@
       <view class="item" style="opacity: 0;width: 20rpx;">dfsdf</view>
     </scroll-view>
     <view class="tabclassify" bindtap="showClassify">
-      <image src="/images/indexIcon/tabclassify.png"></image>
+      <image src="{{$state.imgHost}}/indexIcon/tabclassify.png"></image>
     </view>
   </view>
 </view>

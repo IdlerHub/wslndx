@@ -1,6 +1,6 @@
 <!--page/index/pages/allLesson/allLesson.wxml-->
 <navigator class="pageTop" hover-class="none" url="../search/search">
-  <image src="/images/indexIcon/searchp.png"></image>
+  <image src="{{$state.imgHost}}/indexIcon/searchp.png"></image>
   <text>搜索课程名称</text>
 </navigator>
 <swiper class="contrainer" current="{{tabCurrent}}" duration="300">

@@ -13,58 +13,7 @@ Page({
     shownowt: true,
     showdialog: true,
     showSignbox: false,
-    centerIcon: [{
-      url: '/page/index/pages/allLesson/allLesson',
-      icon: '/images/indexIcon/allLessonIcon.png',
-      name: '全部课程',
-      width: 92,
-      height: 92
-    }, {
-      url: '/page/index/pages/topTeacher/topTeacher',
-      icon: '/images/indexIcon/topTeacher.png',
-      name: '名师榜',
-      width: 92,
-      height: 92
-    }, {
-      url: '/page/index/pages/schoolLesson/schoolLesson',
-      icon: '/images/indexIcon/shollLesson.png',
-      name: '高校课程',
-      width: 92,
-      height: 92
-    }, {
-      url: '/page/index/pages/hotActivity/hotActivity',
-      icon: '/images/indexIcon/hotActivityIcon.png',
-      name: '热门活动',
-      width: 92,
-      height: 92
-    }, {
-      url: '/page/index/pages/lessonSpecial/lessonSpecial?id=3&name=智能技术',
-      icon: '/images/indexIcon/technologyIcon.png',
-      name: '智能技术',
-      width: 64,
-      height: 64,
-    }, {
-      url: '/pages/video/video',
-      icon: '/images/indexIcon/sortVideoicon.png',
-      name: '短视频',
-      width: 64,
-      height: 62.49,
-    }, {
-      url: 'pages/studyCard/studyCard?type=home',
-      icon: '/images/indexIcon/vipIcon.png',
-      name: 'VIP专区',
-      width: 59,
-      height: 66,
-      toMiniProgram: 'wx8dc9e7f55fe1f3ff'
-    }, {
-      url: '/page/index/pages/rankingList/rankingList',
-      icon: '/images/indexIcon/dowloadIcon.png',
-      name: '下载APP',
-      width: 86,
-      height: 76,
-      toEducation: 'https://mp.weixin.qq.com/s/vSd8XBQDQkvqVX_kt_YyTQ',
-      showCanvas: 1
-    },]
+    centerIcon: []
   },
   pageName: '首页',
   guide: 0,
@@ -107,7 +56,7 @@ Page({
       interestList: [],
       category: [],
       history: {},
-    })
+    })  
     this.init()
   },
   onShow() {
@@ -121,6 +70,63 @@ Page({
       })
       this.data.isSign ? this.signIn() : ''
     }
+    this.setCenterIcon()
+  },
+  setCenterIcon() {
+    this.setData({
+      centerIcon: [{
+        url: '/page/index/pages/allLesson/allLesson',
+        icon: `${this.data.$state.imgHost}/indexIcon/allLessonIcon.png`,
+        name: '全部课程',
+        width: 92,
+        height: 92
+      }, {
+        url: '/page/index/pages/topTeacher/topTeacher',
+        icon: `${this.data.$state.imgHost}/indexIcon/topTeacher.png`,
+        name: '名师榜',
+        width: 92,
+        height: 92
+      }, {
+        url: '/page/index/pages/schoolLesson/schoolLesson',
+        icon: `${this.data.$state.imgHost}/indexIcon/shollLesson.png`,
+        name: '高校课程',
+        width: 92,
+        height: 92
+      }, {
+        url: '/page/index/pages/hotActivity/hotActivity',
+        icon: `${this.data.$state.imgHost}/indexIcon/hotActivityIcon.png`,
+        name: '热门活动',
+        width: 92,
+        height: 92
+      }, {
+        url: '/page/index/pages/lessonSpecial/lessonSpecial?id=3&name=智能技术',
+        icon: `${this.data.$state.imgHost}/indexIcon/technologyIcon.png`,
+        name: '智能技术',
+        width: 64,
+        height: 64,
+      }, {
+        url: '/pages/video/video',
+        icon: `${this.data.$state.imgHost}/indexIcon/sortVideoicon.png`,
+        name: '短视频',
+        width: 64,
+        height: 62.49,
+      }, {
+        url: 'pages/studyCard/studyCard?type=home',
+        icon: `${this.data.$state.imgHost}/indexIcon/vipIcon.png`,
+        name: 'VIP专区',
+        width: 59,
+        height: 66,
+        toMiniProgram: 'wx8dc9e7f55fe1f3ff'
+      }, {
+        url: '/page/index/pages/rankingList/rankingList',
+        icon: `${this.data.$state.imgHost}/indexIcon/dowloadIcon.png`,
+        name: '下载APP',
+        width: 86,
+        height: 76,
+        toEducation: 'https://mp.weixin.qq.com/s/vSd8XBQDQkvqVX_kt_YyTQ',
+        showCanvas: 1
+      },]
+    })
   },
   init(type) {
     if(type) {

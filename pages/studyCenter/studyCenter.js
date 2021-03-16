@@ -2,41 +2,7 @@
 const app = getApp()
 Page({
   data: {
-    iconList: [{
-        id: 1,
-        name: '学习榜',
-        image: '/images/studyIcon/rankListIcon.png',
-        url: '/page/index/pages/rankingList/rankingList',
-        width: 48,
-        height: 48
-      },
-      {
-        id: 2,
-        name: '结课证书',
-        image: '/images/studyIcon/overIcon.png',
-        url: '/page/study/pages/certificate/certificate',
-        width: 50,
-        height: 50
-      },
-      {
-        id: 3,
-        name: '学习历史',
-        image: '/images/studyIcon/historyIcon.png',
-        url: '/page/study/pages/history/history',
-        width: 50,
-        height: 50
-      },
-      {
-        id: 4,
-        name: '学院市集',
-        image: '/images/studyIcon/shopIcon.png',
-        url: '',
-        width: 50,
-        height: 50,
-        toMiniprogram: 1,
-        appId: 'wx11cabfef2ec771b3'
-      },
-    ],
+    iconList: [],
     liveList: [],
     lessonList: [],
     detail: {}
@@ -54,6 +20,46 @@ Page({
     this.getDetail()
     this.getMylive()
     this.getMylesson()
+    this.setIcon()
+  },
+  setIcon() {
+    this.setData({
+      iconList: [{
+          id: 1,
+          name: '学习榜',
+          image: `${this.data.$state.imgHost}/studyIcon/rankListIcon.png`,
+          url: '/page/index/pages/rankingList/rankingList',
+          width: 48,
+          height: 48
+        },
+        {
+          id: 2,
+          name: '结课证书',
+          image: `${this.data.$state.imgHost}/studyIcon/overIcon.png`,
+          url: '/page/study/pages/certificate/certificate',
+          width: 50,
+          height: 50
+        },
+        {
+          id: 3,
+          name: '学习历史',
+          image: `${this.data.$state.imgHost}/studyIcon/historyIcon.png`,
+          url: '/page/study/pages/history/history',
+          width: 50,
+          height: 50
+        },
+        {
+          id: 4,
+          name: '学院市集',
+          image: `${this.data.$state.imgHost}/studyIcon/shopIcon.png`,
+          url: '',
+          width: 50,
+          height: 50,
+          toMiniprogram: 1,
+          appId: 'wx11cabfef2ec771b3'
+        },
+      ]
+    })
   },
   onReachBottom: function () {
     if (this.data.lessonList.length < (this.lessonParams.pageNum * 10)) return

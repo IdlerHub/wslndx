@@ -1,6 +1,6 @@
 <!--page/study/pages/certificate/certificate.wxml-->
 <view class="topBox">
-  <image src="/images/studyIcon/certificateTop.png" class="certificateTop"></image>
+  <image src="{{$state.imgHost}}/studyIcon/certificateTop.png" class="certificateTop"></image>
   <navigator class="back" style="top: {{top > 30 ? top : 20}}px;" open-type="navigateBack" hover-class="none">
     <image src="/images/back.png"></image>
   </navigator>

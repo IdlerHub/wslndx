@@ -24,7 +24,7 @@
         <view class="left">
           <image src="{{item.indexCover}}"></image>
           <!-- <view class="mask" wx:if="{{item.isFinish}}">
-            <image src="/images/studyIcon/pastDue.png"></image>
+            <image src="{{$state.imgHost}}/studyIcon/pastDue.png"></image>
           </view> -->
         </view>
         <view class="right">
@@ -52,14 +52,14 @@
 <view class="pageTop">
   <view class="timeBox">
     <view class="timeItem">
-      <image src="/images/studyIcon/studyDaysIcon.png" class="studyDaysIcon"></image>
+      <image src="{{$state.imgHost}}/studyIcon/studyDaysIcon.png" class="studyDaysIcon"></image>
       <view>
         <view><text>{{detail.studyDay}}</text> 天</view>
         <view>学习天数</view>
       </view>
     </view>
     <view class="timeItem">
-      <image src="/images/studyIcon/studyHoursIcon.png" class="studyHoursIcon"></image>
+      <image src="{{$state.imgHost}}/studyIcon/studyHoursIcon.png" class="studyHoursIcon"></image>
       <view>
         <view><text>{{detail.studyTime}}</text> 小时</view>
         <view>本周学习</view>

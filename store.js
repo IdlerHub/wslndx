@@ -8,8 +8,9 @@ let env = "pro";
 let mpVersion = "v24"; /* 版本管理 */
 /* 图片等静态资源服务器 */
 let imgBase = {
-  dev: "https://hwcdn.jinlingkeji.cn/images/dev",
-  test: "https://hwcdn.jinlingkeji.cn/images/dev",
+  // dev: "https://hwcdn.jinlingkeji.cn/images/dev",
+  dev: "https://hwcdn.jinlingkeji.cn/images/pro",
+  test: "https://hwcdn.jinlingkeji.cn/images/pro",
   pro: "https://hwcdn.jinlingkeji.cn/images/pro",
   testpro: "https://hwcdn.jinlingkeji.cn/images/pro",
 };
