@@ -111,6 +111,9 @@ Page({
     }
   },
   getList(list) {
+    this.setData({
+      showLoading: true
+    });
     let temp = list || this.data.list;
     this.param.us_id = this.data.us_id;
     return app.circle.myNews(this.param).then(msg => {

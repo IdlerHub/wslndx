@@ -5,6 +5,7 @@
     "formCode": "/components/formCode/formCode",
     "integralAnimation": "/components/integralAni/integralAni",
     "playRrecord": "/components/playRrecord/playRrecord",
-    "navigationBar": "/components/navigationBar/navigationBar"
+    "navigationBar": "/components/navigationBar/navigationBar",
+    "mp-loading": "/components/loading/loading"
   }
 }

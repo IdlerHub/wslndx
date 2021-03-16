@@ -124,9 +124,9 @@
 					<text class="text">{{ item.forward != 0 ? item.fw || item.forward : '分享' }}</text>
 				</button>
 			</view>
-			
 		</view>
 		<mp-loading type="circle" wx:if="{{ showLoading }}"></mp-loading>
+		<view class="upbottom" wx:else>已经到底咯~</view>
 	</view>
 </view>
 <view class="ncir" wx:if="{{ list.length == 0 }}">
