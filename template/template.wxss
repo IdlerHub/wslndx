@@ -164,18 +164,16 @@
 }
 
 .wrap>.item .content .poster {
-  position: absolute;
   width: 100%;
-  height: 100%;
   filter: brightness(0.8);
   background: #e9e9e9;
+  border-radius: 6rpx;
 }
 
 .wrap>.item .content .bg {
   position: relative;
   margin-top: 20rpx;
-  width: 100%;
-  height: 350rpx;
+  width: 400rpx;
 }
 
 .wrap>.item .content .play {

@@ -44,7 +44,7 @@
 			<!-- wx:if="{{ item.url }}" -->
 			<view class="content" wx:if="{{ item.check_status == 1 || item.check_status == 2 || item.check_status == 0 }}">
 				<view class="bg">
-					<image mode="aspectFill"
+					<image mode="widthFix"
 						src="{{ item.check_status == 0 ?  $state.imgHost + '/tip.jpg' : item.check_status == 2 ? $state.imgHost + '/sensitivity.png' : item.image }}"
 						class="poster" lazy-load></image>
 					<image mode="aspectFill" src="{{ $state.imgHost }}/play-hl.png" class="play" lazy-load>
