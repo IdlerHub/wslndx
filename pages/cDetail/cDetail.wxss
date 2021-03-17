@@ -147,7 +147,7 @@ page {
     font-size: 50rpx;
     line-height: 50rpx;
     color: #fff;
-    width: 390rpx;
+    max-width: 390rpx;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap; }
