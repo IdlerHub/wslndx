@@ -3,11 +3,17 @@
  * @LastEditors: wjl
  * @LastEditTime: 2021-01-15 16:28:35
  */
-import { wxp } from "./utils/service";
-import { uma } from "umtrack-wx";
+import {
+  wxp
+} from "./utils/service";
+import {
+  uma
+} from "umtrack-wx";
 /* 全局状态管理 */
 import store from "./store";
-import { praise } from "./data/Circle";
+import {
+  praise
+} from "./data/Circle";
 // const vodwxsdk = require('vod-wx-sdk-v2')
 /* sse */
 const socket = require("data/socket.js");
@@ -15,17 +21,17 @@ const backgroundAudioManager = wx.getBackgroundAudioManager();
 //工具库
 var util = require("utils/util.js");
 //http请求接口
-var classroom = require("data/Classroom.js");
-var user = require("data/User.js");
-var video = require("data/Video.js");
-var circle = require("data/Circle.js");
-var lottery = require("data/Lottery.js");
-var tutor = require("data/Tutor.js");
+var classroom = require("data/Classroom.js"); //PHP空中课堂接口
+var user = require("data/User.js"); // 个人信息接口
+var video = require("data/Video.js"); // 短视频接口
+var circle = require("data/Circle.js"); // 秀风采/同学圈接口
+var lottery = require("data/Lottery.js"); // 奖品接口
+var tutor = require("data/Tutor.js"); // 收徒接口
 var vote = require("data/Vote.js"); //票选活动接口
-var activity = require("data/Activity.js");
-var liveData = require("data/LiveData.js");
-var lessonNew = require("data/lessonNew.js");
-var study = require("data/studyCenter.js");
+var activity = require("data/Activity.js"); //活动接口
+var liveData = require("data/LiveData.js"); //直播接口
+var lessonNew = require("data/lessonNew.js"); // 新课程接口
+var study = require("data/studyCenter.js"); //学习中心接口
 //app.js
 App({
   API_URL: store.API_URL,
@@ -48,15 +54,14 @@ App({
   store,
   backgroundAudioManager,
   umengConfig: {
-    appKey:
-      store.process == "develop"
-        ? "5e4cad07eef38d3632042549"
-        : "5e4cd613e1367a268d56bfa2", //由友盟分配的APP_KEY
+    /*埋点统计*/
+    appKey: store.process == "develop" ?
+      "5e4cad07eef38d3632042549" :
+      "5e4cd613e1367a268d56bfa2", //由友盟分配的APP_KEY
     useOpenid: false, // 是否使用openid进行统计，此项为false时将使用友盟+随机ID进行用户统计。使用openid来统计微信小程序的用户，会使统计的指标更为准确，对系统准确性要求高的应用推荐使用OpenID。
     autoGetOpenid: false, // 是否需要通过友盟后台获取openid，如若需要，请到友盟后台设置appId及secret
     debug: false, //是否打开调试模式
   },
-  /*埋点统计*/
   onLaunch: async function (opts) {
     this.getSecureToken();
     let optsStr = decodeURIComponent(opts.query.scene).split("&");
@@ -109,17 +114,16 @@ App({
     ) {
       this.playVedio("flow");
     }
-    console.log(wxtype)
-    if (wxtype < 606) {
+    if (wxtype < 606) { //微信版本过低提示用户更新版本
       wx.reLaunch({
         url: "/pages/upwxpage/upwxpage",
       });
-    } else if (opstObj.p) {
+    } else if (opstObj.p) { // 初次启动进入活动
       wx.reLaunch({
         url: `/page/vote/pages/voteArticle/voteArticle?voteid=${opstObj.o}&uid=${opstObj.u}`,
       });
     }
-    if (!this.store.$state.userInfo.id) {
+    if (!this.store.$state.userInfo.id) { // 未登录页面守卫
       let isLogin = 0;
       if (opts.path == "pages/index/index") return;
       getCurrentPages().forEach((e) => {
@@ -174,13 +178,14 @@ App({
         }, 1500);
       }
     }
-    if (this.store.$state.userInfo.id) {
+    if (this.store.$state.userInfo.id) { // socket启动
       setTimeout(() => {
         socket.init(this.store.$state.userInfo.id);
         socket.listen(this.prizemessage, "Prizemessage");
         socket.listen(this.bokemessage, "Bokemessage");
       }, 2000);
     } else {
+      //从后台返回前台路由守卫
       let isLogin = 0;
       if (opts.path == "pages/index/index") return;
       getCurrentPages().forEach((e) => {
@@ -198,8 +203,7 @@ App({
       socket.close();
     }
   },
-  onError: function (err) {
-  },
+  onError: function (err) {},
   wxLogin: async function (e) {
     await wxp.login({}).then((res) => {
       if (res.code) {
@@ -277,14 +281,14 @@ App({
       socket.listen(this.bokemessage, "Bokemessage");
     }
     getCurrentPages().forEach((e) => {
-      e.route == "pages/index/index"
-        ? this.store.$state.nextTapDetial.type == "addStudy"
-          ? e.init(1)
-          : e.init()
-        : "";
+      e.route == "pages/index/index" ?
+        this.store.$state.nextTapDetial.type == "addStudy" ?
+        e.init(1) :
+        e.init() :
+        "";
     });
   },
-  /* 更新AuthKey */
+  /* 更新AuthKey 上传视频*/
   setAuthKey: function (data) {
     this.store.setState({
       authKey: data,
@@ -353,11 +357,11 @@ App({
       });
   },
   playVedio(type) {
-    type == "wifi"
-      ? ""
-      : this.store.setState({
-          flow: true,
-        });
+    type == "wifi" ?
+      "" :
+      this.store.setState({
+        flow: true,
+      });
   },
   /* 更新签到信息 */
   setSignIn(data, bl) {
@@ -376,7 +380,7 @@ App({
         },
       });
   },
-  // 获取用户openid
+  /* 获取用户openid */
   getUserOpenData() {
     this.user.getUserOpenData().then((res) => {
       this.store.setState({
@@ -394,7 +398,6 @@ App({
     if (wx.canIUse("getUpdateManager")) {
       const updateManager = wx.getUpdateManager();
       updateManager.onCheckForUpdate(function (res) {
-        console.log(res, 121212121)
         // 请求完新版本信息的回调
         if (res.hasUpdate) {
           updateManager.onUpdateReady(function () {
@@ -404,15 +407,14 @@ App({
               showCancel: false,
               success: function (res) {
                 if (res.confirm) {
-                  // 新的版本已经下载好，调用 applyUpdate 应用新版本并重启
                   updateManager.applyUpdate();
-                }else {
+                } else {
                   wx.showModal({
-                    title:'温馨提示',
-                    content:'为了保障您的信息安全, 请点击进行系统更新',
-                    showCancel:false,//隐藏取消按钮
-                    confirmText:"确定更新",//只保留确定更新按钮
-                    success: function(res) {
+                    title: '温馨提示',
+                    content: '为了保障您的信息安全, 请点击进行系统更新',
+                    showCancel: false, //隐藏取消按钮
+                    confirmText: "确定更新", //只保留确定更新按钮
+                    success: function (res) {
                       updateManager.applyUpdate();
                     }
                   })
@@ -431,14 +433,18 @@ App({
       });
     }
   },
+  /* 接收秀风采socket消息 */
   bokemessage(res) {
-    let { num = 0, avatar } = JSON.parse(res.data).data;
+    let {
+      num = 0, avatar
+    } = JSON.parse(res.data).data;
     this.store.setState({
       unRead: num,
       surPass: num > 99,
       lastMan: avatar,
     });
   },
+  /* 接收抽奖消息 */
   prizemessage(res) {
     let phoneList = JSON.parse(res.data);
     this.store.setState({
@@ -450,7 +456,7 @@ App({
       url: "/pages/index/index",
     });
   },
-  // 获取新手指引
+  /* 获取新手指引 */
   getGuide() {
     if (this.store.$state.userInfo.mobile) {
       return this.user.guideRecord().then((res) => {
@@ -461,7 +467,7 @@ App({
       });
     }
   },
-  // 获取任务状态
+  /* 获取任务状态 */
   getTaskStatus() {
     this.user.getNewTaskStatus().then((res) => {
       this.store.setState({
@@ -497,8 +503,7 @@ App({
     });
     return {
       title: "一起来网上老年大学学习",
-      path:
-        "/pages/index/index?uid=" +
+      path: "/pages/index/index?uid=" +
         this.store.$state.userInfo.id +
         "&type=invite&activity=1",
       imageUrl: "https://hwcdn.jinlingkeji.cn/images/dev/withdrawShareImg2.png",
@@ -513,19 +518,20 @@ App({
       });
     }, 1000);
   },
+  /* 更改登录弹框状态 */
   changeLoginstatus() {
     this.store.setState({
       showLogin: !this.store.$state.showLogin,
     });
   },
+  /* 更新登录后操作 */
   checknextTap(e, type) {
-    console.log(e);
     if (!type) {
       this.store.setState({
         "nextTapDetial.type": e.currentTarget.dataset.type,
-        "nextTapDetial.detail": e.currentTarget.dataset.detail
-          ? e.currentTarget.dataset.detail
-          : e,
+        "nextTapDetial.detail": e.currentTarget.dataset.detail ?
+          e.currentTarget.dataset.detail :
+          e,
       });
     } else {
       this.store.setState({

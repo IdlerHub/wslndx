@@ -336,16 +336,6 @@ Page({
         this.setData({
           "detail.progress": msg.data.progress
         });
-        if (msg.data.progress == 100) {
-          this.pages.forEach(item => {
-            item.route == "pages/index/index" ?
-              item.doneless(this.data.detail.id) :
-              "";
-            item.route == "pages/search/search" ?
-              item.doneless(this.data.detail.id) :
-              "";
-          });
-        }
       });
     });
   },

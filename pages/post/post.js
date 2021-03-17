@@ -545,7 +545,7 @@ Page({
           }
           if (msg.data.is_first == "first") {
             this.setData({
-              integral: "+50 学分",
+              integral: "+5 学分",
               integralContent: "完成[秀风采]首次点赞",
               showintegral: true
             });
@@ -912,7 +912,7 @@ Page({
         .guideRecordAdd(param)
         .then(res => {
           this.setData({
-            integral: "+45 学分",
+            integral: "+5 学分",
             integralContent: "完成[秀风采]新手指引",
             showintegral: true
           });

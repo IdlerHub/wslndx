@@ -212,15 +212,6 @@ Page({
       });
     });
   },
-  // 课程完成状态
-  doneless(id) {
-    this.data.lessonList.forEach(item => {
-      item.id == id ? (item.is_finish = 1) : "";
-    });
-    this.setData({
-      lessonList: this.data.lessonList
-    });
-  },
   checknextTap(e) {
     app.checknextTap(e)
   },

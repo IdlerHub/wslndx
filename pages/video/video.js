@@ -156,7 +156,7 @@ Page({
     app.video.recordFinish(param).then(res => {
       if (res.data.day_read == 1) {
         this.setData({
-          integral: "+100 学分",
+          integral: "+2 学分",
           integralContent: "每日看完十个短视频",
           showintegral: true
         });
@@ -409,7 +409,7 @@ Page({
           app.getGuide();
           this.setData({
             nextRtight: 5,
-            integral: "+45 学分",
+            integral: "+5 学分",
             integralContent: "完成[短视频]新手指引",
             showintegral: true
           });

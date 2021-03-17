@@ -406,14 +406,14 @@ Page({
             });
             if (msg.data.is_first == "first") {
               this.setData({
-                integral: "+50 学分",
+                integral: "+5 学分",
                 integralContent: "完成首次发帖",
                 showintegral: true
               });
               integral = "first";
             } else if (msg.data.is_first == "day") {
               this.setData({
-                integral: "+20 学分",
+                integral: "+2 学分",
                 integralContent: "完成每日[秀风采]首次发帖",
                 showintegral: true
               });

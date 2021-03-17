@@ -402,9 +402,6 @@ Page({
   // 跳友方小程序
   jumpmini() {
     this.minigo('{"appid":"wx7d6c683879173db6","url":""}')
-    wx.uma.trackEvent('index_btnClick', {
-      btnName: '斗地主'
-    });
   },
   minigo(url) {
     console.log(JSON.parse(url), url)
@@ -459,21 +456,6 @@ Page({
       url: `plugin-private://wx2b03c6e691cd7370/pages/live-player-plugin?room_id=${id}&custom_params=${customParams}`
     })
   },
-  // 课程完成状态
-  doneless(id) {
-    this.data.recommend.forEach(item => {
-      item.id == id ? item.is_finish = 1 : ''
-    })
-    this.data.catrecommend.forEach((item, index) => {
-      item.forEach(i => {
-        i.id == id ? i.is_finish = 1 : ''
-      })
-    })
-    this.setData({
-      recommend: this.data.recommend,
-      catrecommend: this.data.catrecommend
-    })
-  },
   closesignBox() {
     this.setData({
       showSignbox: false
@@ -483,10 +465,11 @@ Page({
       count: 1
     }, true)
   },
+  /* 积分动画 */
   showIntegral() {
     this.setData({
       showSignbox: false,
-      integral: "+20 学分",
+      integral: "+2 学分",
       integralContent: "签到成功",
       showintegral: true,
       isSign: false
