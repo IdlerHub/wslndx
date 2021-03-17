@@ -112,6 +112,9 @@ Page({
     app.backgroundAudioManager.stop()
   },
   getList: function (list) {
+    this.setData({
+      showLoading: true
+    });
     let temp = list || this.data.list
     return app.circle.myNews(this.param).then(msg => {
       msg.data.forEach(function (item) {
@@ -131,7 +134,8 @@ Page({
         }
       })
       this.setData({
-        list: temp.concat(msg.data)
+        list: temp.concat(msg.data),
+        showLoading: msg.data.length < 10 ? false : true
       })
     })
   },
