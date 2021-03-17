@@ -45,7 +45,7 @@
 						url="/pages/cDetail/cDetail?id={{item.id}}" open-type="navigate" hover-class="none">
 						<view class="label" wx:if="{{item.is_top}}">推荐</view>
 						<image src="{{item.image}}"></image>
-						<text>{{item.title}}</text>
+						<text class="van-ellipsis">{{item.title}}</text>
 					</navigator>
 					<navigator class="scroll-view" open-type="navigate" hover-class="none" url="/page/user/pages/circle/circle?type=1">
 						<image src="{{$state.imgHost}}/larstCircle.png"></image>
