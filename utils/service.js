@@ -7,6 +7,7 @@ import {
   promisifyAll
 } from "miniprogram-api-promise";
 const wxp = {};
+let noNext = 0;
 import store from "../store";
 promisifyAll(wx, wxp);
 
@@ -16,6 +17,21 @@ function handle(req, res) {
   // getApp().fundebug.notifyHttpError(req, res);
   switch (res.statusCode || res.status) {
     case 401:
+      if (res.data.msg == 'Account is locked') {
+        if (noNext) return
+        noNext = 1
+        wx.showModal({
+          content: '由于您近期有违规操作已被限制使用该程序，如有疑问请联系客服为您解答',
+          success(res) {
+            if (res.confirm) {
+              console.log('用户点击确定')
+            } else if (res.cancel) {
+              console.log('用户点击取消')
+            }
+          }
+        })
+        return
+      }
       wx.clearStorage();
       getApp().wxLogin();
       break;
