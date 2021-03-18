@@ -125,17 +125,15 @@ page {
 }
 
 .circle-scroll {
-  display: flex;
-  white-space: nowrap;
-  align-items: center;
-  overflow: hidden;
+  height: 200rpx;
 }
 
 .circle-scroll .scroll-view {
-  display: inline-block;
-  text-align: center;
   margin-left: 24rpx;
   position: relative;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
 }
 
 .circle-scroll .scroll-view:nth-child(1) {
@@ -149,6 +147,7 @@ page {
 .circle-scroll .scroll-view image {
   width: 152rpx;
   height: 152rpx;
+  margin-bottom: 5rpx;
   border-radius: 6rpx;
 }
 

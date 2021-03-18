@@ -159,8 +159,8 @@
           "scene": null
         },
         {
-          "name": "pages/studyCenter/studyCenter",
-          "pathName": "pages/studyCenter/studyCenter",
+          "name": "pages/post/post",
+          "pathName": "pages/post/post",
           "query": "id=1460",
           "scene": 1069,
           "referrerInfo": {}
