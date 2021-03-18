@@ -161,7 +161,7 @@
         {
           "name": "pages/studyCenter/studyCenter",
           "pathName": "pages/studyCenter/studyCenter",
-          "query": "",
+          "query": "id=1460",
           "scene": 1069,
           "referrerInfo": {}
         }

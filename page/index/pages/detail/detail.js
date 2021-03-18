@@ -1639,6 +1639,6 @@ Page({
     }
   },
   binderror(e) {
-    console.log(e)
+    console.log(e, 4786347657347)
   }
 });

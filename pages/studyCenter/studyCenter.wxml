@@ -9,18 +9,39 @@
   <view class="contentBox">
     <view class="contentTop">
       <view class="contentTopleft">
-        <text>{{title}} {{ isLive ? detail.liveTotal : detail.lessonTotal}}</text>
+        <text>{{title}} {{ isLive ? "" : detail.lessonTotal}}</text>
       </view>
-      <navigator class="contentTopright" hover-class="none" url="/page/study/pages/livePage/livePage" wx:if="{{isLive}}">
+      <navigator class="contentTopright" hover-class="none" url="/page/study/pages/livePage/livePage"
+        wx:if="{{isLive}}">
         <text>全部</text>
         <image src="/images/vedioRight.png"></image>
       </navigator>
     </view>
     <view class="itemBox" wx:if="{{isLive}}">
-      <liveItem liveList="{{liveList}}" isLive="{{isLive}}" />
+      <view class="liveListBox">
+        <view class="liveItem" wx:for="{{liveList}}" wx:key="index" wx:if="{{index < 3}}">
+          <view class="img">
+            <image src="{{item.indexCover}}"></image>
+            <view class="status living" wx:if="{{item.status == 0}}">
+              <text wx:for="{{3}}" wx:key="index"></text>
+              <view>直播中</view>
+            </view>
+            <view class="status stanby" wx:else>
+              <image src="/images/naoling.png"></image>
+              即将开始
+            </view>
+          </view>
+          <text class="van-ellipsis">{{item.name}}</text>
+          <text>{{item.studydate}}</text>
+        </view>
+        <navigator class="moreLive" hover-class="none" url="/page/study/pages/livePage/livePage"> <text>更 多\n直 播</text> </navigator>
+        <view style="width: 30rpx; opacity: 0;">1</view>
+      </view>
+      <!-- <liveItem liveList="{{liveList}}" isLive="{{isLive}}" /> -->
     </view>
     <view class="itemBox" wx:else>
-      <view class="lessItem" bindtap="topDetail" data-item="{{item}}" wx:for="{{lessonList}}" wx:key="index" style="border: {{ index == lessonList.length - 1 ? 'none' : '' }}; margin-bottom:  {{ index == lessonList.length - 1 ? 0 : '' }}">
+      <view class="lessItem" bindtap="topDetail" data-item="{{item}}" wx:for="{{lessonList}}" wx:key="index"
+        style="border: {{ index == lessonList.length - 1 ? 'none' : '' }}; margin-bottom:  {{ index == lessonList.length - 1 ? 0 : '' }}">
         <view class="left">
           <image src="{{item.indexCover}}"></image>
           <!-- <view class="mask" wx:if="{{item.isFinish}}">
@@ -31,7 +52,9 @@
           <view class="itemTitle">{{item.name}}</view>
           <view class="bottom" wx:if="{{ item.studyLiveCount > 0 && item.studyLiveCount != item.liveCount }}">
             <view class="studyNum">已学{{item.studyLiveCount}}/{{item.liveCount}}课时</view>
-            <view class="studyLine"><text style="width: {{ (item.studyLiveCount / item.liveCount) * 100 > 100 ? 100 : (item.studyLiveCount / item.liveCount) * 100 }}%;" ></text></view>
+            <view class="studyLine"><text
+                style="width: {{ (item.studyLiveCount / item.liveCount) * 100 > 100 ? 100 : (item.studyLiveCount / item.liveCount) * 100 }}%;"></text>
+            </view>
           </view>
           <!-- <view class="bottom" wx:elif="{{item.isFinish}}">
             <view class="studyNum">课程过期时间  {{item.studydate}}</view>  
@@ -39,12 +62,12 @@
           <view class="bottom unStudy" wx:else>
             <view class="studyNum">共{{item.liveCount}}课时</view>
             <view class="btn {{item.studyLiveCount > 0 ? 'over' : ''}}">
-                {{ item.studyLiveCount > 0 ? '已学完' : '去学习' }}
+              {{ item.studyLiveCount > 0 ? '已学完' : '去学习' }}
             </view>
           </view>
         </view>
       </view>
-      <loading type="circle" wx:if="{{ lessonList.length < detail.lessonTotal }}"/>
+      <loading type="circle" wx:if="{{ lessonList.length < detail.lessonTotal }}" />
       <template is="nomore" wx:else></template>
     </view>
   </view>
@@ -74,7 +97,7 @@
   </view>
 </view>
 <view wx:if="{{liveList[0] || lessonList[0]}}">
-  <template is="contentBox" data="{{ title:'直播课程', isLive: 1, liveList, detail }}" wx:if="{{liveList[0]}}"></template>
+  <template is="contentBox" data="{{ title:'正在直播', isLive: 1, liveList, detail }}" wx:if="{{liveList[0]}}"></template>
   <template is="contentBox" data="{{ title:'我的课程', lessonList, detail }}" wx:if="{{lessonList[0]}}"></template>
 </view>
 <view class="qst" wx:else>
