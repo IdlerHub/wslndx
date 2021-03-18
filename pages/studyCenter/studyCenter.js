@@ -91,7 +91,6 @@ Page({
   getMylive() {
     app.study.centerLive(this.liveParams).then(res => {
       res.dataList.forEach(item => {
-        console.log(app.util.formatTime(new Date(item.startTime * 1000)).substring(0,10),app.util.formatTime(new Date()).substring(0,10))
         item.studydate = app.util.formatTime(new Date(item.startTime * 1000)).substring(0,10) == app.util.formatTime(new Date()).substring(0,10) ? '今天' + app.util.formatTime(new Date(item.startTime * 1000)).substring(10) :  app.util.formatTime(new Date(item.startTime * 1000), 1)
       })
       this.setData({
