@@ -447,13 +447,8 @@ Page({
     }
   },
   toLive(id) {
-    let customParams = encodeURIComponent(JSON.stringify({
-      path: 'pages/index/index',
-      uid: this.data.$state.userInfo.id,
-      type: 'invite'
-    }))
     wx.navigateTo({
-      url: `plugin-private://wx2b03c6e691cd7370/pages/live-player-plugin?room_id=${id}&custom_params=${customParams}`
+      url: `/page/live/pages/vliveRoom/vliveRoom?roomId=${id}`
     })
   },
   closesignBox() {
