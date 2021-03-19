@@ -34,7 +34,7 @@
           <text class="van-ellipsis">{{item.name}}</text>
           <text>{{item.studydate}}</text>
         </view>
-        <navigator class="moreLive" hover-class="none" url="/page/study/pages/livePage/livePage"> <text>更 多\n直 播</text> </navigator>
+        <navigator class="moreLive" hover-class="none" url="/page/study/pages/livePage/livePage" wx:if="{{liveList[2]}}"> <text>更 多\n直 播</text> </navigator>
         <view style="width: 30rpx; opacity: 0;">1</view>
       </view>
       <!-- <liveItem liveList="{{liveList}}" isLive="{{isLive}}" /> -->
