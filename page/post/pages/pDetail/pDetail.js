@@ -161,25 +161,20 @@ Page({
     this.setHeight();
   },
   getDetail() {
-    let param = {
-      blog_id: this.id
-    };
     return app.circle
-      .detail(param)
+      .detail({
+        blog_id: this.id
+      })
       .then(msg => {
         let detail = msg.data[0];
-        let arr = [],
-          brr = [];
-        detail.images.forEach(function (i) {
-          arr.push(i.image);
-        });
-        detail.images.forEach(function (i) {
-          brr.push(i.image_compress);
-        });
+        detail.image_compress = detail.images.map((i) => {
+          return i.image_compress
+        })
+        detail.images = detail.images.map((i) => {
+          return i.image
+        })
         detail.content = app.util.delHtmlTag(detail.content)
         this.detailContent = detail.content;
-        detail.images = arr;
-        detail.image_compress = brr;
         detail.auditing =
           new Date().getTime() - new Date(detail.createtime * 1000) < 7000;
         detail.pause = true;
@@ -205,68 +200,42 @@ Page({
         }
       });
   },
-  praise() {
-    let detail = this.data.detail;
-    let param = {
+  praise: async function () {
+    let detail = this.data.detail,
+      msg = null;
+    detail.likestatus == 1 ? msg = await app.circle.delPraise({
       blog_id: detail.id
-    };
-    if (detail.likestatus == 1) {
-      // 取消点赞
-      app.circle
-        .delPraise(param)
-        .then(msg => {
-          this.aniend();
-        })
-        .catch(err => {
-          if (err.code == -2) {
-            /* 帖子已经删除 */
-            this.setData({
-              detail: "",
-              delState: true
-            });
+    }) : msg = await app.circle.praise({
+      blog_id: detail.id
+    })
+    if (msg.code == 1) {
+      if (detail.likestatus == 1) {
+        // 取消点赞
+        this.aniend();
+      } else {
+        // 点赞
+        /* 开启动画 */
+        detail.praising = true;
+        app.socket.send({
+          type: "Bokemessage",
+          data: {
+            uid: this.data.detail.uid
           }
         });
-    } else {
-      // 点赞
-      app.circle
-        .praise(param)
-        .then(msg => {
-          /* 开启动画 */
-          detail.praising = true;
-          app.socket.send({
-            type: "Bokemessage",
-            data: {
-              uid: this.data.detail.uid
-            }
-          });
-          if (msg.data.is_first == "first") {
-            this.setData({
-              integral: "+5 学分",
-              integralContent: "完成[秀风采]首次点赞",
-              showintegral: true
-            });
-            setTimeout(() => {
-              this.setData({
-                showintegral: false
-              });
-            }, 2000);
-          }
-          this.setData({
-            detail: detail
-          });
-          wx.uma.trackEvent("post_btnClick", {
-            btnName: "点赞按钮"
-          });
-        })
-        .catch(err => {
-          if (err.code == -2) {
-            /* 帖子已经删除 */
-            this.setData({
-              detail: "",
-              delState: true
-            });
-          }
+        if (msg.data.is_first == "first") app.setIntegral(this, "+5 学分", "完成[秀风采]首次点赞")
+        this.setData({
+          detail: detail
         });
+        wx.uma.trackEvent("post_btnClick", {
+          btnName: "点赞按钮"
+        });
+      }
+    } else if (msg.code == -2) {
+      /* 帖子已经删除 */
+      this.setData({
+        detail: "",
+        delState: true
+      });
     }
   },
   aniend() {
@@ -496,28 +465,10 @@ Page({
             blogcomment
           });
         }
-        if (msg.data.is_first == "first") {
-          this.setData({
-            integral: "+5 学分",
-            integralContent: "完成[秀风采]首次评论",
-            showintegral: true
-          });
-          setTimeout(() => {
-            this.setData({
-              showintegral: false
-            });
-          }, 2000);
+        if (msg.data.is_first == "first")  {
+          app.setIntegral(this, "+5 学分", "完成[秀风采]首次评论")
         } else if (msg.data.is_first == "day") {
-          this.setData({
-            integral: "+2 学分",
-            integralContent: "完成每日[秀风采]首评评论",
-            showintegral: true
-          });
-          setTimeout(() => {
-            this.setData({
-              showintegral: false
-            });
-          }, 2000);
+          app.setIntegral(this, "+2 学分", "完成每日[秀风采]首评评论")
         } else {
           wx.showToast({
             title: "发布成功",
@@ -813,27 +764,9 @@ Page({
       .then(msg => {
         wx.hideLoading();
         if (msg.data.is_first == "first") {
-          this.setData({
-            integral: "+5 学分",
-            integralContent: "完成[秀风采]首次评论",
-            showintegral: true
-          });
-          setTimeout(() => {
-            this.setData({
-              showintegral: false
-            });
-          }, 2000);
+          app.setIntegral(this, "+5 学分", "完成[秀风采]首次评论")
         } else if (msg.data.is_first == "day") {
-          this.setData({
-            integral: "+2 学分",
-            integralContent: "完成每日[秀风采]首评评论",
-            showintegral: true
-          });
-          setTimeout(() => {
-            this.setData({
-              showintegral: false
-            });
-          }, 2000);
+          app.setIntegral(this, "+2 学分", "完成每日[秀风采]首评评论")
         } else {
           wx.showToast({
             title: "发布成功",
@@ -1022,7 +955,7 @@ Page({
       if (!this.data.showvoiceauto) return;
       let text = res.result;
       console.log(text)
-      
+
       this.data.replyshow ?
         (text = this.data.replycontent + text) :
         (text = this.data.content + text);
@@ -1035,11 +968,11 @@ Page({
         });
         return;
       }
-      if( this.data.replycontent.length >= 200 || this.data.content.length >= 200) {
+      if (this.data.replycontent.length >= 200 || this.data.content.length >= 200) {
         wx.showToast({
           title: '评论字数不能超过200字哦！',
           icon: 'none'
-        }) 
+        })
         this.setData({
           voicetextstatus: "",
           filePath,

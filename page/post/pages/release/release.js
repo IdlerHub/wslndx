@@ -405,18 +405,10 @@ Page({
               param: paramInit
             });
             if (msg.data.is_first == "first") {
-              this.setData({
-                integral: "+5 学分",
-                integralContent: "完成首次发帖",
-                showintegral: true
-              });
+              app.setIntegral(this, "+5 学分", "完成首次发帖");
               integral = "first";
             } else if (msg.data.is_first == "day") {
-              this.setData({
-                integral: "+2 学分",
-                integralContent: "完成每日[秀风采]首次发帖",
-                showintegral: true
-              });
+              app.setIntegral(this, "+2 学分", "完成每日[秀风采]首次发帖");
               integral = "day";
             }
             app.store.setState({

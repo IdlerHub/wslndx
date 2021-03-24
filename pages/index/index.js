@@ -462,18 +462,11 @@ Page({
   },
   /* 积分动画 */
   showIntegral() {
+    app.setIntegral(this, "+2 学分", "签到成功")
     this.setData({
       showSignbox: false,
-      integral: "+2 学分",
-      integralContent: "签到成功",
-      showintegral: true,
       isSign: false
     });
-    setTimeout(() => {
-      this.setData({
-        showintegral: false
-      });
-    }, 2000);
   },
   sigin() {
     if (!this.data.$state.userIndex.has_mp_openid) {

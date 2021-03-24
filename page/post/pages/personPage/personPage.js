@@ -197,16 +197,7 @@ Page({
             data: { uid: list[i].uid }
           });
           if (msg.data.is_first == "first") {
-            this.setData({
-              integral: "+5 学分",
-              integralContent: "完成[秀风采]首次点赞",
-              showintegral: true
-            });
-            setTimeout(() => {
-              this.setData({
-                showintegral: false
-              });
-            }, 2000);
+            app.setIntegral(this, "+5 学分", "完成[秀风采]首次点赞");
           }
           this.setData({
             list: list

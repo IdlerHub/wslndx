@@ -112,16 +112,7 @@ Page({
     if (this.data.cur.id == this.recordVideo_id) return;
     app.video.recordFinish(param).then(res => {
       if (res.data.day_read == 1) {
-        this.setData({
-          integral: "+2 学分",
-          integralContent: "每日看完十个短视频",
-          showintegral: true
-        });
-        setTimeout(() => {
-          this.setData({
-            showintegral: false
-          });
-        }, 2000);
+        app.setIntegral(this, "+2 学分", "每日看完十个短视频");
       }
       this.setData({
         loop: true,

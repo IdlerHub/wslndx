@@ -155,16 +155,7 @@ Page({
     };
     app.video.recordFinish(param).then(res => {
       if (res.data.day_read == 1) {
-        this.setData({
-          integral: "+2 学分",
-          integralContent: "每日看完十个短视频",
-          showintegral: true
-        });
-        setTimeout(() => {
-          this.setData({
-            showintegral: false
-          });
-        }, 2000);
+        app.setIntegral(this, "+2 学分", "每日看完十个短视频")
       }
       this.setData({
         loop: true,
@@ -297,8 +288,7 @@ Page({
       });
       this.setData({
         list: this.param.position == "end" ?
-          (msg.data.lists || []).concat(temp) :
-          temp.concat(msg.data.lists || [])
+          (msg.data.lists || []).concat(temp) : temp.concat(msg.data.lists || [])
       });
       this.param.last_id = msg.data.last_id;
     }
@@ -407,16 +397,11 @@ Page({
         .guideRecordAdd(param)
         .then(res => {
           app.getGuide();
+          app.setIntegral(this, "+5 学分", "完成[短视频]新手指引")
           this.setData({
             nextRtight: 5,
-            integral: "+5 学分",
-            integralContent: "完成[短视频]新手指引",
-            showintegral: true
           });
           setTimeout(() => {
-            this.setData({
-              showintegral: false
-            });
             this.judgeWifi();
           }, 2000);
         })
@@ -474,20 +459,8 @@ Page({
       }
     });
   },
-  showIntegral(e) {
-    this.setData({
-      integral: `+${e.detail.num} 学分`,
-      integralContent: e.detail.txt,
-      showintegral: true
-    });
-    setTimeout(() => {
-      this.setData({
-        showintegral: false
-      });
-    }, 2000);
-  },
   toBack() {
-    if(getCurrentPages().length > 1) {
+    if (getCurrentPages().length > 1) {
       wx.navigateBack()
     } else {
       wx.reLaunch({

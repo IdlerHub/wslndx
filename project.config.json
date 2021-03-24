@@ -158,9 +158,9 @@
           "scene": null
         },
         {
-          "name": "pages/post/post",
-          "pathName": "pages/post/post",
-          "query": "",
+          "name": "page/post/pages/pDetail/pDetail",
+          "pathName": "page/post/pages/pDetail/pDetail",
+          "query": "id=176256",
           "scene": 1069,
           "referrerInfo": {}
         }

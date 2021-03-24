@@ -281,19 +281,6 @@ Page({
       });
     })
   },
-  setIntegral(integral, integralContent) {
-    this.setData({
-      integral,
-      integralContent,
-      showintegral: true
-    });
-    setTimeout(() => {
-      this.setData({
-        showintegral: false
-      });
-      this.showPlath(this)
-    }, 2000);
-  },
   played() {
     setTimeout(() => {
       this.vedioRecordAdd()
@@ -328,9 +315,9 @@ Page({
     };
     app.lessonNew.recordFinish(param).then(res => {
       if (res.data.is_first == "first") {
-        this.setIntegral("+70 学分", "完成首次学习课程");
+        app.setIntegral(this, "+5 学分", "完成首次学习课程");
       } else if (res.data.is_first == "finish") {
-        this.setIntegral("+20 学分", "完成学完一门新课程");
+        app.setIntegral(this, "+5 学分", "完成学完一门新课程");
       }
       app.lessonNew.lessonInfo(this.param).then(msg => {
         this.setData({
@@ -737,7 +724,7 @@ Page({
         showvoiceauto: false
       });
       if (res.data.is_first == "day") {
-        this.setIntegral("+10 学分", "完成[云课堂]每日课程首次讨论");
+        app.setIntegral("+2 学分", "完成[云课堂]每日课程首次讨论");
       } else {
         wx.showToast({
           title: "评论成功",
@@ -782,7 +769,7 @@ Page({
         showvoiceauto: false
       });
       if (msg.data.is_first == "day") {
-        this.setIntegral("+10 学分", "完成[云课堂]每日课程首次讨论");
+        app.setIntegral("+5 学分", "完成[云课堂]每日课程首次讨论");
       } else {
         wx.showToast({
           title: "评论成功",
@@ -1120,7 +1107,7 @@ Page({
     };
     app.user.guideRecordAdd(param).then(res => {
       app.getGuide()
-      this.setIntegral("+45 学分", "完成[云课堂]新手指引");
+      app.setIntegral(this, "+5 学分", "完成[云课堂]新手指引")
     }).catch(err => {
       this.turnOff.guide = 0
       err.msg == '记录已增加' ? app.setState({

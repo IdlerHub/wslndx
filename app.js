@@ -540,6 +540,19 @@ App({
       });
     }
   },
+  /* 积分动画 */
+  setIntegral(that, integral, integralContent) {
+    that.setData({
+      integral,
+      integralContent,
+      showintegral: true
+    });
+    setTimeout(() => {
+      that.setData({
+        showintegral: false
+      });
+    }, 2000);
+  },
   globalData: {
     /*wx.login 返回值 code */
     code: null,
