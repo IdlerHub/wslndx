@@ -16,13 +16,13 @@ Page({
     pageNum: 1,
     pageSize: 15
   },
-  onLoad: function(options) {},
-  onShow: function() {
+  onLoad: function (options) {},
+  onShow: function () {
     this.getMessage();
     this.getList()
   },
-  onPullDownRefresh: function() {},
-  onReachBottom: function() {},
+  onPullDownRefresh: function () {},
+  onReachBottom: function () {},
   getList(list) {
     let arr = list || []
     app.user.userFollowing().then(res => {
@@ -36,8 +36,8 @@ Page({
     })
   },
   bindscrolltolower() {
-      this.param.pageNum += 1
-      this.getList(this.data.list)
+    this.param.pageNum += 1
+    this.getList(this.data.list)
   },
   checkTab(e) {
     this.setData({
@@ -58,7 +58,8 @@ Page({
     });
   },
   closeattention(e) {
-    let index = e.currentTarget.dataset.index, status = e.currentTarget.dataset.status
+    let index = e.currentTarget.dataset.index,
+      status = e.currentTarget.dataset.status
     let that = this
     if (status == '取消关注') {
       wx.showModal({
@@ -69,7 +70,9 @@ Page({
         cancelText: '否',
         success(res) {
           if (res.confirm) {
-            let param = { follower_uid: that.data.list[index].id }
+            let param = {
+              follower_uid: that.data.list[index].id
+            }
             app.user.cancelFollowing(param).then(msg => {
               that.data.list[index].status = '关注'
               that.setData({
@@ -80,7 +83,9 @@ Page({
         }
       })
     } else {
-      let param = { follower_uid: that.data.list[index].id }
+      let param = {
+        follower_uid: that.data.list[index].id
+      }
       app.user.following(param).then(res => {
         that.data.list[index].status = '取消关注'
         that.setData({

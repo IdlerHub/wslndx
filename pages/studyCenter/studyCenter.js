@@ -51,7 +51,7 @@ Page({
         {
           id: 4,
           name: '学院市集',
-          image: `${this.data.$state.imgHost}/studyIcon/shopIcon.png`,
+          image: `${this.data.$state.imgHost}/studyIcon/shopIcon1.png`,
           url: '',
           width: 50,
           height: 50,
