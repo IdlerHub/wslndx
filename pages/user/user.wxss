@@ -192,7 +192,7 @@ page .navgationto .navgationBox .toInvite image {
 .myslef .iconBox {
   display: flex;
   flex-wrap: wrap;
-  padding: 40rpx 59rpx;
+  padding: 40rpx 0;
   padding-top: 0;
   justify-content: space-between;
 }
@@ -201,10 +201,10 @@ page .navgationto .navgationBox .toInvite image {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-right: 118rpx;
   margin-top: 40rpx;
   line-height: normal;
   position: relative;
+  width: 33.33%;
 }
 
 .myslef .item {
@@ -238,6 +238,24 @@ page .navgationto .navgationBox .toInvite image {
 .myslef .iconBox .iconItem image {
   width: 70rpx;
   height: 70rpx;
+}
+
+.myslef .iconBox .iconItem .courseWhite {
+  width: 26rpx;
+  height: 26rpx;
+  position: absolute;
+  bottom: 77rpx;
+  right: 81rpx;
+  animation: moveWhite 0.8s infinite;
+}
+
+.myslef .iconBox .iconItem .course {
+  width: 55rpx;
+  height: 55rpx;
+  position: absolute;
+  bottom: 40rpx;
+  right: 44rpx;
+  animation: moveBig 0.8s infinite;
 }
 
 .myslef .iconBox .iconItem text {
@@ -328,4 +346,37 @@ page .navgationto .navgationBox .toInvite image {
   position: absolute;
   right: 30rpx;
   bottom: 130rpx;
+}
+
+@keyframes moveBig {
+  0% {
+    width: 55rpx;
+    height: 55rpx;
+  }
+  50% {
+    width: 60rpx;
+    height: 60rpx;
+  }
+  100% {
+    width: 55rpx;
+    height: 55rpx;
+  }
+}
+
+@keyframes moveWhite {
+  0% {
+    width: 26rpx;
+    height: 26rpx;
+    opacity: 1;
+  }
+  50% {
+    width: 20rpx;
+    height: 20rpx;
+    opacity: 0;
+  }
+  100% {
+    width: 26rpx;
+    height: 26rpx;
+    opacity: 1;
+  }
 }

@@ -106,7 +106,7 @@ Page({
         height: 64,
       }, {
         url: '/pages/video/video',
-        icon: `${this.data.$state.imgHost}/indexIcon/sortVideoicon.png`,
+        icon: `${this.data.$state.imgHost}/indexIcon/sortVideoicon1.png`,
         name: '短视频',
         width: 64,
         height: 62.49,

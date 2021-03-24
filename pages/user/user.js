@@ -26,34 +26,38 @@ Page({
           icon: `${this.data.$state.imgHost}/userIcon/courseIcon.png`,
         },
         {
+          id: 9,
+          name: "学院市集",
+          page: "",
+          icon: `${this.data.$state.imgHost}/userIcon/shopIcon1.png`,
+          isMini: 1,
+          appId: "wx11cabfef2ec771b3",
+        },
+        {
+          id: 9,
+          name: "去游学",
+          page: "",
+          icon: `${this.data.$state.imgHost}/userIcon/travelIcon1.png`,
+          isMini: 1,
+          appId: "wx185325c684044bbc",
+        },
+        {
           id: 2,
           name: "我的作品",
           page: "/page/user/pages/myCircle/myCircle",
           icon: `${this.data.$state.imgHost}/userIcon/myworkIcon.png`,
         },
-        {
-          id: 3,
-          name: "我的关注",
-          page: "/page/user/pages/attentionPage/attentionPage",
-          icon: `${this.data.$state.imgHost}/userIcon/aconicon.png`,
-        },
-        {
-          id: 4,
-          name: "加入圈子",
-          page: "/page/user/pages/circle/circle?type=1",
-          icon: `${this.data.$state.imgHost}/userIcon/useraddquan.png`,
-        },
+        // {
+        //   id: 3,
+        //   name: "我的关注",
+        //   page: "/page/user/pages/attentionPage/attentionPage",
+        //   icon: `${this.data.$state.imgHost}/userIcon/aconicon.png`,
+        // },
         {
           id: 5,
           name: "我的收藏",
           page: "/page/user/pages/collection/collection",
           icon: `${this.data.$state.imgHost}/userIcon/usershoucang.png`,
-        },
-        {
-          id: 6,
-          name: "学习历史",
-          page: "/page/study/pages/history/history",
-          icon: `${this.data.$state.imgHost}/userIcon/historyicon.png`,
         },
         {
           id: 7,
@@ -63,19 +67,23 @@ Page({
           isNews: 1,
         },
         {
+          id: 6,
+          name: "学习历史",
+          page: "/page/study/pages/history/history",
+          icon: `${this.data.$state.imgHost}/userIcon/myhistoryicon1.png`,
+        },
+        {
+          id: 4,
+          name: "加入圈子",
+          page: "/page/user/pages/circle/circle?type=1",
+          icon: `${this.data.$state.imgHost}/userIcon/useraddquan.png`,
+        },
+        {
           id: 8,
           name: "APP下载",
           page:
             "/pages/education/education?type=0&url=https://mp.weixin.qq.com/s/vSd8XBQDQkvqVX_kt_YyTQ",
           icon: `${this.data.$state.imgHost}/userIcon/appIcon.png`,
-        },
-        {
-          id: 9,
-          name: "学院市集",
-          page: "",
-          icon: `${this.data.$state.imgHost}/userIcon/shopingIcon.png`,
-          isMini: 1,
-          appId: "wx11cabfef2ec771b3",
         },
       ],
       moreList = [

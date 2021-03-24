@@ -1,23 +1,58 @@
 <!--pages/usermesseage/usermesseage.wxml-->
-<view class="contrain">
-  <view class="newitem" wx:for="{{newsList}}" wx:key="index" bindtap="tomessage" data-id="{{item.id}}"
-    wx:if="{{newsList[0]}}">
-    <view class="news-time"> {{item.createtime}}</view>
-    <view class="newsBox">
-      <view class="news-title" style="color:{{ item.is_read ? 'rgba(153,153,153,1) ' : ''}}">
-        {{item.title}}
+<view class="pageTop">
+  <view class="tabItem {{!current ? 'active' : ''}}" bindtap="checkTab" data-current="0">我的消息 <text
+      wx:if="{{!current}}"></text></view>
+  <view class="tabItem {{current ? 'active' : ''}}" bindtap="checkTab" data-current="1">我的关注 <text
+      wx:if="{{current}}"></text></view>
+</view>
+<swiper class="swiper" current="{{current}}" duration="100" bindanimationfinish="checkTab">
+  <swiper-item>
+    <scroll-view scroll-y class="scrollView newscroll" wx:if="{{newsList[0]}}">
+      <view class="newitem" wx:for="{{newsList}}" wx:key="index" bindtap="tomessage" data-id="{{item.id}}"
+        wx:if="{{newsList[0]}}">
+        <view class="news-time"> {{item.createtime}}</view>
+        <view class="newsBox">
+          <view class="news-title" style="color:{{ item.is_read ? 'rgba(153,153,153,1) ' : ''}}">
+            {{item.title}}
+          </view>
+          <rich-text nodes="{{item.intro}}" class="tichtext"
+            style="display: -webkit-box;-webkit-box-orient: vertical;-webkit-line-clamp: 4;overflow: hidden; color:{{ item.is_read ? 'rgba(204,204,204,1)' : 'rgba(58,58,58,1)'}} !important;font-size:18px !important;line-height:54rpx !important;">
+          </rich-text>
+          <view class="tonews">
+            <text style="color:{{ item.is_read ? 'rgba(153,153,153,1) ' : ''}}">查看详情</text>
+            <image src="/images/stickright.png"></image>
+          </view>
+        </view>
       </view>
-      <rich-text nodes="{{item.intro}}" class="tichtext"
-        style="display: -webkit-box;-webkit-box-orient: vertical;-webkit-line-clamp: 4;overflow: hidden; color:{{ item.is_read ? 'rgba(204,204,204,1)' : 'rgba(58,58,58,1)'}} !important;font-size:18px !important;line-height:54rpx !important;">
-      </rich-text>
-      <view class="tonews">
-        <text style="color:{{ item.is_read ? 'rgba(153,153,153,1) ' : ''}}">查看详情</text>
-        <image src="/images/stickright.png"></image>
+    </scroll-view>
+    <view class="contrain">
+      <view class="qstBox" wx:if="{{!newsList[0]}}">
+        <image src="{{$state.imgHost}}/delBlog.png"></image>
+        <view class="txt">暂无消息</view>
       </view>
     </view>
-  </view>
-  <view class="qstBox" wx:if="{{!newsList[0]}}">
-    <image src="{{$state.imgHost}}/delBlog.png"></image>
-    <view class="txt">暂无消息</view>
-  </view>
-</view>
+  </swiper-item>
+  <swiper-item>
+    <scroll-view scroll-y class="scrollView" wx:if="{{list[0]}}" bindscrolltolower="bindscrolltolower">
+      <view class="container" wx:if="{{list[0]}}">
+        <view wx:for="{{list}}" wx:key="index" class="item" bindtap="touser" data-index="{{index}}">
+          <image src="{{item.avatar}}" class="avatar"></image>
+          <view class="titlecon">
+            <view class="title-name">
+              <text class="name">{{item.nickname}}</text>
+              <image class="label" wx:if="{{item.fs != null}}" src="/images/approve.png"></image>
+            </view>
+            <view class="univers">{{item.university == mull ? '暂无'  : item.university}}</view>
+          </view>
+          <view class="{{item.status == '关注'? 'joinbtn' : 'btn'}}" catchtap="closeattention" data-index="{{index}}"
+            data-status="{{item.status}}">{{item.status}}</view>
+        </view>
+      </view>
+      <view class="qstBox" wx:else>
+        <image src="{{$state.imgHost}}/delBlog.png"></image>
+        <view class="txt">啥都没有呢</view>
+        <view class="txt">赶快去关注有趣的人吧！</view>
+      </view>
+    </scroll-view>
+  </swiper-item>
+</swiper>

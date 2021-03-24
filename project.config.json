@@ -152,16 +152,15 @@
           "scene": 1008
         },
         {
-          "id": 9,
           "name": "个人中心",
           "pathName": "pages/user/user",
           "query": "",
           "scene": null
         },
         {
-          "name": "pages/post/post",
-          "pathName": "pages/post/post",
-          "query": "id=1460",
+          "name": "page/user/pages/usermesseage/usermesseage",
+          "pathName": "page/user/pages/usermesseage/usermesseage",
+          "query": "",
           "scene": 1069,
           "referrerInfo": {}
         }
