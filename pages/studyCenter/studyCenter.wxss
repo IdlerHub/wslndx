@@ -283,8 +283,7 @@ page {
 .liveListBox {
   width: 100vw;
   display: flex;
-  overflow: hidden;
-  overflow-x: auto;
+  max-height: fit-content;
 }
 
 .liveListBox .liveItem {
@@ -319,7 +318,6 @@ page {
   font-size: 28rpx;
   font-weight: 400;
   color: #999999;
-  margin-top: 10rpx;
 }
 
 .liveListBox .liveItem .img .status {

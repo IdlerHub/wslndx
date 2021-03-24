@@ -18,8 +18,8 @@
       </navigator>
     </view>
     <view class="itemBox" wx:if="{{isLive}}">
-      <view class="liveListBox">
-        <view class="liveItem" wx:for="{{liveList}}" wx:key="index" wx:if="{{index < 3}}">
+      <scroll-view scroll-x enable-flex class="liveListBox">
+        <navigator hover-class="none" url="/page/live/pages/vliveRoom/vliveRoom?roomId={{item.liveId}}" class="liveItem" wx:for="{{liveList}}" wx:key="index" wx:if="{{index < 3}}">
           <view class="img">
             <image src="{{item.indexCover}}"></image>
             <view class="status living" wx:if="{{item.status == 0}}">
@@ -33,10 +33,10 @@
           </view>
           <text class="van-ellipsis">{{item.name}}</text>
           <text>{{item.studydate}}</text>
-        </view>
+        </navigator>
         <navigator class="moreLive" hover-class="none" url="/page/study/pages/livePage/livePage" wx:if="{{liveList[2]}}"> <text>更 多\n直 播</text> </navigator>
         <view style="width: 30rpx; opacity: 0;">1</view>
-      </view>
+      </scroll-view>
       <!-- <liveItem liveList="{{liveList}}" isLive="{{isLive}}" /> -->
     </view>
     <view class="itemBox" wx:else>

@@ -27,7 +27,7 @@ Page({
         },
         {
           id: 9,
-          name: "学院市集",
+          name: "网大商城",
           page: "",
           icon: `${this.data.$state.imgHost}/userIcon/shopIcon1.png`,
           isMini: 1,
