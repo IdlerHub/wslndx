@@ -2,6 +2,7 @@
   "backgroundTextStyle": "light",
   "navigationBarTitleText": "网上老年大学",
   "navigationBarTextStyle": "black",
+  "navigationBarBackgroundColor": "#EEEEEE",
   "enablePullDownRefresh": true,
   "usingComponents": {
     "playRrecord": "/components/playRrecord/playRrecord",

@@ -2,6 +2,7 @@
   "backgroundTextStyle": "light",
   "navigationBarTitleText": "秀风采正文",
   "navigationBarTextStyle": "black",
+  "navigationBarBackgroundColor": "#EEEEEE",
   "enablePullDownRefresh": true,
   "usingComponents": {
     "navBar": "/components/navBar/navBar",

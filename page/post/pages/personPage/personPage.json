@@ -1,6 +1,7 @@
 {
   "navigationBarTextStyle": "black",
   "enablePullDownRefresh": true,
+  "navigationBarBackgroundColor": "#EEEEEE",
   "usingComponents": {
     "formCode": "/components/formCode/formCode",
     "integralAnimation": "/components/integralAni/integralAni",
