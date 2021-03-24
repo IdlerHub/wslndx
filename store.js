@@ -74,7 +74,6 @@ let store = new Store({
     imageUrl: "",
     shareImgurl: "",
     shareTitle: "",
-    recommend: "",
     playVedio: false,
     lessDiscussion: {},
     blogcomment: {},
@@ -93,6 +92,7 @@ let store = new Store({
     messageReceived: 0,
     showLogin: false,
     nextTapDetial: {},
+    systemInfo: wx.getSystemInfoSync().system
   },
   pageLisener: {
     onLoad(opts) {

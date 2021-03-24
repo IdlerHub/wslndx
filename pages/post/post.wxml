@@ -2,12 +2,16 @@
 	module.exports = {
 	search: function(str) {
 	return str.search('gif');
+	},
+	isAndroid: function (systemInfo) {
+	return systemInfo.search('Android') >= 0 ? 1 : 0;
 	}
 	}
 </wxs>
 <import src="/template/template.wxml"></import>
 <view class="tabnav" style="padding-top:{{ top }}px">
-	<navigator url="/page/post/pages/search/search" hover-class="none" class="search" style="margin-top: {{isAndroid ? '5rpx' : ''}};"> 
+	<navigator url="/page/post/pages/search/search" hover-class="none" class="search"
+		style="margin-top: {{fn.isAndroid($state.systemInfo) ? '5rpx' : ''}};">
 		<image src="/images/postSearchIcon.png"></image>
 	</navigator>
 	<view class="{{ currentTab != 0 ? 'lose' : ''}} tabnav-item" bindtap="switchNav" data-current="0">
@@ -33,11 +37,11 @@
 				<view class="weui-loading"></view>
 			</view>
 			<view class="message" wx:if="{{ $state.unRead }}">
-				<view class="msg-btn" catchtap="toMessage">
+				<navigator class="msg-btn" hover-class="none" url="/page/post/pages/message/message">
 					<image class="img" src="{{ $state.lastMan }}" mode="aspectFill"> </image>
 					<text class="news"> {{ $state.unRead }}条新信息</text>
 					<icon class="iconfont icon-arrow-right"></icon>
-				</view>
+				</navigator>
 			</view>
 			<view class="circle" style="padding-top:{{$state.unRead ? '11' : ''}}px;" wx:if="{{joinedList[0]}}">
 				<scroll-view scroll-x="true" class="circle-scroll" enable-flex style="display: flex;">
@@ -47,7 +51,8 @@
 						<image src="{{item.image}}"></image>
 						<text class="van-ellipsis">{{item.title}}</text>
 					</navigator>
-					<navigator class="scroll-view" open-type="navigate" hover-class="none" url="/page/user/pages/circle/circle?type=1">
+					<navigator class="scroll-view" open-type="navigate" hover-class="none"
+						url="/page/user/pages/circle/circle?type=1">
 						<image src="{{$state.imgHost}}/larstCircle.png"></image>
 						<text>加入圈子</text>
 					</navigator>

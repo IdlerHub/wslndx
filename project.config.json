@@ -158,8 +158,8 @@
           "scene": null
         },
         {
-          "name": "page/user/pages/usermesseage/usermesseage",
-          "pathName": "page/user/pages/usermesseage/usermesseage",
+          "name": "pages/post/post",
+          "pathName": "pages/post/post",
           "query": "",
           "scene": 1069,
           "referrerInfo": {}
