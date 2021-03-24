@@ -165,7 +165,7 @@
 }
 
 .detail .img.one image {
-  width: 400rpx;
+  border-radius: 12rpx;
 }
 
 .detail .img.two image {
