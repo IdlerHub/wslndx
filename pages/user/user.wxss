@@ -235,28 +235,74 @@ page .navgationto .navgationBox .toInvite image {
   margin-right: 0;
 }
 
-.myslef .iconBox .iconItem image {
+.myslef .iconBox .iconItem .iconImg {
   width: 70rpx;
   height: 70rpx;
 }
 
-.myslef .iconBox .iconItem .courseWhite {
-  width: 26rpx;
-  height: 26rpx;
-  position: absolute;
-  bottom: 77rpx;
-  right: 81rpx;
-  animation: moveWhite 0.8s infinite;
+.myslef .iconBox .iconItem .itemBox {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.myslef .iconBox .iconItem .course {
-  width: 55rpx;
-  height: 55rpx;
-  position: absolute;
-  bottom: 40rpx;
-  right: 44rpx;
-  animation: moveBig 0.8s infinite;
+.myslef .iconBox .iconItem .itemBox .itemBg{
+  width: 100%;
+  height: 100%;
 }
+
+.myslef .iconBox .iconItem .itemBox .shop {
+  width: 42rpx;
+  height: 37.97rpx;
+  position: absolute;
+  animation: shopMove 1s infinite;
+}
+
+.myslef .iconBox .iconItem .hotIcon {
+  width: 50rpx;
+  height: 50rpx;
+  position: absolute;
+  right: 40rpx;
+  top: -25rpx;
+}
+
+@keyframes shopMove {
+  0% {
+    transform: rotatez(16deg);
+  }
+  25% {
+    /* transform: rotatez(0deg); */
+  }
+  50% {
+    transform: rotatez(-16deg);
+  }
+  75% {
+    /* transform: rotatez(0deg); */
+  }
+  100% {
+    transform: rotatez(16deg);
+  }
+  /* 100% {
+    transform: rotatez(0deg);
+  } */
+}
+
+@keyframes hotActive {
+  0% {
+    transform: scale(1);
+  }
+  40% {
+    transform: scale(.9) rotatez(5deg);
+  }
+  60% {
+    transform: scale(.9) rotatez(-5deg);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
 
 .myslef .iconBox .iconItem text {
   font-size: 28rpx;
@@ -346,37 +392,4 @@ page .navgationto .navgationBox .toInvite image {
   position: absolute;
   right: 30rpx;
   bottom: 130rpx;
-}
-
-@keyframes moveBig {
-  0% {
-    width: 55rpx;
-    height: 55rpx;
-  }
-  50% {
-    width: 60rpx;
-    height: 60rpx;
-  }
-  100% {
-    width: 55rpx;
-    height: 55rpx;
-  }
-}
-
-@keyframes moveWhite {
-  0% {
-    width: 26rpx;
-    height: 26rpx;
-    opacity: 1;
-  }
-  50% {
-    width: 20rpx;
-    height: 20rpx;
-    opacity: 0;
-  }
-  100% {
-    width: 26rpx;
-    height: 26rpx;
-    opacity: 1;
-  }
 }

@@ -43,18 +43,20 @@
     <view class="iconBox">
       <navigator class="iconItem" wx:for="{{myList}}" wx:key="index" hover-class="none" url="{{item.page}}"
         target="{{ item.isMini ? 'miniProgram': 'self' }}" app-id="{{item.appId}}" path="">
-        <image src="{{item.icon}}"></image>
+        <image src="{{item.icon}}" class="iconImg" wx:if="{{!item.iconBg}}"></image>
+        <view class="itemBox iconImg" wx:else>
+          <image src="{{item.iconBg}}" class="iconImg"></image>
+          <image src="{{item.icon}}" class="shop"></image>
+        </view>
+        <image src="/images/userIcon/hotIcon.gif" wx:if="{{index == 2}}" class="hotIcon"></image>
         <text space="emsp">{{item.name}}</text>
         <view class="smallred" wx:if="{{showMes > 0 && item.isNews}}"></view>
-        <view class="moveBox" wx:if="{{index == 1}}">
-          <image src="/images/courseWhite.png" class="courseWhite"></image>
-          <image src="/images/course.png" class="course"></image>
-        </view>
       </navigator>
     </view>
   </view>
   <view class="myslef">
-    <navigator wx:for="{{moreList}}" wx:key="index" hover-class="none" url="{{item.page}}" class="item" wx:if="{{!item.isContact}}">
+    <navigator wx:for="{{moreList}}" wx:key="index" hover-class="none" url="{{item.page}}" class="item"
+      wx:if="{{!item.isContact}}">
       <text>{{item.name}}</text>
       <image src="/images/stickright.png"></image>
     </navigator>
