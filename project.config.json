@@ -158,8 +158,8 @@
           "scene": null
         },
         {
-          "name": "page/post/pages/pDetail/pDetail",
-          "pathName": "page/post/pages/pDetail/pDetail",
+          "name": "pages/post/post",
+          "pathName": "pages/post/post",
           "query": "id=176256",
           "scene": 1069,
           "referrerInfo": {}

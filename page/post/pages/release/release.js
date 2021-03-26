@@ -1,7 +1,6 @@
 //获取应用实例
 const VodUploader = require('../../vod/vodsdk.js');
 const recorderManager = wx.getRecorderManager()
-const innerAudioContext = wx.createInnerAudioContext();
 const record = require('../../../../utils/record')
 
 import OBS from "../../../../OBS/OBSUploadFile.js"
@@ -115,9 +114,7 @@ Page({
     wx.setKeepScreenOn({
       keepScreenOn: false
     })
-    innerAudioContext.stop()
-    recorderManager.stop()
-    this.timer ? [clearInterval(this.timer), this.timer = null] : ''
+    this.timer ? [clearInterval(this.timer), this.timer = null, recorderManager.stop()] : ''
     app.backgroundAudioManager.stop()
     if (this.data.replyparam) return
     let pages = getCurrentPages();
