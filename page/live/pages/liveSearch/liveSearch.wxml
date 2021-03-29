@@ -2,7 +2,7 @@
 <view class="container">
     <view class="search-top">
         <view class="search-box">
-            <image src="{{$state.imgHost}}/searchp.png"></image>
+            <mini-icon mini-class="icon" icon="search" color="#9a9a9a" miniStyle="width:50rpx;height:50rpx" class="iconImg"/>
             <form>
                 <input placeholder="搜索课程名称" placeholder-style="color:#999;" confirm-type="search" type="text" class="search-txt" focus="focus" value="{{text}}" bindinput="changeText"></input>
                 <button wx:if="{{text != ''}}" form-type="reset" catchtap="clearText"></button>

@@ -11,9 +11,7 @@
   align-items: center;
 }
 
-.pageTop image {
-  width: 40rpx;
-  height: 40rpx;
+.pageTop .iconImg {
   margin-right: 20rpx;
 }
 

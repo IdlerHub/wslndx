@@ -322,7 +322,7 @@
         <view class="plahtPicker">
           <text wx:if="{{plathParam.plath.length == 0}}" class="plathoer">请选择地区</text>
           <text wx:else class="adress">{{ plathParam.plath }}</text>
-          <image src="/images/stickright.png"></image>
+          <mini-icon mini-class="icon" icon="arrowRight" color="#bfbfbf" miniStyle="width:35rpx;height:35rpx"/>
         </view>
       </picker>
     </view>
@@ -333,7 +333,7 @@
         <view class="plahtPicker">
           <text class="plathoer" wx:if="{{plathParam.shool.length == 0}}">请选择学校</text>
           <text wx:else class="adress">{{ plathParam.shool }}</text>
-          <image src="/images/stickright.png"></image>
+          <mini-icon mini-class="icon" icon="arrowRight" color="#bfbfbf" miniStyle="width:35rpx;height:35rpx"/>
         </view>
       </picker>
     </view>

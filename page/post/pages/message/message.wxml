@@ -13,7 +13,7 @@
     </view>
     <view class="blog">
       <image wx:if="{{ item.media_type == 2 }}" class="media" src="{{ item.title }}" mode="aspectFill">
-        <image wx:if="{{ item.video_url }}" src="/images/play.png" mode="aspectFill"> </image>
+        <image wx:if="{{ item.video_url }}" src="{{ $state.imgHost }}/play.png" mode="aspectFill"> </image>
       </image>
       <text wx:else class="word"> {{ item.title }} </text>
     </view>

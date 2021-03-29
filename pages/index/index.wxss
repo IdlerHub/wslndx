@@ -237,9 +237,7 @@ page {
   justify-content: space-between;
 }
 
-.now image:nth-child(1) {
-  width: 50rpx;
-  height: 50rpx;
+.now .iconImg {
   margin-right: 20rpx;
 }
 
@@ -502,7 +500,7 @@ page {
   align-items: center;
 }
 
-.search-box .search-left image {
+.search-box .search-left .iconImg {
   width: 56rpx;
   height: 56rpx;
   margin-right: 20rpx;
@@ -512,6 +510,7 @@ page {
   font-size: 36rpx;
   font-weight: 400;
   color: rgba(153, 153, 153, 1);
+  margin-top: -5rpx;
 }
 
 .search-box .search-right {

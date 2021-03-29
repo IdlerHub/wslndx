@@ -20,7 +20,7 @@
           </rich-text>
           <view class="tonews">
             <text style="color:{{ item.is_read ? 'rgba(153,153,153,1) ' : ''}}">查看详情</text>
-            <image src="/images/stickright.png"></image>
+            <mini-icon mini-class="icon" icon="arrowRight" color="#bfbfbf" miniStyle="width:30rpx;height:30rpx" class="iconImg"/>
           </view>
         </view>
       </view>

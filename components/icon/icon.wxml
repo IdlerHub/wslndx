@@ -1,0 +1,3 @@
+<!--components/icon/icon.wxml-->
+<view class="m-icon {{iconClass}} mini-class" bindtap="_tap" style='background-image:url("{{backgroundImage}}");{{miniStyle}}'></view>
+

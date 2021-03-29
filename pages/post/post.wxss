@@ -24,11 +24,6 @@ page {
   left: 34rpx;
 }
 
-.tabnav image {
-  width: 40rpx;
-  height: 40rpx;
-}
-
 .tabnav .tabnav-item {
   font-size: 22px;
   font-family: PingFangSC-Medium, PingFang SC;
@@ -207,9 +202,9 @@ page {
 }
 
 .stick image:nth-child(3) {
-  width: 18rpx;
+  width: 31rpx;
   height: 31rpx;
-  margin-left: 25rpx;
+  margin-left: 6rpx;
 }
 
 .wrap {

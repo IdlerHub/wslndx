@@ -40,7 +40,7 @@
 <scroll-view class="scrollView" scroll-y bindscroll="bindscroll" bindscrolltolower="bindscrolltolower"
   bindscrolltoupper="bindscrolltoupper">
   <view class="topBox" style="padding-top: {{ statusBarHeight + 10 }}px;">
-    <image src="/images/back.png" class="back" bindtap="back"></image>
+    <mini-icon mini-class="icon" icon="arrowLeft" color="#FFF" miniStyle="width:40rpx;height:40rpx" class="back" bindtap="back"/>
     <view class="msgBox">
       <view class="imgBox">
         <image src="{{ info.avatar || '../../images/avatarNone.png'}}"></image>

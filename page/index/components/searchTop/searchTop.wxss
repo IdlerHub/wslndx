@@ -32,10 +32,6 @@
   margin-left: 20rpx;
 }
 
-.serchBox .searchLeft image:nth-child(1) {
-  width: 40rpx;
-  height: 40rpx;
-}
 
 .serchBox .searchLeft image:nth-child(3) {
   width: 40rpx;

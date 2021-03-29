@@ -11,8 +11,7 @@
 }
 
 .topBox .back {
-  width: 40rpx;
-  height: 35rpx;
+  display: inline-block;
   padding: 0 30rpx;
 }
 

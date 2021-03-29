@@ -223,7 +223,7 @@ page .navgationto .navgationBox .toInvite image {
 }
 
 .myslef .item image {
-  width: 18rpx;
+  width: 32rpx;
   height: 32rpx;
 }
 

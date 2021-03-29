@@ -29,10 +29,7 @@
   position: relative;
 }
 
-.container .search-top .search-box image:nth-child(1) {
-  width: 40rpx;
-  height: 40rpx;
-  margin-left: 12rpx;
+.container .search-top .search-box .iconImg {
   margin-right: 20rpx;
 }
 

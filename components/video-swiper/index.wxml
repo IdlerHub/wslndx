@@ -35,7 +35,7 @@
                   <view class="vedioTitle-p">{{ item.category_name }}</view>
                   <view class="viewMore" catchtap="navigate">
                     <view>查看更多</view>
-                    <image src="/images/vedioRight.png" class="viewMoreimg"></image>
+                    <mini-icon mini-class="icon" icon="arrowRight" color="#333333" miniStyle="width:22rpx;height:22rpx" class="viewMoreimg"/>
                   </view>
                 </view>
               </view>

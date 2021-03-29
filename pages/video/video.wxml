@@ -1,6 +1,6 @@
 <view class="container">
   <view class="back" style="top: {{top + 8}}px;" bindtap="toBack">
-    <image src="/images/back.png"/>
+    <mini-icon mini-class="icon" icon="arrowLeft" color="#FFF" miniStyle="width:40rpx;height:40rpx"  bindtap="back"/>
   </view>
   <view class="tabnav" style="padding-top:{{ top }}px">
     <view class="{{ currentTab == 1 ? 'lose' : ''}} tabnav-item" bindtap="switchNav" data-current="0">

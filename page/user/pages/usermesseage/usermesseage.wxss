@@ -128,9 +128,8 @@ page img {
   color: rgba(153, 153, 153, 1);
 }
 
-.newsBox .tonews image {
-  width: 14rpx;
-  height: 25rpx;
+.newsBox .tonews .iconImg {
+  margin-top: 5rpx;
 }
 
 .readed {

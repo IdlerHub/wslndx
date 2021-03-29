@@ -123,7 +123,7 @@
       <view class="viewMore" wx:if="{{ newMessage > 0 && showNum }}" bindtap="niewMore"
         style="left: {{!vliveRoom ? statusBarHeight : ''}}px; bottom: {{!vliveRoom ? 'calc(30vmin / 7.5)' : '' }}">
         <text>{{ newMessage >= 99 ? newMessage + '+' : newMessage }}新消息</text>
-        <image src="/images/messageMore.png"></image>
+        <mini-icon mini-class="icon" icon="arrowBottom" color="#333333" miniStyle="width:calc(20vmin / 7.5);height:calc(20vmin / 7.5)" class="iconMore"/>
       </view>
     </scroll-view>
     <view class="specialBox" style="left: {{!vliveRoom ? statusBarHeight : ''}}px; top: {{ !vliveRoom ? 'calc(-400vmin / 7.5)' : '' }}"

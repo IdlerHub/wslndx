@@ -1,0 +1,26 @@
+/* components/icon/icon.wxss */
+button,
+div,
+span {
+  font-size: 32rpx;
+}
+.m-icon {
+  vertical-align: middle;
+  height: 40rpx;
+  width: 40rpx;
+  background-size: cover;
+}
+.m-icon-loading {
+  animation: iconLoading 2s linear infinite;
+}
+@keyframes iconLoading {
+  from {
+    transform: rotate(0deg);
+    transform-origin: center;
+  }
+  to {
+    transform: rotate(360deg);
+    transform-origin: center;
+  }
+}
+

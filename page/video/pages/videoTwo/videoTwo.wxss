@@ -209,8 +209,6 @@
     color:rgba(51,51,51,1);
     margin-top: 19rpx;
   } .viewMore .viewMoreimg {
-    width: 11rpx;
-    height: 22rpx;
     margin-left: 10rpx;
   }
   /* 点赞动画 */

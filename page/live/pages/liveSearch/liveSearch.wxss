@@ -26,9 +26,7 @@ page {
   align-items: center;
 }
 
-.container .search-top .search-box image:nth-child(1) {
-  width: 44rpx;
-  height: 44rpx;
+.container .search-top .search-box .iconImg {
   margin-right:23rpx;
 }
 

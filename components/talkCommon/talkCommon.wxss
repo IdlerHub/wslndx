@@ -184,11 +184,11 @@
   color: #333333;
 }
 
-.viewMore image {
+.viewMore .iconMore {
   width: calc(20vmin / 7.5);
   height: calc(10vmin / 7.5);
   margin-left: calc(10vmin / 7.5);
-  margin-top: calc(3vmin / 7.5);
+  margin-top: calc(-10vmin / 7.5);
 }
 
 .specialBox {

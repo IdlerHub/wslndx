@@ -137,10 +137,9 @@ page {
   color: #333333;
 }
 
-.contentBox .contentTop .contentTopright image {
-  width: 14rpx;
-  height: 22rpx;
+.contentBox .contentTop .contentTopright .viewMoreimg {
   margin-left: 10rpx;
+  margin-top: 5rpx;
 }
 
 .contentBox .itemBox {

@@ -14,7 +14,7 @@
       <navigator class="contentTopright" hover-class="none" url="/page/study/pages/livePage/livePage"
         wx:if="{{isLive}}">
         <text>全部</text>
-        <image src="/images/vedioRight.png"></image>
+        <mini-icon mini-class="icon" icon="arrowRight" color="#333333" miniStyle="width:22rpx;height:22rpx" class="viewMoreimg"/>
       </navigator>
     </view>
     <view class="itemBox" wx:if="{{isLive}}">

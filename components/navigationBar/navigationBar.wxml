@@ -1,7 +1,7 @@
 <view class="navigation-bar" style="padding-top:{{ paddingTop }}px;height:{{ height }}px;line-height:{{ height }}px;background:{{ background }};color:{{ color }};font-size:{{ fontSize }};position:{{ fixed && 'fixed' }};transform:translateY({{ !show ? -paddingTop - height + 'px' : '0' }});">
   <view class="back" wx:if="{{ back }}" style="padding-top:{{ paddingTop }}px;height:{{ height }}px;line-height:{{ height }}px;" bind:tap="navigateBack">
     <!-- <view class="icon-fanhui"></view> -->
-    <image src="/images/vedioRight.png"></image>
+    <mini-icon mini-class="icon" icon="arrowLeft" color="#333333" miniStyle="width:30rpx;height:30rpx" class="backImg"/>
   </view>
   <view class="title">{{ title != "none" ? title : "" }}</view>
 </view>

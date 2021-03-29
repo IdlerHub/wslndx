@@ -3,14 +3,14 @@
   url="/page/index/pages/allSearch/allSearch?isSchool={{isSchool}}&isLesson={{isLesson}}&isTeach={{isTeach}}&universityId={{universityId}}"
   class="serchBox" wx:if="{{!isSearch}}">
   <view class="searchLeft" style="border-radius: {{ isTeach ? '100rpx 0 0 100rpx;' : ''  }}">
-    <image src="../../images/searchIcon.png"></image>
+    <mini-icon mini-class="icon" icon="search" color="#ccc" miniStyle="width:45rpx;height:45rpx" class="iconImg"/>
     <text>搜索{{isSchool ? '高校' : isLesson ? '课程' : '讲师'}}名称</text>
   </view>
   <view class="searchRight" style="border-radius: {{ isTeach ? '0px 100rpx 100rpx 0px;' : ''  }};">搜索</view>
 </navigator>
 <view class="serchBox" wx:else>
   <view class="searchLeft">
-    <image src="../../images/searchIcon.png"></image>
+    <mini-icon mini-class="icon" icon="search" color="#ccc" miniStyle="width:45rpx;height:45rpx" class="iconImg"/>
     <input placeholder="搜索{{isSchool ? '高校' : isLesson ? '课程' : '讲师'}}名称" placeholder-style="color:#999;" confirm-type="search"
       type="text" class="search-txt" focus="{{focus}}" value="{{text}}" bindinput="txtchange"
       bindconfirm="searchlesss" wx:if="{{focus}}"></input>

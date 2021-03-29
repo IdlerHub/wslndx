@@ -58,14 +58,14 @@
     <navigator wx:for="{{moreList}}" wx:key="index" hover-class="none" url="{{item.page}}" class="item"
       wx:if="{{!item.isContact}}">
       <text>{{item.name}}</text>
-      <image src="/images/stickright.png"></image>
+      <image src="{{$state.imgHost}}/Return-black.png"></image>
     </navigator>
     <button wx:for="{{moreList}}" wx:key="index" class="item" open-type="contact" bindcontact="handleContact"
       data-index='{{index}}'
       session-from='{"name": "{{$state.userInfo.nickname}}","avatarUrl":"{{$state.userInfo.avatar}}","nickName":"{{$state.userInfo.nickname}}"}'
       wx:if="{{item.isContact}}">
       <text>{{item.name}}</text>
-      <image src="/images/stickright.png"></image>
+      <image src="{{$state.imgHost}}/Return-black.png"></image>
     </button>
     <!-- <view class="iconBox moreList">
       <navigator class="iconItem" wx:for="{{moreList}}" wx:key="index" hover-class="none" url="{{item.page}}"

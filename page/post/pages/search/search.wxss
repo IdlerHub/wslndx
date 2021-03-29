@@ -19,9 +19,7 @@
   align-items: center;
 }
 
-.search-top .search-box image:nth-child(1) {
-  width: 44rpx;
-  height: 44rpx;
+.search-top .search-box .iconImg {
   margin-right: 23rpx;
 }
 

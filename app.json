@@ -162,6 +162,7 @@
     }
   },
   "usingComponents": {
-    "signinBox": "/components/signinBox/signinBox"
+    "signinBox": "/components/signinBox/signinBox",
+    "mini-icon": "components/icon/icon"
   }
 }
