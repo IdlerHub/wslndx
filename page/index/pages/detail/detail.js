@@ -179,6 +179,7 @@ Page({
     }
     if (this.timeTemplate > 0) {
       let progress = parseInt(new Date().getTime() / 1000 + "") - this.timeTemplate
+      if(progress > this.data.cur.filmLength) progress = this.data.cur.filmLength
       this.updateProgress(progress)
     }
   },
@@ -293,6 +294,7 @@ Page({
   ended() {
     if (this.timeTemplate > 0) {
       let progress = parseInt(new Date().getTime() / 1000 + "") - this.timeTemplate
+      if(progress > this.data.cur.filmLength) progress = this.data.cur.filmLength
       this.updateProgress(progress)
     }
     this.data.sublessons.forEach(item => {
@@ -329,6 +331,7 @@ Page({
   videoPause() {
     if (this.timeTemplate > 0) {
       let progress = parseInt(new Date().getTime() / 1000 + "") - this.timeTemplate
+      if(progress > this.data.cur.filmLength) progress = this.data.cur.filmLength
       this.updateProgress(progress)
     }
   },
