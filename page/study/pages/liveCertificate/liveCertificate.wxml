@@ -22,7 +22,7 @@
     <text>保存图片</text>
   </view>
   <button hover-class="none" class="btn" open-type="share">
-    <image src="../../images/shareIcon.png"></image>
+    <mini-icon mini-class="icon" icon="wechat" color="#fff" miniStyle="width:50rpx;height:50rpx" class="iconImg"/>
     <text>分享好友</text>
   </button>
 </view>

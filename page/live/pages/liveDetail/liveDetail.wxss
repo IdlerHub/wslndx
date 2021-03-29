@@ -137,9 +137,7 @@ page {
   color: #F2323A;
 }
 
-.noticeBox image:nth-child(3) {
-  width: 30rpx;
-  height: 30rpx;
+.noticeBox .iconImg {
   margin-left: 20rpx;
 }
 

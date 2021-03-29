@@ -68,7 +68,7 @@
             <template is="listItem" data="{{list: liveList, isLive: 1}}"></template>
             <view class="bottom" bindtap="checkTab" data-index="1">
               <text>查看全部</text>
-              <image src="../../images/allRight.png"></image>
+              <mini-icon mini-class="icon" icon="arrowRight" color="#96A8BB" miniStyle="width:20rpx;height:20rpx" class="iconImg"/>
             </view>
           </view>
           <view class="allBox" wx:if="{{lessonList[0]}}">
@@ -76,7 +76,7 @@
             <template is="listItem" data="{{list: lessonList, isLesson: 1}}"></template>
             <view class="bottom" bindtap="checkTab" data-index="2">
               <text>查看全部</text>
-              <image src="../../images/allRight.png"></image>
+              <mini-icon mini-class="icon" icon="arrowRight" color="#96A8BB" miniStyle="width:20rpx;height:20rpx" class="iconImg"/>
             </view>
           </view>
         </scroll-view>

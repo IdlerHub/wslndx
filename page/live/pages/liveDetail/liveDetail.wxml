@@ -17,7 +17,7 @@
             wx:if="{{lessonDetail.notice.length > 0}}">
             <image src="../../images/noticeIcon.png"></image>
             <view>{{lessonDetail.notice}}</view>
-            <image src="../../images/noticeRight.png"></image>
+            <mini-icon mini-class="icon" icon="arrowRight" color="#96A8BB" miniStyle="width:30rpx;height:30rpx" class="iconImg"/>
         </navigator>
     </view>
     <!-- 课程信息 -->

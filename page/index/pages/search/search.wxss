@@ -347,9 +347,7 @@
   color: #96A8BB;
 }
 
-.allBox .bottom image {
-  width: 20rpx;
-  height: 20rpx;
+.allBox .bottom .iconImg {
   margin-left: 16rpx;
 }
 

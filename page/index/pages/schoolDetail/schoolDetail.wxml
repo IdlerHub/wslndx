@@ -64,7 +64,7 @@
       url="/page/index/pages/allSchoollesson/allSchoollesson?id={{detail.id}}&type=1&title={{detail.name}}"
       hover-class="none">
       <text>查看全部</text>
-      <image src="../../images/allRight.png" alt=""></image>
+      <mini-icon mini-class="icon" icon="arrowRight" color="#96A8BB" miniStyle="width:20rpx;height:20rpx" class="iconImg"/>
     </navigator>
   </view>
 </template>

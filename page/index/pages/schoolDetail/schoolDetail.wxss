@@ -229,9 +229,7 @@ page {
   border-top: 1rpx solid #E9E9E9;
 }
 
-.liveBox .allBox image {
-  width: 20rpx;
-  height: 20rpx;
+.liveBox .allBox .iconImg {
   margin-left: 16rpx;
 }
 
