@@ -3,7 +3,7 @@
   <view class="loginBox">
     <text class="loginTitle">微信登陆</text>
     <view class="issuse">
-      <image src="../loginBox/images/radio.png" wx:if="{{check}}" bindtap="checkRadio"></image>
+      <mini-icon mini-class="icon" icon="pitch" class="iconImg" wx:if="{{check}}" color="#9E7E6B" miniStyle="width:28rpx;height:28rpx" bindtap="checkRadio"/>
       <view class="circle" wx:else bindtap="checkRadio"></view>
       <navigator hover-class="none" url="/pages/agreement/agreement" class="text">已阅读《用户协议》，登录即注册</navigator>
     </view>
@@ -15,6 +15,6 @@
       <image src="../loginBox/images/wechat.png"></image>
       <text>微 信</text>
     </button>
-    <image src="../loginBox/images/close.png" class="close" bindtap="changeLoginstatus"></image>
+    <mini-icon mini-class="icon" icon="closeOutline" class="close" color="#fff" miniStyle="width:70rpx;height:70rpx" bindtap="changeLoginstatus"/>
   </view>
 </view>

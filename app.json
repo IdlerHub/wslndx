@@ -150,6 +150,12 @@
         "pages/history/history",
         "pages/liveCertificate/liveCertificate"
       ]
+    },
+    {
+      "root": "page/discoveryHall/",
+      "pages": [
+        "pages/index/index"
+      ]
     }
   ],
   "requiredBackgroundModes": [
