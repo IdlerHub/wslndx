@@ -26,23 +26,16 @@
         <view class="liveSubtitle">
             共{{lessonDetail.liveCount}}讲 · {{lessonDetail.description}}
         </view>
-        <view class="share-joinClass">
-            <view class="live-info">
-                <view class="join-class" bindtap="joinClass">
-                    <image src="../../images/join.png"></image>
-                    <view>进班群</view>
-                </view>
-                <navigator class="subscribe" hover-class="none"
-                    url="/pages/education/education?type=0&url=https://mp.weixin.qq.com/s/vSd8XBQDQkvqVX_kt_YyTQ">
-                    <image src="../../images/phoneIcon.png"></image>
-                    <view>打开app</view>
-                </navigator>
-                <!-- <image src="/images/messageImg.png"></image> -->
+        <view class="statusLeft">
+            <view class="statusTxt">
+                <view wx:for="{{3}}" wx:key="index" class="statusWite"></view>
+                <view class="text">直播中</view>
             </view>
-            <button class="share" open-type="share">
-                <image class="shareLesson" src="../../images/shareLesson.png"></image>
-                <text>分享</text>
-            </button>
+            <view class="title">2.中国民族音乐分类</view>
+            <view class="view">
+                <text>看直播</text>
+                <image src="{{ $state.imgHost }}/Return-black.png"></image>
+            </view>
         </view>
         <view class="progressBox" wx:if="{{lessonDetail.progress != 100}}">
             <view class="studyNum">
@@ -111,7 +104,7 @@
                         id="{{'sublessonsd'+item.id}}">
                         <view class="left">
                             <text class="name">{{ index+1 }}. {{ item.name }}</text>
-                            <!-- <text class="time">{{ item.minute }}分钟</text> -->
+                            <text class="time">{{ item.dayTime +' '}}{{item.startTime}}</text>
                         </view>
                         <view class="right" wx:if="{{item.state == 0}}">暂未开始</view>
                         <view class="right" wx:elif="{{item.state == 3}}">观看回播</view>
@@ -305,4 +298,22 @@
         </cover-view>
         <cover-image src="{{$state.imgHost}}/cancel.png" class="cancel" catchtap="showServise"></cover-image>
     </cover-view>
+    <view class="share-joinClass">
+        <view class="live-info">
+            <view class="join-class" bindtap="joinClass">
+                <image src="../../images/join.png"></image>
+                <view>进班群</view>
+            </view>
+            <navigator class="subscribe" hover-class="none"
+                url="/pages/education/education?type=0&url=https://mp.weixin.qq.com/s/vSd8XBQDQkvqVX_kt_YyTQ">
+                <image src="../../images/phoneIcon.png"></image>
+                <view>打开app</view>
+            </navigator>
+            <!-- <image src="/images/messageImg.png"></image> -->
+        </view>
+        <button class="share" open-type="share">
+            <image class="shareLesson" src="../../images/shareLesson.png"></image>
+            <text>分享</text>
+        </button>
+    </view>
 </view>

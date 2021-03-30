@@ -57,8 +57,20 @@
         <text>授课老师</text>
         <text>{{lessonDetail.teacher}}{{ lessonDetail.lecturers[2] ? '等' : '' }} </text>
       </view>
+      <view class="tab">
+        <text>在学人数</text>
+        <text>1.2W人</text>
+      </view>
     </view>
-    <view class="content">
+    <view class="content" wx:if="{{lessonDetail.introduction.length <= 0}}">
+      <view class="title">课程目录</view>
+      <view wx:for="{{lessonDetail.liverVOS}}" wx:key="index" class="live-list">
+        <text class="live-list-item">
+          {{item.name}}
+        </text>
+      </view>
+    </view>
+    <view class="content" wx:else>
       <view class="title">课程简介</view>
       <rich-text nodes="{{lessonDetail.introduction}}" class="richText"></rich-text>
     </view>
@@ -67,19 +79,19 @@
     <button open-type="share" class="left" wx:if="{{$state.userInfo.id}}">
       <view class="leftBox">
         <image src="../../images/share-wx.png"></image>
-        <text>邀请好友</text>
+        <text>邀好友一起学</text>
       </view>
     </button>
     <slotSign class="xiaolin" bindtap="checknextTap" data-type="shareNone" wx:else class="left">
       <view>
         <view class="leftBox">
           <image src="../../images/share-wx.png"></image>
-          <text>邀请好友</text>
+          <text>邀好友一起学</text>
         </view>
       </view>
     </slotSign>
     <slotSign class="xiaolin" bindtap="checknextTap" data-type="addSubscribe" class="left" class="right">
-      <view bindtap="rightNow">立即学习</view>
+      <view bindtap="rightNow">立即报名</view>
     </slotSign>
   </view>
   <view class="attentionBox" wx:if="{{showAtention}}">
