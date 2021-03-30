@@ -201,12 +201,12 @@
   <!-- 底部tabbar -->
   <navBar path='index'></navBar>
   <!-- 学习历史 -->
-  <view class="now" wx:if="{{history.last_lesson}}" bindtap="historyTap" data-id="{{ history.last_lesson.id }}"
-    data-title="{{ history.last_lesson.title }}"
-    style="animation:{{ history.last_lesson && shownow && shownowt ? 'nowshow' : 'nowclose'}}  0.5s ; bottom:{{history.last_lesson && shownow && shownowt? '138rpx' : '-88rpx'}} ">
+  <view class="now" wx:if="{{history.name}}" bindtap="historyTap" data-id="{{ history.columnId }}"
+    data-title="{{ history.name }}"
+    style="animation:{{ history.name && shownow && shownowt ? 'nowshow' : 'nowclose'}}  0.5s ; bottom:{{history.name && shownow && shownowt? '138rpx' : '-88rpx'}} ">
     <!-- <image src="/images/play-red.png"></image> -->
     <mini-icon mini-class="icon" icon="playVideo" color="#d81e06" miniStyle="width:50rpx;height:50rpx" class="iconImg"/>
-    <view class="line">{{ history.last_lesson.title + "第" + history.last_lesson.sub_id + "讲" }}</view>
+    <view class="line">{{ history.name }}</view>
     <image src="{{$state.imgHost}}/nowcancle.png" catchtap="closenow"></image>
   </view>
   <!-- 活动弹窗 -->

@@ -193,12 +193,12 @@ Page({
   },
   getHistory() {
     let historyParam = {
-      page: 1,
-      pageSize: 10
+      pageNum: 1,
+      pageSize: 1
     }
-    return app.user.history(historyParam).then(msg => {
+    return app.study.centerSpecial(historyParam).then(msg => {
       this.setData({
-        "history.last_lesson": msg.data.last_lesson || ""
+        "history": msg.dataList[0] || ""
       })
     })
   },
@@ -262,7 +262,7 @@ Page({
   //继续播放
   historyTap: function (e) {
     wx.navigateTo({
-      url: `/page/index/pages/detail/detail?id=${e.currentTarget.dataset.id}&name=${e.currentTarget.dataset.title}&play=true`
+      url: `/page/live/pages/liveDetail/liveDetail?specialColumnId=${e.currentTarget.dataset.id}&name=${e.currentTarget.dataset.title}&play=true`
     })
     wx.uma.trackEvent('video_historyPlay', {
       lessonsName: e.currentTarget.dataset.title
