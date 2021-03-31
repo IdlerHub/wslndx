@@ -1,8 +1,8 @@
 // page/discoveryHall/pages/index/index.js
 Page({
   data: {
-    showOverlay: false,
-    overlayType: 0,
+    showOverlay: true,
+    overlayType: 1,
   },
   onLoad: function (options) {
 

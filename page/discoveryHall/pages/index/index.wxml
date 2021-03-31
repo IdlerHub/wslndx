@@ -1,7 +1,7 @@
 <!--page/discoveryHall/pages/index/index.wxml-->
 <!-- 规则 -->
 <view class="ruleBtn" bindtap="onClickHid" data-type="0">规则</view>
-<van-overlay show="{{ showOverlay }}" bind:click="onClickHid">
+<van-overlay show="{{ showOverlay }}" bind:click="onClickHid" data-type="{{overlayType}}">
   <view class="ruleBox" wx:if="{{!overlayType}}">
     <view class="title">新生体验馆</view>
     <view class="txtList">
@@ -16,6 +16,13 @@
     </view>
     
     <mini-icon mini-class="icon" icon="closeOutline" color="#fff" miniStyle="width:80rpx;height:80rpx" class="ruleClose"
-      catchtap="onClickHid" />
+      catchtap="onClickHid" data-type="{{overlayType}}"/>
+  </view>
+  <view class="vipBox" wx:else>
+    <text class="title">恭喜您完成全部任务</text>
+    <text class="inro">7天VIP学习卡已到，请在APP上使用</text>
+    <text class="joinBtn">去下载APP</text>
+    <mini-icon mini-class="icon" icon="closeOutline" color="#fff" miniStyle="width:80rpx;height:80rpx" class="ruleClose"
+    catchtap="onClickHid" data-type="{{overlayType}}"/>
   </view>
 </van-overlay>

@@ -33,8 +33,20 @@ Page({
   onReachBottom: function () {
 
   },
-  onShareAppMessage: function () {
-
+  onShareAppMessage: function (ops) {
+    if (ops.from === "menu") {
+      return this.menuAppShare();
+    }
+    if (ops.from === "button") {
+      return {
+        title: '视频详情',
+        imageUrl: "/images/sharemessage.jpg",
+        path: "/page/discoveryHall/pages/videoDetail/videoDetail?id=" +
+          1 +
+          "&type=share&uid=" +
+          this.data.$state.userInfo.id
+      };
+    }
   },
   onChange(e) {
     this.setData({

@@ -19,10 +19,10 @@
           <mini-icon mini-class="icon" icon="heart" color="#fff" miniStyle="width:50rpx;height:50rpx" class="" />
           <text>点赞</text>
         </view>
-        <view class="bth">
+        <button hover-class="none" open-type="share" class="bth">
           <mini-icon mini-class="icon" icon="wechat" color="#fff" miniStyle="width:50rpx;height:50rpx" class="" />
           <text>分享</text>
-        </view>
+        </button>
       </view>
     </view>
   </video>

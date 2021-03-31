@@ -155,7 +155,7 @@
       "root": "page/discoveryHall/",
       "pages": [
         "pages/index/index",
-        "pages/videoDetail/videoDetail",
+        "pages/detail/detail",
         "pages/works/works"
       ]
     }
