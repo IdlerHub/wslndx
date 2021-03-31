@@ -145,7 +145,7 @@ page {
 /* 课程信息块 */
 .liveInfo {
   width: 100%;
-  height: 249rpx;
+  height: 168rpx;
   box-sizing: border-box;
   padding: 30rpx;
   background: #fff;
@@ -181,42 +181,63 @@ page {
   white-space: nowrap;
 }
 
-.liveInfo .statusLeft {
+ /*直播中提示*/
+ .statusLeft {
   display: flex;
   align-items: center;
+  padding: 29rpx 29rpx 19rpx 29rpx;
+  background-color: #EDEDED;
 }
-.liveInfo .statusLeft .statusTxt {
+ .statusLeft .statusTxt {
   display: flex;
   align-items: flex-end;
+  justify-content: center;
   height: 24rpx;
-  border-radius: 30rpx;
+  border-radius: 6rpx;
   background: linear-gradient(270deg, #FF565D 0%, #F2323A 100%);
   padding: 3% 3% 1% 3%;
+  margin-right: 10rpx;
 }
-.liveInfo .statusLeft .statusTxt .text {
+ .statusLeft .statusTxt .text {
   color: #fff;
   margin-left: 10rpx;
+  font-size: 28rpx;
 }
-.liveInfo .statusLeft .statusWite {
+ .statusLeft .statusWite {
   display: block;
   width: 5rpx;
   height: 100%;
   background-color: #fff;
   border-radius: 20rpx;
-  margin-right: 5rpx;
+  margin: 0 5rpx 5rpx 0;
   position: relative;
 }
-.liveInfo .statusLeft .statusWite:nth-child(1) {
+ .statusLeft .statusWite:nth-child(1) {
   animation: liveStatus 0.4s 0s ease-out infinite;
 }
-.liveInfo .statusLeft .statusWite:nth-child(2) {
+ .statusLeft .statusWite:nth-child(2) {
   animation: liveStatus 0.6s 0s ease-out infinite;
 }
-.liveInfo .statusLeft .statusWite:nth-child(3) {
+ .statusLeft .statusWite:nth-child(3) {
   animation: liveStatus 0.8s 0s ease-out infinite;
 }
 .statusLeft .title {
   flex: 1;
+  font-size: 36rpx;
+  font-family: PingFangSC-Medium, PingFang SC;
+  font-weight: bold;
+  color: #3A3A3A;
+  margin-right: 14rpx;
+  word-break: break-all;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.statusLeft .view text {
+  color: #999999;
+  font-size: 30rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
 }
 .statusLeft .view image {
   width: 22rpx;
@@ -290,7 +311,7 @@ page {
   padding: 30rpx;
   position: fixed;
   bottom: 0;
-  width: 92%;
+  width: 100%;
   background-color: #e6e6e6;
 }
 
@@ -310,32 +331,40 @@ page {
   position: absolute;
   width: 4rpx;
   height: 60rpx;
-  background: #CCCCCC;
+  background: #ccc;
   border-radius: 3rpx;
-  right: -30rpx;
+  left: 85rpx;
   top: 6rpx;
 }
-
-.live-info .join-class {
-  width: 230rpx;
-  height: 72rpx;
+.live-info .right-box, .live-info .join-class {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  background: linear-gradient(319deg, #FF183F 0%, #FF5454 100%);
-  box-shadow: 0px 2rpx 6rpx 0px rgba(255, 0, 0, 0.4);
-  border-radius: 40rpx;
-  margin-right: 30rpx;
 }
-
-.live-info .join-class>view {
-  height: 72rpx;
-  line-height: 72rpx;
+.live-info .right-box image {
+  width: 43rpx;
+  height: 43rpx;
+}
+.live-info .right-box text, .live-info .join-class text {
+  font-size: 30rpx;
+  font-family: PingFangSC-Regular, PingFang SC;
+  font-weight: 400;
+  color: #303132;
+  margin-top: 5rpx;
+}
+.live-info .right-box{
+  width: 11%;
+}
+.live-info .join-class {
+  width: 170rpx;
+}
+.live-info .join-class text {
+  margin-top: 8rpx;
 }
 
 .live-info .join-class image {
-  width: 43rpx;
-  height: 36rpx;
+  width: 46rpx;
+  height: 39rpx;
   margin-right: 12rpx;
 }
 
@@ -345,33 +374,40 @@ page {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(319deg, #FE772A 0%, #FE8D4E 100%);
+  background: linear-gradient(319deg, #FFB441 0%, #FE9B02 100%);
   box-shadow: 0px 2rpx 6rpx 0px #FF6812;
-  border-radius: 40rpx;
+  border-radius: 40rpx 0 0 40rpx;
 }
 
-.live-info .subscribe image {
+/* .live-info .subscribe image {
   width: 24.22rpx;
   height: 36rpx;
   margin-right: 15rpx;
-}
+} */
 
 .share-joinClass .share {
+  background-color: #F2323A;
+  border: #F2323A solid 1px;
+  border-radius: 0 40rpx 40rpx 0;
+  height: 74rpx;
+  width: 230rpx;
   display: flex;
   align-items: center;
+  justify-content: center;
+  margin-top: 1rpx;
 }
 
-.share-joinClass .share .shareLesson {
+/* .share-joinClass .share .shareLesson {
   width: 34rpx;
   height: 34rpx;
   margin-right: 13rpx;
-}
+} */
 
-.share-joinClass .share text {
-  font-size: 32rpx;
+.share-joinClass .share text, .share-joinClass .subscribe text {
+  font-size: 30rpx;
   font-family: PingFangSC-Regular, PingFang SC;
   font-weight: 400;
-  color: #7e7e7e;
+  color: #fff;
 }
 
 /* 直播卡片 */
@@ -526,9 +562,15 @@ page {
   animation: liveStatus 0.8s 0s ease-out infinite;
 }
 
+/*分割线*/
+.cutLine {
+  height: 15rpx;
+  background-color: #dcdcdc;
+}
 /* 课程部分 */
 .content {
-  margin: 20rpx 0 130rpx 0;
+  /* margin: 20rpx 0 130rpx 0; */
+  margin: 0 0 130rpx 0;
   background: #fff;
 }
 
@@ -537,7 +579,7 @@ page {
   height: 103rpx;
   line-height: 98rpx;
   box-sizing: border-box;
-  margin-top: 10px;
+  /* margin-top: 10px; */
   border-bottom: 2rpx solid #e9e9e9;
   background: #fff;
   display: flex;
@@ -555,7 +597,7 @@ page {
   position: relative;
 }
 
-.nav .item .active {
+.nav .item.active {
   position: relative;
   color: #df2020;
   font-size: 44rpx;
@@ -583,6 +625,28 @@ page {
   margin-left: -30rpx;
 }
 
+.tab-item .sort {
+  background-color: #dcdcdc;
+  height: 60rpx;
+  display: flex;
+  align-items: center;
+  padding: 10rpx 30rpx;
+}
+.tab-item .sort .left {
+  flex: 1;
+}
+.tab-item .sort .left, .tab-item .sort .right {
+  color: #7E7E7E;
+  font-size: 28rpx;
+}
+.tab-item .sort image {
+  width: 28rpx;
+  height: 28rpx;
+}
+.tab-item .sort .right {
+  margin-left: 5rpx;
+}
+
 /* 简介 */
 rich-text {
   display: block;
@@ -601,7 +665,7 @@ rich-text {
 }
 
 .drama {
-  padding: 0 30rpx;
+  padding: 0 30rpx 80rpx 30rpx;
 }
 
 .drama .item {
@@ -640,7 +704,7 @@ rich-text {
   color: #df2020;
 }
 
-.drama .item.isStudy .left .name  {
+.drama .item.isStudy .left .name, .drama .item.isStudy .left .time  {
   color: rgba(58, 58, 58, 0.4);
 }
 
@@ -658,6 +722,60 @@ rich-text {
 .drama .item.active .right {
   color: #df2020;
   background: #FFF2F2;
+}
+
+.drama .item .playMv {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.drama .item .playMv image {
+  height: 40rpx;
+  width: 40rpx;
+}
+.drama .item .playMv .white {
+  font-size: 28rpx;
+  color: #7E7E7E;
+}
+.drama .item .playMv .red {
+  font-size: 28rpx;
+  color: #F2323A;
+}
+.playingMv {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+ }
+ .playingMv .statusTxt {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  height: 24rpx;
+  border-radius: 6rpx;
+ }
+ .playingMv .text {
+  color: #F2323A;
+  margin-left: 10rpx;
+  font-size: 28rpx;
+}
+.playingMv .statusWite {
+  display: block;
+  width: 5rpx;
+  height: 100%;
+  background-color: #F2323A;
+  border-radius: 20rpx;
+  margin: 0 5rpx 5rpx 0;
+  position: relative;
+}
+.playingMv .statusWite:nth-child(1) {
+  animation: liveStatus 0.4s 0s ease-out infinite;
+}
+ .playingMv .statusWite:nth-child(2) {
+  animation: liveStatus 0.6s 0s ease-out infinite;
+}
+ .playingMv .statusWite:nth-child(3) {
+  animation: liveStatus 0.8s 0s ease-out infinite;
 }
 
 /* 讨论 */

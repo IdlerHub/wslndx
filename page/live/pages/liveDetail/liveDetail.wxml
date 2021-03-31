@@ -26,17 +26,6 @@
         <view class="liveSubtitle">
             共{{lessonDetail.liveCount}}讲 · {{lessonDetail.description}}
         </view>
-        <view class="statusLeft">
-            <view class="statusTxt">
-                <view wx:for="{{3}}" wx:key="index" class="statusWite"></view>
-                <view class="text">直播中</view>
-            </view>
-            <view class="title">2.中国民族音乐分类</view>
-            <view class="view">
-                <text>看直播</text>
-                <image src="{{ $state.imgHost }}/Return-black.png"></image>
-            </view>
-        </view>
         <view class="progressBox" wx:if="{{lessonDetail.progress != 100}}">
             <view class="studyNum">
                 <text>已学习</text>
@@ -52,6 +41,20 @@
                 <text class="badge">查看证书</text>
             </view>
         </navigator>
+    </view>
+    <!--直播中状态-->
+    <view wx:for="{{ sublessons }}" catchtap="select" data-item="{{item}}" data-index="{{ index }}" wx:key="index">
+        <view class="statusLeft" wx:if="{{item.state==1}}">
+            <view class="statusTxt">
+                <view wx:for="{{3}}" wx:key="index" class="statusWite"></view>
+                <view class="text">直播中</view>
+            </view>
+            <view class="title">{{item.name}}</view>
+            <view class="view" bindtap="select">
+                <text>看直播</text>
+                <image src="{{ $state.imgHost }}/Return-black.png"></image>
+            </view>
+        </view>
     </view>
     <!-- 直播信息 -->
     <view class="liveLesson" wx:if="{{current.id}}" bindtap="select" data-item="{{current}}" data-item="{{current}}">
@@ -72,6 +75,8 @@
             </view>
         </view>
     </view>
+    <!--cut-->
+    <view class="cutLine"></view>
     <!-- 课程以及讨论 -->
     <view class="content">
         <scroll-view scroll-x="true" class="nav" enable-flex scroll-left="{{ 0 }}" scroll-with-animation="{{ true }}">
@@ -97,7 +102,12 @@
                     <text>暂无课程
                         去浏览其他内容吧~</text>
                 </view>
-                <scroll-view wx:else scroll-y="true" class="wrap drama" scroll-with-animation="true"
+                <view class="sort" wx:if="{{sublessons.length != 0}}" bindtap="sort">
+                    <text class="left">已更新 {{haveNum}}/{{sublessons.length}}</text>
+                    <image src="{{ sort ? '../../images/sortDwon.png' : '../../images/sortup.png'}}"></image>
+                    <text class="right">{{ !sort ? '倒序' : '正序'}}</text>
+                </view>
+                <scroll-view wx:if="{{sublessons.length != 0}}" scroll-y="true" class="wrap drama" scroll-with-animation="true"
                     scroll-top="{{scrollviewtop}}">
                     <view wx:for="{{ sublessons }}" catchtap="select" data-item="{{item}}" data-index="{{ index }}"
                         wx:key="index" class="item {{ playNow.id==item.id ?'active' : item.isStudy ? 'isStudy' : ''}} {{'sublessonsd' + item.id}}"
@@ -106,17 +116,25 @@
                             <text class="name">{{ index+1 }}. {{ item.name }}</text>
                             <text class="time">{{ item.dayTime +' '}}{{item.startTime}}</text>
                         </view>
-                        <view class="right" wx:if="{{item.state == 0}}">暂未开始</view>
-                        <view class="right" wx:elif="{{item.state == 3}}">观看回播</view>
-                        <view class="right" wx:elif="{{item.state == 2}}">正在上传</view>
+                        <view class="right" wx:if="{{item.state == 0}}">未开始</view>
+                        <view class="right" wx:elif="{{item.state == 2}}">剪辑中</view>
+                        <view class="playMv" wx:elif="{{item.state == 3}}">
+                            <image src="{{playNow.id==item.id ?'../../images/play.png':'https://hwcdn.jinlingkeji.cn/images/dev/play-ash.png'}}" alt="" />
+                            <text class="{{playNow.id==item.id?'red':'white'}}">播放</text>
+                        </view>
                         <!-- <view class="right"
                             wx:elif="{{current.id == item.id && (current.live_status == 104 ||  current.live_status == 107)}}">
-                            观看回播
+                            观看回播state：0未开始 1直播 2剪辑中 3回放
                         </view> -->
                         <!-- <view class="right" wx:elif="{{item.state == 3}}">
                             即将开播
                         </view> -->
-                        <view class="right" wx:else>正在直播</view>
+                        <view class="playingMv" wx:else>
+                            <view class="statusTxt">
+                                <view wx:for="{{3}}" wx:key="index" class="statusWite"></view>
+                            </view>
+                            <text class="text">直播中</text>
+                        </view>
                     </view>
                 </scroll-view>
             </swiper-item>
@@ -300,20 +318,25 @@
     </cover-view>
     <view class="share-joinClass">
         <view class="live-info">
+            <view class="right-box" bindtap="collect">
+                <image src="{{$state.imgHost}}/class-collected.png" wx:if="{{ collected }}"></image>
+                <image src="../../images/like.png" wx:else></image>
+                <text>收藏</text>
+            </view>
             <view class="join-class" bindtap="joinClass">
-                <image src="../../images/join.png"></image>
-                <view>进班群</view>
+                <image src="../../images/joinBlack.png"></image>
+                <text>进班群</text>
             </view>
             <navigator class="subscribe" hover-class="none"
                 url="/pages/education/education?type=0&url=https://mp.weixin.qq.com/s/vSd8XBQDQkvqVX_kt_YyTQ">
-                <image src="../../images/phoneIcon.png"></image>
-                <view>打开app</view>
+                <!-- <image src="../../images/phoneIcon.png"></image> -->
+                <text>下载APP</text>
             </navigator>
+            <button class="share" plain open-type="share">
+                <!-- <image class="shareLesson" src="../../images/shareLesson.png"></image> -->
+                <text>邀好友一起学</text>
+            </button>
             <!-- <image src="/images/messageImg.png"></image> -->
         </view>
-        <button class="share" open-type="share">
-            <image class="shareLesson" src="../../images/shareLesson.png"></image>
-            <text>分享</text>
-        </button>
     </view>
 </view>
