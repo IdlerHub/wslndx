@@ -48,7 +48,7 @@ Page({
     let query = wx.createSelectorQuery().in(this)
     query.select(".top").boundingClientRect()
     query.exec(res => {
-      that.headerHeight = res[0].height + pt + h
+      // that.headerHeight = res[0].height + pt + h
     })
     this.setData({
       liveRecommend: [],

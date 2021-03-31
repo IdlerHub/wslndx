@@ -101,7 +101,7 @@
     <view class="weui-loading"></view>
   </view>
   <slotSign bindtap="checknextTap" data-type="top">
-    <view class="top" style="padding-top:{{ topT }}px" wx:if="{{liveRecommend[0]}}" bindtap="toInfo">
+    <!-- <view class="top" style="padding-top:{{ topT }}px" wx:if="{{liveRecommend[0]}}" bindtap="toInfo">
       <view class="avatarBox" catchtap="toUser" wx:if="{{$state.authUserInfo}}">
         <image class="img" src="{{$state.userInfo.avatar}}" alt=""></image>
       </view>
@@ -113,7 +113,7 @@
       <text wx:if="{{$state.userInfo.id}}">{{$state.userInfo.school || "请完善信息"}}</text>
       <text wx:else class="loginTxt">注册登录</text>
     </view>
-    <template is="skeletonTop" data="{{topT}}" wx:else></template>
+    <template is="skeletonTop" data="{{topT}}" wx:else></template> -->
   </slotSign>
   <!-- 搜索/学分 -->
   <view class="search-box">
@@ -121,12 +121,12 @@
       <mini-icon mini-class="icon" icon="search" color="#b3b3b3" miniStyle="width:50rpx;height:50rpx" class="iconImg"/>
       <text>搜索课程名称</text>
     </navigator>
-    <slotSign bindtap="checknextTap" data-type="search" data-detail="/page/live/pages/timetableList/timetableList">
+    <!-- <slotSign bindtap="checknextTap" data-type="search" data-detail="/page/live/pages/timetableList/timetableList">
       <navigator class="search-right" url="/page/live/pages/timetableList/timetableList" hover-class="none">
         <image src="{{$state.imgHost}}/indexIcon/timetableIcon.png"></image>
         <text>我的课程</text>
       </navigator>
-    </slotSign>
+    </slotSign> -->
   </view>
   <view class="wrap recommend" id="recommend1">
     <!-- 广告位banner -->

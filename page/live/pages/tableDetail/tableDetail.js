@@ -124,10 +124,12 @@ Page({
           url: `/page/live/pages/liveDetail/liveDetail?specialColumnId=${res.data.columnId}`
         }) :
         res.data.introduction = htmlparser.default(res.data.introduction);
-      this.setData({
-        lessonDetail: res.data,
-        showAll: 1
-      })
+        res.data.liverVOS = res.data.liverVOS.sort((a,b)=>{ return a.id-b.id}) // 未学习时课程正序展示
+        this.setData({
+          lessonDetail: res.data,
+          showAll: 1
+        })
+        console.log(res.data)
     })
   },
   leftTimer(leftTime) {
