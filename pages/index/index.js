@@ -432,8 +432,10 @@ Page({
         })
       } else if(dialog.jump_type == 2) {
         this.toLive(dialog.extra.room_id)
-      } else {
+      } else if(dialog.jump_type == 3){
         this.minigo(dialog.url)
+      } else {
+        this.toLivelesson()
       }
       this.closeSignIn()
       wx.uma.trackEvent('index_activityClick');

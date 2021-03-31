@@ -1,0 +1,29 @@
+<!--page/discoveryHall/pages/detail/detail.wxml-->
+<view class="container">
+  <mini-icon mini-class="icon" icon="arrowLeft" color="#fff" miniStyle="width:40rpx;height:40rpx" class="iconImg"
+    style="top: {{ statusBarHeight}}px;" bindtap="toBack"/>
+  <video
+    src="https://mini-program-prod.jinlingkeji.cn/4381f353vodtranscq1500001200/844a1faf5285890816233770457/v.f70.mp4"
+    class="video" object-fit="fill">
+    <view class="videoContetBox">
+      <text class="videoContent">今年是中华人民共和国改革开放80周年，人民物质生活越来愈好感谢党和政府给予我们无</text>
+      <van-circle value="{{ value }}" size="74" layer-color="#CCCCCC" color="#F2323A" class="vanCircle">
+        <van-count-down time="{{ time }}" use-slot format="ss秒" bind:change="onChange">
+            <text class="circleNum">{{timeData.seconds}}秒
+              +5学分
+            </text>
+        </van-count-down>
+      </van-circle>
+      <view class="btnBox">
+        <view class="bth">
+          <mini-icon mini-class="icon" icon="heart" color="#fff" miniStyle="width:50rpx;height:50rpx" class="" />
+          <text>点赞</text>
+        </view>
+        <view class="bth">
+          <mini-icon mini-class="icon" icon="wechat" color="#fff" miniStyle="width:50rpx;height:50rpx" class="" />
+          <text>分享</text>
+        </view>
+      </view>
+    </view>
+  </video>
+</view>

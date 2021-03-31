@@ -154,7 +154,9 @@
     {
       "root": "page/discoveryHall/",
       "pages": [
-        "pages/index/index"
+        "pages/index/index",
+        "pages/videoDetail/videoDetail",
+        "pages/works/works"
       ]
     }
   ],

@@ -158,8 +158,8 @@
           "scene": null
         },
         {
-          "name": "page/discoveryHall/pages/index/index",
-          "pathName": "page/discoveryHall/pages/index/index",
+          "name": "page/discoveryHall/pages/videoDetail/videoDetail",
+          "pathName": "page/discoveryHall/pages/videoDetail/videoDetail",
           "query": "id=271",
           "scene": 1069,
           "referrerInfo": {}
