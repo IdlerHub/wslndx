@@ -46,7 +46,9 @@ Page({
     comment: [], //  讨论
     playFlag: false, //视频播放状态
     fullScreen: 0,
-    scrollviewtop: 0
+    scrollviewtop: 0,
+    haveNum: 0, //当前已更新课程个数
+    collected: false // 收藏状态
   },
   timer: null,
   pageName: 'liveDetail',
@@ -96,6 +98,33 @@ Page({
       let progress = parseInt(new Date().getTime() / 1000 + "") - this.timeTemplate
       this.updateProgress(progress)
     }
+  },
+  // 排序
+  sort() {
+    if (!this.data.sort) {
+      this.data.sublessons.sort((a, b) => {
+        return a.id - b.id
+      })
+    } else {
+      this.data.sublessons.sort((a, b) => {
+        return b.id - a.id
+      })
+    }
+    this.setData({
+      'sublessons': this.data.sublessons,
+      sort: !this.data.sort
+    })
+  },
+  haveNum() {
+    let num = 0
+    this.data.sublessons.map(item => {
+      if(item.state==1||item.state==3){
+        num++
+      }
+      this.setData({
+        haveNum: num
+      });
+    })
   },
   subscribe() {
     //上课通知
@@ -215,6 +244,8 @@ Page({
         })
       }, 60000);
     });
+    this.haveNum() // 计算开放的课程数量
+    // this.sort() //每次刷新就根据sort不动之前的顺序
   },
   //展示客服页面
   showServise() {
