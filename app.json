@@ -76,7 +76,8 @@
         "pages/allSearch/allSearch",
         "pages/chageLesson/chageLesson",
         "pages/lessonSpecial/lessonSpecial",
-        "pages/schoolDetail/schoolDetail"
+        "pages/schoolDetail/schoolDetail",
+        "pages/charityLesson/charityLesson"
       ]
     },
     {

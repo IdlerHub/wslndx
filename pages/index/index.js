@@ -104,10 +104,18 @@ Page({
         name: '热门活动',
         width: 92,
         height: 92
-      }, {
-        url: '/page/index/pages/lessonSpecial/lessonSpecial?id=3&name=智能技术',
+      },
+      // {
+      //   url: '/page/index/pages/lessonSpecial/lessonSpecial?id=3&name=智能技术',
+      //   icon: `${this.data.$state.imgHost}/indexIcon/technologyIcon.png`,
+      //   name: '智能技术',
+      //   width: 64,
+      //   height: 64,
+      // },
+       {
+        url: '/page/index/pages/charityLesson/charityLesson',
         icon: `${this.data.$state.imgHost}/indexIcon/technologyIcon.png`,
-        name: '智能技术',
+        name: '本月公益课',
         width: 64,
         height: 64,
       }, {
@@ -207,7 +215,6 @@ Page({
         "history": msg.dataList[0] || "",
         showNewStudentBox: msg.dataList[0] ? false: true
       })
-      console.log(this.data.history)
     })
   },
   router2newstudent() { // 跳新生体验馆，只弹一次，存当日日期
