@@ -1,0 +1,8 @@
+<!--page/discoveryHall/pages/works/works.wxml-->
+<view wx:for="{{15}}" wx:key="index" class="listItem">
+    <image src="https://hwcdn.jinlingkeji.cn/uploads/images/b995cecdcd0579264eea7a1a8373a84c.png" class="cover"></image>
+    <view class="playIcon">
+      <mini-icon mini-class="icon" icon="triangleRight" color="#fff" miniStyle="width:35rpx;height:35rpx;margin-left: 5rpx" class="" />
+    </view>
+    <view class="title van-multi-ellipsis--l2">学习3个月的效果，阿姨真是厉害，阿姨真可是老客户上岛咖啡决定返回港口金色的光辉看见对方韩国v发</view>
+</view>

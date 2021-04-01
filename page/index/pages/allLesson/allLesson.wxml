@@ -6,9 +6,9 @@
 <swiper class="contrainer" current="{{tabCurrent}}" duration="300">
   <swiper-item catchtouchmove="stopTouchMove">
     <view class="contrainer">
-      <scroll-view scroll-y class="scrollLeft">
+      <scroll-view scroll-with-animation="true" scroll-y class="scrollLeft" scroll-into-view="item{{current < 4 ? 0 : current - 3}}">
         <view id="nav{{item.id}}" class="navItem {{ current == index ? 'active' : '' }}" wx:for="{{navList}}"
-          wx:key="index" bindtap="navChange" data-index="{{index}}">
+          wx:key="index" bindtap="navChange" data-index="{{index}}" id="item{{index}}">
           {{item.name}}
           <text wx:if="{{ current == index}}"></text>
         </view>

@@ -1,0 +1,8 @@
+{
+  "usingComponents": {
+    "van-circle": "@vant/weapp/circle/index",
+    "van-count-down": "@vant/weapp/count-down/index"
+  },
+  "navigationStyle": "custom",
+  "disableScroll": true
+}
