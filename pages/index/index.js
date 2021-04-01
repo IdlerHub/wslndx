@@ -13,7 +13,9 @@ Page({
     shownowt: true,
     showdialog: true,
     showSignbox: false,
-    centerIcon: []
+    centerIcon: [],
+    times: 0, // 打开弹窗次数 默认0
+    showNewStudentBox: false
   },
   pageName: '首页',
   guide: 0,
@@ -71,6 +73,10 @@ Page({
       this.data.isSign ? this.signIn() : ''
     }
     this.setCenterIcon()
+    // 展示新生弹窗
+    let date = wx.getStorageSync('date') || ''; // 之前记录的日期
+    let newDate = app.util.formatDate(); // 获取当前日期
+    date != newDate ? this.setData({ times: 0 }): '' // 如之前记录日期和当前日期不等 times恢复为0
   },
   setCenterIcon() {
     this.setData({
@@ -198,8 +204,18 @@ Page({
     }
     return app.study.centerSpecial(historyParam).then(msg => {
       this.setData({
-        "history": msg.dataList[0] || ""
+        "history": msg.dataList[0] || "",
+        showNewStudentBox: msg.dataList[0] ? false: true
       })
+      console.log(this.data.history)
+    })
+  },
+  router2newstudent() { // 跳新生体验馆，只弹一次，存当日日期
+    let date = app.util.formatDate();
+    wx.setStorageSync("date", date);
+    this.setData({ times: 1})
+    wx.navigateTo({
+      url: "../../page/discoveryHall/pages/index/index"
     })
   },
   getSigns() {
@@ -459,15 +475,10 @@ Page({
       status: 0,
       count: 1
     }, true)
-    // 消失后跳转学分页面(携带name和积分num)
-    let num = app.store.$state.signdays == 7 ? 50 : 2
-    wx.navigateTo({
-      url: `../../page/user/pages/score/score?name=home&num=${num}`
-    })
   },
   /* 积分动画 */
   showIntegral() {
-    app.setIntegral(this, "+2 学分", "签到成功")
+    app.setIntegral(this, "+2 学分", "签到成功", 'type')
     this.setData({
       showSignbox: false,
       isSign: false

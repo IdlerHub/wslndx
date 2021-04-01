@@ -210,7 +210,7 @@
     <image src="{{$state.imgHost}}/nowcancle.png" catchtap="closenow"></image>
   </view>
   <!-- 活动弹窗 -->
-  <view class="integration" wx:if="{{ dialog[0].image && showdialog }}" catchtouchmove="return">
+  <view class="integration" wx:if="{{ dialog[0].image && showdialog && times }}" catchtouchmove="return">
     <view class="dialog">
       <view class="bg"
         style="background: url('{{dialog[0].image}}') no-repeat center; background-size: 100% 100%;border-radius:10px"
@@ -219,7 +219,7 @@
       <icon type="cancel" size="37" color="white" data-id="0" catchtap="closeSignIn"></icon>
     </view>
   </view>
-  <signinBox wx:if="{{ !$state.signStatus.count && !dialog[0].image && showSignbox}}" state="{{$state}}" top="{{topT}}"
+  <signinBox wx:if="{{ !$state.signStatus.count && !dialog[0].image && showSignbox && times}}" state="{{$state}}" top="{{topT}}"
     isIndex="{{true}}" bind:closesignBox="closesignBox" bind:showIntegral="showIntegral" bind:sigin="sigin" />
 </view>
 <navigator url="/page/index/pages/assistant/assistant" hover-class="none">
@@ -241,3 +241,14 @@
 
 <!-- 登录 -->
 <loginBox wx:if="{{$state.showLogin}}" />
+
+<!-- 新生体验馆弹窗 -->
+<view class="weui-mask" wx:if="{{ showNewStudentBox && !times && $state.userInfo.id}}">
+  <view class="weui-dialog">
+    <view class="title">新生体验馆</view>
+    <view class="text">testtesttest</view>
+    <view class="btnBox">
+      <button class="blackBtn" plain catchtap="router2newstudent">立即体验</button>
+    </view>
+  </view>
+</view>

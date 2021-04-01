@@ -63,6 +63,18 @@ function delHtmlTag(str) {
   return str.replace(/<[^>]+>/g,"");
 } 
 
+function formatDate() {
+  var timestamp = Date.parse(new Date());
+  timestamp = timestamp / 1000;
+  var n = timestamp * 1000;
+  var date = new Date(n);
+  var Y = date.getFullYear();
+  var M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1);
+  var D = date.getDate() < 10 ? '0' + date.getDate() : date.getDate();
+  // 20210312
+  return Y + M + D
+}
+
 module.exports = {
   formatTime,
   isPoneAvailable,
@@ -71,5 +83,6 @@ module.exports = {
   towTwice,
   dateUnit,
   delHtmlTag,
-  qian
+  qian,
+  formatDate
 }
