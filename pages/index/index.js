@@ -459,6 +459,11 @@ Page({
       status: 0,
       count: 1
     }, true)
+    // 消失后跳转学分页面(携带name和积分num)
+    let num = app.store.$state.signdays == 7 ? 50 : 2
+    wx.navigateTo({
+      url: `../../page/user/pages/score/score?name=home&num=${num}`
+    })
   },
   /* 积分动画 */
   showIntegral() {
