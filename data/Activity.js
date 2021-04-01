@@ -9,6 +9,7 @@ function hots(param) {
 function bannerList() {
   return httpService.post("activity/bannerList")
 }
+
   
 module.exports = {
   hots,

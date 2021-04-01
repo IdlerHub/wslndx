@@ -1,4 +1,99 @@
 <!--page/discoveryHall/pages/index/index.wxml-->
+<!-- 公共盒子 -->
+<template name="contentBox">
+  <view class="titleBox flexAlign">
+    <view class="titleLft">
+      <text>{{title}}</text>
+      <text>0/6</text>
+    </view>
+    <navigator class="titleRight flexAlign" hover-class="none" url="{{url}}" wx:if="{{subTitle}}">
+      <text>{{subTitle}}</text>
+      <mini-icon mini-class="icon" icon="arrowRight" color="#fff" miniStyle="width:16rpx;height:16rpx"
+        class="iconImg" />
+    </navigator>
+  </view>
+  <view class="contentBox">
+    <template is="worksList" wx:if="{{isWorks}}"></template>
+    <template is="lessonList" wx:if="{{islesson}}"></template>
+    <template is="aboutBox" wx:if="{{isOn}}"></template>
+    <template is="score" wx:if="{{isScore}}" data="{{stepsList}}"></template>
+  </view>
+</template>
+<!-- 作品列表 -->
+<template name="worksList">
+  <scroll-view scroll-x enable-flex class="worksList">
+    <view class="workItem" wx:for="{{6}}" wx:key="index">
+      <image src="https://hwcdn.jinlingkeji.cn/uploads/images/b995cecdcd0579264eea7a1a8373a84c.png"></image>
+      <text class="van-multi-ellipsis--l2">的付款了附件是的肌肤打开的JFK</text>
+    </view>
+    <view style="width: 20rpx;height: 50rpx;opacity: 0;">45
+    </view>
+  </scroll-view>
+</template>
+<!-- 热门课程 -->
+<template name="lessonList">
+  <view class="lessonList">
+    <view class="lessonItem" wx:for="{{5}}" wx:key="index">
+      <image src="https://hwcdn.jinlingkeji.cn/uploads/images/b995cecdcd0579264eea7a1a8373a84c.png"></image>
+      <image src="/images/recomonPlay.png"></image>
+      <text>营养与健康</text>
+      <view class="tagsLine">
+        <view>零基础</view>
+        <view>国家一级艺术家</view>
+      </view>
+      <text>03月06日 16:00</text>
+    </view>
+  </view>
+</template>
+<!-- 关于本大 -->
+<template name="aboutBox">
+  <view class="aboutBox">
+    <image src="https://hwcdn.jinlingkeji.cn/uploads/images/b995cecdcd0579264eea7a1a8373a84c.png"></image>
+    <text
+      class="van-multi-ellipsis--l4">分割开来JFK经济复苏的孙大发感慨了就换地方了空间规划扩大解放韩国的肌肤光滑对抗肌肤光滑对抗肌肤光滑代开收费价格和了代开收费价格和看的肌肤光滑’啊圣诞节福克斯的肌肤快乐圣诞节；肯定是积分；肯定是方法看</text>
+  </view>
+</template>
+<!-- 任务列表 -->
+<template name="score">
+  <view class="scoreBox">
+    <view class="scroeItem flexAlign" wx:for="{{stepsList}}" wx:key="index">
+      <view class="itemLeft">
+        <text>{{item.taskName}}</text>
+        <text>共可获取{{item.taskNum * item.points}}个学分</text>
+      </view>
+      <view class="itemRight">
+        <text>完成{{item.completedTaskNum}}/{{item.taskNum}}</text>
+        <text style="background: {{item.isCompleted ? '#CCCCCC' : ''}};" bindtap="getScore" data-index="{{index}}">{{item.isCompleted ? '已获得' : '赚学分'}}</text>
+      </view>
+    </view>
+  </view>
+</template>
+<image src="../../images/bgImg.png" class="bgImg"></image>
+<!-- 进度条 -->
+<view class="steps">
+  <view class="stepsLine flexAlign">
+    <view class="stepsIcon flexAlign" wx:for="{{stepsList}}" wx:key="index">
+      <image src="../../images/stepsIcon.png" wx:if="{{item.isCompleted}}"></image>
+    </view>
+    <text class="inLine"></text>
+  </view>
+  <view class="stepsKey flexAlign">
+    <view wx:for="{{stepsList}}" wx:key="index">
+      <text style="color:{{item.isCompleted ? null : '#FFFEFF'}}">+{{item.taskNum * item.points}}学分</text>
+      <text style="color:{{item.isCompleted ? null : '#FFFEFF'}}">{{item.taskName}}</text>
+    </view>
+  </view>
+</view>
+<template is="contentBox"
+  data="{{title: '学员优秀作品', subTitle: '更多作品', url: '/page/discoveryHall/pages/works/works', isWorks: 1}}">
+</template>
+<template is="contentBox"
+  data="{{title: '热门课程', subTitle: '更多课程', url: '/page/discoveryHall/pages/works/works', islesson: 1}}"></template>
+<template is="contentBox" data="{{title: '关于网上老年大学',isOn: 1}}"></template>
+<template is="contentBox" data="{{title: '做任务得学分',isScore: 1, stepsList}}"></template>
+<button hover-clss="none" open-type="share" class="shareBtn">
+  <image src="../../images/invitBtn.png"></image>
+</button>
 <!-- 规则 -->
 <view class="ruleBtn" bindtap="onClickHid" data-type="0">规则</view>
 <van-overlay show="{{ showOverlay }}" bind:click="onClickHid" data-type="{{overlayType}}">
@@ -14,15 +109,15 @@
       <text decode>学分：学分可以在学分商城兑换课程或实物</text>
       <text decode>VIP学习卡：可以在网上老年大学APP中免费学习付费课程</text>
     </view>
-    
+
     <mini-icon mini-class="icon" icon="closeOutline" color="#fff" miniStyle="width:80rpx;height:80rpx" class="ruleClose"
-      catchtap="onClickHid" data-type="{{overlayType}}"/>
+      catchtap="onClickHid" data-type="{{overlayType}}" />
   </view>
   <view class="vipBox" wx:else>
     <text class="title">恭喜您完成全部任务</text>
     <text class="inro">7天VIP学习卡已到，请在APP上使用</text>
     <text class="joinBtn">去下载APP</text>
     <mini-icon mini-class="icon" icon="closeOutline" color="#fff" miniStyle="width:80rpx;height:80rpx" class="ruleClose"
-    catchtap="onClickHid" data-type="{{overlayType}}"/>
+      catchtap="onClickHid" data-type="{{overlayType}}" />
   </view>
 </van-overlay>

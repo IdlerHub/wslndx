@@ -172,6 +172,15 @@ function searchLessonList(params) {
   return httpService.post("lesson/searchLessonList", params, null, 2);
 }
 
+/**
+ * @description: 获取热门专栏列表
+ * @param {} 
+ * @return:  promise
+ * **/
+function experienceHallColumnList(params) {
+  return httpService.post("experienceHall/ColumnList", params, null, true);
+}
+
 module.exports = {
   getBannerList,
   interestList,
@@ -191,5 +200,6 @@ module.exports = {
   recordFinish,
   countVideo,
   getUniversityInfo,
-  searchLessonList
+  searchLessonList,
+  experienceHallColumnList
 }
