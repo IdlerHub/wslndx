@@ -28,7 +28,9 @@ Page({
         clickUrl: "/page/user/pages/makeMoney/makeMoney"
       }
     ],
-    swiperHeight: {}
+    swiperHeight: {},
+    showAddScore: true,
+    addNum: 0
   },
   pageName: "学分兑换页",
   common: {
@@ -49,6 +51,8 @@ Page({
         })
       : "";
     this.setHeight()
+    options.name == 'home' ? this.setData({showAddScore: true}) : this.setData({showAddScore: false})
+    this.setData({addNum: options.num})
   },
   onShow: function() {
     let sources = [

@@ -539,7 +539,7 @@ App({
     }
   },
   /* 积分动画 */
-  setIntegral(that, integral, integralContent) {
+  setIntegral(that, integral, integralContent, type) {
     that.setData({
       integral,
       integralContent,
@@ -549,6 +549,13 @@ App({
       that.setData({
         showintegral: false
       });
+      if (type) {
+        // 消失后跳转学分页面(携带name和积分num)
+        let num = this.store.$state.signdays == 7 ? 50 : 2
+        wx.navigateTo({
+          url: `/page/user/pages/score/score?name=home&num=${num}`
+        })
+      }
     }, 2000);
   },
   /* 专栏跳转判断 */

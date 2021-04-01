@@ -78,20 +78,23 @@
   <view class="bottomBox">
     <button open-type="share" class="left" wx:if="{{$state.userInfo.id}}">
       <view class="leftBox">
-        <image src="../../images/share-wx.png"></image>
+        <image src="../../images/whiteWX.png"></image>
         <text>邀好友一起学</text>
       </view>
     </button>
     <slotSign class="xiaolin" bindtap="checknextTap" data-type="shareNone" wx:else class="left">
       <view>
         <view class="leftBox">
-          <image src="../../images/share-wx.png"></image>
+          <image src="../../images/whiteWX.png"></image>
           <text>邀好友一起学</text>
         </view>
       </view>
     </slotSign>
     <slotSign class="xiaolin" bindtap="checknextTap" data-type="addSubscribe" class="left" class="right">
-      <view bindtap="rightNow">立即报名</view>
+      <view bindtap="rightNow" class="rightBox">
+        <image src="../../images/phoneIcon.png"></image>
+        <text class="">立即报名</text>
+      </view>
     </slotSign>
   </view>
   <view class="attentionBox" wx:if="{{showAtention}}">
