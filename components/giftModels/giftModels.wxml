@@ -2,7 +2,7 @@
 <view class="c-gift-models" wx:if="{{showCard}}" catchtouchmove="unMove">
   <view class="mask-bg">
     <view class="gift-box">
-      <image class="gift-models-close" src="/images/close.png" mode="aspectFill" catchtap="close"></image>
+      <mini-icon mini-class="icon" icon="closeOutline" class="gift-models-close" color="#999999" miniStyle="width:48rpx;height:48rpx" bindtap="close"/>
       <view class="box-info">
         <view class="gift-img">
           <image src="{{giftInfo.image}}" mode="aspectFill"></image>

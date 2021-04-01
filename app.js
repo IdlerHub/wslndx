@@ -56,8 +56,7 @@ App({
   umengConfig: {
     /*埋点统计*/
     appKey: store.process == "develop" ?
-      "5e4cad07eef38d3632042549" :
-      "5e4cd613e1367a268d56bfa2", //由友盟分配的APP_KEY
+      "5e4cad07eef38d3632042549" : "5e4cd613e1367a268d56bfa2", //由友盟分配的APP_KEY
     useOpenid: false, // 是否使用openid进行统计，此项为false时将使用友盟+随机ID进行用户统计。使用openid来统计微信小程序的用户，会使统计的指标更为准确，对系统准确性要求高的应用推荐使用OpenID。
     autoGetOpenid: false, // 是否需要通过友盟后台获取openid，如若需要，请到友盟后台设置appId及secret
     debug: false, //是否打开调试模式
@@ -530,8 +529,7 @@ App({
       this.store.setState({
         "nextTapDetial.type": e.currentTarget.dataset.type,
         "nextTapDetial.detail": e.currentTarget.dataset.detail ?
-          e.currentTarget.dataset.detail :
-          e,
+          e.currentTarget.dataset.detail : e,
       });
     } else {
       this.store.setState({
@@ -559,6 +557,22 @@ App({
         })
       }
     }, 2000);
+  },
+  /* 专栏跳转判断 */
+  liveAddStatus(columnId) {
+    liveData.getLiveBySpecialColumnId({
+      specialColumnId: columnId
+    }).then(res => {
+      if (!res.data.isAddSubscribe) {
+        wx.navigateTo({
+          url: `/page/live/pages/tableDetail/tableDetail?specialColumnId=${item.columnId}`,
+        })
+      } else {
+        wx.navigateTo({
+          url: `/page/live/pages/vliveRoom/vliveRoom?roomId=${item.liveId}`,
+        })
+      }
+    })
   },
   globalData: {
     /*wx.login 返回值 code */

@@ -72,7 +72,7 @@
   margin-top: 10rpx;
 }
 
-.loginContariner .loginBox .issuse image {
+.loginContariner .loginBox .issuse .iconImg {
   width: 28rpx;
   height: 28rpx;
   padding-right: 10rpx;
