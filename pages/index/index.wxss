@@ -481,7 +481,7 @@ page {
 /* 课程搜索 */
 .search-box {
   width: 100%;
-  padding: 42rpx 30rpx 30rpx 30rpx;
+  padding: 0 30rpx 30rpx 30rpx;
   box-sizing: border-box;
   display: flex;
   justify-content: space-between;
@@ -543,7 +543,7 @@ page {
   z-index: 5000;
 }
 
-.blackBox {
+.blackBox, .weui-mask {
   width: 100vw;
   height: 100vh;
   background: rgba(0, 0, 0, 0.3);
@@ -596,6 +596,47 @@ page {
 
 .blackBox .blackToast .btnBox .blackBtn:nth-child(2) {
   color: #DF2020;
+}
+
+.weui-mask .weui-dialog {
+  position: fixed;
+  z-index: 5000;
+  top: 50%;
+  height: 600rpx;
+  width: 560rpx;
+  transform: translate(0,-50%);
+  background-color: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  flex-direction: column;
+  padding: 50rpx 50rpx 30rpx 50rpx;
+}
+.weui-mask .weui-dialog .title {
+  text-align: center;
+  font-size: 42rpx;
+  font-family: PingFangSC-Semibold, PingFang SC;
+  font-weight: 600;
+  color: #333333;
+}
+.weui-mask .weui-dialog .text {
+  display: flex;
+  flex: 1;
+  padding: 40rpx 30rpx;
+}
+.weui-mask .weui-dialog .btnBox {
+  display: flex;
+  justify-content: center;
+}
+.weui-mask .weui-dialog .btnBox .blackBtn {
+  width: 500rpx;
+  height: 88rpx;
+  background: linear-gradient(90deg, #FD7352 0%, #F2323A 100%);
+  border-radius: 48rpx;
+  color: #fff;
+  border: none;
 }
 
 .xiaolin {

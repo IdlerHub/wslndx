@@ -57,7 +57,7 @@
         </view>
     </view>
     <!-- 直播信息 -->
-    <view class="liveLesson" wx:if="{{current.id}}" bindtap="select" data-item="{{current}}" data-item="{{current}}">
+    <!-- <view class="liveLesson" wx:if="{{current.id}}" bindtap="select" data-item="{{current}}" data-item="{{current}}">
         <view class="liveImg">
             <image class="coverImg" mode="widthFix" src="{{lessonDetail.cover}}"></image>
             <image class="playImg" src="/images/recomonPlay.png"></image>
@@ -74,7 +74,7 @@
                 <text>直播</text>
             </view>
         </view>
-    </view>
+    </view> -->
     <!--cut-->
     <view class="cutLine"></view>
     <!-- 课程以及讨论 -->
