@@ -1,19 +1,13 @@
 /*
  * @Date: 2019-05-28 09:50:08
  * @LastEditors: wjl
- * @LastEditTime: 2021-01-15 16:28:35
+ * @LastEditTime: 2021-04-02 18:03:12
  */
-import {
-  wxp
-} from "./utils/service";
-import {
-  uma
-} from "umtrack-wx";
+import { wxp } from "./utils/service";
+import { uma } from "umtrack-wx";
 /* 全局状态管理 */
 import store from "./store";
-import {
-  praise
-} from "./data/Circle";
+import { praise } from "./data/Circle";
 // const vodwxsdk = require('vod-wx-sdk-v2')
 /* sse */
 const socket = require("data/socket.js");
@@ -55,8 +49,10 @@ App({
   backgroundAudioManager,
   umengConfig: {
     /*埋点统计*/
-    appKey: store.process == "develop" ?
-      "5e4cad07eef38d3632042549" : "5e4cd613e1367a268d56bfa2", //由友盟分配的APP_KEY
+    appKey:
+      store.process == "develop"
+        ? "5e4cad07eef38d3632042549"
+        : "5e4cd613e1367a268d56bfa2", //由友盟分配的APP_KEY
     useOpenid: false, // 是否使用openid进行统计，此项为false时将使用友盟+随机ID进行用户统计。使用openid来统计微信小程序的用户，会使统计的指标更为准确，对系统准确性要求高的应用推荐使用OpenID。
     autoGetOpenid: false, // 是否需要通过友盟后台获取openid，如若需要，请到友盟后台设置appId及secret
     debug: false, //是否打开调试模式
@@ -97,7 +93,11 @@ App({
     let userInfo = wx.getStorageSync("userInfo") || {};
     let mpVersion = wx.getStorageSync("mpVersion");
     /* storage中信息缺失,重新登录 */
-    if (!userInfo.mobile || !userInfo.openid || mpVersion != this.store.mpVersion) {
+    if (
+      !userInfo.mobile ||
+      !userInfo.openid ||
+      mpVersion != this.store.mpVersion
+    ) {
       await this.wxLogin();
       wx.setStorageSync("mpVersion", this.store.mpVersion);
     }
@@ -113,16 +113,19 @@ App({
     ) {
       this.playVedio("flow");
     }
-    if (wxtype < 606) { //微信版本过低提示用户更新版本
+    if (wxtype < 606) {
+      //微信版本过低提示用户更新版本
       wx.reLaunch({
         url: "/pages/upwxpage/upwxpage",
       });
-    } else if (opstObj.p) { // 初次启动进入活动
+    } else if (opstObj.p) {
+      // 初次启动进入活动
       wx.reLaunch({
         url: `/page/vote/pages/voteArticle/voteArticle?voteid=${opstObj.o}&uid=${opstObj.u}`,
       });
     }
-    if (!this.store.$state.userInfo.id) { // 未登录页面守卫
+    if (!this.store.$state.userInfo.id) {
+      // 未登录页面守卫
       let isLogin = 0;
       if (opts.path == "pages/index/index") return;
       getCurrentPages().forEach((e) => {
@@ -166,7 +169,10 @@ App({
           url: "/pages/education/education?type=lottery&login=1",
         });
       }
-      if (opts.path == "pages/education/education" && !this.store.$state.userInfo.id) {
+      if (
+        opts.path == "pages/education/education" &&
+        !this.store.$state.userInfo.id
+      ) {
         setTimeout(() => {
           this.changeLoginstatus();
           let params = {
@@ -177,7 +183,8 @@ App({
         }, 1500);
       }
     }
-    if (this.store.$state.userInfo.id) { // socket启动
+    if (this.store.$state.userInfo.id) {
+      // socket启动
       setTimeout(() => {
         socket.init(this.store.$state.userInfo.id);
         socket.listen(this.prizemessage, "Prizemessage");
@@ -239,7 +246,7 @@ App({
           if (this.globalData.path == "/pages/education/education") {
             wx.navigateTo({
               url: `/pages/education/education?url=${this.globalData.query.url}&type=0&login=1`,
-            })
+            });
           }
         }
       });
@@ -280,11 +287,11 @@ App({
       socket.listen(this.bokemessage, "Bokemessage");
     }
     getCurrentPages().forEach((e) => {
-      e.route == "pages/index/index" ?
-        this.store.$state.nextTapDetial.type == "addStudy" ?
-        e.init(1) :
-        e.init() :
-        "";
+      e.route == "pages/index/index"
+        ? this.store.$state.nextTapDetial.type == "addStudy"
+          ? e.init(1)
+          : e.init()
+        : "";
     });
   },
   /* 更新AuthKey 上传视频*/
@@ -356,11 +363,11 @@ App({
       });
   },
   playVedio(type) {
-    type == "wifi" ?
-      "" :
-      this.store.setState({
-        flow: true,
-      });
+    type == "wifi"
+      ? ""
+      : this.store.setState({
+          flow: true,
+        });
   },
   /* 更新签到信息 */
   setSignIn(data, bl) {
@@ -409,14 +416,14 @@ App({
                   updateManager.applyUpdate();
                 } else {
                   wx.showModal({
-                    title: '温馨提示',
-                    content: '为了保障您的信息安全, 请点击进行系统更新',
+                    title: "温馨提示",
+                    content: "为了保障您的信息安全, 请点击进行系统更新",
                     showCancel: false, //隐藏取消按钮
                     confirmText: "确定更新", //只保留确定更新按钮
                     success: function (res) {
                       updateManager.applyUpdate();
-                    }
-                  })
+                    },
+                  });
                 }
               },
             });
@@ -434,9 +441,7 @@ App({
   },
   /* 接收秀风采socket消息 */
   bokemessage(res) {
-    let {
-      num = 0, avatar
-    } = JSON.parse(res.data).data;
+    let { num = 0, avatar } = JSON.parse(res.data).data;
     this.store.setState({
       unRead: num,
       surPass: num > 99,
@@ -502,7 +507,8 @@ App({
     });
     return {
       title: "一起来网上老年大学学习",
-      path: "/pages/index/index?uid=" +
+      path:
+        "/pages/index/index?uid=" +
         this.store.$state.userInfo.id +
         "&type=invite&activity=1",
       imageUrl: "https://hwcdn.jinlingkeji.cn/images/dev/withdrawShareImg2.png",
@@ -528,8 +534,9 @@ App({
     if (!type) {
       this.store.setState({
         "nextTapDetial.type": e.currentTarget.dataset.type,
-        "nextTapDetial.detail": e.currentTarget.dataset.detail ?
-          e.currentTarget.dataset.detail : e,
+        "nextTapDetial.detail": e.currentTarget.dataset.detail
+          ? e.currentTarget.dataset.detail
+          : e,
       });
     } else {
       this.store.setState({
@@ -543,36 +550,44 @@ App({
     that.setData({
       integral,
       integralContent,
-      showintegral: true
+      showintegral: true,
     });
     setTimeout(() => {
       that.setData({
-        showintegral: false
+        showintegral: false,
       });
       if (type) {
         // 消失后跳转学分页面(携带name和积分num)
-        let num = this.store.$state.signdays == 7 ? 50 : 2
+        let num = this.store.$state.signdays == 7 ? 50 : 2;
         wx.navigateTo({
-          url: `/page/user/pages/score/score?name=home&num=${num}`
-        })
+          url: `/page/user/pages/score/score?name=home&num=${num}`,
+        });
       }
     }, 2000);
   },
   /* 专栏跳转判断 */
-  liveAddStatus(columnId) {
-    liveData.getLiveBySpecialColumnId({
-      specialColumnId: columnId
-    }).then(res => {
-      if (!res.data.isAddSubscribe) {
-        wx.navigateTo({
-          url: `/page/live/pages/tableDetail/tableDetail?specialColumnId=${columnId}`,
+  liveAddStatus(columnId, isCharge) {
+    if (isCharge == 1) {
+      wx.navigateTo({
+        url: `page/index/pages/chageLesson/chageLesson?id=${columnId}`,
+      });
+    } else {
+      liveData
+        .getLiveBySpecialColumnId({
+          specialColumnId: columnId,
         })
-      } else {
-        wx.navigateTo({
-          url: `/page/live/pages/liveDetail/liveDetail?specialColumnId=${columnId}`,
-        })
-      }
-    })
+        .then((res) => {
+          if (!res.data.isAddSubscribe) {
+            wx.navigateTo({
+              url: `/page/live/pages/tableDetail/tableDetail?specialColumnId=${columnId}`,
+            });
+          } else {
+            wx.navigateTo({
+              url: `/page/live/pages/vliveRoom/vliveRoom?roomId=${liveId}`,
+            });
+          }
+        });
+    }
   },
   globalData: {
     /*wx.login 返回值 code */
