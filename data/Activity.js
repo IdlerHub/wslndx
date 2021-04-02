@@ -65,6 +65,15 @@ function giveOrCancelLike(params) {
 function experienceHallShare(params) {
   return httpService.post("experienceHall/share", params, null, true);
 }
+
+/**
+ * @description: 增加学分
+ * @param {} 
+ * @return:  promise
+ * **/
+function addStudyRecord(params) {
+  return httpService.post("experienceHall/addStudyRecord", params, null, true);
+}
   
 module.exports = {
   hots,
@@ -74,5 +83,6 @@ module.exports = {
   hallGetOpus,
   hallGetOpusInfo,
   giveOrCancelLike,
-  experienceHallShare
+  experienceHallShare,
+  addStudyRecord,
 }

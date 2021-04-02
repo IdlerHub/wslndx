@@ -8,16 +8,28 @@ Page({
     isPlay: true,
     showMoreTxt: false,
     showMore: false,
-    isOn: false
+    isOn: false,
+    scroeMsg: {}
   },
+  timeActive: true,
   onLoad: function (options) {
     this.setData({
       statusBarHeight: wx.getSystemInfoSync().statusBarHeight + 12
     })
     options.isOn ? [this.setData({
       isOn: 1
-    }), this.hallGgetContentInfo()] : this.hallGetOpusInfo(options.id)
+    }), this.hallGgetContentInfo().then(() => { this.addStudyRecord() })] : this.hallGetOpusInfo(options.id).then(() => { this.addStudyRecord() })
     this.videoContext = wx.createVideoContext("myVideo");
+    this.timeScore = this.selectComponent('.timeScore')
+  },
+  onShow() {
+    if(this.timeActive) return
+    this.timeScore.timeScore.start()
+    this.timeActive = true
+  },
+  onHide() {
+    this.timeScore.timeScore.pause()
+    this.timeActive = false
   },
   onShareAppMessage: function (ops) {
     if (ops.from === "menu") {
@@ -40,7 +52,7 @@ Page({
     }
   },
   hallGetOpusInfo(opusId) {
-    app.activity.hallGetOpusInfo({
+    return app.activity.hallGetOpusInfo({
       opusId
     }).then(res => {
       res.data.type == 2 ? res.data.content = htmlparser.default(res.data.content) : null
@@ -61,11 +73,22 @@ Page({
     })
   },
   hallGgetContentInfo() {
-    app.activity.hallGgetContentInfo().then(res => {
+    return app.activity.hallGgetContentInfo().then(res => {
       this.setData({
         inro: res.data
       }, () => {
         this.videoContext.play()
+      })
+    })
+  },
+  addStudyRecord() {
+    app.activity.addStudyRecord({
+      optType: 1,
+      channelId: this.data.isOn ? this.data.inro.id : this.data.detail.id,
+      channelType: this.data.isOn ? 3 : 1
+    }).then(res => {
+      this.setData({
+        scroeMsg: res.data
       })
     })
   },

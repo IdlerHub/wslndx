@@ -19,6 +19,9 @@ Component({
     timeData: {},
     value: 0
   },
+  ready() {
+    this.timeScore = this.selectComponent('.control-count-down')
+  },
   methods: {
     onChange(e) {
       this.setData({

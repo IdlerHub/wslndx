@@ -113,14 +113,14 @@
   <view class="ruleBox" wx:if="{{!overlayType}}">
     <view class="title">新生体验馆</view>
     <view class="txtList">
-      <view class="line"><text></text> <text> 查看一个学员优秀作品可得5学分，最多可以获得30学分 </text></view>
-      <view class="line"> <text></text><text>查看一个热门课程可得5学分，最多可以获取20学分</text></view>
-      <view class="line"><text></text> <text>查看网上老年大学视频介绍可得20学分</text></view>
-      <view class="line"> <text></text><text>全部完成以上任务可以额外获得7天VIP学习卡</text></view>
+      <view class="line"><text></text><text>欣赏每个学员风采展示可获得5学分，最高可获得30学分</text></view>
+      <view class="line"> <text></text><text>学习每门精选热门课程可获得5学分，最高可获得20学分</text></view>
+      <view class="line"><text></text><text>观看网上老年大学视频介绍可获得20学分</text></view>
+      <view class="line"> <text></text><text>全部完成以上任务即可获得7天VIP学习卡</text></view>
     </view>
     <view class="specalTxt">
-      <text decode>学分：学分可以在学分商城兑换课程或实物</text>
-      <text decode>VIP学习卡：可以在网上老年大学APP中免费学习付费课程</text>
+      <text decode>学分：在学分商城兑换课程或礼品</text>
+      <text decode>7天体验卡：免费学习网上老年大学APP中的付费课程</text>
     </view>
 
     <mini-icon mini-class="icon" icon="closeOutline" color="#fff" miniStyle="width:80rpx;height:80rpx" class="ruleClose"
