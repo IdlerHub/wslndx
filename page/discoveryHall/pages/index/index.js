@@ -27,10 +27,11 @@ Page({
         isCompleted: 0,
         type: 3
       },
-    ]
+    ],
+    opusList: []
   },
   onLoad: function (options) {
-
+    Promise.all([this.hallGetOpus()])
   },
   onReady: function () {
 
@@ -48,6 +49,14 @@ Page({
         path: "/page/discoveryHall/pages/index/index?type=share&uid=" + this.data.$state.userInfo.id
       }
     }
+  },
+  // 获取优秀作品
+  hallGetOpus() {
+    app.activity.hallGetOpus({ pageSize: 6, pageNum: 1 }).then(res => {
+      this.setData({
+        opusList: res.dataList
+      })
+    })
   },
   // 规则显示隐藏
   onClickHid(e) {

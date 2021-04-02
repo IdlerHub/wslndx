@@ -1,0 +1,20 @@
+<!--components/timeScore/timeScore.wxml-->
+<view class="scoreBox">
+  <image src="/images/scoreBg.png" class="scoreBg"></image>
+  <view class="iconBox">
+    <image class="icon" src="/images/scoreIcon.png"></image>
+    <view class="line"></view>
+  </view>
+  <view class="slider">
+    <text style="width: {{(value / 30) * 100}}%;"></text>
+  </view>
+  <view class="inro">
+      <text>再浏览{{timeData.seconds}}秒
+        可得5学分</text>
+  </view>
+  <van-count-down time="{{ time }}" use-slot format="ss秒" bind:change="onChange">
+    <text class="circleNum">{{timeData.seconds}}秒
+      +5学分
+    </text>
+  </van-count-down>
+</view>
