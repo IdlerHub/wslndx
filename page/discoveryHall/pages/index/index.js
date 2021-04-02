@@ -72,10 +72,10 @@ Page({
         url = '/page/discoveryHall/pages/works/works'
         break;
       case 2:
-        url = '/page/discoveryHall/pages/works/works'
+        url = '/page/index/pages/charityLesson/charityLesson?name=热门'
         break;
         case 3:
-        url = '/page/discoveryHall/pages/detail/detail?isInro=1'
+        url = '/page/discoveryHall/pages/detail/detail?isOn=1'
         break;
     }
     wx.navigateTo({

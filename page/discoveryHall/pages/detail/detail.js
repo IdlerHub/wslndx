@@ -7,7 +7,8 @@ Page({
     detail: {},
     isPlay: true,
     showMoreTxt: false,
-    showMore: false
+    showMore: false,
+    isOn: false
   },
   onLoad: function (options) {
     this.setData({

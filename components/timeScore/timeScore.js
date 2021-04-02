@@ -4,6 +4,14 @@ Component({
     detail: {
       type: Object,
       value: {}
+    },
+    isOn: {
+      type: Boolean,
+      value: {}
+    },
+    inro: {
+      type: Object,
+      value: {}
     }
   },
   data: {
