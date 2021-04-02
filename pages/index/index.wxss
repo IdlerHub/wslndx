@@ -127,7 +127,7 @@ page {
 
 .swiperBox {
   position: relative;
-  padding-top: 145rpx;
+  /* padding-top: 145rpx; */
 }
 
 .swiper {
@@ -492,12 +492,12 @@ page {
 }
 
 .search-box .search-left {
-  width: 530rpx;
+  width: 520rpx;
   height: 70rpx;
   padding: 0 20rpx;
   box-sizing: border-box;
   background: rgb(238, 238, 238);
-  border-radius: 10rpx;
+  border-radius: 40rpx;
   display: flex;
   align-items: center;
 }

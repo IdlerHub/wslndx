@@ -116,7 +116,7 @@
     <template is="skeletonTop" data="{{topT}}" wx:else></template> -->
   </slotSign>
   <!-- 搜索/学分 -->
-  <view class="search-box" style="padding-top:{{ topT }}px">
+  <view class="search-box" style="padding-top:{{ topT==28? topT-5:topT }}px">
     <navigator hover-class="none" class="search-left" url="/page/index/pages/search/search">
       <mini-icon mini-class="icon" icon="search" color="#b3b3b3" miniStyle="width:50rpx;height:50rpx" class="iconImg"/>
       <text>搜索课程名称</text>
@@ -130,7 +130,7 @@
   </view>
   <view class="wrap recommend" id="recommend1">
     <!-- 广告位banner -->
-    <view class="swiperBox" wx:if="{{liveRecommend[0]}}">
+    <view class="swiperBox" wx:if="{{liveRecommend[0]}}" style="padding-top:{{ 50 + topT }}px">
       <swiper autoplay interval="3500" duration="200" circular class="swiper" wx:if="{{imgUrls[0].image}}"
         current="{{bannercurrentTab}}" bindanimationfinish="centerTab">
         <block wx:for="{{imgUrls}}" wx:key="index">

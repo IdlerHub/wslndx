@@ -1,0 +1,42 @@
+<view class="contariner">
+  <view class="swiperBox">
+    <image class="img" src="{{name=='热门'? '../../images/topimg1.png':'../../images/topimg2.png'}}"></image>
+    <view class="leftIcon" style="top:{{ topT }}rpx" catchtap="goback">
+      <image class="icon" src="{{name=='热门'? '../../images/leftWhite.png':'../../images/leftBlack.png'}}"></image>
+    </view>
+  </view>
+  <view class="moreBox">
+    <view class="moreTitle">
+      <text class="left" wx:if="{{name=='热门'}}">精选20门课程</text>
+      <text class="left" wx:else>本月更新13门新课</text>
+      <text class="right" wx:if="{{name!='热门'}}">下期预告</text>
+      <image class="icon" wx:if="{{name!='热门'}}" src="../../images/right.png"></image>
+    </view>
+    <scroll-view scroll-y wx:if="{{activityList[0]}}" bindscrolltolower="bindscrolltolower">
+      <view wx:for="{{activityList}}" wx:key="index" data-item="{{item}}">
+        <view class="listItem" wx:if="{{!item.is_login}}" bindtap="bannerGo" data-item="{{item}}">
+          <view class="imgMask">
+            <image src="{{item.image}}" class="cover"></image>
+            <image src="../../../../images/recomonPlay.png" class="img"></image>
+          </view>
+          <view class="centerBox">
+            <view class="name">{{item.name}}</view>
+            <view class="tags">
+              <text>零基础</text><text>国家一级艺术家</text>
+            </view>
+            <view class="desc">
+              <text>免费</text><view></view><text>1.4万人在学</text>
+            </view>
+          </view>
+        </view>
+      </view>
+    </scroll-view>
+    <view wx:else class="qs" style="height: 600rpx;">
+      <image src="../../images/activityNo.png"></image>
+      <text>{{name=='热门'?'暂无热门课程':'暂无公益课'}}</text>
+    </view>
+  </view>
+  <view class="moreBottom" wx:if="{{name!='热门'}}">
+    <view class="btn">全部课程</view>
+  </view>
+</view>
