@@ -565,11 +565,11 @@ App({
     }).then(res => {
       if (!res.data.isAddSubscribe) {
         wx.navigateTo({
-          url: `/page/live/pages/tableDetail/tableDetail?specialColumnId=${item.columnId}`,
+          url: `/page/live/pages/tableDetail/tableDetail?specialColumnId=${columnId}`,
         })
       } else {
         wx.navigateTo({
-          url: `/page/live/pages/vliveRoom/vliveRoom?roomId=${item.liveId}`,
+          url: `/page/live/pages/liveDetail/liveDetail?specialColumnId=${columnId}`,
         })
       }
     })

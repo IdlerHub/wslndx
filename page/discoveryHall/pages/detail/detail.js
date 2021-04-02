@@ -13,9 +13,9 @@ Page({
     this.setData({
       statusBarHeight: wx.getSystemInfoSync().statusBarHeight + 12
     })
-    options.isOn ? this.setData({
+    options.isOn ? [this.setData({
       isOn: 1
-    }) : this.hallGetOpusInfo(options.id)
+    }), this.hallGgetContentInfo()] : this.hallGetOpusInfo(options.id)
     this.videoContext = wx.createVideoContext("myVideo");
   },
   onShareAppMessage: function (ops) {
@@ -23,11 +23,16 @@ Page({
       return this.menuAppShare();
     }
     if (ops.from === "button") {
+      app.activity.experienceHallShare({
+        channelId: this.data.isOn ? this.data.inro.id : this.data.detail.id,
+        channelType: this.data.isOn ? 3 : 1
+      })
+      let path = !this.data.isOn ? "/page/discoveryHall/pages/detail/detail?id=" +
+        this.data.detail.id : "/page/discoveryHall/pages/detail/detail?isOn=1"
       return {
-        title: this.data.detail.title,
-        imageUrl: this.data.detail.coverImage,
-        path: "/page/discoveryHall/pages/detail/detail?id=" +
-          this.data.detail.id +
+        title: this.data.isOn ? '关于网上老年大学' : this.data.detail.title,
+        imageUrl: this.data.isOn ? this.data.inro.coverImage : this.data.detail.coverImage,
+        path: path +
           "&type=share&uid=" +
           this.data.$state.userInfo.id
       };
@@ -41,7 +46,7 @@ Page({
       this.setData({
         detail: res.data
       }, () => {
-        if(res.data.type == 2) return
+        if (res.data.type == 2) return
         this.videoContext.play()
         let query = wx.createSelectorQuery().in(this),
           that = this
@@ -51,6 +56,15 @@ Page({
             showMoreTxt: true
           }) : null
         })
+      })
+    })
+  },
+  hallGgetContentInfo() {
+    app.activity.hallGgetContentInfo().then(res => {
+      this.setData({
+        inro: res.data
+      }, () => {
+        this.videoContext.play()
       })
     })
   },
@@ -72,8 +86,8 @@ Page({
   praise() {
     if (this.data.detail.isLike) return
     app.activity.giveOrCancelLike({
-      channelId: this.data.detail.id,
-      channelType: this.data.detail.isOn ? 3 : 1,
+      channelId: this.data.isOn ? this.data.inro.id : this.data.detail.id,
+      channelType: this.data.isOn ? 3 : 1,
       isLike: 1
     }).then(() => {
       this.setData({

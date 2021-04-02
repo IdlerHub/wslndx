@@ -1,10 +1,26 @@
 <!--page/discoveryHall/pages/index/index.wxml-->
+<wxs module="fn">
+  module.exports = {
+  title: function(type) {
+  return type == 1 ? '学员优秀作品' : type == 2 ? '热门课程' : '关于网上老年大学'
+  },
+  subTitle: function(type) {
+  return type == 1 ? '更多作品' : type == 2 ? '更多课程' : ''
+  },
+  url: function(type) {
+  return type == 1 ? '/page/discoveryHall/pages/works/works' : type == 2 ? '/page/index/pages/charityLesson/charityLesson?name=热门' : ''
+  },
+  people: function(studyNum) {
+    return studyNum >= 10000 ? (studyNum / 10000).toFixed(1) + 'w' : studyNum
+  }
+  }
+</wxs>
 <!-- 公共盒子 -->
 <template name="contentBox">
   <view class="titleBox flexAlign">
     <view class="titleLft">
       <text>{{title}}</text>
-      <text>0/6</text>
+      <text wx:if="{{type != 3}}">{{item.isCompleted}}/{{item.taskNum}}</text>
     </view>
     <navigator class="titleRight flexAlign" hover-class="none" url="{{url}}" wx:if="{{subTitle}}">
       <text>{{subTitle}}</text>
@@ -13,16 +29,17 @@
     </navigator>
   </view>
   <view class="contentBox">
-    <template is="worksList" wx:if="{{isWorks}}" data="{{opusList}}"></template>
-    <template is="lessonList" wx:if="{{islesson}}"></template>
-    <template is="aboutBox" wx:if="{{isOn}}"></template>
+    <template is="worksList" wx:if="{{type == 1}}" data="{{opusList}}"></template>
+    <template is="lessonList" wx:if="{{type == 2}}" data="{{lessonList}}"></template>
+    <template is="aboutBox" wx:if="{{type == 3}}" data="{{inro}}"></template>
     <template is="score" wx:if="{{isScore}}" data="{{stepsList}}"></template>
   </view>
 </template>
 <!-- 作品列表 -->
 <template name="worksList">
   <scroll-view scroll-x enable-flex class="worksList" wx:if="{{opusList[0]}}">
-    <navigator hover-class="none" url="/page/discoveryHall/pages/detail/detail?id={{item.id}}" class="workItem" wx:for="{{opusList}}" wx:key="index">
+    <navigator hover-class="none" url="/page/discoveryHall/pages/detail/detail?id={{item.id}}" class="workItem"
+      wx:for="{{opusList}}" wx:key="index">
       <image src="{{item.coverImage}}"></image>
       <text class="van-multi-ellipsis--l2">{{item.title}}</text>
     </navigator>
@@ -33,24 +50,22 @@
 <!-- 热门课程 -->
 <template name="lessonList">
   <view class="lessonList">
-    <view class="lessonItem" wx:for="{{5}}" wx:key="index">
-      <image src="https://hwcdn.jinlingkeji.cn/uploads/images/b995cecdcd0579264eea7a1a8373a84c.png"></image>
+    <view class="lessonItem" wx:for="{{lessonList}}" wx:key="index" bindtap="toLesson" data-item="{{item}}">
+      <image src="{{item.indexCover}}"></image>
       <image src="/images/recomonPlay.png"></image>
-      <text>营养与健康</text>
-      <view class="tagsLine">
-        <view>零基础</view>
-        <view>国家一级艺术家</view>
+      <text class="van-ellipsis">{{item.name}}</text>
+      <view class="tagsLine" wx:for="{{item.tags}}" wx:for-item="tag" wx:key="index">
+        <view>{{tag.tagName}}</view>
       </view>
-      <text>03月06日 16:00</text>
+      <text>共{{fn.people(item.studyNum)}}人在学</text>
     </view>
   </view>
 </template>
 <!-- 关于本大 -->
 <template name="aboutBox">
   <navigator hover-class="none" url="/page/discoveryHall/pages/detail/detail?isOn=1" class="aboutBox">
-    <image src="https://hwcdn.jinlingkeji.cn/uploads/images/b995cecdcd0579264eea7a1a8373a84c.png"></image>
-    <text
-      class="van-multi-ellipsis--l4">分割开来JFK经济复苏的孙大发感慨了就换地方了空间规划扩大解放韩国的肌肤光滑对抗肌肤光滑对抗肌肤光滑代开收费价格和了代开收费价格和看的肌肤光滑’啊圣诞节福克斯的肌肤快乐圣诞节；肯定是积分；肯定是方法看</text>
+    <image src="{{inro.coverImage}}"></image>
+    <rich-text class="text" nodes="{{inro.introduce}}"></rich-text>
   </navigator>
 </template>
 <!-- 任务列表 -->
@@ -63,7 +78,8 @@
       </view>
       <view class="itemRight">
         <text>完成{{item.completedTaskNum}}/{{item.taskNum}}</text>
-        <text style="background: {{item.isCompleted ? '#CCCCCC' : ''}};" bindtap="getScore" data-index="{{index}}">{{item.isCompleted ? '已获得' : '赚学分'}}</text>
+        <text style="background: {{item.isCompleted ? '#CCCCCC' : ''}};" bindtap="getScore"
+          data-index="{{index}}">{{item.isCompleted ? '已获得' : '赚学分'}}</text>
       </view>
     </view>
   </view>
@@ -84,12 +100,9 @@
     </view>
   </view>
 </view>
-<template is="contentBox"
-  data="{{title: '学员优秀作品', subTitle: '更多作品', url: '/page/discoveryHall/pages/works/works', isWorks: 1, opusList}}">
+<template is="contentBox" wx:for="{{stepsList}}" wx:key="index"
+  data="{{title: fn.title(item.type), subTitle: fn.subTitle(item.type), url: fn.url(item.type), opusList, lessonList, type: item.type, item, inro}}">
 </template>
-<template is="contentBox"
-  data="{{title: '热门课程', subTitle: '更多课程', url: '/page/discoveryHall/pages/works/works', islesson: 1}}"></template>
-<template is="contentBox" data="{{title: '关于网上老年大学',isOn: 1}}"></template>
 <template is="contentBox" data="{{title: '做任务得学分',isScore: 1, stepsList}}"></template>
 <button hover-clss="none" open-type="share" class="shareBtn">
   <image src="../../images/invitBtn.png"></image>

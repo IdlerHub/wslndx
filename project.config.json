@@ -160,7 +160,7 @@
         {
           "name": "page/discoveryHall/pages/index/index",
           "pathName": "page/discoveryHall/pages/index/index",
-          "query": "id=2",
+          "query": "isOn=1",
           "scene": 1069,
           "referrerInfo": {}
         }
