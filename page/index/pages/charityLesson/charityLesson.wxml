@@ -7,25 +7,25 @@
   </view>
   <view class="moreBox">
     <view class="moreTitle">
-      <text class="left" wx:if="{{name=='热门'}}">精选20门课程</text>
-      <text class="left" wx:else>本月更新13门新课</text>
-      <text class="right" wx:if="{{name!='热门'}}">下期预告</text>
+      <text class="left" wx:if="{{name=='热门'}}">精选{{total}}门课程</text>
+      <text class="left" wx:else>本月更新{{total}}门新课</text>
+      <text class="right" wx:if="{{name!='热门'}}" bindtap="goEducation">下期预告</text>
       <image class="icon" wx:if="{{name!='热门'}}" src="../../images/right.png"></image>
     </view>
-    <scroll-view scroll-y wx:if="{{activityList[0]}}" bindscrolltolower="bindscrolltolower">
-      <view wx:for="{{activityList}}" wx:key="index" data-item="{{item}}">
-        <view class="listItem" wx:if="{{!item.is_login}}" bindtap="bannerGo" data-item="{{item}}">
+    <scroll-view scroll-y wx:if="{{ name=='热门'? hotLessonList[0] : charityLessonList[0] }}" bindscrolltolower="bindscrolltolower">
+      <view wx:for="{{ name=='热门'? hotLessonList:charityLessonList }}" wx:key="index" data-item="{{item}}">
+        <view class="listItem" bindtap="bannerGo" data-item="{{item}}">
           <view class="imgMask">
-            <image src="{{item.image}}" class="cover"></image>
+            <image src="{{item.indexCover}}" class="cover"></image>
             <image src="../../../../images/recomonPlay.png" class="img"></image>
           </view>
           <view class="centerBox">
             <view class="name">{{item.name}}</view>
-            <view class="tags">
-              <text>零基础</text><text>国家一级艺术家</text>
+            <view class="tags" wx:for="{{item.tags}}" wx:key="index" wx:for-item="mItem">
+              <text>{{mItem.tagName}}</text>
             </view>
             <view class="desc">
-              <text>免费</text><view></view><text>1.4万人在学</text>
+              <text>{{!item.isCharge? '免费': '付费'}}</text><view></view><text>{{item.studyNum>9999? (item.studyNum/10000)+'万' : item.studyNum}}人在学</text>
             </view>
           </view>
         </view>

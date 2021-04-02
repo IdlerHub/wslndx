@@ -76,7 +76,7 @@ Page({
     // 展示新生弹窗
     let date = wx.getStorageSync('date') || ''; // 之前记录的日期
     let newDate = app.util.formatDate(); // 获取当前日期
-    date != newDate ? this.setData({ times: 0 }): '' // 如之前记录日期和当前日期不等 times恢复为0
+    date != newDate ? this.setData({ times: 0 }): this.setData({times: 1}) // 如之前记录日期和当前日期不等 times恢复为0
   },
   setCenterIcon() {
     this.setData({

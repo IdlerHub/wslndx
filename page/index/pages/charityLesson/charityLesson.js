@@ -13,10 +13,8 @@ Page({
     current: 0,
     hotLessonList: [],
     charityLessonList: [],
-    params: {
-      pageSize: 10,
-      pageNum: 1
-    }
+    total: 0,
+    mpurl: ''
   },
   onLoad: function (options) {
     this.setData({name: options.name})
@@ -35,9 +33,14 @@ Page({
     this.setData({
       topT: 100
     });
+    this.params = {
+      pageSize: 10,
+      pageNum: 1
+    }
   },
   onShow: function () {
     // Promise.all([this.getHost(), this.getHostbanner()]);
+    this.data.name=='热门'? this.getHotLessonList():this.getCharityLessonList()
   },
   onPullDownRefresh: function () {},
   onReachBottom: function () {},
@@ -46,9 +49,14 @@ Page({
   },
   bindscrolltolower() {
     this.params.pageNum += 1
-    // this.getLesson()
+    this.data.name=='热门'? this.getHotLessonList():this.getCharityLessonList()
   },
-  // getHost() {
+  goEducation() {
+    wx.navigateTo({
+      url: `/pages/education/education?type=1&url=${this.data.mpurl}`
+    })
+  },
+  // getCharityLessonList() {
   //   app.activity.hots({ page_size: 100 }).then((res) => {
   //     this.setData({
   //       charityLessonList: res.data,
@@ -56,35 +64,37 @@ Page({
   //   });
   // },
   getHotLessonList() {
-    app.activity.bannerList().then((res) => {
+    app.lessonNew.hallGetColumnList(this.params).then((res) => {
       this.setData({
-        hotLessonList: res.data,
+        hotLessonList: res.dataList,
+        total: res.total
       });
     });
   },
   bannerGo(e) {
     let item = e.currentTarget.dataset.item;
     console.log(item);
-    if (item.is_finish) return;
-    let login = item.is_login > 0 ? 1 : 0;
-    if (item.jump_type == 1) {
-      /* 外链 */
-      wx.navigateTo({
-        url: `/pages/education/education?type=0&url=${item.extra.url}&login=${login}`,
-      });
-    } else if (item.jump_type == 0) {
-      /* 视频 */
-      wx.navigateTo({
-        url: item.extra.url,
-      });
-    } else if (item.jump_type == 3) {
-      this.minigo(item.extra.url || "", item.extra.wechat_app_id);
-    } else {
-      /* 文章 */
-      wx.navigateTo({
-        url: item.extra.url,
-      });
-    }
+    app.liveAddStatus(item.columnId, item.isCharge)
+    // if (item.is_finish) return;
+    // let login = item.is_login > 0 ? 1 : 0;
+    // if (item.jump_type == 1) {
+    //   /* 外链 */
+    //   wx.navigateTo({
+    //     url: `/pages/education/education?type=0&url=${item.extra.url}&login=${login}`,
+    //   });
+    // } else if (item.jump_type == 0) {
+    //   /* 视频 */
+    //   wx.navigateTo({
+    //     url: item.extra.url,
+    //   });
+    // } else if (item.jump_type == 3) {
+    //   this.minigo(item.extra.url || "", item.extra.wechat_app_id);
+    // } else {
+    //   /* 文章 */
+    //   wx.navigateTo({
+    //     url: item.extra.url,
+    //   });
+    // }
   },
   minigo(url, appId) {
     wx.navigateToMiniProgram({

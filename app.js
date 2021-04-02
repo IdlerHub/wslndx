@@ -559,20 +559,26 @@ App({
     }, 2000);
   },
   /* 专栏跳转判断 */
-  liveAddStatus(columnId) {
-    liveData.getLiveBySpecialColumnId({
-      specialColumnId: columnId
-    }).then(res => {
-      if (!res.data.isAddSubscribe) {
-        wx.navigateTo({
-          url: `/page/live/pages/tableDetail/tableDetail?specialColumnId=${item.columnId}`,
-        })
-      } else {
-        wx.navigateTo({
-          url: `/page/live/pages/vliveRoom/vliveRoom?roomId=${item.liveId}`,
-        })
-      }
-    })
+  liveAddStatus(columnId, isCharge) {
+    if (isCharge == 1) {
+      wx.navigateTo({
+        url: `page/index/pages/chageLesson/chageLesson?id=${columnId}`,
+      })
+    } else {
+      liveData.getLiveBySpecialColumnId({
+        specialColumnId: columnId
+      }).then(res => {
+        if (!res.data.isAddSubscribe) {
+          wx.navigateTo({
+            url: `/page/live/pages/tableDetail/tableDetail?specialColumnId=${columnId}`,
+          })
+        } else {
+          wx.navigateTo({
+            url: `/page/live/pages/vliveRoom/vliveRoom?roomId=${liveId}`,
+          })
+        }
+      })
+    }
   },
   globalData: {
     /*wx.login 返回值 code */
