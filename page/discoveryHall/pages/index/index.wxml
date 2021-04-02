@@ -13,7 +13,7 @@
     </navigator>
   </view>
   <view class="contentBox">
-    <template is="worksList" wx:if="{{isWorks}}"></template>
+    <template is="worksList" wx:if="{{isWorks}}" data="{{opusList}}"></template>
     <template is="lessonList" wx:if="{{islesson}}"></template>
     <template is="aboutBox" wx:if="{{isOn}}"></template>
     <template is="score" wx:if="{{isScore}}" data="{{stepsList}}"></template>
@@ -21,11 +21,11 @@
 </template>
 <!-- 作品列表 -->
 <template name="worksList">
-  <scroll-view scroll-x enable-flex class="worksList">
-    <view class="workItem" wx:for="{{6}}" wx:key="index">
-      <image src="https://hwcdn.jinlingkeji.cn/uploads/images/b995cecdcd0579264eea7a1a8373a84c.png"></image>
-      <text class="van-multi-ellipsis--l2">的付款了附件是的肌肤打开的JFK</text>
-    </view>
+  <scroll-view scroll-x enable-flex class="worksList" wx:if="{{opusList[0]}}">
+    <navigator hover-class="none" url="/page/discoveryHall/pages/detail/detail?id={{item.id}}" class="workItem" wx:for="{{opusList}}" wx:key="index">
+      <image src="{{item.coverImage}}"></image>
+      <text class="van-multi-ellipsis--l2">{{item.title}}</text>
+    </navigator>
     <view style="width: 20rpx;height: 50rpx;opacity: 0;">45
     </view>
   </scroll-view>
@@ -47,11 +47,11 @@
 </template>
 <!-- 关于本大 -->
 <template name="aboutBox">
-  <view class="aboutBox">
+  <navigator hover-class="none" url="/page/discoveryHall/pages/detail/detail?isOn=1" class="aboutBox">
     <image src="https://hwcdn.jinlingkeji.cn/uploads/images/b995cecdcd0579264eea7a1a8373a84c.png"></image>
     <text
       class="van-multi-ellipsis--l4">分割开来JFK经济复苏的孙大发感慨了就换地方了空间规划扩大解放韩国的肌肤光滑对抗肌肤光滑对抗肌肤光滑代开收费价格和了代开收费价格和看的肌肤光滑’啊圣诞节福克斯的肌肤快乐圣诞节；肯定是积分；肯定是方法看</text>
-  </view>
+  </navigator>
 </template>
 <!-- 任务列表 -->
 <template name="score">
@@ -85,7 +85,7 @@
   </view>
 </view>
 <template is="contentBox"
-  data="{{title: '学员优秀作品', subTitle: '更多作品', url: '/page/discoveryHall/pages/works/works', isWorks: 1}}">
+  data="{{title: '学员优秀作品', subTitle: '更多作品', url: '/page/discoveryHall/pages/works/works', isWorks: 1, opusList}}">
 </template>
 <template is="contentBox"
   data="{{title: '热门课程', subTitle: '更多课程', url: '/page/discoveryHall/pages/works/works', islesson: 1}}"></template>

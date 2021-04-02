@@ -1,37 +1,18 @@
 // page/discoveryHall/pages/detail/detail.js
+const app = getApp()
 Page({
   data: {
     statusBarHeight: 30,
-    value: 0,
-    gradientColor: {
-      '0%': '#ffd01e',
-      '100%': '#ee0a24',
-    },
-    time: 15 * 1000,
-    timeData: {}
+    detail: {}
   },
   onLoad: function (options) {
     this.setData({
       statusBarHeight: wx.getSystemInfoSync().statusBarHeight + 12
     })
-  },
-  onReady: function () {
-
-  },
-  onShow: function () {
-
-  },
-  onHide: function () {
-
-  },
-  onUnload: function () {
-
-  },
-  onPullDownRefresh: function () {
-
-  },
-  onReachBottom: function () {
-
+    options.isOn ? this.setData({
+      isOn: 1
+    }) : this.hallGetOpusInfo(options.id)
+    this.videoContext = wx.createVideoContext("myVideo");
   },
   onShareAppMessage: function (ops) {
     if (ops.from === "menu") {
@@ -42,17 +23,22 @@ Page({
         title: '视频详情',
         imageUrl: "/images/sharemessage.jpg",
         path: "/page/discoveryHall/pages/videoDetail/videoDetail?id=" +
-          1 +
+          this.data.detail.id +
           "&type=share&uid=" +
           this.data.$state.userInfo.id
       };
     }
   },
-  onChange(e) {
-    this.setData({
-      timeData: e.detail,
-      value: this.data.value + Math.ceil(100 / 15)
-    });
+  hallGetOpusInfo(opusId) {
+    app.activity.hallGetOpusInfo({
+      opusId
+    }).then(res => {
+      this.setData({
+        detail: res.data
+      }, () => {
+        this.videoContext.play()
+      })
+    })
   },
   toBack() {
     if (getCurrentPages().length > 1) {
@@ -62,5 +48,17 @@ Page({
         url: '/pages/index/index',
       })
     }
+  },
+  praise() {
+    app.activity.giveOrCancelLike({
+      channelId: this.data.detail.id,
+      channelType: this.data.detail.isOn ? 3 : 1,
+      isLike: 1
+    }).then(() => {
+      this.setData({
+        'detail.isLike': 1
+      })
+    })
+
   }
 })

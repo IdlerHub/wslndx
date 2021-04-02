@@ -50,7 +50,7 @@
 }
 
 .videoContetBox .btnBox .bth:nth-child(1) {
-  background: linear-gradient(90deg, #FFB441 0%, #FE9B02 100%);
+  background: linear-gradient(90deg, #FF4B79 0%, #FE0241 100%);
 }
 
 .videoContetBox .btnBox .bth:nth-child(2) {
@@ -64,16 +64,13 @@
   margin-left: 16rpx;
 }
 
-.circleNum {
-  font-size: 32rpx !important;
-  color: #fff !important;
-} 
-
-.vanCircle {
+.timeScore {
   position: absolute;
-  right: 30rpx;
-  bottom: 153rpx;
+  bottom: 198rpx;
+  right: 20rpx;
+  z-index: 9999999999;
 }
+
 
 
 

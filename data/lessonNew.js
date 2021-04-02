@@ -177,8 +177,8 @@ function searchLessonList(params) {
  * @param {} 
  * @return:  promise
  * **/
-function experienceHallColumnList(params) {
-  return httpService.post("experienceHall/ColumnList", params, null, true);
+function hallGetColumnList(params) {
+  return httpService.post("hall/getColumnList", params, null, true);
 }
 
 module.exports = {
@@ -201,5 +201,5 @@ module.exports = {
   countVideo,
   getUniversityInfo,
   searchLessonList,
-  experienceHallColumnList
+  hallGetColumnList
 }
