@@ -1,43 +1,101 @@
 // page/discoveryHall/pages/detail/detail.js
+var htmlparser = require("../../../../utils/htmlparser");
 const app = getApp()
 Page({
   data: {
     statusBarHeight: 30,
-    detail: {}
+    detail: {},
+    isPlay: true,
+    showMoreTxt: false,
+    showMore: false,
+    isOn: false,
+    scroeMsg: {}
   },
+  timeActive: true,
   onLoad: function (options) {
     this.setData({
       statusBarHeight: wx.getSystemInfoSync().statusBarHeight + 12
     })
-    options.isOn ? this.setData({
+    options.isOn ? [this.setData({
       isOn: 1
-    }) : this.hallGetOpusInfo(options.id)
+    }), this.hallGgetContentInfo().then(() => { this.addStudyRecord() })] : this.hallGetOpusInfo(options.id).then(() => { this.addStudyRecord() })
     this.videoContext = wx.createVideoContext("myVideo");
+    this.timeScore = this.selectComponent('.timeScore')
+  },
+  onShow() {
+    if(this.timeActive) return
+    this.timeScore.timeScore.start()
+    this.timeActive = true
+  },
+  onHide() {
+    this.timeScore.timeScore.pause()
+    this.timeActive = false
   },
   onShareAppMessage: function (ops) {
     if (ops.from === "menu") {
       return this.menuAppShare();
     }
     if (ops.from === "button") {
+      app.activity.experienceHallShare({
+        channelId: this.data.isOn ? this.data.inro.id : this.data.detail.id,
+        channelType: this.data.isOn ? 3 : 1
+      })
+      let path = !this.data.isOn ? "/page/discoveryHall/pages/detail/detail?id=" +
+        this.data.detail.id : "/page/discoveryHall/pages/detail/detail?isOn=1"
       return {
-        title: '视频详情',
-        imageUrl: "/images/sharemessage.jpg",
-        path: "/page/discoveryHall/pages/videoDetail/videoDetail?id=" +
-          this.data.detail.id +
+        title: this.data.isOn ? '关于网上老年大学' : this.data.detail.title,
+        imageUrl: this.data.isOn ? this.data.inro.coverImage : this.data.detail.coverImage,
+        path: path +
           "&type=share&uid=" +
           this.data.$state.userInfo.id
       };
     }
   },
   hallGetOpusInfo(opusId) {
-    app.activity.hallGetOpusInfo({
+    return app.activity.hallGetOpusInfo({
       opusId
     }).then(res => {
+      res.data.type == 2 ? res.data.content = htmlparser.default(res.data.content) : null
       this.setData({
         detail: res.data
       }, () => {
+        if (res.data.type == 2) return
+        this.videoContext.play()
+        let query = wx.createSelectorQuery().in(this),
+          that = this
+        query.selectAll(".videoContent").boundingClientRect()
+        query.exec(res => {
+          (res[0][0].height + 8) < res[0][1].height ? this.setData({
+            showMoreTxt: true
+          }) : null
+        })
+      })
+    })
+  },
+  hallGgetContentInfo() {
+    return app.activity.hallGgetContentInfo().then(res => {
+      this.setData({
+        inro: res.data
+      }, () => {
         this.videoContext.play()
       })
+    })
+  },
+  addStudyRecord() {
+    app.activity.addStudyRecord({
+      optType: 1,
+      channelId: this.data.isOn ? this.data.inro.id : this.data.detail.id,
+      channelType: this.data.isOn ? 3 : 1
+    }).then(res => {
+      this.setData({
+        scroeMsg: res.data
+      })
+    })
+  },
+  pause() {
+    this.data.isPlay ? this.videoContext.pause() : this.videoContext.play()
+    this.setData({
+      isPlay: !this.data.isPlay
     })
   },
   toBack() {
@@ -50,9 +108,10 @@ Page({
     }
   },
   praise() {
+    if (this.data.detail.isLike) return
     app.activity.giveOrCancelLike({
-      channelId: this.data.detail.id,
-      channelType: this.data.detail.isOn ? 3 : 1,
+      channelId: this.data.isOn ? this.data.inro.id : this.data.detail.id,
+      channelType: this.data.isOn ? 3 : 1,
       isLike: 1
     }).then(() => {
       this.setData({
@@ -60,5 +119,10 @@ Page({
       })
     })
 
+  },
+  checkMore() {
+    this.setData({
+      showMore: !this.data.showMore
+    })
   }
 })

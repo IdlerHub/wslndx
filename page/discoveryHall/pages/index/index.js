@@ -4,40 +4,15 @@ Page({
   data: {
     showOverlay: false,
     overlayType: 0,
-    stepsList: [
-      {
-        taskName: '观看优秀作品',
-        taskNum: 6,
-        points: 10,
-        completedTaskNum: 2,
-        isCompleted: 1,
-        type: 1
-      },{
-        taskName: '学习热门课程',
-        taskNum: 6,
-        points: 6,
-        completedTaskNum: 4,
-        isCompleted: 0,
-        type: 2
-      },{
-        taskName: '查看网大介绍',
-        taskNum: 6,
-        points: 5,
-        completedTaskNum: 3,
-        isCompleted: 0,
-        type: 3
-      },
-    ],
-    opusList: []
+    stepsList: [],
+    opusList: [],
+    lessonList: []
   },
   onLoad: function (options) {
-    Promise.all([this.hallGetOpus()])
-  },
-  onReady: function () {
-
+    Promise.all([this.getStepList(), this.hallGetOpus(), this.hallGetColumnList(), this.hallGgetContentInfo()])
   },
   onShow: function () {
-
+    this.getStepList()
   },
   onShareAppMessage: function (ops) {
     if (ops.from === "menu") {
@@ -66,7 +41,25 @@ Page({
     })
   },
   getStepList() {
-  
+    app.activity.hallGetTaskPointInfo().then(res => {
+      this.setData({
+        stepsList: res.dataList
+      })
+    })
+  },
+  hallGetColumnList() {
+    app.lessonNew.hallGetColumnList({ pageSize: 4, pageNum: 1 }).then(res => {
+      this.setData({
+        lessonList: res.dataList
+      })
+    })
+  },
+  hallGgetContentInfo() {
+    app.activity.hallGgetContentInfo().then(res => {
+      this.setData({
+        inro: res.data
+      })
+    })
   },
   toLesson(e) {
     app.liveAddStatus(e.currentTarget.dataset.item.id)
@@ -79,14 +72,17 @@ Page({
         url = '/page/discoveryHall/pages/works/works'
         break;
       case 2:
-        url = '/page/discoveryHall/pages/works/works'
+        url = '/page/index/pages/charityLesson/charityLesson?name=热门'
         break;
         case 3:
-        url = '/page/discoveryHall/pages/detail/detail?isInro=1'
+        url = '/page/discoveryHall/pages/detail/detail?isOn=1'
         break;
     }
     wx.navigateTo({
       url,
     })
+  },
+  toLesson(e) {
+    app.liveAddStatus(e.currentTarget.dataset.item.columnId, e.currentTarget.dataset.item.isCharge)
   }
 })

@@ -118,7 +118,7 @@
   <!-- 搜索/学分 -->
   <view class="search-box" style="padding-top:{{ topT==28? topT-5:topT }}px">
     <navigator hover-class="none" class="search-left" url="/page/index/pages/search/search">
-      <mini-icon mini-class="icon" icon="search" color="#b3b3b3" miniStyle="width:50rpx;height:50rpx" class="iconImg"/>
+      <mini-icon mini-class="icon" icon="search" color="#b3b3b3" miniStyle="width:50rpx;height:50rpx" class="iconImg" />
       <text>搜索课程名称</text>
     </navigator>
     <!-- <slotSign bindtap="checknextTap" data-type="search" data-detail="/page/live/pages/timetableList/timetableList">
@@ -156,20 +156,30 @@
     </view>
     <template is="skeletonSwiper" wx:else></template>
     <!-- 中间icon -->
-    <view class="centerIcon">
-      <view wx:for="{{centerIcon}}" wx:key="index" class="centerIconItem" style="margin: {{ index > 3 ? 0 : ''}}">
-        <slotSign bindtap="checknextTap" data-type="search" data-detail="{{item.url}}"
-          wx:if="{{ index == 3 || index == 5}}">
-          <view class="iconBox" bindtap="iconBind" data-item="{{item}}">
-            <image src="{{item.icon}}" style="width: {{item.width}}rpx;height:{{item.height}}rpx;"></image>
+    <view class="centerBox">
+      <view class="centerIcon">
+        <view wx:for="{{centerIcon}}" wx:key="index" class="centerIconItem" style="margin: {{ index > 3 ? 0 : ''}}">
+          <slotSign bindtap="checknextTap" data-type="search" data-detail="{{item.url}}"
+            wx:if="{{ index == 3 || index == 5}}">
+            <view class="iconBox" bindtap="iconBind" data-item="{{item}}">
+              <image src="{{item.icon}}" style="width: {{item.width}}rpx;height:{{item.height}}rpx;"></image>
+              <text>{{item.name}}</text>
+            </view>
+          </slotSign>
+          <view class="iconBox" bindtap="iconBind" data-item="{{item}}" wx:else>
+            <image src="{{item.icon}}"
+              style="width: {{item.width}}rpx;height:{{item.height}}rpx;margin-left:{{ index == 7 ? '44rpx' : '' }}; margin-top: {{index == 7 ? '-13rpx' : ''}}">
+            </image>
             <text>{{item.name}}</text>
           </view>
-        </slotSign>
-        <view class="iconBox" bindtap="iconBind" data-item="{{item}}" wx:else>
-          <image src="{{item.icon}}" style="width: {{item.width}}rpx;height:{{item.height}}rpx;margin-left:{{ index == 7 ? '44rpx' : '' }}; margin-top: {{index == 7 ? '-13rpx' : ''}}"></image>
-          <text>{{item.name}}</text>
         </view>
       </view>
+      <slotSign bindtap="checknextTap" data-type="search" data-detail="/page/discoveryHall/pages/index/index">
+        <image src="/images/centerImg.png" class="centerImg" wx:if="{{$state.userInfo.id}}"></image>
+        <navigator hover-class="none" url="/page/discoveryHall/pages/index/index" wx:else>
+          <image src="/images/centerImg.png" class="centerImg"></image>
+        </navigator>
+      </slotSign>
     </view>
     <template is="liveBox" data="{{recommend, liveRecommend, $state}}"></template>
     <view>
@@ -205,7 +215,8 @@
     data-title="{{ history.name }}"
     style="animation:{{ history.name && shownow && shownowt ? 'nowshow' : 'nowclose'}}  0.5s ; bottom:{{history.name && shownow && shownowt? '138rpx' : '-88rpx'}} ">
     <!-- <image src="/images/play-red.png"></image> -->
-    <mini-icon mini-class="icon" icon="playVideo" color="#d81e06" miniStyle="width:50rpx;height:50rpx" class="iconImg"/>
+    <mini-icon mini-class="icon" icon="playVideo" color="#d81e06" miniStyle="width:50rpx;height:50rpx"
+      class="iconImg" />
     <view class="line">{{ history.name }}</view>
     <image src="{{$state.imgHost}}/nowcancle.png" catchtap="closenow"></image>
   </view>
@@ -219,8 +230,9 @@
       <icon type="cancel" size="37" color="white" data-id="0" catchtap="closeSignIn"></icon>
     </view>
   </view>
-  <signinBox wx:if="{{ !$state.signStatus.count && !dialog[0].image && showSignbox && times}}" state="{{$state}}" top="{{topT}}"
-    isIndex="{{true}}" bind:closesignBox="closesignBox" bind:showIntegral="showIntegral" bind:sigin="sigin" />
+  <signinBox wx:if="{{ !$state.signStatus.count && !dialog[0].image && showSignbox && times}}" state="{{$state}}"
+    top="{{topT}}" isIndex="{{true}}" bind:closesignBox="closesignBox" bind:showIntegral="showIntegral"
+    bind:sigin="sigin" />
 </view>
 <navigator url="/page/index/pages/assistant/assistant" hover-class="none">
   <image src="/images/xiaolin.png" class="xiaolin"></image>

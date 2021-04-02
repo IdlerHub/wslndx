@@ -56,6 +56,24 @@ function hallGetOpusInfo(params) {
 function giveOrCancelLike(params) {
   return httpService.post("experienceHall/giveOrCancelLike", params, null, true);
 }
+
+/**
+ * @description: 記錄新人體驗館的内容分享
+ * @param {} 
+ * @return:  promise
+ * **/
+function experienceHallShare(params) {
+  return httpService.post("experienceHall/share", params, null, true);
+}
+
+/**
+ * @description: 增加学分
+ * @param {} 
+ * @return:  promise
+ * **/
+function addStudyRecord(params) {
+  return httpService.post("experienceHall/addStudyRecord", params, null, true);
+}
   
 module.exports = {
   hots,
@@ -65,4 +83,6 @@ module.exports = {
   hallGetOpus,
   hallGetOpusInfo,
   giveOrCancelLike,
+  experienceHallShare,
+  addStudyRecord,
 }

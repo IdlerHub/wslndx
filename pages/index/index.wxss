@@ -73,13 +73,23 @@ page {
   opacity: 0;
 }
 
+.centerBox {
+  padding: 32rpx 0 30rpx 0;
+  background: linear-gradient(180deg, #FFFFFF 0%, #F7F7F7 100%);
+}
+
+.centerBox .centerImg {
+  display: block;
+  width: 710rpx;
+  height: 160rpx;
+  margin: 40rpx auto 0 auto;
+}
+
 .centerIcon {
   display: flex;
-  padding: 32rpx 0 30rpx 0;
   align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
-  background: linear-gradient(180deg, #FFFFFF 0%, #F7F7F7 100%);
 }
 
 .centerIcon .centerIconItem {

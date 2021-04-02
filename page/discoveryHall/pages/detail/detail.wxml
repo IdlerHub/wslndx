@@ -1,19 +1,23 @@
 <!--page/discoveryHall/pages/detail/detail.wxml-->
-<view class="container" wx:if="{{detail.type}}">
+<timeScore class="timeScore" detail="{{detail}}" isOn="{{isOn}}" inro="{{inro}}" wx:if="{{!detail.studyScore}}"></timeScore>
+<view class="container" wx:if="{{detail.type == 1 || isOn}}">
   <mini-icon mini-class="icon" icon="arrowLeft" color="#fff" miniStyle="width:40rpx;height:40rpx" class="iconImg"
-    style="top: {{ statusBarHeight}}px;" bindtap="toBack"/>
-  <timeScore class="timeScore"></timeScore>
+    style="top: {{ statusBarHeight}}px;" catchtap="toBack"/>
   <video
-    src="{{detail.videoUrl}}"
-    class="video" object-fit="fill" id="myVideo" show-fullscreen-btn="{{false}}" show-play-btn="{{fasle}}" show-center-play-btn="{{fasle}}" enable-progress-gesture="{{fasle}}">
+    src="{{detail.videoUrl || inro.videoUrl}}"
+    class="video" id="myVideo" show-fullscreen-btn="{{false}}" show-play-btn="{{fasle}}" show-center-play-btn="{{fasle}}" enable-progress-gesture="{{fasle}}" controls="{{fasle}}" bindtap="pause">
     <view class="videoContetBox">
-      <text class="videoContent">{{detail.introduce}}</text>
+      <text class="videoContent van-multi-ellipsis--l3" wx:if="{{!isOn}}" style="{{ showMore ? 'opacity: 0;position: absolute;' : ''}}">{{detail.introduce}}</text>
+      <text  class="videoContent" wx:if="{{!isOn}}" style="{{ showMore ? 'display: block;' : 'opacity: 0;position: absolute;' }}">{{detail.introduce}}</text>
+      <rich-text class="richtext" nodes="{{inro.introduce}}"></rich-text>
+      <text class="more" wx:if="{{!isOn}}" catchtap="checkMore">{{ showMore ? '收起' : '展开' }}</text>
+      <image wx:if="{{!isPlay}}" src="{{$state.imgHost}}/play-hl.png" class="pause"></image>
       <view class="btnBox">
-        <view class="bth" bindtap="praise">
-          <mini-icon mini-class="icon" icon="heart" color="{{ detail.isLike ? '#FFD000' : '#fff' }}" miniStyle="width:50rpx;height:50rpx" class="" />
-          <text style="color:{{ detail.isLike ? '#FFD000' : '#fff' }}">点赞</text>
+        <view class="bth" catchtap="praise">
+          <mini-icon mini-class="icon" icon="heart" color="{{ detail.isLike || inro.isLike ? '#FFD000' : '#fff' }}" miniStyle="width:50rpx;height:50rpx"/>
+          <text style="color:{{ detail.isLike || inro.isLike ? '#FFD000' : '#fff' }}">{{ detail.likeNum > 0 || inro.likeNum > 0 ? detail.likeNum || inro.likeNum : '点赞'  }}</text>
         </view>
-        <button hover-class="none" open-type="share" class="bth">
+        <button hover-class="none" open-type="share" class="bth" catchtap="return">
           <mini-icon mini-class="icon" icon="wechat" color="#fff" miniStyle="width:50rpx;height:50rpx" class="" />
           <text>分享</text>
         </button>
@@ -21,3 +25,19 @@
     </view>
   </video>
 </view>
+<navigationBar id="navigationBar" title="{{detail.title}}" back="{{ true }}"
+isIndex="{{false}}" wx:if="{{detail.type == 2}}" fixed="{{fasle}}"></navigationBar>
+<scroll-view scroll-y class="scrollView" wx:if="{{detail.type == 2 }}">
+  <rich-text class="richText" nodes="{{detail.content}}"></rich-text>
+  <view style="width: 100%;height:300rpx;opacity: 0;">sfda</view>
+  <view class="btnBox contentBtn">
+    <view class="bth" catchtap="praise">
+      <mini-icon mini-class="icon" icon="heart" color="{{ detail.isLike ? '#FFD000' : '#fff' }}" miniStyle="width:50rpx;height:50rpx"/>
+      <text style="color:{{ detail.isLike ? '#FFD000' : '#fff' }}">{{ detail.likeNum > 0 ? detail.likeNum : '点赞'  }}</text>
+    </view>
+    <button hover-class="none" open-type="share" class="bth" catchtap="return">
+      <mini-icon mini-class="icon" icon="wechat" color="#fff" miniStyle="width:50rpx;height:50rpx" class="" />
+      <text>分享</text>
+    </button>
+  </view>
+</scroll-view>
