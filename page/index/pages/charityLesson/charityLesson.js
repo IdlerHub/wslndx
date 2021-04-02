@@ -9,32 +9,56 @@
 const app = getApp();
 Page({
   data: {
+    name: '',
     current: 0,
-    swiperList: [],
-    activityList: [],
+    hotLessonList: [],
+    charityLessonList: [],
+    params: {
+      pageSize: 10,
+      pageNum: 1
+    }
   },
-  onLoad: function (options) {},
+  onLoad: function (options) {
+    this.setData({name: options.name})
+    let reg = /ios/i
+    let pt = 20 //导航状态栏上内边距
+    let h = 44 //导航状态栏高度
+    let systemInfo = wx.getSystemInfoSync()
+    pt = systemInfo.statusBarHeight
+    if (!reg.test(systemInfo.system)) {
+      h = 48
+    }
+    systemInfo.statusBarHeight < 30 ?
+    this.setData({
+      topT: 70
+    }) :
+    this.setData({
+      topT: 100
+    });
+  },
   onShow: function () {
-    Promise.all([this.getHost(), this.getHostbanner()]);
+    // Promise.all([this.getHost(), this.getHostbanner()]);
   },
   onPullDownRefresh: function () {},
   onReachBottom: function () {},
-  centerTab(e) {
-    this.setData({
-      current: e.detail.current,
-    });
+  goback() {
+    wx.navigateBack({ delta: 1 })
   },
-  getHost() {
-    app.activity.hots({ page_size: 100 }).then((res) => {
-      this.setData({
-        activityList: res.data,
-      });
-    });
+  bindscrolltolower() {
+    this.params.pageNum += 1
+    // this.getLesson()
   },
-  getHostbanner() {
+  // getHost() {
+  //   app.activity.hots({ page_size: 100 }).then((res) => {
+  //     this.setData({
+  //       charityLessonList: res.data,
+  //     });
+  //   });
+  // },
+  getHotLessonList() {
     app.activity.bannerList().then((res) => {
       this.setData({
-        swiperList: res.data,
+        hotLessonList: res.data,
       });
     });
   },
@@ -68,16 +92,5 @@ Page({
       path: url,
       // envVersion: 'trial',
     });
-  },
-  onGotUserInfo(e) {
-    if (e.detail.errMsg === "getUserInfo:ok") {
-      app.updateBase(e);
-      let item = e.currentTarget.dataset.item;
-      setTimeout(() => {
-        wx.navigateTo({
-          url: `/pages/education/education?url=${item.extra.url}&type=1`,
-        });
-      }, 500);
-    }
-  },
+  }
 });

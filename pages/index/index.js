@@ -114,7 +114,7 @@ Page({
       // },
        {
         url: '/page/index/pages/charityLesson/charityLesson',
-        icon: `${this.data.$state.imgHost}/indexIcon/technologyIcon.png`,
+        icon: '../../images/charityLesson.png',
         name: '本月公益课',
         width: 64,
         height: 64,
