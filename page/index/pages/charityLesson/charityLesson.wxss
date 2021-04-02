@@ -37,7 +37,8 @@ page {
     top: 340rpx;
     background: #fff;
     border-radius: 20rpx 20rpx 0 0;
-    width: 92.2%;
+    width: 100%;
+    box-sizing: border-box;
   }
   
   .moreBox .moreTitle {

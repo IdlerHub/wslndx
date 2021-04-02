@@ -116,7 +116,7 @@
     <template is="skeletonTop" data="{{topT}}" wx:else></template> -->
   </slotSign>
   <!-- 搜索/学分 -->
-  <view class="search-box" style="padding-top:{{ topT==28? topT-5:topT }}px">
+  <view class="search-box" style="padding-top:{{ topT==28? topT-5:topT-2 }}px">
     <navigator hover-class="none" class="search-left" url="/page/index/pages/search/search">
       <mini-icon mini-class="icon" icon="search" color="#b3b3b3" miniStyle="width:50rpx;height:50rpx" class="iconImg" />
       <text>搜索课程名称</text>

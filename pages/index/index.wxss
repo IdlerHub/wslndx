@@ -498,15 +498,15 @@ page {
   align-items: center;
   position: fixed;
   z-index: 9999;
-  background: #fff;
+  background: #F5F6FA;
 }
 
 .search-box .search-left {
-  width: 520rpx;
-  height: 70rpx;
+  width: 494rpx;
+  height: 80rpx;
   padding: 0 20rpx;
   box-sizing: border-box;
-  background: rgb(238, 238, 238);
+  background: #fff;
   border-radius: 40rpx;
   display: flex;
   align-items: center;
