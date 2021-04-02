@@ -158,9 +158,9 @@
           "scene": null
         },
         {
-          "name": "page/discoveryHall/pages/detail/detail",
-          "pathName": "page/discoveryHall/pages/detail/detail",
-          "query": "id=1",
+          "name": "page/discoveryHall/pages/index/index",
+          "pathName": "page/discoveryHall/pages/index/index",
+          "query": "id=2",
           "scene": 1069,
           "referrerInfo": {}
         }

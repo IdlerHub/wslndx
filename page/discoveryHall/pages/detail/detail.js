@@ -1,9 +1,13 @@
 // page/discoveryHall/pages/detail/detail.js
+var htmlparser = require("../../../../utils/htmlparser");
 const app = getApp()
 Page({
   data: {
     statusBarHeight: 30,
-    detail: {}
+    detail: {},
+    isPlay: true,
+    showMoreTxt: false,
+    showMore: false
   },
   onLoad: function (options) {
     this.setData({
@@ -20,9 +24,9 @@ Page({
     }
     if (ops.from === "button") {
       return {
-        title: '视频详情',
-        imageUrl: "/images/sharemessage.jpg",
-        path: "/page/discoveryHall/pages/videoDetail/videoDetail?id=" +
+        title: this.data.detail.title,
+        imageUrl: this.data.detail.coverImage,
+        path: "/page/discoveryHall/pages/detail/detail?id=" +
           this.data.detail.id +
           "&type=share&uid=" +
           this.data.$state.userInfo.id
@@ -33,11 +37,27 @@ Page({
     app.activity.hallGetOpusInfo({
       opusId
     }).then(res => {
+      res.data.type == 2 ? res.data.content = htmlparser.default(res.data.content) : null
       this.setData({
         detail: res.data
       }, () => {
+        if(res.data.type == 2) return
         this.videoContext.play()
+        let query = wx.createSelectorQuery().in(this),
+          that = this
+        query.selectAll(".videoContent").boundingClientRect()
+        query.exec(res => {
+          (res[0][0].height + 8) < res[0][1].height ? this.setData({
+            showMoreTxt: true
+          }) : null
+        })
       })
+    })
+  },
+  pause() {
+    this.data.isPlay ? this.videoContext.pause() : this.videoContext.play()
+    this.setData({
+      isPlay: !this.data.isPlay
     })
   },
   toBack() {
@@ -50,6 +70,7 @@ Page({
     }
   },
   praise() {
+    if (this.data.detail.isLike) return
     app.activity.giveOrCancelLike({
       channelId: this.data.detail.id,
       channelType: this.data.detail.isOn ? 3 : 1,
@@ -60,5 +81,10 @@ Page({
       })
     })
 
+  },
+  checkMore() {
+    this.setData({
+      showMore: !this.data.showMore
+    })
   }
 })

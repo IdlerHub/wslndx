@@ -1,6 +1,10 @@
 // components/timeScore/timeScore.js
 Component({
   properties: {
+    detail: {
+      type: Object,
+      value: {}
+    }
   },
   data: {
     time: 30 * 1000,

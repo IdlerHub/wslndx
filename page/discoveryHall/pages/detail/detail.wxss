@@ -26,7 +26,6 @@
 }
 
 .videoContetBox .videoContent {
-  display: inline-block;
   width: 524rpx;
   font-size: 36rpx;
   font-weight: 400;
@@ -34,13 +33,26 @@
   line-height: 56rpx;
 }
 
-.videoContetBox .btnBox {
+.videoContetBox .more {
+  display: block;
+  font-size: 36rpx;
+  font-weight: 400;
+  color: #CCCCCC;
+  line-height: 36rpx;
+  padding-top: 8rpx;
+  position: relative;
+  z-index: 99;
+}
+
+.btnBox {
+  position: relative;
+  z-index: 99;
   display: flex;
   justify-content: space-between;
   margin-top: 30rpx;
 }
 
-.videoContetBox .btnBox .bth {
+.btnBox .bth {
   width: 330rpx;
   height: 88rpx;
   border-radius: 50rpx;
@@ -49,19 +61,31 @@
   justify-content: center;
 }
 
-.videoContetBox .btnBox .bth:nth-child(1) {
+.btnBox .bth:nth-child(1) {
   background: linear-gradient(90deg, #FF4B79 0%, #FE0241 100%);
 }
 
-.videoContetBox .btnBox .bth:nth-child(2) {
+.btnBox .bth:nth-child(2) {
   background: linear-gradient(90deg, #43DE80 0%, #1CCA61 100%);
 }
 
-.videoContetBox .btnBox .bth text {
+.btnBox .bth text {
   font-size: 36rpx;
   font-weight: 500;
   color: #FFFFFF;
   margin-left: 16rpx;
+}
+
+.pause {
+  position: fixed;
+  z-index: 3;
+  width: 146rpx;
+  height: 146rpx;
+  left: 0;
+  right: 0;
+  top: -28rpx;
+  bottom: 0;
+  margin: auto;
 }
 
 .timeScore {
@@ -71,6 +95,28 @@
   z-index: 9999999999;
 }
 
+/* 图文 */
+.scrollView {
+  width: 100vw;
+  height: 100vh;
+  padding: 0 30rpx;
+  box-sizing: border-box;
+}
 
+.richText {
+  padding: 30rpx;
+}
 
+::-webkit-scrollbar {
+  display: none;
+}
 
+.contentBtn {
+  width: 100vw;
+  position: fixed;
+  bottom: 30rpx;
+  left: 50%;
+  transform: translateX(-50%);
+  box-sizing: border-box;
+  padding: 30rpx;
+}
