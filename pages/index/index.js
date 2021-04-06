@@ -458,7 +458,7 @@ Page({
       } else if(dialog.jump_type == 3){
         this.minigo(dialog.url)
       } else {
-        this.toLivelesson()
+        app.liveAddStatus(dialog.url)
       }
       this.closeSignIn()
       wx.uma.trackEvent('index_activityClick');
