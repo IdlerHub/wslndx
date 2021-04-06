@@ -20,10 +20,9 @@ Page({
       isOn: 1
     }), this.hallGgetContentInfo()] : this.hallGetOpusInfo(options.id)
     this.videoContext = wx.createVideoContext("myVideo");
-    this.timeScore = this.selectComponent('.timeScore')
   },
   onShow() {
-    if(this.timeActive) return
+    if (this.timeActive) return
     this.timeScore.timeScore.start()
     this.timeActive = true
   },
@@ -69,6 +68,7 @@ Page({
             showMoreTxt: true
           }) : null
         })
+        this.timeScore = this.selectComponent('.timeScore')
       })
     })
   },
@@ -78,6 +78,7 @@ Page({
         inro: res.data
       }, () => {
         this.videoContext.play()
+        this.timeScore = this.selectComponent('.timeScore')
       })
     })
   },
@@ -103,13 +104,13 @@ Page({
       isLike: this.data.detail.isLike || this.data.inro.isLike ? 0 : 1
     }).then(() => {
       !this.data.isOn ?
-      this.setData({
-        'detail.isLike': this.data.detail.isLike ? 0 : 1,
-        'detail.likeNum': this.data.detail.isLike  ? this.data.detail.likeNum - 1 : this.data.detail.likeNum += 1
-      }) : this.setData({
-        'inro.isLike': this.data.inro.isLike ? 0 : 1,
-        'inro.likeNum': this.data.inro.isLike  ? this.data.inro.likeNum - 1 : this.data.inro.likeNum += 1
-      })
+        this.setData({
+          'detail.isLike': this.data.detail.isLike ? 0 : 1,
+          'detail.likeNum': this.data.detail.isLike ? this.data.detail.likeNum - 1 : this.data.detail.likeNum += 1
+        }) : this.setData({
+          'inro.isLike': this.data.inro.isLike ? 0 : 1,
+          'inro.likeNum': this.data.inro.isLike ? this.data.inro.likeNum - 1 : this.data.inro.likeNum += 1
+        })
     })
 
   },
