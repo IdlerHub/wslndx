@@ -107,6 +107,9 @@ let store = new Store({
           }
         };
       }
+      getApp().globalData.scorePage ? this.setData({
+        showTime: true
+      }) : null
     },
     onShow() {
       wx.uma.trackEvent("join_page", {

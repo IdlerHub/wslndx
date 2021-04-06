@@ -40,3 +40,8 @@
     <view class="btn">全部课程</view>
   </view>
 </view>
+
+<navigator open-type="navigateBack" class="back" hover-class="none" wx:if="{{name == '热门'}}">
+  <text>返回
+    体验馆</text>
+</navigator>

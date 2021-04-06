@@ -340,3 +340,4 @@
         </view>
     </view>
 </view>
+<timeScore class="timeScore" lessonDetail="{{lessonDetail}}" wx:if="{{!lessonDetail.studyScore && lessonDetail.score}}"></timeScore>

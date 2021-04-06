@@ -83,7 +83,7 @@
   position: relative;
   z-index: 1;
   border-radius: 0px 0px 16rpx 16rpx;
-  font-size: 30rpx;
+  font-size: 28rpx;
   font-weight: 500;
   color: #FFFFFF;
   line-height: 35rpx;

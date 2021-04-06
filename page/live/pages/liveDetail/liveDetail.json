@@ -1,4 +1,6 @@
 {
   "enablePullDownRefresh": true,
-  "usingComponents": {}
+  "usingComponents": {
+    "timeScore": "/components/timeScore/timeScore"
+  }
 }

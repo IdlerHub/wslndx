@@ -10,9 +10,13 @@ Page({
   },
   onLoad: function (options) {
     Promise.all([this.getStepList(), this.hallGetOpus(), this.hallGetColumnList(), this.hallGgetContentInfo()])
+    app.globalData.scorePage = true
   },
   onShow: function () {
     this.getStepList()
+  },
+  onUnload() {
+    app.globalData.scorePage = false
   },
   onShareAppMessage: function (ops) {
     if (ops.from === "menu") {
@@ -27,7 +31,10 @@ Page({
   },
   // 获取优秀作品
   hallGetOpus() {
-    app.activity.hallGetOpus({ pageSize: 6, pageNum: 1 }).then(res => {
+    app.activity.hallGetOpus({
+      pageSize: 6,
+      pageNum: 1
+    }).then(res => {
       this.setData({
         opusList: res.dataList
       })
@@ -42,13 +49,26 @@ Page({
   },
   getStepList() {
     app.activity.hallGetTaskPointInfo().then(res => {
+      var value = wx.getStorageSync('showVipBox')
+      if (!value) {
+        if (res.dataList[0].isCompleted && res.dataList[1].isCompleted && res.dataList[2].isCompleted) {
+          wx.setStorageSync('showVipBox', 1)
+          this.setData({
+            showOverlay: true,
+            overlayType: 1
+          })
+        }
+      }
       this.setData({
         stepsList: res.dataList
       })
     })
   },
   hallGetColumnList() {
-    app.lessonNew.hallGetColumnList({ pageSize: 4, pageNum: 1 }).then(res => {
+    app.lessonNew.hallGetColumnList({
+      pageSize: 4,
+      pageNum: 1
+    }).then(res => {
       this.setData({
         lessonList: res.dataList
       })
@@ -61,20 +81,18 @@ Page({
       })
     })
   },
-  toLesson(e) {
-    app.liveAddStatus(e.currentTarget.dataset.item.id)
-  },
   getScore(e) {
-    let index = e.currentTarget.dataset.index, url = ''
-    if(this.data.stepsList[index].isCompleted) return
-    switch(this.data.stepsList[index].type) {
+    let index = e.currentTarget.dataset.index,
+      url = ''
+    if (this.data.stepsList[index].isCompleted) return
+    switch (this.data.stepsList[index].type) {
       case 1:
         url = '/page/discoveryHall/pages/works/works'
         break;
       case 2:
         url = '/page/index/pages/charityLesson/charityLesson?name=热门'
         break;
-        case 3:
+      case 3:
         url = '/page/discoveryHall/pages/detail/detail?isOn=1'
         break;
     }
@@ -83,6 +101,11 @@ Page({
     })
   },
   toLesson(e) {
-    app.liveAddStatus(e.currentTarget.dataset.item.columnId, e.currentTarget.dataset.item.isCharge)
+    app.liveAddStatus(e.currentTarget.dataset.item.columnId, e.currentTarget.dataset.item.isCharge, e.currentTarget.dataset.item.id)
+  },
+  toLoade() {
+    wx.navigateTo({
+      url: '/pages/education/education?type=0&login=1&url=https://mp.weixin.qq.com/s/vSd8XBQDQkvqVX_kt_YyTQ',
+    })
   }
 })
