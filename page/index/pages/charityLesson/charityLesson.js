@@ -15,7 +15,10 @@ Page({
     charityLessonList: [],
     total: 0,
     mpurl: '',
-    charity: {}
+    charity: {},
+    nomore: 0,
+    pagecount: 1,
+    isLoadInterface: false
   },
   onLoad: function (options) {
     this.setData({name: options.name})
@@ -37,12 +40,12 @@ Page({
     this.params = {
       pageSize: 10,
       pageNum: 1,
-      id: ''
+      id: 1
     }
     options.str ? this.setData({
       charity: JSON.parse(options.str)
     }): ''
-    this.params.id = options.str ? JSON.parse(options.str).id : ''
+    // this.params.id = options.str ? JSON.parse(options.str).id : ''
   },
   onShow: function () {
     let req = Promise.all([this.semesterColumnList(), this.getCharityLessonList()]);
@@ -54,9 +57,23 @@ Page({
     wx.navigateBack({ delta: 1 })
   },
   bindscrolltolower(e) {
-    console.log(e)
-    this.params.pageNum += 1
-    this.data.name=='热门'? this.getHotLessonList():this.getCharityLessonList()
+    if (!this.data.isLoadInterface) { //防止在接口未执行完再次调用接口
+      console.log(this.params.pageNum * 1 + 1)
+      if (this.params.pageNum * 1 + 1 <= this.data.pagecount) {
+        this.setData({
+          isLoadInterface: true
+        })
+        this.params.pageNum = this.params.pageNum * 1 + 1
+        this.getCharityLessonList();
+      } else {
+        //如果大于总页数停止请求数据
+        this.setData({
+          nomore: 1
+        })
+      }
+    }
+    // this.params.pageNum += 1
+    // this.data.name=='热门'? this.getHotLessonList():this.getCharityLessonList()
   },
   goEducation() {
     wx.navigateTo({
@@ -66,9 +83,20 @@ Page({
   getCharityLessonList() {
     app.lessonNew.semesterColumnList(this.params).then((res) => {
       this.setData({
-        charityLessonList: res.dataList,
-        total: res.total
+        total: res.total,
+        pagecount: Math.ceil(res.total / 10)
       });
+      if (this.params.pageNum == 1) {
+        this.setData({
+          charityLessonList: res.dataList,
+          isLoadInterface: false
+        })
+      } else {
+        this.setData({
+          charityLessonList: [...this.data.charityLessonList, ...res.dataList],
+          isLoadInterface: false
+        })
+      }
     });
   },
   semesterColumnList() {

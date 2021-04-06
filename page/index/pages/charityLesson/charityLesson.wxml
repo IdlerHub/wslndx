@@ -12,7 +12,7 @@
       <text class="right" wx:if="{{name!='热门'}}" bindtap="goEducation">下期预告</text>
       <image class="icon" wx:if="{{name!='热门'}}" src="../../images/right.png"></image>
     </view>
-    <scroll-view scroll-y wx:if="{{ name=='热门'? hotLessonList[0] : charityLessonList[0] }}" bindscrolltolower="bindscrolltolower">
+    <scroll-view scroll-y wx:if="{{ name=='热门'? hotLessonList[0] : charityLessonList[0] }}" bindscrolltolower="bindscrolltolower" class="scrollView">
       <view wx:for="{{ name=='热门'? hotLessonList:charityLessonList }}" wx:key="index" data-item="{{item}}">
         <view class="listItem" bindtap="bannerGo" data-item="{{item}}">
           <view class="imgMask">
