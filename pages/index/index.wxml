@@ -175,7 +175,7 @@
         </view>
       </view>
       <slotSign bindtap="checknextTap" data-type="search" data-detail="/page/discoveryHall/pages/index/index">
-        <image src="/images/centerImg.png" class="centerImg" wx:if="{{$state.userInfo.id}}"></image>
+        <image src="/images/centerImg.png" class="centerImg" wx:if="{{!$state.userInfo.id}}"></image>
         <navigator hover-class="none" url="/page/discoveryHall/pages/index/index" wx:else>
           <image src="/images/centerImg.png" class="centerImg"></image>
         </navigator>

@@ -20,7 +20,7 @@
   <view class="titleBox flexAlign">
     <view class="titleLft">
       <text>{{title}}</text>
-      <text wx:if="{{type != 3}}">{{item.isCompleted}}/{{item.taskNum}}</text>
+      <text wx:if="{{type != 3 && !isScore}}">{{item.isCompleted}}/{{item.taskNum}}</text>
     </view>
     <navigator class="titleRight flexAlign" hover-class="none" url="{{url}}" wx:if="{{subTitle}}">
       <text>{{subTitle}}</text>

@@ -1,5 +1,5 @@
 <!--page/discoveryHall/pages/detail/detail.wxml-->
-<timeScore class="timeScore" detail="{{detail}}" isOn="{{isOn}}" inro="{{inro}}" wx:if="{{!detail.studyScore}}"></timeScore>
+<timeScore class="timeScore" detail="{{detail}}" isOn="{{isOn}}" inro="{{inro}}" wx:if="{{!detail.studyScore && showTime}}"></timeScore>
 <view class="container" wx:if="{{detail.type == 1 || isOn}}">
   <mini-icon mini-class="icon" icon="arrowLeft" color="#fff" miniStyle="width:40rpx;height:40rpx" class="iconImg"
     style="top: {{ statusBarHeight}}px;" catchtap="toBack"/>

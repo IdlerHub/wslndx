@@ -10,9 +10,13 @@ Page({
   },
   onLoad: function (options) {
     Promise.all([this.getStepList(), this.hallGetOpus(), this.hallGetColumnList(), this.hallGgetContentInfo()])
+    app.globalData.scorePage = true
   },
   onShow: function () {
     this.getStepList()
+  },
+  onUnload() {
+    app.globalData.scorePage = false
   },
   onShareAppMessage: function (ops) {
     if (ops.from === "menu") {

@@ -617,5 +617,6 @@ App({
     },
     uma,
     categoryId: 0,
+    scorePage: false
   },
 });
