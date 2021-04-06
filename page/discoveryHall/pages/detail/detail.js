@@ -5,11 +5,11 @@ Page({
   data: {
     statusBarHeight: 30,
     detail: {},
+    inro: {},
     isPlay: true,
     showMoreTxt: false,
     showMore: false,
     isOn: false,
-    scroeMsg: {}
   },
   timeActive: true,
   onLoad: function (options) {
@@ -18,7 +18,7 @@ Page({
     })
     options.isOn ? [this.setData({
       isOn: 1
-    }), this.hallGgetContentInfo().then(() => { this.addStudyRecord() })] : this.hallGetOpusInfo(options.id).then(() => { this.addStudyRecord() })
+    }), this.hallGgetContentInfo()] : this.hallGetOpusInfo(options.id)
     this.videoContext = wx.createVideoContext("myVideo");
     this.timeScore = this.selectComponent('.timeScore')
   },
@@ -81,17 +81,6 @@ Page({
       })
     })
   },
-  addStudyRecord() {
-    app.activity.addStudyRecord({
-      optType: 1,
-      channelId: this.data.isOn ? this.data.inro.id : this.data.detail.id,
-      channelType: this.data.isOn ? 3 : 1
-    }).then(res => {
-      this.setData({
-        scroeMsg: res.data
-      })
-    })
-  },
   pause() {
     this.data.isPlay ? this.videoContext.pause() : this.videoContext.play()
     this.setData({
@@ -108,14 +97,18 @@ Page({
     }
   },
   praise() {
-    if (this.data.detail.isLike) return
     app.activity.giveOrCancelLike({
       channelId: this.data.isOn ? this.data.inro.id : this.data.detail.id,
       channelType: this.data.isOn ? 3 : 1,
-      isLike: 1
+      isLike: this.data.detail.isLike || this.data.inro.isLike ? 0 : 1
     }).then(() => {
+      !this.data.isOn ?
       this.setData({
-        'detail.isLike': 1
+        'detail.isLike': this.data.detail.isLike ? 0 : 1,
+        'detail.likeNum': this.data.detail.isLike  ? this.data.detail.likeNum - 1 : this.data.detail.likeNum += 1
+      }) : this.setData({
+        'inro.isLike': this.data.inro.isLike ? 0 : 1,
+        'inro.likeNum': this.data.inro.isLike  ? this.data.inro.likeNum - 1 : this.data.inro.likeNum += 1
       })
     })
 

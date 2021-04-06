@@ -141,6 +141,13 @@ page {
   margin-left: 20rpx;
 }
 
+.timeScore {
+  position: absolute;
+  bottom: 198rpx;
+  right: 20rpx;
+  z-index: 10;
+}
+
 
 /* 课程信息块 */
 .liveInfo {

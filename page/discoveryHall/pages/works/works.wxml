@@ -1,8 +1,15 @@
 <!--page/discoveryHall/pages/works/works.wxml-->
-<navigator hover-class="none" url="/page/discoveryHall/pages/detail/detail?id={{item.id}}" wx:for="{{list}}" wx:key="index" class="listItem">
-    <image src="{{item.coverImage}}" class="cover"></image>
-    <view class="playIcon" wx:if="{{item.type == 1}}">
-      <mini-icon mini-class="icon" icon="triangleRight" color="#fff" miniStyle="width:35rpx;height:35rpx;margin-left: 5rpx" class="" />
-    </view>
-    <view class="title van-multi-ellipsis--l2">{{item.introduce}}</view>
+<navigator hover-class="none" url="/page/discoveryHall/pages/detail/detail?id={{item.id}}" wx:for="{{list}}"
+  wx:key="index" class="listItem">
+  <image src="{{item.coverImage}}" class="cover"></image>
+  <view class="playIcon" wx:if="{{item.type == 1}}">
+    <mini-icon mini-class="icon" icon="triangleRight" color="#fff"
+      miniStyle="width:35rpx;height:35rpx;margin-left: 5rpx" class="" />
+  </view>
+  <view class="title van-multi-ellipsis--l2">{{item.introduce}}</view>
+</navigator>
+
+<navigator open-type="navigateBack" class="back" hover-class="none">
+  <text>返回
+    体验馆</text>
 </navigator>

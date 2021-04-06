@@ -182,10 +182,11 @@ Page({
   },
   //获取数据
   getLessonDetail(specialColumnId, flag = false) {
-    let _this = this;
-    LiveData.getLiveBySpecialColumnId({
-      specialColumnId,
-    }).then((res) => {
+    let _this = this, params = {
+      specialColumnId
+    }
+    this.options.scroeId ? params.hallSpecialColumnId = this.options.scroeId : null
+    LiveData.getLiveBySpecialColumnId(params).then((res) => {
       wx.setNavigationBarTitle({
         title: res.data.name || "",
       });
