@@ -612,31 +612,26 @@ page {
   position: fixed;
   z-index: 5000;
   top: 50%;
-  height: 600rpx;
-  width: 560rpx;
+  height: 727rpx;
+  width: 600rpx;
   transform: translate(0,-50%);
-  background-color: #fff;
   border-radius: 12px;
-  overflow: hidden;
   display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
   flex-direction: column;
-  padding: 50rpx 50rpx 30rpx 50rpx;
 }
-.weui-mask .weui-dialog .title {
-  text-align: center;
-  font-size: 42rpx;
-  font-family: PingFangSC-Semibold, PingFang SC;
-  font-weight: 600;
-  color: #333333;
+.weui-mask .weui-dialog .topImg {
+  height: 100%;
+  width: 100%;
 }
-.weui-mask .weui-dialog .text {
-  display: flex;
-  flex: 1;
-  padding: 40rpx 30rpx;
+.weui-mask .weui-dialog .share-del{
+  width: 84rpx;
+  height: 84rpx;
+  position: absolute;
+  right: 43%;
+  bottom: -95rpx;
+  z-index: 9999;
 }
-.weui-mask .weui-dialog .btnBox {
+/* .weui-mask .weui-dialog .btnBox {
   display: flex;
   justify-content: center;
 }
@@ -647,7 +642,7 @@ page {
   border-radius: 48rpx;
   color: #fff;
   border: none;
-}
+} */
 
 .xiaolin {
   width: 168rpx;

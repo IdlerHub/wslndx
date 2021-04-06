@@ -14,7 +14,8 @@ Page({
     hotLessonList: [],
     charityLessonList: [],
     total: 0,
-    mpurl: ''
+    mpurl: '',
+    charity: {}
   },
   onLoad: function (options) {
     this.setData({name: options.name})
@@ -35,8 +36,13 @@ Page({
     });
     this.params = {
       pageSize: 10,
-      pageNum: 1
+      pageNum: 1,
+      id: ''
     }
+    options.str ? this.setData({
+      charity: JSON.parse(options.str)
+    }): ''
+    this.params.id = options.str ? JSON.parse(options.str).id : ''
   },
   onShow: function () {
     // Promise.all([this.getHost(), this.getHostbanner()]);
@@ -56,13 +62,19 @@ Page({
       url: `/pages/education/education?type=1&url=${this.data.mpurl}`
     })
   },
-  // getCharityLessonList() {
-  //   app.activity.hots({ page_size: 100 }).then((res) => {
-  //     this.setData({
-  //       charityLessonList: res.data,
-  //     });
-  //   });
-  // },
+  getCharityLessonList() {
+    app.lessonNew.semesterColumnList(this.params).then((res) => {
+      this.setData({
+        charityLessonList: res.dataList,
+        total: res.total
+      });
+    });
+  },
+  goAllLesson() {
+    wx.navigateTo({
+      url: '../allLesson/allLesson'
+    })
+  },
   getHotLessonList() {
     app.lessonNew.hallGetColumnList(this.params).then((res) => {
       this.setData({

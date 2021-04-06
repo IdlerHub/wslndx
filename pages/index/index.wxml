@@ -100,21 +100,6 @@
   <view wx:if="{{ isRefreshing }}" class="weui-loadmore indexdrop">
     <view class="weui-loading"></view>
   </view>
-  <slotSign bindtap="checknextTap" data-type="top">
-    <!-- <view class="top" style="padding-top:{{ topT }}px" wx:if="{{liveRecommend[0]}}" bindtap="toInfo">
-      <view class="avatarBox" catchtap="toUser" wx:if="{{$state.authUserInfo}}">
-        <image class="img" src="{{$state.userInfo.avatar}}" alt=""></image>
-      </view>
-      <button class="avatarBox" wx:elif="{{ !$state.authUserInfo && $state.userInfo.id }}" open-type="getUserInfo"
-        bindgetuserinfo="onGotUserInfo" data-role="user" catchtap="getSomthin">
-        <open-data class="img" type="userAvatarUrl"></open-data>
-      </button>
-      <image src="{{$state.imgHost}}/indexIcon/userNone.png" wx:else class="userNone"></image>
-      <text wx:if="{{$state.userInfo.id}}">{{$state.userInfo.school || "请完善信息"}}</text>
-      <text wx:else class="loginTxt">注册登录</text>
-    </view>
-    <template is="skeletonTop" data="{{topT}}" wx:else></template> -->
-  </slotSign>
   <!-- 搜索/学分 -->
   <view class="search-box" style="padding-top:{{ topT==28? topT-5:topT-2 }}px">
     <navigator hover-class="none" class="search-left" url="/page/index/pages/search/search">
@@ -128,6 +113,21 @@
       </navigator>
     </slotSign> -->
   </view>
+  <!-- <slotSign bindtap="checknextTap" data-type="top">
+    <view class="top" style="padding-top:{{ topT }}px" wx:if="{{liveRecommend[0]}}" bindtap="toInfo">
+      <view class="avatarBox" catchtap="toUser" wx:if="{{$state.authUserInfo}}">
+        <image class="img" src="{{$state.userInfo.avatar}}" alt=""></image>
+      </view>
+      <button class="avatarBox" wx:elif="{{ !$state.authUserInfo && $state.userInfo.id }}" open-type="getUserInfo"
+        bindgetuserinfo="onGotUserInfo" data-role="user" catchtap="getSomthin">
+        <open-data class="img" type="userAvatarUrl"></open-data>
+      </button>
+      <image src="{{$state.imgHost}}/indexIcon/userNone.png" wx:else class="userNone"></image>
+      <text wx:if="{{$state.userInfo.id}}">{{$state.userInfo.school || "请完善信息"}}</text>
+      <text wx:else class="loginTxt">注册登录</text>
+    </view>
+    <template is="skeletonTop" data="{{topT}}" wx:else></template>
+  </slotSign> -->
   <view class="wrap recommend" id="recommend1">
     <!-- 广告位banner -->
     <view class="swiperBox" wx:if="{{liveRecommend[0]}}" style="padding-top:{{ 50 + topT }}px">
@@ -257,10 +257,12 @@
 <!-- 新生体验馆弹窗 -->
 <view class="weui-mask" wx:if="{{ showNewStudentBox && !times && $state.userInfo.id}}">
   <view class="weui-dialog">
-    <view class="title">新生体验馆</view>
+    <image src="/images/newStudent.png" class="topImg" catchtap="router2newstudent"></image>
+    <image class="share-del" src="/images/unshare.png" alt="" catchtap="unshare" />
+    <!-- <view class="title">新生体验馆</view>
     <view class="text">testtesttest</view>
     <view class="btnBox">
       <button class="blackBtn" plain catchtap="router2newstudent">立即体验</button>
-    </view>
+    </view> -->
   </view>
 </view>

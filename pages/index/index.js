@@ -58,6 +58,7 @@ Page({
       interestList: [],
       category: [],
       history: {},
+      charity: {}
     })  
     this.init()
   },
@@ -118,6 +119,7 @@ Page({
         name: '本月公益课',
         width: 64,
         height: 64,
+        toCharity: true
       }, {
         url: '/pages/video/video',
         icon: `${this.data.$state.imgHost}/indexIcon/sortVideoicon1.png`,
@@ -144,15 +146,15 @@ Page({
   },
   init(type) {
     if(type) {
-      return Promise.all([this.getRecommendLessons(1), this.getBanner(), this.getDialog(), this.getUserOpenid()]).then(() => {
+      return Promise.all([this.getRecommendLessons(1), this.getBanner(), this.getDialog(), this.getUserOpenid(), this.getCurrentMonthSemester()]).then(() => {
         this.getSigns()
       })
     } else if (this.data.$state.userInfo.mobile) {
-      return Promise.all([this.getRecommendLessons(1), this.getinterestList(), this.getBanner(), this.getDialog(), this.getUserOpenid()]).then(() => {
+      return Promise.all([this.getRecommendLessons(1), this.getinterestList(), this.getBanner(), this.getDialog(), this.getUserOpenid(), this.getCurrentMonthSemester()]).then(() => {
         this.getSigns()
       })
     } else {
-      return Promise.all([this.getRecommendLessons(1), this.getinterestList(), this.getBanner()])
+      return Promise.all([this.getRecommendLessons(1), this.getinterestList(), this.getBanner(), this.getCurrentMonthSemester()])
     }
   },
   centerTab(e) {
@@ -217,6 +219,13 @@ Page({
       })
     })
   },
+  getCurrentMonthSemester() {
+    return app.lessonNew.getCurrentMonthSemester().then(res => {
+      this.setData({
+        'charity': res.data
+      })
+    })
+  },
   router2newstudent() { // 跳新生体验馆，只弹一次，存当日日期
     let date = app.util.formatDate();
     wx.setStorageSync("date", date);
@@ -224,6 +233,11 @@ Page({
     wx.navigateTo({
       url: "../../page/discoveryHall/pages/index/index"
     })
+  },
+  unshare() {
+    let date = app.util.formatDate();
+    wx.setStorageSync("date", date);
+    this.setData({ times: 1})
   },
   getSigns() {
     app.user.signed().then(res => {
@@ -547,12 +561,17 @@ Page({
   },
   iconBind(e) {
     let item = e.currentTarget.dataset.item
+    let str=JSON.stringify(this.data.charity)
     if(item.toEducation) {
       wx.navigateTo({
         url: '/pages/education/education?type=0&login=1&url=' + item.toEducation,
       })
     } else if(item.toMiniProgram) {
       this.minigo(`{"appid":"${item.toMiniProgram}","url":"${item.url}"}`)
+    } else if (item.toCharity) {
+      wx.navigateTo({
+        url: '/page/index/pages/charityLesson/charityLesson?str=' + str
+      })
     } else {
       wx.navigateTo({
         url: item.url

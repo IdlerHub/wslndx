@@ -56,8 +56,8 @@ Page({
     // clearInterval(this.timer);
   },
   init() {
-    this.getLiveBySpecialColumnId(this.options.specialColumnId)
     this.data.$state.userInfo.id ? this.getUserOpenid() : ''
+    this.getLiveBySpecialColumnId(this.options.specialColumnId)
   },
   getUserOpenid(type) {
     user.myIndex().then(res => {
@@ -124,7 +124,7 @@ Page({
           url: `/page/live/pages/liveDetail/liveDetail?specialColumnId=${res.data.columnId}`
         }) :
         res.data.introduction = htmlparser.default(res.data.introduction);
-        res.data.liverVOS = res.data.liverVOS.sort((a,b)=>{ return a.id-b.id}) // 未学习时课程正序展示
+        res.data.liverVOS = res.data.liverVOS ? res.data.liverVOS.sort((a,b)=>{ return a.id-b.id}) : '' // 未学习时课程正序展示
         this.setData({
           lessonDetail: res.data,
           showAll: 1
