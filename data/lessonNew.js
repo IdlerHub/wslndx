@@ -181,6 +181,20 @@ function hallGetColumnList(params) {
   return httpService.post("hall/getColumnList", params, null, true);
 }
 
+/**
+ * @description: 获取热门专栏列表
+ * @param {id} 热门推荐学期ID
+ * @return:  promise
+ * **/
+ function semesterColumnList(params) {
+  return httpService.post("recommend/miniSemesterColumnList", params, null, true);
+}
+
+//POST /recommend/getCurrentMonthSemester 获取本月公益课信息id
+function getCurrentMonthSemester(params) {
+  return httpService.post("recommend/getCurrentMonthSemester", params, null, true);
+}
+
 module.exports = {
   getBannerList,
   interestList,
@@ -201,5 +215,7 @@ module.exports = {
   countVideo,
   getUniversityInfo,
   searchLessonList,
-  hallGetColumnList
+  hallGetColumnList,
+  semesterColumnList,
+  getCurrentMonthSemester
 }

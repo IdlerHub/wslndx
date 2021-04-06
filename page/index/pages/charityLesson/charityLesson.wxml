@@ -1,6 +1,6 @@
 <view class="contariner">
   <view class="swiperBox">
-    <image class="img" src="{{name=='热门'? '../../images/topimg1.png':'../../images/topimg2.png'}}"></image>
+    <image class="img" src="{{name=='热门'? '../../images/topimg1.png': charity.coverImage}}"></image>
     <view class="leftIcon" style="top:{{ topT }}rpx" catchtap="goback">
       <image class="icon" src="{{name=='热门'? '../../images/leftWhite.png':'../../images/leftBlack.png'}}"></image>
     </view>
@@ -16,11 +16,11 @@
       <view wx:for="{{ name=='热门'? hotLessonList:charityLessonList }}" wx:key="index" data-item="{{item}}">
         <view class="listItem" bindtap="bannerGo" data-item="{{item}}">
           <view class="imgMask">
-            <image src="{{item.indexCover}}" class="cover"></image>
+            <image src="{{item.indexCover? item.indexCover:item.image}}" class="cover"></image>
             <image src="../../../../images/recomonPlay.png" class="img"></image>
           </view>
           <view class="centerBox">
-            <view class="name">{{item.name}}</view>
+            <view class="name">{{item.name? item.name:item.title}}</view>
             <view class="tags" wx:for="{{item.tags}}" wx:key="index" wx:for-item="mItem">
               <text>{{mItem.tagName}}</text>
             </view>
@@ -36,7 +36,7 @@
       <text>{{name=='热门'?'暂无热门课程':'暂无公益课'}}</text>
     </view>
   </view>
-  <view class="moreBottom" wx:if="{{name!='热门'}}">
+  <view class="moreBottom" wx:if="{{name!='热门'}}" bindtap="goAllLesson">
     <view class="btn">全部课程</view>
   </view>
 </view>

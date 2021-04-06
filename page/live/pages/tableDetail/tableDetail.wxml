@@ -62,7 +62,7 @@
         <text>1.2W人</text>
       </view>
     </view>
-    <view class="content" wx:if="{{lessonDetail.introduction.length <= 0}}">
+    <view class="content" wx:if="{{lessonDetail.liverVOS.length > 0}}">
       <view class="title">课程目录</view>
       <view wx:for="{{lessonDetail.liverVOS}}" wx:key="index" class="live-list">
         <text class="live-list-item">
