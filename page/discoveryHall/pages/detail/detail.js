@@ -97,15 +97,18 @@ Page({
     }
   },
   praise() {
-    if (this.data.detail.isLike) return
     app.activity.giveOrCancelLike({
       channelId: this.data.isOn ? this.data.inro.id : this.data.detail.id,
       channelType: this.data.isOn ? 3 : 1,
-      isLike: 1
+      isLike: this.data.detail.isLike || this.data.inro.isLike ? 0 : 1
     }).then(() => {
+      !this.data.isOn ?
       this.setData({
-        'detail.isLike': 1,
-        'detail.likeNum': this.data.detail.likeNum += 1
+        'detail.isLike': this.data.detail.isLike ? 0 : 1,
+        'detail.likeNum': this.data.detail.isLike  ? this.data.detail.likeNum - 1 : this.data.detail.likeNum += 1
+      }) : this.setData({
+        'inro.isLike': this.data.inro.isLike ? 0 : 1,
+        'inro.likeNum': this.data.inro.isLike  ? this.data.inro.likeNum - 1 : this.data.inro.likeNum += 1
       })
     })
 
