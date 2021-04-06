@@ -21,8 +21,8 @@
           </view>
           <view class="centerBox">
             <view class="name">{{item.name? item.name:item.title}}</view>
-            <view class="tags" wx:for="{{item.tags}}" wx:key="index" wx:for-item="mItem">
-              <text>{{mItem.tagName}}</text>
+            <view class="tags">
+              <text wx:for="{{item.tags}}" wx:key="index" wx:for-item="mItem">{{mItem.tagName? mItem.tagName:mItem }}</text>
             </view>
             <view class="desc">
               <text>{{!item.isCharge? '免费': '付费'}}</text><view></view><text>{{item.studyNum>9999? (item.studyNum/10000)+'万' : item.studyNum}}人在学</text>

@@ -45,15 +45,16 @@ Page({
     this.params.id = options.str ? JSON.parse(options.str).id : ''
   },
   onShow: function () {
-    // Promise.all([this.getHost(), this.getHostbanner()]);
-    this.data.name=='热门'? this.getHotLessonList():this.getCharityLessonList()
+    let req = Promise.all([this.semesterColumnList(), this.getCharityLessonList()]);
+    this.data.name=='热门'? this.getHotLessonList(): req
   },
   onPullDownRefresh: function () {},
   onReachBottom: function () {},
   goback() {
     wx.navigateBack({ delta: 1 })
   },
-  bindscrolltolower() {
+  bindscrolltolower(e) {
+    console.log(e)
     this.params.pageNum += 1
     this.data.name=='热门'? this.getHotLessonList():this.getCharityLessonList()
   },
@@ -69,6 +70,13 @@ Page({
         total: res.total
       });
     });
+  },
+  semesterColumnList() {
+    app.lessonNew.getNextIssueNotice().then(res => {
+      this.setData({
+        mpurl: res.data.value
+      })
+    })
   },
   goAllLesson() {
     wx.navigateTo({

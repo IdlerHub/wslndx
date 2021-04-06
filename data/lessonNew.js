@@ -190,6 +190,15 @@ function hallGetColumnList(params) {
   return httpService.post("recommend/miniSemesterColumnList", params, null, true);
 }
 
+/**
+ * @description: 获取本月公益课的下期预告
+ * @param {}
+ * @return:  promise
+ * **/
+ function getNextIssueNotice(params) {
+  return httpService.post("recommend/getNextIssueNotice", params, null, true);
+}
+
 //POST /recommend/getCurrentMonthSemester 获取本月公益课信息id
 function getCurrentMonthSemester(params) {
   return httpService.post("recommend/getCurrentMonthSemester", params, null, true);
@@ -217,5 +226,6 @@ module.exports = {
   searchLessonList,
   hallGetColumnList,
   semesterColumnList,
+  getNextIssueNotice,
   getCurrentMonthSemester
 }
