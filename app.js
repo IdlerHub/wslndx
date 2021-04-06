@@ -3,11 +3,17 @@
  * @LastEditors: wjl
  * @LastEditTime: 2021-04-02 18:03:12
  */
-import { wxp } from "./utils/service";
-import { uma } from "umtrack-wx";
+import {
+  wxp
+} from "./utils/service";
+import {
+  uma
+} from "umtrack-wx";
 /* 全局状态管理 */
 import store from "./store";
-import { praise } from "./data/Circle";
+import {
+  praise
+} from "./data/Circle";
 // const vodwxsdk = require('vod-wx-sdk-v2')
 /* sse */
 const socket = require("data/socket.js");
@@ -49,10 +55,9 @@ App({
   backgroundAudioManager,
   umengConfig: {
     /*埋点统计*/
-    appKey:
-      store.process == "develop"
-        ? "5e4cad07eef38d3632042549"
-        : "5e4cd613e1367a268d56bfa2", //由友盟分配的APP_KEY
+    appKey: store.process == "develop" ?
+      "5e4cad07eef38d3632042549" :
+      "5e4cd613e1367a268d56bfa2", //由友盟分配的APP_KEY
     useOpenid: false, // 是否使用openid进行统计，此项为false时将使用友盟+随机ID进行用户统计。使用openid来统计微信小程序的用户，会使统计的指标更为准确，对系统准确性要求高的应用推荐使用OpenID。
     autoGetOpenid: false, // 是否需要通过友盟后台获取openid，如若需要，请到友盟后台设置appId及secret
     debug: false, //是否打开调试模式
@@ -287,11 +292,11 @@ App({
       socket.listen(this.bokemessage, "Bokemessage");
     }
     getCurrentPages().forEach((e) => {
-      e.route == "pages/index/index"
-        ? this.store.$state.nextTapDetial.type == "addStudy"
-          ? e.init(1)
-          : e.init()
-        : "";
+      e.route == "pages/index/index" ?
+        this.store.$state.nextTapDetial.type == "addStudy" ?
+        e.init(1) :
+        e.init() :
+        "";
     });
   },
   /* 更新AuthKey 上传视频*/
@@ -363,11 +368,11 @@ App({
       });
   },
   playVedio(type) {
-    type == "wifi"
-      ? ""
-      : this.store.setState({
-          flow: true,
-        });
+    type == "wifi" ?
+      "" :
+      this.store.setState({
+        flow: true,
+      });
   },
   /* 更新签到信息 */
   setSignIn(data, bl) {
@@ -441,7 +446,9 @@ App({
   },
   /* 接收秀风采socket消息 */
   bokemessage(res) {
-    let { num = 0, avatar } = JSON.parse(res.data).data;
+    let {
+      num = 0, avatar
+    } = JSON.parse(res.data).data;
     this.store.setState({
       unRead: num,
       surPass: num > 99,
@@ -507,8 +514,7 @@ App({
     });
     return {
       title: "一起来网上老年大学学习",
-      path:
-        "/pages/index/index?uid=" +
+      path: "/pages/index/index?uid=" +
         this.store.$state.userInfo.id +
         "&type=invite&activity=1",
       imageUrl: "https://hwcdn.jinlingkeji.cn/images/dev/withdrawShareImg2.png",
@@ -534,9 +540,9 @@ App({
     if (!type) {
       this.store.setState({
         "nextTapDetial.type": e.currentTarget.dataset.type,
-        "nextTapDetial.detail": e.currentTarget.dataset.detail
-          ? e.currentTarget.dataset.detail
-          : e,
+        "nextTapDetial.detail": e.currentTarget.dataset.detail ?
+          e.currentTarget.dataset.detail :
+          e,
       });
     } else {
       this.store.setState({
@@ -579,11 +585,11 @@ App({
         .then((res) => {
           if (!res.data.isAddSubscribe) {
             wx.navigateTo({
-              url: `/page/live/pages/tableDetail/tableDetail?specialColumnId=${columnId}&scroeId=${scoreId}`,
+              url: '/page/live/pages/tableDetail/tableDetail?specialColumnId=' + columnId + (scoreId ? `&scroeId=${scoreId}` : ''),
             });
           } else {
             wx.navigateTo({
-              url: `/page/live/pages/liveDetail/liveDetail?specialColumnId=${columnId}&scroeId=${scoreId}`,
+              url: '/page/live/pages/liveDetail/liveDetail?specialColumnId=' + columnId + (scoreId ? `&scroeId=${scoreId}` : ''),
             });
           }
         });
