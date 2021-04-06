@@ -40,12 +40,12 @@ Page({
     this.params = {
       pageSize: 10,
       pageNum: 1,
-      id: 1
+      id: ''
     }
     options.str ? this.setData({
       charity: JSON.parse(options.str)
     }): ''
-    // this.params.id = options.str ? JSON.parse(options.str).id : ''
+    this.params.id = options.str ? JSON.parse(options.str).id : ''
   },
   onShow: function () {
     let req = Promise.all([this.semesterColumnList(), this.getCharityLessonList()]);
@@ -122,7 +122,9 @@ Page({
   bannerGo(e) {
     let item = e.currentTarget.dataset.item;
     console.log(item);
-    app.liveAddStatus(item.columnId, item.isCharge, item.id)
+    this.data.name=='热门'? 
+    app.liveAddStatus(item.columnId, item.isCharge, item.id):
+    app.liveAddStatus(item.id, item.isCharge)
     // if (item.is_finish) return;
     // let login = item.is_login > 0 ? 1 : 0;
     // if (item.jump_type == 1) {
