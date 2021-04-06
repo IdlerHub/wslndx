@@ -52,6 +52,7 @@ Page({
   },
   timer: null,
   pageName: 'liveDetail',
+  timeScore: null,
   onLoad: function (options) {
     options.lessonId ? options.specialColumnId = options.lessonId - -614 : ''
     this.options = options
@@ -90,6 +91,14 @@ Page({
     // wx.onNetworkStatusChange((res) => {
     //   res.networkType == "wifi" ? app.playVedio("wifi") : "";
     // });
+    if(!this.timeScore) return
+    this.timeScore.timeScore.start()
+    this.timeActive = true
+  },
+  onHide() {
+    if(!this.timeScore) return
+    this.timeScore.timeScore.pause()
+    this.timeActive = false
   },
   onUnload() {
     clearInterval(this.timer);
@@ -207,6 +216,7 @@ Page({
         _this.getSublesson(msg.dataList)
       })
       _this.getComment();
+      this.options.scroeId ? this.timeScore = this.selectComponent('.timeScore') : ''
     });
   },
   getSublesson(lessons, type) {
