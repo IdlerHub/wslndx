@@ -74,7 +74,7 @@ Page({
   bannerGo(e) {
     let item = e.currentTarget.dataset.item;
     console.log(item);
-    app.liveAddStatus(item.columnId, item.isCharge)
+    app.liveAddStatus(item.columnId, item.isCharge, item.id)
     // if (item.is_finish) return;
     // let login = item.is_login > 0 ? 1 : 0;
     // if (item.jump_type == 1) {

@@ -20,7 +20,7 @@
   <view class="titleBox flexAlign">
     <view class="titleLft">
       <text>{{title}}</text>
-      <text wx:if="{{type != 3 && !isScore}}">{{item.isCompleted}}/{{item.taskNum}}</text>
+      <text wx:if="{{type != 3 && !isScore}}">{{item.completedTaskNum}}/{{item.taskNum}}</text>
     </view>
     <navigator class="titleRight flexAlign" hover-class="none" url="{{url}}" wx:if="{{subTitle}}">
       <text>{{subTitle}}</text>
@@ -57,7 +57,7 @@
       <view class="tagsLine" wx:for="{{item.tags}}" wx:for-item="tag" wx:key="index">
         <view>{{tag.tagName}}</view>
       </view>
-      <text>共{{fn.people(item.studyNum)}}人在学</text>
+      <text class="studyNum">共{{fn.people(item.studyNum)}}人在学</text>
     </view>
   </view>
 </template>
@@ -127,9 +127,7 @@
       catchtap="onClickHid" data-type="{{overlayType}}" />
   </view>
   <view class="vipBox" wx:else>
-    <text class="title">恭喜您完成全部任务</text>
-    <text class="inro">7天VIP学习卡已到，请在APP上使用</text>
-    <text class="joinBtn">去下载APP</text>
+    <image src="../../images/vipBg-min.png" class="vipBg" bindtap="toLoade"></image>
     <mini-icon mini-class="icon" icon="closeOutline" color="#fff" miniStyle="width:80rpx;height:80rpx" class="ruleClose"
       catchtap="onClickHid" data-type="{{overlayType}}" />
   </view>

@@ -5,11 +5,11 @@ Page({
   data: {
     statusBarHeight: 30,
     detail: {},
+    inro: {},
     isPlay: true,
     showMoreTxt: false,
     showMore: false,
     isOn: false,
-    scroeMsg: {}
   },
   timeActive: true,
   onLoad: function (options) {
@@ -18,7 +18,7 @@ Page({
     })
     options.isOn ? [this.setData({
       isOn: 1
-    }), this.hallGgetContentInfo().then(() => { this.addStudyRecord() })] : this.hallGetOpusInfo(options.id).then(() => { this.addStudyRecord() })
+    }), this.hallGgetContentInfo()] : this.hallGetOpusInfo(options.id)
     this.videoContext = wx.createVideoContext("myVideo");
     this.timeScore = this.selectComponent('.timeScore')
   },
@@ -81,17 +81,6 @@ Page({
       })
     })
   },
-  addStudyRecord() {
-    app.activity.addStudyRecord({
-      optType: 1,
-      channelId: this.data.isOn ? this.data.inro.id : this.data.detail.id,
-      channelType: this.data.isOn ? 3 : 1
-    }).then(res => {
-      this.setData({
-        scroeMsg: res.data
-      })
-    })
-  },
   pause() {
     this.data.isPlay ? this.videoContext.pause() : this.videoContext.play()
     this.setData({
@@ -115,7 +104,8 @@ Page({
       isLike: 1
     }).then(() => {
       this.setData({
-        'detail.isLike': 1
+        'detail.isLike': 1,
+        'detail.likeNum': this.data.detail.likeNum += 1
       })
     })
 

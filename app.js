@@ -566,7 +566,7 @@ App({
     }, 2000);
   },
   /* 专栏跳转判断 */
-  liveAddStatus(columnId, isCharge) {
+  liveAddStatus(columnId, isCharge, scoreId) {
     if (isCharge == 1) {
       wx.navigateTo({
         url: `page/index/pages/chageLesson/chageLesson?id=${columnId}`,
@@ -579,11 +579,11 @@ App({
         .then((res) => {
           if (!res.data.isAddSubscribe) {
             wx.navigateTo({
-              url: `/page/live/pages/tableDetail/tableDetail?specialColumnId=${columnId}`,
+              url: `/page/live/pages/tableDetail/tableDetail?specialColumnId=${columnId}&scroeId=${scoreId}`,
             });
           } else {
             wx.navigateTo({
-              url: `/page/live/pages/vliveRoom/vliveRoom?roomId=${liveId}`,
+              url: `/page/live/pages/liveDetail/liveDetail?specialColumnId=${columnId}&scroeId=${scoreId}`,
             });
           }
         });
