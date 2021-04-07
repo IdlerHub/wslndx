@@ -16,7 +16,12 @@ Component({
     },
     lessonDetail: {
       type: Object,
-      value: {}
+      value: {},
+      observer: function() {
+        this.setData({
+          time: 60 * 1000,
+        })
+      }
     }
   },
   data: {
@@ -45,10 +50,6 @@ Component({
             channelId: this.data.detail.id || this.data.inro.id || this.data.lessonDetail.hallSpecialColumnId,
             channelType: JSON.stringify(this.data.lessonDetail) == "{}" ? (JSON.stringify(this.data.detail) == '{}' ? 3 : 1) : 2
           }).then(res => {
-            // wx.showToast({
-            //   title: `您已获得${this.data.detail.score || this.data.inro.score || this.deta.lessonDetail.score}学分`,
-            //   icon: 'none'
-            // })
             app.setIntegral(this.page, '+' + (this.data.detail.score || this.data.inro.score || this.data.lessonDetail.score) + ' 学分', `您已获得${this.data.detail.score || this.data.inro.score || this.data.lessonDetail.score}学分`)
             if (res.data.isSendCard) {
               wx.setStorageSync('showVipBox', 1)

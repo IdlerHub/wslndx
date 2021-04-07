@@ -92,7 +92,7 @@
   position: absolute;
   bottom: 250rpx;
   right: 20rpx;
-  z-index: 9999999999;
+  z-index: 9999999;
 }
 
 .richtext {
