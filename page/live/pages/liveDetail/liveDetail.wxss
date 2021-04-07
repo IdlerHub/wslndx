@@ -641,7 +641,7 @@ page {
 }
 
 .sort {
-  background-color: #dcdcdc;
+  background-color: #f0f0f0;
   height: 60rpx;
   display: flex;
   align-items: center;
