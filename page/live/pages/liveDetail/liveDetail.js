@@ -48,13 +48,14 @@ Page({
     fullScreen: 0,
     scrollviewtop: 0,
     haveNum: 0, //当前已更新课程个数
-    collected: false // 收藏状态
+    specialColumnId: 0 // 传过来的课程id
   },
   timer: null,
   pageName: 'liveDetail',
   timeScore: null,
   onLoad: function (options) {
     options.lessonId ? options.specialColumnId = options.lessonId - -614 : ''
+    options.specialColumnId? this.setData({specialColumnId: options.specialColumnId}):''
     this.options = options
     this.videoContext = wx.createVideoContext("myVideo");
     this.init(options);
@@ -106,6 +107,39 @@ Page({
     if (this.timeTemplate > 0) {
       let progress = parseInt(new Date().getTime() / 1000 + "") - this.timeTemplate
       this.updateProgress(progress)
+    }
+  },
+  collect() {
+    if (this.data.lessonDetail.isCollect) {
+      app.lessonNew.cancelCollect({ columnId: this.data.lessonDetail.columnId}).then(res => {
+        this.getLessonDetail(this.data.specialColumnId)
+        wx.showToast({
+          title: '您已取消收藏',
+          icon: "none",
+          duration: 1500
+        })
+      }).catch(err => {
+        wx.showToast({
+          title: err.msg,
+          image: '/images/warn.png',
+          duration: 800
+        })
+      })
+    } else {
+      app.lessonNew.collect({ columnId: this.data.lessonDetail.columnId}).then(res => {
+        this.getLessonDetail(this.data.specialColumnId)
+        wx.showToast({
+          title: '收藏成功',
+          icon: "none",
+          duration: 1500
+        })
+      }).catch(err => {
+        wx.showToast({
+          title: err.msg,
+          image: '/images/warn.png',
+          duration: 800
+        })
+      })
     }
   },
   // 排序

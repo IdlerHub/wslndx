@@ -13,11 +13,42 @@
 	<view class="{{currentTab == 0 ? 'collectionBar-itemActive collectionBar-item' : 'collectionBar-item'}}" bindtap="tap" data-type="0">收藏课程
 		<view class="tap-bottom" wx:if="{{currentTab == 0}}"></view>
 	</view>
-	<view class="{{currentTab == 1 ? 'collectionBar-itemActive collectionBar-item' : 'collectionBar-item'}}" bindtap="tap" data-type="1">收藏帖子
+	<view class="{{currentTab == 1 ? 'collectionBar-itemActive collectionBar-item' : 'collectionBar-item'}}" bindtap="tap" data-type="1">直播课程
 		<view class="tap-bottom" wx:if="{{currentTab == 1}}"></view>
+	</view>
+	<view class="{{currentTab == 2 ? 'collectionBar-itemActive collectionBar-item' : 'collectionBar-item'}}" bindtap="tap" data-type="2">收藏帖子
+		<view class="tap-bottom" wx:if="{{currentTab == 2}}"></view>
 	</view>
 </view>
 <swiper class="swiper" current="{{ currentTab }}" duration="300" bindchange="switchTab">
+	<swiper-item>
+		<!-- 收藏课程 -->
+		<scroll-view scroll-y bindscrolltolower="scrollEnd" style="height:100%;{{collect.length > 0 ? 'background: #eee' : 'background: #fff'}}">
+			<navigator url="/page/index/pages/detail/detail?id={{ item.id }}&name={{ item.title }}" wx:for="{{ collect }}" wx:key="index" hover-class="none" open-type="navigate" class="item">
+				<view class="vedio-content">
+					<view class="left">
+						<image class="poster" mode="widthFix" src="{{ item.image }}"></image>
+						<image class="icon" mode="aspectFill" src="{{ $state.imgHost }}/play.png"></image>
+					</view>
+					<view class="right">
+						<text class="line name">{{ item.title }}</text>
+						<text class="line actor" wx:if="{{ item.teacher_id == 0 }}">{{ item.subtitle }}</text>
+						<text class="line actor" wx:else>{{ item.name }}-{{ item.honor }}</text>
+						<text class="line info">
+        <!-- prettier-ignore -->
+        <text class="dramaNum"><text class="key">剧集</text>{{ item.lesson_count }}集</text>
+						<!-- prettier-ignore -->
+						<text class="playNum"><text class="key">播放</text>{{ item.thousand || item.browse }}</text>
+						</text>
+					</view>
+				</view>
+			</navigator>
+		</scroll-view>
+		<view class="ncol" wx:if="{{ collect.length == 0 }}">
+			<image mode="widthFix" src="{{ $state.imgHost }}/ncol.png"></image>
+			<text class="line">啥都没有呢~\n赶紧去收藏课程吧</text>
+		</view>
+	</swiper-item>
 	<swiper-item>
 		<!-- 收藏课程 -->
 		<scroll-view scroll-y bindscrolltolower="scrollEnd" style="height:100%;{{collect.length > 0 ? 'background: #eee' : 'background: #fff'}}">

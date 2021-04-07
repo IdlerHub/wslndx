@@ -319,7 +319,7 @@
     <view class="share-joinClass">
         <view class="live-info">
             <view class="right-box" bindtap="collect">
-                <image src="{{$state.imgHost}}/class-collected.png" wx:if="{{ collected }}"></image>
+                <image src="../../images/likeRed.png" wx:if="{{ lessonDetail.isCollect }}"></image>
                 <image src="../../images/like.png" wx:else></image>
                 <text>收藏</text>
             </view>
