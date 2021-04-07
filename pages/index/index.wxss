@@ -637,7 +637,7 @@ page {
   height: 84rpx;
   position: absolute;
   right: 43%;
-  bottom: -95rpx;
+  bottom: -120rpx;
   z-index: 9999;
 }
 /* .weui-mask .weui-dialog .btnBox {
