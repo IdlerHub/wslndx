@@ -109,9 +109,7 @@ Page({
   },
   getNextIssueNotice() {
     app.lessonNew.getNextIssueNotice().then(res => {
-      this.setData({
-        mpurl: res.data.value
-      })
+      res.data && res.data.value ? this.setData({ mpurl: res.data.value }) : ''
     })
   },
   goAllLesson() {
