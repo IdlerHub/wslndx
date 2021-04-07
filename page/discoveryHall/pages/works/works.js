@@ -24,6 +24,7 @@ Page({
     })
   },
   onReachBottom: function () {
-
+    this.params.pageNum += 1
+    this.getList(this.data.list)
   },
 })

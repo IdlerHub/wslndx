@@ -43,6 +43,11 @@ Component({
             optType: 2,
             channelId: this.data.detail.id || this.data.inro.id || this.data.lessonDetail.hallSpecialColumnId,
             channelType: JSON.stringify(this.data.lessonDetail) == "{}" ? (JSON.stringify(this.data.detail) == '{}' ? 3 : 1) : 2
+          }).then(res => {
+            console.log(res)
+            if(res.data.isSendCard) {
+              wx.setStorageSync('showVipBox', 1)
+            }
           })
         }
       });
