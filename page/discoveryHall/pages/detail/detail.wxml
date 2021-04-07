@@ -41,3 +41,7 @@ isIndex="{{false}}" wx:if="{{detail.type == 2}}" fixed="{{fasle}}"></navigationB
     </button>
   </view>
 </scroll-view>
+
+<!-- 学分动画 -->
+<integralAnimation integral="{{integral}}" integralContent="{{integralContent}}" wx:if="{{showintegral}}">
+</integralAnimation>

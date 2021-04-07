@@ -172,6 +172,7 @@
   },
   "usingComponents": {
     "signinBox": "/components/signinBox/signinBox",
-    "mini-icon": "components/icon/icon"
+    "mini-icon": "components/icon/icon",
+    "integralAnimation": "/components/integralAni/integralAni"
   }
 }

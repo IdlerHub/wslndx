@@ -27,6 +27,7 @@ Component({
   ready() {
     this.timeScore = this.selectComponent('.control-count-down')
     this.addStudy = false
+    this.page = getCurrentPages()[getCurrentPages().length - 1]
     setTimeout(() => {
       this.addStudyRecord()
     }, 1000)
@@ -44,8 +45,12 @@ Component({
             channelId: this.data.detail.id || this.data.inro.id || this.data.lessonDetail.hallSpecialColumnId,
             channelType: JSON.stringify(this.data.lessonDetail) == "{}" ? (JSON.stringify(this.data.detail) == '{}' ? 3 : 1) : 2
           }).then(res => {
-            console.log(res)
-            if(res.data.isSendCard) {
+            // wx.showToast({
+            //   title: `您已获得${this.data.detail.score || this.data.inro.score || this.deta.lessonDetail.score}学分`,
+            //   icon: 'none'
+            // })
+            app.setIntegral(this.page, '+' + (this.data.detail.score || this.data.inro.score || this.data.lessonDetail.score) + ' 学分', `您已获得${this.data.detail.score || this.data.inro.score || this.data.lessonDetail.score}学分`)
+            if (res.data.isSendCard) {
               wx.setStorageSync('showVipBox', 1)
             }
           })
