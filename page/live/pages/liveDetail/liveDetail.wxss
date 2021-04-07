@@ -640,8 +640,8 @@ page {
   margin-left: -30rpx;
 }
 
-.tab-item .sort {
-  background-color: #f0f0f0;
+.sort {
+  background-color: #dcdcdc;
   height: 60rpx;
   display: flex;
   align-items: center;
