@@ -107,6 +107,7 @@
 <template is="contentBox" data="{{title: '做任务得学分',isScore: 1, stepsList}}"></template>
 <button hover-clss="none" open-type="share" class="shareBtn">
   <image src="../../images/invitBtn.png"></image>
+  <image src="../../images/course.png"></image>
 </button>
 <!-- 规则 -->
 <view class="ruleBtn" bindtap="onClickHid" data-type="0">规则</view>

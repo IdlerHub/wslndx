@@ -24,11 +24,12 @@ page {
 }
 
 .listItem .playIcon {
-  width: 80rpx;
-  height: 80rpx;
+  width: 65rpx;
+  height: 65rpx;
   position: absolute;
   top: 140rpx;
-  left: 140rpx;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 .listItem .title {

@@ -9,10 +9,9 @@ Page({
     pageNum: 1
   },
   onLoad: function (options) {
-
+    this.getList()
   },
   onShow: function () {
-    this.getList()
   },
   getList(list) {
     let arr = list || []
