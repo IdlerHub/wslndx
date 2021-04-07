@@ -64,7 +64,7 @@ Page({
           isLoadInterface: true
         })
         this.params.pageNum = this.params.pageNum * 1 + 1
-        this.getCharityLessonList();
+        this.data.name=='热门'? this.getCharityLessonList():this.getCharityLessonList();
       } else {
         //如果大于总页数停止请求数据
         this.setData({
@@ -114,9 +114,20 @@ Page({
   getHotLessonList() {
     app.lessonNew.hallGetColumnList(this.params).then((res) => {
       this.setData({
-        hotLessonList: res.dataList,
-        total: res.total
+        total: res.total,
+        pagecount: Math.ceil(res.total / 10)
       });
+      if (this.params.pageNum == 1) {
+        this.setData({
+          hotLessonList: res.dataList,
+          isLoadInterface: false
+        })
+      } else {
+        this.setData({
+          hotLessonList: [...this.data.hotLessonList, ...res.dataList],
+          isLoadInterface: false
+        })
+      }
     });
   },
   bannerGo(e) {

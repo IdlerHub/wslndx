@@ -142,6 +142,15 @@
   bottom: -124rpx;
 }
 
+.signBox .signBoxbg .share-del {
+  width: 84rpx;
+  height: 84rpx;
+  position: absolute;
+  right: 43%;
+  bottom: -95rpx;
+  z-index: 9999;
+}
+
 .signBox .signBoxbg .btnBox {
   width: 100%;
   padding: 25rpx 0 42rpx 0;

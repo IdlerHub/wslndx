@@ -227,7 +227,8 @@
         style="background: url('{{dialog[0].image}}') no-repeat center; background-size: 100% 100%;border-radius:10px"
         src="{{dialog[0].image}}" mode="aspectFill" catchtap="jumpPeper" data-peper="{{dialog[0]}}" data-type="dialog">
       </view>
-      <icon type="cancel" size="37" color="white" data-id="0" catchtap="closeSignIn"></icon>
+      <!-- <icon type="cancel" size="37" color="white" data-id="0" catchtap="closeSignIn"></icon> -->
+      <image class="share-del" src="/images/closeBlack.png" alt="" data-id="0" catchtap="closeSignIn" />
     </view>
   </view>
   <signinBox wx:if="{{ !$state.signStatus.count && !dialog[0].image && showSignbox && times}}" state="{{$state}}"
@@ -258,7 +259,7 @@
 <view class="weui-mask" wx:if="{{ showNewStudentBox && !times && $state.userInfo.id}}">
   <view class="weui-dialog">
     <image src="/images/newStudent.png" class="topImg" catchtap="router2newstudent"></image>
-    <image class="share-del" src="/images/unshare.png" alt="" catchtap="unshare" />
+    <image class="share-del" src="/images/closeBlack.png" alt="" catchtap="unshare" />
     <!-- <view class="title">新生体验馆</view>
     <view class="text">testtesttest</view>
     <view class="btnBox">
