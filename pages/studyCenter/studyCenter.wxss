@@ -417,3 +417,17 @@ page {
 ::-webkit-scrollbar {
   display: none;
 }
+
+.van-notice-bar {
+  padding-right: 70rpx !important;
+  height: 88rpx !important;
+}
+
+.van-notice-bar__content {
+  font-size: 30rpx;
+}
+
+.van-notice-bar__right-icon {
+  top: 50% !important;
+  transform: translateY(-50%);
+}

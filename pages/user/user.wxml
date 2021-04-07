@@ -55,10 +55,12 @@
     </view>
   </view>
   <view class="myslef">
-    <navigator wx:for="{{moreList}}" wx:key="index" hover-class="none" url="{{item.page}}" class="item"
+    <navigator wx:for="{{moreList}}" target="{{!item.appId ? '' : 'miniProgram'}}" app-id="{{item.appId}}" wx:key="index" hover-class="none" url="{{item.page}}" class="item"
       wx:if="{{!item.isContact}}">
       <text>{{item.name}}</text>
       <image src="{{$state.imgHost}}/Return-black.png"></image>
+      <text class="red" wx:if="{{index == 0}}"></text>
+      <text class="subName" wx:if="{{index == 1}}">{{item.subName}}</text>
     </navigator>
     <button wx:for="{{moreList}}" wx:key="index" class="item" open-type="contact" bindcontact="handleContact"
       data-index='{{index}}'

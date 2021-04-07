@@ -19,7 +19,7 @@ Component({
       value: {},
       observer: function() {
         this.setData({
-          time: 60 * 1000,
+          time: 1 * 1000,
         })
       }
     }
@@ -51,7 +51,7 @@ Component({
             channelType: JSON.stringify(this.data.lessonDetail) == "{}" ? (JSON.stringify(this.data.detail) == '{}' ? 3 : 1) : 2
           }).then(res => {
             app.setIntegral(this.page, '+' + (this.data.detail.score || this.data.inro.score || this.data.lessonDetail.score) + ' 学分', `您已获得${this.data.detail.score || this.data.inro.score || this.data.lessonDetail.score}学分`)
-            if (res.data.isSendCard) {
+            if (res.data.isSendCard == 0) {
               wx.setStorageSync('showVipBox', 1)
             }
           })
@@ -59,7 +59,6 @@ Component({
       });
     },
     addStudyRecord() {
-      console.log()
       if (this.data.inro.studyScore > 0 || this.data.inro.studyScore > 0 || this.data.lessonDetail.studyScore > 0) return
       app.activity.addStudyRecord({
         optType: 1,

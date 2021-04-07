@@ -2,7 +2,8 @@
   "usingComponents": {
     "navBar": "/components/navBar/navBar",
     "liveItem": "/components/liveItem/liveItem",
-    "loading": "/components/loading/loading"
+    "loading": "/components/loading/loading",
+    "van-notice-bar": "@vant/weapp/notice-bar/index"
   },
   "navigationBarTitleText": "学习"
 }
