@@ -48,7 +48,8 @@ Page({
     fullScreen: 0,
     scrollviewtop: 0,
     haveNum: 0, //当前已更新课程个数
-    specialColumnId: 0 // 传过来的课程id
+    specialColumnId: 0, // 传过来的课程id
+    pause: false
   },
   timer: null,
   pageName: 'liveDetail',
@@ -1280,6 +1281,9 @@ Page({
   },
   played() {
     //开始播放
+    this.setData({
+      pause:false
+    });
     setTimeout(() => {
       this.timeTemplate = parseInt(new Date().getTime() / 1000 + "")
       this.updateProgress(0)
@@ -1298,6 +1302,7 @@ Page({
     if (this.timeTemplate > 0) {
       let progress = parseInt(new Date().getTime() / 1000 + "") - this.timeTemplate
       this.updateProgress(progress)
+      this.setData({pause: true})
     }
   },
   ended() {

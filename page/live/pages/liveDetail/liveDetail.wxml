@@ -118,9 +118,17 @@
                         </view>
                         <view class="right" wx:if="{{item.state == 0}}">未开始</view>
                         <view class="right" wx:elif="{{item.state == 2}}">剪辑中</view>
+
                         <view class="playMv" wx:elif="{{item.state == 3}}">
-                            <image src="{{playNow.id==item.id ?'../../images/play.png':'https://hwcdn.jinlingkeji.cn/images/dev/play-ash.png'}}" alt="" />
-                            <text class="{{playNow.id==item.id?'red':'white'}}">播放</text>
+                            <!-- 可播放未播放 -->
+                            <image wx:if="{{playNow.id!=item.id}}" src="https://hwcdn.jinlingkeji.cn/images/dev/play-ash.png" alt="" />
+                            <text wx:if="{{playNow.id!=item.id}}" class="white">播放</text>
+                            <!-- 可播放在播放 -->
+                            <image wx:if="{{playNow.id==item.id && !pause}}" src="../../images/play.png" alt="" />
+                            <text wx:if="{{playNow.id==item.id && !pause}}" class="red">播放</text>
+                            <!-- 可播放在暂停 -->
+                            <image wx:if="{{playNow.id==item.id && pause}}" src="../../images/pause.png" alt="" />
+                            <text wx:if="{{playNow.id==item.id && pause}}" class="red" >暂停</text>
                         </view>
                         <!-- <view class="right"
                             wx:elif="{{current.id == item.id && (current.live_status == 104 ||  current.live_status == 107)}}">
@@ -129,7 +137,7 @@
                         <!-- <view class="right" wx:elif="{{item.state == 3}}">
                             即将开播
                         </view> -->
-                        <view class="playingMv" wx:else>
+                        <view class="playingMv" wx:elif="{{item.state == 1}}">
                             <view class="statusTxt">
                                 <view wx:for="{{3}}" wx:key="index" class="statusWite"></view>
                             </view>
