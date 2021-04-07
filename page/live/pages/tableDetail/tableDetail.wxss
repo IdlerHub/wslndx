@@ -33,8 +33,8 @@ page {
   height: 90rpx;
 }
 .bottomBox .left .leftBox image {
-  width: 48rpx;
-  height: 50rpx;
+  width: 44rpx;
+  height: 36rpx;
   margin-right: 20rpx;
 }
 .bottomBox .left .leftBox text, .bottomBox .right text {
@@ -73,8 +73,8 @@ page {
   align-items: center;
 }
 .bottomBox .right image{
-  width: 35rpx;
-  height: 46rpx;
+  width: 31rpx;
+  height: 42rpx;
   margin-right: 20rpx;
 }
 

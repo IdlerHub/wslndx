@@ -50,7 +50,7 @@
 		</view>
 	</swiper-item>
 	<swiper-item>
-		<!-- 收藏课程 -->
+		<!-- 直播课程 -->
 		<scroll-view scroll-y bindscrolltolower="scrollEnd" style="height:100%;{{liveList.length > 0 ? 'background: #eee' : 'background: #fff'}}">
 			<view class="live-container">
 				<view class="live-content" wx:for="{{ liveList }}" wx:key="index" bindtap="goTableDetail" data-item="{{item}}">
@@ -66,7 +66,7 @@
 		</scroll-view>
 		<view class="ncol" wx:if="{{ liveList.length == 0 }}">
 			<image mode="widthFix" src="{{ $state.imgHost }}/ncol.png"></image>
-			<text class="line">啥都没有呢~\n赶紧去收藏课程吧</text>
+			<text class="line">啥都没有呢~\n赶紧去收藏直播课吧</text>
 		</view>
 	</swiper-item>
 	<swiper-item bindtouchstart="scrollTouchStart" bindtouchend="scrollTouchEnd" style="background: #eee">
