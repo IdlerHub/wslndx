@@ -81,7 +81,7 @@ page {
 .centerBox .centerImg {
   display: block;
   width: 710rpx;
-  height: 160rpx;
+  height: 170rpx;
   margin: 40rpx auto 0 auto;
 }
 

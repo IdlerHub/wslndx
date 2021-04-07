@@ -51,28 +51,20 @@
 	</swiper-item>
 	<swiper-item>
 		<!-- 收藏课程 -->
-		<scroll-view scroll-y bindscrolltolower="scrollEnd" style="height:100%;{{collect.length > 0 ? 'background: #eee' : 'background: #fff'}}">
-			<navigator url="/page/index/pages/detail/detail?id={{ item.id }}&name={{ item.title }}" wx:for="{{ collect }}" wx:key="index" hover-class="none" open-type="navigate" class="item">
-				<view class="vedio-content">
-					<view class="left">
-						<image class="poster" mode="widthFix" src="{{ item.image }}"></image>
-						<image class="icon" mode="aspectFill" src="{{ $state.imgHost }}/play.png"></image>
+		<scroll-view scroll-y bindscrolltolower="scrollEnd" style="height:100%;{{liveList.length > 0 ? 'background: #eee' : 'background: #fff'}}">
+			<view class="live-container">
+				<view class="live-content" wx:for="{{ liveList }}" wx:key="index" bindtap="goTableDetail" data-item="{{item}}">
+					<view class="tips">{{ item.isCharge?'付费':'免费' }}</view>
+					<view class="top">
+						<image class="poster" mode="widthFix" src="{{ item.indexCover }}"></image>
 					</view>
-					<view class="right">
-						<text class="line name">{{ item.title }}</text>
-						<text class="line actor" wx:if="{{ item.teacher_id == 0 }}">{{ item.subtitle }}</text>
-						<text class="line actor" wx:else>{{ item.name }}-{{ item.honor }}</text>
-						<text class="line info">
-        <!-- prettier-ignore -->
-        <text class="dramaNum"><text class="key">剧集</text>{{ item.lesson_count }}集</text>
-						<!-- prettier-ignore -->
-						<text class="playNum"><text class="key">播放</text>{{ item.thousand || item.browse }}</text>
-						</text>
+					<view class="bottom">
+						<text class="line name">{{ item.name }}</text>
 					</view>
 				</view>
-			</navigator>
+			</view>
 		</scroll-view>
-		<view class="ncol" wx:if="{{ collect.length == 0 }}">
+		<view class="ncol" wx:if="{{ liveList.length == 0 }}">
 			<image mode="widthFix" src="{{ $state.imgHost }}/ncol.png"></image>
 			<text class="line">啥都没有呢~\n赶紧去收藏课程吧</text>
 		</view>
