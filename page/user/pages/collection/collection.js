@@ -12,6 +12,7 @@ Page({
   //options(Object)
   onLoad: function (options) {
     this.collectParam = { page: 1, pageSize: 10 }
+    this.liveParam = { page: 1, pageSize: 10 }
     this.circleparam = { page: 1, pageSize: 10 }
     this.getCollect([])
     this.getCircle([])

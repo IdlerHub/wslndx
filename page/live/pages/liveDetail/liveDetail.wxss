@@ -373,7 +373,6 @@ page {
 .live-info .join-class image {
   width: 46rpx;
   height: 39rpx;
-  margin-right: 12rpx;
 }
 
 .subscribe {
