@@ -349,3 +349,7 @@
     </view>
 </view>
 <timeScore class="timeScore" lessonDetail="{{lessonDetail}}" wx:if="{{!lessonDetail.studyScore && lessonDetail.score}}"></timeScore>
+
+<!-- 学分动画 -->
+<integralAnimation integral="{{integral}}" integralContent="{{integralContent}}" wx:if="{{showintegral}}">
+</integralAnimation>
