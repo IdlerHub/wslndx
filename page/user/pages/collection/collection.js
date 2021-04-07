@@ -5,7 +5,7 @@ Page({
     collect: [],
     isRefreshing: false,
     showSheet: false,
-    currentTab: 1,
+    currentTab: 0,
     circleList: [],
     liveList: []
   },
