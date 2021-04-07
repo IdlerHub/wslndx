@@ -122,23 +122,24 @@ Page({
         toCharity: true
       }, {
         url: '/pages/video/video',
-        icon: `${this.data.$state.imgHost}/indexIcon/sortVideoicon1.png`,
+        icon: `${this.data.$state.imgHost}/indexIcon/sortVideoicon2.png`,
         name: '短视频',
-        width: 64,
-        height: 62.49,
+        width: 60,
+        height: 60,
       }, {
         url: 'pages/studyCard/studyCard?type=home',
-        icon: `${this.data.$state.imgHost}/indexIcon/vipIcon.png`,
-        name: 'VIP专区',
-        width: 59,
-        height: 66,
-        toMiniProgram: 'wx8dc9e7f55fe1f3ff'
+        icon: `${this.data.$state.imgHost}/indexIcon/jiujiu2.png`,
+        name: '附近同学',
+        width: 71.34,
+        height: 58,
+        toMiniProgram: 'wx705029dc7b626e23',
+        url: ''
       }, {
         url: '/page/index/pages/rankingList/rankingList',
-        icon: `${this.data.$state.imgHost}/indexIcon/dowloadIcon.png`,
+        icon: `${this.data.$state.imgHost}/indexIcon/dowloadIcon2.png`,
         name: '下载APP',
-        width: 86,
-        height: 76,
+        width: 46,
+        height: 64,
         toEducation: 'https://mp.weixin.qq.com/s/vSd8XBQDQkvqVX_kt_YyTQ',
         showCanvas: 1
       },]

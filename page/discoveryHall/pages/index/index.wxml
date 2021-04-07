@@ -54,8 +54,8 @@
       <image src="{{item.indexCover}}"></image>
       <image src="/images/recomonPlay.png"></image>
       <text class="van-ellipsis">{{item.name}}</text>
-      <view class="tagsLine" wx:for="{{item.tags}}" wx:for-item="tag" wx:key="index">
-        <view>{{tag.tagName}}</view>
+      <view class="tagsLine"  >
+        <view wx:for="{{item.tags}}" wx:for-item="tag" wx:key="index">{{tag.tagName}}</view>
       </view>
       <text class="studyNum">共{{fn.people(item.studyNum)}}人在学</text>
     </view>
