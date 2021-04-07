@@ -341,7 +341,7 @@ page {
   height: 60rpx;
   background: #d8d8d8;
   border-radius: 3rpx;
-  left: 85rpx;
+  left: 88rpx;
   top: 6rpx;
 }
 .live-info .right-box, .live-info .join-class {

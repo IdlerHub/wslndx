@@ -11,7 +11,7 @@ page {
 
 .bgImg {
   width: 100vw;
-  height: 1618rpx;
+  height: 1273rpx;
   position: absolute;
   top: 0;
   z-index: 0;
@@ -19,7 +19,7 @@ page {
 
 .steps {
   padding: 0 40rpx;
-  margin-top: 1313rpx;
+  margin-top: 1062rpx;
   position: relative;
   z-index: 1;
 }
