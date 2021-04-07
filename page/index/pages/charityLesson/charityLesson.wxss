@@ -10,12 +10,11 @@ page {
     position: relative;
   }
   .swiperBox {
-    height: 400rpx;
     position: fixed;
-    height: 400rpx;
+    height: 431rpx;
     width: 100vw;
   }
-  .swiperBox  .img {
+  .swiperBox .img {
     width: 100%;
     height: 100%;
   }
@@ -34,7 +33,7 @@ page {
     padding: 30rpx 30rpx 140rpx 30rpx;
     padding-top: 40rpx;
     position: absolute;
-    top: 340rpx;
+    top: 390rpx;
     background: #fff;
     border-radius: 20rpx 20rpx 0 0;
     width: 100%;
@@ -46,7 +45,7 @@ page {
   .moreBox .moreTitle {
     display: flex;
     align-items: center;
-    padding-bottom: 30rpx;
+    padding: 5rpx 0 43rpx 0;
   }
   .moreBox .moreTitle .left {
     flex: 1;
@@ -169,6 +168,8 @@ page {
     height: 90rpx;
     background: #F2323A;
     border-radius: 48rpx;
+    font-size: 40rpx;
+    font-weight: bold;
   }
   /* .moreBox .listItem .centerBox text:nth-child(1) {
     overflow: hidden;

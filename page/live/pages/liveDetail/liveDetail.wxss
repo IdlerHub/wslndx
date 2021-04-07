@@ -337,9 +337,9 @@ page {
 .live-info::after {
   content: "";
   position: absolute;
-  width: 4rpx;
+  width: 2rpx;
   height: 60rpx;
-  background: #ccc;
+  background: #d8d8d8;
   border-radius: 3rpx;
   left: 85rpx;
   top: 6rpx;
@@ -351,7 +351,7 @@ page {
 }
 .live-info .right-box image {
   width: 43rpx;
-  height: 43rpx;
+  height: 39rpx;
 }
 .live-info .right-box text, .live-info .join-class text {
   font-size: 30rpx;
@@ -371,7 +371,7 @@ page {
 }
 
 .live-info .join-class image {
-  width: 46rpx;
+  width: 48rpx;
   height: 39rpx;
 }
 
@@ -413,7 +413,7 @@ page {
 .share-joinClass .share text, .share-joinClass .subscribe text {
   font-size: 30rpx;
   font-family: PingFangSC-Regular, PingFang SC;
-  font-weight: 400;
+  font-weight: bold;
   color: #fff;
 }
 
@@ -572,7 +572,7 @@ page {
 /*分割线*/
 .cutLine {
   height: 15rpx;
-  background-color: #dcdcdc;
+  background-color: #f0f0f0;
 }
 /* 课程部分 */
 .pageContent {
@@ -641,7 +641,7 @@ page {
 }
 
 .sort {
-  background-color: #dcdcdc;
+  background-color: #f0f0f0;
   height: 60rpx;
   display: flex;
   align-items: center;
@@ -750,8 +750,8 @@ rich-text {
 }
 
 .drama .item .playMv image {
-  height: 40rpx;
-  width: 40rpx;
+  height: 44rpx;
+  width: 44rpx;
 }
 .drama .item .playMv .white {
   font-size: 28rpx;

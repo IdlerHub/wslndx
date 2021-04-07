@@ -8,10 +8,11 @@
   return type == 1 ? '更多作品' : type == 2 ? '更多课程' : ''
   },
   url: function(type) {
-  return type == 1 ? '/page/discoveryHall/pages/works/works' : type == 2 ? '/page/index/pages/charityLesson/charityLesson?name=热门' : ''
+  return type == 1 ? '/page/discoveryHall/pages/works/works' : type == 2 ?
+  '/page/index/pages/charityLesson/charityLesson?name=热门' : ''
   },
   people: function(studyNum) {
-    return studyNum >= 10000 ? (studyNum / 10000).toFixed(1) + 'w' : studyNum
+  return studyNum >= 10000 ? (studyNum / 10000).toFixed(1) + 'w' : studyNum
   }
   }
 </wxs>
@@ -54,7 +55,7 @@
       <image src="{{item.indexCover}}"></image>
       <image src="/images/recomonPlay.png"></image>
       <text class="van-ellipsis">{{item.name}}</text>
-      <view class="tagsLine"  >
+      <view class="tagsLine">
         <view wx:for="{{item.tags}}" wx:for-item="tag" wx:key="index">{{tag.tagName}}</view>
       </view>
       <text class="studyNum">共{{fn.people(item.studyNum)}}人在学</text>

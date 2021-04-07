@@ -48,7 +48,7 @@ Page({
     this.params.id = options.str ? JSON.parse(options.str).id : ''
   },
   onShow: function () {
-    let req = Promise.all([this.semesterColumnList(), this.getCharityLessonList()]);
+    let req = Promise.all([this.getNextIssueNotice(), this.getCharityLessonList()]);
     this.data.name=='热门'? this.getHotLessonList(): req
   },
   onPullDownRefresh: function () {},
@@ -76,9 +76,17 @@ Page({
     // this.data.name=='热门'? this.getHotLessonList():this.getCharityLessonList()
   },
   goEducation() {
-    wx.navigateTo({
-      url: `/pages/education/education?type=1&url=${this.data.mpurl}`
-    })
+    if (this.data.mpurl) {
+      wx.navigateTo({
+        url: `/pages/education/education?type=1&url=${this.data.mpurl}`
+      })
+    } else {
+      wx.showToast({
+        title: "暂无下期预告",
+        icon: "none",
+        duration: 2000,
+      });
+    }
   },
   getCharityLessonList() {
     app.lessonNew.semesterColumnList(this.params).then((res) => {
@@ -99,11 +107,9 @@ Page({
       }
     });
   },
-  semesterColumnList() {
+  getNextIssueNotice() {
     app.lessonNew.getNextIssueNotice().then(res => {
-      this.setData({
-        mpurl: res.data.value
-      })
+      res.data && res.data.value ? this.setData({ mpurl: res.data.value }) : ''
     })
   },
   goAllLesson() {
