@@ -123,13 +123,10 @@
       <text decode>学分：在学分商城兑换课程或礼品</text>
       <text decode>7天体验卡：免费学习网上老年大学APP中的付费课程</text>
     </view>
-
-    <mini-icon mini-class="icon" icon="closeOutline" color="#fff" miniStyle="width:80rpx;height:80rpx" class="ruleClose"
-      catchtap="onClickHid" data-type="{{overlayType}}" />
+    <image src="../../images/close.png" class="ruleClose" catchtap="onClickHid" data-type="{{overlayType}}"></image>
   </view>
   <view class="vipBox" wx:else>
     <image src="../../images/vipBg-min.png" class="vipBg" bindtap="toLoade"></image>
-    <mini-icon mini-class="icon" icon="closeOutline" color="#fff" miniStyle="width:80rpx;height:80rpx" class="ruleClose"
-      catchtap="onClickHid" data-type="{{overlayType}}" />
+    <image src="../../images/close.png" class="ruleClose" catchtap="onClickHid" data-type="{{overlayType}}"></image>
   </view>
 </van-overlay>

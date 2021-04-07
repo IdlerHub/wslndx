@@ -414,7 +414,6 @@ page {
 }
 
 .ruleBox .specalTxt {
-  height: 288rpx;
   background: #FFF8F8;
   border-radius: 0px 0px 20rpx 20rpx;
   padding: 25rpx 38rpx;
@@ -430,8 +429,14 @@ page {
   margin-bottom: 24rpx;
 }
 
+.ruleBox .specalTxt text:nth-child(2) {
+  margin-bottom: 0;
+}
+
 .ruleClose {
   position: absolute;
+  width: 80rpx;
+  height: 80rpx;
   bottom: -130rpx;
   left: 50%;
   transform: translateX(-50%);
