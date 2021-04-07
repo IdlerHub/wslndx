@@ -38,8 +38,8 @@ page {
   margin-right: 20rpx;
 }
 .bottomBox .left .leftBox text, .bottomBox .right text {
-  font-size: 32rpx;
-  font-weight: 400;
+  font-size: 30rpx;
+  font-weight: bold;
   color: #fff;
 }
 .bottomBox .left .leftBox:nth-child(2) image {

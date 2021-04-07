@@ -127,7 +127,7 @@
                             <image wx:if="{{playNow.id==item.id && !pause}}" src="../../images/play.png" alt="" />
                             <text wx:if="{{playNow.id==item.id && !pause}}" class="red">播放</text>
                             <!-- 可播放在暂停 -->
-                            <image wx:if="{{playNow.id==item.id && pause}}" src="../../images/pause.png" alt="" />
+                            <image wx:if="{{playNow.id==item.id && pause}}" src="../../images/pause.png" alt="" style="width: 33rpx"/>
                             <text wx:if="{{playNow.id==item.id && pause}}" class="red" >暂停</text>
                         </view>
                         <!-- <view class="right"
