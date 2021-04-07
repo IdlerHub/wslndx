@@ -90,7 +90,7 @@
 
 .timeScore {
   position: absolute;
-  bottom: 198rpx;
+  bottom: 250rpx;
   right: 20rpx;
   z-index: 9999999999;
 }
