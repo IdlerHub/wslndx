@@ -5,8 +5,9 @@ Page({
     collect: [],
     isRefreshing: false,
     showSheet: false,
-    currentTab: 0,
-    circleList: []
+    currentTab: 1,
+    circleList: [],
+    liveList: []
   },
   pageName: '收藏课程',
   //options(Object)
@@ -16,6 +17,7 @@ Page({
     this.circleparam = { page: 1, pageSize: 10 }
     this.getCollect([])
     this.getCircle([])
+    this.liveCollectList()
   },
   onReady: function () { },
   onShow: function () {
@@ -54,19 +56,37 @@ Page({
     if (this.currentTab == 0) {
       this.collectParam.page++
       this.getCollect()
-    } else {
+    } else if (this.currentTab == 2){
       this.circleparam.page++
       this.getCircle()
+    } else {
+      this.liveParam.page++
+      this.liveCollectList()
     }
   },
   scrollEnd() {
     if (this.data.currentTab == 0) {
       this.collectParam.page++
       this.getCollect()
-    } else {
+    } else if (this.currentTab == 2){
       this.circleparam.page++
       this.getCircle()
+    } else {
+      this.liveParam.page++
+      this.liveCollectList()
     }
+  },
+  goTableDetail(e) {
+    let item = e.currentTarget.dataset.item;
+    app.liveAddStatus(item.id, item.isCharge)
+  },
+  liveCollectList() {
+    let liveList = this.data.liveList
+    app.lessonNew.collectList().then(res => {
+      this.setData({
+        liveList: liveList.concat(res.dataList)
+      })
+    })
   },
   getCollect(list) {
     let collect = list || this.data.collect
