@@ -158,9 +158,9 @@
           "scene": null
         },
         {
-          "name": "page/discoveryHall/pages/index/index",
-          "pathName": "page/discoveryHall/pages/index/index",
-          "query": "id=2",
+          "name": "page/live/pages/liveDetail/liveDetail",
+          "pathName": "page/live/pages/liveDetail/liveDetail",
+          "query": "specialColumnId=246",
           "scene": 1069,
           "referrerInfo": {}
         }

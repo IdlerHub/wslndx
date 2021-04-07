@@ -6,7 +6,7 @@
     <view class="line"></view>
   </view>
   <view class="slider">
-    <text style="width: {{(value / 30) * 100}}%;"></text>
+    <text style="width: {{(value / (time / 1000)) * 100}}%;"></text>
   </view>
   <view class="inro">
       <text>再看{{timeData.seconds}}秒
