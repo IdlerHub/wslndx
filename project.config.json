@@ -158,8 +158,8 @@
           "scene": null
         },
         {
-          "name": "page/live/pages/liveDetail/liveDetail",
-          "pathName": "page/live/pages/liveDetail/liveDetail",
+          "name": "pages/studyCenter/studyCenter",
+          "pathName": "pages/studyCenter/studyCenter",
           "query": "specialColumnId=246",
           "scene": 1069,
           "referrerInfo": {}

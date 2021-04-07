@@ -8,10 +8,11 @@
   return type == 1 ? '更多作品' : type == 2 ? '更多课程' : ''
   },
   url: function(type) {
-  return type == 1 ? '/page/discoveryHall/pages/works/works' : type == 2 ? '/page/index/pages/charityLesson/charityLesson?name=热门' : ''
+  return type == 1 ? '/page/discoveryHall/pages/works/works' : type == 2 ?
+  '/page/index/pages/charityLesson/charityLesson?name=热门' : ''
   },
   people: function(studyNum) {
-    return studyNum >= 10000 ? (studyNum / 10000).toFixed(1) + 'w' : studyNum
+  return studyNum >= 10000 ? (studyNum / 10000).toFixed(1) + 'w' : studyNum
   }
   }
 </wxs>

@@ -168,16 +168,16 @@
           </slotSign>
           <view class="iconBox" bindtap="iconBind" data-item="{{item}}" wx:else>
             <image src="{{item.icon}}"
-              style="width: {{item.width}}rpx;height:{{item.height}}rpx;margin-left:{{ index == 7 ? '44rpx' : '' }}; margin-top: {{index == 7 ? '-13rpx' : ''}}">
+              style="width: {{item.width}}rpx;height:{{item.height}}rpx;">
             </image>
             <text>{{item.name}}</text>
           </view>
         </view>
       </view>
       <slotSign bindtap="checknextTap" data-type="search" data-detail="/page/discoveryHall/pages/index/index">
-        <image src="/images/centerImg.png" class="centerImg" wx:if="{{!$state.userInfo.id}}"></image>
+        <image src="/images/centerImg.gif" class="centerImg" wx:if="{{!$state.userInfo.id}}"></image>
         <navigator hover-class="none" url="/page/discoveryHall/pages/index/index" wx:else>
-          <image src="/images/centerImg.png" class="centerImg"></image>
+          <image src="/images/centerImg.gif" class="centerImg"></image>
         </navigator>
       </slotSign>
     </view>

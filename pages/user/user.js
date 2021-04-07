@@ -18,8 +18,7 @@ Page({
     this.setData({
       statusBarHeight: wx.getSystemInfoSync().statusBarHeight + 80,
     });
-    let myList = [
-        {
+    let myList = [{
           id: 1,
           name: "我的课程",
           page: "/page/live/pages/timetableList/timetableList",
@@ -82,17 +81,28 @@ Page({
         {
           id: 8,
           name: "APP下载",
-          page:
-            "/pages/education/education?type=0&url=https://mp.weixin.qq.com/s/vSd8XBQDQkvqVX_kt_YyTQ",
+          page: "/pages/education/education?type=0&url=https://mp.weixin.qq.com/s/vSd8XBQDQkvqVX_kt_YyTQ",
           icon: `${this.data.$state.imgHost}/userIcon/appIcon.png`,
         },
       ],
-      moreList = [
+      moreList = [{
+          id: 1,
+          name: "新生体验营",
+          page: "/page/discoveryHall/pages/index/index",
+          icon: `${this.data.$state.imgHost}/userIcon/ShapeIcon.png`,
+        },
+        {
+          id: 2,
+          name: "九九社区",
+          subName: '参加线下活动, 认识身边的的同学',
+          page: "/page/discoveryHall/pages/index/index",
+          icon: `${this.data.$state.imgHost}/userIcon/ShapeIcon.png`,
+          appId: 'wx705029dc7b626e23'
+        },
         {
           id: 1,
           name: "商务合作",
-          page:
-            "/pages/education/education?type=0&url=https://mp.weixin.qq.com/s/RBZMIupOHPjb5PeYioy8NQ",
+          page: "/pages/education/education?type=0&url=https://mp.weixin.qq.com/s/RBZMIupOHPjb5PeYioy8NQ",
           icon: `${this.data.$state.imgHost}/userIcon/ShapeIcon.png`,
         },
         {
@@ -152,7 +162,9 @@ Page({
     wx.navigateTo({
       url: "/page/user/pages/score/score?type=index",
     });
-    wx.uma.trackEvent("personal_btnClick", { btnName: "学分兑换" });
+    wx.uma.trackEvent("personal_btnClick", {
+      btnName: "学分兑换"
+    });
   },
   toInvite() {
     wx.navigateTo({
@@ -176,11 +188,15 @@ Page({
       })
       .catch(() => {
         this.guide = 0;
-        err.msg == "记录已增加" ? app.setState({ "newGuide.user": 1 }) : "";
+        err.msg == "记录已增加" ? app.setState({
+          "newGuide.user": 1
+        }) : "";
       });
   },
   drawPage() {
-    wx.uma.trackEvent("personal_btnClick", { btnName: "学分抽奖" });
+    wx.uma.trackEvent("personal_btnClick", {
+      btnName: "学分抽奖"
+    });
   },
   unreadNum() {
     app.user.unreadNum().then((res) => {
