@@ -9,8 +9,8 @@
     <text style="width: {{(value / 30) * 100}}%;"></text>
   </view>
   <view class="inro">
-      <text>再浏览{{timeData.seconds}}秒
-        可得{{detail.score || inro.score || lessonDetail.score}}学分</text>
+      <text>再看{{timeData.seconds}}秒
+        得{{detail.score || inro.score || lessonDetail.score}}学分</text>
   </view>
   <van-count-down class="control-count-down" time="{{ time }}" use-slot format="ss秒" bind:change="onChange">
     <text class="circleNum">{{timeData.seconds}}秒

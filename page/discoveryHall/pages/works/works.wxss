@@ -55,7 +55,7 @@ page {
   text-align: center;
   font-size: 28rpx;
   font-weight: 400;
-  color: rgba(244, 244, 244, 0.8);
+  color: rgba(244, 244, 244, 0.9);
   line-height: 38rpx;
   border-radius: 50%;
   display: flex;

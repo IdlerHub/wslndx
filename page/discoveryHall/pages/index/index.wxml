@@ -65,6 +65,7 @@
 <template name="aboutBox">
   <navigator hover-class="none" url="/page/discoveryHall/pages/detail/detail?isOn=1" class="aboutBox">
     <image src="{{inro.coverImage}}"></image>
+    <image src="/images/recomonPlay.png"></image>
     <rich-text class="text" nodes="{{inro.introduce}}"></rich-text>
   </navigator>
 </template>
