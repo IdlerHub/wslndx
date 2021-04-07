@@ -439,6 +439,15 @@ page {
   margin-top: 48rpx;
 }
 
+.integration .dialog .share-del {
+  width: 84rpx;
+  height: 84rpx;
+  position: absolute;
+  right: 43%;
+  bottom: -95rpx;
+  z-index: 9999;
+}
+
 .outer-link {
   height: 250rpx;
   margin: 30rpx 0 0;
@@ -556,7 +565,7 @@ page {
 .blackBox, .weui-mask {
   width: 100vw;
   height: 100vh;
-  background: rgba(0, 0, 0, 0.3);
+  background: rgba(0, 0, 0, 0.6);
   position: fixed;
   top: 0;
   z-index: 99999;

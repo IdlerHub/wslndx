@@ -204,6 +204,33 @@ function getCurrentMonthSemester(params) {
   return httpService.post("recommend/getCurrentMonthSemester", params, null, true);
 }
 
+/**
+ * @description: 收藏直播专栏课程
+ * @param {columnId} 专栏ID
+ * @return:  promise
+ * **/
+ function collect(params) {
+  return httpService.post("live/collect", params, null, true);
+}
+
+/**
+ * @description: 取消收藏直播专栏课程
+ * @param {columnId} 专栏ID
+ * @return:  promise
+ * **/
+ function cancelCollect(params) {
+  return httpService.post("live/cancelCollect", params, null, true);
+}
+
+/**
+ * @description: 获取收藏专栏列表
+ * @param {columnId} 专栏ID
+ * @return:  promise
+ * **/
+ function collectList(params) {
+  return httpService.post("live/collectList", params, null, true);
+}
+
 module.exports = {
   getBannerList,
   interestList,
@@ -227,5 +254,8 @@ module.exports = {
   hallGetColumnList,
   semesterColumnList,
   getNextIssueNotice,
-  getCurrentMonthSemester
+  getCurrentMonthSemester,
+  collect,
+  cancelCollect,
+  collectList
 }

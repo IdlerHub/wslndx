@@ -40,12 +40,12 @@ Page({
     this.params = {
       pageSize: 10,
       pageNum: 1,
-      id: 1
+      id: ''
     }
     options.str ? this.setData({
       charity: JSON.parse(options.str)
     }): ''
-    // this.params.id = options.str ? JSON.parse(options.str).id : ''
+    this.params.id = options.str ? JSON.parse(options.str).id : ''
   },
   onShow: function () {
     let req = Promise.all([this.semesterColumnList(), this.getCharityLessonList()]);
@@ -64,7 +64,7 @@ Page({
           isLoadInterface: true
         })
         this.params.pageNum = this.params.pageNum * 1 + 1
-        this.getCharityLessonList();
+        this.data.name=='热门'? this.getCharityLessonList():this.getCharityLessonList();
       } else {
         //如果大于总页数停止请求数据
         this.setData({
@@ -114,15 +114,28 @@ Page({
   getHotLessonList() {
     app.lessonNew.hallGetColumnList(this.params).then((res) => {
       this.setData({
-        hotLessonList: res.dataList,
-        total: res.total
+        total: res.total,
+        pagecount: Math.ceil(res.total / 10)
       });
+      if (this.params.pageNum == 1) {
+        this.setData({
+          hotLessonList: res.dataList,
+          isLoadInterface: false
+        })
+      } else {
+        this.setData({
+          hotLessonList: [...this.data.hotLessonList, ...res.dataList],
+          isLoadInterface: false
+        })
+      }
     });
   },
   bannerGo(e) {
     let item = e.currentTarget.dataset.item;
     console.log(item);
-    app.liveAddStatus(item.columnId, item.isCharge, item.id)
+    this.data.name=='热门'? 
+    app.liveAddStatus(item.columnId, item.isCharge, item.id):
+    app.liveAddStatus(item.id, item.isCharge)
     // if (item.is_finish) return;
     // let login = item.is_login > 0 ? 1 : 0;
     // if (item.jump_type == 1) {

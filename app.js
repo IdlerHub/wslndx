@@ -575,7 +575,7 @@ App({
   liveAddStatus(columnId, isCharge, scoreId) {
     if (isCharge == 1) {
       wx.navigateTo({
-        url: `page/index/pages/chageLesson/chageLesson?id=${columnId}`,
+        url: `/page/index/pages/chageLesson/chageLesson?id=${columnId}`,
       });
     } else {
       liveData

@@ -22,6 +22,7 @@
     <view class="btnBox" wx:if="{{isIndex}}">
       <view class="btn" bindtap="signin">签 到</view>
     </view>
-    <icon type="cancel" size="46" color="white" data-id="0" catchtap="closesignBox" class="signBox-cancel"></icon>
+    <image class="share-del" src="/images/closeBlack.png" alt="" catchtap="closesignBox" />
+    <!-- <icon type="cancel" size="46" color="white" data-id="0" catchtap="closesignBox" class="signBox-cancel"></icon> -->
   </view>
 </view>
