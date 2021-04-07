@@ -250,7 +250,7 @@ Page({
             }
           })
           wx.redirectTo({
-            url: `/page/live/pages/liveDetail/liveDetail?specialColumnId=${columnId}&isFirst=1&scroeId=${this.options.scroeId}`,
+            url: '/page/live/pages/liveDetail/liveDetail?isFirst=1&specialColumnId=' + columnId + (this.options.scoreId ? `&scroeId=${this.options.scoreId}` : ''),
           });
 
         })

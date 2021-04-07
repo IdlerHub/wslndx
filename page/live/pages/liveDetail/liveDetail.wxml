@@ -43,8 +43,8 @@
         </navigator>
     </view>
     <!--直播中状态-->
-    <view wx:for="{{ sublessons }}" catchtap="select" data-item="{{item}}" data-index="{{ index }}" wx:key="index">
-        <view class="statusLeft" wx:if="{{item.state==1}}">
+    <view wx:for="{{ sublessons }}" catchtap="select" wx:if="{{item.state==1}}" data-item="{{item}}" data-index="{{ index }}" wx:key="index">
+        <view class="statusLeft" >
             <view class="statusTxt">
                 <view wx:for="{{3}}" wx:key="index" class="statusWite"></view>
                 <view class="text">直播中</view>
@@ -78,7 +78,7 @@
     <!--cut-->
     <view class="cutLine"></view>
     <!-- 课程以及讨论 -->
-    <view class="content">
+    <view class="pageContent">
         <scroll-view scroll-x="true" class="nav" enable-flex scroll-left="{{ 0 }}" scroll-with-animation="{{ true }}">
             <block wx:for="{{ nav }}" wx:for-index="id" wx:for-item="item" wx:key="id">
                 <view class="item {{ currentTab == id ? 'active' : '' }}" data-index="{{ id }}" bindtap="switchNav">
@@ -87,7 +87,12 @@
                 </view>
             </block>
         </scroll-view>
-        <swiper class="tab" style="height:{{ height }}px" current="{{ currentTab }}" duration="300"
+        <view class="sort" wx:if="{{sublessons.length != 0 && currentTab == 1}}" bindtap="sort">
+            <text class="left">已更新 {{haveNum}}/{{sublessons.length}}</text>
+            <image src="{{ sort ? '../../images/sortDwon.png' : '../../images/sortup.png'}}"></image>
+            <text class="right">{{ !sort ? '倒序' : '正序'}}</text>
+        </view>
+        <swiper class="tab" style="height:{{ currentTab == 1 ? '100%' :  height  + 'px' }}" current="{{ currentTab }}" duration="300"
             bindchange="switchTab" scroll-top="{{scrollviewtop}}">
             <swiper-item class="tab-item">
                 <!-- 简介 -->
@@ -101,11 +106,6 @@
                     <image src="{{$state.imgHost}}/courseqs.png"></image>
                     <text>暂无课程
                         去浏览其他内容吧~</text>
-                </view>
-                <view class="sort" wx:if="{{sublessons.length != 0}}" bindtap="sort">
-                    <text class="left">已更新 {{haveNum}}/{{sublessons.length}}</text>
-                    <image src="{{ sort ? '../../images/sortDwon.png' : '../../images/sortup.png'}}"></image>
-                    <text class="right">{{ !sort ? '倒序' : '正序'}}</text>
                 </view>
                 <scroll-view wx:if="{{sublessons.length != 0}}" scroll-y="true" class="wrap drama" scroll-with-animation="true"
                     scroll-top="{{scrollviewtop}}">
@@ -144,6 +144,7 @@
                             <text class="text">直播中</text>
                         </view>
                     </view>
+                    <view style="width: 100%;height: 200rpx;opacity: 0;"> 4354345</view>
                 </scroll-view>
             </swiper-item>
             <swiper-item class="tab-item">

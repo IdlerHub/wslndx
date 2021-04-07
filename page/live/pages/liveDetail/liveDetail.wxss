@@ -575,14 +575,21 @@ page {
   background-color: #dcdcdc;
 }
 /* 课程部分 */
-.content {
+.pageContent {
   /* margin: 20rpx 0 130rpx 0; */
   margin: 0 0 130rpx 0;
   background: #fff;
+  height: calc(100vh - 103rpx);
 }
 
+/* .pageContent {
+  height: calc(100vh - 103rpx);
+} */
+
 .nav {
-  position: relative;
+  position: sticky;
+  top: 0;
+  left: 0;
   height: 103rpx;
   line-height: 98rpx;
   box-sizing: border-box;
@@ -591,6 +598,7 @@ page {
   background: #fff;
   display: flex;
   justify-content: space-around;
+  z-index: 10;
 }
 
 .nav .item {
@@ -632,25 +640,28 @@ page {
   margin-left: -30rpx;
 }
 
-.tab-item .sort {
+.sort {
   background-color: #dcdcdc;
   height: 60rpx;
   display: flex;
   align-items: center;
   padding: 10rpx 30rpx;
+  position: sticky;
+  top: 103rpx;
+  z-index: 10;
 }
-.tab-item .sort .left {
+.sort .left {
   flex: 1;
 }
-.tab-item .sort .left, .tab-item .sort .right {
+.sort .left, .tab-item .sort .right {
   color: #7E7E7E;
   font-size: 28rpx;
 }
-.tab-item .sort image {
+.sort image {
   width: 28rpx;
   height: 28rpx;
 }
-.tab-item .sort .right {
+.sort .right {
   margin-left: 5rpx;
 }
 
