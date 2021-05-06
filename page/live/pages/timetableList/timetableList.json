@@ -1,7 +1,12 @@
 {
   "usingComponents": {
-    "navBar": "/components/navBar/navBar"
+    "navBar": "/components/navBar/navBar",
+    "van-tab": "@vant/weapp/tab/index",
+    "van-tabs": "@vant/weapp/tabs/index",
+    "van-nav-bar": "@vant/weapp/nav-bar/index",
+    "van-icon": "@vant/weapp/icon/index"
   },
-  "enablePullDownRefresh": true,
-  "navigationBarTitleText": "课程表"
+  "navigationStyle": "custom",
+  "navigationBarTitleText": "课程表",
+  "disableScroll": true
 }

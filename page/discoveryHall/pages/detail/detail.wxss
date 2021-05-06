@@ -7,8 +7,8 @@
 
 .container .iconImg {
   position: absolute;
-  left: 30rpx;
   z-index: 9999999;
+  padding: 30rpx;
 }
 
 .container video {
@@ -23,6 +23,7 @@
   position: absolute;
   padding: 0 30rpx;
   bottom: 30rpx;
+  background: linear-gradient(180deg,rgba(0,0,0,0)  0%, rgba(0,0,0,1) 100%);
 }
 
 .videoContetBox .videoContent {
@@ -101,6 +102,7 @@
   font-weight: 400;
   color: #FFFFFF;
   line-height: 56rpx;
+  display: block;
 }
 
 /* 图文 */

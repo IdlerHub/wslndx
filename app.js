@@ -1,7 +1,7 @@
 /*
  * @Date: 2019-05-28 09:50:08
  * @LastEditors: wjl
- * @LastEditTime: 2021-04-02 18:03:12
+ * @LastEditTime: 2021-04-15 16:20:47
  */
 import {
   wxp
@@ -11,15 +11,13 @@ import {
 } from "umtrack-wx";
 /* 全局状态管理 */
 import store from "./store";
-import {
-  praise
-} from "./data/Circle";
-// const vodwxsdk = require('vod-wx-sdk-v2')
 /* sse */
 const socket = require("data/socket.js");
 const backgroundAudioManager = wx.getBackgroundAudioManager();
 //工具库
 var util = require("utils/util.js");
+// 神策数据监测SDK
+var sensors = require("./utils/sensorsdata.min.js");
 //http请求接口
 var classroom = require("data/Classroom.js"); //PHP空中课堂接口
 var user = require("data/User.js"); // 个人信息接口
@@ -56,13 +54,17 @@ App({
   umengConfig: {
     /*埋点统计*/
     appKey: store.process == "develop" ?
-      "5e4cad07eef38d3632042549" :
-      "5e4cd613e1367a268d56bfa2", //由友盟分配的APP_KEY
+      "5e4cad07eef38d3632042549" : "5e4cd613e1367a268d56bfa2", //由友盟分配的APP_KEY
     useOpenid: false, // 是否使用openid进行统计，此项为false时将使用友盟+随机ID进行用户统计。使用openid来统计微信小程序的用户，会使统计的指标更为准确，对系统准确性要求高的应用推荐使用OpenID。
     autoGetOpenid: false, // 是否需要通过友盟后台获取openid，如若需要，请到友盟后台设置appId及secret
     debug: false, //是否打开调试模式
   },
   onLaunch: async function (opts) {
+    if(opts.scene == 1036 || opts.scene == 1069) {
+      store.setState({
+        showApp: true
+      })
+    }
     this.getSecureToken();
     let optsStr = decodeURIComponent(opts.query.scene).split("&");
     let opstObj = {};
@@ -97,16 +99,6 @@ App({
     }
     let userInfo = wx.getStorageSync("userInfo") || {};
     let mpVersion = wx.getStorageSync("mpVersion");
-    /* storage中信息缺失,重新登录 */
-    if (
-      !userInfo.mobile ||
-      !userInfo.openid ||
-      mpVersion != this.store.mpVersion
-    ) {
-      await this.wxLogin();
-      wx.setStorageSync("mpVersion", this.store.mpVersion);
-    }
-    this.initStore();
     let systemInfo = wx.getSystemInfoSync();
     let wxtype = systemInfo.version.replace(".", "").replace(".", "");
     let platform = systemInfo.platform;
@@ -129,21 +121,36 @@ App({
         url: `/page/vote/pages/voteArticle/voteArticle?voteid=${opstObj.o}&uid=${opstObj.u}`,
       });
     }
-    if (!this.store.$state.userInfo.id) {
-      // 未登录页面守卫
-      let isLogin = 0;
-      if (opts.path == "pages/index/index") return;
-      getCurrentPages().forEach((e) => {
-        e.isLogin ? (isLogin = 1) : "";
-      });
-      if (isLogin) return;
-      wx.reLaunch({
-        url: "/pages/index/index",
-      });
+    /* storage中信息缺失,重新登录 */
+    if (
+      !userInfo.mobile ||
+      !userInfo.openid ||
+      mpVersion != this.store.mpVersion
+    ) {
+      if (opts.path != "pages/index/index" && !(this.globalData.unLoginPage.indexOf(opts.path) >= 0)) {
+        wx.reLaunch({
+          url: "/pages/index/index",
+          success: () => {
+            if (this.globalData.path != "/pages/index/index") {
+              wx.showLoading({
+                title: "正在努力加载中",
+              });
+            }
+          },
+        });
+      }
+      await this.wxLogin();
+      wx.setStorageSync("mpVersion", this.store.mpVersion);
     }
+    this.initStore();
   },
   onShow: function (opts) {
     console.log(opts, "进入");
+    if(opts.scene == 1036 || opts.scene == 1069) {
+      store.setState({
+        showApp: true
+      })
+    }
     let optsStr = decodeURIComponent(opts.query.scene).split("&");
     let opstObj = {};
     optsStr.forEach((item, index) => {
@@ -197,16 +204,13 @@ App({
       }, 2000);
     } else {
       //从后台返回前台路由守卫
-      let isLogin = 0;
       if (opts.path == "pages/index/index") return;
-      getCurrentPages().forEach((e) => {
-        e.isLogin ? (isLogin = 1) : "";
-      });
-      if (isLogin) return;
+      if (this.globalData.unLoginPage.indexOf(opts.path) >= 0) return;
       wx.reLaunch({
         url: "/pages/index/index",
       });
     }
+    this.getSets();
   },
   onHide() {
     this.globalData.backstage = true;
@@ -230,6 +234,7 @@ App({
       })
       .then((msg) => {
         if (!msg.data.userInfo) {
+          wx.hideLoading();
           /* 新用户未注册 */
           this.globalData.loginDetail = msg.data;
           if (this.globalData.path == "/pages/education/education") {
@@ -244,6 +249,7 @@ App({
           }
         } else {
           /* 旧用户 */
+          wx.hideLoading();
           wx.setStorageSync("token", msg.data.token);
           wx.setStorageSync("uid", msg.data.uid);
           wx.setStorageSync("authKey", msg.data.authKey);
@@ -252,9 +258,46 @@ App({
             wx.navigateTo({
               url: `/pages/education/education?url=${this.globalData.query.url}&type=0&login=1`,
             });
+          } else {
+            wx.navigateTo({
+              url: `${this.globalData.path}?${JSON.stringify(
+                this.globalData.query
+              )
+                .replace("{", "")
+                .replace("}", "")
+                .replace(":", "=")
+                .replace(/\"/g, "")
+                .replace(/\,/g, "&")}`,
+            });
           }
         }
       });
+  },
+  sensorsInit() {
+    if (store.process == "dev") return;
+    sensors.setOpenid(store.$state.userInfo.openid);
+    sensors.login(store.$state.userInfo.id);
+    sensors.registerApp({
+      from: `wslndx-${store.process}`,
+    });
+    sensors.init();
+    sensors.setPara({
+      name: "wslndxMiniTest",
+      server_url: "https://jinlingkeji.datasink.sensorsdata.cn/sa?project=default&token=4f0021310a3bc4f0",
+      // 全埋点控制开关
+      autoTrack: {
+        appLaunch: true, // 默认为 true，false 则关闭 $MPLaunch 事件采集
+        appShow: true, // 默认为 true，false 则关闭 $MPShow 事件采集
+        appHide: true, // 默认为 true，false 则关闭 $MPHide 事件采集
+        pageShow: true, // 默认为 true，false 则关闭 $MPViewScreen 事件采集
+        pageShare: true, // 默认为 true，false 则关闭 $MPShare 事件采集
+        mpClick: true, // 默认为 false，true 则开启 $MPClick 事件采集
+        mpFavorite: true, // 默认为 true，false 则关闭 $MPAddFavorites 事件采集
+      },
+      source_channel: [],
+      show_log: false,
+      allow_amend_share_path: true,
+    });
   },
   /* 初始化store */
   initStore: function () {
@@ -272,6 +315,7 @@ App({
       signStatus: sign,
     });
     this.getSets();
+    this.sensorsInit();
   },
   /* 更新store中的userInfo */
   setUser: function (data) {
@@ -284,6 +328,7 @@ App({
     this.store.setState({
       userInfo: data,
     });
+    // this.sensorsInit();
     wx.setStorageSync("userInfo", data);
     if (data.id) {
       socket.close();
@@ -315,14 +360,20 @@ App({
   },
   /* 更新store中的用户授权  */
   getSets: function () {
+    let auth = wx.getStorageSync("scopUserInfo");
     let self = this;
     wx.getSetting({
+      withSubscriptions: true,
       success: (res) => {
         if (res.errMsg == "getSetting:ok") {
-          let auth = res.authSetting["scope.userInfo"];
+          // let auth = res.authSetting["scope.userInfo"];
           self.store.setState({
             authUserInfo: auth || false,
             baseInfo: !auth && self.store.$state.visitedNum.length > 10,
+            subscript: res.subscriptionsSetting.mainSwitch,
+            itemSettings: res.subscriptionsSetting.itemSettings
+            // authUserInfo: 1,
+            // baseInfo: 0
           });
         }
         let record = res.authSetting["scope.record"];
@@ -347,14 +398,15 @@ App({
   },
   /* 授权更新数据库及store中的用户信息 */
   updateBase(e) {
-    if (e.detail.errMsg != "getUserInfo:ok") {
+    if (e.errMsg != "getUserProfile:ok") {
       return;
     }
+    wx.setStorageSync("scopUserInfo", "true");
     this.getSets();
     let param = {
-      userInfo: e.detail.userInfo,
-      encryptedData: e.detail.encryptedData,
-      iv: e.detail.iv,
+      userInfo: e.userInfo,
+      // encryptedData: e.detail.encryptedData,
+      // iv: e.detail.iv,
     };
     this.user
       .profile(param)
@@ -479,13 +531,13 @@ App({
     }
   },
   /* 获取任务状态 */
-  getTaskStatus() {
-    this.user.getNewTaskStatus().then((res) => {
+  getTaskStatus: async function () {
+    await this.user.getNewTaskStatus().then((res) => {
       this.store.setState({
         taskStatus: res.data,
       });
     });
-    this.user.getDayTaskStatus().then((res) => {
+    await this.user.getDayTaskStatus().then((res) => {
       this.store.setState({
         dayStatus: res.data,
       });
@@ -541,8 +593,8 @@ App({
       this.store.setState({
         "nextTapDetial.type": e.currentTarget.dataset.type,
         "nextTapDetial.detail": e.currentTarget.dataset.detail ?
-          e.currentTarget.dataset.detail :
-          e,
+          e.currentTarget.dataset.detail : e,
+        "nextTapDetial.funname": e.currentTarget.dataset.funname ? e.currentTarget.dataset.funname : null
       });
     } else {
       this.store.setState({
@@ -585,15 +637,119 @@ App({
         .then((res) => {
           if (!res.data.isAddSubscribe) {
             wx.navigateTo({
-              url: '/page/live/pages/tableDetail/tableDetail?specialColumnId=' + columnId + (scoreId ? `&scroeId=${scoreId}` : ''),
+              url: "/page/live/pages/tableDetail/tableDetail?specialColumnId=" +
+                columnId +
+                (scoreId ? `&scroeId=${scoreId}` : ""),
             });
           } else {
             wx.navigateTo({
-              url: '/page/live/pages/liveDetail/liveDetail?specialColumnId=' + columnId + (scoreId ? `&scroeId=${scoreId}` : ''),
+              url: "/page/live/pages/liveDetail/liveDetail?specialColumnId=" +
+                columnId +
+                (scoreId ? `&scroeId=${scoreId}` : ""),
             });
           }
         });
     }
+  },
+  /* 订阅消息授权 */
+  subscribeMessage: async function (liveId, that, func) {
+    let page = getCurrentPages()[getCurrentPages().length - 1],
+      settingReject = 0,
+      reject = 0,
+      Box = null,
+      itemSettings = store.$state.itemSettings || null
+    if (store.$state.subscript) {
+      let reserveList = (await liveData.getTemplate()).data.map((item) => {
+        return item.priTmplId;
+      });
+      if (itemSettings) {
+        reserveList.forEach(item => {
+          itemSettings[item] == 'reject' ? settingReject += 1 : ''
+        })
+      }
+      let openid = (await user.myIndex()).data.has_mp_openid,
+        showReserveBox = !(itemSettings && settingReject != reserveList.length)
+      page.setData({
+          showReserveBox,
+        },
+        () => {
+          if (!showReserveBox) return
+          Box = page.selectComponent("#reserveBox");
+          if (settingReject == reserveList.length) Box.setData({
+            showSetting: true,
+          });
+        }
+      );
+      wx.requestSubscribeMessage({
+        tmplIds: reserveList,
+        success: async function (res) {
+          reserveList.forEach((item) => {
+            res[item] == "reject" ? (reject = reject += 1) : "";
+          });
+          if (settingReject == reserveList.length) return
+          if (reject == reserveList.length) {
+            Box.setData({
+              showReserveBox: true,
+            });
+          } else {
+            page.setData({
+              showReserveBox: false,
+            });
+            if (!openid) {
+              wx.showToast({
+                title: "订阅成功",
+                icon: "none",
+                duration: 5000,
+              });
+              wx.navigateTo({
+                url: "/pages/education/education?type=sign&url=https://globalh5pro.jinlingkeji.cn/Authorization/#/",
+                success() {
+                  page.isAdd = 1
+                }
+              });
+            } else {
+              wx.showToast({
+                title: "课程通知订阅成功",
+                icon: "none",
+              });
+              if (that) {
+                that[func]()
+              }
+            }
+            showReserveBox ? Box.setData({
+              showReserveBox: false,
+              showSetting: false,
+            }) : ''
+            if (liveId) {
+              await liveData.liveReserve({
+                liveId,
+              });
+              page.setData({
+                "liveDetail.reserveStatus": 1,
+              });
+            }
+          }
+        },
+        fail(res) {
+          console.log(res, "fail");
+          page.setData({
+            showReserveBox: false,
+          });
+        },
+      });
+    } else {
+      page.setData({
+          showReserveBox: true,
+        },
+        () => {
+          Box = page.selectComponent("#reserveBox");
+          Box.setData({
+            showSetting: true,
+          });
+        }
+      );
+    }
+    this.getSets()
   },
   globalData: {
     /*wx.login 返回值 code */
@@ -623,6 +779,28 @@ App({
     },
     uma,
     categoryId: 0,
-    scorePage: false
+    scorePage: false,
+    unLoginPage: [
+      'pages/search/search',
+      'pages/video/video',
+      'pages/studyCenter/studyCenter',
+      'pages/post/post',
+      'pages/user/user',
+      'pages/cDetail/cDetail',
+      'page/discoveryHall/pages/index/index',
+      "page/index/pages/allSchoollesson/allSchoollesson",
+      'page/index/pages/schoolLesson/schoolLesson',
+      'page/index/pages/detail/detail',
+      'page/index/pages/topTeacher/topTeacher',
+      'page/index/pages/tearcherDetail/tearcherDetail',
+      'page/live/pages/tableDetail/tableDetail',
+      'page/live/pages/liveDetail/liveDetail',
+      'page/live/pages/vliveRoom/vliveRoom',
+      'page/live/pages/hliveRoom/hliveRoom',
+      'page/live/pages/timetableList/timetableList',
+      'page/user/pages/makeMoney/makeMoney',
+      'page/post/pages/pDetail/pDetail',
+      'page/post/pages/personPage/personPage'
+    ]
   },
 });

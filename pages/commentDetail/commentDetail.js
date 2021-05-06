@@ -273,7 +273,7 @@ Page({
       } else {
         this.setData({
           write: true,
-          replyplaceholder: "回复 " + e.currentTarget.dataset.detail.nickname,
+          replyplaceholder: "回复 " + e.currentTarget.dataset.binddetail.nickname,
           replyshow: true,
           focus: true,
         });
@@ -912,5 +912,8 @@ Page({
   /*长按复制内容 */
   copythat(e) {
     app.copythat(e.target.dataset.content);
+  },
+  checknextTap(e) {
+    app.checknextTap(e);
   },
 });

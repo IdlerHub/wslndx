@@ -1,0 +1,94 @@
+{
+  "setting": {},
+  "condition": {
+    "plugin": {
+      "list": []
+    },
+    "game": {
+      "list": []
+    },
+    "gamePlugin": {
+      "list": []
+    },
+    "miniprogram": {
+      "list": [
+        {
+          "id": 0,
+          "name": "微课堂分享卡片",
+          "pathName": "pages/detail/detail",
+          "query": "id=559&name=跟我轻松学古筝&type=share",
+          "scene": 1007
+        },
+        {
+          "id": 1,
+          "name": "小程序码分享",
+          "pathName": "pages/loading/loading",
+          "query": "uid=303&type=invite",
+          "scene": 1047
+        },
+        {
+          "id": 2,
+          "name": "长按图片识别小程序码进入",
+          "pathName": "pages/loading/loading",
+          "query": "uid=303&type=invite",
+          "scene": 1048
+        },
+        {
+          "id": 3,
+          "name": "手机相册选取小程序码",
+          "pathName": "pages/loading/loading",
+          "query": "uid=303&type=invite",
+          "scene": 1049
+        },
+        {
+          "id": 4,
+          "name": "短视频分享卡片",
+          "pathName": "pages/video/video",
+          "query": "id=808&type=share",
+          "scene": 1007
+        },
+        {
+          "id": 5,
+          "name": "秀风采分享卡片",
+          "pathName": "pages/pDetail/pDetail",
+          "query": "id= 1535&type=share",
+          "scene": 1007
+        },
+        {
+          "id": -1,
+          "name": "从课程分享卡片进入小程序",
+          "pathName": "pages/detail/detail",
+          "query": "id=12661&type=share",
+          "scene": null
+        },
+        {
+          "id": 8,
+          "name": "消息卡片打开小程序",
+          "pathName": "pages/education/education",
+          "query": "uid=12661&type=lottery&id=856",
+          "scene": 1008
+        },
+        {
+          "name": "个人中心",
+          "pathName": "pages/user/user",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/post/post",
+          "pathName": "pages/post/post",
+          "query": "specialColumnId=246",
+          "scene": 1069,
+          "referrerInfo": {}
+        },
+        {
+          "name": "page/index/pages/studyCard/studyCard",
+          "pathName": "page/index/pages/studyCard/studyCard",
+          "query": "specialColumnId=367",
+          "scene": 1036,
+          "referrerInfo": {}
+        }
+      ]
+    }
+  }
+}

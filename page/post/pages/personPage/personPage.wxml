@@ -24,14 +24,16 @@
 					</view>
 				</view>
 			</view>
-			<view class="attention {{isFollow == 1 ? 'attentionold' : ''}}"
-				bindtap="{{isFollow == 1  ? 'clsocancelFollowing' : 'attention'}}">{{isFollow == 1  ? '已关注' : '关注'}}
-			</view>
+			<slotSign class="attention" catchtap="checknextTap" data-type="nameFunction" data-funName="attention">
+				<view class="{{isFollow == 1 ? 'attentionold' : ''}}"
+					bindtap="{{isFollow == 1  ? 'clsocancelFollowing' : 'attention'}}">{{isFollow == 1  ? '已关注' : '关注'}}
+				</view>
+			</slotSign>
 		</view>
 	</view>
 	<view class="wrap">
-		<template is="listitem" wx:for="{{list}}" data="{{item:item, index, $state, voiceplayimg, playVoice, isPersomPage: 1}}"
-			wx:key="index" />
+		<template is="listitem" wx:for="{{list}}"
+			data="{{item:item, index, $state, voiceplayimg, playVoice, isPersomPage: 1}}" wx:key="index" />
 		<mp-loading type="circle" wx:if="{{ showLoading }}"></mp-loading>
 		<view class="upbottom" wx:else>已经到底咯~</view>
 	</view>
@@ -42,9 +44,11 @@
 </view>
 <view class="ActionSheet" bindtap="closeSheet" wx:if="{{showSheet}}">
 	<view class="ActionSheet-box" wx:if="{{showSheetBox}}">
-		<view class="ActionSheet-item" catchtap="setCollect">
-			收藏
-		</view>
+		<slotSign catchtap="checknextTap" data-type="nameFunction" data-funName="setCollect" class="ActionSheet-item">
+			<view class="ActionSheet-item" catchtap="setCollect">
+				收藏
+			</view>
+		</slotSign>
 		<view class="ActionSheet-item">
 			取消
 		</view>
@@ -56,3 +60,6 @@
 <!-- 学分动画 -->
 <integralAnimation integral="{{integral}}" integralContent="{{integralContent}}" wx:if="{{showintegral}}">
 </integralAnimation>
+
+<!-- 登录 -->
+<loginBox id="loginBox" wx:if="{{$state.showLogin}}" />

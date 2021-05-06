@@ -37,4 +37,4 @@
   </navigator>
 </view>
 
-<loginBox wx:if="{{$state.showLogin}}" />
+<loginBox id="loginBox" wx:if="{{$state.showLogin}}" />

@@ -1,0 +1,82 @@
+/* components/reserveBox/reserveBox.wxss */
+.wrapper {
+  height: 100%;
+  display: flex;
+  justify-content: center
+}
+
+.reserveGif {
+  width: calc(580vmin / 7.5);
+  height: calc(276vmin / 7.5);
+  position: relative;
+  top: 18%;
+}
+
+.contentBox {
+  /* width: calc(600vmin / 7.5); */
+  padding: calc(30vmin / 7.5) 0;
+  border-radius: calc(20vmin / 7.5);
+  background: #fff;
+  position: fixed;
+  top: 30%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-30%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+
+.contentBox text{
+  font-size: calc(36vmin / 7.5);
+  line-height: calc(50vmin / 7.5);
+  text-align: center;
+  font-weight: 400;
+  color: #333333;
+}
+
+.contentBox .reserveGif {
+  width: calc(540vmin / 7.5);
+  height: calc(269vmin / 7.5);
+}
+
+.contentBox .settingGif {
+  width: calc(600vmin / 7.5);
+  height: calc(853vmin / 7.5);
+  margin: calc(30vmin / 7.5) 0;
+}
+
+.contentBox .reverve {
+  width: calc(480vmin / 7.5);
+  height: calc(80vmin / 7.5);
+  background: linear-gradient(90deg, #FF794D 0%, #F63C09 100%);
+  text-align: center;
+  margin:  0 calc(30vmin / 7.5);
+  line-height: calc(80vmin / 7.5);
+  font-size: calc(30vmin / 7.5);
+  font-weight: 400;
+  color: #FFFFFF;
+  border-radius: calc(40vmin / 7.5);
+}
+
+.contentBox .close {
+  position: absolute;
+  bottom: calc(-120vmin / 7.5);
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.isHlive {
+  top: 27%;
+}
+
+.isHlive .settingGif  {
+  width: calc(342vmin / 7.5);
+  height: calc(427vmin / 7.5);
+  margin: calc(15vmin / 7.5) 0;
+}
+
+.isHlive .close  {
+  bottom: calc(-91vmin / 7.5);
+}

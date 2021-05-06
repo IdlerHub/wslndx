@@ -32,13 +32,19 @@ Page({
   pageRecord: 1,
   onLoad(options) {
     this.id = options.id
-    this.param = { fs_id: this.id, page: 1, pageSize: 10 }
+    this.param = {
+      fs_id: this.id,
+      page: 1,
+      pageSize: 10
+    }
     this.getList([])
     this.getCircleInfo().then(() => {
       wx.setNavigationBarTitle({
         title: this.data.circle.title
       })
-      wx.uma.trackEvent('circleClick', { circleName: this.data.circle.title });
+      wx.uma.trackEvent('circleClick', {
+        circleName: this.data.circle.title
+      });
     })
     getCurrentPages().forEach(item => {
       item.route == 'pages/post/post' ? this.postPages = item : ''
@@ -53,12 +59,16 @@ Page({
     /* 从circle-->发帖 */
     setTimeout(() => {
       if (app.globalData.rlSuc) {
-        this.setData({ rlSucFlag: true });
+        this.setData({
+          rlSucFlag: true
+        });
       }
       if (this.data.rlSucFlag) {
         this.rlSuc();
         /* 确保动画只执行一次 */
-        this.setData({ rlSucFlag: false });
+        this.setData({
+          rlSucFlag: false
+        });
         app.globalData.rlSuc = false;
       }
     }, 800)
@@ -106,8 +116,7 @@ Page({
       })
     }
   },
-  onHide() {
-  },
+  onHide() {},
   onUnload() {
     app.backgroundAudioManager.stop()
   },
@@ -183,7 +192,9 @@ Page({
   },
   join() {
     let circle = this.data.circle
-    let param = { fs_id: this.id }
+    let param = {
+      fs_id: this.id
+    }
     return app.circle.addOne(param).then(msg => {
       wx.showToast({
         title: "您已成功加入\r\n【" + circle.title + "】学友圈",
@@ -195,11 +206,11 @@ Page({
       this.setData({
         circle: circle
       })
-      getCurrentPages().forEach(v=> {
-        v.pageName == "秀风采搜索" ?  v.data.cList.forEach((a,b) => {
+      getCurrentPages().forEach(v => {
+        v.pageName == "秀风采搜索" ? v.data.cList.forEach((a, b) => {
           a.id == circle.id ? v.setData({
             [`cList[${b}].is_follow`]: 1
-          }) :''
+          }) : ''
         }) : ''
       })
     })
@@ -248,14 +259,18 @@ Page({
       let i = ops.target.dataset.index
       let article = this.data.list[i]
       let bkid = article.id
-      app.circle.addForward({ blog_id: bkid }).then(res => {
+      app.circle.addForward({
+        blog_id: bkid
+      }).then(res => {
         let list = this.data.list
         list[i].forward += 1
         this.setData({
           list: list
         })
       })
-      wx.uma.trackEvent('totalShare', { shareName: '秀风采分享' });
+      wx.uma.trackEvent('totalShare', {
+        shareName: '秀风采分享'
+      });
       return {
         title: app.util.delHtmlTag(article.content),
         imageUrl: article.image || article.images[0] || "../../images/sharemessage.jpg",
@@ -325,7 +340,12 @@ Page({
   },
   //收藏风采
   collect(e) {
-    let blog_id = e.currentTarget.dataset.id, status = e.currentTarget.dataset.status, blog_index = e.currentTarget.dataset.index, flowId = e.currentTarget.dataset.userid, is_follow = e.currentTarget.dataset.follow, follownickname = e.currentTarget.dataset.name
+    let blog_id = e.currentTarget.dataset.id,
+      status = e.currentTarget.dataset.status,
+      blog_index = e.currentTarget.dataset.index,
+      flowId = e.currentTarget.dataset.userid,
+      is_follow = e.currentTarget.dataset.follow,
+      follownickname = e.currentTarget.dataset.name
     this.setData({
       blog_id,
       blog_index,
@@ -337,15 +357,17 @@ Page({
     })
   },
   cancelCollection() {
-    let param = { blog_id: this.data.blog_id }
+    let param = {
+      blog_id: this.data.blog_id
+    }
     app.circle.collectCancel(param).then(res => {
-      this.pagesCollect(this.data.blog_id, 0)
-      this.postPages.pagesCollect(this.data.blog_id, 0)
       wx.showToast({
         title: res.msg,
         icon: 'success',
         duration: 800
       })
+      this.pagesCollect(this.data.blog_id, 0)
+      this.postPages.pagesCollect(this.data.blog_id, 0)
     }).catch(res => {
       if (res.code == 0) {
         wx.showToast({
@@ -364,14 +386,14 @@ Page({
       blog_id: this.data.blog_id
     }
     app.circle.collect(param).then(res => {
-      this.pagesCollect(this.data.blog_id, 1)
-      this.postPages.pagesCollect(this.data.blog_id, 1)
-      this.closeSheet()
       wx.showToast({
         title: res.msg,
         icon: 'success',
         duration: 1500
       })
+      this.pagesCollect(this.data.blog_id, 1)
+      this.postPages.pagesCollect(this.data.blog_id, 1)
+      this.closeSheet()
     }).catch(res => {
       this.closeSheet()
       if (res.code == 0) {
@@ -396,7 +418,9 @@ Page({
         follownickname: e.currentTarget.dataset.name,
       })
     }
-    let param = { follower_uid: this.data.flowId }
+    let param = {
+      follower_uid: this.data.flowId
+    }
     app.user.following(param).then(res => {
       wx.showToast({
         title: '您已成功关注' + this.data.follownickname,
@@ -406,17 +430,19 @@ Page({
       this.setfollow(this.data.flowId, true)
       this.postPages.setfollow(this.data.flowId, true)
       this.closeSheet()
-      getCurrentPages().forEach(v=> {
-        v.pageName == "秀风采搜索" ?  v.data.uList.forEach((a,b) => {
+      getCurrentPages().forEach(v => {
+        v.pageName == "秀风采搜索" ? v.data.uList.forEach((a, b) => {
           a.id == this.data.flowId ? v.setData({
             [`uList[${b}].is_follow`]: 1
-          }) :''
+          }) : ''
         }) : ''
       })
     })
   },
   clsocancelFollowing() {
-    let param = { follower_uid: this.data.flowId }
+    let param = {
+      follower_uid: this.data.flowId
+    }
     app.user.cancelFollowing(param).then(res => {
       wx.showToast({
         title: '取消关注成功',
@@ -430,7 +456,8 @@ Page({
   },
   pagesCollect(id, type) {
     if (type) {
-      let list = this.data.list, flowList = this.data.flowList
+      let list = this.data.list,
+        flowList = this.data.flowList
       list.forEach(item => {
         item.id == id ? item.collectstatus = 1 : ''
       })
@@ -438,7 +465,8 @@ Page({
         list
       })
     } else {
-      let list = this.data.list, flowList = this.data.flowList
+      let list = this.data.list,
+        flowList = this.data.flowList
       list.forEach(item => {
         item.id == id ? item.collectstatus = 0 : ''
       })
@@ -464,13 +492,34 @@ Page({
       })
     }
   },
+  //用户黑名单判断
+  handleRelse(status) {
+    if (this.data.$state.userInfo.status !== "normal") {
+      wx.showModal({
+        content: "由于您近期不合规操作，您的账户已被管理员禁止发帖留言，如有疑问请在个人中心联系客服处理"
+      });
+    } else {
+      if (status.currentTarget.dataset.bindtype == "reply") {
+        wx.navigateTo({
+          url: `/page/post/pages/pDetail/pDetail?id= ${status.currentTarget.dataset.id}&comment`
+        });
+        wx.uma.trackEvent("post_btnClick", {
+          btnName: "评论按钮"
+        });
+      }
+    }
+  },
   // 写帖成功动效
   rlSuc() {
     /* 重新到第一页 */
     this.setData({
       list: []
     });
-    this.param = { fs_id: this.id, page: 1, pageSize: 10 }
+    this.param = {
+      fs_id: this.id,
+      page: 1,
+      pageSize: 10
+    }
     this.getList([]);
     this.getCircleInfo()
     this.setData({
@@ -483,5 +532,8 @@ Page({
       });
       clearTimeout(timer);
     }, 2000);
-  }
+  },
+  checknextTap(e) {
+    app.checknextTap(e);
+  },
 })

@@ -1,4 +1,4 @@
 <!--page/index/pages/topTeacher/topTeacher.wxml-->
 <searchTop isTeach="{{true}}" universityId="{{universityId}}"/>
 <teacherBox item="{{item}}" index="{{index}}" wx:for="{{list}}" wx:key="index"/>
-<loginBox wx:if="{{$state.showLogin}}" />
+<loginBox id="loginBox" wx:if="{{$state.showLogin}}" />

@@ -333,26 +333,44 @@ page {
 .qstBox image {
   width: 598rpx;
   position: absolute;
-  top: 50%;
+  top: 44%;
   margin-top: -267rpx;
   left: 50%;
   margin-left: -299rpx;
 }
 
 .qstBox .txt {
-  font-size: 32rpx;
-  color: #949494;
+  font-size: 36rpx;
+  color: #666666;
   width: 100%;
   text-align: center;
   position: absolute;
+  margin-top: -28rpx;
+  margin-bottom: 20rpx;
 }
 
 .qstBox .txt:nth-child(2) {
-  top: 56%;
+  top: 50%;
 }
 
 .qstBox .txt:nth-child(3) {
-  top: 59%;
+  top: 54.5%;
   left: 50%;
   margin-left: -358rpx;
+}
+
+.qstBox .loginBox {
+  width: 250rpx;
+  height: 80rpx;
+  background: linear-gradient(90deg, #FD7352 0%, #F2323A 100%);
+  border-radius: 40rpx;
+  text-align: center;
+  line-height: 80rpx;
+  position: absolute;
+  top: 58%;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 36rpx;
+  font-weight: 400;
+  color: #FFFFFF;
 }

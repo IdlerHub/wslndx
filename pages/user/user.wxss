@@ -7,7 +7,7 @@ page .container {
   padding-bottom: 240rpx;
 }
 
-page .container>.top {
+.container .top {
   position: relative;
   overflow: hidden;
   padding-bottom: 50rpx;
@@ -44,6 +44,7 @@ page .container>.top .box .left .img {
   height: 110rpx;
   border-radius: 50%;
   border: 2rpx solid #b1adac;
+  overflow: hidden;
 }
 
 page .container>.top .box .left .info {
@@ -235,10 +236,12 @@ page .navgationto .navgationBox .toInvite image {
 }
 
 .myslef .item .subName {
-  font-size: 24rpx;
+  font-size: 30rpx;
   position: absolute;
-  top: 42rpx;
-  left: 177rpx;
+  top: 50%;
+  right: 50rpx;
+  transform: translateY(-50%);
+  color: #999;
 }
 
 .myslef .item image {

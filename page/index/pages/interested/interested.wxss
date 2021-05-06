@@ -1,9 +1,14 @@
 /* page/index/pages/interested/interested.wxss */
 page {
-  padding: 30rpx;
+  /* padding: 30rpx; */
   padding-bottom: 200rpx;
-  min-height: 100vh;
+  /* min-height: 100vh; */
   box-sizing: border-box;
+}
+
+.navigationBar {
+  position: sticky;
+  top: 0;
 }
 
 .pageTop {
@@ -28,6 +33,7 @@ page {
 }
 
 .interestedBox {
+  margin: 0 30rpx;
   padding: 30rpx 0 20rpx 0;
   border-bottom: 1rpx solid #E9E9E9;
 }
@@ -84,3 +90,19 @@ page {
   bottom: 83rpx;
   transform: translateX(-50%);
 }
+
+.vannavbar {
+  background: #F5F6FA !important;
+}
+
+.vannavbarTitle {
+  font-size: 36rpx !important;
+  font-weight: 500 !important;
+  text-align: center;
+  color: #333333;
+}
+
+.scrollView {
+  height: 100vh;
+}
+

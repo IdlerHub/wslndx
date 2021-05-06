@@ -18,7 +18,6 @@ Page({
     current: 0
   },
   pagename: "课程搜索",
-  isLogin: 1,
   onLoad: function (options) {
     let that = this
     wx.getStorage({

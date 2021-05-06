@@ -1,6 +1,6 @@
 /* pages/tableDetail/tableDetail.wxss */
 page {
-  background: rgba(248, 248, 248, 1);
+  background: #f0f0f0;
   padding-bottom: 150rpx;
 }
 
@@ -247,7 +247,7 @@ page {
   margin-bottom: 20rpx;
   font-size: 40rpx;
   font-weight: 400;
-  color: rgba(58, 58, 58, 1);
+  color: #999999;
   line-height: 56rpx;
 }
 .content .classInfo {

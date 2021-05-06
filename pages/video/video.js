@@ -77,22 +77,18 @@ Page({
         last_id: ""
       };
     }
-
-    if (this.data.$state.userInfo.mobile) {
-      /* 已登录 */
-      this.getList([]).then(() => {
-        this.setData({
-          cur: this.data.list[0],
-          index: 0
-        });
-        this.shortvideoAward();
-        app.addVisitedNum(`v${this.data.cur.id}`);
-        wx.uma.trackEvent("sortVideo_play", {
-          videoName: this.data.cur.title
-        });
+    this.getList([]).then(() => {
+      this.setData({
+        cur: this.data.list[0],
+        index: 0
       });
-      this.getCategory();
-    }
+      this.shortvideoAward();
+      app.addVisitedNum(`v${this.data.cur.id}`);
+      wx.uma.trackEvent("sortVideo_play", {
+        videoName: this.data.cur.title
+      });
+    });
+    this.getCategory();
     wx.uma.trackEvent("menu", {
       pageName: "短视频"
     });
@@ -329,8 +325,8 @@ Page({
         title: this.data.cur.title,
         path: "/pages/video/video?id=" +
           this.data.cur.id +
-          "&type=share&uid=" +
-          this.data.$state.userInfo.id
+          "&type=share" + (this.data.$state.userInfo.id ? "&uid=" +
+          this.data.$state.userInfo.id : null)
       };
     }
   },
@@ -415,14 +411,17 @@ Page({
   },
   // 获取用户的微信昵称头像
   onGotUserInfo: function (e) {
-    if (e.detail.errMsg == "getUserInfo:ok") {
-      app.updateBase(e);
-      e.currentTarget.dataset.type ?
-        wx.navigateTo({
-          url: "../../page/user/pages/makeMoney/makeMoney"
-        }) :
-        "";
-    }
+    wx.getUserProfile({
+      desc: '请授权您的个人信息便于更新资料',
+      success: (res) => {
+        app.updateBase(res)
+        e.currentTarget.dataset.type ?
+          wx.navigateTo({
+            url: "../../page/user/pages/makeMoney/makeMoney"
+          }) :
+          "";
+      }
+    })
   },
   switchNav(event) {
     let cur = event.currentTarget.dataset.current;
@@ -467,5 +466,17 @@ Page({
         url: '/pages/index/index',
       })
     }
-  }
+  },
+  showIntegral(e) {
+    this.setData({
+      integral: `+${e.detail.num} 学分`,
+      integralContent: e.detail.txt,
+      showintegral: true
+    });
+    setTimeout(() => {
+      this.setData({
+        showintegral: false
+      });
+    }, 2000);
+  },
 });

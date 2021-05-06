@@ -1,9 +1,10 @@
 <!--components/loginBox/loginBox.wxml-->
-<view class="loginContariner">
-  <view class="loginBox">
+<!-- <view class="loginContariner">
+  <view class="loginBox" style="top: {{statusBarHeight < 50 ? '15%' : null}};">
     <text class="loginTitle">微信登陆</text>
     <view class="issuse">
-      <mini-icon mini-class="icon" icon="pitch" class="iconImg" wx:if="{{check}}" color="#9E7E6B" miniStyle="width:28rpx;height:28rpx" bindtap="checkRadio"/>
+      <mini-icon mini-class="icon" icon="pitch" class="iconImg" wx:if="{{check}}" color="#9E7E6B"
+        miniStyle="width: calc(28vmin / 7.5);height: calc(28vmin / 7.5)" bindtap="checkRadio" />
       <view class="circle" wx:else bindtap="checkRadio"></view>
       <navigator hover-class="none" url="/pages/agreement/agreement" class="text">已阅读《用户协议》，登录即注册</navigator>
     </view>
@@ -15,6 +16,36 @@
       <image src="../loginBox/images/wechat.png"></image>
       <text>微 信</text>
     </button>
-    <mini-icon mini-class="icon" icon="closeOutline" class="close" color="#fff" miniStyle="width:70rpx;height:70rpx" bindtap="changeLoginstatus"/>
+    <mini-icon mini-class="icon" icon="closeOutline" class="close" color="#fff"
+      miniStyle="width:calc(70vmin / 7.5);height:calc(70vmin / 7.5)" bindtap="changeLoginstatus" />
   </view>
+</view> -->
+
+<view class="loginContariner">
+  <van-transition show="{{ show }}" name="fade-up" custom-class="loginBox">
+    <view class="loginTop">
+      <image src="/images/logo.png" class="logo"></image>
+      <view>
+        <text>网上老年大学 登录</text>
+        <text>登陆后体验更佳</text>
+      </view>
+      <image src="/images/icon-del.png" class="close" bindtap="changeLoginstatus"></image>
+    </view>
+    <view class="getPhone" wx:if="{{!check}}" bindtap="showToast">微信授权</view>
+    <button class="loginItem" hover-class="none" open-type="getPhoneNumber" bindgetphonenumber="getphonenumber" wx:else>
+      <view class="getPhone" bindtap="showToast">微信授权</view>
+    </button>
+    <view class="xieyi">
+      <mini-icon mini-class="icon" icon="allRight" color="#09C263"
+        miniStyle="width:calc(40vmin / 7.5);height:calc(40vmin / 7.5)" wx:if="{{check}}" bindtap="checkRadio" />
+      <view class="allRight" bindtap="checkRadio" wx:else></view>
+      <navigator hover-class="none" url="/pages/agreement/agreement">
+        <text> 已阅读《用户协议》</text>
+      </navigator>
+    </view>
+  </van-transition>
 </view>
+
+<!-- 学分动画 -->
+<integralAnimation integral="{{integral}}" integralContent="{{integralContent}}" wx:if="{{showintegral}}">
+</integralAnimation>

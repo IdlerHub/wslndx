@@ -16,3 +16,6 @@
     </view>
   </view>
 </view>
+
+<!-- 登录 -->
+<loginBox id="loginBox" wx:if="{{$state.showLogin}}" />

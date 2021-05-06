@@ -1,63 +1,157 @@
 <!-- pages/timetableList/timetableList.wxml -->
-<view class="top">
-  <picker mode="date" value="{{weeks[current].date}}" start="2018-01-01" bindchange="pickerChange" bindcancel="pickerCancel">
-    <view class="topOne">
-      <text class="month">{{month}}</text>
-    </view>
-  </picker>
-  <view class="dateBox">
-    <view class="dateItem {{current == index ? 'active' : ''}}" wx:for="{{7}}" wx:key="index" bindtap="checkCurrent"
-      data-index="{{index}}" data-month="{{weeks[index].title}}">
-      <text>{{weekList[index]}}</text>
-      <text>{{weeks[index].day}}</text>
-      <view class="now" wx:if="{{weeks[index].is_today}}"></view>
-    </view>
-  </view>
-</view>
-<view class="timetableList">
-  <!-- 缺省 -->
-  <view class="qstBox" wx:if="{{courseList.length == 0}}">
-    <image src="/images/liveqs.png"></image>
-    <text>
-      暂无课程
-    </text>
-    <!-- <navigator open-type="switchTab" hover-class="none" url="/pages/timetable/timetable" class="choose">去选课</navigator> -->
-  </view>
-  <!-- 列表 -->
-  <view wx:else class="contariner">
-    <view class="item" wx:for="{{courseList}}" wx:for-item="lesson" wx:key="index" bindtap="toDetail"
-      data-lesson-id="{{lesson.columnId}}" data-status="{{lesson.status}}" data-liveid="{{lesson.liveId}}">
-      <view class="imgBox">
-        <image src="{{lesson.indexCover}}" class="img"></image>
-        <image class="icon" mode="aspectFill" src="/images/recomonPlay.png"></image>
-      </view>
-      <view class="txtBox">
-        <view class="title">{{ lesson.liveName }}</view>
-        <!-- <view class="time" wx:if="{{lesson.is_end}}">已结课</view> -->
-        <view class="time">
-          {{lesson.dayTime}} {{lesson.startTime}}
+<view style="padding-top: {{ statusBarHeight }}px;">
+  <van-nav-bar title="高校课程" bind:click-left="back" fixed z-index="2" wx:if="{{universityId}}">
+    <van-icon name="arrow-left" slot="left" color="#999" size="40rpx" />
+  </van-nav-bar>
+  <mini-icon mini-class="icon" icon="arrowLeft" class="back" color="#999999" miniStyle="width:28rpx;height:28rpx"
+    bindtap="back" wx:if="{{!universityId}}" />
+  <van-tabs active="{{ dataCurrent }}" title-inactive-color="#666666" title-active-color="#F2323A" z-index="1" swipeable
+    line-width="54rpx" line-height="5rpx" nav-class="vanTabs" tab-class="tabItem" tab-active-class="tabItemActivce"
+    bind:change="lessonChange" animated>
+    <van-tab title="免费课程">
+      <scroll-view class="scrolView" scroll-y style="height: calc(100vh - {{statusBarHeight}}px - 51px);"
+        bindscrolltolower="reachBottom">
+        <view>
+          <view class="top" style="top: 0;z-index: 9;" wx:if="{{!dataCurrent}}">
+            <picker mode="date" value="{{weeks[current.free].date}}" start="2018-01-01" bindchange="pickerChange"
+              bindcancel="pickerCancel">
+              <view class="topOne">
+                <text class="month">{{month.free}}</text>
+              </view>
+            </picker>
+            <navigator class="navigator" url="/page/index/pages/allSchoollesson/allSchoollesson?title=免费课程&from=1"
+              hover-class="none">
+              <text>全部课程</text>
+              <image src="{{ $state.imgHost }}/Return-black.png"></image>
+            </navigator>
+            <view class="dateBox">
+              <view class="dateItem {{current.free == index ? 'active' : ''}}" wx:for="{{7}}" wx:key="index"
+                bindtap="checkCurrent" data-index="{{index}}" data-month="{{freeWeeks[index].title}}">
+                <text>{{weekList[index]}}</text>
+                <text>{{freeWeeks[index].day}}</text>
+                <view class="now" wx:if="{{freeWeeks[index].is_today}}"></view>
+              </view>
+            </view>
+          </view>
+          <view class="timetableList">
+            <!-- 缺省 -->
+            <view class="qstBox" style="height: calc(100vh - {{statusBarHeight}}px - 51px);" wx:if="{{courseList.length == 0}}">
+              <image src="/images/liveqs.png"></image>
+              <text>
+                暂无课程
+              </text>
+              <!-- <navigator open-type="switchTab" hover-class="none" url="/pages/timetable/timetable" class="choose">去选课</navigator> -->
+            </view>
+            <!-- 列表 -->
+            <view wx:else class="contariner">
+              <view class="item" wx:for="{{courseList}}" wx:for-item="lesson" wx:key="index" bindtap="toDetail"
+                data-lesson-id="{{lesson.columnId}}" data-status="{{lesson.status}}" data-liveid="{{lesson.liveId}}">
+                <view class="imgBox">
+                  <image src="{{lesson.indexCover}}" class="img"></image>
+                  <image class="icon" mode="aspectFill" src="/images/recomonPlay.png"></image>
+                </view>
+                <view class="txtBox">
+                  <view class="title">{{ lesson.liveName }}</view>
+                  <!-- <view class="time" wx:if="{{lesson.is_end}}">已结课</view> -->
+                  <view class="time">
+                    {{lesson.dayTime}} {{lesson.startTime}}
+                  </view>
+                  <view class="textBottom">
+                    <view class="teacher">
+                      <image src="../../images/userImg.png"></image>
+                      <view>{{ lesson.nickname }}</view>
+                    </view>
+                    <view class="btn end" wx:if="{{lesson.status == 2 }}">
+                      <image src="/images/endIcon.png"></image>
+                      观看
+                    </view>
+                    <view class="btn end waite" wx:elif="{{lesson.status == 1 }}">
+                      <image src="/images/naoling.png"></image>
+                      待开始
+                    </view>
+                    <view class="btn living" wx:else>
+                      <view wx:for="{{3}}" wx:key="index" class="statusWite"></view>
+                      <text>直播中</text>
+                    </view>
+                  </view>
+                </view>
+              </view>
+            </view>
+          </view>
         </view>
-        <view class="textBottom">
-          <view class="teacher">
-            <image src="../../images/userImg.png"></image>
-            <view>{{ lesson.nickname }}</view>
+      </scroll-view>
+    </van-tab>
+    <van-tab title="高校课程" disabled="{{universityId ? true : false}}">
+      <scroll-view class="scrolView" scroll-y style="height: calc(100vh - {{statusBarHeight}}px - 51px);"
+        bindscrolltolower="reachBottom">
+        <view>
+          <view class="top" style="top: 0;z-index: 9;" wx:if="{{dataCurrent}}">
+            <picker mode="date" value="{{schoolWeeks[current.school].date}}" start="2018-01-01"
+              bindchange="pickerChange" bindcancel="pickerCancel">
+              <view class="topOne">
+                <text class="month">{{month.school}}</text>
+              </view>
+            </picker>
+            <navigator class="navigator" url="/page/index/pages/allSchoollesson/allSchoollesson?title=高校课程&from=3"
+              hover-class="none">
+              <text>全部课程</text>
+              <image src="{{ $state.imgHost }}/Return-black.png"></image>
+            </navigator>
+            <view class="dateBox">
+              <view class="dateItem {{current.school == index ? 'active' : ''}}" wx:for="{{7}}" wx:key="index"
+                bindtap="checkCurrent" data-index="{{index}}" data-month="{{schoolWeeks[index].title}}">
+                <text>{{weekList[index]}}</text>
+                <text>{{schoolWeeks[index].day}}</text>
+                <view class="now" wx:if="{{schoolWeeks[index].is_today}}"></view>
+              </view>
+            </view>
           </view>
-          <view class="btn end" wx:if="{{lesson.status == 2 }}">
-            <image src="/images/endIcon.png"></image>
-            看回放
-          </view>
-          <view class="btn end waite" wx:elif="{{lesson.status == 1 }}">
-            <image src="/images/naoling.png"></image>
-            待开始
-          </view>
-          <view class="btn living" wx:else>
-            <view wx:for="{{3}}" wx:key="index" class="statusWite"></view>
-            <text>直播中</text>
+          <view class="timetableList">
+            <!-- 缺省 -->
+            <view class="qstBox" style="height: calc(100vh - {{statusBarHeight}}px - 51px);" wx:if="{{schoolLesson.length == 0}}">
+              <image src="/images/liveqs.png"></image>
+              <text>
+                暂无课程
+              </text>
+            </view>
+            <!-- 列表 -->
+            <view wx:else class="contariner">
+              <view class="item" wx:for="{{schoolLesson}}" wx:for-item="lesson" wx:key="index" bindtap="toDetail"
+                data-lesson-id="{{lesson.columnId}}" data-status="{{lesson.status}}" data-liveid="{{lesson.liveId}}">
+                <view class="imgBox">
+                  <image src="{{lesson.indexCover}}" class="img"></image>
+                  <image class="icon" mode="aspectFill" src="/images/recomonPlay.png"></image>
+                </view>
+                <view class="txtBox">
+                  <view class="title">{{ lesson.liveName }}</view>
+                  <!-- <view class="time" wx:if="{{lesson.is_end}}">已结课</view> -->
+                  <view class="time">
+                    {{lesson.dayTime}} {{lesson.startTime}}
+                  </view>
+                  <view class="textBottom">
+                    <view class="teacher">
+                      <image src="../../images/userImg.png"></image>
+                      <view>{{ lesson.nickname }}</view>
+                    </view>
+                    <view class="btn end" wx:if="{{lesson.status == 2 }}">
+                      <image src="/images/endIcon.png"></image>
+                      观看
+                    </view>
+                    <view class="btn end waite" wx:elif="{{lesson.status == 1 }}">
+                      <image src="/images/naoling.png"></image>
+                      待开始
+                    </view>
+                    <view class="btn living" wx:else>
+                      <view wx:for="{{3}}" wx:key="index" class="statusWite"></view>
+                      <text>直播中</text>
+                    </view>
+                  </view>
+                </view>
+              </view>
+            </view>
           </view>
         </view>
-      </view>
-    </view>
-  </view>
+      </scroll-view>
+    </van-tab>
+  </van-tabs>
 </view>
-
-<!-- <navBar path="video" /> -->

@@ -1,13 +1,45 @@
 /* pages/timetableList/timetableList.wxss */
 page {
-  padding-top: 112rpx;
+  background-color: #F5F6FA;
+}
+
+.back {
+  position: fixed;
+  padding: 30rpx;
+  z-index: 2;
+}
+
+.van-tabs__wrap {
+  height: 85rpx !important;
+  justify-content: center;
+  border-bottom: 1px solid #E9E9E9;
+  padding-left: 150rpx;
+  background: #F5F6FA;
+}
+
+.tabItem {
+  flex: inherit !important;
+  font-size: 38rpx !important;
+  font-weight: 500;
+  padding:0 30rpx !important;
+  height: 85rpx;
+  /* padding-top: 16rpx !important; */
+}
+
+.tabItemActivce {
+  font-weight: 600 !important;
+}
+
+.van-tabs__nav {
+  background: #F5F6FA;
 }
 
 .timetableList{
-  padding-top: 112rpx;
-  padding-bottom: 100rpx;
+  background: #fff;
   box-sizing: border-box;
+  height: 100%;
 }
+
 
 .top {
   height: 224rpx;
@@ -15,11 +47,27 @@ page {
   padding: 20rpx;
   padding-top: 22rpx;
   box-sizing: border-box;
-  position: fixed;
-  top: 0;
-  z-index: 99;
+  /* position: fixed; */
+  position: sticky;
   width: 100%;
   border-bottom: 1px solid #EDEDED;
+  z-index: 2;
+}
+
+.top .navigator {
+  position: absolute;
+  right: 20rpx;
+  top: 28rpx;
+  font-size: 32rpx;
+  font-weight: 500;
+  color: #999999;
+}
+
+.top .navigator image {
+  width: 22rpx;
+  height: 22rpx;
+  margin-left: 10rpx;
+  margin-top: 2rpx;
 }
 
 .top .topOne {
@@ -284,7 +332,7 @@ page {
 }
 
 .qstBox {
-  height: 100vh;
+  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;

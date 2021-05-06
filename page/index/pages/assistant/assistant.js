@@ -4,24 +4,24 @@ Page({
    * 页面的初始数据
    */
   data: {
-    list: [
-      // {
-      //   id: 1,
-      //   name: "选课中心",
-      // },
-      {
+    list: [{
         id: 1,
-        name: "公益课报名",
+        name: "查看最新公益课",
+        url: "/page/index/pages/charityLesson/charityLesson",
+        str: '{"id":1,"name":"最新公益课","coverImage":"https://hwcdn.jinlingkeji.cn/uploads/images/3e32bebc9762199043d9d4b676e5e294.png","columnNum":27,"studyNum":35294}'
       },
       {
         id: 2,
-        name: "查看本周课程安排",
+        name: "查看我的学校",
         isLogin: 1,
-        url: "/page/live/pages/timetableList/timetableList",
+        isUniversity: 1,
+        url: "/page/index/pages/schoolLesson/schoolLesson",
       },
       {
         id: 3,
-        name: "下载网上老年大学APP",
+        name: "查看本周课程安排",
+        isLogin: 1,
+        url: "/page/live/pages/timetableList/timetableList",
       },
       {
         id: 4,
@@ -31,45 +31,68 @@ Page({
       },
       {
         id: 5,
+        name: "如何赚取学分",
+        isLogin: 1,
+        url: "/page/user/pages/score/score",
+      },
+      {
+        id: 6,
+        name: "下载网上老年大学APP",
+        mpurl: 'https://mp.weixin.qq.com/s/vSd8XBQDQkvqVX_kt_YyTQ'
+      },
+      {
+        id: 7,
         name: "问题反馈",
       },
     ],
-    mpurlList: [
-      "https://mp.weixin.qq.com/s/y3mAB8Kws2mkdGZQEjxBKQ",
-      "",
-      "https://mp.weixin.qq.com/s/vSd8XBQDQkvqVX_kt_YyTQ",
-    ],
     talkList: [],
+    userMsg: {}
   },
   isLogin: 1,
-  onLoad: function (options) {
+  onLoad:async function (options) {
     wx.uma.trackEvent("xiaolinCheck", {
       click: "小林老师",
     });
-    let talkList = [
-      {
-        id: 1,
+    await this.getUserOpenid()
+    this.getcountVideo()
+    let talkList = [{
+      id: 1,
+      coverurl: "/images/logo.png",
+      msg: "您好！我是网上老年大学小林老师，请问有什么可以帮您？",
+    }, ];
+    wx.getStorageSync("attetionAccounts") || this.data.userMsg.has_mp_openid ?
+      talkList.push({
+        id: 2,
         coverurl: "/images/logo.png",
-        msg: "您好！我是网上老年大学小林老师，请问有什么可以帮您？",
-      },
-    ];
-    wx.getStorageSync("attetionAccounts")
-      ? talkList.push({
-          id: 2,
-          coverurl: "/images/logo.png",
-          msg: "猜您想选",
-          list: this.data.list,
-        })
-      : talkList.push({
-          id: 2,
-          coverurl: "/images/logo.png",
-          msg: "您还未关注【网上老年大学】公众号，点击关注解决您的问题",
-          showBtn: 1,
-          mpurl: "https://mp.weixin.qq.com/s/bdGLXj6u6aOGVNh2owTjgA",
-        });
+        msg: "猜您想选",
+        list: this.data.list,
+      }) :
+      talkList.push({
+        id: 2,
+        coverurl: "/images/logo.png",
+        msg: "您还未关注【网上老年大学】公众号，点击关注解决您的问题",
+        showBtn: 1,
+        mpurl: "https://mp.weixin.qq.com/s/bdGLXj6u6aOGVNh2owTjgA",
+      });
     this.setData({
       talkList,
     });
+  },
+  getUserOpenid() {
+    if(!this.data.$state.userInfo.id) return
+    return app.user.myIndex().then(res => {
+      this.setData({
+        userMsg: res.data
+      })
+    })
+  },
+  getcountVideo() {
+    if(!this.data.$state.userInfo.id) return
+    return app.lessonNew.countVideo().then(res => {
+      this.setData({
+        detail: res.data
+      })
+    })
   },
   toEducation(e) {
     let item = e.currentTarget.dataset.item;
@@ -98,45 +121,36 @@ Page({
           }
         },
       });
+    } else if(item.isUniversity) {
+      this.data.detail && this.data.detail.universityId ? wx.navigateTo({
+        url: '/page/index/pages/schoolDetail/schoolDetail?id=' + this.data.detail.universityId,
+      }) : wx.navigateTo({
+        url: '/page/index/pages/schoolLesson/schoolLesson',
+      })
     } else {
-      console.log(item.index);
-      switch (item.index) {
-        // case 0:
-        //   wx.navigateTo({
-        //     url: "/page/live/pages/liveCenter/liveCenter",
-        //   });
-        //   break;
-        case 1:
-          wx.navigateTo({
-            url: "/page/live/pages/timetableList/timetableList",
-          });
-          break;
-        case 3:
-          wx.navigateTo({
-            url: "/page/study/pages/history/history",
-          });
-          break;
-      }
+      console.log(item);
+      wx.navigateTo({
+        url: item.url + (item.str ? '?str=' + item.str : ''),
+      })
     }
   },
   additem(e) {
     let item = e.currentTarget.dataset.item,
       index = e.currentTarget.dataset.index;
     this.data.list.forEach((i) => {
-      i.id == item.id
-        ? this.data.talkList.push({
-            id: Math.ceil(Math.random() * 10),
-            coverurl: this.data.$state.userInfo.avatar,
-            msg: i.name,
-            isRight: 1,
-          })
-        : "";
+      i.id == item.id ?
+        this.data.talkList.push({
+          id: Math.ceil(Math.random() * 10),
+          coverurl: this.data.$state.userInfo.avatar,
+          msg: i.name,
+          isRight: 1,
+        }) :
+        "";
     });
     wx.uma.trackEvent("xiaolinCheck", {
       click: item.name,
     });
-    this.setData(
-      {
+    this.setData({
         talkList: this.data.talkList,
       },
       () => {
@@ -145,17 +159,9 @@ Page({
     );
   },
   add(id, index) {
-    this.data.talkList.push({
-      id: Math.ceil(Math.random() * 10),
-      coverurl: "/images/logo.png",
-      mpurl: this.data.mpurlList[id - 1],
-      reply: this.data.list[id - 1].name,
-      index: index,
-      isLogin: this.data.list[id - 1].isLogin ? 1 : 0,
-      url: this.data.list[id - 1].url,
-    });
-    this.setData(
-      {
+    this.data.talkList.push(Object.assign({id: Math.ceil(Math.random() * 10),
+      coverurl: "/images/logo.png", index, reply: this.data.list[id - 1].name}, this.data.list[id - 1]))
+    this.setData({
         talkList: this.data.talkList,
       },
       () => {

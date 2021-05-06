@@ -1,4 +1,11 @@
 <!--page/live/pages/hliveRoom/hliveRoom.wxml-->
+<wxs module="fn">
+  module.exports = {
+  num: function(num) {
+  return num > 10000 ? (num / 10000).toFixed(1) + 'W' : num
+  }
+  }
+</wxs>
 <live-player src="{{liveDetail.liveUrl}}" class="h-player" autoplay bindstatechange="bindstatechange"
   wx:if="{{liveStatus == 1 && !liveDetail.liveType}}" orientation="vertical" bindtap="closeCommont"
   bindleavepictureinpicture="bindleavepictureinpicture">
@@ -17,8 +24,8 @@
 </view>
 <liveTop liveDetail="{{liveDetail}}" liveCount="{{liveCount}}" direction="{{liveDetail.direction}}"
   bind:checkFollow="checkFollow" wx:if="{{showCommont}}" />
-<talkCommon id="talkCommon" talkList="{{talkList}}" specialList="{{specialList}}" close="{{close}}" joinList="{{joinList}}"
-  showList="{{showList}}" newMessage="{{newMessage}}" bind:setNewmessagenum="setNewmessagenum"
+<talkCommon id="talkCommon" talkList="{{talkList}}" specialList="{{specialList}}" close="{{close}}"
+  joinList="{{joinList}}" showList="{{showList}}" newMessage="{{newMessage}}" bind:setNewmessagenum="setNewmessagenum"
   bind:animationCheck="animationCheck" bind:animationDel="animationDel" bind:animationEnd="animationEnd" />
 <navigator class="downloadeApp"
   url="/pages/education/education?type=0&url=https://mp.weixin.qq.com/s/vSd8XBQDQkvqVX_kt_YyTQ" hover-class="none"
@@ -33,15 +40,47 @@
     style="{{animation.showDoweload ? 'animation: loseImg 0.5s;' : 'animation: showImg 0.5s;'}}" bindtap="downloadeApp">
   </image>
 </navigator>
-<liveBottom close="{{close}}" columnId="{{liveDetail.columnId}}" bind:sendMsg="sendMsg" bind:praise="praise"
-  bind:checkCaption="checkCaption" bind:clickHandler="clickHandler" wx:if="{{showCommont}}" />
+<liveBottom id="liveBottom" close="{{close}}" columnId="{{liveDetail.columnId}}" bind:sendMsg="sendMsg"
+  bind:praise="praise" bind:checkCaption="checkCaption" bind:clickHandler="clickHandler" wx:if="{{showCommont}}" />
 <like-fx count="{{praiseCount}}" wx:if="{{showCanvans}}"></like-fx>
 <view class="teacherBox" wx:if="{{showBox}}">
   <image src="/images/icon-del.png" class="icondel" bindtap="showBox" data-type="1"></image>
   <image src="{{ liveDetail.avatar }}" class="avatar"></image>
   <text>{{ liveDetail.nickname }}</text>
   <text>关注老师，更多好课不错过</text>
-  <view class="addBtn" bindtap="attention">关注</view>
+  <slotSign catchtap="{{!$state.userInfo.id ? 'checknextTap' : 'checkFollow'}}" data-type="nameFunction"
+    data-funName="checkFollow">
+    <view class="addBtn" bindtap="checkFollow">关注</view>
+  </slotSign>
 </view>
 <image class="liveFloat" src="{{liveDetail.floatImage}}" wx:if="{{liveDetail.floatStatus}}" bindtap="clickFloat">
 </image>
+
+<van-popup show="{{ ShowAddSubscribe == 1 }}" position="right" custom-style="height: 100vh;background: #393B47;"
+  bind:close="onClose" round="true" overlay="{{false}}" z-index="99999999999">
+  <view class="addSubscribeBox">
+    <view class="addSubscribeTitle">
+      <text>好课不错过</text>
+      <image src="/images/warn.png" bindtap="closeAddSubscribe"></image>
+    </view>
+    <view class="lessonDetail">
+      <image class="cover" src="{{liveDetail.cover}}"></image>
+      <image class="icon" src="/images/recomonPlay.png"></image>
+      <view style="flex: 1;width: 0;display: flex;flex-direction: column;justify-content: space-between;">
+        <text class="van-ellipsis">{{lessonDetail.name}}</text>
+        <text class="van-ellipsis">共{{fn.num(lessonDetail.studyNum)}}人在学</text>
+        <text wx:if="{{liveDetail.nextDayTime}}">下节课时间：{{ liveDetail.nextDayTime + liveDetail.nextStartTime }}</text>
+      </view>
+    </view>
+    <slotSign catchtap="{{!$state.userInfo.id ? 'checknextTap' : 'addStudy'}}" data-type="nameFunction"
+      data-funName="addStudy" class="btn">
+      <view bindtap="addStudy">免费报名</view>
+    </slotSign>
+  </view>
+</van-popup>
+
+<!-- 订阅消息 -->
+<reserveBox id="reserveBox" isHlive="{{true}}" wx:if="{{showReserveBox}}"></reserveBox>
+
+<!-- 登录 -->
+<loginBox id="loginBox" wx:if="{{$state.showLogin}}" statusBarHeight="{{statusBarHeight}}" />

@@ -19,14 +19,15 @@ Page({
   pageName: "个人简介页面",
   pageRecord: 1,
   onLoad(options) {
+    this.options = options
     this.setData({
       us_id: options.uid,
       nickname: options.nickname,
       avatar: options.avatar
     });
     wx.setNavigationBarTitle({
-      title: options.nickname
-    });
+      title: options.nickname ? options.nickname : '网上老年大学'
+     });
     this.param = { page: 1, pageSize: 10 };
     this.getList([]);
     wx.uma.trackEvent("post_persons", { pageName: "个人风采" });
@@ -36,8 +37,7 @@ Page({
   },
   onShow: function() {
     record.initRecord(this)
-    let list = this.data.list,
-      flowList = this.data.flowList;
+    let list = this.data.list
     list.forEach(item => {
       if (item.id == app.globalData.detail.id) {
         if (app.globalData.detail.likestatus > 0) {
@@ -148,8 +148,13 @@ Page({
           list: temp,
           university_name: temp[0].university_name,
           addressCity: temp[0].province,
-          isFollow: temp[0].is_follow
+          isFollow: temp[0].is_follow,
+          avatar: this.options.avatar ?  this.options.avatar :  temp[0].avatar,
+          nickname: this.options.nickname ? this.options.nickname :  temp[0].nickname,
         });
+        wx.setNavigationBarTitle({
+          title: this.options.nickname || temp[0].nickname
+         });
       }
       this.setData({
         showLoading: false
@@ -253,9 +258,9 @@ Page({
           "由于您近期不合规操作，您的账户已被管理员禁止发帖留言，如有疑问请在个人中心联系客服处理"
       });
     } else {
-      status.currentTarget.dataset.type == "reply"
+      status.currentTarget.dataset.bindtype == "reply"
         ? wx.navigateTo({
-            url: `/pages/pDetail/pDetail?id= ${status.currentTarget.dataset.id}&comment`
+            url: `/page/post/pages/pDetail/pDetail?id= ${status.currentTarget.dataset.id}&comment`
           })
         : wx.navigateTo({
             url: "/pages/release/release"
@@ -390,5 +395,8 @@ Page({
         }
       }
     });
-  }
+  },
+  checknextTap(e) {
+    app.checknextTap(e);
+  },
 });

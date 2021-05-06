@@ -1,0 +1,2 @@
+<!--page/index/pages/studyCard/studyCard.wxml-->
+<web-view src="{{webURL}}"></web-view>

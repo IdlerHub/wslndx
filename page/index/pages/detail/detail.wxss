@@ -137,7 +137,7 @@ page {
         display: flex;
         justify-content: center;
         align-items: center;
-        margin-left: 45rpx;
+        margin-left: 12rpx;
         line-height: 34rpx;
       }
       .info .bottom .right .right-box:nth-child(2){

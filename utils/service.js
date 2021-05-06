@@ -75,8 +75,8 @@ function xhr(path, method, param = {}, noToken, checkAPI) {
     if (token) {
       // param.uid = wx.getStorageSync("uid");
       param.timestamp = parseInt(new Date().getTime() / 1000 + "");
+      header['Authorization'] = checkAPI ? token : "Bearer " + token
     }
-    header['Authorization'] = checkAPI ? token : "Bearer " + token
   }
   let req = {
     method: method,

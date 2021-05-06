@@ -14,7 +14,7 @@ Page({
   timeActive: true,
   onLoad: function (options) {
     this.setData({
-      statusBarHeight: wx.getSystemInfoSync().statusBarHeight + 12
+      statusBarHeight: wx.getSystemInfoSync().statusBarHeight - 5
     })
     options.isOn ? [this.setData({
       isOn: 1
@@ -42,8 +42,8 @@ Page({
       let path = !this.data.isOn ? "/page/discoveryHall/pages/detail/detail?id=" +
         this.data.detail.id : "/page/discoveryHall/pages/detail/detail?isOn=1"
       return {
-        title: this.data.isOn ? '关于网上老年大学' : this.data.detail.title,
-        imageUrl: this.data.isOn ? this.data.inro.coverImage : this.data.detail.coverImage,
+        title: this.data.isOn ? '网上老年大学，千万中老年朋友更新知识的殿堂！' : this.data.detail.title,
+        imageUrl: this.data.isOn ? '../../images/shareImg.png' : this.data.detail.coverImage,
         path: path +
           "&type=share&uid=" +
           this.data.$state.userInfo.id

@@ -54,6 +54,7 @@ Page({
     this.pageInit()
     this.getList([]);
     this.gettop();
+    app.getGuide()
     let query = wx.createSelectorQuery().in(this);
     let systemInfo = wx.getSystemInfoSync();
     query.selectAll(".tabnav").boundingClientRect();
@@ -158,8 +159,8 @@ Page({
         imageUrl: article.image || article.images[0] || "../../images/sharemessage.jpg",
         path: "/page/post/pages/pDetail/pDetail?id=" +
           article.id +
-          "&type=share&uid=" +
-          this.data.$state.userInfo.id
+          "&type=share" + ( this.data.$state.userInfo.id ? "&uid=" +
+          this.data.$state.userInfo.id : null)
       };
     }
   },
@@ -286,7 +287,8 @@ Page({
       })
     })
   },
-  praise: async function (e, index) {
+  praise: async function (e) {   
+    console.log(e) 
     if (this.stopTap.praise) return
     this.stopTap.praise = true
     let i = e.currentTarget.dataset.index,
@@ -520,7 +522,7 @@ Page({
         content: "由于您近期不合规操作，您的账户已被管理员禁止发帖留言，如有疑问请在个人中心联系客服处理"
       });
     } else {
-      if (status.currentTarget.dataset.type == "reply") {
+      if (status.currentTarget.dataset.bindtype == "reply") {
         wx.navigateTo({
           url: `/page/post/pages/pDetail/pDetail?id= ${status.currentTarget.dataset.id}&comment`
         });
@@ -550,6 +552,7 @@ Page({
     }
     this.setData({
       flowId: e.currentTarget.dataset.userid,
+      follownickname: e.currentTarget.dataset.name,
       is_follow: e.currentTarget.dataset.follow,
       showSheet: true,
       collectstatus: e.currentTarget.dataset.status
@@ -659,6 +662,9 @@ Page({
             this.setData({
               [`${this.data.listName}[${i}][${index}].is_follow`]: 0
             })
+          this.setData({
+            flowId: null
+          })
         }
       })
     })
@@ -687,15 +693,15 @@ Page({
       }
     }
     let param = {
-      follower_uid: this.attentionParam.flowId
+      follower_uid: this.data.flowId || this.attentionParam.flowId
     };
     app.user.following(param).then(res => {
       wx.showToast({
-        title: "您已成功关注" + this.attentionParam.follownickname,
+        title: "您已成功关注" +  (this.data.follownickname || this.attentionParam.follownickname),
         icon: "none",
         duration: 1500
       });
-      this.setfollow(this.attentionParam.flowId, true);
+      this.setfollow(this.data.flowId || this.attentionParam.flowId, true);
       this.closeSheet();
     });
   },
@@ -712,5 +718,8 @@ Page({
       this.setfollow(this.data.flowId);
       this.closeSheet();
     });
-  }
+  },
+  checknextTap(e) {
+    app.checknextTap(e);
+  },
 });

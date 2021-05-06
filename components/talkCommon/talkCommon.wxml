@@ -142,9 +142,9 @@
         </view>
       </van-transition>
     </view>
-    <view class="joinSpelItem" wx:if="{{ joinList[0] && talkList[0] && !close}}" bindanimationend="animationiteration"
+    <view class="joinSpelItem" wx:if="{{ joinList[0] && talkList[0] && !close && joinSpelItem}}" bindanimationend="animationiteration"
       style="bottom: {{!vliveRoom ? 'calc(-50vmin / 7.5)' : ''}}">
-      <text>{{joinList[0].nick}}</text>进入了直播间
+      <text wx:if="{{$state.userInfo.id}}">{{joinList[0].nick}}</text> <open-data class="openData" wx:else type="userNickName"> </open-data> 进入了直播间
     </view>
     </view>
 

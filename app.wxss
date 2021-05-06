@@ -373,14 +373,14 @@ button.button-hover {
 }
   .ActionSheet .ActionSheet-box {
     width:100%;
-    height:267rpx;
-    background:#fff;
+    /* height:267rpx; */
+    background:#EDEDED;
     border-radius:40rpx 40rpx 0px 0px;
     position: absolute;
     bottom: 0;
     animation: runTop 0.5s;
   }
-  .ActionSheet .ActionSheet-box .ActionSheet-item {
+  .ActionSheet .ActionSheet-item {
     width:100%;
     height: 118rpx;
     text-align: center;
@@ -388,9 +388,10 @@ button.button-hover {
     font-size:38rpx;
     font-weight:400;
     color:rgba(51,51,51,1);
+    background: #fff;
     border-bottom: 1px solid rgba(237,237,237,1);
   }
-.ActionSheet .ActionSheet-box .ActionSheet-item:nth-child(2) { 
+.ActionSheet .ActionSheet-item:nth-child(2) { 
   border: 0;
 }
 .ActionSheet .ActionSheet-cancelBox {

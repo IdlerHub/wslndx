@@ -19,6 +19,7 @@ Page({
     showCommont: 1,
     showVideo: 1,
     showBox: 0,
+    ShowAddSubscribe: 0,
     moveBox: 0,
     viewNum: 0,
     showList: 1,
@@ -31,10 +32,13 @@ Page({
   pageName: 'live',
   pagetype: 'hlive',
   liveInterval: null,
+  addSubscribeTime: 0,
   onLoad: function (ops) {
     this.liveOps = ops
+    this.addSubscribeTime = Number(ops.addSubscribeTime)
     this.setData({
       statusBarHeight: ops.statusBarHeight,
+      ShowAddSubscribe: ops.ShowAddSubscribe,
       viewNum: Number(ops.viewNum)
     }, () => {
       this.liveInit()
@@ -70,19 +74,18 @@ Page({
     // timsdk.timLoginout(this)
   },
   onShareAppMessage: function () {
-    this.setCustommessag('MD5_AUDIENCE_SHARE_LIVE_ROOM')
+    this.data.$state.userInfo.id ? this.setCustommessag('MD5_AUDIENCE_SHARE_LIVE_ROOM') : ''
     return {
       imageUrl: this.data.liveDetail.shareCover || this.data.liveDetail.indexCover,
       title: this.data.liveDetail.name,
       path: "/page/live/pages/vliveRoom/vliveRoom?roomId=" +
         this.data.liveDetail.id +
-        "&type=share&uid=" +
-        this.data.$state.userInfo.id
+        "&type="+ ( this.data.$state.userInfo.id ? "share&uid=" +
+        this.data.$state.userInfo.id : null)
     };
   },
-  liveInit() {
+  liveInit(type) {
     Promise.all([this.getTimSign(), this.getLiveById(this.liveOps.roomId), this.liveCount()]).then(values => {
-      timsdk.timInit(this, values[0], 1)
       let pages = ''
       getCurrentPages().forEach(e => {
         e.route == 'page/live/pages/vliveRoom/vliveRoom' ? pages = e : ''
@@ -90,9 +93,16 @@ Page({
       this.setData({
         talkList: pages.data.talkList
       })
+      if(!this.data.$state.userInfo.id) return
+      type ? timsdk.timInit(this, values[0]) : timsdk.timInit(this, values[0], 1)
     })
   },
   getLiveById(liveId) {
+    if(!liveId ||  liveId ==='undefined'){
+      return wx.reLaunch({
+        url: "/pages/index/index"
+      });
+    }
     return app.liveData.getLiveById({
       liveId
     }).then(res => {
@@ -100,11 +110,11 @@ Page({
         liveDetail: res.data,
         showVideo: 1
       })
-      if(res.data.status == 3) {
+      if (res.data.status == 3) {
         this.setData({
           liveStatus: 3
         })
-      } else if(res.data.status > 1) {
+      } else if (res.data.status > 1) {
         this.setData({
           liveStatus: 4
         })
@@ -118,6 +128,7 @@ Page({
     })
   },
   getTimSign() {
+    if(!this.data.$state.userInfo.id) return
     return app.liveData.getTimSign({}).then(res => {
       this.setData({
         userInfo: res.data
@@ -126,6 +137,11 @@ Page({
     })
   },
   liveCount() {
+    if(!this.liveOps.roomId ||  this.liveOps.roomId ==='undefined'){
+      return wx.reLaunch({
+        url: "/pages/index/index"
+      });
+    }
     app.liveData.liveCount({
       liveId: this.liveOps.roomId
     }).then(res => {
@@ -134,9 +150,9 @@ Page({
       })
     })
   },
-  addliveCount() {
+  addliveCount(num) {
     this.setData({
-      liveCount: this.data.liveCount += 1
+      liveCount: this.data.liveCount + num
     })
   },
   checkCaption() {
@@ -148,12 +164,20 @@ Page({
     timsdk.sendTextMsg(e.detail)
   },
   checkFollow() {
-    this.setData({
-      'liveDetail.follow': 1,
-      showBox: false,
-      moveBox: false
+    app.liveData.follow({
+      followerUid: this.data.liveDetail.lecturerUserId
+    }).then(() => {
+      this.setData({
+        'liveDetail.follow': 1,
+        showBox: false,
+        moveBox: false
+      })
+      wx.showToast({
+        title: '关注成功',
+        icon: 'none'
+      })
+      this.setCustommessag('MD5_AUDIENCE_FOLLOW_LIVE_ROOM_ANCHOR')
     })
-    this.setCustommessag('MD5_AUDIENCE_FOLLOW_LIVE_ROOM_ANCHOR')
   },
   setCustommessag(customText, type, values) {
     let params = {
@@ -203,6 +227,33 @@ Page({
         }
       })
     }, 1000);
+    let that = this
+    if (this.data.ShowAddSubscribe == 1) {
+      app.liveData
+        .getLiveBySpecialColumnId({
+          specialColumnId: this.data.liveDetail.columnId,
+        }).then(res => {
+          this.setData({
+            lessonDetail: res.data
+          })
+        })
+    } else {
+      this.addSubscribeInterVal || this.data.liveDetail.isAddSubscribe || this.data.ShowAddSubscribe > 0 ? null : this.addSubscribeInterVal = setInterval(async function () {
+        that.addSubscribeTime += 1
+        if (that.addSubscribeTime >= 60) {
+          let lessonDetail = (await app.liveData
+            .getLiveBySpecialColumnId({
+              specialColumnId: that.data.liveDetail.columnId,
+            })).data
+          if (!lessonDetail.isAddSubscribe) that.setData({
+            ShowAddSubscribe: 1,
+            lessonDetail
+          })
+          clearInterval(that.addSubscribeInterVal)
+          that.addSubscribeInterVal = null
+        }
+      }, 1000)
+    }
   },
   showBox(e) {
     this.setData({
@@ -212,15 +263,6 @@ Page({
       if (e) {
         this.liveInterVal()
       }
-    })
-  },
-  attention() {
-    app.liveData.follow({ followerUid: this.data.liveDetail.lecturerUserId }).then(() => {
-      this.checkFollow()
-      wx.showToast({
-        title: '关注成功',
-        icon: 'none'
-      })
     })
   },
   animationCheck(e) {
@@ -251,5 +293,30 @@ Page({
         url: '/page/live/pages/liveDetail/liveDetail?specialColumnId=' + params.url,
       })
     }
-  }
-}) 
+  },
+  closeAddSubscribe() {
+    this.setData({
+      ShowAddSubscribe: 2
+    })
+    let page = getCurrentPages()[getCurrentPages().length - 2]
+    page.setData({
+      ShowAddSubscribe: 2
+    })
+  },
+  addStudy() {
+    app.liveData
+      .addSubscribe({
+        columnId: this.data.liveDetail.columnId,
+      })
+      .then(() => {
+        this.setData({
+          ShowAddSubscribe: 2
+        })
+        let page = getCurrentPages()[getCurrentPages().length - 2]
+        page.setData({
+          ShowAddSubscribe: 2
+        })
+      });
+    app.subscribeMessage()
+  },
+})

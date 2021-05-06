@@ -12,7 +12,7 @@
 <view class="tabnav" style="padding-top:{{ top }}px">
 	<navigator url="/page/post/pages/search/search" hover-class="none" class="search"
 		style="margin-top: {{fn.isAndroid($state.systemInfo) ? '5rpx' : ''}};">
-		<mini-icon mini-class="icon" icon="search" color="#333333" miniStyle="width:45rpx;height:45rpx" class="iconImg"/>
+		<mini-icon mini-class="icon" icon="search" color="#333333" miniStyle="width:45rpx;height:45rpx" class="iconImg" />
 	</navigator>
 	<view class="{{ currentTab != 0 ? 'lose' : ''}} tabnav-item" bindtap="switchNav" data-current="0">
 		<text>推荐</text>
@@ -45,7 +45,7 @@
 			</view>
 			<view class="circle" style="padding-top:{{$state.unRead ? '11' : ''}}px;" wx:if="{{joinedList[0]}}">
 				<scroll-view scroll-x="true" class="circle-scroll" enable-flex style="display: flex;">
-					<navigator class="scroll-view" target="miniProgram" app-id="wx705029dc7b626e23"  hover-class="none">
+					<navigator class="scroll-view" target="miniProgram" app-id="wx705029dc7b626e23" hover-class="none">
 						<view class="label">推荐</view>
 						<image src="/images/jiujiuImg.png"></image>
 						<text class="van-ellipsis">附近同学</text>
@@ -56,11 +56,14 @@
 						<image src="{{item.image}}"></image>
 						<text class="van-ellipsis">{{item.title}}</text>
 					</navigator>
-					<navigator class="scroll-view" open-type="navigate" hover-class="none"
-						url="/page/user/pages/circle/circle?type=1">
-						<image src="{{$state.imgHost}}/larstCircle.png"></image>
-						<text>加入圈子</text>
-					</navigator>
+					<slotSign class="scroll-view" catchtap="checknextTap" data-type="search"
+						data-detail="/page/user/pages/circle/circle">
+						<navigator style="margin: 0;" class="scroll-view" open-type="navigate" hover-class="none"
+							url="/page/user/pages/circle/circle?type=1">
+							<image src="{{$state.imgHost}}/larstCircle.png"></image>
+							<text>加入圈子</text>
+						</navigator>
+					</slotSign>
 				</scroll-view>
 			</view>
 			<view class="stick" catchtap="navigate" data-id="{{ bokeTop.id }}" wx:if="{{bokeTop.content}}">
@@ -111,10 +114,19 @@
 				<view class="weui-loading"></view>
 			</view>
 			<view class="wrap">
-				<view class="qstBox" wx:if="{{!flowList[0][0]}}">
+				<view class="qstBox" wx:if="{{!flowList[0][0] && $state.userInfo.id}}">
 					<image src="{{$state.imgHost}}/delBlog.png"></image>
 					<view class="txt">啥都没有呢</view>
 					<view class="txt">赶快去关注有趣的人吧！</view>
+				</view>
+				<view class="qstBox" wx:elif="{{!flowList[0][0] && !$state.userInfo.id}}">
+					<image src="{{$state.imgHost}}/delBlog.png"></image>
+					<view class="txt">您还未登录</view>
+					<view class="txt">登录后可查看关注人的动态</view>
+					<slotSign class="scroll-view" catchtap="checknextTap" data-type=""
+						data-detail="" class="loginBox">
+						<view class="loginBox" style="position: relative;">登录查看</view>
+					</slotSign>
 				</view>
 				<view wx:for="{{ flowList }}" class="wrap" wx:for-item="subList" wx:for-index="page" id="listpage-{{page + 1}}"
 					wx:key="page">
@@ -132,12 +144,14 @@
 	</swiper-item>
 </swiper>
 <view class="footer">
-	<view hover-class="none" class="write" bindtap="handleRelse" data-status="{{ $state.userInfo.status }}"
-		data-type="release">
-		<view class="write">
-			<text class="text">发帖</text>
+	<slotSign catchtap="checknextTap" data-type="nameFunction" data-funName="handleRelse" data-bindType="release">
+		<view hover-class="none" class="write" bindtap="handleRelse" data-status="{{ $state.userInfo.status }}"
+			data-bindType="release">
+			<view class="write">
+				<text class="text">发帖</text>
+			</view>
 		</view>
-	</view>
+	</slotSign>
 </view>
 <view wx:if="{{ rlAni }}" class="popup">
 	<view class="publishAni"></view>
@@ -146,14 +160,21 @@
 <navBar path="post" />
 <view class="ActionSheet" wx:if="{{showSheet}}" bindtap="closeSheet">
 	<view class="ActionSheet-box">
-		<view class="ActionSheet-item" catchtap="{{is_follow ? 'clsocancelFollowing' : 'attention'}}"
+		<slotSign catchtap="{{ !$state.userInfo.id ? 'checknextTap' : is_follow ? 'clsocancelFollowing' : 'attention' }}"
+			data-type="nameFunction" data-funName="attention" class="ActionSheet-item"
 			wx:if="{{flowId != $state.userInfo.id}}">
-			{{is_follow ? '取消关注' : '关注'}}
-		</view>
-		<view class="ActionSheet-item" catchtap="{{collectstatus ? 'cancelCollection' : 'setCollect'}}">
-			{{collectstatus ? '取消收藏' : '收藏'}}
-		</view>
-		<view class="ActionSheet-item" catchtap="closeSheet">
+			<view class="ActionSheet-item">
+				{{is_follow ? '取消关注' : '关注'}}
+			</view>
+		</slotSign>
+		<slotSign catchtap="{{ !$state.userInfo.id ? 'checknextTap' : collectstatus ? 'cancelCollection' : 'setCollect' }}"
+			data-type="nameFunction" data-funName="setCollect" class="ActionSheet-item"
+			wx:if="{{flowId != $state.userInfo.id}}">
+			<view class="ActionSheet-item" style="border: 0">
+				{{collectstatus ? '取消收藏' : '收藏'}}
+			</view>
+		</slotSign>
+		<view class="ActionSheet-item" style="margin-top: 15rpx" catchtap="closeSheet">
 			取消
 		</view>
 	</view>
@@ -179,3 +200,6 @@
 <!-- 学分动画 -->
 <integralAnimation integral="{{integral}}" integralContent="{{integralContent}}" wx:if="{{showintegral}}">
 </integralAnimation>
+
+<!-- 登录 -->
+<loginBox id="loginBox" wx:if="{{$state.showLogin}}" />

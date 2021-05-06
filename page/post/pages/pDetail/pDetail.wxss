@@ -296,20 +296,20 @@
   background: #dbdbdb;
 }
 
-.footer>.item {
+.footer .item {
   flex: 1;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.footer>.item .iconfont {
+.footer .item .iconfont {
   font-size: 58rpx;
   color: #bdbdbd;
   text-align: center;
 }
 
-.footer>.item .praise {
+.footer .item .praise {
   width: 125rpx;
   height: 125rpx;
   background-size: cover;
@@ -317,19 +317,19 @@
   animation-fill-mode: forwards;
 }
 
-.footer>.item .praise.end {
+.footer .item .praise.end {
   background-position: 100% 0;
 }
 
-.footer>.item .praise.ani {
+.footer .item .praise.ani {
   animation: ani steps(20) 1s both;
 }
 
-.footer>.item .praise+.text {
+.footer .item .praise+.text {
   margin-left: -20rpx;
 }
 
-.footer>.item .text {
+.footer .item .text {
   margin-left: 20rpx;
   font-family: PingFangSC-Regular;
   font-size: 28rpx;

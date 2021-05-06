@@ -3,24 +3,44 @@ const LiveData = require("../../../../data/LiveData");
 Page({
   data: {
     courseList: [],
+    schoolLesson: [],
     weekList: ["周一", "周二", "周三", "周四", "周五", "周六", "周日"],
-    weeks: [],
+    freeWeeks: [],
+    schoolWeeks: [],
     today: '',
     page: 1,
-    current: 0,
-    month: '',
-    pageEnd: false
+    current: {
+      free: 0,
+      school: 0,
+    },
+    month: {
+      free: 0,
+      school: 0,
+    },
+    freePageEnd: false,
+    schollPageEnd: false,
+    dataCurrent: 0,
   },
   onLoad: function (options) {
     // this.getLessonWeeks()
+    let systemInfo = wx.getSystemInfoSync();
+    this.setData({
+      statusBarHeight: systemInfo.statusBarHeight,
+      universityId: options.id || null
+    })
     this.params = {
       date: '',
       pageSize: 20,
       pageNum: 1,
       type: 1
     }
+    this.shoolParams = {
+      date: '',
+      pageSize: 20,
+      pageNum: 1,
+      type: 3
+    }
     this.options.type ? this.params['universityId'] = options.id : ''
-    console.log(this.params)
     this.getWeekDate()
   },
   getWeekDate() {
@@ -43,14 +63,21 @@ Page({
         }
       })
     this.setData({
-      weeks
+      freeWeeks: weeks,
+      schoolWeeks: weeks
     }, () => {
       weeks.forEach((e, i) => {
         e.is_today ? [this.setData({
-          current: i,
-          month: e.title,
+          current: {
+            free: i,
+            school: i,
+          },
+          month: {
+            free: e.title,
+            school: e.title,
+          },
           today: e.date
-        }), this.getUserLessons(e.date)] : ''
+        }), this.getUserLessons(e.date), this.getSchoolLesson(e.date)] : ''
       })
     })
   },
@@ -82,7 +109,7 @@ Page({
         list.push(...res.dataList)
         this.setData({
           courseList: list,
-          pageEnd: res.total < 10 ? 1 : 0
+          freePageEnd: res.dataList.length < 10 ? 1 : 0
         });
       });
     } else {
@@ -90,15 +117,32 @@ Page({
         list.push(...res.dataList)
         this.setData({
           courseList: list,
-          pageEnd: res.total < 10 ? 1 : 0
+          freePageEnd: res.dataList.length < 10 ? 1 : 0
         });
       });
     }
   },
-  onReachBottom() {
-    if (this.data.pageEnd) return
-    this.params.pageNum++
-    this.getUserLessons(this.data.weeks[this.data.current].date)
+  getSchoolLesson(date) {
+    this.shoolParams.date = new Date(date).valueOf()
+    let list = this.data.schoolLesson
+    return LiveData.freeDate(this.shoolParams).then((res) => {
+      list.push(...res.dataList)
+      this.setData({
+        schoolLesson: list,
+        pageEnd: res.dataList.length < 10 ? 1 : 0
+      });
+    });
+  },
+  reachBottom() {
+    if (this.data.dataCurrent) {
+      if (this.data.schollPageEnd) return
+      this.shoolParams.pageNum++
+      this.getSchoolLesson(this.data.schoolWeeks[this.data.current.school].date)
+    } else {
+      if (this.data.freePageEnd) return
+      this.params.pageNum++
+      this.getUserLessons(this.data.freeWeeks[this.data.current.free].date)
+    }
   },
   onPullDownRefresh() {
     this.params.date = ''
@@ -107,7 +151,7 @@ Page({
       courseList: [],
       pageEnd: 0
     })
-    this.getUserLessons(this.data.weeks[this.data.current].date).then(() => {
+    this.getUserLessons(this.data.freeWeeks[this.data.current].date).then(() => {
       wx.stopPullDownRefresh();
       wx.showToast({
         title: "刷新完成",
@@ -130,17 +174,20 @@ Page({
   },
   checkCurrent(e) {
     this.setData({
-      current: e.currentTarget.dataset.index,
-      month: e.currentTarget.dataset.month,
-      courseList: []
+      [this.data.dataCurrent ? 'current.school' : 'current.free']: e.currentTarget.dataset.index,
+      [this.data.dataCurrent ? 'month.school' : 'month.free']: e.currentTarget.dataset.month,
+      [this.data.dataCurrent ? 'schoolLesson' : 'courseList']: [],
+      [this.data.dataCurrent ? 'schollPageEnd' : 'pageEnd']: 0,
     }, () => {
-      wx.pageScrollTo({
-        duration: 0,
-        scrollTop: 0
-      })
-      this.params.date = ''
-      this.params.pageNum = 1
-      this.getUserLessons(this.data.weeks[this.data.current].date)
+      if (this.data.dataCurrent) {
+        this.shoolParams.date = ''
+        this.shoolParams.pageNum = 1
+        this.getSchoolLesson(this.data.schoolWeeks[this.data.current.school].date)
+      } else {
+        this.params.date = ''
+        this.params.pageNum = 1
+        this.getUserLessons(this.data.freeWeeks[this.data.current.free].date)
+      }
     })
   },
   getPewWeeks(date) {
@@ -174,21 +221,46 @@ Page({
   pickerChange(e) {
     let date = e.detail.value
     this.setData({
-      weeks: this.getPewWeeks(String(date)),
-      courseList: [],
-      pageEnd: 0
+      [this.data.dataCurrent ? 'schoolWeeks' : 'freeWeeks']: this.getPewWeeks(String(date)),
+      [this.data.dataCurrent ? 'schoolLesson' : 'courseList']: [],
+      [this.data.dataCurrent ? 'schollPageEnd' : 'pageEnd']: 0,
     }, () => {
-      this.params.date = ''
-      this.params.pageNum = 1
-      this.data.weeks.forEach((e, i) => {
-        date == e.date ? [this.setData({
-          current: i,
-          month: e.title,
-        }), this.getUserLessons(e.date)] : ''
-      })
+      if (this.data.dataCurrent) {
+        this.shoolParams.date = ''
+        this.shoolParams.pageNum = 1
+        this.data.schoolWeeks.forEach((e, i) => {
+          date == e.date ? [this.setData({
+            'current.school': i,
+            'month.school': e.title,
+          }), this.getSchoolLesson(e.date)] : ''
+        })
+      } else {
+        this.params.date = ''
+        this.params.pageNum = 1
+        this.data.freeWeeks.forEach((e, i) => {
+          date == e.date ? [this.setData({
+            'current.free': i,
+            'month.free': e.title,
+          }), this.getUserLessons(e.date)] : ''
+        })
+      }
     })
   },
   pickerCancel() {
     console.log('picker取消')
+  },
+  lessonChange(e) {
+    this.setData({
+      dataCurrent: e.detail.index
+    })
+  },
+  back() {
+    if(getCurrentPages().length > 1) {
+      wx.navigateBack()
+    } else {
+      wx.switchTab({
+        url: '/pages/index/index',
+      })
+    }
   }
 });

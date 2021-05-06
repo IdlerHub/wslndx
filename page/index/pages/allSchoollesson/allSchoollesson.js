@@ -12,16 +12,17 @@ Page({
     showClassify: false
   },
   navHeightList: [],
-  isLogin: 1,
   isAlllessonpage: 1,
+  categoryParams: [],
   onLoad: function (options) {
     this.universityId = options.id
+    this.hotId = options.id
     this.type = options.type
-    this.setData({
-      universityId: options.id
-    })
-    wx.setNavigationBarTitle({
-      title: options.title
+    this.currentTab = options.current || 0
+    this.from = options.from || 0
+    wx.setNavigationBarColor({
+      frontColor: '#000000',
+      backgroundColor: options.from ? '#F5F6FA' : '#fff',
     })
     let query = wx.createSelectorQuery().in(this),
       that = this
@@ -29,7 +30,29 @@ Page({
     query.exec(res => {
       that.navHeight = res[0].height
     })
-    Promise.all([this.getCategory()])
+    if (options.type == 3) {
+      const eventChannel = this.getOpenerEventChannel()
+      eventChannel.on('acceptData', function (data) {
+        wx.setNavigationBarTitle({
+          title: data.name
+        })
+        that.getCategory(data.categoryList)
+      })
+    } else if(options.type == 4) {
+      wx.setNavigationBarTitle({
+        title: options.title
+      })
+      this.getCategory()
+    } else {
+      this.setData({
+        universityId: options.id,
+        from: options.from ? 1 : null,
+      })
+      wx.setNavigationBarTitle({
+        title: options.title
+      })
+      this.getCategory()
+    }
   },
   onShow: function () {},
   onReachBottom: function () {
@@ -111,44 +134,53 @@ Page({
       })
     }, 1000)
   },
-  getCategory() {
-    this.setData({
-      currentTab: 0,
-    })
-    this.categoryParams = [{
-      categoryId: null,
-      universityId: this.universityId,
-      pageNum: 1,
-      pageSize: 10,
-      type: 1
-    }]
-    return app.lessonNew.getAllCategory().then(msg => {
-      let arr = [{
+  getCategory: async function (arr) {
+    let list = arr ? [...arr] : []
+    if (!arr) {
+      this.type == 4 ? this.categoryParams = [{
+        categoryId: null,
+        id: this.hotId,
+        pageNum: 1,
+        pageSize: 10,
+      }] : this.categoryParams = [{
+        categoryId: null,
+        universityId: this.universityId,
+        pageNum: 1,
+        pageSize: 10,
+        type: this.from > 0 ? this.from : 1
+      }]
+      list = (await app.lessonNew.getAllCategory()).dataList
+      list = [{
         id: 0,
         name: "全部",
         class: "#recommend0",
         unMove: true,
         showBtoom: false,
         showNone: false
-      }]
-      msg.dataList.forEach((i, index) => {
-        this.categoryParams[i.id] = {
-          categoryId: i.id,
-          universityId: this.universityId,
-          type: 1,
-          pageNum: 1,
-          pageSize: 10
-        }
-        i['class'] = '#recommend' + i.id
-        i['showBtoom'] = false,
-          i['showNone'] = false
-        arr.push(i)
-      })
-      this.setData({
-        nav: arr
-      }, () => {
-        this.geteCatrcommend(arr[0].id, this.data.currtab, 1)
-      })
+      }].concat(list)
+    }
+    for (let i in list) {
+      this.categoryParams[list[i].id] = this.type == 4 ? {
+        categoryId: list[i].id,
+        id: this.hotId,
+        pageNum: 1,
+        pageSize: 10
+      } : {
+        categoryId: list[i].id,
+        universityId: this.universityId,
+        type: this.from > 0 ? this.from : 1,
+        pageNum: 1,
+        pageSize: 10
+      }
+      list[i]['class'] = '#recommend' + list[i].id
+      list[i]['showBtoom'] = false
+      list['showNone'] = false
+    }
+    this.setData({
+      nav: list,
+      currentTab: this.currentTab
+    }, () => {
+      this.geteCatrcommend(list[this.data.currentTab].id, this.data.currtab, 1)
     })
   },
   geteCatrcommend(id, currtab, type) {
@@ -170,6 +202,46 @@ Page({
           [`nav[${this.data.currentTab}].showBtoom`]: true
         }) : ''
         console.log(msg.dataList.length, this.categoryParams[id].pageNum)
+        setTimeout(() => {
+          msg.dataList.length == 0 && this.categoryParams[id].pageNum == 1 ? this.setData({
+            [`nav[${this.data.currentTab}].showNone`]: true
+          }) : ''
+          currtab != this.data.currentTab && !type ? '' : this.setHeight()
+        }, 600)
+      })
+    } else if(this.type == 3) {
+      return app.lessonNew.categoryLessonOrLive(this.categoryParams[id]).then(msg => {
+        msg.dataList.forEach(function (item) {
+          item.thousand = app.util.tow(item.browse)
+        })
+        let catrecommend = this.data.catrecommend
+        catrecommend[id] = temp.concat(msg.dataList)
+        this.setData({
+          [`catrecommend[${id}]`]: temp.concat(msg.dataList)
+        })
+        temp.concat(msg.dataList).length < 10 ? this.setData({
+          [`nav[${this.data.currentTab}].showBtoom`]: true
+        }) : ''
+        setTimeout(() => {
+          msg.dataList.length == 0 && this.categoryParams[id].pageNum == 1 ? this.setData({
+            [`nav[${this.data.currentTab}].showNone`]: true
+          }) : ''
+          currtab != this.data.currentTab && !type ? '' : this.setHeight()
+        }, 600)
+      })
+    } else if(this.type == 4) {
+      return app.lessonNew.semesterColumnList(this.categoryParams[id]).then(msg => {
+        msg.dataList.forEach(function (item) {
+          item.thousand = app.util.tow(item.browse)
+        })
+        let catrecommend = this.data.catrecommend
+        catrecommend[id] = temp.concat(msg.dataList)
+        this.setData({
+          [`catrecommend[${id}]`]: temp.concat(msg.dataList)
+        })
+        temp.concat(msg.dataList).length < 10 ? this.setData({
+          [`nav[${this.data.currentTab}].showBtoom`]: true
+        }) : ''
         setTimeout(() => {
           msg.dataList.length == 0 && this.categoryParams[id].pageNum == 1 ? this.setData({
             [`nav[${this.data.currentTab}].showNone`]: true
@@ -226,7 +298,7 @@ Page({
       }) : ''
       wx.hideLoading()
     }, 300)
-    if (cur != 0) {
+    if (cur != 0 || this.type == 3) {
       let id = this.data.nav[cur].id
       this.geteCatrcommend(id, cur)
     }

@@ -23,12 +23,12 @@
   <swiper class="swiper" current="{{ currentTab }}" duration="300" bindanimationfinish="switchTab">
     <swiper-item>
         <!-- 授权 -->
-        <cover-view wx:if="{{ cur && $state.baseInfo }}" class="dropback  frontdrop">
+        <cover-view wx:if="{{ cur && $state.baseInfo && $state.userInfo.id }}" class="dropback  frontdrop">
           <cover-view class="userInfo-mask">
             <cover-view class="userInfo-box">
               <cover-view class="text">完善微信授权</cover-view>
               <cover-view class="text">获得更多免费内容</cover-view>
-              <button open-type="getUserInfo" bindgetuserinfo="onGotUserInfo">允许授权</button>
+              <button bindtap="onGotUserInfo">允许授权</button>
             </cover-view>
           </cover-view>
         </cover-view>
@@ -115,3 +115,6 @@
     </view>
   </view>
 </view>
+
+<!-- 登录 -->
+<loginBox id="loginBox" wx:if="{{$state.showLogin}}" />

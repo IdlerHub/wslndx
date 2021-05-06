@@ -2,7 +2,7 @@
 <view class="shareBox" style="{{!type ? 'padding-top:0' : ''}}"> 
   <view class="txt" wx:if="{{!type}}">邀请新学员一起学习</view>
   <view class="shareBox-content">
-    <button class="shareBtn" open-type="share" data-id="{{ $state.userInfo.id }}" hover-class="btn-hover">
+    <button class="shareBtn" open-type="{{ !$state.userInfo.id ? '' : 'share'}}" data-id="{{ $state.userInfo.id }}" hover-class="btn-hover" bindtap="{{  !$state.userInfo.id ? 'checknextTap' : '' }}">
       <image src="{{$state.imgHost}}/makeMoneywx.png"></image>
       <text>邀请好友</text>
     </button>

@@ -2,14 +2,14 @@
 <wxs module="fn">
   module.exports = {
   title: function(type) {
-  return type == 1 ? '学员优秀作品' : type == 2 ? '热门课程' : '关于网上老年大学'
+  return type == 1 ? '学员风采展示' : type == 2 ? '精选热门课程' : '关于网上老年大学'
   },
   subTitle: function(type) {
-  return type == 1 ? '更多作品' : type == 2 ? '更多课程' : ''
+  return type == 1 || type == 2 ? '查看更多' : ''
   },
-  url: function(type) {
-  return type == 1 ? '/page/discoveryHall/pages/works/works' : type == 2 ?
-  '/page/index/pages/charityLesson/charityLesson?name=热门' : ''
+  url: function(type, taskNum) {
+  return type == 1 ? '/page/discoveryHall/pages/works/works?taskNum=' + taskNum : type == 2 ?
+  '/page/index/pages/charityLesson/charityLesson?name=热门&taskNum=' + taskNum : ''
   },
   people: function(studyNum) {
   return studyNum >= 10000 ? (studyNum / 10000).toFixed(1) + 'w' : studyNum
@@ -23,27 +23,38 @@
       <text>{{title}}</text>
       <text wx:if="{{type != 3 && !isScore}}">{{item.completedTaskNum}}/{{item.taskNum}}</text>
     </view>
-    <navigator class="titleRight flexAlign" hover-class="none" url="{{url}}" wx:if="{{subTitle}}">
+    <navigator class="titleRight flexAlign" hover-class="none" url="{{url}}" wx:if="{{subTitle && !isScore}}">
       <text>{{subTitle}}</text>
       <mini-icon mini-class="icon" icon="arrowRight" color="#fff" miniStyle="width:16rpx;height:16rpx"
         class="iconImg" />
     </navigator>
+    <slotSign bindtap="checknextTap" data-type="search" data-detail="{{url}}" wx:elif="{{isScore}}">
+      <navigator target="{{!$state.userInfo.id ? 'miniProgram' : 'self'}}" class="titleRight flexAlign" hover-class="none" url="{{url}}">
+        <text>{{subTitle}}</text>
+        <mini-icon mini-class="icon" icon="arrowRight" color="#fff" miniStyle="width:16rpx;height:16rpx"
+          class="iconImg" />
+      </navigator>
+    </slotSign>
   </view>
   <view class="contentBox">
-    <template is="worksList" wx:if="{{type == 1}}" data="{{opusList}}"></template>
-    <template is="lessonList" wx:if="{{type == 2}}" data="{{lessonList}}"></template>
-    <template is="aboutBox" wx:if="{{type == 3}}" data="{{inro}}"></template>
-    <template is="score" wx:if="{{isScore}}" data="{{stepsList}}"></template>
+    <template is="worksList" wx:if="{{type == 1}}" data="{{opusList, $state}}"></template>
+    <template is="lessonList" wx:if="{{type == 2}}" data="{{lessonList, $state}}"></template>
+    <template is="aboutBox" wx:if="{{type == 3}}" data="{{inro, $state}}"></template>
+    <template is="score" wx:if="{{isScore}}" data="{{stepsList, newbie, $state}}"></template>
   </view>
 </template>
 <!-- 作品列表 -->
 <template name="worksList">
   <scroll-view scroll-x enable-flex class="worksList" wx:if="{{opusList[0]}}">
-    <navigator hover-class="none" url="/page/discoveryHall/pages/detail/detail?id={{item.id}}" class="workItem"
-      wx:for="{{opusList}}" wx:key="index">
-      <image src="{{item.coverImage}}"></image>
-      <text class="van-multi-ellipsis--l2">{{item.title}}</text>
-    </navigator>
+    <slotSign bindtap="checknextTap" data-type="search" class="workItem"
+      data-detail="/page/discoveryHall/pages/detail/detail?id={{item.id}}" wx:for="{{opusList}}" wx:key="index">
+      <navigator target="{{$state.userInfo.id ? 'self' : 'miniProgram'}}" hover-class="none"
+        url="/page/discoveryHall/pages/detail/detail?id={{item.id}}" class="workItem" style="margin: 0;">
+        <image mode="aspectFill" src="{{item.coverImage}}"></image>
+        <image src="/images/recomonPlay.png" wx:if="{{item.type == 1}}"></image>
+        <view class="van-multi-ellipsis--l2 text">{{item.title}}</view>
+      </navigator>
+    </slotSign>
     <view style="width: 20rpx;height: 50rpx;opacity: 0;">45
     </view>
   </scroll-view>
@@ -55,8 +66,11 @@
       <image src="{{item.indexCover}}"></image>
       <image src="/images/recomonPlay.png"></image>
       <text class="van-ellipsis">{{item.name}}</text>
-      <view class="tagsLine">
+      <view class="tagsLine" wx:if="{{item.tags[0]}}">
         <view wx:for="{{item.tags}}" wx:for-item="tag" wx:key="index">{{tag.tagName}}</view>
+      </view>
+      <view wx:else class="tagsLine">
+        <view>网上老年大学</view>
       </view>
       <text class="studyNum">共{{fn.people(item.studyNum)}}人在学</text>
     </view>
@@ -64,25 +78,57 @@
 </template>
 <!-- 关于本大 -->
 <template name="aboutBox">
-  <navigator hover-class="none" url="/page/discoveryHall/pages/detail/detail?isOn=1" class="aboutBox">
-    <image src="{{inro.coverImage}}"></image>
-    <image src="/images/recomonPlay.png"></image>
-    <rich-text class="text" nodes="{{inro.introduce}}"></rich-text>
-  </navigator>
+  <slotSign bindtap="checknextTap" data-type="search" data-detail="/page/discoveryHall/pages/detail/detail?isOn=1">
+    <navigator target="{{$state.userInfo.id ? 'self' : 'miniProgram'}}" hover-class="none"
+      url="/page/discoveryHall/pages/detail/detail?isOn=1" class="aboutBox">
+      <image src="{{inro.coverImage}}"></image>
+      <image src="/images/recomonPlay.png"></image>
+      <rich-text class="text" nodes="{{inro.introduce}}"></rich-text>
+    </navigator>
+  </slotSign>
 </template>
 <!-- 任务列表 -->
 <template name="score">
   <view class="scoreBox">
     <view class="scroeItem flexAlign" wx:for="{{stepsList}}" wx:key="index">
       <view class="itemLeft">
-        <text>{{item.taskName}}</text>
+        <text>{{item.taskSubName}}</text>
         <text>共可获取{{item.taskNum * item.points}}个学分</text>
       </view>
       <view class="itemRight">
-        <text>完成{{item.completedTaskNum}}/{{item.taskNum}}</text>
-        <text style="background: {{item.isCompleted ? '#CCCCCC' : ''}};" bindtap="getScore"
-          data-index="{{index}}">{{item.isCompleted ? '已获得' : '赚学分'}}</text>
+        <text class="textFirst">完成{{item.completedTaskNum}}/{{item.taskNum}}</text>
+        <text style="background: {{item.isCompleted ? '#CCCCCC' : ''}};" bindtap="getScore" data-index="{{index}}"
+          class="textSecom" wx:if="{{index < 2}}">{{item.isCompleted ? '已获得' : '赚学分'}}</text>
+        <text style="background: {{item.isCompleted ? '#CCCCCC' : ''}};" bindtap="getScore" data-index="{{index}}"
+          class="textSecom" wx:elif="{{index == 2 && $state.userInfo.id}}">{{item.isCompleted ? '已获得' : '赚学分'}}</text>
+        <slotSign bindtap="checknextTap" data-type="search" data-detail="/page/discoveryHall/pages/detail/detail?isOn=1"
+          class="itemRight" wx:else>
+          <text class="textSecom">赚学分</text>
+        </slotSign>
       </view>
+    </view>
+    <view class="scroeItem flexAlign" wx:for="{{newbie}}" wx:key="index">
+      <view class="itemLeft">
+        <text>{{item.title}}</text>
+        <text>+{{item.score}} 学分</text>
+      </view>
+      <view class="itemRight" wx:if="{{!item.login && $state.userInfo.id}}">
+        <text style="background: {{item.isCompleted ? '#CCCCCC' : ''}};" bindtap="scoreGet" data-index="{{index}}"
+          class="textSecom" wx:if="{{!item.authorization}}">{{item.isCompleted ? '已获得' : '赚学分'}}</text>
+        <text style="background: {{item.isCompleted ? '#CCCCCC' : ''}};" bindtap="scoreGet" data-index="{{index}}"
+          class="textSecom"
+          wx:elif="{{item.authorization && $state.authUserInfo}}">{{item.isCompleted ? '已获得' : '赚学分'}}</text>
+        <button class="item" bindtap="onGotUserInfo" data-index="{{index}}" wx:else>
+          <text style="background: {{item.isCompleted ? '#CCCCCC' : ''}};" data-index="{{index}}"
+            class="textSecom">{{item.isCompleted ? '已获得' : '赚学分'}}</text>
+        </button>
+      </view>
+      <view class="itemRight" wx:elif="{{!item.login}}">
+        <text bindtap="scoreGet" data-index="{{index}}" class="textSecom">赚学分</text>
+      </view>
+      <slotSign bindtap="checknextTap" data-type="search" data-detail="{{item.page}}" class="itemRight" wx:else>
+        <text bindtap="scoreGet" bindtap="scoreGet" class="textSecom" style="background: {{item.isCompleted ? '#CCCCCC' : ''}};">{{item.isCompleted ? '已获得' : '赚学分'}}</text>
+      </slotSign>
     </view>
   </view>
 </template>
@@ -103,9 +149,10 @@
   </view>
 </view>
 <template is="contentBox" wx:for="{{stepsList}}" wx:key="index"
-  data="{{title: fn.title(item.type), subTitle: fn.subTitle(item.type), url: fn.url(item.type), opusList, lessonList, type: item.type, item, inro}}">
+  data="{{title: fn.title(item.type), subTitle: fn.subTitle(item.type), url: fn.url(item.type, item.taskNum), opusList, lessonList, type: item.type, item, inro, $state}}">
 </template>
-<template is="contentBox" data="{{title: '做任务得学分',isScore: 1, stepsList}}"></template>
+<template is="contentBox"
+  data="{{title: '做任务得学分', subTitle: '赚更多学分', url: '/page/user/pages/score/score',isScore: 1, stepsList, newbie, $state}}"></template>
 <button hover-clss="none" open-type="share" class="shareBtn">
   <image src="../../images/invitBtn.png"></image>
   <image src="../../images/course.png"></image>
@@ -114,12 +161,12 @@
 <view class="ruleBtn" bindtap="onClickHid" data-type="0">规则</view>
 <van-overlay show="{{ showOverlay }}" bind:click="onClickHid" data-type="{{overlayType}}">
   <view class="ruleBox" wx:if="{{!overlayType}}">
-    <view class="title">新生体验馆</view>
+    <view class="title">新生体验营</view>
     <view class="txtList">
       <view class="line"><text></text><text>欣赏每个学员风采展示可获得5学分，最高可获得30学分</text></view>
       <view class="line"> <text></text><text>学习每门精选热门课程可获得5学分，最高可获得20学分</text></view>
       <view class="line"><text></text><text>观看网上老年大学视频介绍可获得20学分</text></view>
-      <view class="line"> <text></text><text>全部完成以上任务即可获得7天VIP学习卡</text></view>
+      <view class="line"> <text></text><text>全部完成以上任务即可获得7天体验卡</text></view>
     </view>
     <view class="specalTxt">
       <text decode>学分：在学分商城兑换课程或礼品</text>
@@ -132,3 +179,6 @@
     <image src="../../images/close.png" class="ruleClose" catchtap="onClickHid" data-type="{{overlayType}}"></image>
   </view>
 </van-overlay>
+
+<!-- 登录 -->
+<loginBox id="loginBox" wx:if="{{$state.showLogin}}" />

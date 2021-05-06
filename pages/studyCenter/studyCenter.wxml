@@ -40,28 +40,29 @@
           wx:if="{{liveList[2]}}"> <text>更 多\n直 播</text> </navigator>
         <view style="width: 30rpx; opacity: 0;">1</view>
       </scroll-view>
-      <!-- <liveItem liveList="{{liveList}}" isLive="{{isLive}}" /> -->
     </view>
     <view class="itemBox" wx:else>
-      <view class="lessItem" bindtap="topDetail" data-item="{{item}}" wx:for="{{lessonList}}" wx:key="index"
+      <view class="lessItem" bindtap="topDetail" data-item="{{item}}" wx:for="{{list}}" wx:key="index"
         style="border: {{ index == lessonList.length - 1 ? 'none' : '' }}; margin-bottom:  {{ index == lessonList.length - 1 ? 0 : '' }}">
         <view class="left">
           <image src="{{item.indexCover}}"></image>
-          <!-- <view class="mask" wx:if="{{item.isFinish}}">
-            <image src="{{$state.imgHost}}/studyIcon/pastDue.png"></image>
-          </view> -->
         </view>
         <view class="right">
           <view class="itemTitle">{{item.name}}</view>
-          <view class="bottom" wx:if="{{ item.studyLiveCount > 0 && item.studyLiveCount != item.liveCount }}">
+          <view class="bottom unStudy" wx:if="{{isRecommend}}">
+            <view class="studyNum">共{{item.liveCount}}课时</view>
+            <slotSign catchtap="checknextTap" data-type="nameFunction" data-funName="add" data-item="{{ item }}">
+              <view class="btn {{item.isEnroll ? 'over' : ''}}" catchtap="add" data-item="{{item}}">
+                {{ item.isEnroll ? '已报名' : '报名'}}
+              </view>
+            </slotSign>
+          </view>
+          <view class="bottom" wx:elif="{{ item.studyLiveCount > 0 && item.studyLiveCount != item.liveCount }}">
             <view class="studyNum">已学{{item.studyLiveCount}}/{{item.liveCount}}课时</view>
             <view class="studyLine"><text
                 style="width: {{ (item.studyLiveCount / item.liveCount) * 100 > 100 ? 100 : (item.studyLiveCount / item.liveCount) * 100 }}%;"></text>
             </view>
           </view>
-          <!-- <view class="bottom" wx:elif="{{item.isFinish}}">
-            <view class="studyNum">课程过期时间  {{item.studydate}}</view>  
-          </view> -->
           <view class="bottom unStudy" wx:else>
             <view class="studyNum">共{{item.liveCount}}课时</view>
             <view class="btn {{item.studyLiveCount > 0 ? 'over' : ''}}">
@@ -96,19 +97,34 @@
     </view>
   </view>
   <view class="iconBox">
-    <view wx:for="{{iconList}}" wx:key="index" class="iconItem" bindtap="iconBind" data-item="{{item}}">
-      <image src="{{item.image}}" style="width: {{item.width}}rpx;height:{{item.height}}rpx;"></image>
-      <text>{{item.name}}</text>
+    <view wx:for="{{iconList}}" wx:key="index">
+      <slotSign bindtap="{{ !$state.userInfo.id ? 'checknextTap' : 'iconBind'}}" data-item="{{item}}" data-type="search"
+        data-detail="{{item.url}}" wx:if="{{!$state.userInfo.id && index != 3}}">
+        <view class="iconItem">
+          <image src="{{item.image}}" style="width: {{item.width}}rpx;height:{{item.height}}rpx;"></image>
+          <text>{{item.name}}</text>
+        </view>
+      </slotSign>
+      <view class="iconItem" bindtap="iconBind" data-item="{{item}}" wx:else>
+        <image src="{{item.image}}" style="width: {{item.width}}rpx;height:{{item.height}}rpx;"></image>
+        <text>{{item.name}}</text>
+      </view>
     </view>
   </view>
 </view>
 <view wx:if="{{liveList[0] || lessonList[0]}}">
-  <template is="contentBox" data="{{ title:'正在直播', isLive: 1, liveList, detail }}" wx:if="{{liveList[0]}}"></template>
-  <template is="contentBox" data="{{ title:'我的课程', lessonList, detail }}" wx:if="{{lessonList[0]}}"></template>
+  <!-- <template is="contentBox" data="{{ title:'正在直播', isLive: 1, liveList, detail }}" wx:if="{{liveList[0]}}"></template> -->
+  <template is="contentBox" data="{{ title:'我的课程', list: lessonList, detail }}" wx:if="{{lessonList[0]}}"></template>
 </view>
 <view class="qst" wx:else>
   <image src="/images/liveqs.png"></image>
-  <text>您还未开始学习</text>
-  <navigator class="navigator" url="/page/index/pages/allLesson/allLesson">去选课</navigator>
+  <text>更多优质课程等你来学</text>
+  <navigator class="navigator" hover-class="none" url="/page/index/pages/allLesson/allLesson">发现课程</navigator>
+</view>
+<view class="recommend" wx:if="{{recommenList[0] && !lessonList[0]}}">
+  <template is="contentBox" data="{{ title:'为您推荐', list: recommenList, isRecommend: 1 }}"></template>
 </view>
 <navBar path="video" />
+
+<!-- 登录 -->
+<loginBox id="loginBox" wx:if="{{$state.showLogin}}" />

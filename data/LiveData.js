@@ -187,6 +187,16 @@ function recommendLessons(params) {
 }
 
 /**
+ * @description: 首页课程
+
+ * @param {}
+ * @return:  promise
+ * **/
+function selectFreeLives(params) {
+  return httpService.post("live/selectFreeLives", params, null ,true);
+}
+
+/**
  * @description: 加入学习（新）
  * @param {}
  * @return:  promise
@@ -346,6 +356,43 @@ function giftListConfig(params) {
   return httpService.post("live/giftListConfig", params, null ,true);
 }
 
+/**
+ * @description: 课程消息订阅id列表
+ * @param {}
+ * @return:  promise
+ * **/
+function getTemplate(params) {
+  return httpService.post("user/getTemplate", params);
+}
+
+/**
+ * @description: 预约直播
+ * @param {}
+ * @return:  promise
+ * **/
+function liveReserve(params) {
+  return httpService.post("live/reserve", params, null, true);
+}
+
+/**
+ * @description: 小程序用户根据分类推荐
+ * @param {}
+ * @return:  promise
+ * **/
+function selectRecommedListByCategoryIds(params) {
+  return httpService.post("live/selectRecommedListByCategoryIds", params, null, true);
+}
+
+/**
+ * @description: 小程序首页获取回播
+ * @param {}
+ * @return:  promise
+ * **/
+function selectBackLives(params) {
+  return httpService.post("live/selectBackLives", params, null, true);
+}
+
+
 module.exports = {
   getLiveLessons,
   getApplyDetail,
@@ -384,5 +431,10 @@ module.exports = {
   hotList,
   chargeList,
   freeDate,
-  giftListConfig
+  giftListConfig,
+  selectFreeLives,
+  getTemplate,
+  liveReserve,
+  selectRecommedListByCategoryIds,
+  selectBackLives,
 };

@@ -5,7 +5,6 @@ Page({
     list: []
   },
   isTopteacher: 1,
-  isLogin: 1,
   onLoad: function (options) {
     this.params = {
       pageSize: 10,

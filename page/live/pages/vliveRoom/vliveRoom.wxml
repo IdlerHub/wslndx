@@ -1,4 +1,11 @@
 <!--page/live/pages/liveVideo/liveVideo.wxml-->
+<wxs module="fn">
+  module.exports = {
+  num: function(num) {
+  return num > 10000 ? (num / 10000).toFixed(1) + 'W' : num
+  }
+  }
+</wxs>
 <live-player src="{{liveDetail.liveUrl}}" class="v-player" autoplay bindstatechange="bindstatechange"
   bindleavepictureinpicture="bindleavepictureinpicture"
   wx:if="{{liveStatus == 1 && liveDetail.direction && !liveDetail.liveType}}">
@@ -34,6 +41,11 @@
         即将开播
       </view>
     </view>
+    <slotSign catchtap="{{!$state.userInfo.id ? 'checknextTap' : 'reserve'}}" data-type="nameFunction" data-funName=""
+      class="subscribe"
+      style="background: {{liveDetail.reserveStatus ? 'rgba(255, 255, 255, 0.2)' : ''}};color: {{liveDetail.reserveStatus ? 'rgba(255, 255, 255, 1)' : ''}}">
+      <view>{{liveDetail.reserveStatus ? '已预约' : '预约上课'}}</view>
+    </slotSign>
   </view>
 </view>
 <view class="statusBox" wx:if="{{liveStatus != 1}}">
@@ -66,7 +78,7 @@
 <image class="liveFloat" src="{{liveDetail.floatImage}}" wx:if="{{liveDetail.floatStatus}}" bindtap="clickFloat">
 </image>
 
-<liveBottom close="{{close}}" columnId="{{liveDetail.columnId}}" keyHeight="{{keyHeight}}" vliveRoom="1"
+<liveBottom id="liveBottom" close="{{close}}" columnId="{{liveDetail.columnId}}" keyHeight="{{keyHeight}}" vliveRoom="1"
   bind:sendMsg="sendMsg" bind:praise="praise" bind:checkCaption="checkCaption" bind:clickHandler="clickHandler" />
 <like-fx count="{{praiseCount}}" wx:if="{{showCanvans}}"></like-fx>
 
@@ -76,9 +88,41 @@
     <image src="{{ liveDetail.avatar }}" class="avatar"></image>
     <text>{{ liveDetail.nickname }}</text>
     <text>关注老师，更多好课不错过</text>
-    <view class="addBtn" catchtap="attention">关注</view>
+    <slotSign catchtap="{{!$state.userInfo.id ? 'checknextTap' : 'checkFollow'}}" data-type="nameFunction"
+      data-funName="checkFollow">
+      <view class="addBtn">关注</view>
+    </slotSign>
   </view>
 </view>
 
 <textarea class="textarea" placeholder="文字" focus="{{false}}" fixed show-confirm-bar adjust-position="{{false}}"
   bindblur="showBox"></textarea>
+
+<van-popup show="{{ ShowAddSubscribe == 1 }}" position="bottom" custom-style="height: 496rpx;background: #393B47;"
+  bind:close="onClose" round="true" overlay="{{false}}" z-index="99999999999">
+  <view class="addSubscribeBox">
+    <view class="addSubscribeTitle">
+      <text>好课不错过</text>
+      <image src="/images/warn.png" bindtap="closeAddSubscribe"></image>
+    </view>
+    <view class="lessonDetail">
+      <image class="cover" src="{{liveDetail.cover}}"></image>
+      <image class="icon" src="/images/recomonPlay.png"></image>
+      <view style="flex: 1;width: 0;display: flex;flex-direction: column;justify-content: space-between;">
+        <text class="van-ellipsis">{{lessonDetail.name}}</text>
+        <text class="van-ellipsis">共{{fn.num(lessonDetail.studyNum)}}人在学</text>
+        <text wx:if="{{liveDetail.nextDayTime}}">下节课时间：{{ liveDetail.nextDayTime + liveDetail.nextStartTime }}</text>
+      </view>
+    </view>
+    <slotSign catchtap="{{!$state.userInfo.id ? 'checknextTap' : 'addStudy'}}" data-type="nameFunction"
+      data-funName="addStudy">
+      <view class="btn">免费报名</view>
+    </slotSign>
+  </view>
+</van-popup>
+
+<!-- 订阅消息提示框 -->
+<reserveBox id="reserveBox" liveId="{{liveDetail.id}}" wx:if="{{showReserveBox}}"></reserveBox>
+
+<!-- 登录 -->
+<loginBox id="loginBox" wx:if="{{$state.showLogin}}" />

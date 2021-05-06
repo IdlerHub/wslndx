@@ -1,7 +1,5 @@
 {
   "usingComponents": {
-    "slotSign": "/components/slotSign/slotSign",
-    "loginBox": "/components/loginBox/loginBox"
   },
   "navigationBarTitleText": "搜索课程",
   "navigationBarBackgroundColor": "#F5F6FA",

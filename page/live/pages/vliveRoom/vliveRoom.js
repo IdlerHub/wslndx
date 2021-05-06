@@ -17,6 +17,7 @@ Page({
     showCanvans: 1,
     liveStatus: 1,
     showVideo: 1,
+    ShowAddSubscribe: 0,
     showBox: 0,
     moveBox: 0,
     viewNum: 0,
@@ -34,9 +35,11 @@ Page({
   },
   pageName: 'live',
   liveInterval: null,
+  addSubscribeTime: 0,
   onLoad: function (ops) {
     this.liveOps = ops
     this.liveInit()
+    this.data.$state.userInfo.id ?  null : this.talkListInit()
     let systemInfo = wx.getSystemInfoSync()
     systemInfo.statusBarHeight < 30 ?
       this.setData({
@@ -82,7 +85,6 @@ Page({
       this.setData({
         keyHeight: res.height
       }, () => {
-        console.log(this.data.textHeight, this.textHeight, this.data.textHeight - this.textHeight >= 0)
         this.data.keyHeight - this.textHeight >= 0 ? '' : this.setData({
           keyHeight: '-60'
         });
@@ -97,29 +99,43 @@ Page({
       showVideo: 0
     })
     this.liveInterval ? [clearInterval(this.liveInterval), this.liveInterval = null] : ''
+    this.addSubscribeInterVal ? [clearInterval(this.addSubscribeInterVal), this.addSubscribeInterVal = null] : ''
   },
   onUnload: function () {
-    timsdk.quitGroup(this)
-    timsdk.timLoginout(this)
     this.liveInterval ? [clearInterval(this.liveInterval), this.liveInterval = null] : ''
     wx.offKeyboardHeightChange()
     wx.setKeepScreenOn({
       keepScreenOn: false
     })
+    if(!this.data.$state.userInfo.id) return
+    timsdk.quitGroup(this)
+    timsdk.timLoginout(this)
   },
   onShareAppMessage: function () {
-    this.setCustommessag('MD5_AUDIENCE_SHARE_LIVE_ROOM')
+    this.data.$state.userInfo.id ? this.setCustommessag('MD5_AUDIENCE_SHARE_LIVE_ROOM') : null
     return {
       imageUrl: this.data.liveDetail.shareCover || this.data.liveDetail.indexCover,
       title: this.data.liveDetail.name,
       path: "/page/live/pages/vliveRoom/vliveRoom?roomId=" +
         this.data.liveDetail.id +
-        "&type=share&uid=" +
-        this.data.$state.userInfo.id
+        "&type="+ ( this.data.$state.userInfo.id ? "share&uid=" +
+        this.data.$state.userInfo.id : null)
     };
+  },
+  talkListInit() {
+    this.setData({
+      talkList: [{
+        nick: "网上老年大学小助手",
+        payload: {
+          text: "欢迎来到直播间：<p> 1、请自行调节手机音量至合适的状态。</p> <p>2、听众发言可以在讨论区进行查看。</p>",
+        },
+      }]
+    })
+
   },
   liveInit(type) {
     Promise.all([this.getTimSign(), this.getLiveById(this.liveOps.roomId), this.liveCount()]).then(values => {
+      if(!this.data.$state.userInfo.id) return
       if (type) {
         timsdk.timInit(this, values[0], 1)
         this.setData({
@@ -131,28 +147,34 @@ Page({
     })
   },
   getLiveById(liveId, type) {
+    let that = this
+    if(!liveId ||  liveId ==='undefined'){
+     return wx.reLaunch({
+        url: "/pages/index/index"
+      });
+    }
     return app.liveData.getLiveById({
-      liveId
-    }).then(res => {
-      this.setData({
+      liveId 
+    }).then((res) => {
+      that.setData({
         liveDetail: res.data,
         showVideo: 1
       })
       if (res.data.status == 3) {
-        this.setData({
+        that.setData({
           liveStatus: 3
         })
       } else if (res.data.status > 1) {
-        this.setData({
+        that.setData({
           liveStatus: 4
         })
       } else if (res.data.status == 0) {
-        this.setData({
+        that.setData({
           liveStatus: 0
         }, () => {
           if (type) return
           let date = new Date()
-          let dataTime = date.getFullYear() + '/' + this.data.liveDetail.dayTime.slice(0, 2) + '/' + this.data.liveDetail.dayTime.slice(3, 5) + ' ' + this.data.liveDetail.startTime.slice(0, 2) + ':' + this.data.liveDetail.startTime.slice(3, 5) + ':00'
+          let dataTime = date.getFullYear() + '/' + that.data.liveDetail.dayTime.slice(0, 2) + '/' + that.data.liveDetail.dayTime.slice(3, 5) + ' ' + that.data.liveDetail.startTime.slice(0, 2) + ':' + that.data.liveDetail.startTime.slice(3, 5) + ':00'
           let total = ((new Date(dataTime)).getTime() - date.getTime()) / 1000
           let day = parseInt(total / (24 * 60 * 60))
           let afterDay = total - day * 24 * 60 * 60;
@@ -160,51 +182,52 @@ Page({
           let afterHour = total - day * 24 * 60 * 60 - hour * 60 * 60;
           let min = parseInt(afterHour / 60);
           if (day == 0 && hour == 0 && min == 0) return
-          this.setData({
+          that.setData({
             'downTime.d': day,
             'downTime.m': min + 1 >= 60 ? hour + 1 : hour,
             'downTime.s': min + 1 >= 0 ? min + 1 >= 60 ? 0 : min + 1 : 0
           }, () => {
-            if (this.downTimer) return
-            this.downTimer = setInterval(() => {
-              if (this.data.downTime.s - 1 < 0) {
-                if (this.data.downTime.m - 1 < 0 && this.data.downTime.d > 0) {
-                  this.setData({
-                    'downTime.d': this.data.downTime.d - 1,
+            if (that.downTimer) return
+            that.downTimer = setInterval(() => {
+              if (that.data.downTime.s - 1 < 0) {
+                if (that.data.downTime.m - 1 < 0 && that.data.downTime.d > 0) {
+                  that.setData({
+                    'downTime.d': that.data.downTime.d - 1,
                     'downTime.m': 23,
                     'downTime.s': 59
                   })
                 } else {
-                  this.setData({
-                    'downTime.d': this.data.downTime.d,
-                    'downTime.m': this.data.downTime.m - 1,
+                  that.setData({
+                    'downTime.d': that.data.downTime.d,
+                    'downTime.m': that.data.downTime.m - 1,
                     'downTime.s': 59
                   })
                 }
               } else {
-                this.setData({
-                  'downTime.d': this.data.downTime.d,
-                  'downTime.m': this.data.downTime.m,
-                  'downTime.s': this.data.downTime.s - 1
+                that.setData({
+                  'downTime.d': that.data.downTime.d,
+                  'downTime.m': that.data.downTime.m,
+                  'downTime.s': that.data.downTime.s - 1
                 })
               }
-              if (this.data.downTime.d == 0 && this.data.downTime.m == 0 && this.data.downTime.s == 0) {
-                this.getLiveById(this.liveOps.roomId, 1)
-                clearInterval(this.downTimer)
+              if (that.data.downTime.d == 0 && that.data.downTime.m == 0 && that.data.downTime.s == 0) {
+                that.getLiveById(that.liveOps.roomId, 1)
+                clearInterval(that.downTimer)
               }
             }, 60000)
           })
         })
       } else {
-        this.setData({
+        that.setData({
           liveStatus: 1
         })
       }
-      this.liveInterVal()
-      return this.data.liveDetail
+      that.liveInterVal()
+      return that.data.liveDetail
     })
   },
   getTimSign() {
+    if(!this.data.$state.userInfo.id) return
     return app.liveData.getTimSign({}).then(res => {
       this.setData({
         userInfo: res.data
@@ -213,6 +236,11 @@ Page({
     })
   },
   liveCount() {
+    if(!this.liveOps.roomId ||  this.liveOps.roomId ==='undefined'){
+     return wx.reLaunch({
+        url: "/pages/index/index"
+      });
+    }
     app.liveData.liveCount({
       liveId: this.liveOps.roomId
     }).then(res => {
@@ -221,9 +249,9 @@ Page({
       })
     })
   },
-  addliveCount() {
+  addliveCount(num) {
     this.setData({
-      liveCount: this.data.liveCount += 1
+      liveCount: this.data.liveCount + num
     })
   },
   checkCaption() {
@@ -235,12 +263,20 @@ Page({
     timsdk.sendTextMsg(e.detail)
   },
   checkFollow() {
-    this.setData({
-      'liveDetail.follow': 1,
-      showBox: false,
-      moveBox: false
+    app.liveData.follow({
+      followerUid: this.data.liveDetail.lecturerUserId
+    }).then(() => {
+      this.setData({
+        'liveDetail.follow': 1,
+        showBox: false,
+        moveBox: false
+      })
+      wx.showToast({
+        title: '关注成功',
+        icon: 'none'
+      })
+      this.setCustommessag('MD5_AUDIENCE_FOLLOW_LIVE_ROOM_ANCHOR')
     })
-    this.setCustommessag('MD5_AUDIENCE_FOLLOW_LIVE_ROOM_ANCHOR')
   },
   setCustommessag(customText, type, values) {
     let params = {
@@ -280,7 +316,7 @@ Page({
         showVideo: 0
       })
       wx.navigateTo({
-        url: `../hliveRoom/hliveRoom?roomId=${this.data.liveDetail.id}&statusBarHeight=${this.data.statusBarHeight}&viewNum=${this.data.viewNum}`,
+        url: `../hliveRoom/hliveRoom?roomId=${this.data.liveDetail.id}&statusBarHeight=${this.data.statusBarHeight}&viewNum=${this.data.viewNum}&addSubscribeTime=${this.addSubscribeTime}&ShowAddSubscribe=${this.data.ShowAddSubscribe}`,
       })
     }, 200);
   },
@@ -304,6 +340,23 @@ Page({
         }
       })
     }, 1000);
+    if(this.data.ShowAddSubscribe == 2) return
+    let that = this
+    this.addSubscribeInterVal || this.data.liveDetail.isAddSubscribe ? null : this.addSubscribeInterVal = setInterval(async function () {
+      that.addSubscribeTime += 1
+      if (that.addSubscribeTime >= 60) {
+        let lessonDetail = (await app.liveData
+          .getLiveBySpecialColumnId({
+            specialColumnId: that.data.liveDetail.columnId,
+          })).data
+        if (!lessonDetail.isAddSubscribe) that.setData({
+          ShowAddSubscribe: 1,
+          lessonDetail
+        })
+        clearInterval(that.addSubscribeInterVal)
+        that.addSubscribeInterVal = null
+      }
+    }, 1000)
   },
   showTentionBox(e) {
     this.setData({
@@ -313,17 +366,6 @@ Page({
       if (e) {
         this.liveInterVal()
       }
-    })
-  },
-  attention() {
-    app.liveData.follow({
-      followerUid: this.data.liveDetail.lecturerUserId
-    }).then(() => {
-      this.checkFollow()
-      wx.showToast({
-        title: '关注成功',
-        icon: 'none'
-      })
     })
   },
   animationCheck(e) {
@@ -360,5 +402,29 @@ Page({
         })
       }
     }
-  }
+  },
+  closeAddSubscribe() {
+    this.setData({
+      ShowAddSubscribe: 2
+    })
+  },
+  addStudy() {
+    app.liveData
+      .addSubscribe({
+        columnId: this.data.liveDetail.columnId,
+      })
+      .then(() => {
+        this.setData({
+          ShowAddSubscribe: 2
+        })
+        app.subscribeMessage()
+      });
+  },
+  // 直播订阅
+  reserve: async function() {
+    app.subscribeMessage(this.data.liveDetail.id)
+  },
+  checknextTap(e) {
+    app.checknextTap(e);
+  },
 })

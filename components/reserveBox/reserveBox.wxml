@@ -1,0 +1,22 @@
+<!--components/reserveBox/reserveBox.wxml-->
+<van-overlay show="{{ show }}" z-index="9999999999" duration="0" bind:click="onClickHide">
+  <view class="wrapper" wx:if="{{!showSetting  && !showReserveBox}}">
+    <image src="/images/reserveGif.gif" class="reserveGif"></image>
+  </view>
+  <view class="wrapper" wx:elif="{{showReserveBox}}">
+      <view class="contentBox">
+        <text>点击允许提醒
+          才能收到上课提醒哦！</text>
+        <image src="/images/reserveGif.gif" class="reserveGif"></image>
+        <view class="reverve" bindtap="reverve">允许提醒</view>
+        <mini-icon mini-class="icon" icon="closeOutline" class="close" color="#FFF" miniStyle="width:calc(65vmin / 7.5);height:calc(65vmin / 7.5)" bindtap="close"/>
+      </view>
+  </view>
+  <view class="wrapper {{isHlive ? 'isHlive' : ''}}" wx:elif="{{showSetting}}">
+    <view class="contentBox" style="padding-top: 0;">
+      <image src="/images/settingGif.gif" class="settingGif"></image>
+      <view class="reverve" bindtap="restSetting">前往设置</view>
+      <mini-icon mini-class="icon" icon="closeOutline" class="close" color="#FFF" miniStyle="width:calc(65vmin / 7.5);height:calc(65vmin / 7.5)" bindtap="close"/>
+    </view>
+</view>
+</van-overlay> 

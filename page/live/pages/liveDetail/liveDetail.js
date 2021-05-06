@@ -56,7 +56,9 @@ Page({
   timeScore: null,
   onLoad: function (options) {
     options.lessonId ? options.specialColumnId = options.lessonId - -614 : ''
-    options.specialColumnId? this.setData({specialColumnId: options.specialColumnId}):''
+    options.specialColumnId ? this.setData({
+      specialColumnId: options.specialColumnId
+    }) : ''
     this.options = options
     this.videoContext = wx.createVideoContext("myVideo");
     this.init(options);
@@ -76,9 +78,12 @@ Page({
     this.getLessonDetail(this.options.specialColumnId, true);
   },
   onGotUserInfo(e) {
-    if (e.detail.errMsg == "getUserInfo:ok") {
-      app.updateBase(e); //更新state授权状态
-    }
+    wx.getUserProfile({
+      desc: '请授权您的个人信息便于更新资料',
+      success: (res) => {
+        app.updateBase(res)
+      }
+    })
   },
   onReachBottom() {
     if (this.data.currentTab == 1) {
@@ -93,12 +98,12 @@ Page({
     // wx.onNetworkStatusChange((res) => {
     //   res.networkType == "wifi" ? app.playVedio("wifi") : "";
     // });
-    if(!this.timeScore) return
+    if (!this.timeScore) return
     this.timeScore.timeScore.start()
     this.timeActive = true
   },
   onHide() {
-    if(!this.timeScore) return
+    if (!this.timeScore) return
     this.timeScore.timeScore.pause()
     this.timeActive = false
   },
@@ -112,7 +117,9 @@ Page({
   },
   collect() {
     if (this.data.lessonDetail.isCollect) {
-      app.lessonNew.cancelCollect({ columnId: this.data.lessonDetail.columnId}).then(res => {
+      app.lessonNew.cancelCollect({
+        columnId: this.data.lessonDetail.columnId
+      }).then(res => {
         this.getLessonDetail(this.data.specialColumnId)
         wx.showToast({
           title: '您已取消收藏',
@@ -127,7 +134,9 @@ Page({
         })
       })
     } else {
-      app.lessonNew.collect({ columnId: this.data.lessonDetail.columnId}).then(res => {
+      app.lessonNew.collect({
+        columnId: this.data.lessonDetail.columnId
+      }).then(res => {
         this.getLessonDetail(this.data.specialColumnId)
         wx.showToast({
           title: '收藏成功',
@@ -162,7 +171,7 @@ Page({
   haveNum() {
     let num = 0
     this.data.sublessons.map(item => {
-      if(item.state==1||item.state==3){
+      if (item.state == 1 || item.state == 3) {
         num++
       }
       this.setData({
@@ -226,19 +235,20 @@ Page({
   },
   //获取数据
   getLessonDetail(specialColumnId, flag = false) {
-    let _this = this, params = {
-      specialColumnId
-    }
+    let _this = this,
+      params = {
+        specialColumnId
+      }
     this.options.scroeId ? params.hallSpecialColumnId = this.options.scroeId : null
     LiveData.getLiveBySpecialColumnId(params).then((res) => {
       wx.setNavigationBarTitle({
         title: res.data.name || "",
       });
-      if (res.data.isAddSubscribe == 0 && !(res.data.price > 0)) {
-        wx.redirectTo({
-          url: `/page/live/pages/tableDetail/tableDetail?specialColumnId=${specialColumnId}`,
-        });
-      }
+      // if (res.data.isAddSubscribe == 0 && !(res.data.price > 0)) {
+      //   wx.redirectTo({
+      //     url: `/page/live/pages/tableDetail/tableDetail?specialColumnId=${specialColumnId}`,
+      //   });
+      // }
       res.data.introduction = htmlparser.default(
         res.data.introduction
       );
@@ -545,6 +555,11 @@ Page({
   getLiveBackById(liveId, type) {
     let i = 0,
       studyNum = 0
+    if (!liveId || liveId === 'undefined') {
+      return wx.reLaunch({
+        url: "/pages/index/index"
+      });
+    }
     LiveData.getLiveBackById({
       liveId
     }).then(res => {
@@ -555,7 +570,7 @@ Page({
       this.setData({
         playNow: res.data,
         [`sublessons[${i}].isStudy`]: 1,
-        'lessonDetail.progress': !type && this.data.lessonDetail.progress < 100 ? ((studyNum + 1) / this.data.lessonDetail.liveCount * 100).toFixed(0) : this.data.lessonDetail.progress
+        'lessonDetail.progress': this.data.$state.userInfo.id ? !type && this.data.lessonDetail.progress < 100 ? ((studyNum + 1) / this.data.lessonDetail.liveCount * 100).toFixed(0) : this.data.lessonDetail.progress : 0
       }, () => {
         this.recordAddVedio();
       })
@@ -1279,15 +1294,35 @@ Page({
       playFlag: true,
     });
   },
+  loginInterval() {
+    if(this.loginTime) return
+    this.loginTimer = setInterval(() => {
+      this.loginTime = this.loginTime ? this.loginTime += 1 : 1
+      if (this.loginTime >= 60) {
+        this.videoContext.pause();
+        this.setData({
+          pause: true
+        })
+        app.changeLoginstatus()
+        app.store.setState({
+          "nextTapDetial.type": 'nameFunction',
+          "nextTapDetial.detail": 'played',
+        })
+        this.loginTime = 1
+        clearInterval(this.loginTimer)
+      }
+    }, 1000);
+  },
   played() {
     //开始播放
+    this.data.pause ? this.videoContext.play() : null
     this.setData({
-      pause:false
+      pause: false
     });
-    setTimeout(() => {
+    this.data.$state.userInfo.id ? setTimeout(() => {
       this.timeTemplate = parseInt(new Date().getTime() / 1000 + "")
       this.updateProgress(0)
-    }, 800)
+    }, 800) : this.loginInterval()
   },
   timeupdate() {
     //进度条变化
@@ -1299,10 +1334,13 @@ Page({
     // this.setData({
     //   playFlag: false,
     // });
+    clearInterval(this.loginTimer)
     if (this.timeTemplate > 0) {
       let progress = parseInt(new Date().getTime() / 1000 + "") - this.timeTemplate
       this.updateProgress(progress)
-      this.setData({pause: true})
+      this.setData({
+        pause: true
+      })
     }
   },
   ended() {
@@ -1334,7 +1372,7 @@ Page({
       cover = this.data.lessonDetail.shareCover || this.data.lessonDetail.cover;
     return {
       title: `快来和我一起报名,免费好课天天学!`,
-      path: `/page/live/pages/liveDetail/liveDetail?specialColumnId=${lesson_id}&inviter=${this.data.$state.userInfo.id}&liveShare=1`,
+      path: `/page/live/pages/liveDetail/liveDetail?specialColumnId=${lesson_id}&liveShare=1` + (this.data.$state.userInfo.id ? `&inviter=${this.data.$state.userInfo.id}` : null),
       imageUrl: cover,
     };
   },
@@ -1349,4 +1387,10 @@ Page({
       fullScreen: e.detail.fullScreen,
     });
   },
+  checknextTap(e) {
+    app.checknextTap(e);
+  },
+  showLogin() {
+    app.changeLoginstatus()
+  }
 });

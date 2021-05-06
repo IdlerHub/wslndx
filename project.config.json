@@ -37,7 +37,7 @@
     ]
   },
   "setting": {
-    "urlCheck": false,
+    "urlCheck": true,
     "es6": true,
     "enhance": true,
     "postcss": true,
@@ -77,7 +77,7 @@
     "minifyWXSS": true
   },
   "compileType": "miniprogram",
-  "libVersion": "2.12.2",
+  "libVersion": "2.15.0",
   "appid": "wx756d04f5d669cef0",
   "projectname": "wslndx",
   "isGameTourist": false,
@@ -158,8 +158,8 @@
           "scene": null
         },
         {
-          "name": "pages/studyCenter/studyCenter",
-          "pathName": "pages/studyCenter/studyCenter",
+          "name": "page/discoveryHall/pages/index/index",
+          "pathName": "page/discoveryHall/pages/index/index",
           "query": "specialColumnId=246",
           "scene": 1069,
           "referrerInfo": {}

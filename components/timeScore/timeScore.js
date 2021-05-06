@@ -19,7 +19,7 @@ Component({
       value: {},
       observer: function() {
         this.setData({
-          time: 1 * 1000,
+          time: 60 * 1000,
         })
       }
     }
@@ -33,6 +33,9 @@ Component({
     this.timeScore = this.selectComponent('.control-count-down')
     this.addStudy = false
     this.page = getCurrentPages()[getCurrentPages().length - 1]
+    getCurrentPages().forEach(item => {
+      item.pageName == 'discoveryHall' ? this.pages = item : ''
+    })
     setTimeout(() => {
       this.addStudyRecord()
     }, 1000)
@@ -51,8 +54,16 @@ Component({
             channelType: JSON.stringify(this.data.lessonDetail) == "{}" ? (JSON.stringify(this.data.detail) == '{}' ? 3 : 1) : 2
           }).then(res => {
             app.setIntegral(this.page, '+' + (this.data.detail.score || this.data.inro.score || this.data.lessonDetail.score) + ' 学分', `您已获得${this.data.detail.score || this.data.inro.score || this.data.lessonDetail.score}学分`)
-            if (res.data.isSendCard == 0) {
-              wx.setStorageSync('showVipBox', 1)
+            let name = JSON.stringify(this.data.lessonDetail) == "{}" ? (JSON.stringify(this.data.detail) == '{}' ? 'inro' : 'detail') : 'lessonDetail'
+            this.page.setData({
+              [`${name}.studyScore`]: 1
+            })
+            console.log(res.data, this.pages)
+            if (res.data.isSendCard == 1) {
+              this.pages.setData({
+                showOverlay: true,
+                overlayType: 1
+              })
             }
           })
         }

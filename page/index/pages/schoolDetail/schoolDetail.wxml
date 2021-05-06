@@ -12,7 +12,7 @@
 <template name="liveBox">
   <view class="liveBox">
     <view class="topTtile">
-      <text>免费直播</text>
+      <text>免费课程</text>
       <navigator class="topTtile-right" url="/page/live/pages/timetableList/timetableList?id={{detail.id}}&type=2"
         hover-class="none" wx:if="{{$state.userInfo.id}}">
         <text>本周课表</text>
@@ -30,9 +30,9 @@
       <view class="liveItem" style="{{index + 1 > 6 - 2 ? 'border:none' : '' }}" wx:for="{{liveList}}" wx:key="index"
         bindtap="toLivelesson" data-item="{{item}}">
         <view class="liveImgBox">
-          <image src="{{item.indexCover}}">
-          </image>
-          <view class="liveStatus"
+          <image src="{{item.indexCover}}"></image>
+          <image src="/images/recomonPlay.png" class="play"></image>
+          <!-- <view class="liveStatus"
             style="background: {{ item.status == 0 ? '' : item.status == 2 ? 'linear-gradient(270deg, #FF8242 0%, #FF6010 100%)' : 'linear-gradient(270deg, #44A2FF 0%, #007CF7 100%);border-radius: 10rpx 6rpx 6rpx 0px;' }}">
             <view class="statusLeft" wx:if="{{item.status == 1}}">
               <image src="/images/naoling.png" class="naoling"></image>
@@ -48,7 +48,7 @@
               <view class="statusTxt" style="margin: 0">看回播</view>
               <view class="viewNum">{{fn.num(item.viewNum)}}人</view>
             </view>
-          </view>
+          </view> -->
         </view>
         <text>{{item.liveName}}</text>
         <view class="tagsLine" wx:if="{{item.tags[0]}}">
@@ -124,4 +124,4 @@
   </view>
 </view>
 
-<loginBox wx:if="{{$state.showLogin}}" />
+<loginBox id="loginBox" wx:if="{{$state.showLogin}}" />

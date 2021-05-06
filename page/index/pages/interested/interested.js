@@ -1,11 +1,21 @@
+const Tutor = require("../../../../data/Tutor")
+
 // page/index/pages/interested/interested.js
 const app = getApp()
 Page({
   data: {
     list: [],
     selectNum: 0,
-    select: []
+    select: [],
+    lesson: [],
+    popupShow: false
   },
+  param: {
+    type: 1,
+    pageSize: 10,
+    pageNum: 1
+  },
+  pageName: 'interested',
   onLoad: function (options) {
     this.getAllCategory()
   },
@@ -55,30 +65,64 @@ Page({
       })
     }
   },
-  determine() {
+  determine: async function () {
     if (this.data.select.length > 0) {
-      let str = this.data.select.toString()
-      app.lessonNew.collectLessonCategory({
+      let str = this.data.select.toString(),page = getCurrentPages()
+      this.param.selectCategoryId = str.split(',')
+      await app.lessonNew.collectLessonCategory({
         categoryStr: str
-      }).then(res => {
-        app.store.setState({
-          'userInfo.recommendCategoryList': str
-        })
-        wx.setStorageSync("userInfo", this.data.$state.userInfo);
-        wx.showToast({
-          title: '选择成功',
-          icon: 'none'
-        })
-        getCurrentPages().forEach(e => {
-          e.route == 'pages/index/index' ? e.getinterestList() : ''
-        })
-        wx.navigateBack()
       })
+      app.store.setState({
+        'userInfo.recommendCategoryList': str
+      })
+      wx.setStorageSync("userInfo", this.data.$state.userInfo);
+      page[0].freeParams.pageNum = 1
+      page[0].schoolParams.pageNum = 1
+      page[0].scroll = 1
+      page[0].getRecommendLessons()
+      wx.navigateTo({
+        url: '/page/index/pages/recommendList/recommendList?str=' + str.split(','),
+      })
+      // await this.getLesson()
+      // this.bindLeft()
+      // .then(res => {
+      // app.store.setState({
+      //   'userInfo.recommendCategoryList': str
+      // })
+      // wx.setStorageSync("userInfo", this.data.$state.userInfo);
+      // wx.showToast({
+      //   title: '选择成功',
+      //   icon: 'none'
+      // })
+      // getCurrentPages().forEach(e => {
+      //   e.route == 'pages/index/index' ? e.getinterestList() : ''
+      // })
+      // wx.navigateBack()
+      // })
     } else {
       wx.showToast({
         title: '请至少选择一个您感兴趣的内容',
         icon: 'none'
       })
     }
-  }
+  },
+  getLesson(list) {
+    let arr = list || this.data.lesson
+    return app.liveData.selectRecommedListByCategoryIds(this.param).then(res => {
+      this.setData({
+        lesson: arr.concat(res.dataList)
+      })
+    })
+  },
+  bindLeft() {
+    this.setData({
+      popupShow: !this.data.popupShow
+    }, () => {
+      if (this.data.popupShow) return
+      this.setData({
+        lesson: []
+      })
+      this.param.pageNum = 1
+    })
+  },
 })

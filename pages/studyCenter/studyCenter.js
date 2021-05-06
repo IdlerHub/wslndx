@@ -17,10 +17,11 @@ Page({
       pageNum: 1,
       pageSize: 10,
     }
-    this.getDetail()
-    this.getMylive()
-    this.getMylesson()
     this.setIcon()
+    this.getDetail()
+    this.getMylesson()
+    if (!this.data.$state.userInfo.id) return
+    this.getMylive()
   },
   setIcon() {
     this.setData({
@@ -62,9 +63,9 @@ Page({
     })
   },
   onReachBottom: function () {
-    if (this.data.lessonList.length < (this.lessonParams.pageNum * 10)) return
+    // if (this.data.lessonList.length < (this.lessonParams.pageNum * 10)) return
     this.lessonParams.pageNum += 1
-    this.getMylesson(this.data.lessonList)
+    this.getMylesson(this.data.lessonList.length > 0 ? this.data.lessonList : this.data.recommenList)
   },
   iconBind(e) {
     let item = e.currentTarget.dataset.item
@@ -91,7 +92,7 @@ Page({
   getMylive() {
     app.study.centerLive(this.liveParams).then(res => {
       res.dataList.forEach(item => {
-        item.studydate = app.util.formatTime(new Date(item.startTime * 1000)).substring(0,10) == app.util.formatTime(new Date()).substring(0,10) ? '今天' + app.util.formatTime(new Date(item.startTime * 1000)).substring(10) :  app.util.formatTime(new Date(item.startTime * 1000), 1)
+        item.studydate = app.util.formatTime(new Date(item.startTime * 1000)).substring(0, 10) == app.util.formatTime(new Date()).substring(0, 10) ? '今天' + app.util.formatTime(new Date(item.startTime * 1000)).substring(10) : app.util.formatTime(new Date(item.startTime * 1000), 1)
       })
       this.setData({
         liveList: res.dataList,
@@ -99,9 +100,19 @@ Page({
       })
     })
   },
-  getMylesson(list) {
+  getMylesson: async function (list) {
     let arr = list || []
-    app.study.centerSpecial(this.lessonParams).then(res => {
+    let res = this.data.$state.userInfo.id ? (await app.study.centerSpecial(this.lessonParams)) : null
+    if (!this.data.$state.userInfo.id || (this.data.lessonList.length == 0 && res.dataList.length == 0) || (list && this.data.lessonList.length == 0)) {
+      let msg = await app.liveData.selectRecommedListByCategoryIds(this.lessonParams)
+      msg.dataList.forEach(item => {
+        item.studydate = app.util.dateUnit(item.studydate)
+      })
+      arr.push(...msg.dataList)
+      this.setData({
+        recommenList: arr
+      })
+    } else {
       res.dataList.forEach(item => {
         item.studydate = app.util.dateUnit(item.studydate)
       })
@@ -110,12 +121,41 @@ Page({
         lessonList: arr,
         'detail.lessonTotal': res.total
       })
-    })
+    }
   },
   topDetail(e) {
-    let item = e.currentTarget.dataset.item
-    wx.navigateTo({
-      url: '/page/live/pages/liveDetail/liveDetail?specialColumnId=' + item.columnId,
+    if (this.data.lessonList[0] || e.currentTarget.dataset.item.isEnroll) {
+      let item = e.currentTarget.dataset.item
+      wx.navigateTo({
+        url: '/page/live/pages/liveDetail/liveDetail?specialColumnId=' + item.columnId,
+      })
+    } else {
+      let item = e.currentTarget.dataset.item
+      wx.navigateTo({
+        url: '/page/live/pages/tableDetail/tableDetail?specialColumnId=' + item.columnId,
+      })
+    }
+
+  },
+  add(e) {
+    app.liveData
+    .addSubscribe({
+      columnId: e.currentTarget.dataset.item.columnId,
     })
-  }
+    .then(() => {
+      this.data.recommenList.forEach((i) => {
+        i.columnId == e.currentTarget.dataset.item.columnId ? (i.isEnroll = 1) : "";
+      });
+      wx.showToast({
+        title: "报名成功",
+        icon: "none",
+      });
+      this.setData({
+        recommenList: this.data.recommenList,
+      });
+    });
+  },
+  checknextTap(e) {
+    app.checknextTap(e);
+  },
 })

@@ -2,7 +2,13 @@
   <view class="swiperBox">
     <swiper class="swiper" autoplay current="{{current}}" interval="2000" circular bindchange="centerTab">
       <swiper-item wx:for="{{swiperList}}" wx:key="index">
-        <view class="swiperitem" bindtap="bannerGo" data-item="{{item}}" wx:if="{{!item.is_login}}">
+        <slotSign bindtap="checknextTap" data-type="swiper" data-item="{{ item }}"
+          wx:if="{{item.is_login && !$state.userInfo.id}}">
+          <view class="swiperitem" bindtap="bannerGo" data-item="{{item}}">
+            <image src="{{item.image}}"></image>
+          </view>
+        </slotSign>
+        <view class="swiperitem" bindtap="bannerGo" data-item="{{item}}" wx:elif="{{!item.is_login}}">
           <image src="{{item.image}}"></image>
         </view>
         <view class="swiperitem" bindtap="bannerGo" data-item="{{item}}"
@@ -10,8 +16,7 @@
           <image src="{{item.image}}"></image>
         </view>
         <button class="swiperitem" style="background:url({{item.image}});background-size: 100% 100%;"
-          open-type="getUserInfo" bindgetuserinfo="onGotUserInfo" data-type="banner" data-item="{{item}}"
-          wx:else></button>
+          bindtap="onGotUserInfo" data-type="banner" data-item="{{item}}" wx:else></button>
       </swiper-item>
     </swiper>
     <view class="indicatorBox">
@@ -25,7 +30,25 @@
     </view>
     <view wx:if="{{activityList[0]}}">
       <view wx:for="{{activityList}}" wx:key="index" data-item="{{item}}">
-        <view class="listItem" wx:if="{{!item.is_login}}" bindtap="bannerGo" data-item="{{item}}">
+        <slotSign bindtap="checknextTap" data-type="swiper" data-item="{{ item }}"
+          wx:if="{{item.is_login && !$state.userInfo.id}}">
+          <view class="listItem">
+            <view class="imgMask">
+              <image src="{{item.image}}" class="cover"></image>
+              <view class="mask" wx:if="{{item.is_finish}}"></view>
+              <image class="finish" src="../../images/finish.png" wx:if="{{item.is_finish}}"></image>
+            </view>
+            <view class="centerBox">
+              <text>{{item.name}}</text>
+              <text>{{item.description}}</text>
+            </view>
+            <view class="itemBtn">
+              {{ item.is_finish ? '结束' : '参与'}}
+              <view class="mask" wx:if="{{item.is_finish}}"></view>
+            </view>
+          </view>
+        </slotSign>
+        <view class="listItem" wx:elif="{{!item.is_login}}" bindtap="bannerGo" data-item="{{item}}">
           <view class="imgMask">
             <image src="{{item.image}}" class="cover"></image>
             <view class="mask" wx:if="{{item.is_finish}}"></view>
@@ -56,8 +79,8 @@
             <view class="mask" wx:if="{{item.is_finish}}"></view>
           </view>
         </view>
-        <button class="listItem" open-type="getUserInfo" bindgetuserinfo="onGotUserInfo" data-type="banner"
-          data-item="{{item}}" data-item="{{item}}" wx:else>
+        <button class="listItem" bindtap="onGotUserInfo" data-type="banner" data-item="{{item}}" data-item="{{item}}"
+          wx:else>
           <view class="imgMask">
             <image src="{{item.image}}" class="cover"></image>
             <view class="mask" wx:if="{{item.is_finish}}"></view>
@@ -84,3 +107,6 @@
   <image src="../../images/activityNo.png"></image>
   <text>暂无活动</text>
 </view>
+
+<!-- 登录 -->
+<loginBox id="loginBox" wx:if="{{$state.showLogin}}" />

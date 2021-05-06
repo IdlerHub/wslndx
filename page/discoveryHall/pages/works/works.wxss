@@ -1,6 +1,9 @@
 /* page/discoveryHall/pages/works/works.wxss */
 page {
   background: #EDEDED;
+}
+
+.page {
   padding: 10rpx;
   display: flex;
   justify-content: space-between;
@@ -10,7 +13,6 @@ page {
 
 .listItem {
   width: 360rpx;
-  height: 480rpx;
   border-radius: 10rpx;
   overflow: hidden;
   background: #fff;
@@ -33,11 +35,13 @@ page {
 }
 
 .listItem .title {
-  padding: 10rpx 16rpx;
-  font-size: 30rpx;
+  padding: 0 16rpx;
+  font-size: 36rpx;
   font-weight: 400;
   color: #333333;
-  line-height: 44rpx;
+  line-height: 46rpx;
+  margin-top: 10rpx;
+  margin-bottom: 20rpx;
 }
 
 .back {

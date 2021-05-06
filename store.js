@@ -4,8 +4,8 @@
  * @LastEditTime: 2021-01-14 17:26:27
  */
 import Store from "wxministore";
-let env = "test";
-let mpVersion = "v24"; /* 版本管理 */
+let env = "pro";
+let mpVersion = "v25"; /* 版本管理 */
 /* 图片等静态资源服务器 */
 let imgBase = {
   // dev: "https://hwcdn.jinlingkeji.cn/images/dev",
@@ -136,13 +136,12 @@ let store = new Store({
     },
     onUnload() {
       this.pageName == "首页" ? clearInterval(this.timer) : "";
-      if (!this.data.$state.userInfo.id && this.data.$state.showLogin)
+      if (!this.data.$state.userInfo.id && this.data.$state.showLogin && !this.unshowLogin)
         getApp().changeLoginstatus();
     },
   },
   methods: {
     menuAppShare() {
-      console.log();
       wx.uma.trackEvent("totalShare", {
         shareName: "tab三个点",
       });

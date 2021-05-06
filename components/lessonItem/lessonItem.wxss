@@ -71,6 +71,25 @@
   margin-right: 10rpx;
 }
 
+.item .contentBox .levelName {
+  font-size: 28rpx;
+  font-weight: 400;
+  color: #666666;
+  display: flex;
+  align-items: center;
+}
+
+.item .contentBox .levelName text {
+  display: inline-block;
+  padding: 2rpx 8rpx;
+  background: #FFF5F5;
+  font-size: 24rpx;
+  font-weight: 400;
+  color: #F52D3A;
+  border-radius: 8rpx;
+  margin-left: 16rpx;
+}
+
 .item .contentBox .bottom {
   width: 100%;
   display: flex;

@@ -1,7 +1,5 @@
 {
   "usingComponents": {
-    "slotSign": "/components/slotSign/slotSign",
-    "loginBox": "/components/loginBox/loginBox",
     "teacherBox": "../../components/teacherBox/teacherBox",
     "searchTop": "../../components/searchTop/searchTop"
   },

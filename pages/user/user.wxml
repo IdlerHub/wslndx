@@ -8,24 +8,32 @@
   <view wx:if="{{ isRefreshing }}" class="weui-loadmore indexdrop">
     <view class="weui-loading"></view>
   </view>
-  <navigator hover-class="none" class="top" url="/page/user/pages/info/info" open-type="navigate"
-    style="padding-top:{{statusBarHeight}}px">
-    <image class="bg" mode="widthFix" src="{{ $state.userInfo.avatar }}"></image>
-    <view class="box">
-      <view class="left">
-        <image class="img" mode="widthFix" src="{{ $state.userInfo.avatar }}"></image>
-        <view class="info">
-          <text class="line name">{{ $state.userInfo.nickname }}</text>
-          <view class="line">
-            <text class="school">{{ $state.userInfo.school || "网上老年大学" }}</text>
+  <slotSign bindtap="checknextTap" data-type="search" data-detail="/page/user/pages/info/info" class="top">
+    <navigator target="{{$state.userInfo.id ? 'self' : 'miniProgram'}}" hover-class="none" class="top"
+      url="/page/user/pages/info/info" open-type="navigate" style="padding-top:{{statusBarHeight}}px">
+      <image class="bg" mode="widthFix"
+        src="{{ $state.userInfo.avatar || 'https://jinling-xcx-dev.obs.cn-north-1.myhuaweicloud.com/images/default_avatar.png'}}">
+      </image>
+      <view class="box">
+        <view class="left">
+          <image class="img" mode="widthFix"
+            src="{{ $state.userInfo.avatar || 'https://jinling-xcx-dev.obs.cn-north-1.myhuaweicloud.com/images/default_avatar.png' }}">
+          </image>
+          <view class="info">
+            <text class="line name">{{ $state.userInfo.nickname || '您暂无登录~' }}</text>
+            <view class="line">
+              <text class="school">{{ $state.userInfo.school || "网上老年大学" }}</text>
+            </view>
           </view>
         </view>
+        <icon class="iconfont icon-arrow-right"></icon>
       </view>
-      <icon class="iconfont icon-arrow-right"></icon>
-    </view>
-  </navigator>
+    </navigator>
+  </slotSign>
+
   <view class="navgationto">
-    <view class="navgationBox" bindtap="toScore">
+    <view class="navgationBox" style="width: 366rpx" bindtap="{{!$state.userInfo.id ? 'checknextTap' : 'toScore'}}"
+      data-index="1" data-type="search" data-detail="/page/user/pages/score/score?type=index">
       <text class="navTitle">我的学分</text>
       <text class="num">{{ my_score }}可用学分</text>
       <image src="{{$state.imgHost}}/userIcon/integralbg.png"></image>
@@ -41,22 +49,43 @@
       我的服务
     </view>
     <view class="iconBox">
-      <navigator class="iconItem" wx:for="{{myList}}" wx:key="index" hover-class="none" url="{{item.page}}"
-        target="{{ item.isMini ? 'miniProgram': 'self' }}" app-id="{{item.appId}}" path="">
-        <image src="{{item.icon}}" class="iconImg" wx:if="{{!item.iconBg}}"></image>
-        <view class="itemBox iconImg" wx:else>
-          <image src="{{item.iconBg}}" class="iconImg"></image>
-          <image src="{{item.icon}}" class="shop"></image>
+      <navigator  bindtap="{{ !$state.userInfo.id ? 'checknextTap' : 'null'}}" data-type="search"
+        data-detail="{{item.page}}" data-index="{{index + 1}}" wx:for="{{myList}}" wx:key="index"
+        hover-class="none" url="{{item.page}}"
+        target="{{ ((item.isMini || !$state.userInfo.id) && index != 8) || (index == 8 && $state.showApp) ? 'miniProgram': 'self' }}"
+        app-id="{{item.appId}}" path="" class="iconItem">
+        <view class="iconItem" style="width: 100%;margin: 0;" wx:if="{{!item.type}}">
+          <image src="{{item.icon}}" class="iconImg" wx:if="{{!item.iconBg}}"></image>
+          <view class="itemBox iconImg" wx:else>
+            <image src="{{item.iconBg}}" class="iconImg"></image>
+            <image src="{{item.icon}}" class="shop"></image>
+          </view>
+          <image src="/images/userIcon/hotIcon.gif" wx:if="{{index == 2}}" class="hotIcon"></image>
+          <text space="emsp">{{item.name}}</text>
+          <view class="smallred" wx:if="{{showMes > 0 && item.isNews}}"></view>
         </view>
-        <image src="/images/userIcon/hotIcon.gif" wx:if="{{index == 2}}" class="hotIcon"></image>
-        <text space="emsp">{{item.name}}</text>
-        <view class="smallred" wx:if="{{showMes > 0 && item.isNews}}"></view>
+        <view class="iconItem" style="width: 100%;margin: 0;" wx:elif="{{item.type && !$state.showApp}}">
+          <image src="{{item.icon}}" class="iconImg" wx:if="{{!item.iconBg}}"></image>
+          <view class="itemBox iconImg" wx:else>
+            <image src="{{item.iconBg}}" class="iconImg"></image>
+            <image src="{{item.icon}}" class="shop"></image>
+          </view>
+          <text space="emsp">{{item.name}}</text>
+        </view>
+        <button class="iconItem" style="width: 100%;margin: 0;" wx:else>
+          <image src="{{item.icon}}" class="iconImg" wx:if="{{!item.iconBg}}"></image>
+          <view class="itemBox iconImg" wx:else>
+            <image src="{{item.iconBg}}" class="iconImg"></image>
+            <image src="{{item.icon}}" class="shop"></image>
+          </view>
+          <text space="emsp">{{item.name}}</text>
+        </button>
       </navigator>
     </view>
   </view>
   <view class="myslef">
-    <navigator wx:for="{{moreList}}" target="{{!item.appId ? '' : 'miniProgram'}}" app-id="{{item.appId}}" wx:key="index" hover-class="none" url="{{item.page}}" class="item"
-      wx:if="{{!item.isContact}}">
+    <navigator wx:for="{{moreList}}" target="{{!item.appId ? '' : 'miniProgram'}}" app-id="{{item.appId}}"
+      wx:key="index" hover-class="none" url="{{item.page}}" class="item" wx:if="{{!item.isContact}}">
       <text>{{item.name}}</text>
       <image src="{{$state.imgHost}}/Return-black.png"></image>
       <text class="red" wx:if="{{index == 0}}"></text>
@@ -94,3 +123,6 @@
     <cover-image class="userGuide-img" src="{{$state.imgHost}}/experienceApply.png"></cover-image>
   </cover-view> -->
 </view>
+
+<!-- 登录 -->
+<loginBox id="loginBox" wx:if="{{$state.showLogin}}" />

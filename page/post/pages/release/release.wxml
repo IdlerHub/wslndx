@@ -46,7 +46,7 @@
             <formCode  bind:handler='{{replyparam.blog_id ? "reply" : "judgeCircle"}}' wx:if="{{$state.authUserInfo}}">
                 <button class='item ensure'>发布</button>
             </formCode>
-            <button class="item ensure" bindgetuserinfo="onGotUserInfo" open-type="getUserInfo" data-role="user" wx:else>发布</button>
+            <button class="item ensure" bindtap="onGotUserInfo" data-role="user" wx:else>发布</button>
         </view>
     </view>
     <view wx:else class="recordBox">

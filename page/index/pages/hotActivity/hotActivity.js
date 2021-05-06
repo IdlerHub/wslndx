@@ -25,7 +25,9 @@ Page({
     });
   },
   getHost() {
-    app.activity.hots({ page_size: 100 }).then((res) => {
+    app.activity.hots({
+      page_size: 100
+    }).then((res) => {
       this.setData({
         activityList: res.data,
       });
@@ -70,14 +72,20 @@ Page({
     });
   },
   onGotUserInfo(e) {
-    if (e.detail.errMsg === "getUserInfo:ok") {
-      app.updateBase(e);
-      let item = e.currentTarget.dataset.item;
-      setTimeout(() => {
-        wx.navigateTo({
-          url: `/pages/education/education?url=${item.extra.url}&type=1`,
-        });
-      }, 500);
-    }
+    wx.getUserProfile({
+      desc: '请授权您的个人信息便于更新资料',
+      success: (res) => {
+        app.updateBase(res)
+        let item = e.currentTarget.dataset.item;
+        setTimeout(() => {
+          wx.navigateTo({
+            url: `/pages/education/education?url=${item.extra.url}&type=1`,
+          });
+        }, 500);
+      }
+    })
+  },
+  checknextTap(e) {
+    app.checknextTap(e);
   },
 });

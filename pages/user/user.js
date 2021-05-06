@@ -83,6 +83,7 @@ Page({
           name: "APP下载",
           page: "/pages/education/education?type=0&url=https://mp.weixin.qq.com/s/vSd8XBQDQkvqVX_kt_YyTQ",
           icon: `${this.data.$state.imgHost}/userIcon/appIcon.png`,
+          type: 1
         },
       ],
       moreList = [{
@@ -93,8 +94,8 @@ Page({
         },
         {
           id: 2,
-          name: "九九社区",
-          subName: '参加线下活动, 认识身边的的同学',
+          name: "附近同学",
+          subName: '与同学一起参加线下活动',
           page: "/page/discoveryHall/pages/index/index",
           icon: `${this.data.$state.imgHost}/userIcon/ShapeIcon.png`,
           appId: 'wx705029dc7b626e23'
@@ -204,5 +205,11 @@ Page({
         showMes: res.data.unread_count,
       });
     });
+  },
+  checknextTap(e) {
+    app.checknextTap(e);
+    if(e.currentTarget.dataset.index) {
+      e.currentTarget.dataset.index != 2 && e.currentTarget.dataset.index != 3 && e.currentTarget.dataset.index != 9 ? [app.changeLoginstatus(), console.log(e.currentTarget.dataset.index)] : null
+    }
   },
 });

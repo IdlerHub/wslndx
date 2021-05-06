@@ -1,7 +1,7 @@
 <!--
  * @Date: 2019-06-11 20:56:43
  * @LastEditors: wjl
- * @LastEditTime: 2021-02-04 14:16:54
+ * @LastEditTime: 2021-04-15 16:22:37
  -->
 <wxs module="fn">
   module.exports = {
@@ -10,6 +10,7 @@
   }
   }
 </wxs>
+<import src="/template/template.wxml"></import>
 <template name="skeletonTop">
   <view class="top" style="padding-top:{{ topT }}px">
     <view class="avatarBox skeletonaAtive"></view>
@@ -17,34 +18,19 @@
   </view>
 </template>
 <template name="skeletonSwiper">
-  <view class="skeletonSwiper">
+  <view class="skeletonSwiper" style="padding-top:{{ !isRefreshing ? 50 + topT : '' }}px">
     <view class="skeletonaAtive"></view>
   </view>
 </template>
 <template name="liveBox">
-  <view class="liveBox" wx:if="{{liveRecommend[0]}}">
-    <view class="topTtile">
-      <text>免费直播</text>
-      <navigator class="topTtile-right" url="/page/live/pages/timetableList/timetableList" hover-class="none"
-        wx:if="{{$state.userInfo.id}}">
-        <text>本周课表</text>
-        <image src="{{ $state.imgHost }}/Return-black.png"></image>
-      </navigator>
-      <slotSign bindtap="checknextTap" data-type="navBar" data-detail="/page/live/pages/timetableList/timetableList"
-        wx:else>
-        <view class="topTtile-right">
-          <text>本周课表</text>
-          <image src="{{ $state.imgHost }}/Return-black.png"></image>
-        </view>
-      </slotSign>
-    </view>
+  <view class="liveBox" wx:if="{{liveRecommend[0] || schoolRecommend[0]}}">
     <view class="comment">
-      <view class="liveItem" style="{{index + 1 > 6 - 2 ? 'border:none' : '' }}" wx:for="{{liveRecommend}}"
-        wx:key="index" bindtap="toLivelesson" data-item="{{item}}">
+      <view class="liveItem" style="{{index + 1 > 8 - 2 ? 'border:none' : '' }}"
+        wx:for="{{liveRecommend || schoolRecommend}}" wx:key="index" bindtap="toLivelesson" data-item="{{item}}">
         <view class="liveImgBox">
-          <image src="{{item.indexCover}}">
-          </image>
-          <view class="liveStatusBox">
+          <image src="{{item.indexCover}}"></image>
+          <image src="/images/recomonPlay.png" class="play"></image>
+          <!-- <view class="liveStatusBox">
             <view class="liveStatus"
               style="background: {{ item.status == 0 ? '' : item.status == 2 ? 'linear-gradient(270deg, #FF8242 0%, #FF6010 100%)' : 'linear-gradient(270deg, #44A2FF 0%, #007CF7 100%);border-radius: 10rpx 6rpx 6rpx 0px;' }}">
               <view class="statusLeft" wx:if="{{item.status == 1}}">
@@ -54,16 +40,14 @@
               <view class="statusLeft" wx:elif="{{item.status == 0}}">
                 <view wx:for="{{3}}" wx:key="index" class="statusWite"></view>
                 <view class="statusTxt">直播</view>
-                <!-- <view class="viewNum">{{fn.num(item.viewNum)}}人</view> -->
               </view>
               <view class="statusLeft" wx:else>
                 <image src="/images/endIcon.png" class="endIcon"></image>
                 <view class="statusTxt" style="margin: 0">看回播</view>
-                <!-- <view class="viewNum">{{fn.num(item.viewNum)}}人</view> -->
               </view>
             </view>
             <view class="viewNum" wx:if="{{item.status == 0 || item.status == 2}}">{{fn.num(item.viewNum)}}人</view>
-          </view>
+          </view> -->
         </view>
         <text>{{item.liveName}}</text>
         <view class="tagsLine" wx:if="{{item.tags[0]}}">
@@ -77,13 +61,6 @@
     </view>
   </view>
   <view class="liveBox" wx:else>
-    <view class="topTtile">
-      <text>免费直播</text>
-      <view class="topTtile-right">
-        <text>更多课程</text>
-        <image src="{{ $state.imgHost }}/Return-black.png"></image>
-      </view>
-    </view>
     <view class="comment">
       <view wx:for="{{6}}" wx:key="index" class="liveItem" style="{{index + 1 > 6 - 2 ? 'border:none' : '' }}">
         <view class="img skeletonaAtive"></view>
@@ -95,42 +72,20 @@
   </view>
 </template>
 <view class="container" bindtouchstart="touchstart" bindtouchend="touchend">
-  <!-- <image class="topBg" style="top: {{ isRefreshing ? '180rpx' : 0 }}" src="/images/indexIcon/topBg.png" alt="" srcset=""></image> -->
   <!-- 下拉刷新 -->
-  <view wx:if="{{ isRefreshing }}" class="weui-loadmore indexdrop">
+  <view wx:if="{{ isRefreshing }}" style="margin-top: {{topT - 10}}px;" class="weui-loadmore indexdrop">
     <view class="weui-loading"></view>
   </view>
   <!-- 搜索/学分 -->
-  <view class="search-box" style="padding-top:{{ topT==28? topT-5:topT-2 }}px">
+  <view class="search-box" style="padding-top:{{  topT-5  }}px;">
     <navigator hover-class="none" class="search-left" url="/page/index/pages/search/search">
       <mini-icon mini-class="icon" icon="search" color="#b3b3b3" miniStyle="width:50rpx;height:50rpx" class="iconImg" />
       <text>搜索课程名称</text>
     </navigator>
-    <!-- <slotSign bindtap="checknextTap" data-type="search" data-detail="/page/live/pages/timetableList/timetableList">
-      <navigator class="search-right" url="/page/live/pages/timetableList/timetableList" hover-class="none">
-        <image src="{{$state.imgHost}}/indexIcon/timetableIcon.png"></image>
-        <text>我的课程</text>
-      </navigator>
-    </slotSign> -->
   </view>
-  <!-- <slotSign bindtap="checknextTap" data-type="top">
-    <view class="top" style="padding-top:{{ topT }}px" wx:if="{{liveRecommend[0]}}" bindtap="toInfo">
-      <view class="avatarBox" catchtap="toUser" wx:if="{{$state.authUserInfo}}">
-        <image class="img" src="{{$state.userInfo.avatar}}" alt=""></image>
-      </view>
-      <button class="avatarBox" wx:elif="{{ !$state.authUserInfo && $state.userInfo.id }}" open-type="getUserInfo"
-        bindgetuserinfo="onGotUserInfo" data-role="user" catchtap="getSomthin">
-        <open-data class="img" type="userAvatarUrl"></open-data>
-      </button>
-      <image src="{{$state.imgHost}}/indexIcon/userNone.png" wx:else class="userNone"></image>
-      <text wx:if="{{$state.userInfo.id}}">{{$state.userInfo.school || "请完善信息"}}</text>
-      <text wx:else class="loginTxt">注册登录</text>
-    </view>
-    <template is="skeletonTop" data="{{topT}}" wx:else></template>
-  </slotSign> -->
   <view class="wrap recommend" id="recommend1">
     <!-- 广告位banner -->
-    <view class="swiperBox" wx:if="{{liveRecommend[0]}}" style="padding-top:{{ 50 + topT }}px">
+    <view class="swiperBox" wx:if="{{liveRecommend[0]}}" style="padding-top:{{ !isRefreshing ? 50 + topT : '' }}px">
       <swiper autoplay interval="3500" duration="200" circular class="swiper" wx:if="{{imgUrls[0].image}}"
         current="{{bannercurrentTab}}" bindanimationfinish="centerTab">
         <block wx:for="{{imgUrls}}" wx:key="index">
@@ -139,8 +94,7 @@
               <image src="{{item.image}}" class="slide-image" width="355" height="150" catchtap="bannerGo"
                 data-item="{{ item }}" wx:if="{{item.isLogin && $state.authUserInfo}}" />
               <button class="slide-image" style="background:url({{item.image}});background-size: 100% 100%;"
-                open-type="getUserInfo" bindgetuserinfo="onGotUserInfo" data-type="banner" data-item="{{item}}"
-                wx:else></button>
+                bindtap="onGotUserInfo" data-type="banner" data-item="{{item}}" wx:else></button>
             </slotSign>
             <view wx:else>
               <image src="{{item.image}}" class="slide-image" width="355" height="150" catchtap="bannerGo"
@@ -154,56 +108,50 @@
           wx:key="index" wx:if="{{imgUrls.length > 1}}"></view>
       </view>
     </view>
-    <template is="skeletonSwiper" wx:else></template>
+    <template is="skeletonSwiper" data="{{isRefreshing, topT}}" wx:else></template>
     <!-- 中间icon -->
     <view class="centerBox">
       <view class="centerIcon">
         <view wx:for="{{centerIcon}}" wx:key="index" class="centerIconItem" style="margin: {{ index > 3 ? 0 : ''}}">
-          <slotSign bindtap="checknextTap" data-type="search" data-detail="{{item.url}}"
-            wx:if="{{ index == 3 || index == 5}}">
-            <view class="iconBox" bindtap="iconBind" data-item="{{item}}">
-              <image src="{{item.icon}}" style="width: {{item.width}}rpx;height:{{item.height}}rpx;"></image>
-              <text>{{item.name}}</text>
-            </view>
-          </slotSign>
-          <view class="iconBox" bindtap="iconBind" data-item="{{item}}" wx:else>
-            <image src="{{item.icon}}"
-              style="width: {{item.width}}rpx;height:{{item.height}}rpx;">
+          <view class="iconBox" bindtap="iconBind" data-item="{{item}}" wx:if="{{!item.type}}">
+            <image src="{{item.icon}}" style="width: {{item.width}}rpx;height:{{item.height}}rpx;">
             </image>
+            <image src="/images/userIcon/hotIcon.gif" class="hotIcon" wx:if="{{ index == 4}}"></image>
             <text>{{item.name}}</text>
           </view>
+          <view class="iconBox" bindtap="iconBind" data-item="{{item}}" wx:elif="{{item.type && !$state.showApp}}">
+            <image src="{{item.icon}}" style="width: {{item.width}}rpx;height:{{item.height}}rpx;">
+            </image>
+            <image src="/images/userIcon/hotIcon.gif" class="hotIcon" wx:if="{{ index == 4}}"></image>
+            <text>{{item.name}}</text>
+          </view>
+          <button wx:else class="iconBox" open-type="launchApp" binderror="binderror" bindlaunchapp="bindlaunchapp">
+            <image src="{{item.icon}}" style="width: {{item.width}}rpx;height:{{item.height}}rpx;">
+            </image>
+            <image src="/images/userIcon/hotIcon.gif" class="hotIcon" wx:if="{{ index == 4}}"></image>
+            <text>{{item.name}}</text>
+          </button>
         </view>
       </view>
-      <slotSign bindtap="checknextTap" data-type="search" data-detail="/page/discoveryHall/pages/index/index">
-        <image src="/images/centerImg.gif" class="centerImg" wx:if="{{!$state.userInfo.id}}"></image>
-        <navigator hover-class="none" url="/page/discoveryHall/pages/index/index" wx:else>
-          <image src="/images/centerImg.gif" class="centerImg"></image>
-        </navigator>
-      </slotSign>
+      <navigator hover-class="none" url="/page/discoveryHall/pages/index/index">
+        <image src="/images/centerImg.gif" class="centerImg"></image>
+      </navigator>
     </view>
-    <template is="liveBox" data="{{recommend, liveRecommend, $state}}"></template>
-    <view>
-    </view>
-    <view class="liveBox">
-      <view class="topTtile">
-        <text>入门推荐</text>
+    <view style="position: relative;">
+      <view class="dataNav">
+        <van-sticky offset-top="{{ searchHeight + 20 }}" z-index="2" style="right: 30rpx;">
+          <navigator url="/page/live/pages/timetableList/timetableList" hover-class="none">
+            <text>查看更多</text>
+            <image src="{{ $state.imgHost }}/Return-black.png"></image>
+          </navigator>
+        </van-sticky>
       </view>
-      <lessonItem id="lessonItem" lessonList="{{sprogInterestList}}" isIndex="1" bind:addStudy="addStudy" />
-    </view>
-    <view class="liveBox">
-      <view class="topTtile">
-        <text>进阶提升</text>
-      </view>
-      <lessonItem id="lessonItem" lessonList="{{interestList}}" isIndex="1" bind:addStudy="addStudy" />
-    </view>
-    <view class="interestedBox">
-      <text>调整学习兴趣</text>
-      <text>从此更懂你的学习需求</text>
-      <navigator hover-class="none" url="/page/index/pages/interested/interested" class="navigator"
-        wx:if="{{$state.userInfo.id}}">去调整</navigator>
-      <slotSign bindtap="checknextTap" data-type="search" data-detail="/page/index/pages/interested/interested" wx:else>
-        <view class="navigator">去调整</view>
-      </slotSign>
+      <van-tabs active="{{ lessonCurrent }}" title-inactive-color="#666666" title-active-color="#F2323A" z-index="1"
+        swipeable line-width="54rpx" line-height="5rpx" nav-class="vanTabs" tab-class="tabItem"
+        tab-active-class="tabItemActivce" bind:change="lessonChange" sticky offset-top="{{searchHeight}}" animated>
+        <van-tab title="免费课程"><template is="liveBox" data="{{recommend, liveRecommend, $state}}"></template></van-tab>
+        <van-tab title="高校课程"><template is="liveBox" data="{{recommend, schoolRecommend, $state}}"></template></van-tab>
+      </van-tabs>
     </view>
   </view>
   <navigationBar wx:if="{{ scroll }}" id="navigationBar" placeholderBg="#F8F8F8" color="#000000" title="网上老年大学"
@@ -211,23 +159,28 @@
   <!-- 底部tabbar -->
   <navBar path='index'></navBar>
   <!-- 学习历史 -->
-  <view class="now" wx:if="{{history.name}}" bindtap="historyTap" data-id="{{ history.columnId }}"
+  <!-- <view class="now" wx:if="{{history.name}}" bindtap="historyTap" data-id="{{ history.columnId }}"
     data-title="{{ history.name }}"
     style="animation:{{ history.name && shownow && shownowt ? 'nowshow' : 'nowclose'}}  0.5s ; bottom:{{history.name && shownow && shownowt? '138rpx' : '-88rpx'}} ">
-    <!-- <image src="/images/play-red.png"></image> -->
     <mini-icon mini-class="icon" icon="playVideo" color="#d81e06" miniStyle="width:50rpx;height:50rpx"
       class="iconImg" />
     <view class="line">{{ history.name }}</view>
     <image src="{{$state.imgHost}}/nowcancle.png" catchtap="closenow"></image>
+  </view> -->
+  <!-- 订阅消息 -->
+  <view class="now reserve" bindtap="reserve" style="bottom:168rpx">
+    <image src="/images/reserveIcon.png"></image>
+    <view class="line">上课提醒，好课学不停</view>
+    <text>开启提醒</text>
   </view>
   <!-- 活动弹窗 -->
-  <view class="integration" wx:if="{{ dialog[0].image && showdialog && times }}" catchtouchmove="return">
+  <view class="integration" wx:if="{{ dialog[0].image && showdialog && times && !overlayShow }}"
+    catchtouchmove="return">
     <view class="dialog">
       <view class="bg"
         style="background: url('{{dialog[0].image}}') no-repeat center; background-size: 100% 100%;border-radius:10px"
         src="{{dialog[0].image}}" mode="aspectFill" catchtap="jumpPeper" data-peper="{{dialog[0]}}" data-type="dialog">
       </view>
-      <!-- <icon type="cancel" size="37" color="white" data-id="0" catchtap="closeSignIn"></icon> -->
       <image class="share-del" src="/images/closeBlack.png" alt="" data-id="0" catchtap="closeSignIn" />
     </view>
   </view>
@@ -235,9 +188,19 @@
     top="{{topT}}" isIndex="{{true}}" bind:closesignBox="closesignBox" bind:showIntegral="showIntegral"
     bind:sigin="sigin" />
 </view>
-<navigator url="/page/index/pages/assistant/assistant" hover-class="none">
+<!-- <navigator url="/page/index/pages/assistant/assistant" hover-class="none">
   <image src="/images/xiaolin.png" class="xiaolin"></image>
-</navigator>
+</navigator> -->
+<view class="floaBar">
+  <navigator hover-class="none" url="/page/index/pages/interested/interested" class="bar">
+    <image src="/images/recommondIcon.png"></image>
+    <text>推荐课</text>
+  </navigator>
+  <navigator class="bar" url="/page/index/pages/assistant/assistant" hover-class="none">
+    <image src="/images/xiaolin.png"></image>
+    <text>林老师</text>
+  </navigator>
+</view>
 <!-- 黑名单提示框 -->
 <view class="blackBox" wx:if="{{$state.blackShow}}">
   <view class="blackToast">
@@ -253,17 +216,22 @@
 </integralAnimation>
 
 <!-- 登录 -->
-<loginBox wx:if="{{$state.showLogin}}" />
+<loginBox id="loginBox" wx:if="{{$state.showLogin}}" />
 
 <!-- 新生体验馆弹窗 -->
-<view class="weui-mask" wx:if="{{ showNewStudentBox && !times && $state.userInfo.id}}">
+<view class="weui-mask" wx:if="{{ showNewStudentBox && !times && !overlayShow }}">
   <view class="weui-dialog">
     <image src="/images/newStudent.png" class="topImg" catchtap="router2newstudent"></image>
     <image class="share-del" src="/images/closeBlack.png" alt="" catchtap="unshare" />
-    <!-- <view class="title">新生体验馆</view>
-    <view class="text">testtesttest</view>
-    <view class="btnBox">
-      <button class="blackBtn" plain catchtap="router2newstudent">立即体验</button>
-    </view> -->
   </view>
 </view>
+
+<!-- 收藏小程序 -->
+<van-overlay custom-style="background-color: var(--overlay-background-color,rgba(0,0,0,0.9));"
+  show="{{ overlayShow && liveRecommend[0] }}" z-index="9997" duration="0" bind:click="onClickHide">
+  <view class="wrapper" style="padding-top:{{ 53 + topT - 5 }}px;">
+    <image src="/images/trunUp.png" class="trunUp" bindtap="closeOverlay"></image>
+  </view>
+</van-overlay>
+
+<reserveBox id="reserveBox" wx:if="{{showReserveBox}}"></reserveBox>

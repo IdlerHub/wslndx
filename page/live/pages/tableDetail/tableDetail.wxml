@@ -66,7 +66,7 @@
       <view class="title">课程目录</view>
       <view wx:for="{{lessonDetail.liverVOS}}" wx:key="index" class="live-list">
         <text class="live-list-item">
-          {{item.name}}
+          {{index+1}}. {{item.name}}
         </text>
       </view>
     </view>
@@ -76,22 +76,14 @@
     </view>
   </view>
   <view class="bottomBox">
-    <button open-type="share" class="left" wx:if="{{$state.userInfo.id}}">
+    <button open-type="share" class="left">
       <view class="leftBox">
         <image src="../../images/whiteWX.png"></image>
         <text>邀好友一起学</text>
       </view>
     </button>
-    <slotSign class="xiaolin" bindtap="checknextTap" data-type="shareNone" wx:else class="left">
-      <view>
-        <view class="leftBox">
-          <image src="../../images/whiteWX.png"></image>
-          <text>邀好友一起学</text>
-        </view>
-      </view>
-    </slotSign>
     <slotSign class="xiaolin" bindtap="checknextTap" data-type="addSubscribe" class="left" class="right">
-      <view bindtap="rightNow" class="rightBox">
+      <view bindtap="subscribeMessage" class="rightBox">
         <image src="../../images/phoneIcon.png"></image>
         <text class="">立即报名</text>
       </view>
@@ -111,4 +103,6 @@
 </view>
 
 <!-- 登录 -->
-<loginBox wx:if="{{$state.showLogin}}" />
+<loginBox id="loginBox" wx:if="{{$state.showLogin}}" />
+
+<reserveBox id="reserveBox" isLessonDetail="toLivedetail" wx:if="{{showReserveBox}}"></reserveBox>

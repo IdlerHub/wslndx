@@ -1,12 +1,21 @@
 <!--page/discoveryHall/pages/works/works.wxml-->
-<navigator hover-class="none" url="/page/discoveryHall/pages/detail/detail?id={{item.id}}" wx:for="{{list}}"
-  wx:key="index" class="listItem">
-  <image src="{{item.coverImage}}" class="cover"></image>
-  <image src="/images/recomonPlay.png" wx:if="{{item.type == 1}}" class="playIcon"></image>
-  <view class="title van-multi-ellipsis--l2">{{item.title}}</view>
-</navigator>
+<view class="page">
+  <slotSign bindtap="checknextTap" data-type="search" class="workItem"
+    data-detail="/page/discoveryHall/pages/detail/detail?id={{item.id}}" wx:for="{{list}}" wx:key="index"
+    class="listItem">
+    <navigator target="{{$state.userInfo.id ? 'self' : 'miniProgram'}}" hover-class="none"
+      url="/page/discoveryHall/pages/detail/detail?id={{item.id}}" class="listItem">
+      <image mode="aspectFill" src="{{item.coverImage}}" class="cover"></image>
+      <image src="/images/recomonPlay.png" wx:if="{{item.type == 1}}" class="playIcon"></image>
+      <view class="title van-multi-ellipsis--l2">{{item.title}}</view>
+    </navigator>
+  </slotSign>
+</view>
 
 <navigator open-type="navigateBack" class="back" hover-class="none">
   <text>返回
-    体验馆</text>
+    体验营</text>
 </navigator>
+
+<!-- 登录 -->
+<loginBox id="loginBox" wx:if="{{$state.showLogin}}" />

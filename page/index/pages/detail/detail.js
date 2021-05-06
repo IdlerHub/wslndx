@@ -122,7 +122,7 @@ Page({
             }, 800);
           });
         });
-      } else if (that.data.$state.userInfo.mobile) {
+      } else {
         that.getDetail().then(() => {
           setTimeout(() => {
             that.recordAdd();
@@ -179,7 +179,7 @@ Page({
     }
     if (this.timeTemplate > 0) {
       let progress = parseInt(new Date().getTime() / 1000 + "") - this.timeTemplate
-      if(progress > this.data.cur.filmLength) progress = this.data.cur.filmLength
+      if (progress > this.data.cur.filmLength) progress = this.data.cur.filmLength
       this.updateProgress(progress)
     }
   },
@@ -222,12 +222,15 @@ Page({
     }
   },
   onGotUserInfo: function (e) {
-    if (e.detail.errMsg == "getUserInfo:ok") {
-      app.updateBase(e)
-      e.currentTarget.dataset.type ? wx.navigateTo({
-        url: '/pages/makeMoney/makeMoney',
-      }) : ''
-    }
+    wx.getUserProfile({
+      desc: '请授权您的个人信息便于更新资料',
+      success: (res) => {
+        app.updateBase(res)
+        e.currentTarget.dataset.type ? wx.navigateTo({
+          url: '/pages/makeMoney/makeMoney',
+        }) : ''
+      }
+    })
   },
   switchNav(event) {
     let cur = event.currentTarget.dataset.current;
@@ -282,7 +285,31 @@ Page({
       });
     })
   },
+  loginInterval() {
+    if(this.loginTime) return
+    this.loginTimer = setInterval(() => {
+      this.loginTime = this.loginTime ? this.loginTime += 1 : 1
+      if (this.loginTime >= 60) {
+        this.videoContext.pause();
+        this.setData({
+          playing: false
+        })
+        app.changeLoginstatus()
+        app.store.setState({
+          "nextTapDetial.type": 'nameFunction',
+          "nextTapDetial.detail": 'played',
+        })
+        this.loginTime = 1
+        clearInterval(this.loginTimer)
+      }
+    }, 1000);
+  },
   played() {
+    if(!this.data.$state.userInfo.id) {
+      !this.data.playing ? this.videoContext.play() : null
+      this.loginInterval()
+      return
+    }
     setTimeout(() => {
       this.vedioRecordAdd()
       this.timeTemplate = parseInt(new Date().getTime() / 1000 + "")
@@ -294,7 +321,7 @@ Page({
   ended() {
     if (this.timeTemplate > 0) {
       let progress = parseInt(new Date().getTime() / 1000 + "") - this.timeTemplate
-      if(progress > this.data.cur.filmLength) progress = this.data.cur.filmLength
+      if (progress > this.data.cur.filmLength) progress = this.data.cur.filmLength
       this.updateProgress(progress)
     }
     this.data.sublessons.forEach(item => {
@@ -331,7 +358,7 @@ Page({
   videoPause() {
     if (this.timeTemplate > 0) {
       let progress = parseInt(new Date().getTime() / 1000 + "") - this.timeTemplate
-      if(progress > this.data.cur.filmLength) progress = this.data.cur.filmLength
+      if (progress > this.data.cur.filmLength) progress = this.data.cur.filmLength
       this.updateProgress(progress)
     }
   },
@@ -660,8 +687,8 @@ Page({
           this.data.id +
           "&curid=" +
           this.data.cur.id +
-          "&type=share&uid=" +
-          this.data.$state.userInfo.id
+          "&type=share" + ( this.data.$state.userInfo.id ? "&uid=" +
+          this.data.$state.userInfo.id : null)
       };
     }
   },
@@ -1630,5 +1657,8 @@ Page({
   },
   binderror(e) {
     console.log(e, 4786347657347)
-  }
+  },
+  checknextTap(e) {
+    app.checknextTap(e);
+  },
 });

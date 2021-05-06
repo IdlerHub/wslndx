@@ -36,3 +36,6 @@
   </view>
 </view>
 <recruitShare type="{{false}}"></recruitShare>
+
+<!-- 登录 -->
+<loginBox id="loginBox" wx:if="{{$state.showLogin}}" />

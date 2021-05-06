@@ -1,7 +1,5 @@
 {
   "enablePullDownRefresh": true,
   "usingComponents": {
-    "loginBox": "/components/loginBox/loginBox",
-    "slotSign": "/components/slotSign/slotSign"
   }
 }

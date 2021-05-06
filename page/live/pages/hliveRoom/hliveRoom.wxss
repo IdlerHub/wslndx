@@ -173,3 +173,100 @@ page {
   bottom: calc(364vmin / 7.5);
   z-index: 999999999;
 }
+
+.addSubscribeBox {
+  width: calc(758vmin / 7.5);
+  height: 100vh;
+}
+
+.addSubscribeBox .addSubscribeTitle {
+  height: calc(117vmin / 7.5);
+  line-height: calc(117vmin / 7.5);
+  text-align: center;
+  font-size: calc(40vmin / 7.5);
+  font-weight: 500;
+  color: #FFFFFF;
+  border-bottom: 1px solid rgba(255, 255, 255, .15);
+  position: relative;
+}
+
+.addSubscribeBox .addSubscribeTitle image {
+  width: calc(26.33vmin / 7.5);
+  height: calc(26.33vmin / 7.5);
+  position: absolute;
+  padding: calc(30vmin / 7.5);
+  left: 0;
+  top: calc(14vmin / 7.5);
+}
+
+.addSubscribeBox .lessonDetail {
+  display: flex;
+  justify-content: space-between;
+  padding: calc(30vmin / 7.5);
+  position: relative;
+}
+
+.addSubscribeBox .lessonDetail .cover {
+  width: calc(260vmin / 7.5);
+  height: calc(160vmin / 7.5);
+  border-radius: calc(12vmin / 7.5);
+  margin-right: calc(30vmin / 7.5);
+}
+
+.addSubscribeBox .lessonDetail .icon {
+  width: calc(50vmin / 7.5);
+  height: calc(50vmin / 7.5);
+  position: absolute;
+  top: calc(133vmin / 7.5);
+  left: calc(230vmin / 7.5);
+}
+
+.addSubscribeBox .lessonDetail text:nth-child(1) {
+  font-size: calc(38vmin / 7.5);
+  font-weight: 400;
+  color: #FFFFFF;
+}
+
+.addSubscribeBox .lessonDetail text:nth-child(2) {
+  font-size: calc(28vmin / 7.5);
+  font-weight: 400;
+  color: #E6E6E6;
+}
+
+.addSubscribeBox .lessonDetail text:nth-child(3) {
+  font-size: calc(27vmin / 7.5);
+  font-weight: 400;
+  color: #FFFFFF;
+  background: rgba(255, 255, 255, 0.2);
+  text-align: center;
+  border-radius: calc(6vmin / 7.5);
+  padding: calc(7vmin / 7.5);
+}
+
+.addSubscribeBox .btn {
+  width: calc(703vmin / 7.5);
+  height: calc(98vmin / 7.5);
+  margin: 0 calc(30vmin / 7.5);
+  background: #F2323A;
+  text-align: center;
+  border-radius: calc(49vmin / 7.5);
+  font-size: calc(40vmin / 7.5);
+  font-weight: 500;
+  color: #FFFFFF;
+  line-height: calc(98vmin / 7.5);
+  position: absolute;
+  bottom: calc(30vmin / 7.5);
+  animation: activce .85s infinite; 
+}
+
+@keyframes activce {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(0.9);
+  }
+  100% {
+    transform: scale(1);
+  }
+}

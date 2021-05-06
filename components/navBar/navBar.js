@@ -9,6 +9,9 @@ Component({
       value: '' //默认值
     }
   },
+  ready() {
+    this.checkstatus = 1
+  },
   methods: {
     loginStauts(e) {
       if (!this.data.$state.userInfo.id) {
@@ -18,34 +21,45 @@ Component({
       }
     },
     toIndex(e) {
-      if (this.loginStauts(e)) return
-      if (this.data.path == 'index') {
+      if (this.data.path == 'index' || !this.checkstatus) {
         return
       } else {
+        this.checkstatus = 0
         wx.switchTab({
-          url: "/pages/index/index"
+          url: "/pages/index/index",
+          success: () => {
+            this.checkstatus = 1
+          }
         })
         this.hideIndex()
       }
     },
     toVideo(e) {
-      if (this.loginStauts(e)) return
-      if (this.data.path == 'video') {
+      // if (this.loginStauts(e)) return
+      console.log(this.checkstatus)
+      if (this.data.path == 'video' || !this.checkstatus) {
         return
       } else {
+        this.checkstatus = 0
         wx.switchTab({
-          url: "/pages/studyCenter/studyCenter"
+          url: "/pages/studyCenter/studyCenter",
+          success: () => {
+            this.checkstatus = 1
+          }
         })
         this.hideIndex()
       }
     },
     toPost(e) {
-      if (this.loginStauts(e)) return
-      if (this.data.path == 'post') {
+      if (this.data.path == 'post' || !this.checkstatus) {
         return
       } else {
+        this.checkstatus = 0
         wx.switchTab({
-          url: "/pages/post/post"
+          url: "/pages/post/post",
+          success: () => {
+            this.checkstatus = 1
+          }
         })
         app.globalData.postShow = true
         this.hideIndex()
@@ -60,27 +74,38 @@ Component({
       })
     },
     toUser(e) {
-      if (this.loginStauts(e)) return
-      if (this.data.path == 'user') {
+      if (this.data.path == 'user' || !this.checkstatus) {
         return
       } else {
+        this.checkstatus = 0
         wx.switchTab({
-          url: "/pages/user/user"
+          url: "/pages/user/user",
+          success: () => {
+            this.checkstatus = 1
+          }
         })
       }
     },
     // 用户昵称等信息授权
     onGotUserInfo(e) {
-      if (e.detail.errMsg === "getUserInfo:ok") {
-        app.updateBase(e)
-        if (e.currentTarget.dataset.role == "user") {
-          this.toUser()
-        } else if (e.currentTarget.dataset.role == "post") {
-          this.toPost()
-        } else {
-          this.toEducation()
+      console.log(this.checkstatus)
+      if(!this.checkstatus) return
+      wx.getUserProfile({
+        desc: '请授权您的个人信息便于更新资料', // 声明获取用户个人信息后的用途，后续会展示在弹窗中，请谨慎填写
+        success: (res) => {
+          app.updateBase(res)
+          if (e.currentTarget.dataset.role == "user") {
+            this.toUser()
+          } else if (e.currentTarget.dataset.role == "post") {
+            this.toPost()
+          } else {
+            this.toEducation()
+          }
+        },
+        fail:() => {
+          this.checkstatus = 1
         }
-      }
+      })
     },
   }
 

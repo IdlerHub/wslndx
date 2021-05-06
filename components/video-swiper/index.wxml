@@ -3,7 +3,7 @@
     duration="{{duration}}" bindanimationfinish="animationfinish">
     <!-- curQueue 循环会导致video重新插入，objectFit 不可变更 -->
     <swiper-item wx:for="{{curQueue}}" wx:key="index">
-      <video id="video_{{index}}" class="video_item" loop="{{loop}}"  autoplay="{{false}}"
+      <video id="video_{{index}}" class="video_item" loop="{{loop}}" autoplay="{{false}}"
         show-center-play-btn="{{false}}" controls="{{false}}" src="{{item.url}}" data-id="{{item.id}}"
         object-fit="{{item.objectFit || 'cover'}}" data-index="{{index}}" bindplay="onPlay" bindended="onEnded"
         binderror="onError">
@@ -16,13 +16,15 @@
           <view class="vedioAll">
             <!-- 点赞 -->
             <view class="praise" catchtap="praise" wx:if="{{nextRtight != 4}}" data-index="{{index}}">
-              <view wx:if="!item.praising">
-                <image class="heart" wx:if="{{ item.praised == 0 }}" mode="aspectFill" src="/images/heart.png">
-                </image>
-                <image class="heart" wx:else mode="aspectFill" src="{{ $state.imgHost }}/heart-red.png"></image>
-              </view>
-              <view wx:if="{{ item.pw }}" class="text">{{ item.pw }}</view>
-              <view wx:else class="text">{{ item.praise }}</view>
+              <slotSign bindtap="checknextTap" data-type="nameFunction" data-funName="praise" data-index="{{index}}">
+                <view wx:if="!item.praising">
+                  <image class="heart" wx:if="{{ item.praised == 0 }}" mode="aspectFill" src="/images/heart.png">
+                  </image>
+                  <image class="heart" wx:else mode="aspectFill" src="{{ $state.imgHost }}/heart-red.png"></image>
+                </view>
+                <view wx:if="{{ item.pw }}" class="text">{{ item.pw }}</view>
+                <view wx:else class="text">{{ item.praise }}</view>
+              </slotSign>
             </view>
             <!-- 底部视频描述 -->
             <view class="info">
@@ -35,7 +37,8 @@
                   <view class="vedioTitle-p">{{ item.category_name }}</view>
                   <view class="viewMore" catchtap="navigate">
                     <view>查看更多</view>
-                    <mini-icon mini-class="icon" icon="arrowRight" color="#333333" miniStyle="width:22rpx;height:22rpx" class="viewMoreimg"/>
+                    <mini-icon mini-class="icon" icon="arrowRight" color="#333333" miniStyle="width:22rpx;height:22rpx"
+                      class="viewMoreimg" />
                   </view>
                 </view>
               </view>
@@ -52,8 +55,7 @@
             <!-- <view class="redPacket" catchtap="showred" wx:if="{{isshowRed}}"></view> -->
             <!-- <navigator class="moneyPackt" hover-class="none" url="/pages/makeMoney/makeMoney"
               wx:if="{{$state.authUserInfo}}"></navigator> -->
-            <button open-type="getUserInfo" bindgetuserinfo="onGotUserInfo" class="moneyPackt" data-type="money"
-              wx:else></button>
+            <button bindtap="onGotUserInfo" class="moneyPackt" data-type="money" wx:else></button>
           </view>
         </view>
       </view>

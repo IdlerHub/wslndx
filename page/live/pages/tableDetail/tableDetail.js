@@ -30,11 +30,13 @@ Page({
   },
   timer: "",
   toEducation: false,
-  isLogin: 1,
   onShow() {
     if (this.toEducation) {
       this.getUserOpenid(1)
       this.toEducation = false
+    }
+    if (this.isAdd) {
+      this.toLivedetail()
     }
   },
   onLoad: function (options) {
@@ -117,19 +119,21 @@ Page({
       specialColumnId: id
     }).then(res => {
       res.data.lecturers ? res.data.lecturers.forEach((e, i) => {
-        if(i > 1) return
+        if (i > 1) return
         res.data['teacher'] ? res.data.teacher = res.data.teacher + ',' + e.lecturerName : res.data.teacher = e.lecturerName
       }) : ''
       res.data.isAddSubscribe ? wx.redirectTo({
           url: `/page/live/pages/liveDetail/liveDetail?specialColumnId=${res.data.columnId}`
         }) :
         res.data.introduction = htmlparser.default(res.data.introduction);
-        res.data.liverVOS = res.data.liverVOS ? res.data.liverVOS.sort((a,b)=>{ return a.id-b.id}) : '' // 未学习时课程正序展示
-        this.setData({
-          lessonDetail: res.data,
-          showAll: 1
-        })
-        console.log(res.data)
+      res.data.liverVOS = res.data.liverVOS ? res.data.liverVOS.sort((a, b) => {
+        return a.id - b.id
+      }) : '' // 未学习时课程正序展示
+      this.setData({
+        lessonDetail: res.data,
+        showAll: 1
+      })
+      console.log(res.data)
     })
   },
   leftTimer(leftTime) {
@@ -177,13 +181,13 @@ Page({
     //     cancelColor: "#999999",
     //   });
     // } else 
-    if (!this.data.userMsg.has_mp_openid) {
-      this.setData({
-        showAtention: true
-      })
-    } else {
-      this.toLivedetail()
-    }
+    // if (!this.data.userMsg.has_mp_openid) {
+    //   this.setData({
+    //     showAtention: true
+    //   })
+    // } else {
+    this.toLivedetail()
+    // }
   },
   showAllAvatar() {
     let {
@@ -219,9 +223,12 @@ Page({
     this.shareLesson(lesson_id);
     return {
       title: `快来和我一起报名,免费好课天天学!`,
-      path: `/page/live/pages/tableDetail/tableDetail?specialColumnId=${lesson_id}&inviter=${id}&liveShare=1`,
+      path: `/page/live/pages/tableDetail/tableDetail?specialColumnId=${lesson_id}&liveShare=1` + (this.data.$state.userInfo.id ? `&inviter=${id}` : null),
       imageUrl: cover,
     };
+  },
+  subscribeMessage() {
+    app.subscribeMessage(null, this, 'toLivedetail')
   },
   toLivedetail() {
     let columnId = this.data.lessonDetail.columnId;
@@ -236,23 +243,18 @@ Page({
         .then((res) => {
           this.data.lessonDetail.isAddSubscribe = 1;
           getCurrentPages().forEach(e => {
-            if (e.route == 'pages/index/index') {
-              e.data.interestList.forEach(i => {
-                i.columnId == columnId ? i.isEnroll = 1 : ''
-              })
-              e.data.sprogInterestList.forEach(i => {
+            if (e.pageName == 'interested') {
+              e.data.lesson.forEach(i => {
                 i.columnId == columnId ? i.isEnroll = 1 : ''
               })
               e.setData({
-                interestList: e.data.interestList,
-                sprogInterestList: e.data.sprogInterestList
+                lesson: e.data.lesson,
               })
             }
           })
           wx.redirectTo({
-            url: '/page/live/pages/liveDetail/liveDetail?isFirst=1&specialColumnId=' + columnId + (this.options.scoreId ? `&scroeId=${this.options.scoreId}` : ''),
+            url: '/page/live/pages/liveDetail/liveDetail?isFirst=1&specialColumnId=' + columnId + (this.options.scroeId ? `&scroeId=${this.options.scroeId}` : '')
           });
-
         })
         .catch((err) => {
           wx.showToast({

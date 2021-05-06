@@ -7,6 +7,8 @@ Component({
     },
   },
   methods: {
-    
+    checknextTap(e) {
+      getApp().changeLoginstatus()
+    },
   }
 })

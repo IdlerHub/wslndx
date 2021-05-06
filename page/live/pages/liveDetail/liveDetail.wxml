@@ -17,7 +17,8 @@
             wx:if="{{lessonDetail.notice.length > 0}}">
             <image src="../../images/noticeIcon.png"></image>
             <view>{{lessonDetail.notice}}</view>
-            <mini-icon mini-class="icon" icon="arrowRight" color="#96A8BB" miniStyle="width:30rpx;height:30rpx" class="iconImg"/>
+            <mini-icon mini-class="icon" icon="arrowRight" color="#96A8BB" miniStyle="width:30rpx;height:30rpx"
+                class="iconImg" />
         </navigator>
     </view>
     <!-- 课程信息 -->
@@ -35,7 +36,9 @@
                 <text style="width: {{lessonDetail.progress}}%;"></text>
             </view>
         </view>
-        <navigator hover-class="none" url="/page/study/pages/liveCertificate/liveCertificate?name={{lessonDetail.name}}&id={{lessonDetail.columnId}}" class="progressBox" wx:else>
+        <navigator hover-class="none"
+            url="/page/study/pages/liveCertificate/liveCertificate?name={{lessonDetail.name}}&id={{lessonDetail.columnId}}"
+            class="progressBox" wx:else>
             <view class="badgeBox">
                 <image src="../../images/livebadge.png"></image>
                 <text class="badge">查看证书</text>
@@ -43,8 +46,9 @@
         </navigator>
     </view>
     <!--直播中状态-->
-    <view wx:for="{{ sublessons }}" catchtap="select" wx:if="{{item.state==1}}" data-item="{{item}}" data-index="{{ index }}" wx:key="index">
-        <view class="statusLeft" >
+    <view wx:for="{{ sublessons }}" catchtap="select" wx:if="{{item.state==1}}" data-item="{{item}}"
+        data-index="{{ index }}" wx:key="index">
+        <view class="statusLeft">
             <view class="statusTxt">
                 <view wx:for="{{3}}" wx:key="index" class="statusWite"></view>
                 <view class="text">直播中</view>
@@ -92,8 +96,8 @@
             <image src="{{ sort ? '../../images/sortDwon.png' : '../../images/sortup.png'}}"></image>
             <text class="right">{{ !sort ? '倒序' : '正序'}}</text>
         </view>
-        <swiper class="tab" style="height:{{ currentTab == 1 ? '100%' :  height  + 'px' }}" current="{{ currentTab }}" duration="300"
-            bindchange="switchTab" scroll-top="{{scrollviewtop}}">
+        <swiper class="tab" style="height:{{ currentTab == 1 ? '100%' :  height  + 'px' }}" current="{{ currentTab }}"
+            duration="300" bindchange="switchTab" scroll-top="{{scrollviewtop}}">
             <swiper-item class="tab-item">
                 <!-- 简介 -->
                 <scroll-view scroll-y="true" class="wrap synopsis">
@@ -107,10 +111,11 @@
                     <text>暂无课程
                         去浏览其他内容吧~</text>
                 </view>
-                <scroll-view wx:if="{{sublessons.length != 0}}" scroll-y="true" class="wrap drama" scroll-with-animation="true"
-                    scroll-top="{{scrollviewtop}}">
+                <scroll-view wx:if="{{sublessons.length != 0}}" scroll-y="true" class="wrap drama"
+                    scroll-with-animation="true" scroll-top="{{scrollviewtop}}">
                     <view wx:for="{{ sublessons }}" catchtap="select" data-item="{{item}}" data-index="{{ index }}"
-                        wx:key="index" class="item {{ playNow.id==item.id ?'active' : item.isStudy ? 'isStudy' : ''}} {{'sublessonsd' + item.id}}"
+                        wx:key="index"
+                        class="item {{ playNow.id==item.id ?'active' : item.isStudy ? 'isStudy' : ''}} {{'sublessonsd' + item.id}}"
                         id="{{'sublessonsd'+item.id}}">
                         <view class="left">
                             <text class="name">{{ index+1 }}. {{ item.name }}</text>
@@ -121,14 +126,16 @@
 
                         <view class="playMv" wx:elif="{{item.state == 3}}">
                             <!-- 可播放未播放 -->
-                            <image wx:if="{{playNow.id!=item.id}}" src="https://hwcdn.jinlingkeji.cn/images/dev/play-ash.png" alt="" />
+                            <image wx:if="{{playNow.id!=item.id}}"
+                                src="https://hwcdn.jinlingkeji.cn/images/dev/play-ash.png" alt="" />
                             <text wx:if="{{playNow.id!=item.id}}" class="white">播放</text>
                             <!-- 可播放在播放 -->
                             <image wx:if="{{playNow.id==item.id && !pause}}" src="../../images/play.png" alt="" />
                             <text wx:if="{{playNow.id==item.id && !pause}}" class="red">播放</text>
                             <!-- 可播放在暂停 -->
-                            <image wx:if="{{playNow.id==item.id && pause}}" src="../../images/pause.png" alt="" style="width: 33rpx"/>
-                            <text wx:if="{{playNow.id==item.id && pause}}" class="red" >暂停</text>
+                            <image wx:if="{{playNow.id==item.id && pause}}" src="../../images/pause.png" alt=""
+                                style="width: 33rpx" />
+                            <text wx:if="{{playNow.id==item.id && pause}}" class="red">暂停</text>
                         </view>
                         <!-- <view class="right"
                             wx:elif="{{current.id == item.id && (current.live_status == 104 ||  current.live_status == 107)}}">
@@ -173,10 +180,16 @@
                                     <rich-text nodes="{{ item.content }}" catchlongpress="copythat"
                                         data-content="{{ item.content }}" data-type="comment" data-index="{{index}}">
                                     </rich-text>
-                                    <button wx:if="{{ !$state.authUserInfo }}" class="reply-btn" data-reply="{{ item }}"
-                                        open-type="getUserInfo" bindgetuserinfo="onGotUserInfo">
+                                    <button wx:if="{{ !$state.authUserInfo && $state.userInfo.id }}" class="reply-btn"
+                                        data-reply="{{ item }}" bindtap="onGotUserInfo">
                                         回复
                                     </button>
+                                    <slotSign bindtap="checknextTap"
+                                        wx:elif="{{ !$state.authUserInfo && !$state.userInfo.id }}" class="reply-btn">
+                                        <button class="reply-btn">
+                                            回复
+                                        </button>
+                                    </slotSign>
                                     <button wx:else class="reply-btn" data-reply="{{ item }}" catchtap="show">
                                         回复
                                     </button>
@@ -203,10 +216,16 @@
                                 <rich-text nodes="{{ child.rtext + child.replyContent }}" catchlongpress="copythat"
                                     data-content="{{ child.replyContent }}" data-index="{{index}}"
                                     data-chilindex="{{number}}"></rich-text>
-                                <button wx:if="{{ !$state.authUserInfo }}" class="reply-btn" data-parent="{{ child}}"
-                                    open-type="getUserInfo" bindgetuserinfo="onGotUserInfo">
+                                <button wx:if="{{ !$state.authUserInfo && $state.userInfo.id }}" class="reply-btn"
+                                    data-parent="{{ child}}" bindtap="onGotUserInfo">
                                     回复
                                 </button>
+                                <slotSign bindtap="checknextTap"
+                                    wx:elif="{{ !$state.authUserInfo && !$state.userInfo.id }}" class="reply-btn">
+                                    <button class="reply-btn">
+                                        回复
+                                    </button>
+                                </slotSign>
                                 <button wx:else class="reply-btn" data-parent="{{ child }}" catchtap="show">
                                     回复
                                 </button>
@@ -225,8 +244,8 @@
         </swiper>
     </view>
     <!-- 语音评论等 -->
-    <button class="issueBox" wx:if="{{write&&currentTab == 2&& !$state.authUserInfo}}" hover-class="none"
-        open-type="getUserInfo" bindgetuserinfo="onGotUserInfo" style="text-align: left;line-height:0;">
+    <button class="issueBox" wx:if="{{write&&currentTab == 2&& !$state.authUserInfo && $state.userInfo.id}}"
+        hover-class="none" bindtap="onGotUserInfo" style="text-align: left;line-height:0;">
         <image src="{{$state.imgHost}}/voicebig.png" class="bigvoice" catchtap="showvoice" data-type="content"></image>
         <view class="issueBox-txt" style="color:{{content != '' ? 'rgba(46,46,46,1)': ''}}">
             {{ content != '' ? content : replycomment }}
@@ -236,14 +255,25 @@
             发布
         </view>
     </button>
-    <view class="issueBox" wx:if="{{write&&currentTab == 2&&$state.authUserInfo}}" bindtap="showWrite"
-        data-type="reply">
+    <view class="issueBox" wx:elif="{{write&&currentTab == 2&&$state.authUserInfo && $state.userInfo.id}}"
+        bindtap="showWrite" data-type="reply">
         <image src="{{$state.imgHost}}/voicebig.png" class="bigvoice" catchtap="showvoice" data-type="content"></image>
         <view class="issueBox-txt" style="color:{{content != '' ? 'rgba(46,46,46,1)': ''}}">
             {{ content != '' ? content : replycomment }}
         </view>
         <view class="submit" catchtap="{{content != '' ? 'release' : ''}}" data-type="reply"
             style="color:{{content != '' ? '' : 'rgba(51,51,51,1);'}}">
+            发布
+        </view>
+    </view>
+    <view class="issueBox" wx:elif="{{write&&currentTab == 2&&!$state.authUserInfo && !$state.userInfo.id}}"
+        bindtap="showLogin">
+        <image src="{{$state.imgHost}}/voicebig.png" class="bigvoice">
+        </image>
+        <view class="issueBox-txt">
+            {{ content != '' ? content : replycomment }}
+        </view>
+        <view class="submit">
             发布
         </view>
     </view>
@@ -327,30 +357,37 @@
     </cover-view>
     <view class="share-joinClass">
         <view class="live-info">
-            <view class="right-box" bindtap="collect">
-                <image src="../../images/likeRed.png" wx:if="{{ lessonDetail.isCollect }}"></image>
-                <image src="../../images/like.png" wx:else></image>
-                <text>收藏</text>
-            </view>
+            <slotSign bindtap="checknextTap" data-type="nameFunction" data-funName="collect" class="right-box">
+                <view class="right-box" style="width: auto;" bindtap="{{$state.userInfo.id ? 'collect' : ''}}">
+                    <image src="../../images/likeRed.png" wx:if="{{ lessonDetail.isCollect }}"></image>
+                    <image src="../../images/like.png" wx:else></image>
+                    <text>收藏</text>
+                </view>
+            </slotSign>
             <view class="join-class" bindtap="joinClass">
                 <image src="../../images/joinBlack.png"></image>
                 <text>进班群</text>
             </view>
             <navigator class="subscribe" hover-class="none"
-                url="/pages/education/education?type=0&url=https://mp.weixin.qq.com/s/vSd8XBQDQkvqVX_kt_YyTQ">
-                <!-- <image src="../../images/phoneIcon.png"></image> -->
+                url="/pages/education/education?type=0&url=https://mp.weixin.qq.com/s/vSd8XBQDQkvqVX_kt_YyTQ"
+                wx:if="{{!$state.showApp}}">
                 <text>下载APP</text>
             </navigator>
+            <button wx:else class="subscribe" open-type="launchApp">
+                <text>下载APP</text>
+            </button>
             <button class="share" plain open-type="share">
-                <!-- <image class="shareLesson" src="../../images/shareLesson.png"></image> -->
                 <text>邀好友一起学</text>
             </button>
-            <!-- <image src="/images/messageImg.png"></image> -->
         </view>
     </view>
 </view>
-<timeScore class="timeScore" lessonDetail="{{lessonDetail}}" wx:if="{{!lessonDetail.studyScore && lessonDetail.score}}"></timeScore>
+<timeScore class="timeScore" lessonDetail="{{lessonDetail}}"
+    wx:if="{{!lessonDetail.studyScore && lessonDetail.score && !lessonDetail.allComplated}}"></timeScore>
 
 <!-- 学分动画 -->
 <integralAnimation integral="{{integral}}" integralContent="{{integralContent}}" wx:if="{{showintegral}}">
 </integralAnimation>
+
+<!-- 登录 -->
+<loginBox id="loginBox" wx:if="{{$state.showLogin}}" />

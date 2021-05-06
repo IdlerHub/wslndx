@@ -16,46 +16,51 @@ Page({
     centerIcon: [],
     times: 0, // 打开弹窗次数 默认0
     showNewStudentBox: false,
+    overlayShow: false,
+    lessonCurrent: 0
   },
   pageName: "首页",
   guide: 0,
-  liveTimer: "",
-  nextTapDetial: {
-    type: "",
-    detail: {},
+  freeParams: {
+    type: 1,
+    pageSize: 10,
+    pageNum: 1
+  },
+  schoolParams: {
+    type: 3,
+    pageSize: 10,
+    pageNum: 1
   },
   onLoad: function (e) {
     e.type != undefined ? (this.pageType = e.type) : "";
-    let reg = /ios/i;
-    let pt = 20; //导航状态栏上内边距
+    let reg = /ios/i,
+      pt = 20; //导航状态栏上内边距
     let h = 44; //导航状态栏高度
     let systemInfo = wx.getSystemInfoSync();
+    let value = wx.getStorageSync("collectMini");
     pt = systemInfo.statusBarHeight;
     if (!reg.test(systemInfo.system)) {
       h = 48;
     }
-    systemInfo.statusBarHeight < 30
-      ? this.setData({
-          topT: 28,
-        })
-      : this.setData({
-          topT: 48,
-        });
+    if (!value) {
+      this.setData({
+        overlayShow: true,
+      });
+      wx.setStorageSync("collectMini", 1);
+    }
+    systemInfo.statusBarHeight < 30 ?
+      this.setData({
+        topT: 28,
+      }) :
+      this.setData({
+        topT: 48,
+      });
     this.setData({
       top: pt + h,
     });
-    let roomId = 1;
-    let windowHeight = systemInfo.windowHeight;
-    let that = this;
-    let query = wx.createSelectorQuery().in(this);
-    query.select(".top").boundingClientRect();
-    query.exec((res) => {
-      // that.headerHeight = res[0].height + pt + h
-    });
     this.setData({
       liveRecommend: [],
-      sprogInterestList: [],
-      interestList: [],
+      schoolRecommend: [],
       category: [],
       history: {},
       charity: {},
@@ -63,6 +68,11 @@ Page({
     this.init();
   },
   onShow() {
+    console.log(this.scroll)
+    this.scroll ? [wx.pageScrollTo({
+      scrollTop: 320,
+      duration: 0
+    }), this.scroll = null]: null
     /* 更新用户的视频浏览历史 */
     if (app.store.$state.userInfo.mobile) {
       this.getHistory();
@@ -77,12 +87,15 @@ Page({
     // 展示新生弹窗
     let date = wx.getStorageSync("date") || ""; // 之前记录的日期
     let newDate = app.util.formatDate(); // 获取当前日期
-    date != newDate ? this.setData({ times: 0 }) : this.setData({ times: 1 }); // 如之前记录日期和当前日期不等 times恢复为0
+    date != newDate ? this.setData({
+      times: 0
+    }) : this.setData({
+      times: 1
+    }); // 如之前记录日期和当前日期不等 times恢复为0
   },
   setCenterIcon() {
     this.setData({
-      centerIcon: [
-        {
+      centerIcon: [{
           url: "/page/index/pages/allLesson/allLesson",
           icon: `${this.data.$state.imgHost}/indexIcon/allLessonIcon.png`,
           name: "全部课程",
@@ -121,8 +134,8 @@ Page({
           url: "/page/index/pages/charityLesson/charityLesson",
           icon: "../../images/charityLesson.png",
           name: "本月公益课",
-          width: 64,
-          height: 52.21,
+          width: 66,
+          height: 56,
           toCharity: true,
         },
         {
@@ -145,10 +158,10 @@ Page({
           url: "/page/index/pages/rankingList/rankingList",
           icon: `${this.data.$state.imgHost}/indexIcon/dowloadIcon2.png`,
           name: "下载APP",
+          type: "app",
           width: 46,
           height: 64,
-          toEducation: "https://mp.weixin.qq.com/s/vSd8XBQDQkvqVX_kt_YyTQ",
-          showCanvas: 1,
+          toEducation: "https://mp.weixin.qq.com/s/vSd8XBQDQkvqVX_kt_YyTQ"
         },
       ],
     });
@@ -156,7 +169,7 @@ Page({
   init(type) {
     if (type) {
       return Promise.all([
-        this.getRecommendLessons(1),
+        this.getRecommendLessons(),
         this.getBanner(),
         this.getDialog(),
         this.getUserOpenid(),
@@ -166,8 +179,7 @@ Page({
       });
     } else if (this.data.$state.userInfo.mobile) {
       return Promise.all([
-        this.getRecommendLessons(1),
-        this.getinterestList(),
+        this.getRecommendLessons(),
         this.getBanner(),
         this.getDialog(),
         this.getUserOpenid(),
@@ -177,24 +189,19 @@ Page({
       });
     } else {
       return Promise.all([
-        this.getRecommendLessons(1),
-        this.getinterestList(),
+        this.getRecommendLessons(),
         this.getBanner(),
         this.getCurrentMonthSemester(),
-      ]);
+      ]).then(() => {
+        this.setData({
+          showNewStudentBox: true,
+        });
+      });
     }
   },
   centerTab(e) {
     this.setData({
       bannercurrentTab: e.detail.current,
-    });
-  },
-  getinterestList() {
-    return app.lessonNew.interestList().then((res) => {
-      this.setData({
-        interestList: res.data.interestList,
-        sprogInterestList: res.data.sprogInterestList,
-      });
     });
   },
   getUserOpenid() {
@@ -204,27 +211,55 @@ Page({
       });
     });
   },
-  getRecommendLessons(type) {
-    if (this.data.liveRecommend[0] && !type) {
-      setInterval(() => {
-        app.liveData.recommendLessons().then((res) => {
-          this.setData({
-            liveRecommend: res.dataList,
-          });
-        });
-      }, 60000);
+  lessonChange(e) {
+    this.setData({
+      lessonCurrent: e.detail.index
+    })
+  },
+  getRecommendLessons: async function (type) {
+    if (type) {
+      let list = []
+      this.data.lessonCurrent ? list = (await app.liveData.selectBackLives(this.schoolParams)).dataList :
+        list = (await app.liveData.selectBackLives(this.freeParams)).dataList
+      this.setData({
+        [this.data.lessonCurrent ? 'schoolRecommend' : 'liveRecommend']: this.data.lessonCurrent ? this.data.schoolRecommend.concat(list) : this.data.liveRecommend.concat(list)
+      })
     } else {
-      app.liveData.recommendLessons().then((res) => {
-        this.setData(
-          {
-            liveRecommend: res.dataList,
-          },
-          () => {
-            res.dataList.length > 0 ? this.getRecommendLessons() : "";
-          }
-        );
+      let liveRecommend = (await app.liveData.selectBackLives(this.freeParams)).dataList
+      let schoolRecommend = (await app.liveData.selectBackLives(this.schoolParams)).dataList
+      this.setData({
+        liveRecommend,
+        schoolRecommend
       });
+      let query = wx.createSelectorQuery().in(this),
+        that = this
+      query.select(".search-box").boundingClientRect()
+      query.exec(res => {
+        that.setData({
+          searchHeight: res[0].height
+        })
+      })
     }
+    // if (this.data.liveRecommend[0] && !type) {
+    //   setInterval(() => {
+    //     app.liveData.recommendLessons().then((res) => {
+    //       this.setData({
+    //         liveRecommend: res.dataList,
+    //       });
+    //     });
+    //   }, 60000);
+    // } else {
+    // app.liveData.recommendLessons().then((res) => {
+    //   this.setData(
+    //     {
+    //       liveRecommend: res.dataList,
+    //     },
+    //     () => {
+    //       res.dataList.length > 0 ? this.getRecommendLessons() : "";
+    //     }
+    //   );
+    // });
+    // }
   },
   getBanner() {
     this.setData({
@@ -259,7 +294,9 @@ Page({
     // 跳新生体验馆，只弹一次，存当日日期
     let date = app.util.formatDate();
     wx.setStorageSync("date", date);
-    this.setData({ times: 1 });
+    this.setData({
+      times: 1
+    });
     wx.navigateTo({
       url: "../../page/discoveryHall/pages/index/index",
     });
@@ -267,24 +304,24 @@ Page({
   unshare() {
     let date = app.util.formatDate();
     wx.setStorageSync("date", date);
-    this.setData({ times: 1 });
+    this.setData({
+      times: 1
+    });
   },
   getSigns() {
     app.user.signed().then((res) => {
       let sign = res.data && res.data.signed;
       app.store.setState({
-        signdays: res.data.sign_days,
+        signdays: res.data.sign_days == 1 && !res.data.signed ? 0 : res.data.sign_days,
       });
       console.log(this.data.$state.signStatus.count);
-      app.setSignIn(
-        {
+      app.setSignIn({
           status: sign,
           count: sign ? 1 : this.data.$state.signStatus.count,
         },
         true
       );
-      app.store.setState(
-        {
+      app.store.setState({
           showSignbox: !sign,
         },
         () => {
@@ -326,16 +363,16 @@ Page({
     if (e.scrollTop < 0) return;
     let scrollTop = this.scrollTop;
     this.scrollTop = e.scrollTop;
-    e.scrollTop - scrollTop > 0
-      ? this.data.shownow &&
-        this.setData({
-          shownow: false,
-        })
-      : !this.data.shownow &&
-        this.shownow &&
-        this.setData({
-          shownow: true,
-        });
+    e.scrollTop - scrollTop > 0 ?
+      this.data.shownow &&
+      this.setData({
+        shownow: false,
+      }) :
+      !this.data.shownow &&
+      this.shownow &&
+      this.setData({
+        shownow: true,
+      });
   },
   //继续播放
   historyTap: function (e) {
@@ -355,40 +392,42 @@ Page({
   onHide() {},
   // 用户昵称等信息授权
   onGotUserInfo(e) {
-    if (e.detail.errMsg === "getUserInfo:ok") {
-      app.updateBase(e);
-      if (e.currentTarget.dataset.role == "user") {
-        this.toUser();
-      } else if (e.currentTarget.dataset.role == "post") {
-        this.toPost();
-      } else if (e.currentTarget.dataset.type == "score") {
-        wx.navigateTo({
-          url: "/page/user/pages/score/score",
-        });
-      } else if (e.currentTarget.dataset.type == "banner") {
-        let item = e.currentTarget.dataset.item;
-        if (item.jump_type == "5") {
+    wx.getUserProfile({
+      desc: "请授权您的个人信息便于更新资料",
+      success: (res) => {
+        app.updateBase(res);
+        if (e.currentTarget.dataset.role == "user") {
+          this.toUser();
+        } else if (e.currentTarget.dataset.role == "post") {
+          this.toPost();
+        } else if (e.currentTarget.dataset.type == "score") {
           wx.navigateTo({
-            url: item.clickurl,
+            url: "/page/user/pages/score/score",
           });
-        } else {
-          setTimeout(() => {
+        } else if (e.currentTarget.dataset.type == "banner") {
+          let item = e.currentTarget.dataset.item;
+          if (item.jump_type == "5") {
             wx.navigateTo({
-              url: `../education/education?url=${item.clickurl}&login=${item.is_login}&id=0&type=1`,
+              url: item.clickurl,
             });
-          }, 500);
+          } else {
+            setTimeout(() => {
+              wx.navigateTo({
+                url: `../education/education?url=${item.clickurl}&login=${item.is_login}&id=0&type=1`,
+              });
+            }, 500);
+          }
+          wx.uma.trackEvent("index_bannerClick", {
+            bannerTencent: item.title,
+          });
         }
-        wx.uma.trackEvent("index_bannerClick", {
-          bannerTencent: item.title,
-        });
-      }
-      this.init();
-    }
+        this.init();
+      },
+    });
   },
   /* 签到 */
   closeSignIn() {
-    app.setSignIn(
-      {
+    app.setSignIn({
         status: 0,
         count: 0,
       },
@@ -401,8 +440,7 @@ Page({
     });
   },
   signIn(data) {
-    app.setSignIn(
-      {
+    app.setSignIn({
         status: true,
         count: 1,
       },
@@ -421,6 +459,8 @@ Page({
     this.setData({
       isRefreshing: true,
     });
+    this.freeParams.pageNum = 1
+    this.schoolParams.pageNum = 1
     this.init().then(() => {
       let timer = setTimeout(() => {
         this.setData({
@@ -431,14 +471,7 @@ Page({
     });
   },
   onReachBottom() {
-    this.setData({
-      onReachBottom: true,
-    });
-    setTimeout(() => {
-      this.setData({
-        onReachBottom: false,
-      });
-    }, 1000);
+    this.data.lessonCurrent ? [this.schoolParams.pageNum += 1, this.getRecommendLessons(1)] : [this.freeParams.pageNum += 1, this.getRecommendLessons(1)]
   },
   /* 广告位值跳转 */
   bannerGo(e) {
@@ -500,12 +533,12 @@ Page({
   getDialog() {
     if (this.pageType) return;
     app.user.dialog().then((res) => {
-      res.data[0]
-        ? this.setData({
-            dialog: res.data,
-            showdialog: true,
-          })
-        : 0;
+      res.data[0] ?
+        this.setData({
+          dialog: res.data,
+          showdialog: true,
+        }) :
+        0;
     });
   },
   jumpPeper(e) {
@@ -542,8 +575,7 @@ Page({
     this.setData({
       showSignbox: false,
     });
-    app.setSignIn(
-      {
+    app.setSignIn({
         status: 0,
         count: 1,
       },
@@ -561,8 +593,7 @@ Page({
   sigin() {
     if (!this.data.$state.userIndex.has_mp_openid) {
       wx.navigateTo({
-        url:
-          "/pages/education/education?type=sign&url=https://globalh5pro.jinlingkeji.cn/Authorization/#/",
+        url: "/pages/education/education?type=sign&url=https://globalh5pro.jinlingkeji.cn/Authorization/#/",
       });
       this.setData({
         isSign: true,
@@ -578,7 +609,7 @@ Page({
         specialColumnId: item.columnId,
       })
       .then((res) => {
-        if (this.data.$state.userInfo.id && item.status != 2) {
+        if (item.status != 2) {
           wx.navigateTo({
             url: `/page/live/pages/vliveRoom/vliveRoom?roomId=${item.liveId}`,
           });
@@ -593,43 +624,23 @@ Page({
         }
       });
   },
-  addStudy(e) {
-    app.liveData
-      .addSubscribe({
-        columnId: e.detail.columnId,
-      })
-      .then(() => {
-        this.data.interestList.forEach((i) => {
-          i.columnId == e.detail.columnId ? (i.isEnroll = 1) : "";
-        });
-        this.data.sprogInterestList.forEach((i) => {
-          i.columnId == e.detail.columnId ? (i.isEnroll = 1) : "";
-        });
-        wx.showToast({
-          title: "报名成功",
-          icon: "none",
-        });
-        this.setData({
-          interestList: this.data.interestList,
-          sprogInterestList: this.data.sprogInterestList,
-        });
-      });
-  },
   iconBind(e) {
+    console.log(this.data.$state.showApp)
     let item = e.currentTarget.dataset.item;
     let str = JSON.stringify(this.data.charity);
     if (item.toEducation) {
       wx.navigateTo({
-        url:
-          "/pages/education/education?type=0&login=1&url=" + item.toEducation,
+        url: "/pages/education/education?type=0&login=1&url=" + item.toEducation,
       });
     } else if (item.toMiniProgram) {
       this.minigo(`{"appid":"${item.toMiniProgram}","url":"${item.url}"}`);
     } else if (item.toCharity) {
+      console.log(str);
       wx.navigateTo({
         url: "/page/index/pages/charityLesson/charityLesson?str=" + str,
       });
     } else {
+      console.log(item.url);
       wx.navigateTo({
         url: item.url,
       });
@@ -637,5 +648,23 @@ Page({
   },
   checknextTap(e) {
     app.checknextTap(e);
+  },
+  closeOverlay() {
+    this.setData({
+      overlayShow: false,
+    });
+  },
+  reserve() {
+    if (!this.data.$state.userInfo.id) {
+      app.changeLoginstatus();
+    } else {
+      app.subscribeMessage();
+    }
+  },
+  binderror(e) {
+    console.log(e)
+  },
+  bindlaunchapp(e) {
+    console.log(e)
   },
 });

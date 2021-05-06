@@ -23,8 +23,10 @@
       <playRrecord style="position: relative; left: -30rpx;" wx:if="{{detail.audio_url && detail.audio_duration > 0}}"
         item="{{detail}}" playVoice="{{playVoice}}">
       </playRrecord>
-      <button wx:if="{{ detail.uid && $state.userInfo.id != detail.uid }}" class="reply-btn" data-detail="{{ detail }}"
-        catchtap="show">回复</button>
+      <slotSign class="" catchtap="checknextTap" data-type="nameFunction" data-funName="show"
+        wx:if="{{ detail.uid && $state.userInfo.id != detail.uid }}" data-bindDetail="{{ detail }}">
+        <button class="reply-btn" catchtap="show" data-bindDetail="{{ detail }}">回复</button>
+      </slotSign>
     </view>
   </view>
   <view class="children" wx:for="{{ detail.reply_array }}" wx:key="index" wx:for-item="child">
@@ -47,8 +49,11 @@
     <playRrecord style="position: relative; left: -30rpx;" wx:if="{{child.audio_url && child.audio_duration > 0}}"
       item="{{child}}" playVoice="{{playVoice}}">
     </playRrecord>
-    <button wx:if="{{ $state.userInfo.id != child.reply_user_id }}" class="reply-btn" data-reply="{{ child }}"
-      data-detail="{{ child }}" catchtap="show">回复</button>
+    <slotSign class="" catchtap="checknextTap" data-type="nameFunction" data-funName="show"
+      wx:if="{{ $state.userInfo.id != child.reply_user_id }}" data-reply="{{ child }}" data-bindDetail="{{ child }}">
+      <button class="reply-btn" data-bindDetail="{{ child }}" catchtap="show">回复</button>
+    </slotSign>
+
   </view>
 </view>
 
@@ -83,7 +88,7 @@
     <!-- prettier-ignore -->
     <view class="right" catchtap="navigator">
       <view class="voicebtn_r" catchtap="release" data-type="1">
-        <image src="../../images/addRecord.png" ></image>
+        <image src="../../images/addRecord.png"></image>
         <text>添加音频</text>
       </view>
       <view class="right_r">
@@ -130,3 +135,6 @@
     </view>
   </view>
 </view>
+
+<!-- 登录 -->
+<loginBox id="loginBox" wx:if="{{$state.showLogin}}" />

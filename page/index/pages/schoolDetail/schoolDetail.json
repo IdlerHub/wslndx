@@ -1,8 +1,6 @@
 {
   "usingComponents": {
-    "lessonItem": "/components/lessonItem/lessonItem",
-    "loginBox": "/components/loginBox/loginBox",
-    "slotSign": "/components/slotSign/slotSign"
+    "lessonItem": "/components/lessonItem/lessonItem"
   },
   "navigationBarTitleText": "高校详情"
 }

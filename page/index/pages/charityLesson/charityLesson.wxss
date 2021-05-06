@@ -11,41 +11,50 @@ page {
   }
   .swiperBox {
     position: fixed;
-    height: 431rpx;
     width: 100vw;
   }
   .swiperBox .img {
     width: 100%;
     height: 100%;
   }
-  .swiperBox .leftIcon {
+  .swiperBox .leftIcon, .topTitle .leftIcon {
     position: absolute;
     left: 34rpx;
     width: 100rpx;
     height: 100rpx;
+    padding-top: 5rpx;
   }
-  .swiperBox .leftIcon .icon{
+  .swiperBox .leftIcon .icon, .topTitle .leftIcon .icon{
     height: 40rpx;
     width: 40rpx;
+  }
+  .topTitle {
+    padding: 0 30rpx 30rpx 0;
+    width: 100vw;
+    background-color: #F5F6FA;
+    position: fixed;
+    top: 0;
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 38rpx;
+    font-weight: 400;
   }
 
   .moreBox {
     padding: 30rpx 30rpx 140rpx 30rpx;
-    padding-top: 40rpx;
+    padding-top: 30rpx;
     position: absolute;
-    top: 390rpx;
     background: #fff;
     border-radius: 20rpx 20rpx 0 0;
     width: 100%;
     box-sizing: border-box;
   }
-  .moreBox .scrollView {
-    height: 100vh;
-  }
   .moreBox .moreTitle {
     display: flex;
     align-items: center;
-    padding: 5rpx 0 43rpx 0;
+    padding: 5rpx 0 33rpx 0;
   }
   .moreBox .moreTitle .left {
     flex: 1;

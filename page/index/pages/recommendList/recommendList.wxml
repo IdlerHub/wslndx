@@ -1,0 +1,10 @@
+<!--page/index/pages/recommendList/recommendList.wxml-->
+<view wx:if="{{lesson[0]}}">
+  <lessonItem id="lessonItem" isInterest="1" lessonList="{{lesson}}" bind:addStudy="addStudy" />
+  <view style="height: 116px;opacity: 0;">2344234</view>
+</view>
+<view wx:else class="qstBox">
+  <image src="/images/liveqs.png"></image>
+  <text>暂无课程</text>
+</view>
+<navigator open-type="navigateBack" class="navBack">调整兴趣</navigator>

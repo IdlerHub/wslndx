@@ -45,15 +45,10 @@ Component({
       }
     },
     attention() {
-      app.liveData.follow({
-        followerUid: this.data.liveDetail.lecturerUserId
-      }).then(() => {
-        wx.showToast({
-          title: '关注成功',
-          icon: 'none'
-        })
-        this.triggerEvent('checkFollow', 1)
-      })
+      this.triggerEvent('checkFollow', 1)
+    },
+    checknextTap(e) {
+      app.checknextTap(e);
     },
   }
 })

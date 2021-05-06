@@ -10,7 +10,6 @@ Page({
     pageSize: 20
   },
   pageEnd: 0,
-  isLogin: 1,
   onLoad: function (options) {
     this.getSchollList()
   },

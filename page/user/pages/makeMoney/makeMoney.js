@@ -20,6 +20,17 @@ Page({
     }
   },
   init() {
+    app.tutor.rankList().then(res => {
+      let list = res.data
+      list.forEach(item => {
+        item.number2 = app.util.towTwice(item.prentice_count)
+        item.money2 = app.util.tow(item.total_amount)
+      })
+      this.setData({
+        list
+      })
+    })
+    if(!this.data.$state.userInfo.id) return
     app.tutor.myIndex().then(res => {
       let topMsg = [{
         up: res.data.user_today_num,
@@ -42,21 +53,11 @@ Page({
         topMsg
       })
     })
-    app.tutor.rankList().then(res => {
-      let list = res.data
-      list.forEach(item => {
-        item.number2 = app.util.towTwice(item.prentice_count)
-        item.money2 = app.util.tow(item.total_amount)
-      })
-      this.setData({
-        list
-      })
-    })
     app.tutor.totalAmount().then(res => {
       res.total_amount = Number(res.data.total_amount).toFixed(2)
       this.setData({
         total_amount: res.total_amount
       })
     })
-  }
+  },
 })

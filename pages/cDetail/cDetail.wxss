@@ -239,4 +239,11 @@ page {
   }
 }
 
+.upbottom {
+  width: 100%;
+  padding: 20rpx 0 30rpx 0;
+  text-align: center;
+  font-size: 28rpx;
+}
+
 

@@ -13,12 +13,18 @@ Page({
     current: 0,
     hotLessonList: [],
     charityLessonList: [],
-    total: 0,
+    hot_total: 0,
+    charity_total: 0,
     mpurl: '',
     charity: {},
     nomore: 0,
     pagecount: 1,
-    isLoadInterface: false
+    isLoadInterface: false,
+    showTopTitle: false
+  },
+  common: {
+    scrollTop_1: 190, //热门
+    scrollTop_2: 170 //公益
   },
   onLoad: function (options) {
     this.setData({name: options.name})
@@ -32,10 +38,10 @@ Page({
     }
     systemInfo.statusBarHeight < 30 ?
     this.setData({
-      topT: 70
+      topT: 30
     }) :
     this.setData({
-      topT: 100
+      topT: 50
     });
     this.params = {
       pageSize: 10,
@@ -52,11 +58,7 @@ Page({
     this.data.name=='热门'? this.getHotLessonList(): req
   },
   onPullDownRefresh: function () {},
-  onReachBottom: function () {},
-  goback() {
-    wx.navigateBack({ delta: 1 })
-  },
-  bindscrolltolower(e) {
+  onReachBottom: function () {
     if (!this.data.isLoadInterface) { //防止在接口未执行完再次调用接口
       console.log(this.params.pageNum * 1 + 1)
       if (this.params.pageNum * 1 + 1 <= this.data.pagecount) {
@@ -64,7 +66,7 @@ Page({
           isLoadInterface: true
         })
         this.params.pageNum = this.params.pageNum * 1 + 1
-        this.data.name=='热门'? this.getCharityLessonList():this.getCharityLessonList();
+        this.data.name=='热门'? this.getHotLessonList():this.getCharityLessonList();
       } else {
         //如果大于总页数停止请求数据
         this.setData({
@@ -72,9 +74,21 @@ Page({
         })
       }
     }
+  },
+  onPageScroll: function(e) {
+    if (this.data.name == '热门') {
+      e.scrollTop >= this.common.scrollTop_1? this.setData({showTopTitle:true}):this.setData({showTopTitle:false})
+    } else {
+      e.scrollTop >= this.common.scrollTop_2? this.setData({showTopTitle:true}):this.setData({showTopTitle:false})
+    }
+  },
+  goback() {
+    wx.navigateBack({ delta: 1 })
+  },
+  // bindscrolltolower(e) {
     // this.params.pageNum += 1
     // this.data.name=='热门'? this.getHotLessonList():this.getCharityLessonList()
-  },
+  // },
   goEducation() {
     if (this.data.mpurl) {
       wx.navigateTo({
@@ -91,7 +105,7 @@ Page({
   getCharityLessonList() {
     app.lessonNew.semesterColumnList(this.params).then((res) => {
       this.setData({
-        total: res.total,
+        charity_total: res.total,
         pagecount: Math.ceil(res.total / 10)
       });
       if (this.params.pageNum == 1) {
@@ -120,7 +134,7 @@ Page({
   getHotLessonList() {
     app.lessonNew.hallGetColumnList(this.params).then((res) => {
       this.setData({
-        total: res.total,
+        hot_total: res.total,
         pagecount: Math.ceil(res.total / 10)
       });
       if (this.params.pageNum == 1) {

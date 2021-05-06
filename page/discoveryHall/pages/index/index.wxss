@@ -84,7 +84,7 @@ page {
 /* 公共盒子 */
 .contentBox {
   margin: 0 20rpx;
-  background: linear-gradient(90deg, #FFF1D3 0%, #FFE4B9 100%);
+  background: #fff;
   border: 3rpx solid #FF8747;
   border-top: none;
   border-radius: 0 0 24rpx 24rpx;
@@ -124,7 +124,8 @@ page {
 }
 
 .titleBox .titleRight {
-  width: 160rpx;
+  min-width: 160rpx;
+  padding: 0 16rpx;
   height: 44rpx;
   justify-content: center;
   background: #FC6F50;
@@ -132,6 +133,7 @@ page {
   font-size: 28rpx;
   font-weight: 400;
   color: #FFFFFF;
+  box-sizing: border-box;
 }
 
 .titleBox .titleRight text {
@@ -173,7 +175,7 @@ page {
   display: block;
   font-size: 38rpx;
   color: #3A3A3A;
-  margin-top: 16rpx;
+  margin-top: 5rpx;
   margin-left: 12rpx;
   min-width: 212rpx;
   height: 53rpx;
@@ -188,14 +190,13 @@ page {
 
 .lessonList .lessonItem .tagsLine view {
   padding: 3rpx 6rpx;
-  max-width: 144rpx;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  font-size: 24rpx;
+  font-size: 28rpx;
   font-weight: 400;
   color: #999;
-  background: #fff;
+  background: #F7F7F7;
   border-radius: 4rpx;
   margin-right: 10rpx;
 }
@@ -206,7 +207,6 @@ page {
   overflow: hidden;
   white-space: nowrap;
   font-size: 28rpx;
-  font-weight: 500;
   color: #999999;
   margin-left: 12rpx;
   min-width: 217rpx;
@@ -216,45 +216,62 @@ page {
 
 /* 作品列表 */
 .worksList {
-  padding: 30rpx 0;
+  padding: 20rpx 0;
   display: flex;
   width: 100%;
   max-height: fit-content;
 }
 
 .worksList .workItem {
+  background: #F7F7F7;
   flex-shrink: 0;
-  width: 240rpx;
-  height: 356rpx;
-  background: #fff;
+  width: 265rpx;
+  min-height: 356rpx;
   border-radius: 12rpx;
   overflow: hidden;
   margin-left: 16rpx;
+  position: relative;
 }
 
-.worksList .workItem image {
+.worksList .workItem:nth-child(1) {
+   margin-left: 20rpx;
+}
+
+.worksList .workItem image:nth-child(1) {
   width: 100%;
-  height: 240rpx;
+  height: 260rpx;
 }
 
-.worksList .workItem text {
-  font-size: 28rpx;
+.worksList .workItem image:nth-child(2) {
+  width: 64rpx;
+  height: 64rpx;
+  position: absolute;
+  top: 102rpx;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.worksList .workItem .text {
+  font-size: 36rpx;
   font-weight: 400;
-  color: #666666;
-  line-height: 42rpx;
-  padding: 8rpx 18rpx 0 16rpx;
+  color: #333;
+  line-height: 46rpx;
+  padding: 13rpx 18rpx 0 16rpx;
+  margin-bottom: 19rpx;
 }
 
 /* 关于本大 */
 
 .aboutBox {
-  padding: 30rpx 20rpx;
+  padding: 20rpx 20rpx;
+  padding-bottom: 8rpx;
 }
 
 .aboutBox image:nth-child(1) {
   width: 100%;
   height: 376rpx;
   border-radius: 12rpx;
+  margin-bottom: 8rpx;
 }
 
 .aboutBox image:nth-child(2) {
@@ -270,8 +287,9 @@ page {
   font-size: 36rpx;
   font-weight: 400;
   color: #3A3A3A;
-  line-height: 54rpx;
-  margin-top: 14rpx;
+  display: block;
+  margin-bottom: 20rpx;
+  padding: 0 4rpx;
 }
 
 /* 任务 */
@@ -281,10 +299,10 @@ page {
 
 .scoreBox .scroeItem {
   height: 142rpx;
-  background: #fff;
   justify-content: space-between;
   border-radius: 12rpx;
   margin-bottom: 20rpx;
+  background: #FEF2E7;
 }
 
 .scoreBox .scroeItem text{
@@ -299,11 +317,11 @@ page {
 .scoreBox .scroeItem .itemLeft text:nth-child(2) {
   font-size: 28rpx;
   font-weight: 400;
-  color: #999999;
+  color: #666;
   margin-top: 10rpx;
 }
 
-.scoreBox .scroeItem .itemRight text:nth-child(1){
+.scoreBox .scroeItem .itemRight .textFirst{
   font-size: 28rpx;
   font-weight: 400;
   color: #666666;
@@ -311,7 +329,7 @@ page {
   margin-bottom: 12rpx;
 }
 
-.scoreBox .scroeItem .itemRight text:nth-child(2){
+.scoreBox .scroeItem .itemRight .textSecom {
   width: 118rpx;
   height: 48rpx;
   line-height: 48rpx;

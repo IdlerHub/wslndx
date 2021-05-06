@@ -2,6 +2,6 @@
   "usingComponents": {
     "van-overlay": "@vant/weapp/overlay/index"
   },
-  "navigationBarTitleText": "新生体验馆",
+  "navigationBarTitleText": "新生体验营",
   "navigationBarBackgroundColor": "#F5F6FA"
 } 

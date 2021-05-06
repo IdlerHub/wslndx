@@ -1,0 +1,5 @@
+{
+  "usingComponents": {
+    "lessonItem": "/components/lessonItem/lessonItem"
+  }
+}

@@ -65,11 +65,13 @@
       </view>
       <view class="right">
         <view class="after"></view>
-        <view class="right-box" bindtap="collect">
-          <image src="{{$state.imgHost}}/class-collected.png" wx:if="{{ detail.collected }}"></image>
-          <image src="{{$state.imgHost}}/class-collect.png" wx:else></image>
-          <text>收藏</text>
-        </view>
+        <slotSign bindtap="checknextTap" data-type="nameFunction" data-funName="collect">
+          <view class="right-box" bindtap="{{$state.userInfo.id ? 'collect' : null}}">
+            <image src="{{$state.imgHost}}/class-collected.png" wx:if="{{ detail.collected }}"></image>
+            <image src="{{$state.imgHost}}/class-collect.png" wx:else></image>
+            <text>收藏</text>
+          </view>
+        </slotSign>
       </view>
     </view>
   </view>
@@ -77,7 +79,7 @@
     <view class="line">继续播放：{{ cur.sub_id }}. {{ cur.title }}</view>
     <image class="icon" mode="widthFix" src="{{ $state.imgHost }}/rectangleTwo.png"></image>
   </view>
-  
+
   <view class="content">
     <scroll-view scroll-x="true" class="nav" scroll-left="{{ navScrollLeft }}" scroll-with-animation="{{ true }}">
       <block wx:for="{{ nav }}" wx:for-index="id" wx:for-item="item" wx:key="id">
@@ -207,10 +209,9 @@
     <icon class="iconfont icon-shouye"></icon>
     <text>首页</text>
   </view>
-  <button class="authorize" wx:if="{{ $state.baseInfo }}" open-type="getUserInfo"
-    bindgetuserinfo="onGotUserInfo"></button>
-  <button class="issueBox" wx:if="{{write&&currentTab == 1&& !$state.authUserInfo}}" hover-class="none"
-    open-type="getUserInfo" bindgetuserinfo="onGotUserInfo" style="text-align: left;line-height:0;">
+  <button class="authorize" wx:if="{{ $state.baseInfo }}" bindtap="onGotUserInfo"></button>
+  <!-- <button class="issueBox" wx:if="{{write&&currentTab == 1&& !$state.authUserInfo}}" hover-class="none"
+     bindtap="onGotUserInfo" style="text-align: left;line-height:0;">
     <image src="{{$state.imgHost}}/voicebig.png" class="bigvoice" catchtap="showvoice" data-type="content"></image>
     <view class="issueBox-txt" style="color:{{content != '' ? 'rgba(46,46,46,1)': ''}}">
       {{ content != '' ? content : replycomment }}
@@ -219,8 +220,8 @@
       style="color:{{content != '' ? '' : 'rgba(51,51,51,1);'}}">
       发布
     </view>
-  </button>
-  <view class="issueBox" wx:elif="{{write&&currentTab == 5&&$state.authUserInfo}}" bindtap="showWrite"
+  </button> -->
+  <!-- <view class="issueBox" wx:elif="{{write&&currentTab == 5&&$state.authUserInfo}}" bindtap="showWrite"
     data-type="reply">
     <image src="{{$state.imgHost}}/voicebig.png" class="bigvoice" catchtap="showvoice" data-type="content"></image>
     <view class="issueBox-txt" style="color:{{content != '' ? 'rgba(46,46,46,1)': ''}}">
@@ -230,7 +231,7 @@
       style="color:{{content != '' ? '' : 'rgba(51,51,51,1);'}}">
       发布
     </view>
-  </view>
+  </view> -->
   <view class="issueBoxTow"
     style="bottom :{{ keyheight != 0 ? keyheight : 0}}px;height:{{replyplaceholder != '' ? '181' : ''}}px"
     wx:if="{{writeTow&&currentTab == 1}}">
@@ -322,7 +323,7 @@
         <view class="plahtPicker">
           <text wx:if="{{plathParam.plath.length == 0}}" class="plathoer">请选择地区</text>
           <text wx:else class="adress">{{ plathParam.plath }}</text>
-          <mini-icon mini-class="icon" icon="arrowRight" color="#bfbfbf" miniStyle="width:35rpx;height:35rpx"/>
+          <mini-icon mini-class="icon" icon="arrowRight" color="#bfbfbf" miniStyle="width:35rpx;height:35rpx" />
         </view>
       </picker>
     </view>
@@ -333,7 +334,7 @@
         <view class="plahtPicker">
           <text class="plathoer" wx:if="{{plathParam.shool.length == 0}}">请选择学校</text>
           <text wx:else class="adress">{{ plathParam.shool }}</text>
-          <mini-icon mini-class="icon" icon="arrowRight" color="#bfbfbf" miniStyle="width:35rpx;height:35rpx"/>
+          <mini-icon mini-class="icon" icon="arrowRight" color="#bfbfbf" miniStyle="width:35rpx;height:35rpx" />
         </view>
       </picker>
     </view>
@@ -344,3 +345,6 @@
   <image src="../../images/success.png"></image>
   <text>提交成功</text>
 </view>
+
+<!-- 登录 -->
+<loginBox id="loginBox" wx:if="{{$state.showLogin}}" />

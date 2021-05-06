@@ -2,7 +2,7 @@
 <wxs module="fn">
   module.exports = {
   num: function(studyNum) {
-  return studyNum >= 10000 ? (studyNum / 10000).toFixed(1) + 'w' : studyNum
+  return studyNum >= 10000 ? (studyNum / 10000).toFixed(1) + '万' : studyNum
   },
   }
 </wxs>
@@ -15,7 +15,7 @@
     <view class="contentBox">
       <text class="title" wx:if="{{!isSearch}}">{{ item.title || item.name }}</text>
       <rich-text class="title" wx:else nodes="{{item.title || item.name}}"></rich-text>
-      <view wx:if="{{(!isSchool && item.columnId) || item.type == 1}}">
+      <view wx:if="{{((!isSchool && item.columnId) || item.type == 1) && !isInterest}}">
         <view class="tabLine" wx:if="{{ item.tags[0] }}">
           <text wx:for="{{item.tags}}" wx:key="index" wx:for-item="tagItem">{{tagItem.tagName || tagItem}}</text>
         </view>
@@ -23,15 +23,24 @@
           <text>网上老年大学</text>
         </view>
       </view>
+      <view class="levelName" wx:elif="{{isInterest && item.nickname}}">
+        {{item.nickname}} <text>{{item.levelName}}</text>
+      </view>
       <view class="bottom" wx:if="{{(!isSchool && item.type == 1) || isIndex || item.columnId}}">
-        <view class="left">
+        <view class="left" wx:if="{{!isInterest}}">
           <text>免费</text>
           <text>|</text>
           <text>{{ fn.num(item.studyNum) }}人在学</text>
         </view>
+        <view class="left" wx:else>
+          <text>{{ fn.num(item.studyNum) }}人在学</text>
+          <text wx:if="{{item.avgGrade}}">|</text>
+          <text wx:if="{{item.avgGrade}}">评分{{item.avgGrade}}</text>
+        </view>
         <view wx:if="{{!isAllLesson}}">
-          <view class="right" wx:if="{{isIndex && !item.isEnroll}}" catchtap="addStudy" data-type="addStudy"
-            data-item="{{item}}">报名</view>
+          <slotSign catchtap="{{ $state.userInfo.id ? 'addStudy' : 'checknextTap'}}" data-type="nameFunction" data-funName="addStudy" wx:if="{{(isIndex || isInterest) && !item.isEnroll}}" data-type="addStudy" data-item="{{item}}">
+            <view class="right">报名</view>
+          </slotSign>
           <view class="righted" wx:else>
             已报名
           </view>
@@ -39,9 +48,8 @@
       </view>
       <view class="schoolBootem" wx:else>
         <text class="left">剧集</text><text class="right">{{item.lesson_count || item.lessonCount}}集</text>
-          <text>|</text>
-        <text
-          class="left">播放</text><text class="right">{{item.thousand || item.browse}}</text>
+        <text>|</text>
+        <text class="left">播放</text><text class="right">{{item.thousand || item.browse}}</text>
         <!-- <text>查看全部课程</text> -->
       </view>
     </view>

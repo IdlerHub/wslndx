@@ -24,11 +24,18 @@ Component({
     universityId: {
       type: String,
       value: null
+    },
+    backgound: {
+      type: String,
+      value: '#000'
     }
   },
   data: {
     text: '',
     focus: true,
+  },
+  ready() {
+    console.log(this.data.universityId)
   },
   methods: {
     txtchange(e) {

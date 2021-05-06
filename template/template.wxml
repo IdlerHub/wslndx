@@ -1,4 +1,12 @@
 <!--template/postItem.wxml-->
+<wxs module="fn">
+	module.exports = {
+	num: function(num) {
+	return num > 10000 ? (num / 10000).toFixed(1) + 'W' : num
+	}
+	}
+</wxs>
+
 <!-- 秀风采列表item -->
 <template name="listitem">
 	<view class="item">
@@ -17,9 +25,12 @@
 				</view>
 			</view>
 			<view class="right">
-				{{list}}
-				<view class="attension" wx:if="{{!item.is_follow && item.uid != $state.userInfo.id && !isPersomPage}}" data-index="{{index}}"
-					data-userid="{{item.uid}}" data-page="{{page}}" data-name="{{item.nickname}}" catchtap="attention">关注</view>
+				<slotSign catchtap="{{ !$state.userInfo.id ? 'checknextTap' : 'attention' }}" data-type="nameFunction"
+					data-funName="attention" class="attension"
+					wx:if="{{!item.is_follow && item.uid != $state.userInfo.id && !isPersomPage}}" data-index="{{index}}"
+					data-userid="{{item.uid}}" data-page="{{page}}" data-name="{{item.nickname}}">
+					<view>关注</view>
+				</slotSign>
 				<view class="collect" catchtap="collect" data-id="{{item.id}}" data-status="{{item.collectstatus}}"
 					data-index="{{index}}" data-page="{{page}}" data-userid="{{item.uid}}" data-follow="{{item.is_follow}}"
 					data-name="{{item.nickname}}">...</view>
@@ -77,25 +88,28 @@
 			#{{ item.fs_title }}精选</navigator>
 		<view class="btn" style="margin-top:{{!item.like_avatar_list[0] && !item.last_comment.nickname ? '30rpx' : ''}}">
 			<!-- 点赞 -->
-			<formCode bind:handler="praise" class="item" data-place="{{page}}" data-index="{{ index }}" data-type="true"
-				data-id="{{item.id}}" data-uid="{{item.uid}}">
-				<view class="container-sub">
+			<slotSign bindtap="checknextTap" data-type="nameFunction" data-funName="praise" data-place="{{page}}"
+				data-index="{{ index }}" data-id="{{item.id}}" data-uid="{{item.uid}}" class="container-sub item">
+				<view class="container-sub item" bindtap="{{ !$state.userInfo.id ? null : 'praise'}}" data-place="{{page}}"
+					data-index="{{ index }}" data-type="true" data-id="{{item.id}}" data-uid="{{item.uid}}">
 					<view class="praise  {{ item.likestatus ? 'end' : '' }} {{ item.praising ? 'ani' : '' }}" data-page="{{page}}"
 						data-index="{{ index }}" data-type="true" bindanimationend="aniend" data-id="{{item.id}}"></view>
 					<text class="text">{{ item.likes != 0 ? item.lw || item.likes : '点赞' }} </text>
 				</view>
-			</formCode>
+			</slotSign>
 			<text class="division"></text>
 			<!-- 评论 -->
-			<view hover-class="none" class="item" bindtap="handleRelse" data-status="{{ $state.userInfo.status }}"
-				data-id="{{ item.id }}" data-type="reply">
-				<formCode>
-					<view class="container-sub">
-						<icon class="iconfont icon-comment"></icon>
-						<text class="text">{{ item.comments != 0 ?  item.cw || item.comments : '评论'}}</text>
-					</view>
-				</formCode>
-			</view>
+			<slotSign catchtap="checknextTap" data-type="nameFunction" data-funName="handleRelse" data-id="{{ item.id }}" data-bindType="reply" class="item">
+				<view hover-class="none" class="item" bindtap="handleRelse" data-status="{{ $state.userInfo.status }}"
+					data-id="{{ item.id }}" data-bindType="reply">
+					<formCode>
+						<view class="container-sub">
+							<icon class="iconfont icon-comment"></icon>
+							<text class="text">{{ item.comments != 0 ?  item.cw || item.comments : '评论'}}</text>
+						</view>
+					</formCode>
+				</view>
+			</slotSign>
 			<text class="division"></text>
 			<button class="share item" open-type="share" data-index="{{ index }}" data-page="{{page}}" hover-class="btn-hover"
 				wx:if="{{ item.check_status != 0 && item.check_status != 2}}">
@@ -107,5 +121,42 @@
 				<text class="text">{{ item.forward != 0 ? item.fw || item.forward : '分享' }}</text>
 			</button>
 		</view>
+	</view>
+</template>
+
+<!-- 直播列表Item -->
+<template name="liveItem">
+	<view class="liveItem" style="{{index + 1 > 6 - 2 ? 'border:none' : '' }}" wx:for="{{liveRecommend}}" wx:key="index"
+		bindtap="toLivelesson" data-item="{{item}}">
+		<view class="liveImgBox">
+			<image src="{{item.indexCover}}">
+			</image>
+			<view class="liveStatusBox">
+				<view class="liveStatus"
+					style="background: {{ item.status == 0 ? '' : item.status == 2 ? 'linear-gradient(270deg, #FF8242 0%, #FF6010 100%)' : 'linear-gradient(270deg, #44A2FF 0%, #007CF7 100%);border-radius: 10rpx 6rpx 6rpx 0px;' }}">
+					<view class="statusLeft" wx:if="{{item.status == 1}}">
+						<image src="/images/naoling.png" class="naoling"></image>
+						<view class="statusTxt" style="margin: 0">待开始</view>
+					</view>
+					<view class="statusLeft" wx:elif="{{item.status == 0}}">
+						<view wx:for="{{3}}" wx:key="index" class="statusWite"></view>
+						<view class="statusTxt">直播</view>
+					</view>
+					<view class="statusLeft" wx:else>
+						<image src="/images/endIcon.png" class="endIcon"></image>
+						<view class="statusTxt" style="margin: 0">看回播</view>
+					</view>
+				</view>
+				<view class="viewNum" wx:if="{{item.status == 0 || item.status == 2}}">{{fn.num(item.viewNum)}}人</view>
+			</view>
+		</view>
+		<text>{{item.liveName}}</text>
+		<view class="tagsLine" wx:if="{{item.tags[0]}}">
+			<view wx:for="{{item.tags}}" wx:for-item="tag" wx:key="index">{{tag.tagName}}</view>
+		</view>
+		<view class="tagsLine" wx:else>
+			<view>{{item.universityName}}</view>
+		</view>
+		<text>{{item.dayTime}} {{item.startTime}}</text>
 	</view>
 </template>

@@ -67,11 +67,6 @@ let messageUplisten = function (event) {
         nick,
         payload: payload.text ? payload : JSON.parse(payload.data)
       });
-      payload.text ?
-        "" :
-        messageFilter(payload) == -1 ?
-        then.addliveCount() :
-        "";
       then.setData({
         talkList,
       });
@@ -129,6 +124,7 @@ let messageUplisten = function (event) {
       then.setData({
         joinList
       })
+      then.addliveCount(Number(JSON.parse(payload.data).personCount) > 0 ? Number(JSON.parse(payload.data).personCount) : 1)
     } else if (messageFilter(payload) == -4) {
       then.setData({
         liveStatus: 4,

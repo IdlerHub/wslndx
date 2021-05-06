@@ -1,8 +1,8 @@
 <wxs module="fn">
 	module.exports = {
 	search: function(str) {
-		return str.search('gif');
-		}
+	return str.search('gif');
+	}
 	}
 </wxs>
 <import src="/template/template.wxml"></import>
@@ -12,7 +12,8 @@
 		<view class="weui-loading"></view>
 		<!-- <view class='weui-loadmore-tips'>加载中...</view> -->
 	</view>
-	<view class="header" style="background-image: linear-gradient(-90deg, #{{ detail.color[0] }} 0%, #{{ detail.color[1] }} 100%);">
+	<view class="header"
+		style="background-image: linear-gradient(-90deg, #{{ detail.color[0] }} 0%, #{{ detail.color[1] }} 100%);">
 		<view class="left">
 			<image mode="aspectFill" class="img" src="{{ circle.image }}"></image>
 			<view class="text">
@@ -20,14 +21,17 @@
 					<text class="name">{{ circle.title }}</text>
 					<image src="/images/smalle.png" catchtap="showbig"></image>
 				</view>
-				<navigator class="member" url="/page/post/pages/member/member?id={{ circle.id }}&name={{ circle.title }}" hover-class="none" open-type="navigate">
+				<navigator class="member" url="/page/post/pages/member/member?id={{ circle.id }}&name={{ circle.title }}"
+					hover-class="none" open-type="navigate">
 					{{ circle.members }}名成员
 					<image mode="aspectFill" class="icon" src="{{ $state.imgHost }}/Return.png"></image>
 				</navigator>
 			</view>
 		</view>
 		<view class="join joined" wx:if="{{ circle.joined == 1 }}">已加入</view>
-		<view class="join" wx:else bindtap="join">加入</view>
+		<slotSign catchtap="checknextTap" data-type="nameFunction" data-funName="join" class="join" wx:else>
+			<view bindtap="join">加入</view>
+		</slotSign>
 	</view>
 	<view class="wrap">
 		<template is="listitem" wx:for="{{list}}" data="{{item:item, index, $state, voiceplayimg, playVoice}}"
@@ -40,9 +44,13 @@
 	<view class="publishAni"></view>
 </view>
 <view class="footer">
-	<navigator url="/page/post/pages/release/release?title={{circle.title}}&id={{circle.id}}&type=circle" hover-class="none" open-type="navigate" class="write">
-		<text class="text">写帖</text>
-	</navigator>
+	<slotSign catchtap="checknextTap" data-type="search"
+		data-detail="/page/post/pages/release/release?title={{circle.title}}&id={{circle.id}}&type=circle" class="write">
+		<navigator url="/page/post/pages/release/release?title={{circle.title}}&id={{circle.id}}&type=circle"
+			hover-class="none" open-type="navigate" class="write">
+			<text class="text">写帖</text>
+		</navigator>
+	</slotSign>
 </view>
 <view class="ewm" bindtap="closeewm" wx:if="{{showbig}}">
 	<view class="ewmBox" catch:longpress="longPress">
@@ -57,14 +65,23 @@
 </view>
 <view class="ActionSheet" wx:if="{{showSheet}}" bindtap="closeSheet">
 	<view class="ActionSheet-box">
-		<view class="ActionSheet-item" catchtap="{{is_follow ? 'clsocancelFollowing' : 'attention'}}" wx:if="{{flowId != $state.userInfo.id}}" >
-			{{is_follow ? '取消关注' : '关注'}}
-		</view>
-		<view class="ActionSheet-item" catchtap="{{collectstatus ? 'cancelCollection' : 'setCollect'}}">
-			{{collectstatus ? '取消收藏' : '收藏'}}
-		</view>
-		<view class="ActionSheet-item" catchtap="closeSheet">
+		<slotSign catchtap="checknextTap" data-type="nameFunction" data-funName="attention" class="ActionSheet-item"
+			wx:if="{{flowId != $state.userInfo.id}}">
+			<view class="ActionSheet-item" catchtap="{{is_follow ? 'clsocancelFollowing' : 'attention'}}">
+				{{is_follow ? '取消关注' : '关注'}}
+			</view>
+		</slotSign>
+		<slotSign catchtap="checknextTap" data-type="nameFunction" data-funName="setCollect" class="ActionSheet-item">
+			<view class="ActionSheet-item" catchtap="{{collectstatus ? 'cancelCollection' : 'setCollect'}}">
+				{{collectstatus ? '取消收藏' : '收藏'}}
+			</view>
+		</slotSign>
+		<view style="margin-top: 15rpx;" class="ActionSheet-item" catchtap="closeSheet">
 			取消
 		</view>
 	</view>
 </view>
+
+
+<!-- 登录 -->
+<loginBox id="loginBox" wx:if="{{$state.showLogin}}" />

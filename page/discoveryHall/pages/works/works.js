@@ -5,10 +5,11 @@ Page({
     list: []
   },
   params: {
-    pageSize: 10,
+    pageSize: 0,
     pageNum: 1
   },
   onLoad: function (options) {
+    this.params.pageSize = options.taskNum
     this.getList()
   },
   onShow: function () {
@@ -23,7 +24,11 @@ Page({
     })
   },
   onReachBottom: function () {
+    if(this.params.pageSize < 10) return
     this.params.pageNum += 1
     this.getList(this.data.list)
+  },
+  checknextTap(e) {
+    app.checknextTap(e);
   },
 })

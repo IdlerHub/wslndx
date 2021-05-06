@@ -77,7 +77,9 @@
         "pages/chageLesson/chageLesson",
         "pages/lessonSpecial/lessonSpecial",
         "pages/schoolDetail/schoolDetail",
-        "pages/charityLesson/charityLesson"
+        "pages/charityLesson/charityLesson",
+        "pages/recommendList/recommendList",
+        "pages/studyCard/studyCard"
       ]
     },
     {
@@ -173,6 +175,9 @@
   "usingComponents": {
     "signinBox": "/components/signinBox/signinBox",
     "mini-icon": "components/icon/icon",
-    "integralAnimation": "/components/integralAni/integralAni"
+    "integralAnimation": "/components/integralAni/integralAni",
+    "reserveBox": "/components/reserveBox/reserveBox",
+    "loginBox": "/components/loginBox/loginBox",
+    "slotSign": "/components/slotSign/slotSign"
   }
 }

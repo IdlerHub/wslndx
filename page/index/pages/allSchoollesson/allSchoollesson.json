@@ -1,7 +1,6 @@
 {
   "usingComponents": {
     "lessonItem": "/components/lessonItem/lessonItem",
-    "loginBox": "/components/loginBox/loginBox",
     "searchTop": "../../components/searchTop/searchTop"
   },
   "onReachBottomDistance": 10

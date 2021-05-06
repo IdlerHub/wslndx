@@ -85,12 +85,10 @@ Page({
         });
       }, 5000);
     }
-    if (this.data.$state.userInfo.mobile) {
-      this.getDetail().then(() => {
-        this.getComment([], options.comment);
-        this.getPraise();
-      });
-    }
+    this.getDetail().then(() => {
+      this.getComment([], options.comment);
+      this.getPraise();
+    });
     if (this.data.$state.blogcomment[options.id.trim()]) {
       this.setData({
         content: this.data.$state.blogcomment[options.id.trim()].replycontent,
@@ -395,6 +393,7 @@ Page({
   },
   // 发布评论e
   release(e, params, type) {
+    console.log(e, params, type)
     let param = {},
       replyType = 0
     if (this.replyParent) {
@@ -465,7 +464,7 @@ Page({
             blogcomment
           });
         }
-        if (msg.data.is_first == "first")  {
+        if (msg.data.is_first == "first") {
           app.setIntegral(this, "+5 学分", "完成[秀风采]首次评论")
         } else if (msg.data.is_first == "day") {
           app.setIntegral(this, "+2 学分", "完成每日[秀风采]首评评论")
@@ -1270,25 +1269,17 @@ Page({
     app.circle
       .collectCancel(param)
       .then(res => {
-        this.setData({
-          showSheet: false,
-          ["detail.collectstatus"]: 0
-        });
-        this.postPages.pagesCollect(this.data.detail.id, 0);
         wx.showToast({
           title: res.msg,
           icon: "success",
           duration: 800
         });
-      })
-      .catch(res => {
-        this.collect();
-        wx.showToast({
-          title: res.msg,
-          image: "/images/warn.png",
-          duration: 800
+        this.setData({
+          showSheet: false,
+          ["detail.collectstatus"]: 0
         });
-      });
+        this.postPages.pagesCollect(this.data.detail.id, 0);
+      })
   },
   setCollect() {
     let param = {
@@ -1297,29 +1288,37 @@ Page({
     app.circle
       .collect(param)
       .then(res => {
-        this.setData({
-          showSheet: false,
-          ["detail.collectstatus"]: 1
-        });
-        this.postPages.pagesCollect(this.data.detail.id, 1);
         wx.showToast({
           title: res.msg,
           icon: "success",
           duration: 1500
         });
-      })
-      .catch(res => {
-        this.collect();
-        wx.showToast({
-          title: res.msg,
-          image: "/images/warn.png",
-          duration: 1500
+        this.setData({
+          showSheet: false,
+          ["detail.collectstatus"]: 1
         });
-      });
+        this.postPages.pagesCollect(this.data.detail.id, 1);
+      })
   },
   closeSheet() {
     this.setData({
       showSheet: false
     });
-  }
+  },
+  checknextTap(e) {
+    app.checknextTap(e);
+  },
+  // 授权个人信息
+  onGotUserInfo(e) {
+    wx.getUserProfile({
+      desc: '请授权您的个人信息便于更新资料', // 声明获取用户个人信息后的用途，后续会展示在弹窗中，请谨慎填写
+      success: (res) => {
+        app.updateBase(res)
+        this.release(e)
+      },
+      fail: () => {
+        this.release(e)
+      }
+    })
+  },
 });

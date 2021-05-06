@@ -12,11 +12,10 @@ Page({
     scrollTop: 0
   },
   pageEnd: 0,
-  isLogin: 1,
   onLoad: function (options) {
     this.params = {
       categoryId: '',
-      pageSize: 20, 
+      pageSize: 20,
       pageNum: 1
     }
     this.getAllCategory()
@@ -30,22 +29,28 @@ Page({
   onReachBottom: function () {
 
   },
-  getAllCategory() {
-    app.lessonNew.getAllCategory().then(res => {
+  getAllCategory: async function () {
+    let list = (await app.lessonNew.miniSemesterList()).dataList
+    await app.lessonNew.getAllCategory().then(res => {
       this.setData({
-        navList: res.dataList
+        navList: [{
+          id: 0,
+          name: '好课推荐',
+          list
+        }, ...res.dataList]
       })
     })
   },
   navChange(e) {
-    let index = e.currentTarget.dataset.index, id = e.currentTarget.id
+    let index = e.currentTarget.dataset.index,
+      id = e.currentTarget.id
     this.setData({
       scrollTop: 0,
       current: index
     })
   },
   swiperChange(e) {
-    if(e.detail.current == this.data.current) return
+    if (e.detail.current == this.data.current) return
     this.setData({
       scrollTop: 0,
       current: e.detail.current
@@ -55,26 +60,34 @@ Page({
     return false
   },
   checkTab(e, i) {
-    let categoryId = e.currentTarget.dataset.id, tab1 = e.currentTarget.dataset.tab1, tab2 = e.currentTarget.dataset.tab2
-    this.setData({
-      tabCurrent: !this.data.tabCurrent,
-      'crumbs.tab1': tab1,
-      'crumbs.tab2': tab2,
-      lessonList: []
-    }, () => {
-      this.data.tabCurrent ? wx.setNavigationBarTitle({
-        title: tab2
-      }) : wx.setNavigationBarTitle({
-        title: '全部课程'
-      })
-      this.params = {
-        pageSize: 20, 
-        pageNum: 1
+    let categoryId = e.currentTarget.dataset.id,
+      index = e.currentTarget.dataset.index,
+      current = e.currentTarget.dataset.idx
+    wx.navigateTo({
+      url: `/page/index/pages/allSchoollesson/allSchoollesson?current=${current}&type=3`,
+      success: res => {
+        res.eventChannel.emit('acceptData', this.data.navList[index])
       }
-      this.pageEnd = 0
-      if(!categoryId) return
-      this.categoryLessonOrLive(categoryId)
     })
+    // this.setData({
+    //   tabCurrent: !this.data.tabCurrent,
+    //   'crumbs.tab1': tab1,
+    //   'crumbs.tab2': tab2,
+    //   lessonList: []
+    // }, () => {
+    //   this.data.tabCurrent ? wx.setNavigationBarTitle({
+    //     title: tab2
+    //   }) : wx.setNavigationBarTitle({
+    //     title: '全部课程'
+    //   })
+    //   this.params = {
+    //     pageSize: 20, 
+    //     pageNum: 1
+    //   }
+    //   this.pageEnd = 0
+    //   if(!categoryId) return
+    //   this.categoryLessonOrLive(categoryId)
+    // })
   },
   categoryLessonOrLive(categoryId) {
     this.params.categoryId = categoryId
@@ -92,8 +105,13 @@ Page({
     })
   },
   scrolltolower() {
-    if(this.pageEnd) return
+    if (this.pageEnd) return
     this.params.pageNum += 1
     this.categoryLessonOrLive(this.params.categoryId)
+  },
+  into(e) {
+    wx.navigateTo({
+      url: `/page/index/pages/allSchoollesson/allSchoollesson?title=${e.currentTarget.dataset.item.name}&type=4&id=${e.currentTarget.dataset.item.id}`,
+    })
   }
 })

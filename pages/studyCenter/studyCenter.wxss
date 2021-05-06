@@ -75,38 +75,38 @@ page {
 }
 
 .qst {
-  height: calc(100vh - 500rpx);
-  padding-top: 101rpx;
-  box-sizing: border-box;
+  margin-top: 20rpx;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   background: #fff;
 }
 
 .qst image {
   width: 452rpx;
-  height: 288rpx;
+  height: 286rpx;
 }
 
 .qst text {
-  font-size: 36rpx;
+  font-size: 30rpx;
   font-weight: 400;
   color: #999999;
-  margin-top: -40rpx;
+  margin-top: -50rpx;
 }
 
 .qst .navigator {
-  width: 228rpx;
-  height: 80rpx;
+  width: 158rpx;
+  height: 56rpx;
   background: #F2323A;
-  border-radius: 46rpx;
-  font-size: 36rpx;
+  border-radius: 8rpx;
+  font-size: 30rpx;
   font-weight: 400;
   color: #FFFFFF;
   text-align: center;
-  line-height: 80rpx;
+  line-height: 56rpx;
   margin-top: 30rpx;
+  margin-bottom: 60rpx;
 }
 
 .contentBox {
@@ -430,4 +430,19 @@ page {
 .van-notice-bar__right-icon {
   top: 50% !important;
   transform: translateY(-50%);
+}
+
+.recommend {
+  background: #fff;
+  margin-top: 20rpx;
+}
+
+.recommend .title {
+  height: 119rpx;
+  line-height: 119rpx;
+  padding-left: 30rpx;
+  border-bottom: 1px solid #E9E9E9;
+  font-size: 42rpx;
+  font-weight: 500;
+  color: #333333;
 }

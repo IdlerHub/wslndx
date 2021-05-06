@@ -231,6 +231,15 @@ function getCurrentMonthSemester(params) {
   return httpService.post("live/collectList", params, null, true);
 }
 
+/**
+ * @description: 小程序热门推荐学期列表
+ * @param {}
+ * @return:  promise
+ * **/
+function miniSemesterList(params) {
+  return httpService.post("recommend/miniSemesterList", params, null, true);
+}
+
 module.exports = {
   getBannerList,
   interestList,
@@ -257,5 +266,6 @@ module.exports = {
   getCurrentMonthSemester,
   collect,
   cancelCollect,
-  collectList
+  collectList,
+  miniSemesterList
 }

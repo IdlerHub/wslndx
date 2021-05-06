@@ -54,7 +54,8 @@ Component({
     inScroll: 1,
     showNum: 0,
     top: 0,
-    show: true
+    show: true,
+    joinSpelItem: true
   },
   ready() {
     this.toBottom()
@@ -114,6 +115,15 @@ Component({
     },
     animationiteration() {
       this.triggerEvent('animationEnd')
+      this.setData({
+        joinSpelItem: false
+      }, () => {
+        setTimeout(() => {
+          this.setData({
+            joinSpelItem: true
+          })
+        }, 500)
+      })
     },
     afterEnter(e) {
       let index = e.currentTarget.dataset.index,

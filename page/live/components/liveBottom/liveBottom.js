@@ -108,8 +108,8 @@ Component({
       })
       back ? wx.navigateBack({
         delta: back
-      }) : wx.navigateTo({
-        url: '/page/live/pages/liveDetail/liveDetail?specialColumnId=' + this.data.columnId,
+      }) : this.data.$state.userInfo.id ? getApp().liveAddStatus(this.data.columnId) : wx.navigateTo({
+        url: '/page/live/pages/tableDetail/tableDetail?specialColumnId=' + this.data.columnId,
       })
     },
     showGift() {
@@ -161,6 +161,9 @@ Component({
       this.setData({
         popupShow: false
       })
+    },
+    checknextTap(e) {
+      getApp().checknextTap(e);
     },
   }
 })

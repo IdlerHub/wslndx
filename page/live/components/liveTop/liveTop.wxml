@@ -17,10 +17,12 @@
       <text>{{liveDetail.nickname}}</text>
       <text wx:if="{{liveDetail.state > 0}}">{{fn.num(liveCount)}}人在看</text>
     </view>
-    <view class="attention" catchtap="attention"
-      wx:if="{{!liveDetail.follow && liveDetail.lecturerUserId != $state.userInfo.id}}">
+    <slotSign catchtap="{{!$state.userInfo.id ? 'checknextTap' : 'attention'}}" data-type="nameFunction" data-funName="checkFollow" wx:if="{{!liveDetail.follow && liveDetail.lecturerUserId != $state.userInfo.id}}">
+      <view class="attention">
       <image src="../../images/attentionicon.png"></image>
       关注
     </view>
+    </slotSign>
+    
   </view>
 </view>

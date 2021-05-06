@@ -45,7 +45,7 @@ Page({
             icon: 'success',
             duration: 1000
           })
-          setTimeout(()=>{
+          setTimeout(() => {
             wx.redirectTo({
               url: `/pages/education/education?type=webpay&login=1&url=${encodeURIComponent(openUrl)}/${lesson}`,
             });
@@ -56,9 +56,11 @@ Page({
             icon: 'success',
             duration: 1000
           })
-          wx.redirectTo({
-            url: '/pages/education/education?type=webpay&login=1&url=' + encodeURIComponent(openUrl),
-          });
+          setTimeout(() => {
+            wx.redirectTo({
+              url: '/pages/education/education?type=webpay&login=1&url=' + encodeURIComponent(openUrl),
+            });
+          }, 1000)
         }
       },
       fail: (err) => {
@@ -69,20 +71,22 @@ Page({
             icon: 'none',
             duration: 1000
           })
-          setTimeout(()=>{
+          setTimeout(() => {
             wx.navigateBack({
               delta: 0,
             })
           }, 1000)
         } else {
           wx.showToast({
-            title: '支付失败',
+            title: '支付失败,请重试',
             icon: 'none',
             duration: 1000
           })
-          wx.redirectTo({
-            url: '/pages/education/education?type=webpay&login=1&url=' + encodeURIComponent(openUrl),
-          });
+          setTimeout(() => {
+            wx.redirectTo({
+              url: '/pages/education/education?type=webpay&login=1&url=' + encodeURIComponent(openUrl),
+            });
+          }, 1000)
         }
       },
     });
